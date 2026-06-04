@@ -638,3 +638,15 @@
   margin-bottom: 0.1em;
   opacity: 0.8;
 }
+
+/* maplibre-gl.css sets `.maplibregl-map { position: relative }` and loads AFTER
+   casey.css, so it overrode Tailwind's `.absolute` on the map container and
+   `inset-0` did nothing → the map collapsed to height:0 (only a 300px default
+   canvas, no tiles/pins visible). This scoped selector (specificity 0,2,0 beats
+   maplibre's 0,1,0) forces the container to fill the shell, order-independent. */
+.casey-shell .maplibregl-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}

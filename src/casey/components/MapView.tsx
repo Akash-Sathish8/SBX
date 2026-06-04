@@ -37,7 +37,7 @@ function computeBounds(stadiums: Record<string, Stadium>): LngLatBoundsLike {
 
 function computePadding(): { top: number; bottom: number; left: number; right: number } {
   if (typeof document === 'undefined') {
-    return { top: 280, bottom: 160, left: 20, right: 20 };
+    return { top: 40, bottom: 160, left: 20, right: 20 };
   }
   // Measure the actual UI overlays so the fitBounds frames stadiums into
   // the *visible* area (the part not hidden behind the hero panel or video
@@ -47,7 +47,10 @@ function computePadding(): { top: number; bottom: number; left: number; right: n
   const bottomEl = document.querySelector<HTMLElement>('[data-map-overlay="bottom"]');
   const isMobile = window.innerWidth < 640;
   const gap = 16;
-  const topFallback = isMobile ? 280 : 260;
+  // No top overlay in the SBX embed (branding/StatsBar removed; controls float
+  // top-right only), so keep top padding small — a large top fallback used to
+  // exceed the canvas height and make fitBounds refuse to frame the stadiums.
+  const topFallback = isMobile ? 32 : 24;
   const bottomFallback = isMobile ? 150 : 170;
   const top = (topEl?.offsetHeight ?? topFallback) + gap;
   const bottom = (bottomEl?.offsetHeight ?? bottomFallback) + gap;
