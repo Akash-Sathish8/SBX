@@ -9,7 +9,8 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "casey:css": "tailwindcss -c casey-build/tailwind.config.cjs -i casey-build/casey.src.css -o src/pages/casey.css --minify"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
