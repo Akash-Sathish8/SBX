@@ -152,82 +152,65 @@ export default function HeroPanel({ location, stats, itinerary, onOpenMatch }: P
       : 'text-snap-mist';
 
   return (
+    // Single-line hero for the SBX embed — keeps the key info (tag · countdown ·
+    // matchup · opener) on one row so the map gets vertical space. A thin progress
+    // bar drops below the row only when Casey is in-transit.
     <div
-      className={`pointer-events-auto relative overflow-hidden bg-gradient-to-br from-snap-black/85 via-snap-coal/80 to-snap-black/85 backdrop-blur-sm border-l-4 ${toneClass}`}
+      className={`pointer-events-auto relative overflow-hidden bg-gradient-to-r from-snap-black/85 via-snap-coal/75 to-snap-black/55 backdrop-blur-sm border-l-4 ${toneClass}`}
       style={{
-        boxShadow: hero.tone === 'live' ? '0 0 24px rgba(255,56,56,0.15)' : '0 4px 24px rgba(0,0,0,0.6)',
+        boxShadow: hero.tone === 'live' ? '0 0 24px rgba(255,56,56,0.15)' : '0 4px 16px rgba(0,0,0,0.5)',
       }}
     >
-      {hero.tone === 'live' && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div
-            className="absolute -top-12 -right-12 w-32 h-32 rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(255,56,56,0.25) 0%, transparent 70%)',
-            }}
-          />
-        </div>
-      )}
-
-      <div className="relative px-3 pt-2.5 pb-3 sm:px-4">
-        <div className="flex items-center justify-between gap-2">
-          <span
-            className={`font-mono text-[10px] tracking-[0.24em] font-medium ${tagClass} ${
-              hero.tone === 'live' ? 'animate-pulse-live' : ''
-            }`}
-          >
-            {hero.tagText}
-          </span>
-          {hero.cta && (
-            <button
-              type="button"
-              onClick={() => onOpenMatch(hero.cta!.matchNumber)}
-              className="font-mono text-[9px] tracking-[0.22em] text-snap-mist hover:text-snap-yellow transition-colors"
-            >
-              {hero.cta.label} →
-            </button>
-          )}
-        </div>
-
-        <div
+      <div className="relative flex items-center gap-2.5 px-3 py-2 sm:gap-3 sm:px-4">
+        <span
+          className={`font-mono text-[9px] sm:text-[10px] tracking-[0.2em] font-medium whitespace-nowrap flex-shrink-0 ${tagClass} ${
+            hero.tone === 'live' ? 'animate-pulse-live' : ''
+          }`}
+        >
+          {hero.tagText}
+        </span>
+        <span
           key={hero.bigText}
-          className={`font-display leading-[0.95] mt-1.5 text-snap-chalk break-words ${
+          className={`font-display leading-none text-snap-chalk whitespace-nowrap flex-shrink-0 ${
             animating ? 'animate-hero-swap' : ''
           }`}
           style={{
-            fontSize: 'clamp(28px, 5.5vw, 44px)',
+            fontSize: 'clamp(20px, 2.6vw, 30px)',
             letterSpacing: '-0.01em',
             textShadow: hero.tone === 'live' ? '0 0 20px rgba(255,56,56,0.3)' : 'none',
           }}
         >
           {hero.bigText}
-        </div>
-
+        </span>
         {hero.scriptText && (
-          <div className="font-body italic text-snap-mist text-[12px] sm:text-[13px] mt-0.5">
+          <span className="font-body italic text-snap-mist text-[12px] truncate hidden sm:inline min-w-0">
             {hero.scriptText}
-          </div>
+          </span>
         )}
-
-        {hero.progressPercent !== undefined && (
-          <div className="mt-2.5 flex items-center gap-2">
-            <div className="h-[3px] flex-1 bg-snap-ash overflow-hidden">
-              <div
-                className="h-full bg-snap-yellow transition-[width] duration-1000"
-                style={{ width: `${hero.progressPercent}%` }}
-              />
-            </div>
-            <span className="stat-number text-snap-yellow text-[11px]">{hero.progressPercent}%</span>
-          </div>
+        <span className="flex-1" />
+        {hero.metaRight && (
+          <span className="font-mono text-[9px] tracking-[0.18em] text-snap-fog whitespace-nowrap hidden md:inline flex-shrink-0">
+            {hero.metaRight}
+          </span>
         )}
-
-        {(hero.metaLeft || hero.metaRight) && (
-          <div className="mt-2 flex items-center justify-between gap-3 font-mono text-[9px] tracking-[0.18em] text-snap-fog">
-            {hero.metaLeft && <span className="truncate">{hero.metaLeft}</span>}
-            {hero.metaRight && <span className="truncate text-right">{hero.metaRight}</span>}
-          </div>
+        {hero.cta && (
+          <button
+            type="button"
+            onClick={() => onOpenMatch(hero.cta!.matchNumber)}
+            className="font-mono text-[9px] tracking-[0.22em] text-snap-mist hover:text-snap-yellow hover:border-snap-yellow transition-colors whitespace-nowrap flex-shrink-0 border border-snap-ash px-2 py-1"
+          >
+            {hero.cta.label} →
+          </button>
         )}
       </div>
+      {hero.progressPercent !== undefined && (
+        <div className="h-[3px] w-full bg-snap-ash/60 overflow-hidden">
+          <div
+            className="h-full bg-snap-yellow transition-[width] duration-1000"
+            style={{ width: `${hero.progressPercent}%` }}
+          />
+        </div>
+      )}
     </div>
   );
 }
