@@ -1,7 +1,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import MapView from './MapView';
-import StatsBar from './StatsBar';
+import ControlCluster from './ControlCluster';
+import HeroStatsDock from './HeroStatsDock';
 import StadiumDrawer from './StadiumDrawer';
 import SpendPanel from './SpendPanel';
 import WelcomeCard from './WelcomeCard';
@@ -71,6 +72,7 @@ export default function ClientShell({
     'schedule',
   );
   const [followingOpen, setFollowingOpen] = useState(false);
+  const [dockCollapsed, setDockCollapsed] = useState(false);
   const [welcomeForce, setWelcomeForce] = useState(false);
   const [following, setFollowing] = useState(false);
   const [lastUpdateAt, setLastUpdateAt] = useState<number>(Date.now());
@@ -84,28 +86,9 @@ export default function ClientShell({
   const [speed, setSpeed] = useState<SimSpeed>(2);
   const simModeActive = simTimeMs !== null;
 
-  // ── Track top-overlay height (StatsBar) so floating badges sit just under it ──
+  // ── No top overlay anymore — pin the WhereIsCaseyBadge near the top ──
   useEffect(() => {
-    const update = () => {
-      const topEl = document.querySelector<HTMLElement>('[data-map-overlay="top"]');
-      const h = topEl?.offsetHeight ?? 280;
-      document.documentElement.style.setProperty('--casey-badge-top', `${h + 12}px`);
-    };
-    update();
-    window.addEventListener('resize', update);
-    window.addEventListener('orientationchange', update);
-    // ResizeObserver catches StatsBar collapse/expand without a window resize.
-    const topEl = document.querySelector<HTMLElement>('[data-map-overlay="top"]');
-    let ro: ResizeObserver | null = null;
-    if (topEl && typeof ResizeObserver !== 'undefined') {
-      ro = new ResizeObserver(update);
-      ro.observe(topEl);
-    }
-    return () => {
-      window.removeEventListener('resize', update);
-      window.removeEventListener('orientationchange', update);
-      ro?.disconnect();
-    };
+    document.documentElement.style.setProperty('--casey-badge-top', '16px');
   }, []);
 
   // ── Live polling — only when NOT in sim mode (sim recomputes locally) ──
@@ -275,22 +258,22 @@ export default function ClientShell({
         {stats.daysTotal}
       </div>
       <LiveBanner itinerary={itinerary} onOpenMatch={openMatch} />
-      <StatsBar
+      <ControlCluster
+        location={location}
+        collapsed={dockCollapsed}
+        onToggleCollapse={() => setDockCollapsed((c) => !c)}
+        onOpenToday={() => { setScheduleTab('live'); setScheduleOpen(true); }}
+        onOpenFollowing={() => setFollowingOpen(true)}
+        onOpenSchedule={() => { setScheduleTab('schedule'); setScheduleOpen(true); }}
+        lastUpdateAt={lastUpdateAt}
+        connectionLost={connectionLost}
+      />
+      <HeroStatsDock
         location={location}
         stats={stats}
         itinerary={itinerary}
-        onOpenSchedule={() => {
-          setScheduleTab('schedule');
-          setScheduleOpen(true);
-        }}
-        onOpenToday={() => {
-          setScheduleTab('live');
-          setScheduleOpen(true);
-        }}
-        onOpenFollowing={() => setFollowingOpen(true)}
         onOpenMatch={openMatch}
-        lastUpdateAt={lastUpdateAt}
-        connectionLost={connectionLost}
+        collapsed={dockCollapsed}
       />
       <SpendPanel
         spend={spend}
@@ -332,19 +315,21 @@ export default function ClientShell({
         onClose={() => setFollowingOpen(false)}
         itinerary={itinerary}
       />
-      <TimeTravelPanel
-        simTimeMs={simTimeMs}
-        playing={playing}
-        speed={speed}
-        tripStartMs={TRIP_START_MS}
-        tripEndMs={TRIP_END_MS}
-        onStart={handleStartSim}
-        onPause={() => setPlaying(false)}
-        onResume={() => setPlaying(true)}
-        onSeek={handleSeek}
-        onSpeedChange={setSpeed}
-        onExit={handleExitSim}
-      />
+      {(simModeActive || (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('sim'))) ? (
+        <TimeTravelPanel
+          simTimeMs={simTimeMs}
+          playing={playing}
+          speed={speed}
+          tripStartMs={TRIP_START_MS}
+          tripEndMs={TRIP_END_MS}
+          onStart={handleStartSim}
+          onPause={() => setPlaying(false)}
+          onResume={() => setPlaying(true)}
+          onSeek={handleSeek}
+          onSpeedChange={setSpeed}
+          onExit={handleExitSim}
+        />
+      ) : null}
     </>
   );
 }
