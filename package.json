@@ -13,6 +13,8 @@
     "casey:css": "npx -y tailwindcss@3.4.16 -c casey-build/tailwind.config.cjs -i casey-build/casey.src.css -o src/pages/casey-tracker.css --minify"
   },
   "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@supabase/supabase-js": "^2.107.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-router": "latest",
@@ -20,10 +22,12 @@
     "@tanstack/react-router-ssr-query": "latest",
     "@tanstack/react-start": "latest",
     "@tanstack/router-plugin": "^1.132.0",
+    "jose": "^5.10.0",
     "lucide-react": "^0.545.0",
     "maplibre-gl": "^4.7.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "satori": "^0.12.2",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
