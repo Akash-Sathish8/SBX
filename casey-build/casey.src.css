@@ -8,9 +8,22 @@
   --snap-mist:#8a8a8a; --snap-chalk:#e8e8e8; --live:#ff3838;
 }
 
-/* Embed shell — replaces globals.css's html,body rules; fills the area below SBX's 72px nav. */
-.casey-shell { position: fixed; inset: 0; top: 72px; background: var(--snap-black); color: var(--snap-chalk); overflow: hidden; overscroll-behavior: none; }
+/* Embed shell — replaces globals.css's html,body rules; fills the area below SBX's 72px nav.
+   transform: translateZ(0) makes this a containing block for position:fixed descendants, so
+   the tracker's drawers/modals confine to the shell (below the SBX nav) instead of bleeding
+   over it. */
+.casey-shell { position: fixed; inset: 0; top: 72px; background: var(--snap-black); color: var(--snap-chalk); overflow: hidden; overscroll-behavior: none; transform: translateZ(0); }
 .casey-shell *, .casey-shell *::before, .casey-shell *::after { box-sizing: border-box; }
+
+/* Tailwind preflight is disabled (to avoid resetting SBX's nav), so re-add the one reset that
+   matters here: native <button> background. Element-level specificity lets Tailwind bg-*
+   utilities still win. Fixes SPEND/OPENER showing the OS-default light-grey button bg. */
+button, [type='button'], [type='reset'], [type='submit'] {
+  -webkit-appearance: button;
+  background-color: transparent;
+  background-image: none;
+}
+
 .font-display { font-family:'Bebas Neue','Oswald',Impact,sans-serif; letter-spacing:.01em; }
 .font-mono { font-family:'JetBrains Mono','Courier New',monospace; }
 
