@@ -269,7 +269,7 @@ export default function ScheduleDrawer({
         </footer>
       </aside>
 
-      <style jsx>{`
+      <style>{`
         @keyframes drawer-slide-left {
           from {
             transform: translateX(-100%);

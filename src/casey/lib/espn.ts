@@ -27,7 +27,10 @@ export interface MatchScore {
 
 async function fetchJson(url: string, revalidateSec: number): Promise<any | null> {
   try {
-    const res = await fetch(url, { next: { revalidate: revalidateSec } });
+    // `next` is a Next.js fetch extension; in TanStack Start we just fetch with no cache hint.
+    // revalidateSec is retained as a parameter for API-route callers that document the TTL.
+    void revalidateSec;
+    const res = await fetch(url);
     if (!res.ok) return null;
     return await res.json();
   } catch {

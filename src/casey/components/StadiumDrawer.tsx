@@ -507,7 +507,7 @@ export default function StadiumDrawer({
         )}
       </aside>
 
-      <style jsx>{`
+      <style>{`
         @keyframes drawer-slide {
           from { transform: translateX(100%); }
           to { transform: translateX(0); }
