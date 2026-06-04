@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import { formatCountdown } from '@/lib/stats';
 import Ticker from './Ticker';
 import HeroPanel from './HeroPanel';
-import SnapbackLogo from './SnapbackLogo';
 import CountUp from './CountUp';
 import { useFollows } from '@/lib/follows';
 import type { CaseyLocation, ItineraryMatch, TripStats } from '@/lib/types';
@@ -182,19 +181,10 @@ export default function StatsBar({
           'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0) 100%)',
       }}
     >
-      <div className="flex items-center justify-between gap-3">
-        <div className="pointer-events-auto flex items-center gap-2.5 text-left">
-          <SnapbackLogo size={36} className="sm:!w-8 sm:!h-8 flex-shrink-0 brand-mark-wiggle cursor-pointer" />
-          <div className="leading-none">
-            <div className="font-display text-[22px] sm:text-[24px] tracking-wide">
-              CASEY TRACKER
-            </div>
-            <div className="font-mono text-[9px] sm:text-[10px] text-snap-mist mt-0.5 tracking-[0.18em]">
-              SNAPBACK SPORTS · WORLD CUP 2026
-            </div>
-          </div>
-        </div>
-
+      {/* Branding block (Snapback logo + CASEY TRACKER wordmark) removed for the
+          SBX embed — SBX's own site nav already brands the page. Controls stay
+          right-aligned via justify-end. */}
+      <div className="flex items-center justify-end gap-3">
         <div className="pointer-events-auto flex items-center gap-2">
           <button
             type="button"
