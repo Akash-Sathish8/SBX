@@ -10,7 +10,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "casey:css": "npx -y tailwindcss@3.4.16 -c casey-build/tailwind.config.cjs -i casey-build/casey.src.css -o src/pages/casey.css --minify"
+    "casey:css": "npx -y tailwindcss@3.4.16 -c casey-build/tailwind.config.cjs -i casey-build/casey.src.css -o src/pages/casey-tracker.css --minify"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
