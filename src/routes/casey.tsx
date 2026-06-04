@@ -1,31 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { SiteNav } from '../components/SiteNav';
-import TrackerApp from '../casey/components/TrackerApp';
-// navCss = SBX's shared page/nav styles (so SiteNav renders correctly);
-// trackerCss = the tracker's compiled Tailwind, scoped to .casey-shell.
-import navCss from '../pages/casey.css?url';
-import trackerCss from '../pages/casey-tracker.css?url';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 
+// Layout route for /casey/*. In TanStack flat routing this is the PARENT of
+// casey.index (the tracker), casey.admin, and casey.match.$number — so it must
+// render an <Outlet/> for those children. (Previously it rendered the tracker
+// directly with no Outlet, which made /casey/admin and /casey/match/* fall
+// through to the tracker instead of their own components.)
 export const Route = createFileRoute('/casey')({
-  head: () => ({
-    meta: [{ title: 'Casey · Snapback WC 2026' }],
-    links: [
-      { rel: 'stylesheet', href: navCss },
-      { rel: 'stylesheet', href: trackerCss },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap' },
-      { rel: 'stylesheet', href: 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css' },
-    ],
-  }),
-  component: Casey,
+  component: () => <Outlet />,
 });
-
-function Casey() {
-  return (
-    <>
-      <SiteNav active="casey" />
-      <div className="casey-shell">
-        <TrackerApp />
-      </div>
-    </>
-  );
-}

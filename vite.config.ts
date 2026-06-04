@@ -14,6 +14,11 @@ const config = defineConfig({
       '@/data': fileURLToPath(new URL('./src/casey/data', import.meta.url)),
     },
   },
+  // @resvg/resvg-js (used by the /api/og share-image route) ships a native
+  // .node binding that vite's dep optimizer can't pre-bundle (crashes dev).
+  // Keep it out of optimization and load it as an external at runtime.
+  optimizeDeps: { exclude: ['@resvg/resvg-js'] },
+  ssr: { external: ['@resvg/resvg-js'] },
   plugins: [tanstackStart(), viteReact()],
 })
 
