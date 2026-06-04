@@ -1,0 +1,141 @@
+{
+  "id": "att",
+  "name": "AT&T Stadium",
+  "fifaName": "Dallas Stadium",
+  "nickname": "Jerry World",
+  "city": "Dallas",
+  "country": "USA",
+  "cc": "USA",
+  "role": "Semifinal",
+  "tagline": "The biggest stage of WC26: nine matches, a semifinal, and a climate-controlled palace that laughs at Texas heat.",
+  "hero": "img/stadiums/att.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~80,000"
+    },
+    {
+      "label": "Opened",
+      "value": "2009"
+    },
+    {
+      "label": "WC26 Matches",
+      "value": "9 (most of any venue)"
+    },
+    {
+      "label": "Roof",
+      "value": "Retractable, fully AC'd"
+    },
+    {
+      "label": "Video Board",
+      "value": "160 ft wide center-hung 'Jerry-tron'"
+    },
+    {
+      "label": "Cost",
+      "value": "~$1.3 billion"
+    }
+  ],
+  "why": [
+    {
+      "title": "Most Matches",
+      "text": "Nine games, more than any other venue across the US, Canada and Mexico. This is the beating heart of WC26."
+    },
+    {
+      "title": "Semifinal Host",
+      "text": "One of only two semifinal venues. July 14 is the marquee day of the entire tournament here."
+    },
+    {
+      "title": "Beat The Heat",
+      "text": "Fully enclosed and air-conditioned to a comfy 70s while North Texas bakes outside at 100 plus. Comfort no other Sun Belt venue can match."
+    },
+    {
+      "title": "Pink Glow Pitch",
+      "text": "Real grass grown in Colorado, kept alive indoors by first-of-its-kind pink LED grow lights that lift away on match days."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Sun Jun 14",
+      "round": "Group F",
+      "fixture": "Netherlands vs Japan",
+      "ko": "3:00 PM CT"
+    },
+    {
+      "date": "Wed Jun 17",
+      "round": "Group",
+      "fixture": "England vs Croatia",
+      "ko": "3:00 PM CT"
+    },
+    {
+      "date": "Mon Jun 22",
+      "round": "Group",
+      "fixture": "Argentina vs Austria",
+      "ko": "12:00 PM CT"
+    },
+    {
+      "date": "Thu Jun 25",
+      "round": "Group",
+      "fixture": "Japan vs Sweden",
+      "ko": "6:00 PM CT"
+    },
+    {
+      "date": "Sat Jun 27",
+      "round": "Group",
+      "fixture": "Jordan vs Argentina",
+      "ko": "9:00 PM CT"
+    },
+    {
+      "date": "Tue Jun 30",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "12:00 PM CT"
+    },
+    {
+      "date": "Fri Jul 3",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "1:00 PM CT"
+    },
+    {
+      "date": "Mon Jul 6",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "2:00 PM CT"
+    },
+    {
+      "date": "Tue Jul 14",
+      "round": "Semifinal",
+      "fixture": "TBD",
+      "ko": "2:00 PM CT"
+    }
+  ],
+  "gettingThere": "The stadium sits in Arlington's entertainment district, midway between Dallas and Fort Worth, but Arlington has no permanent public transit, so plan your arrival deliberately. For WC26, organizers built a temporary match-day-only network.",
+  "transit": [
+    "Trinity Railway Express (TRE) from Downtown Dallas (Union Station) or Fort Worth (Central Station) to CentrePort, then a charter shuttle and a half-mile walk to the gates.",
+    "TRE runs about every 30 minutes on match days and fills up fast, so arrive at your downtown station early.",
+    "Driving: ~12,000 stadium spaces in numbered lots at $75-$100 plus; they sell out weeks ahead, so pre-buy.",
+    "Rideshare works but post-match surge is brutal and pickup zones are pushed away from the stadium."
+  ],
+  "matchday": "Texas Live! next door is the party HQ: 11 restaurants, 22 bars and a 100-ft LED screen, the default pre and post-match gathering spot. The free official FIFA Fan Festival is at Fair Park in Dallas, about 20 miles east, with screenings, music and activities.",
+  "food": [
+    "Hurtado Barbecue: Central-Texas brisket with a Tex-Mex twist, famous brisket tostadas.",
+    "Smoke'N Ash: Michelin-recognized Tex-Ethiopian smokehouse, a only-in-Arlington experience.",
+    "225 Barbecue: brisket elote and birria ramen.",
+    "Pappasito's Cantina and LOMA TXMX for elevated Tex-Mex fixes."
+  ],
+  "tips": [
+    "The July 14 semifinal is the crown jewel: book hotels and parking earliest, it's the priciest, busiest day.",
+    "Noon and 1-2 PM kickoffs mean peak-sun arrivals, so pre-hydrate and don't linger in the lots; it's cool once you're inside.",
+    "Using TRE? Get to your downtown rail station early, trains run only every 30 min and pack out.",
+    "After the whistle, walk a few blocks from the stadium before requesting a ride to dodge the surge cordon, or wait it out at Texas Live!.",
+    "Stay in the Arlington district (Live! by Loews or Gaylord) to walk or take the Red Trolley and skip the regional commute.",
+    "The giant center-hung board gives a great view from anywhere, so upper-deck and Party Pass standing seats are smart value."
+  ],
+  "weather": "June-July North Texas is brutal outside at 95-105F with humidity, but the bowl stays a cool ~70s, so dress light, pack sun protection and bring a clear water bottle for the walk in.",
+  "lore": [
+    "Nicknamed 'Jerry World' after Cowboys owner Jerry Jones, who built it as a billion-dollar entertainment palace, not just a stadium.",
+    "Its twin arched roof trusses span ~1,225 feet, among the longest single-span roof structures on Earth.",
+    "Hosted Super Bowl XLV in 2011 with a record 105,121 crowd, plus the first CFP National Championship and two WrestleManias.",
+    "Canelo Alvarez vs Billy Joe Saunders drew 73,000-plus here in 2021, the largest indoor boxing crowd in history."
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "id": "linc",
+  "name": "Lincoln Financial Field",
+  "fifaName": "Philadelphia Stadium",
+  "nickname": "The Linc",
+  "city": "Philadelphia",
+  "country": "USA",
+  "cc": "USA",
+  "role": null,
+  "tagline": "Six matches in the loudest open-air bowl in American sports, capped by a July 4 knockout in the nation's founding city.",
+  "hero": "img/stadiums/linc.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~69,000"
+    },
+    {
+      "label": "Opened",
+      "value": "2003"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "6 (5 group + R16)"
+    },
+    {
+      "label": "Home Team",
+      "value": "Eagles (NFL champs)"
+    },
+    {
+      "label": "Sports Complex",
+      "value": "4 arenas, one walkable district"
+    },
+    {
+      "label": "Subway Access",
+      "value": "Broad Street Line to NRG"
+    }
+  ],
+  "why": [
+    {
+      "title": "Bird Gang Energy",
+      "text": "Philly fans are the loudest, most passionate crowd in American sports, and the stadium's wing-like canopies amplify every roar into a wall of noise."
+    },
+    {
+      "title": "July 4 Knockout",
+      "text": "The Round of 16 lands on US Independence Day during America's 250th birthday, in the very city where the country was founded. A once-ever overlap."
+    },
+    {
+      "title": "Big Names Coming",
+      "text": "Brazil, France and Croatia all play group games here, so the marquee talent rolls through South Philly."
+    },
+    {
+      "title": "Stadium Cluster",
+      "text": "Four pro venues sit side by side, so the whole district turns into one massive matchday block party."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Sun Jun 14, 2026",
+      "round": "Group Stage",
+      "fixture": "Cote d'Ivoire vs Ecuador",
+      "ko": "7:00 PM ET"
+    },
+    {
+      "date": "Fri Jun 19, 2026",
+      "round": "Group Stage",
+      "fixture": "Brazil vs Haiti",
+      "ko": "8:30 PM ET"
+    },
+    {
+      "date": "Mon Jun 22, 2026",
+      "round": "Group Stage",
+      "fixture": "France vs Playoff Winner",
+      "ko": "5:00 PM ET"
+    },
+    {
+      "date": "Thu Jun 25, 2026",
+      "round": "Group Stage",
+      "fixture": "Curacao vs Cote d'Ivoire",
+      "ko": "4:00 PM ET"
+    },
+    {
+      "date": "Sat Jun 27, 2026",
+      "round": "Group Stage",
+      "fixture": "Croatia vs Ghana",
+      "ko": "5:00 PM ET"
+    },
+    {
+      "date": "Sat Jul 4, 2026",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "5:00 PM ET"
+    }
+  ],
+  "gettingThere": "Skip the car and take the SEPTA Broad Street Line subway straight to NRG Station, the southern terminus, then walk five to ten minutes across the lots to the gates. Philadelphia International Airport is only a 10-15 minute drive away, one of the closest airport-to-stadium pairings of the whole tournament.",
+  "transit": [
+    "Broad Street Line subway south to NRG Station, regular fare $2.90, about 15-20 minutes from Center City.",
+    "World Cup bonus: free SEPTA rides home from NRG for all six matches, starting at halftime and running two hours after.",
+    "Sports Express trains run roughly every 10 minutes on match days with extended late-night service.",
+    "Driving means $40-60 parking plus heavy post-match gridlock, so transit is faster."
+  ],
+  "matchday": "The Linc is an open-air bowl with no roof, anchoring the South Philadelphia Sports Complex alongside three other pro arenas. Tailgating in the lots is legendary, so arrive a couple hours early to soak in the pre-match scene.",
+  "food": [
+    "Chickie's & Pete's steps from the complex, the area's premier sports bar famous for its Crabfries.",
+    "South Philly cheesesteaks: the classic Pat's King of Steaks vs Geno's Steaks rivalry, both nearby.",
+    "East Passyunk Avenue and the Italian Market for a deeper food crawl beyond the stadium.",
+    "Stadium is fully cashless, so bring a card or your phone for concessions."
+  ],
+  "tips": [
+    "Take the subway: it beats traffic, drops you near the gates, and your ride home is free from halftime onward.",
+    "Arrive early for World Cup security; walk-through magnetometer lines run longer than normal NFL game days.",
+    "For afternoon matches (Jun 22, 25, 27 and Jul 4), grab upper-deck sideline seats under the canopy for shade; lower bowl and end zones bake in full sun.",
+    "Want the loudest atmosphere? Head to the end-zone supporter sections; for sightlines, the lower-bowl sidelines win.",
+    "No ticket? The free FIFA Fan Festival runs at Lemon Hill in East Fairmount Park every single day of the tournament; register online for your e-ticket.",
+    "Clear bag policy only: bags up to 12 by 6 by 12 inches or a small clutch are allowed."
+  ],
+  "weather": "Expect hot, humid mid-Atlantic summer with highs in the low 80s in June and mid 80s in July (heat index can hit ~97F), plus brief afternoon storms, so pack sunscreen, a hat and water for the unshaded, roofless bowl.",
+  "lore": [
+    "Home of the Philadelphia Eagles, who won Super Bowl LIX after the 2024 season.",
+    "Passed its World Cup audition by hosting seven Club World Cup matches in June 2025, with FIFA's turf experts praising the natural-grass HERO Hybrid pitch.",
+    "One of the greenest stadiums anywhere: ~11,000 solar panels, 14 wind turbines and LEED Gold certification, running on 100% clean energy.",
+    "Hosted WrestleMania 40 in 2024, drawing a record 145,298 fans across two nights."
+  ]
+}

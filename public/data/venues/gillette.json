@@ -1,0 +1,129 @@
+{
+  "id": "gillette",
+  "name": "Gillette Stadium",
+  "fifaName": "Boston Stadium",
+  "nickname": "The Razor",
+  "city": "Boston",
+  "country": "USA",
+  "cc": "USA",
+  "role": null,
+  "tagline": "Home of the Patriots dynasty, crowned by a 218-foot lighthouse, hosting Scotland's Tartan Army and a quarterfinal.",
+  "hero": "img/stadiums/gillette.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "63,815 (WC config)"
+    },
+    {
+      "label": "Opened",
+      "value": "2002"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "7 (incl. a QF)"
+    },
+    {
+      "label": "Signature",
+      "value": "218-ft Lighthouse tower"
+    },
+    {
+      "label": "Location",
+      "value": "Foxborough, between Boston & Providence"
+    },
+    {
+      "label": "Home Teams",
+      "value": "Patriots (NFL), Revolution (MLS)"
+    }
+  ],
+  "why": [
+    {
+      "title": "The Lighthouse",
+      "text": "A 218-foot tower inspired by New England's maritime heritage anchors the north end, with a 360-degree observation deck and the largest outdoor curved video board in America right beside it."
+    },
+    {
+      "title": "Tartan Army Invasion",
+      "text": "Scotland plays two group matches here, and thousands of kilted supporters are basing in Providence and Boston. It's the marquee fan story of the venue."
+    },
+    {
+      "title": "Turf Ripped Out for Grass",
+      "text": "Crews tore out nearly 20 years of FieldTurf and built a sand-based root zone with real Kentucky bluegrass sod, so the ball rolls slower and truer than it ever has here."
+    },
+    {
+      "title": "A Quarterfinal Stage",
+      "text": "Beyond five group games and a Round of 32, Boston Stadium hosts a July 9 quarterfinal, one of just eight in the entire tournament."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 13",
+      "round": "Group",
+      "fixture": "Haiti vs Scotland",
+      "ko": "9:00 PM ET"
+    },
+    {
+      "date": "Jun 16",
+      "round": "Group",
+      "fixture": "Iraq vs Norway",
+      "ko": "6:00 PM ET"
+    },
+    {
+      "date": "Jun 19",
+      "round": "Group",
+      "fixture": "Scotland vs Morocco",
+      "ko": "6:00 PM ET"
+    },
+    {
+      "date": "Jun 23",
+      "round": "Group",
+      "fixture": "England vs Ghana",
+      "ko": "4:00 PM ET"
+    },
+    {
+      "date": "Jun 26",
+      "round": "Group",
+      "fixture": "Norway vs France",
+      "ko": "3:00 PM ET"
+    },
+    {
+      "date": "Jun 29",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "4:30 PM ET"
+    },
+    {
+      "date": "Jul 9",
+      "round": "Quarterfinal",
+      "fixture": "TBD",
+      "ko": "4:00 PM ET"
+    }
+  ],
+  "gettingThere": "The stadium sits in Foxborough, a transit island about 25 miles from both Boston and Providence, with no everyday train service. On every match day the MBTA runs dedicated express Boston Stadium Trains from South Station straight to Foxboro Station, an 8-minute walk from the gates.",
+  "transit": [
+    "Boston Stadium Trains run non-stop from South Station to Foxboro on all 7 match days, a ~1-hour ride; buy the $80 round-trip ONLY in the MBTA mTicket app.",
+    "Last inbound train arrives ~90 min before kickoff; return trains start ~30 min after the whistle and leave every ~15 min until cleared.",
+    "Driving is ~45 min from Boston or ~30-40 min from Providence, but lots fill fast and exit gridlock is notorious.",
+    "Flying in: Boston Logan (BOS) is ~27 mi; T.F. Green in Providence (PVD) is ~18 mi and often cheaper for southbound fans."
+  ],
+  "matchday": "There's no fan district at the stadium itself, just Patriot Place, the open-air dining and entertainment complex wrapped around it. The real party is in downtown Boston (City Hall Plaza Fan Festival, June 12-27) and Providence, where Scotland fans gather before busing or training in.",
+  "food": [
+    "Patriot Place: restaurants, bars and a cinema right outside the gates, far better than concourse lines.",
+    "Boston classics: lobster rolls, clam chowder ('chowdah') and oysters are the local must-eat canon.",
+    "North End: Boston's Italian neighborhood for the best pre-match pasta and cannoli in the city.",
+    "Faneuil Hall / Quincy Market and the Seaport: the pub-dense zones where fans pack in to watch."
+  ],
+  "tips": [
+    "Buy the $80 Boston Stadium Train ticket EARLY in the mTicket app; it's the best way in and includes the return. R32/QF train tickets drop later, so set a reminder.",
+    "Arrive 2+ hours pre-kickoff: the last train lands ~90 min out and security plus the 8-min walk eat into that window.",
+    "Be patient on the way out; return trains clear the queue every ~15 min and beat driving out of the lots every time.",
+    "Best atmosphere is the north (Lighthouse) end by the giant video board; mid-level sideline 100s-200s give the cleanest sight lines.",
+    "Clear-bag policy is enforced: clear bags up to 12x6x12 or a small clutch up to 4.5x6.5x2; lockers handle non-compliant bags.",
+    "Stay in Providence to save money (Scotland fans proved it), or Boston for the Fan Festival and nightlife; match lodging to your priority."
+  ],
+  "weather": "Open-air with no roof and mild for a US venue: June highs ~76F and the July 9 QF ~85F, so pack sunscreen, a hat and a rain shell for afternoon thunderstorms.",
+  "lore": [
+    "Ground zero for the Patriots dynasty: the Brady-Belichick era and multiple Super Bowl runs launched from here.",
+    "Built entirely with private money by owner Robert Kraft for ~$325M, opening in 2002 as the first major Boston-area stadium in 100 years.",
+    "A serious soccer venue already: it staged Copa America Centenario 2016, Copa America 2024 and Gold Cup rounds, and holds a 65,612 soccer-crowd record.",
+    "A premier concert stop with a Taylor Swift bond: she's played here 13 times, the only venue she's hit on every headlining tour."
+  ]
+}

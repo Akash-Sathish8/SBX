@@ -1,0 +1,123 @@
+{
+  "id": "bmo",
+  "name": "BMO Field",
+  "fifaName": "Toronto Stadium",
+  "nickname": null,
+  "city": "Toronto",
+  "country": "Canada",
+  "cc": "CAN",
+  "role": null,
+  "tagline": "Canada's home turf opens the World Cup here on June 12, the first men's WC match ever on Canadian soil.",
+  "hero": "img/stadiums/bmo.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~45,700 (WC config)"
+    },
+    {
+      "label": "Opened",
+      "value": "2007"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "6 (5 group + R32)"
+    },
+    {
+      "label": "Host Of",
+      "value": "Canada's opening match"
+    },
+    {
+      "label": "Setup",
+      "value": "~17,000 temporary seats added"
+    },
+    {
+      "label": "Location",
+      "value": "Exhibition Place, Lake Ontario shore"
+    }
+  ],
+  "why": [
+    {
+      "title": "Canada's Opener",
+      "text": "BMO Field hosts Canada vs the UEFA play-off winner on June 12, the first men's World Cup match ever played on Canadian soil. The whole country will be watching this one."
+    },
+    {
+      "title": "Smallest, Loudest",
+      "text": "It's the tiniest stadium in the tournament, a compact European-style bowl that traps noise. The atmosphere punches way above the seat count."
+    },
+    {
+      "title": "Built Up For the Cup",
+      "text": "Crews bolted on roughly 17,000 temporary seats north and south to push capacity past 28,000 toward 45,700, all to be torn back down after the final whistle."
+    },
+    {
+      "title": "Real Grass, Lakeside",
+      "text": "Natural hybrid grass was already in place, so no turf conversion was needed, and the open-air bowl sits right on the Lake Ontario waterfront."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 12",
+      "round": "Group B",
+      "fixture": "Canada vs UEFA Play-off Winner",
+      "ko": "3:00 PM ET"
+    },
+    {
+      "date": "Jun 17",
+      "round": "Group L",
+      "fixture": "Ghana vs Panama",
+      "ko": "7:00 PM ET"
+    },
+    {
+      "date": "Jun 20",
+      "round": "Group E",
+      "fixture": "Germany vs Cote d'Ivoire",
+      "ko": "4:00 PM ET"
+    },
+    {
+      "date": "Jun 23",
+      "round": "Group L",
+      "fixture": "Panama vs Croatia",
+      "ko": "7:00 PM ET"
+    },
+    {
+      "date": "Jun 26",
+      "round": "Group I",
+      "fixture": "Senegal vs Iraq",
+      "ko": "3:00 PM ET"
+    },
+    {
+      "date": "Jul 2",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "7:00 PM ET"
+    }
+  ],
+  "gettingThere": "Skip the car and take the train. From Union Station, the GO Lakeshore West line reaches Exhibition GO in about 7-8 minutes, a 2-5 minute walk from the gates and the single fastest matchday option.",
+  "transit": [
+    "GO Transit Lakeshore West: Union Station to Exhibition GO in ~7-8 min, then a short walk to the stadium.",
+    "TTC streetcars 509 Harbourfront (scenic via Queens Quay) and 511 Bathurst both terminate at Exhibition Loop next door; fare ~C$3.35.",
+    "From Pearson (YYZ), ride the UP Express to Union in ~25 min, then GO west one stop to Exhibition.",
+    "Driving is the worst option: limited parking runs C$40-80 on event days with road closures and heavy congestion."
+  ],
+  "matchday": "The stadium sits inside Exhibition Place on the waterfront, with young, walkable Liberty Village right next door. The party hub is FIFA's Fan Festival at Fort York and The Bentway (June 11-July 19), a short walk east, showing all 104 matches with global food and live music.",
+  "food": [
+    "Brazen Head (Liberty Village): Irish pub, the Toronto FC crowd's favourite, all fans welcome.",
+    "Amigos da Dundas (Little Portugal): bifana, pastel de nata and Super Bock at a TFC supporters' haunt.",
+    "Cafe Diplomatico (Little Italy): 'the Dip' patio on College St for Italian and Latin crowds.",
+    "Real Sports Bar & Grill (Financial District): one of the biggest sports bars in North America."
+  ],
+  "tips": [
+    "Take the GO train from Union over the streetcars on matchday, and load your Presto or tap a card before the post-match crush.",
+    "Arrive 90+ minutes early; WC security perimeters and clear-bag checks add real time, especially for the June 12 opener and July 2 Round of 32.",
+    "For afternoon kickoffs (Jun 12, 20, 26) the open bowl bakes in sun; the covered west grandstand is the prized shaded side.",
+    "The south end is the traditional supporters' and singing section if you want the loudest atmosphere.",
+    "Pack light: only a clear bag fits the policy and there's no stadium bag check, so stash luggage downtown via Stasher or Bounce.",
+    "Make a day of it: combine Exhibition Place, the waterfront trail and Liberty Village patios with the Fort York Fan Festival nearby."
+  ],
+  "weather": "Expect warm, humid mid-June to early-July Toronto days (highs ~24-30C) with lakeside breezes and possible afternoon storms, so pack sunscreen, water and a packable rain layer.",
+  "lore": [
+    "Opened in 2007 as Canada's first soccer-specific stadium, built for the 2007 FIFA U-20 World Cup and home of Toronto FC.",
+    "Toronto FC won the 2017 MLS Cup here, beating Seattle 2-0 a year after losing the 2016 final to them on penalties.",
+    "FIFA bans corporate stadium names at its events, so for the World Cup BMO Field is officially 'Toronto Stadium'.",
+    "Hosted the 2017 NHL Centennial Classic outdoor game before a then-record 40,148, a high-water mark topped by the 2026 expansion test."
+  ]
+}

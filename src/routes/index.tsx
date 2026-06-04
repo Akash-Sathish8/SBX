@@ -1,0 +1,222 @@
+import { useEffect, useState } from 'react'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { SiteNav } from '../components/SiteNav'
+import css from '../pages/index.css?url'
+
+export const Route = createFileRoute('/')({
+  head: () => ({
+    links: [{ rel: 'stylesheet', href: css }],
+    meta: [{ title: 'Snapback Experiences' }],
+  }),
+  component: Home,
+})
+
+// Rotating hero stadium: photo + fan comment + ranking (ported from index.html script).
+// Slide 0 mirrors the original page's hand-set initial markup (quote + bar widths).
+type Det = [string, number, number] // [label, value, width%]
+type Slide = {
+  img: string; av: string; nm: string; mt: string; stars: number; q: string
+  cc: string; cv: string; crit: number; fan: number; det: Det[]
+}
+const slides: Slide[] = [
+  { img: '/img/stadiums/sofi.jpg', av: 'C', nm: 'Casey M.', mt: 'SoFi · USA vs PAR', stars: 5,
+    q: '"Loudest 90 minutes of my life. Get there early, the food court by section 130 is unreal."',
+    cc: 'Los Angeles · USA', cv: 'SoFi Stadium', crit: 84, fan: 90,
+    det: [['Atmosphere', 9, 92], ['Food', 8, 84], ['Parking', 6, 58]] },
+  { img: '/img/stadiums/azteca.jpg', av: 'D', nm: 'Diego M.', mt: 'Azteca · Opening match', stars: 5,
+    q: '"History you can feel. The altitude is no joke — pace yourself."',
+    cc: 'Mexico City · MEX', cv: 'Estadio Azteca', crit: 95, fan: 71,
+    det: [['Atmosphere', 10, 100], ['History', 10, 100], ['Altitude', 4, 40]] },
+  { img: '/img/stadiums/arrowhead.jpg', av: 'J', nm: 'Jordan P.', mt: 'Arrowhead · ARG vs ALG', stars: 4,
+    q: '"Tailgate is the whole event. Lot G fills by 9am — get there early."',
+    cc: 'Kansas City · USA', cv: 'Arrowhead Stadium', crit: 92, fan: 88,
+    det: [['Atmosphere', 10, 100], ['Tailgate', 9, 90], ['Parking', 7, 70]] },
+  { img: '/img/stadiums/metlife.jpg', av: 'L', nm: 'Leo R.', mt: 'MetLife · The Final', stars: 4,
+    q: '"It hosts the final, enough said. Take the train, do not drive."',
+    cc: 'New York · USA', cv: 'MetLife Stadium', crit: 79, fan: 74,
+    det: [['Atmosphere', 7, 70], ['Transit', 6, 60], ['Big stage', 10, 100]] },
+  { img: '/img/stadiums/bcplace.jpg', av: 'P', nm: 'Priya N.', mt: 'BC Place · CAN vs QAT', stars: 4,
+    q: '"Roof open, lakeside walk in. Best night of the whole trip."',
+    cc: 'Vancouver · CAN', cv: 'BC Place', crit: 82, fan: 80,
+    det: [['Atmosphere', 8, 80], ['Food', 7, 70], ['Getting in', 8, 80]] },
+]
+
+type Card = { img: string; tag: string; name: string; sub: string; crit: number; fan: number }
+const MARQUEE: Card[] = [
+  { img: 'sofi', tag: 'Los Angeles · USA', name: 'SoFi Stadium', sub: 'The spaceship', crit: 84, fan: 90 },
+  { img: 'arrowhead', tag: 'Kansas City · USA', name: 'Arrowhead Stadium', sub: 'Loudest in the world', crit: 92, fan: 88 },
+  { img: 'azteca', tag: 'Mexico City · MEX', name: 'Estadio Azteca', sub: 'History at altitude', crit: 95, fan: 71 },
+  { img: 'mercedes', tag: 'Atlanta · USA', name: 'Mercedes-Benz Stadium', sub: 'The halo roof', crit: 90, fan: 79 },
+  { img: 'metlife', tag: 'New York · USA', name: 'MetLife Stadium', sub: 'Hosts the final', crit: 79, fan: 74 },
+  { img: 'bcplace', tag: 'Vancouver · CAN', name: 'BC Place', sub: 'Roof on the water', crit: 82, fan: 80 },
+  { img: 'att', tag: 'Dallas · USA', name: 'AT&T Stadium', sub: 'Jerry World', crit: 88, fan: 85 },
+  { img: 'nrg', tag: 'Houston · USA', name: 'NRG Stadium', sub: 'Retractable in Texas', crit: 80, fan: 76 },
+  { img: 'hardrock', tag: 'Miami · USA', name: 'Hard Rock Stadium', sub: 'Miami nights', crit: 83, fan: 81 },
+  { img: 'linc', tag: 'Philadelphia · USA', name: 'Lincoln Financial Field', sub: 'The Linc', crit: 85, fan: 87 },
+  { img: 'levis', tag: 'San Francisco · USA', name: "Levi's Stadium", sub: 'Silicon Valley bowl', crit: 78, fan: 72 },
+  { img: 'lumen', tag: 'Seattle · USA', name: 'Lumen Field', sub: 'Wall of sound', crit: 88, fan: 85 },
+  { img: 'gillette', tag: 'Boston · USA', name: 'Gillette Stadium', sub: 'New England fortress', crit: 81, fan: 77 },
+  { img: 'bmo', tag: 'Toronto · CAN', name: 'BMO Field', sub: "Toronto's lakeside", crit: 80, fan: 83 },
+  { img: 'akron', tag: 'Guadalajara · MEX', name: 'Estadio Akron', sub: "Guadalajara's jewel", crit: 86, fan: 82 },
+  { img: 'bbva', tag: 'Monterrey · MEX', name: 'Estadio BBVA', sub: 'El Gigante de Acero', crit: 89, fan: 84 },
+]
+
+function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
+  return (
+    <div className="card venue interactive" aria-hidden={hidden ? 'true' : undefined}>
+      <div className="photo" style={{ backgroundImage: `url('/img/stadiums/${c.img}.jpg')` }}><span className="tag">{c.tag}</span></div>
+      <div className="body">
+        <h4>{c.name}</h4>
+        <div className="city">{c.sub}</div>
+        <div className="scores">
+          <div className="score crit"><div className="v">{c.crit}</div><div className="k">Critics</div></div>
+          <div className="score fan"><div className="v">{c.fan}</div><div className="k">Fans</div></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Home() {
+  const [dotI, setDotI] = useState(0)
+  const [contentI, setContentI] = useState(0)
+  const [vis, setVis] = useState(1)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setDotI((prev) => {
+        const next = (prev + 1) % slides.length
+        setVis(0)
+        setTimeout(() => { setContentI(next); setVis(1) }, 470)
+        return next
+      })
+    }, 4000)
+    return () => clearInterval(id)
+  }, [])
+
+  const cur = slides[contentI]
+  const fadeStyle = { transition: 'opacity .45s ease', opacity: vis } as const
+
+  return (
+    <>
+      <SiteNav />
+
+      {/* HERO (concept A: split / share + compare) */}
+      <section className="a-hero">
+        <div className="a-left grid-bg">
+          <div className="reveal" style={{ animationDelay: '.05s' }}>
+            <span className="eyebrow">World Cup 2026 · 16 venues</span>
+            <h1><span className="ln">Build your</span> <span className="hl">matchday</span></h1>
+          </div>
+          <div className="reveal" style={{ animationDelay: '.2s', marginTop: 'auto' }}>
+            <div className="a-cta">
+              <Link to="/guide" className="btn btn-brand btn-xl">Build your match guide</Link>
+              <a href="#experiences" className="btn btn-brand btn-xl">See what Casey did</a>
+              <a href="#ranking" className="btn btn-dark btn-lg">Rank your experience</a>
+            </div>
+          </div>
+        </div>
+        <div className="a-right">
+          <div className="img" style={{ backgroundImage: `url('${cur.img}')`, ...fadeStyle }}></div>
+          <div className="a-dots">
+            {[0, 1, 2, 3, 4].map((k) => <span key={k} className={k === dotI ? 'on' : undefined}></span>)}
+          </div>
+          <div className="a-post fanpost" style={fadeStyle}>
+            <div className="hd"><div className="avatar">{cur.av}</div><div><div className="nm">{cur.nm}</div><div className="mt">{cur.mt}</div></div></div>
+            <div className="stars">{[0, 1, 2, 3, 4].map((k) => <span key={k} className={k < cur.stars ? undefined : 'e'}>★</span>)}</div>
+            <div className="q" style={{ marginTop: '6px' }}>{cur.q}</div>
+            <span className="wasthere">✓ Was there</span>
+          </div>
+          <div className="a-venue on-dark" style={fadeStyle}>
+            <div className="cc">{cur.cc}</div>
+            <div className="cv">{cur.cv}</div>
+            <div className="scorechip">
+              <div className="s crit"><div className="v">{cur.crit}</div><div className="k">Critics</div></div>
+              <div className="s fan"><div className="v">{cur.fan}</div><div className="k">Fans</div></div>
+            </div>
+            {cur.det.map(([label, , w], k) => (
+              <div key={k} className="detrow"><span className="dl">{label}</span><span className="db"><i style={{ width: w + '%' }}></i></span><span className="dv">{cur.det[k][1]}</span></div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BROWSE VENUES (scrollable marquee on the black band) */}
+      <section id="experiences" className="browse-band">
+        <div className="container">
+          <div className="rail-hint"><span className="rail-count">Browse venues</span></div>
+        </div>
+        <div className="marquee">
+          <div className="marquee-track">
+            {MARQUEE.map((c, i) => <MarqueeCard key={'a' + i} c={c} />)}
+            {MARQUEE.map((c, i) => <MarqueeCard key={'b' + i} c={c} hidden />)}
+          </div>
+        </div>
+      </section>
+
+      {/* KNOW BEFORE YOU GO */}
+      <section id="rankings" className="sec-light-2 grid-bg">
+        <div className="container">
+          <div className="sec-head">
+            <span className="eyebrow">The guide</span>
+            <h2>Know before you go</h2>
+            <p>Fan zones, how to get there, supporter marches and the details that matter — for all 16 World Cup venues.</p>
+          </div>
+          <div className="kbyg-grid">
+            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">★</div><div className="kt">Fan zones</div><div className="kd">Where to gather and watch in every host city.</div></a>
+            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">▦</div><div className="kt">Getting there</div><div className="kd">Transit, parking and the last mile to each stadium.</div></a>
+            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">⚑</div><div className="kt">Supporter marches</div><div className="kd">When and where each nation walks in together.</div></a>
+            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">✓</div><div className="kt">Stadium tips</div><div className="kd">Bag rules, food, altitude and heat — what to expect.</div></a>
+          </div>
+          <a href="/wc26-fan-intel.html" className="kbyg-more">Open the full guide <span className="kb-arrow">→</span></a>
+        </div>
+      </section>
+
+      {/* MAKE YOUR OWN RANKING */}
+      <section id="ranking" className="sec-light grid-bg">
+        <div className="container">
+          <div className="sec-head">
+            <span className="eyebrow">Your call</span>
+            <h2>Make your own ranking</h2>
+            <p>Stack the stadiums your way — atmosphere, food, the whole trip. Build your top five and settle it with your crew.</p>
+          </div>
+          <div className="rank-builder">
+            <div className="rrow"><span className="rnum">1</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/sofi.jpg')" }}></div><div className="rname">SoFi Stadium<span>Los Angeles · USA</span></div><span className="rhandle">⋮⋮</span></div>
+            <div className="rrow"><span className="rnum">2</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/azteca.jpg')" }}></div><div className="rname">Estadio Azteca<span>Mexico City · MEX</span></div><span className="rhandle">⋮⋮</span></div>
+            <div className="rrow"><span className="rnum">3</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/arrowhead.jpg')" }}></div><div className="rname">Arrowhead Stadium<span>Kansas City · USA</span></div><span className="rhandle">⋮⋮</span></div>
+            <div className="rrow empty"><span className="rnum">4</span><div className="rname">+ Add a venue</div></div>
+            <div className="rrow empty"><span className="rnum">5</span><div className="rname">+ Add a venue</div></div>
+          </div>
+          <a href="#" className="btn btn-brand btn-lg">Build your ranking</a>
+        </div>
+      </section>
+
+      {/* JOIN / NEWSLETTER */}
+      <section id="join" className="sec-dark grid-bg">
+        <div className="container">
+          <div className="sec-head" style={{ marginBottom: '8px' }}>
+            <span className="eyebrow">Join the crowd</span>
+            <h2>Your take counts.</h2>
+            <p>Rate venues, settle debates, and climb the fan board. Free, and very loud.</p>
+          </div>
+          <form className="news" onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="you@email.com" aria-label="Email" />
+            <button className="btn btn-brand btn-lg" type="submit">Sign up</button>
+          </form>
+        </div>
+      </section>
+
+      <footer>
+        <div className="container">
+          <div className="logo"><img className="logo-img" src="/img/logo.png" alt="Snapback Sports" />SNAPBACK<span className="wc">WC 2026</span></div>
+          <div className="fnav">
+            <a href="#experiences">Experiences</a>
+            <a href="#rankings">Guide</a>
+            <a href="#join">Join</a>
+          </div>
+          <div className="fine">Snapback Experiences — arcade concept build. Tetris design system, reskinned to the Snapback color theme (yellow #F7DF02 / black #111111 / white).</div>
+        </div>
+      </footer>
+    </>
+  )
+}

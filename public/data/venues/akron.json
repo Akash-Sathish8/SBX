@@ -1,0 +1,111 @@
+{
+  "id": "akron",
+  "name": "Estadio Akron",
+  "fifaName": "Estadio Guadalajara",
+  "nickname": "The Grass Volcano",
+  "city": "Guadalajara",
+  "country": "Mexico",
+  "cc": "MEX",
+  "role": null,
+  "tagline": "Chivas' grass-covered volcano on Guadalajara's edge hosts four group games, including a Mexico home night.",
+  "hero": "img/stadiums/akron.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~48,000"
+    },
+    {
+      "label": "Opened",
+      "value": "2010"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "4 (group stage)"
+    },
+    {
+      "label": "Design",
+      "value": "Grass-volcano roof"
+    },
+    {
+      "label": "Home Club",
+      "value": "Chivas Guadalajara"
+    },
+    {
+      "label": "Altitude",
+      "value": "~5,100 ft"
+    }
+  ],
+  "why": [
+    {
+      "title": "The Grass Volcano",
+      "text": "The bowl rises out of the earth wrapped in a vast grass-covered hill, with a floating elliptical 'cloud' roof hovering above. It's a volcano-and-cloud motif, not a stadium plopped on a lot."
+    },
+    {
+      "title": "Chivas Fortress",
+      "text": "Home of Club Deportivo Guadalajara, one of Mexico's two biggest clubs and the one that fields only Mexican-born players. The passion here is the real thing."
+    },
+    {
+      "title": "Mexico Plays Here",
+      "text": "One of the four group games is a home-nation Mexico match, turning the whole metro area into a sea of green, white, and red."
+    },
+    {
+      "title": "Tequila & Mariachi Capital",
+      "text": "Guadalajara invented mariachi, birria, and tortas ahogadas, and the town of Tequila is a day trip away. The host city is half the experience."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Thu Jun 11",
+      "round": "Group Stage",
+      "fixture": "Korea Republic vs Czechia",
+      "ko": "~8:00 PM"
+    },
+    {
+      "date": "Thu Jun 18",
+      "round": "Group Stage",
+      "fixture": "Mexico vs Korea Republic",
+      "ko": "~7:00 PM"
+    },
+    {
+      "date": "Tue Jun 23",
+      "round": "Group Stage",
+      "fixture": "Colombia vs DR Congo",
+      "ko": "~8:00 PM"
+    },
+    {
+      "date": "Fri Jun 26",
+      "round": "Group Stage",
+      "fixture": "Uruguay vs Spain",
+      "ko": "~6:00 PM"
+    }
+  ],
+  "gettingThere": "The stadium sits on the northwest fringe in Zapopan, far from the center, and on matchdays the entire perimeter is closed to private cars with no public parking. Plan your ride before you leave.",
+  "transit": [
+    "Official 'Ride al Estadio' shuttle: ~500 MXN ($25) per person, from 10 hubs (Chapultepec, Auditorio Telmex, Zona Galerias and more), departing ~4 hours before kickoff",
+    "Mi Macro Periferico BRT to 'Estadio Chivas' station, then about a 1 km walk in",
+    "Uber/DiDi drop you at the edge of the restricted zone with a final walk on foot",
+    "Shuttles end at the 'ultima milla,' an ~800 m walk through a food and culture corridor"
+  ],
+  "matchday": "Arrive early: security screening plus the ~800 m última-milla walk eat up time, and there's a lively food corridor on the approach. Lower exposed rows can get wet in a storm, so gear up.",
+  "food": [
+    "Birria, Jalisco's gift to the world: goat or lamb slow-cooked in chile adobo",
+    "Tortas ahogadas, carnitas on crusty birote bread 'drowned' in fiery chile de árbol sauce, uniquely Guadalajaran",
+    "Cantaritos, the local pour of tequila, citrus, and mineral water served in a clay pot",
+    "Hit Mercado San Juan de Dios or El Parián in Tlaquepaque for the full spread with mariachi"
+  ],
+  "tips": [
+    "Take the official shuttle or BRT, never a private car, since the stadium perimeter is sealed to vehicles",
+    "Pack a packable poncho, not an umbrella (banned), for the rainy-season afternoon storms",
+    "After the final whistle, walk a few blocks out before booking a rideshare to dodge surge pricing",
+    "Bring cash in pesos for street food and small vendors, and use bank ATMs only",
+    "Hydrate for the moderate altitude (~1,560 m) and heat, and pace the tequila accordingly",
+    "FIFA clear-bag rules apply: only transparent bags up to 30x15x30 cm, no backpacks"
+  ],
+  "weather": "Hot, humid June-July highs around 32-33°C with brief but intense afternoon thunderstorms, so pack a poncho, quick-dry layers, and sunscreen.",
+  "lore": [
+    "Opened in 2010 with Guadalajara beating Manchester United 3-2; Chicharito Hernández scored the venue's first-ever goal",
+    "Designed by French architect Jean-Marie Massaud with Populous, conceived as a 'volcano covered in vegetation' blending into the Jalisco landscape",
+    "This is Guadalajara's first World Cup venue; the famous 1970 and 1986 matches were at the older Estadio Jalisco, not here",
+    "Hosted the 2011 Pan American Games ceremonies and the 2011 FIFA U-17 World Cup that Mexico won on home soil"
+  ]
+}

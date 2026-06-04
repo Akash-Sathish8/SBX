@@ -1,0 +1,129 @@
+{
+  "id": "hardrock",
+  "name": "Hard Rock Stadium",
+  "fifaName": "Miami Stadium",
+  "nickname": "The Rock",
+  "city": "Miami",
+  "country": "USA",
+  "cc": "USA",
+  "role": "Third place",
+  "tagline": "Miami's shade-canopy fortress hosts the Bronze Final, the only knockout-tier showdown in the southeastern US.",
+  "hero": "img/stadiums/hardrock.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~65,000 (WC config)"
+    },
+    {
+      "label": "Opened",
+      "value": "1987 (renovated 2016)"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "7 (incl. Bronze Final)"
+    },
+    {
+      "label": "Shade Canopy",
+      "value": "~92% of seats covered"
+    },
+    {
+      "label": "June-July Heat",
+      "value": "~90F, ~75% humidity"
+    },
+    {
+      "label": "Also Hosts",
+      "value": "Miami Open, F1, Dolphins"
+    }
+  ],
+  "why": [
+    {
+      "title": "Hosts the Bronze Final",
+      "text": "Miami stages the July 18 third-place play-off, the day before the Final. It's the only knockout-final-tier match in the southeastern US."
+    },
+    {
+      "title": "The Shade Canopy",
+      "text": "A 14-acre, 17,000-ton steel roof shades about 92% of the seats while leaving the pitch open to the sky. In a Miami summer, that canopy is your best friend."
+    },
+    {
+      "title": "Latin Football Capital",
+      "text": "Huge Brazilian, Colombian, Argentine and Cuban communities make this the most Latin-flavored US host city. Expect electric, partisan, full-volume crowds."
+    },
+    {
+      "title": "Stacked Group Draws",
+      "text": "Brazil, Portugal, Colombia and Uruguay all roll through in the group stage, so the marquee names show up early and often."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 15",
+      "round": "Group",
+      "fixture": "Saudi Arabia vs Uruguay",
+      "ko": "6:00 PM ET"
+    },
+    {
+      "date": "Jun 21",
+      "round": "Group",
+      "fixture": "Uruguay vs Cape Verde",
+      "ko": "6:00 PM ET"
+    },
+    {
+      "date": "Jun 24",
+      "round": "Group",
+      "fixture": "Scotland vs Brazil",
+      "ko": "6:00 PM ET"
+    },
+    {
+      "date": "Jun 27",
+      "round": "Group",
+      "fixture": "Colombia vs Portugal",
+      "ko": "7:30 PM ET"
+    },
+    {
+      "date": "Jul 3",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jul 11",
+      "round": "Quarterfinal",
+      "fixture": "TBD",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jul 18",
+      "round": "Third Place Play-off",
+      "fixture": "TBD",
+      "ko": "TBD"
+    }
+  ],
+  "gettingThere": "The stadium sits in Miami Gardens, about 15 miles north of Downtown amid highways and parking lots, with no rail line to the door. The smart move is Brightline to Aventura, then the free shuttle.",
+  "transit": [
+    "Brightline + free 'Hard Rock Stadium Connect' shuttle from Aventura Station is the least stressful route; shuttles leave about 10 min after each train.",
+    "From South Beach there's no direct rail: bus or Metromover to a Brightline station, then train to Aventura, ~60-90 min door-to-door.",
+    "Driving is ~19 min from Downtown and ~24 min from MIA airport; stadium lots sell out, so buy a Park & Ride pass instead.",
+    "Rideshare has designated lots and steep match-night surge; Uber Shuttle offers fixed-fare seats bookable up to 7 days ahead."
+  ],
+  "matchday": "There's nothing walkable around the stadium, so the scene lives downtown: FIFA's free Fan Festival at Bayfront Park runs ~13 days with a 10,000-seat amphitheater and giant screens. Fans pre-game in Wynwood, Brickell and Little Havana, then funnel north to the venue.",
+  "food": [
+    "Little Havana (Calle Ocho) is the cultural heart: Cuban sandwiches, ropa vieja, croquetas and cafe cubano.",
+    "Cafe La Trova in Little Havana, a World's-50-Best-ranked bar, plus Ball & Chain for live salsa.",
+    "Wynwood for casual watch parties: Cerveceria La Tropical (Inter Miami's brewery), Beaker & Gray, Spanglish.",
+    "Colombian and Venezuelan arepas and Argentine steak round out Miami's Latin food scene."
+  ],
+  "tips": [
+    "Arrive very early, 2.5-3 hours before kickoff. After the 2024 Copa final gate breach here, expect a wider, slower outer security ring than at NFL games.",
+    "Sit under the canopy (nearly all seats are): lower-bowl sideline 100-level keeps you driest and coolest, and avoid front rows by the open field in storms.",
+    "Beat the heat: evening kickoffs help, but hydrate hard and pre-game in shade; afternoon storms usually roll through then clear.",
+    "Take Brightline to Aventura and the free shuttle to skip parking gridlock, and pre-book your return seat.",
+    "Base in Brickell or Downtown for the best mix of Fan Festival access, Brightline and nightlife; South Beach is fun but a long surge-priced ride.",
+    "Bring no bag or one clear plastic bag (max 12x6x12) to clear security fastest."
+  ],
+  "weather": "Hot, humid and stormy June-July with highs near 90F and near-daily brief afternoon thunderstorms, so pack sunscreen, a hat, a sealed clear water bottle and a compact rain layer.",
+  "lore": [
+    "Hosted six Super Bowls, including LIV in February 2020, plus the Orange Bowl annually and the 2026 CFP national title game.",
+    "El Clasico came to town in 2017: Barcelona edged Real Madrid 3-2 in front of 66,014 fans.",
+    "The 2024 Copa America Final descended into chaos when ticketless fans breached the gates and delayed kickoff 80-plus minutes, the cautionary tale shaping WC security here.",
+    "The campus moonlights as the Miami Open tennis grounds and an F1 Grand Prix circuit laid out through its parking lots since 2022."
+  ]
+}

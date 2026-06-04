@@ -1,0 +1,123 @@
+{
+  "id": "levis",
+  "name": "Levi's Stadium",
+  "fifaName": "San Francisco Bay Area Stadium",
+  "nickname": null,
+  "city": "San Francisco Bay",
+  "country": "USA",
+  "cc": "USA",
+  "role": null,
+  "tagline": "Silicon Valley's high-tech open-air bowl hosts six matches, 45 miles south of San Francisco in sun-baked Santa Clara.",
+  "hero": "img/stadiums/levis.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~70,000 (WC config)"
+    },
+    {
+      "label": "Opened",
+      "value": "2014"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "6 (incl. Round of 32)"
+    },
+    {
+      "label": "Design",
+      "value": "Silicon Valley tech-forward, LEED Gold"
+    },
+    {
+      "label": "Heat Warning",
+      "value": "East side bakes in the sun"
+    },
+    {
+      "label": "Location",
+      "value": "Santa Clara, 45 mi from SF"
+    }
+  ],
+  "why": [
+    {
+      "title": "Stadium of the Future",
+      "text": "Built as the most connected venue in sports, with a 40 Gbps backbone, dense Wi-Fi, and an app that lets you order food to your seat and watch instant replays."
+    },
+    {
+      "title": "Knockout Stakes",
+      "text": "Five group games plus a Round of 32 knockout on July 1 mean real win-or-go-home drama on the schedule."
+    },
+    {
+      "title": "Soccer Pedigree",
+      "text": "Hosted four Copa America Centenario matches in 2016, including Chile's stunning 7-0 demolition of Mexico in front of 70,000-plus."
+    },
+    {
+      "title": "Green Machine",
+      "text": "A 27,000 sq ft living green roof, 1,000-plus solar panels, and recycled water make it the first LEED Gold NFL stadium."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Sat, Jun 13",
+      "round": "Group B",
+      "fixture": "Qatar vs Switzerland",
+      "ko": "12:00 PM"
+    },
+    {
+      "date": "Tue, Jun 16",
+      "round": "Group J",
+      "fixture": "Austria vs Jordan",
+      "ko": "9:00 PM"
+    },
+    {
+      "date": "Fri, Jun 19",
+      "round": "Group D",
+      "fixture": "Playoff Winner vs Paraguay",
+      "ko": "9:00 PM"
+    },
+    {
+      "date": "Mon, Jun 22",
+      "round": "Group J",
+      "fixture": "Jordan vs Algeria",
+      "ko": "8:00 PM"
+    },
+    {
+      "date": "Thu, Jun 25",
+      "round": "Group D",
+      "fixture": "Paraguay vs Australia",
+      "ko": "7:00 PM"
+    },
+    {
+      "date": "Wed, Jul 1",
+      "round": "Round of 32",
+      "fixture": "Group D winner vs 3rd place",
+      "ko": "5:00 PM"
+    }
+  ],
+  "gettingThere": "Despite the name, this stadium is in Santa Clara, 45 miles south of San Francisco deep in Silicon Valley. Fly into San Jose (SJC), just 5 miles away, rather than SFO.",
+  "transit": [
+    "VTA Orange Line light rail drops you at Great America Station on the stadium's north side, the easiest car-free arrival.",
+    "From San Francisco, take Caltrain to Mountain View then transfer to the VTA Orange Line; budget 1.5 to 2 hours each way.",
+    "Driving is roughly 45 minutes from SF without traffic but far longer on match days; pre-purchase parking.",
+    "Rideshare from SF runs $65-70-plus and 75-plus minutes with heavy match-day surge; from San Jose it's quick and cheap."
+  ],
+  "matchday": "The stadium sits among office parks, tech campuses, and the Great America theme park next door, with no bar or restaurant strip nearby. The real atmosphere lives in downtown San Jose (15 min) or San Francisco (45 mi).",
+  "food": [
+    "In-seat food and merch ordering through the Levi's Stadium app, delivered right to your row.",
+    "California-forward concessions and craft offerings across the modern concourse.",
+    "Refill stations inside for your clear, transparent water bottle (under 24 oz allowed).",
+    "Pre-game eats are best in downtown San Jose's San Pedro Square, screening all 104 matches free."
+  ],
+  "tips": [
+    "Sit on the SHADED WEST side for day games (sideline sections ~132-144 and the 200s mezzanine); avoid the east sideline for the Jun 13 noon and Jul 1 5 PM kickoffs.",
+    "Pack a hat, sunglasses, SPF, and a clear refillable water bottle; the open bowl and reflective east concrete get brutal.",
+    "Take VTA light rail to Great America Station to dodge the nightmare post-match parking exit.",
+    "Don't base your whole trip at the stadium; it's quiet, so stay in downtown San Jose or San Francisco.",
+    "Arrive early; single-screening metal detection plus clear-bag checks and FIFA protocols make lines slow, and there's no re-entry.",
+    "Evening matches (8-9 PM) are the comfortable ones as the marine layer cools things fast after dark."
+  ],
+  "weather": "Hot, dry, and sunny in June-July with highs in the 80s and spikes into the 90s, plus a high UV index; pack sunscreen, a hat, sunglasses, and a refillable water bottle, with a light layer for cool evenings.",
+  "lore": [
+    "Hosted Super Bowl 50 (2016) and Super Bowl LX (2026, Bad Bunny halftime), making it a two-time Super Bowl host just months before the World Cup.",
+    "Home of the San Francisco 49ers since replacing beloved Candlestick Park in 2014.",
+    "An early reputation for shaky turf, including the grass collapsing under a kicker in 2015 and Super Bowl 50 player complaints, since fixed with a hybrid Bermuda field.",
+    "Concert powerhouse: Ed Sheeran drew a record 80,058 fans, and the Grateful Dead's 2015 farewell pulled roughly 151,650 over three nights."
+  ]
+}

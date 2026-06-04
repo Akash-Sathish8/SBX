@@ -1,0 +1,135 @@
+{
+  "id": "mercedes",
+  "name": "Mercedes-Benz Stadium",
+  "fifaName": "Atlanta Stadium",
+  "nickname": "The Benz",
+  "city": "Atlanta",
+  "country": "USA",
+  "cc": "USA",
+  "role": "Semifinal",
+  "tagline": "A climate-controlled cathedral with a camera-shutter roof, hosting eight matches that climax in a July 15 World Cup semifinal.",
+  "hero": "img/stadiums/mercedes.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~75,000"
+    },
+    {
+      "label": "Opened",
+      "value": "2017"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "8 (incl. semifinal)"
+    },
+    {
+      "label": "Roof",
+      "value": "8-panel pinwheel, opens in ~8 min"
+    },
+    {
+      "label": "Halo Board",
+      "value": "360° ring, 58 ft × 1,100 ft"
+    },
+    {
+      "label": "Concessions",
+      "value": "Fan First: $5 beers, $2 refills"
+    }
+  ],
+  "why": [
+    {
+      "title": "The Pinwheel Roof",
+      "text": "Eight translucent triangular panels slide open like a camera aperture in about eight minutes. Nothing else in sports looks like it."
+    },
+    {
+      "title": "Halo Board",
+      "text": "A 360° video ring wraps the entire roof rim, the size of three NFL jumbotrons. Every seat sees everything."
+    },
+    {
+      "title": "Semifinal Stage",
+      "text": "One of only two semifinals worldwide, feeding the final at MetLife. Atlanta is the last stop before the throne."
+    },
+    {
+      "title": "Soccer City",
+      "text": "Atlanta United routinely packs 70,000-plus and shatters MLS attendance records. This town shows up loud."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 15",
+      "round": "Group H",
+      "fixture": "Spain v Cabo Verde",
+      "ko": "12:00"
+    },
+    {
+      "date": "Jun 18",
+      "round": "Group A",
+      "fixture": "South Africa v TBD",
+      "ko": "12:00"
+    },
+    {
+      "date": "Jun 21",
+      "round": "Group H",
+      "fixture": "Spain v Saudi Arabia",
+      "ko": "12:00"
+    },
+    {
+      "date": "Jun 24",
+      "round": "Group C",
+      "fixture": "Morocco v Haiti",
+      "ko": "18:00"
+    },
+    {
+      "date": "Jun 27",
+      "round": "Group K",
+      "fixture": "Uzbekistan v TBD",
+      "ko": "19:30"
+    },
+    {
+      "date": "Jul 1",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "12:00"
+    },
+    {
+      "date": "Jul 7",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "12:00"
+    },
+    {
+      "date": "Jul 15",
+      "round": "Semifinal",
+      "fixture": "TBD",
+      "ko": "15:00"
+    }
+  ],
+  "gettingThere": "The stadium sits right in downtown Atlanta, a mile from Centennial Olympic Park. Skip the car — MARTA rail drops you at the doorstep.",
+  "transit": [
+    "MARTA rail is the move: GWCC/CNN Center station is essentially at the gates, Vine City is a 10-min walk and dodges traffic",
+    "From Hartsfield-Jackson airport (ATL), take the Red/Gold line to Five Points and transfer to Blue/Green — about $2.50 each way",
+    "Official GWCC parking decks and lots exist but expect surge pricing and gridlock on match days; reserve ahead if you must drive",
+    "Rideshare zones are on Northside Dr and Broad St, but post-match surge waits are brutal — MARTA clears out faster"
+  ],
+  "matchday": "The official FIFA Fan Festival takes over Centennial Olympic Park downtown — free entry, a 40-ft screen, concerts, and food vendors across 18 days from June 11. The Home Depot Backyard, an 11-acre green west of the stadium, is the tailgate hub.",
+  "food": [
+    "Fan First pricing is the real headline: $2 refillable sodas, $5 beers, all whole-dollar with tax baked in — cheapest in U.S. sports",
+    "Best of Atlanta stands bring Chick-fil-A and The Varsity inside at street prices",
+    "670+ points of sale, fully cashless, so lines move fast",
+    "Outside the gates, hit West Midtown and the BeltLine's Ponce City Market for breweries and nightlife"
+  ],
+  "tips": [
+    "Take MARTA, not a car — Vine City or GWCC stations beat parking and rideshare surge every time",
+    "Eat and drink inside; the whole-dollar Fan First menu is unbeatable, no need to overspend outside",
+    "Arrive early for World Cup security and bring a clear bag — the bag policy is strict, or go bag-free",
+    "Aim for the lower-bowl supporters' ends behind the goals for the loudest atmosphere",
+    "The roof stays closed and AC is on, so dress for indoor comfort — but pack a poncho for the muggy walk to transit",
+    "Hit the free Fan Festival at Centennial Park even without a ticket; pre-register and walk over from downtown"
+  ],
+  "weather": "June-July Atlanta is hot and humid with highs near 88°F and pop-up afternoon storms, but the roof stays closed and the stadium is air-conditioned — pack a packable poncho for the walk and dress light.",
+  "lore": [
+    "FIFA strips the Mercedes-Benz name during the tournament, branding it 'Atlanta Stadium' — but the iconic roof star stays put",
+    "Built for ~$1.6 billion and opened in 2017, it was the first LEED Platinum pro sports stadium in the U.S.",
+    "Hosted Super Bowl LIII, two College Football Playoff title games, and the 2024 Copa América opener",
+    "Atlanta United won the 2018 MLS Cup here in front of 73,019 — a championship roar this city won't forget"
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "id": "sofi",
+  "name": "SoFi Stadium",
+  "fifaName": "Los Angeles Stadium",
+  "nickname": "SoFi",
+  "city": "Los Angeles",
+  "country": "USA",
+  "cc": "USA",
+  "role": null,
+  "tagline": "The $5B indoor-outdoor spaceship hosting the USA's World Cup opener under the wildest screen in sports.",
+  "hero": "img/stadiums/sofi.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~70,000 (WC config)"
+    },
+    {
+      "label": "Opened",
+      "value": "2020"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "8 (incl. quarter-final)"
+    },
+    {
+      "label": "Cost",
+      "value": "~$5B+ (priciest ever)"
+    },
+    {
+      "label": "Infinity Screen",
+      "value": "2.2M-lb, 80M-pixel dual 4K board"
+    },
+    {
+      "label": "Roof",
+      "value": "Translucent ETFE canopy, open sides"
+    }
+  ],
+  "why": [
+    {
+      "title": "USA's Opener",
+      "text": "The home side kicks off its World Cup right here on June 12 vs Paraguay. If you want USMNT energy, this is ground zero."
+    },
+    {
+      "title": "The Infinity Screen",
+      "text": "A 2.2-million-pound oval videoboard floats over the field with 80 million pixels and 260 speakers. There's nothing else like it in the world."
+    },
+    {
+      "title": "Most Expensive Ever",
+      "text": "Built for $5B-plus entirely with private money, SoFi was the costliest stadium on earth at opening, over 3x MetLife's price tag."
+    },
+    {
+      "title": "Grass Grown Indoors",
+      "text": "Crews trucked in 74,000 sq ft of real grass and roll LED grow-lights across it 18 hours a day to keep a natural pitch alive under the canopy."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 12",
+      "round": "Group D",
+      "fixture": "USA vs Paraguay",
+      "ko": "6:00 PM PT"
+    },
+    {
+      "date": "Jun 15",
+      "round": "Group G",
+      "fixture": "Iran vs New Zealand",
+      "ko": "6:00 PM PT"
+    },
+    {
+      "date": "Jun 18",
+      "round": "Group B",
+      "fixture": "Switzerland vs Play-Off Winner",
+      "ko": "12:00 PM PT"
+    },
+    {
+      "date": "Jun 21",
+      "round": "Group G",
+      "fixture": "Belgium vs Iran",
+      "ko": "12:00 PM PT"
+    },
+    {
+      "date": "Jun 25",
+      "round": "Group D",
+      "fixture": "Play-Off Winner vs USA",
+      "ko": "7:00 PM PT"
+    },
+    {
+      "date": "Jun 28",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "12:00 PM PT"
+    },
+    {
+      "date": "Jul 2",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "12:00 PM PT"
+    },
+    {
+      "date": "Jul 10",
+      "round": "Quarter-Final",
+      "fixture": "TBD",
+      "ko": "12:00 PM PT"
+    }
+  ],
+  "gettingThere": "SoFi sits just 3 miles from LAX, one of the closest airport-to-stadium hops in US sports. Skip driving and parking entirely: take Metro plus the free game-day shuttle or hop a rideshare outside surge hours.",
+  "transit": [
+    "Metro C Line to Hawthorne/Lennox station, then a ~15-min walk east to the stadium.",
+    "Free game-day shuttles run from the LAX/Metro Transit Center (Bus Bay 8) every 3-5 min, starting 3 hours pre-match.",
+    "Base Metro fare is $1.75 one-way; pre-load a TAP card or use contactless to dodge lines.",
+    "Rideshare from LAX is ~$10-15 normally but surges to $30-50 with 20-40 min waits after a sellout."
+  ],
+  "matchday": "SoFi anchors the brand-new Hollywood Park district, a polished 300-acre development with a 6-acre lake, walkable paseos, the YouTube Theater and Kia Forum steps away. The official FIFA Fan Festival runs at the LA Memorial Coliseum in Exposition Park, with satellite fan zones at Union Station, the Original Farmers Market and beyond.",
+  "food": [
+    "Hollywood Park's retail district and Market Street, Inglewood for bars and bites right by the venue.",
+    "Beach-city pub scene in Manhattan and Hermosa Beach, a short drive west for post-match.",
+    "Koreatown, East LA and Westwood for raucous national-team supporter bars across the metro.",
+    "The stadium is fully cashless, so tap-to-pay for everything inside."
+  ],
+  "tips": [
+    "Skip driving: on-site parking is permit-only, pricey, and gridlocked after the whistle. Take Metro plus the free shuttle.",
+    "Arrive 2-3 hours early. FIFA security, clear-bag screening, and a brand-new transit crowd mean long lines.",
+    "Midday 12 PM kickoffs are hottest. The canopy shades most of the bowl but lower-bowl corners catch full sun.",
+    "Best value: upper-bowl sideline (Level 5) for the full Infinity Screen view and ocean breeze.",
+    "Corner seats were removed to widen the pitch, so end sections differ from the NFL map. Check the WC seating chart before buying.",
+    "Bring an empty reusable bottle to fill, plus a hat and sunscreen. Misting fans deploy above 80F."
+  ],
+  "weather": "Warm, dry, and reliably sunny with June highs of 75-82F and July 78-85F, often a cool morning marine layer first; pack sunscreen, a hat, sunglasses, and light layers.",
+  "lore": [
+    "Built on the old Hollywood Park Racetrack, SoFi helped pull near-bankrupt Inglewood back from the brink.",
+    "Hosted Super Bowl LVI in 2022 (Rams beat the Bengals 23-20 at home) and returns for Super Bowl LXI in 2027.",
+    "WrestleMania 39 drew 161,892 fans across two nights, then the highest-grossing WWE event ever.",
+    "Up next: the 2028 Olympics opening and closing ceremonies plus swimming in a record temporary 38,000-seat pool."
+  ]
+}

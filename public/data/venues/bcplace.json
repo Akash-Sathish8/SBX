@@ -1,0 +1,129 @@
+{
+  "id": "bcplace",
+  "name": "BC Place",
+  "fifaName": "Vancouver Stadium",
+  "nickname": null,
+  "city": "Vancouver",
+  "country": "Canada",
+  "cc": "CAN",
+  "role": null,
+  "tagline": "Canada's busiest World Cup venue, where the home side fights for a knockout spot under a downtown retractable roof.",
+  "hero": "img/stadiums/bcplace.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~54,000 (WC config)"
+    },
+    {
+      "label": "Opened",
+      "value": "1983"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "7 (incl. Round of 16)"
+    },
+    {
+      "label": "Roof",
+      "value": "World's largest cable-supported retractable"
+    },
+    {
+      "label": "Location",
+      "value": "Downtown, on False Creek"
+    },
+    {
+      "label": "SkyTrain",
+      "value": "Stadium-Chinatown, 5-min walk"
+    }
+  ],
+  "why": [
+    {
+      "title": "Canada's Home Base",
+      "text": "Both of Canada's decisive group games are here, vs Qatar and vs Switzerland. This is where the host nation lives in the group stage."
+    },
+    {
+      "title": "Busiest in Canada",
+      "text": "Seven matches, more than any other Canadian venue, and the only one going beyond the Round of 32 with two knockout games."
+    },
+    {
+      "title": "The Retractable Roof",
+      "text": "Billed as the world's largest cable-supported retractable roof, it tucks into a central pod above the videoboard and opens or closes in about 20 minutes."
+    },
+    {
+      "title": "Grass Grown for FIFA",
+      "text": "Crews ripped out the artificial turf and laid a hybrid natural pitch in spring 2026, grown in the Fraser Valley and kept alive with six grow-light rigs."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 13",
+      "round": "Group D",
+      "fixture": "Australia vs Play-Off Winner",
+      "ko": "9:00 PM PT"
+    },
+    {
+      "date": "Jun 18",
+      "round": "Group B",
+      "fixture": "Canada vs Qatar",
+      "ko": "3:00 PM PT"
+    },
+    {
+      "date": "Jun 21",
+      "round": "Group G",
+      "fixture": "New Zealand vs Egypt",
+      "ko": "6:00 PM PT"
+    },
+    {
+      "date": "Jun 24",
+      "round": "Group B",
+      "fixture": "Switzerland vs Canada",
+      "ko": "12:00 PM PT"
+    },
+    {
+      "date": "Jun 26",
+      "round": "Group G",
+      "fixture": "New Zealand vs Belgium",
+      "ko": "8:00 PM PT"
+    },
+    {
+      "date": "Jul 2",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "8:00 PM PT"
+    },
+    {
+      "date": "Jul 7",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "1:00 PM PT"
+    }
+  ],
+  "gettingThere": "BC Place sits right in downtown Vancouver, so most of the core is a 10-20 minute walk away. From YVR airport, ride the Canada Line SkyTrain to Waterfront, then one Expo Line stop to Stadium-Chinatown, about 30-35 minutes total for roughly CA$10.",
+  "transit": [
+    "Expo Line to Stadium-Chinatown station is the closest, a 5-minute walk; exit to Beatty Street for the main gates.",
+    "Alternate route: Canada Line to Yaletown-Roundhouse, then a 10-minute walk northeast through Yaletown.",
+    "Driving and parking are strongly discouraged on match days; use a regional Park & Ride and finish by SkyTrain.",
+    "Tap a Compass Card or contactless to skip ticket lines; budget about CA$10 round-trip from the airport."
+  ],
+  "matchday": "The stadium hugs the north shore of False Creek beside Yaletown, steps from Rogers Arena and the adjacent Parq Vancouver casino-resort. The official FIFA Fan Festival runs free at Hastings Park (PNE grounds) from June 11 to July 19, showing 70-plus matches on big screens.",
+  "food": [
+    "Yaletown next door for craft breweries, cocktail bars, and patios within a short walk.",
+    "Gastown's cobblestone streets and lively bars, plus nearby Chinatown for late eats.",
+    "Parq Vancouver beside the stadium has a 50-foot sportsbook screen and restaurants like The Victor.",
+    "Vancouver runs strong on fresh seafood, sushi, and Asian cuisine across downtown."
+  ],
+  "tips": [
+    "Get there by SkyTrain, not car; Stadium-Chinatown is a 5-minute walk and parking gridlocks after the whistle.",
+    "Beat the post-match crush by walking 10-15 minutes to Yaletown-Roundhouse, a far less mobbed station.",
+    "Pack a light jacket for evening kickoffs, which cool to 11-13C, and sunscreen for day games and the Fan Festival.",
+    "The roof handles any rain, so never let a forecast deter you from attending.",
+    "Lower bowl behind the goals carries the loudest Whitecaps Southsiders energy; west-side mid-tier seats face the videoboard and Northern Lights facade.",
+    "Clear-bag policy is in effect: bags must be clear plastic, max 12 by 6 by 12 inches."
+  ],
+  "weather": "June and July in Vancouver are mild and dry with highs around 18-21C, long daylight, and a UV index up to 8; pack sunscreen and a light layer for cool evenings.",
+  "lore": [
+    "Opened in 1983 for Expo 86 as the world's largest air-supported domed stadium, before a 2011 overhaul swapped the inflatable roof for the retractable one.",
+    "Hosted the 2015 FIFA Women's World Cup Final, where the USA beat Japan 5-2 on a Carli Lloyd hat-trick.",
+    "Staged the 2010 Winter Olympics opening and closing ceremonies and has hosted the CFL's Grey Cup 10 times.",
+    "Its all-time attendance record is 65,061 for an Ed Sheeran concert in September 2023; the venue's LED Northern Lights facade animates the night skyline."
+  ]
+}

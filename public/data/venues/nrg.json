@@ -1,0 +1,129 @@
+{
+  "id": "nrg",
+  "name": "NRG Stadium",
+  "fifaName": "Houston Stadium",
+  "nickname": null,
+  "city": "Houston",
+  "country": "USA",
+  "cc": "USA",
+  "role": null,
+  "tagline": "Seven matches in the NFL's first retractable-roof stadium, where the roof closes and AC laughs off the Houston heat.",
+  "hero": "img/stadiums/nrg.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~72,000"
+    },
+    {
+      "label": "Opened",
+      "value": "2002"
+    },
+    {
+      "label": "WC26 Matches",
+      "value": "7"
+    },
+    {
+      "label": "Roof",
+      "value": "First NFL retractable roof, AC'd"
+    },
+    {
+      "label": "Roof Speed",
+      "value": "Opens or closes in ~7 min"
+    },
+    {
+      "label": "Cost",
+      "value": "$352 million"
+    }
+  ],
+  "why": [
+    {
+      "title": "Beat The Heat",
+      "text": "One of the few WC26 venues that can close the roof and air-condition the bowl, guaranteeing comfortable play in the worst of Gulf Coast summer."
+    },
+    {
+      "title": "Busy Slate",
+      "text": "Seven matches including a Round of 32 and a Round of 16, making it one of the busiest US host venues outside the final site."
+    },
+    {
+      "title": "July 4 Showdown",
+      "text": "Hosts a Round of 16 knockout on US Independence Day, a marquee, high-demand date for the city."
+    },
+    {
+      "title": "Indoor-Grown Grass",
+      "text": "Real Kentucky bluegrass trucked in and kept alive under LED grow lights shipped from the Netherlands, since a dome gets no sunlight."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Sun Jun 14",
+      "round": "Group E",
+      "fixture": "Germany vs Curacao",
+      "ko": "12:00 PM CT"
+    },
+    {
+      "date": "Wed Jun 17",
+      "round": "Group K",
+      "fixture": "Portugal vs Playoff Winner",
+      "ko": "12:00 PM CT"
+    },
+    {
+      "date": "Sat Jun 20",
+      "round": "Group F",
+      "fixture": "Netherlands vs Playoff Winner",
+      "ko": "12:00 PM CT"
+    },
+    {
+      "date": "Tue Jun 23",
+      "round": "Group K",
+      "fixture": "Portugal vs Uzbekistan",
+      "ko": "12:00 PM CT"
+    },
+    {
+      "date": "Fri Jun 26",
+      "round": "Group H",
+      "fixture": "Cabo Verde vs Saudi Arabia",
+      "ko": "7:00 PM CT"
+    },
+    {
+      "date": "Mon Jun 29",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "12:00 PM CT"
+    },
+    {
+      "date": "Sat Jul 4",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "12:00 PM CT"
+    }
+  ],
+  "gettingThere": "NRG Stadium sits in NRG Park about 6-7 miles south of Downtown, just below the Texas Medical Center. The smartest play is the METRORail Red Line, which drops you steps from the gates and skips the game-day traffic and parking crush.",
+  "transit": [
+    "METRORail Red Line to the Stadium Park/Astrodome stop, roughly a 20-27 minute ride from Downtown; exit toward Gate 2.",
+    "From IAH airport (~24 miles, 30-50 min by car), rideshare is fastest; transit means the 500 IAH Express bus to Downtown then the Red Line south.",
+    "Driving: on-site NRG Park lots charge a fee and street parking nearby is extremely limited on event days, so reserve ahead.",
+    "Rideshare runs ~$15-25 from Downtown and ~$35-50 from IAH, but expect heavy surge pricing around kickoff and full-time."
+  ],
+  "matchday": "The immediate NRG area is mostly parking lots, so do your pregame in Rice Village or the Medical Center nearby. The free official FIFA Fan Festival is in East Downtown (EaDo) by Shell Energy Stadium, open daily June 11 to July 19 with a match-ball projection dome, a 7v7 turf field and a 45-ft video board.",
+  "food": [
+    "El Tiempo Cantina: the de facto Tex-Mex pregame spot with potent margaritas, near Kirby and Rice Village.",
+    "Pappas Bar-B-Q: Texas brisket, ribs and sausage smokehouse going since 1967.",
+    "Bellaire Blvd / Chinatown: one of the best Vietnamese scenes in the US for pho, banh mi and Viet-Cajun crawfish.",
+    "Rice Village (~2 mi north): the nearest walkable cluster of bars and restaurants."
+  ],
+  "tips": [
+    "Take the Red Line to Stadium Park/Astrodome and exit toward Gate 2; far easier than parking, but time your return since trains pack hard at full-time.",
+    "Beat the heat at the noon kickoffs: arrive hydrated and trust the roof to be closed with AC on inside.",
+    "Carry an empty clear bottle to refill at fountains; sealed water up to 20 oz is often allowed in.",
+    "Clear-bag policy only (up to 12 x 6 x 12 inches) with no on-site bag storage, so pack light.",
+    "Arrive 60-90 minutes before kickoff; security screening lines are long for 60,000-plus crowds.",
+    "The July 4 Round of 16 means Independence Day crowds and premium demand, so book transport and lodging well ahead."
+  ],
+  "weather": "Houston in June-July is brutally hot and humid with heat indexes around 111-120F, so pack light breathable clothes, sunscreen and a clear water bottle; the bowl itself stays cool with the roof closed.",
+  "lore": [
+    "The first NFL stadium with a retractable roof, splitting at the 50-yard line on two super-trusses each about 675 feet long.",
+    "Hosted Super Bowl LI in 2017, the first Super Bowl decided in overtime, with the Patriots' famous 28-3 comeback over Atlanta.",
+    "Also home to the world's largest livestock show and rodeo each spring and the 2024 CFP National Championship.",
+    "Concert juggernaut: three sold-out Taylor Swift Eras Tour shows in 2023 and a record 80,203 crowd in March 2026."
+  ]
+}

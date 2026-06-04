@@ -1,0 +1,124 @@
+{
+  "id": "lumen",
+  "name": "Lumen Field",
+  "fifaName": "Seattle Stadium",
+  "nickname": "The 12s' House",
+  "city": "Seattle",
+  "country": "USA",
+  "cc": "USA",
+  "role": null,
+  "tagline": "The loudest stadium on Earth meets one of America's deepest soccer cultures, steps from downtown Seattle.",
+  "hero": "img/stadiums/lumen.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~68,740"
+    },
+    {
+      "label": "Opened",
+      "value": "2002"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "6"
+    },
+    {
+      "label": "Loudest crowd",
+      "value": "137.6 dB (Guinness record)"
+    },
+    {
+      "label": "Roof",
+      "value": "Covers ~70% of seats"
+    },
+    {
+      "label": "To downtown",
+      "value": "15-min walk"
+    }
+  ],
+  "why": [
+    {
+      "title": "Engineered Loud",
+      "text": "The horseshoe bowl and partial roof are built to trap and slam crowd noise back onto the pitch. Seattle's Seahawks fans set a 137.6 dB Guinness world record here."
+    },
+    {
+      "title": "Real Soccer City",
+      "text": "The Sounders routinely pack 30,000 to 69,000 fans, among the biggest crowds in North America. This is a venue that already lives and breathes the game."
+    },
+    {
+      "title": "USMNT Home Game",
+      "text": "The USA play their June 19 group match against Australia here, making Seattle a guaranteed host-nation party."
+    },
+    {
+      "title": "Walk To Everything",
+      "text": "Pioneer Square, Pike Place Market, the waterfront and downtown are all a short walk or one quick light-rail stop away."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 15",
+      "round": "Group G",
+      "fixture": "Belgium v Egypt",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jun 19",
+      "round": "Group D",
+      "fixture": "USA v Australia",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jun 24",
+      "round": "Group B",
+      "fixture": "Qatar v Playoff Winner",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jun 26",
+      "round": "Group stage",
+      "fixture": "Egypt v Iran",
+      "ko": "8:00 PM PT"
+    },
+    {
+      "date": "Jul 1",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jul 6",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "TBD"
+    }
+  ],
+  "gettingThere": "Lumen Field sits in SoDo just south of downtown, bordering historic Pioneer Square, and is one of the most transit-friendly venues of the whole tournament. Light rail drops you a one-minute walk from the gates.",
+  "transit": [
+    "Link light rail 1 Line: Stadium Station is a 1-min walk, International District/Chinatown a 5-min walk",
+    "Direct from SEA airport to Stadium Station in ~35-40 min, no transfer",
+    "Washington State Ferries dock at Colman Dock, a ~15-min walk north",
+    "Driving: park-and-ride free at Angle Lake, Tukwila or Northgate, or prepay SoDo lots ~$30-75"
+  ],
+  "matchday": "Arrive early and soak up Pioneer Square, then walk in. Lower-bowl seats away from the roof edge catch the most trapped noise; aim for the south supporters' end for maximum atmosphere.",
+  "food": [
+    "Pike Place Market: original Starbucks, fish tossing, Dungeness crab and oysters",
+    "F.X. McRory's, Pioneer Square institution since 1977 for whiskey, chowder and oysters",
+    "King Street Bar & Oven, opens 2+ hours pre-game with big family-friendly portions",
+    "Seattle's world-class coffee scene plus salmon and seafood everywhere you look"
+  ],
+  "tips": [
+    "Take Link light rail, not a car. Stadium Station is one minute from the gates and trains pack densely on matchdays.",
+    "Do the March to the Match: join the Emerald City Supporters' parade from Occidental Park ~60-90 min before kickoff. It's the soul of Seattle soccer.",
+    "Sit lower-bowl, away from the roof edge, near the south supporters' end for the loudest atmosphere.",
+    "Eat and drink in Pioneer Square pre-match, then walk in, instead of fighting concession lines.",
+    "For post-match rideshare, walk 3-5 blocks toward downtown before opening Uber or Lyft to dodge the surge, or just hop Link.",
+    "Pack a light jacket for evening kickoffs, which can cool into the 50s even on warm days.",
+    "Clear-bag policy: clear bags up to 12 x 6 x 12 inches or a one-gallon freezer bag only."
+  ],
+  "weather": "Seattle is arguably the best-weather venue of the tournament, dry and mild with July highs around 76F and just a 10% rain chance, so pack a light layer for cool evenings rather than rain gear.",
+  "lore": [
+    "Guinness World Record for loudest crowd roar at 137.6 dB, set in 2013 against the New Orleans Saints.",
+    "Built in 2000-2002 on the footprint of the imploded Kingdome, funded by Microsoft co-founder Paul Allen and Washington voters.",
+    "Home of the Sounders, who won MLS Cups in 2016 and 2019 and became the first MLS side to win the CONCACAF Champions League in 2022.",
+    "Soccer attendance record of 69,314 set in August 2025; also hosted six 2025 FIFA Club World Cup matches."
+  ]
+}

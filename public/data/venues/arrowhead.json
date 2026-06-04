@@ -1,0 +1,123 @@
+{
+  "id": "arrowhead",
+  "name": "Arrowhead Stadium",
+  "fifaName": "Kansas City Stadium",
+  "nickname": "The Loudest Stadium in the World",
+  "city": "Kansas City",
+  "country": "USA",
+  "cc": "USA",
+  "role": null,
+  "tagline": "The loudest stadium on Earth turns its Sea of Red into a World Cup wall of sound.",
+  "hero": "img/stadiums/arrowhead.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~76,000"
+    },
+    {
+      "label": "Opened",
+      "value": "1972"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "6"
+    },
+    {
+      "label": "Loudest Stadium",
+      "value": "142.2 dB Guinness record"
+    },
+    {
+      "label": "Home Team",
+      "value": "Kansas City Chiefs"
+    },
+    {
+      "label": "Tailgating",
+      "value": "Best in American sport"
+    }
+  ],
+  "why": [
+    {
+      "title": "World's Loudest",
+      "text": "Chiefs fans hold the Guinness record for loudest sports crowd at 142.2 decibels, set in 2014 and louder than a jet engine. The steep open bowl funnels every roar straight onto the field."
+    },
+    {
+      "title": "Sea of Red",
+      "text": "A continuous steeply-banked single bowl with near-unobstructed sightlines and a true wall-of-sound effect. Expect a packed atmosphere unlike anything else in the tournament."
+    },
+    {
+      "title": "Tailgate Capital",
+      "text": "Acres of parking fuel KC's legendary tailgating culture, with smoked-meat aromas drifting across the lots hours before kickoff."
+    },
+    {
+      "title": "Marquee Knockouts",
+      "text": "Beyond four group games, Kansas City lands a Round of 32 tie and a quarterfinal, one of the biggest stages of the whole tournament."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Mon Jun 16",
+      "round": "Group J",
+      "fixture": "Argentina vs Algeria",
+      "ko": "TBD"
+    },
+    {
+      "date": "Sat Jun 20",
+      "round": "Group E",
+      "fixture": "Ecuador vs Curacao",
+      "ko": "TBD"
+    },
+    {
+      "date": "Thu Jun 25",
+      "round": "Group F",
+      "fixture": "Tunisia vs Netherlands",
+      "ko": "TBD"
+    },
+    {
+      "date": "Sat Jun 27",
+      "round": "Group J",
+      "fixture": "Algeria vs Austria",
+      "ko": "TBD"
+    },
+    {
+      "date": "Fri Jul 3",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "TBD"
+    },
+    {
+      "date": "Sat Jul 11",
+      "round": "Quarter-final",
+      "fixture": "TBD",
+      "ko": "TBD"
+    }
+  ],
+  "gettingThere": "The stadium sits in the Truman Sports Complex off I-70, about 8-10 miles east of downtown Kansas City, ringed by huge surface parking lots. There's nothing walkable nearby, so plan your ride in advance.",
+  "transit": [
+    "ConnectKC26: the official tournament shuttle network linking the airport, stadium, and Fan Festival, the best bet if you don't have a car",
+    "Rideshare drop-off is at the Missouri Welcome Center between Gates 1 and 2; budget $40-60 each way from downtown with game-day surge",
+    "RideKC 47-Broadway bus reaches Blue Ridge Cutoff near the gates, the cheap option but slow at 55-70 minutes total",
+    "Driving: lots open about 3.5 hours before kickoff, advance general parking runs $40-60"
+  ],
+  "matchday": "Get to the lots three-plus hours early to soak in the tailgate scene, then clear airport-style security and be inside 60-90 minutes before kickoff. Most KC matches are evening kickoffs, so it cools down but stays muggy.",
+  "food": [
+    "Joe's Kansas City: the legendary Z-Man sandwich and pulled pork",
+    "Arthur Bryant's: historic brisket institution",
+    "Gates Bar-B-Q: famous burnt ends",
+    "Q39 and Jack Stack: modern BBQ plus that must-try cheesy corn"
+  ],
+  "tips": [
+    "Bring your own shade and water, the open bowl has zero roof or cover in June-July heat",
+    "Go cashless, the stadium and Fan Festival are card-only",
+    "Follow the FIFA clear-bag rule: one 12x6x12 inch clear bag plus a small clutch, no backpacks and no bag storage on site",
+    "Hit the FIFA Fan Festival at the National WWI Museum or the KC Live! Block in Power & Light for watch parties",
+    "Pack a poncho, not an umbrella (often restricted), and watch the radar for afternoon thunderstorms",
+    "Lower-bowl sideline seats give the best atmosphere; the upper deck has great views but a long, steep climb"
+  ],
+  "weather": "Hot and humid with highs around 86F in June and 91F in July plus pop-up thunderstorms, so pack sunscreen, a hat, water, and a rain poncho.",
+  "lore": [
+    "Twice broke the Guinness loudest-stadium record in 2013-2014, settling at 142.2 decibels vs the Patriots",
+    "Home of the Patrick Mahomes Chiefs dynasty and multiple recent Super Bowl titles",
+    "Open-air bowl that has hosted the Chiefs since 1972, the oldest stadium in the AFC",
+    "Slated for demolition after 2031, making the World Cup one of Arrowhead's final marquee chapters"
+  ]
+}

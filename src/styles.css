@@ -1,0 +1,4 @@
+/* Intentionally near-empty.
+   Each route injects its original page CSS verbatim via a per-route <link>
+   (see src/pages/*.css), so all base/reset/:root rules live there and swap
+   per page — exactly like loading a different static HTML file. */

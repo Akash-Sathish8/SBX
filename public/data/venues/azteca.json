@@ -1,0 +1,117 @@
+{
+  "id": "azteca",
+  "name": "Estadio Azteca",
+  "fifaName": "Estadio Ciudad de México",
+  "nickname": "El Coloso de Santa Úrsula",
+  "city": "Mexico City",
+  "country": "Mexico",
+  "cc": "MEX",
+  "role": "Opening Match",
+  "tagline": "The only stadium on earth to host three World Cups, and the first ever to host three opening matches.",
+  "hero": "img/stadiums/azteca.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~87,500"
+    },
+    {
+      "label": "WC2026 matchday",
+      "value": "~72,766"
+    },
+    {
+      "label": "Opened",
+      "value": "1966"
+    },
+    {
+      "label": "WC2026 matches",
+      "value": "5 matches"
+    },
+    {
+      "label": "Altitude",
+      "value": "7,200 ft"
+    },
+    {
+      "label": "Surface",
+      "value": "GrassMaster hybrid"
+    }
+  ],
+  "why": [
+    {
+      "title": "Cathedral of Football",
+      "text": "The pitch where both Pelé (1970) and Maradona (1986) lifted the World Cup. No other stadium can say that."
+    },
+    {
+      "title": "Three-Cup Record",
+      "text": "1970, 1986, and now 2026. The Azteca is the only venue ever to host matches at three different World Cups."
+    },
+    {
+      "title": "The Altitude Weapon",
+      "text": "At 7,200 feet the air is thin, the ball flies farther, and unacclimatized opponents fade. El Tri is built for it."
+    },
+    {
+      "title": "A Wall of Noise",
+      "text": "Steep two-tier stands sunk into volcanic rock keep even upper-deck fans close and trap a deafening roar."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 11",
+      "round": "Group A · Opening Match",
+      "fixture": "Mexico vs South Africa",
+      "ko": "~1:00 PM"
+    },
+    {
+      "date": "Jun 17",
+      "round": "Group K",
+      "fixture": "Uzbekistan vs Colombia",
+      "ko": "~8:00 PM"
+    },
+    {
+      "date": "Jun 24",
+      "round": "Group A",
+      "fixture": "Czech Republic vs Mexico",
+      "ko": "~7:00 PM"
+    },
+    {
+      "date": "Jun 30",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "~7:00 PM"
+    },
+    {
+      "date": "Jul 5",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "~6:00 PM"
+    }
+  ],
+  "gettingThere": "Do not drive or rideshare to the doors — the roads collapse on matchdays. Ride transit and walk the last stretch in.",
+  "transit": [
+    "Tren Ligero (Xochimilco Light Rail) to the 'Estadio Azteca' stop is the closest, smartest arrival — it feeds straight into the concourses.",
+    "Transfer from Metro Line 2 (blue) at Tasqueña onto the light rail; General Anaya is an alternate walk-in point.",
+    "Seven signed pedestrian corridors open at 7:00 AM, each a 10–30 minute walk to the stands.",
+    "Load a Tarjeta MI (Integrated Mobility Card, ~MXN $15 + balance) at any Metro booth to ride everything."
+  ],
+  "matchday": "The official FIFA Fan Festival takes over the Zócalo (June 11–July 19) — free entry, giant screens, and live artists, expected to be one of the tournament's busiest. Around the ground, the football-mad Santa Úrsula barrio and its street market pile right up to the gates.",
+  "food": [
+    "Santa Úrsula tianguis (San Benjamín St near Gate 3) — taco vendors, garnachas, and birria packed around the stadium.",
+    "Steamed tacos sold from baskets on bicycles outside the gates — cheaper and better than concourse food.",
+    "Carnitas Gudiño (Calle San Alejandro #36) — a local institution for slow-cooked pork.",
+    "Michoacaníssimo — beloved birria spot serving since 1988."
+  ],
+  "tips": [
+    "Take the Tren Ligero, not a car — the light rail stop is the single smartest way in and out.",
+    "Arrive absurdly early for the Opener: the city says be in the stadium zone by 9:00 AM for the ~1 PM kickoff.",
+    "Land 1–2 days early and hydrate hard — 7,350 feet hits harder than the mild weather suggests.",
+    "Pack a packable rain shell; predictable storms roll in after 1 PM.",
+    "Eat outside the gates — the Santa Úrsula tacos, birria, and carnitas beat anything inside on price and flavor.",
+    "Bring a clear bag only, small cash, and your FIFA FAN ID ready; leave the backpack and DSLR at the hotel."
+  ],
+  "weather": "Mild not hot (highs ~24–26°C) but it's rainy season — pack a light rain shell for the near-daily afternoon storms.",
+  "lore": [
+    "1970 World Cup Final: Brazil 4–1 Italy, the coronation of Pelé and arguably the greatest team ever assembled.",
+    "1986 vs England: Maradona scored the 'Hand of God' and the 'Goal of the Century' within four minutes — then lifted the trophy here.",
+    "The only stadium on earth where both Pelé and Maradona won a World Cup.",
+    "A concert legend too — Michael Jackson played five shows in 1993, alongside U2, McCartney, Bad Bunny, and Karol G."
+  ]
+}

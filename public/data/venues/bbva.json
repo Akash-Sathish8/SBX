@@ -1,0 +1,111 @@
+{
+  "id": "bbva",
+  "name": "Estadio BBVA",
+  "fifaName": "Estadio Monterrey",
+  "nickname": "El Gigante de Acero (The Steel Giant)",
+  "city": "Monterrey",
+  "country": "Mexico",
+  "cc": "MEX",
+  "role": null,
+  "tagline": "A steel-clad giant with the jagged Cerro de la Silla mountain framed behind one goal — football's most photogenic backdrop.",
+  "hero": "img/stadiums/bbva.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~53,500"
+    },
+    {
+      "label": "WC2026 matchday",
+      "value": "~50,000"
+    },
+    {
+      "label": "Opened",
+      "value": "2015"
+    },
+    {
+      "label": "WC2026 matches",
+      "value": "4 matches"
+    },
+    {
+      "label": "Home club",
+      "value": "Rayados (CF Monterrey)"
+    },
+    {
+      "label": "Backdrop",
+      "value": "Cerro de la Silla mountain"
+    }
+  ],
+  "why": [
+    {
+      "title": "The Steel Giant",
+      "text": "A metallic exoskeleton and jagged roofline mirror Monterrey's century as Mexico's steel capital — and echo the peaks of the Sierra Madre."
+    },
+    {
+      "title": "The Mountain Shot",
+      "text": "The bowl is built to frame the saddle-shaped Cerro de la Silla behind one goal. Sit on the northwest side for the iconic view."
+    },
+    {
+      "title": "Rayados Fortress",
+      "text": "Home of CF Monterrey since 2015, packed with five-time Liga MX champions' fans and the league's loudest derby energy."
+    },
+    {
+      "title": "Populous Design",
+      "text": "A $200M Populous build, LEED Silver certified, with 'gills' in the facade that channel airflow to cool the stands."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 14",
+      "round": "Group Stage",
+      "fixture": "Sweden vs Tunisia",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jun 20",
+      "round": "Group Stage",
+      "fixture": "Tunisia vs Japan",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jun 24",
+      "round": "Group Stage",
+      "fixture": "South Africa vs South Korea",
+      "ko": "TBD"
+    },
+    {
+      "date": "Jun 29",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "TBD"
+    }
+  ],
+  "gettingThere": "The stadium sits in suburban Guadalupe at the foot of Cerro de la Silla, about 24 km (15 mi) east of MTY airport. Transit is limited, so plan your route early.",
+  "transit": [
+    "Metrorrey Line 1 east to its terminus (Exposición), then walk through Parque La Pastora to the west gates (~12–15 min).",
+    "Uber/DiDi are the reliable default — about 30 min from Centro ($15–20), with surge pricing and pickup zones away from the gates.",
+    "Official match-day shuttles are expected from downtown Macroplaza and the Parque Fundidora Fan Festival.",
+    "Driving? Pre-buy a parking pass (~MXN 400–700) — Avenida Pablo Livas jams badly on match days."
+  ],
+  "matchday": "The FIFA Fan Festival takes over Parque Fundidora (June 11–July 19) — a 142-hectare former steel foundry with preserved blast furnaces, free entry, giant screens and live music, the perfect setting for the Steel Giant city.",
+  "food": [
+    "Cabrito — roast kid goat, Monterrey's regional signature and a non-negotiable.",
+    "Carne asada and arrachera — this is Mexico's grill capital, so eat like it.",
+    "Machaca breakfasts — dried beef with eggs, the local morning fuel.",
+    "Head to Barrio Antiguo's cobblestone bars or upscale San Pedro for the full spread."
+  ],
+  "tips": [
+    "Heat is the #1 issue — Monterrey is among the hottest venues, with afternoons pushing 35–40°C. Hydrate hard and bring electrolytes, a hat and sunscreen.",
+    "Target shaded sections under the canopy — coverage is partial and afternoon sun still hits parts of the bowl.",
+    "Sit on the west/northwest side so Cerro de la Silla frames the action behind the far goal — the money view.",
+    "Allow 2.5+ hours for arrival: congestion, security, and heat-paced walking all add up.",
+    "Take Metro Line 1 plus the La Pastora walk, or Uber/DiDi — avoid driving unless you've pre-bought parking.",
+    "Base yourself in San Pedro (upscale, safest) or Centro (central, Metro, nightlife); use rideshare over street taxis at night."
+  ],
+  "weather": "Brutally hot in June–July — afternoons routinely hit 35–40°C in a heat-trapping mountain valley, so pack a hat, sunscreen, electrolytes and refillable water access.",
+  "lore": [
+    "Opened August 2, 2015 with the Eusébio Cup — Monterrey beat Benfica 3–0, ending Rayados' 63-year stay at Estadio Tecnológico.",
+    "Hosts the fierce Clásico Regiomontano against Tigres UANL, which set the venue's attendance record near 53,000.",
+    "The steel facade and mountain-mirroring roofline are a deliberate tribute to Monterrey's industrial steel-and-brewing heritage.",
+    "A concert giant too — Coldplay, Bad Bunny, Paul McCartney, Shakira, The Weeknd and Karol G have all played here."
+  ]
+}

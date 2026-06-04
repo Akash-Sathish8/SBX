@@ -1,0 +1,135 @@
+{
+  "id": "metlife",
+  "name": "MetLife Stadium",
+  "fifaName": "New York New Jersey Stadium",
+  "nickname": "The Meadowlands",
+  "city": "New York / NJ",
+  "country": "USA",
+  "cc": "USA",
+  "role": "Final",
+  "tagline": "This is where it all ends: the first-ever 48-team World Cup Final lands at the biggest stadium of the tournament.",
+  "hero": "img/stadiums/metlife.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~80,800 (WC config)"
+    },
+    {
+      "label": "Opened",
+      "value": "2010"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "8 (most of any venue)"
+    },
+    {
+      "label": "Roof",
+      "value": "Open-air, no roof"
+    },
+    {
+      "label": "Surface",
+      "value": "Natural grass (turf for WC)"
+    },
+    {
+      "label": "Cost",
+      "value": "~$1.6B"
+    }
+  ],
+  "why": [
+    {
+      "title": "Hosts the Final",
+      "text": "MetLife stages the July 19 World Cup Final, the showpiece match of the entire tournament. The road to the trophy ends right here."
+    },
+    {
+      "title": "Biggest in the Cup",
+      "text": "At ~80,800 seats it's the largest venue at WC2026, and the largest stadium in the NFL. Size is exactly why it landed the final."
+    },
+    {
+      "title": "Turned Turf to Grass",
+      "text": "Crews buried the artificial turf under two feet of sand and stitched in a hybrid Bermudagrass pitch built to survive eight matches in summer heat."
+    },
+    {
+      "title": "Proven Big-Match Stage",
+      "text": "It already hosted the 2016 Copa America Centenario final and the 2025 Club World Cup final. This building knows how to throw a championship."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 13",
+      "round": "Group C",
+      "fixture": "Brazil vs Morocco",
+      "ko": "6:00 PM ET"
+    },
+    {
+      "date": "Jun 16",
+      "round": "Group",
+      "fixture": "France vs Senegal",
+      "ko": "3:00 PM ET"
+    },
+    {
+      "date": "Jun 22",
+      "round": "Group",
+      "fixture": "Norway vs Senegal",
+      "ko": "8:00 PM ET"
+    },
+    {
+      "date": "Jun 25",
+      "round": "Group",
+      "fixture": "Ecuador vs Germany",
+      "ko": "4:00 PM ET"
+    },
+    {
+      "date": "Jun 27",
+      "round": "Group",
+      "fixture": "Panama vs England",
+      "ko": "5:00 PM ET"
+    },
+    {
+      "date": "Jun 30",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "5:00 PM ET"
+    },
+    {
+      "date": "Jul 5",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "4:00 PM ET"
+    },
+    {
+      "date": "Jul 19",
+      "round": "Final",
+      "fixture": "TBD",
+      "ko": "3:00 PM ET"
+    }
+  ],
+  "gettingThere": "Take the NJ Transit train, not a car. From Manhattan, ride from Penn Station to Secaucus Junction, then hop the Meadowlands shuttle that drops you at the stadium's front door in about 10 minutes.",
+  "transit": [
+    "Meadowlands Rail Line runs straight to the stadium for every WC match; transfer at Secaucus Junction (marked 'SEC').",
+    "Penn Station NYC to Secaucus to stadium runs ~45-60 min, ~$12-15 each way.",
+    "Coach USA 351 'Meadowlands Express' bus runs from Port Authority to Lot K, starting ~2.5 hours before kickoff.",
+    "Driving is the backup, not the plan: event parking ~$40-60 and final-day lots already sold out."
+  ],
+  "matchday": "There's no real neighborhood around the stadium, so the party lives across the river: FIFA's official NY/NJ Fan Festival, a converted mini-pitch at Rockefeller Center (Jul 6-19), and a free fan hub at Sports Illustrated Stadium in Harrison. Fans pre-game in NYC, Hoboken and Jersey City bars, then funnel onto the trains.",
+  "food": [
+    "Jones Wood Foundry (Upper East Side): British gastropub and the prime England-supporters spot.",
+    "Smithfield Hall (Chelsea): a soccer-bar institution home to eight European supporters' clubs.",
+    "Football Factory at Legends (Koreatown): three levels of soccer-only chaos for big matches.",
+    "Hudson Hall (Jersey City): a big Eastern-European beerhall that takes reservations, ideal for groups on the NJ side."
+  ],
+  "tips": [
+    "Beat the post-match train crush: either sprint to the platform the instant the whistle blows, or linger 30-45 min to let the first wave clear. The slow middle is the worst.",
+    "Load your return fare BEFORE the match so you're not stuck in a ticket line with 80,000 people.",
+    "Arrive 2-3 hours early for the final: airport-style security on 80k fans and a tighter perimeter make gates brutal.",
+    "Clear-bag policy is strict: clear plastic bag max 12x6x12, a gallon Ziploc, or a tiny clutch. No backpacks.",
+    "For the 3 PM July final, the west-facing upper deck bakes in full sun; aim for east-side or lower-bowl shade if heat-sensitive.",
+    "Base in Hoboken or Jersey City for cheaper rooms and a shorter transit hop than Manhattan."
+  ],
+  "weather": "Expect a hot, humid mid-summer afternoon (June ~77F, July final ~87F) in full open-air sun, so pack sunscreen, a hat, and a sealed clear water bottle under 20 oz.",
+  "lore": [
+    "Copa America Centenario Final 2016: Chile beat Argentina on penalties, the biggest soccer final here before the World Cup.",
+    "Hosted Super Bowl XLVIII (2014), the first cold-weather Super Bowl in the NY/NJ area.",
+    "Staged the 2025 FIFA Club World Cup Final, the venue's full dress rehearsal for the big one.",
+    "A top-tier concert and WrestleMania stage (WrestleMania 29 and 35), built for ~$1.6B as the priciest US stadium ever at completion."
+  ]
+}
