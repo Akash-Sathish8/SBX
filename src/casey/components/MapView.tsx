@@ -47,18 +47,18 @@ function computePadding(): { top: number; bottom: number; left: number; right: n
   const bottomEl = document.querySelector<HTMLElement>('[data-map-overlay="bottom"]');
   const isMobile = window.innerWidth < 640;
   const gap = 16;
-  // No top overlay in the SBX embed (branding/StatsBar removed; controls float
-  // top-right only), so keep top padding small — a large top fallback used to
-  // exceed the canvas height and make fitBounds refuse to frame the stadiums.
   const topFallback = isMobile ? 32 : 24;
-  const bottomFallback = isMobile ? 150 : 170;
-  const top = (topEl?.offsetHeight ?? topFallback) + gap;
+  const bottomFallback = 110;
+  // The top overlay is mostly a transparent gradient (only the one-line hero and
+  // the control column are opaque), so reserve ~70% of its height rather than all
+  // of it — that pulls the map a touch closer to the stadium cluster.
+  const top = Math.round((topEl?.offsetHeight ?? topFallback) * 0.7) + gap;
   const bottom = (bottomEl?.offsetHeight ?? bottomFallback) + gap;
   return {
     top,
     bottom,
-    left: isMobile ? 16 : 30,
-    right: isMobile ? 16 : 30,
+    left: isMobile ? 14 : 22,
+    right: isMobile ? 14 : 22,
   };
 }
 

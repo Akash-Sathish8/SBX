@@ -181,7 +181,7 @@ export default function StatsBar({
           'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0) 100%)',
       }}
     >
-      <div className="flex items-start justify-between gap-2 sm:gap-3">
+      <div className="flex items-stretch justify-between gap-2 sm:gap-3">
         {/* LEFT: single-line hero (always visible) + collapsible stat row + ticker */}
         <div className="min-w-0 flex-1 space-y-2">
           <HeroPanel
@@ -234,12 +234,13 @@ export default function StatsBar({
           </div>
         </div>
 
-        {/* RIGHT: controls stacked vertically so the map keeps its width/height */}
-        <div className="pointer-events-auto flex flex-col items-stretch gap-1.5 flex-shrink-0">
+        {/* RIGHT: controls stacked vertically; flex-1 buttons fill the column so it
+            matches the left column's height (PRE-TRIP bottom lines up with the ticker). */}
+        <div className="pointer-events-auto flex flex-col items-stretch gap-1 flex-shrink-0">
           <button
             type="button"
             onClick={toggleCollapse}
-            className={`flex items-center gap-1.5 border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.18em] transition-colors ${
+            className={`flex items-center gap-1.5 flex-1 min-h-0 border px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] transition-colors ${
               collapsed
                 ? 'border-snap-yellow bg-snap-yellow/10 text-snap-yellow'
                 : 'border-snap-ash bg-snap-black/70 text-snap-mist hover:text-snap-yellow hover:border-snap-yellow'
@@ -254,7 +255,7 @@ export default function StatsBar({
           <button
             type="button"
             onClick={onOpenToday}
-            className={`flex items-center gap-1.5 border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.18em] transition-colors ${
+            className={`flex items-center gap-1.5 flex-1 min-h-0 border px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] transition-colors ${
               todayCount && todayCount > 0
                 ? 'border-snap-yellow bg-snap-yellow/10 text-snap-yellow'
                 : 'border-snap-ash bg-snap-black/70 text-snap-mist hover:text-snap-yellow hover:border-snap-yellow'
@@ -273,7 +274,7 @@ export default function StatsBar({
           <button
             type="button"
             onClick={onOpenFollowing}
-            className={`flex items-center gap-1.5 border px-2.5 py-1.5 font-mono text-[10px] tracking-[0.18em] transition-colors ${
+            className={`flex items-center gap-1.5 flex-1 min-h-0 border px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] transition-colors ${
               followingCount > 0
                 ? 'border-snap-yellow bg-snap-yellow/10 text-snap-yellow'
                 : 'border-snap-ash bg-snap-black/70 text-snap-mist hover:text-snap-yellow hover:border-snap-yellow'
@@ -287,7 +288,7 @@ export default function StatsBar({
           <button
             type="button"
             onClick={onOpenSchedule}
-            className="flex items-center gap-1.5 border border-snap-ash bg-snap-black/70 px-2.5 py-1.5 font-mono text-[10px] tracking-[0.18em] text-snap-mist hover:text-snap-yellow hover:border-snap-yellow transition-colors"
+            className="flex flex-1 min-h-0 items-center gap-1.5 border border-snap-ash bg-snap-black/70 px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] text-snap-mist hover:text-snap-yellow hover:border-snap-yellow transition-colors"
           >
             <svg viewBox="0 0 12 12" className="h-3 w-3 fill-current flex-shrink-0" aria-hidden="true">
               <rect x="1" y="2" width="10" height="9" stroke="currentColor" strokeWidth="1" fill="none" />
@@ -297,7 +298,7 @@ export default function StatsBar({
             </svg>
             TOURNAMENT HUB
           </button>
-          <div className="flex items-center gap-2 border border-snap-ash bg-snap-black/70 px-2.5 py-1.5">
+          <div className="flex flex-1 min-h-0 items-center gap-2 border border-snap-ash bg-snap-black/70 px-2.5 py-1">
             <span
               className={`block h-2 w-2 rounded-full flex-shrink-0 ${
                 connectionLost ? 'bg-live' : indicator.color
