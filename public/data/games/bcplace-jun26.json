@@ -1,0 +1,13 @@
+{
+ "id": "bcplace-jun26", "venue": "bcplace", "venueName": "BC Place", "city": "Vancouver",
+ "date": "Jun 26", "ko": "8:00 PM", "round": "Group G", "home": "New Zealand", "away": "Belgium",
+ "preview": {
+  "summary": "New Zealand close their Group G campaign against a star-studded Belgium side built around its veteran golden-generation spine. Belgium's creativity and pace should dominate possession, while the All Whites dig in for the physical, set-piece battle that suits them.",
+  "homeForm": "New Zealand sit 85th in the world, the group's lowest seed, led by captain and record scorer Chris Wood.",
+  "awayForm": "Belgium arrive ranked 9th under Rudi Garcia, anchored by the experienced trio of De Bruyne, Courtois and Lukaku.",
+  "homeKey": "Chris Wood, Nottingham Forest forward and New Zealand's record scorer.",
+  "awayKey": "Kevin De Bruyne, the creative heartbeat orchestrating Belgium's attack.",
+  "storylines": ["Belgium's golden generation seeks a convincing send-off from the group", "Doku's pace against New Zealand's deep block", "Wood looks to trouble Courtois on the big stage"],
+  "h2h": "The two nations have never met at senior level."
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "id": "mercedes-jun21", "venue": "mercedes", "venueName": "Mercedes-Benz Stadium", "city": "Atlanta",
+ "date": "Jun 21", "ko": "12:00 PM", "round": "Group H", "home": "Spain", "away": "Saudi Arabia",
+ "preview": {
+  "summary": "Top-ranked Spain face Saudi Arabia in a Group H meeting that could shape qualification. Spain's slick possession game meets a Saudi side rebuilding under a late coaching change, hoping to spring the kind of upset they managed against Argentina in 2022.",
+  "homeForm": "Spain top the FIFA rankings as European and Olympic champions, unbeaten across their last five with three wins and two draws.",
+  "awayForm": "Saudi Arabia, ranked around 32nd, qualified by topping their AFC group but arrive with limited recent form and a coaching change months before kickoff.",
+  "homeKey": "Pedri, the metronomic Barcelona midfielder dictating Spain's tempo.",
+  "awayKey": "Salem Al-Dawsari, Al-Hilal winger and the side's main creative spark.",
+  "storylines": ["Saudi Arabia replaced manager Hervé Renard just two months before the tournament", "Spain chase a perfect group-stage start in Atlanta", "Roberto Mancini's earlier project gives way to new leadership for the Green Falcons"],
+  "h2h": "Spain have won all three previous meetings, scoring nine goals, including a World Cup victory."
+ }
+}

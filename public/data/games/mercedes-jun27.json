@@ -1,0 +1,13 @@
+{
+ "id": "mercedes-jun27", "venue": "mercedes", "venueName": "Mercedes-Benz Stadium", "city": "Atlanta",
+ "date": "Jun 27", "ko": "7:30 PM", "round": "Group K", "home": "DR Congo", "away": "Uzbekistan",
+ "preview": {
+  "summary": "Two sides ending long World Cup waits meet in Group K, with DR Congo back after 52 years and Uzbekistan making their tournament debut. Expect the Leopards' Premier League-laced athleticism against Fabio Cannavaro's tactically disciplined Central Asian debutants.",
+  "homeForm": "DR Congo, ranked around 46th, finished second in their CAF group and edged Jamaica via a 100th-minute winner in the inter-confederation playoff.",
+  "awayForm": "Uzbekistan, ranked around 50th, qualified directly from Asia for the first time, finishing behind only Iran in their group.",
+  "homeKey": "Chancel Mbemba, captain and decisive playoff scorer at the back.",
+  "awayKey": "Eldor Shomurodov, the side's biggest star and main goal threat.",
+  "storylines": ["DR Congo return to the World Cup for the first time in 52 years", "Uzbekistan become the first Central Asian nation to reach the finals", "World Cup winner Fabio Cannavaro leads the Uzbek debutants"],
+  "h2h": "The two nations have never met before, making this a first-ever encounter."
+ }
+}

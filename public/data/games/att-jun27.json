@@ -1,0 +1,13 @@
+{
+ "id": "att-jun27", "venue": "att", "venueName": "AT&T Stadium", "city": "Dallas",
+ "date": "Jun 27", "ko": "9:00 PM", "round": "Group J", "home": "Jordan", "away": "Argentina",
+ "preview": {
+  "summary": "World Cup debutants Jordan close Group J against defending champions Argentina in what may be the biggest match in their football history. Jordan will defend deep and counter through their attackers, while Argentina look to top the group in style. A landmark occasion for the Asian side.",
+  "homeForm": "Ranked 63rd, Jordan reached a first-ever World Cup after their best qualifying campaign.",
+  "awayForm": "Ranked 3rd, Argentina qualified comfortably from CONMEBOL as reigning world champions.",
+  "homeKey": "Musa Al-Taamari, captain and the face of Jordanian football.",
+  "awayKey": "Lionel Messi, talisman leading Argentina at a record sixth World Cup.",
+  "storylines": ["Jordan's historic World Cup debut against the champions", "Argentina chasing a first back-to-back title since 1962", "Al-Taamari and Olwan carry Jordan's attacking hopes"],
+  "h2h": "The two nations have no prior competitive meeting at this level."
+ }
+}

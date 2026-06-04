@@ -1,0 +1,13 @@
+{
+ "id": "att-jun25", "venue": "att", "venueName": "AT&T Stadium", "city": "Dallas",
+ "date": "Jun 25", "ko": "6:00 PM", "round": "Group F", "home": "Japan", "away": "Sweden",
+ "preview": {
+  "summary": "A Group F clash between Japan's slick, pressing collective and a Sweden side leaning on elite individual firepower. Japan will look to control tempo and exploit width, while Sweden bank on Isak and Gyokeres to convert chances. Group qualification could hinge on the outcome.",
+  "homeForm": "Ranked 18th, Japan were the first non-host to qualify and dominated the AFC round.",
+  "awayForm": "Around 38th, Sweden survived via the playoffs, beating Ukraine and Poland to qualify.",
+  "homeKey": "Takefusa Kubo, Japan's creative spark and difference-maker.",
+  "awayKey": "Viktor Gyokeres, whose playoff goals dragged Sweden to the finals.",
+  "storylines": ["Japan favored after a flawless qualifying run", "Sweden's dramatic playoff escape after finishing last in their group", "Isak and Gyokeres form one of the tournament's most potent strike pairings"],
+  "h2h": "Meetings between the two are rare, with no World Cup history between them."
+ }
+}

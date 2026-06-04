@@ -1,0 +1,13 @@
+{
+ "id": "bbva-jun20", "venue": "bbva", "venueName": "Estadio BBVA", "city": "Monterrey",
+ "date": "Jun 20", "ko": "10:00 PM", "round": "Group F", "home": "Tunisia", "away": "Japan",
+ "preview": {
+  "summary": "Asia's top-ranked side meets a Tunisia team that conceded zero goals in qualifying, a clash of Japan's slick attacking movement against North African discipline. Both will view this as a pivotal Group F fixture for the knockout race.",
+  "homeForm": "Tunisia qualified unbeaten from CAF Group H without conceding a single goal, sitting 44th in the FIFA rankings.",
+  "awayForm": "Japan cruised through AFC qualifying as Asia's top-ranked nation, holding 19th in the world.",
+  "homeKey": "Aymen Dahmen, the goalkeeper behind Tunisia's record clean-sheet run.",
+  "awayKey": "Takefusa Kubo, Japan's chief creative threat with Mitoma injured.",
+  "storylines": ["Japan must break down a defence that conceded none in qualifying", "Kubo carrying extra load with Mitoma and Minamino ruled out injured", "Wataru Endo anchoring Japan's midfield against Skhiri"],
+  "h2h": "The teams last met at the 2022 Kirin Cup final, where Tunisia stunned Japan 3-0 on Japanese soil."
+ }
+}

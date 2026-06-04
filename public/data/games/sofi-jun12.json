@@ -1,0 +1,48 @@
+{
+ "id": "sofi-jun12",
+ "venue": "sofi",
+ "venueName": "SoFi Stadium",
+ "city": "Los Angeles",
+ "date": "Jun 12",
+ "dateISO": "2026-06-12",
+ "ko": "6:00 PM PT",
+ "round": "Group D",
+ "home": "USA",
+ "away": "Paraguay",
+ "verified": true,
+ "verifyNote": "Confirmed via FIFA, SoFi Stadium, and NBC Sports: the Dec 5 2025 final draw placed USA in Group D, and the USMNT opens the tournament vs Paraguay at SoFi on Jun 12 2026, kickoff 6:00 PM PT.",
+ "hype": {
+  "score": 9.4,
+  "label": "Unmissable",
+  "blurb": "The USMNT's home World Cup opener in front of 70,000 in LA. If you can get in the building, you go. This is the loudest SoFi will ever be.",
+  "factors": [
+   { "k": "Stakes", "v": "Co-host opener, must-win to set up the group" },
+   { "k": "Atmosphere", "v": "Sellout USA home crowd, biggest US soccer night ever" },
+   { "k": "Rivalry/Storyline", "v": "USA's first WC group game on home soil since 1994" },
+   { "k": "Star power", "v": "Pulisic, Weah, Pepi vs Almiron-led Paraguay" }
+  ]
+ },
+ "preview": {
+  "summary": "The United States kicks off its home World Cup against a gritty, defensively stubborn Paraguay side in Group D. As co-hosts under no qualifying pressure, the USMNT has had a long runway to peak for this moment, and a win here all but unlocks the round of 32. Expect a partisan, deafening SoFi crowd willing the hosts forward.",
+  "homeForm": "Tuned up through a string of friendlies with a settled core and home-field momentum.",
+  "awayForm": "Battled through tough CONMEBOL qualifying as a compact, counter-attacking unit.",
+  "homeKey": "Christian Pulisic, the talisman expected to carry the attack",
+  "awayKey": "Miguel Almiron, the pace and creativity on the break",
+  "storylines": [
+   "USMNT's first World Cup group match on home soil since 1994",
+   "Can Pulisic deliver a defining moment in front of a home crowd",
+   "Paraguay's low block vs the pressure of being the favorite at home"
+  ],
+  "h2h": "Historically lopsided in the USA's favor, but the meetings have been infrequent and friendly-heavy.",
+  "prediction": "USA 2-0 Paraguay. SoFi erupts, Pulisic gets his moment, and the host nation opens with a statement. Bring earplugs and a flag."
+ },
+ "tickets": {
+  "from": "$450",
+  "ceiling": "$3,500+",
+  "demand": "High",
+  "sellout": "Effectively sold out at face value; the only realistic path in is resale, which will run well above sticker.",
+  "bestValue": "Upper-level corners (500s) for the price-to-view ratio",
+  "atmosphere": "Behind the goals in the lower bowl and the supporters' end where the American Outlaws cluster",
+  "note": "Prices are estimates based on typical WC opener/host-nation resale; buy through verified resale only and lock in early, since host-opener inventory tends to climb as the date nears."
+ }
+}

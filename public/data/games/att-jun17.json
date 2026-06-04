@@ -1,0 +1,13 @@
+{
+ "id": "att-jun17", "venue": "att", "venueName": "AT&T Stadium", "city": "Dallas",
+ "date": "Jun 17", "ko": "3:00 PM", "round": "Group L", "home": "England", "away": "Croatia",
+ "preview": {
+  "summary": "A Group L heavyweight clash and a rematch of the 2018 World Cup semi-final. Thomas Tuchel's high-pressing England face a vastly experienced Croatia side marshalled by Luka Modric. Tournament pedigree on both sides makes this the pick of the group's openers.",
+  "homeForm": "Ranked 4th, England qualified first of any European side, winning every game without conceding.",
+  "awayForm": "Top 15 and unbeaten in qualifying, Croatia won seven of eight in their best-ever campaign.",
+  "homeKey": "Harry Kane, captain and England's most decisive attacking presence.",
+  "awayKey": "Luka Modric, 40, conducting midfield at a record sixth World Cup.",
+  "storylines": ["Rematch of Croatia's 2018 semi-final win over England", "Tuchel's reshaped England in their tournament debut", "Modric joins Messi and Ronaldo with six World Cups"],
+  "h2h": "England lead recent meetings but Croatia won the most famous one, 2-1 after extra time in the 2018 semi-final."
+ }
+}

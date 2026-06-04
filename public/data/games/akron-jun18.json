@@ -1,0 +1,24 @@
+{
+ "id": "akron-jun18",
+ "venue": "akron",
+ "venueName": "Estadio Akron",
+ "city": "Guadalajara",
+ "date": "Jun 18",
+ "ko": "9:00 PM",
+ "round": "Group A",
+ "home": "Mexico",
+ "away": "Korea Republic",
+ "preview": {
+  "summary": "Co-hosts Mexico face South Korea in Guadalajara in a Group A fixture that could shape qualification. Mexico bring a revitalized attack and home-crowd energy against a Korean side built around technical quality and the experience of Son Heung-min.",
+  "homeForm": "Mexico carry home advantage as co-hosts, with a sharpened attack led by an in-form striking line.",
+  "awayForm": "South Korea qualified unbeaten as the standout Asian side but enter with patchy friendly form.",
+  "homeKey": "Santiago Gimenez, AC Milan's clinical centre-forward leading the line.",
+  "awayKey": "Son Heung-min, Korea's captain and creative focal point.",
+  "storylines": [
+   "Co-hosts Mexico chase points in front of a Guadalajara crowd",
+   "Son Heung-min versus a Mexican defense on home soil",
+   "Rematch of a 2018 World Cup group-stage meeting"
+  ],
+  "h2h": "Mexico beat South Korea 2-1 in the group stage of the 2018 World Cup, Son scoring a late consolation."
+ }
+}

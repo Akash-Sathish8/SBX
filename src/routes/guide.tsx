@@ -26,7 +26,7 @@ function Guide() {
       <section className="block">
         <div className="container">
           <div className="choices">
-            <Link className="choice venue" to="/venues">
+            <Link className="choice venue" to="/build" search={{ mode: 'venue' }}>
               <div className="top mosaic" id="mosaic">
                 {MOSAIC.map((id) => (
                   <div key={id} className="tile" style={{ backgroundImage: `url('/img/stadiums/${id}.jpg')` }}></div>
@@ -35,11 +35,11 @@ function Guide() {
               </div>
               <div className="body">
                 <div className="t">Start with a venue</div>
-                <div className="x">Explore all 16 host stadiums across the USA, Mexico and Canada. Get the full fan guide for each — how to get in, what's around, and the stories in the walls.</div>
-                <span className="go">Browse venues →</span>
+                <div className="x">Pick one of the 16 host stadiums, then choose your match there — the build flow stitches in transit, fan walk, food and weather automatically.</div>
+                <span className="go">Choose a venue →</span>
               </div>
             </Link>
-            <Link className="choice game" to="/games">
+            <Link className="choice game" to="/build" search={{ mode: 'matchup' }}>
               <div className="top collage" id="gtop">
                 <div className="ctile" style={{ backgroundImage: "url('/img/celebration.jpg')", backgroundPosition: 'center 42%' }}></div>
                 <div className="ctile" style={{ backgroundImage: "url('/img/celebration2.jpg')", backgroundPosition: 'center 35%' }}></div>
@@ -47,8 +47,8 @@ function Guide() {
               </div>
               <div className="body">
                 <div className="t">Pick a specific game</div>
-                <div className="x">Browse every World Cup 2026 fixture, live from Ticketmaster. Find your match, the venue and city, and tap straight through to tickets.</div>
-                <span className="go">Browse games →</span>
+                <div className="x">Jump straight to any of the 104 fixtures, in date order, then build a shareable matchday plan for it.</div>
+                <span className="go">Choose a match →</span>
               </div>
             </Link>
           </div>

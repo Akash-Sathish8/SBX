@@ -1,124 +1,422 @@
 {
-  "id": "lumen",
-  "name": "Lumen Field",
-  "fifaName": "Seattle Stadium",
-  "nickname": "The 12s' House",
-  "city": "Seattle",
-  "country": "USA",
-  "cc": "USA",
-  "role": null,
-  "tagline": "The loudest stadium on Earth meets one of America's deepest soccer cultures, steps from downtown Seattle.",
-  "hero": "img/stadiums/lumen.jpg",
-  "stats": [
-    {
-      "label": "Capacity",
-      "value": "~68,740"
-    },
-    {
-      "label": "Opened",
-      "value": "2002"
-    },
-    {
-      "label": "WC2026 Matches",
-      "value": "6"
-    },
-    {
-      "label": "Loudest crowd",
-      "value": "137.6 dB (Guinness record)"
-    },
-    {
-      "label": "Roof",
-      "value": "Covers ~70% of seats"
-    },
-    {
-      "label": "To downtown",
-      "value": "15-min walk"
-    }
-  ],
-  "why": [
-    {
-      "title": "Engineered Loud",
-      "text": "The horseshoe bowl and partial roof are built to trap and slam crowd noise back onto the pitch. Seattle's Seahawks fans set a 137.6 dB Guinness world record here."
-    },
-    {
-      "title": "Real Soccer City",
-      "text": "The Sounders routinely pack 30,000 to 69,000 fans, among the biggest crowds in North America. This is a venue that already lives and breathes the game."
-    },
-    {
-      "title": "USMNT Home Game",
-      "text": "The USA play their June 19 group match against Australia here, making Seattle a guaranteed host-nation party."
-    },
-    {
-      "title": "Walk To Everything",
-      "text": "Pioneer Square, Pike Place Market, the waterfront and downtown are all a short walk or one quick light-rail stop away."
-    }
-  ],
-  "matches": [
-    {
-      "date": "Jun 15",
-      "round": "Group G",
-      "fixture": "Belgium v Egypt",
-      "ko": "TBD"
-    },
-    {
-      "date": "Jun 19",
-      "round": "Group D",
-      "fixture": "USA v Australia",
-      "ko": "TBD"
-    },
-    {
-      "date": "Jun 24",
-      "round": "Group B",
-      "fixture": "Qatar v Playoff Winner",
-      "ko": "TBD"
-    },
-    {
-      "date": "Jun 26",
-      "round": "Group stage",
-      "fixture": "Egypt v Iran",
-      "ko": "8:00 PM PT"
-    },
-    {
-      "date": "Jul 1",
-      "round": "Round of 32",
-      "fixture": "TBD",
-      "ko": "TBD"
-    },
-    {
-      "date": "Jul 6",
-      "round": "Round of 16",
-      "fixture": "TBD",
-      "ko": "TBD"
-    }
-  ],
-  "gettingThere": "Lumen Field sits in SoDo just south of downtown, bordering historic Pioneer Square, and is one of the most transit-friendly venues of the whole tournament. Light rail drops you a one-minute walk from the gates.",
-  "transit": [
-    "Link light rail 1 Line: Stadium Station is a 1-min walk, International District/Chinatown a 5-min walk",
-    "Direct from SEA airport to Stadium Station in ~35-40 min, no transfer",
-    "Washington State Ferries dock at Colman Dock, a ~15-min walk north",
-    "Driving: park-and-ride free at Angle Lake, Tukwila or Northgate, or prepay SoDo lots ~$30-75"
-  ],
-  "matchday": "Arrive early and soak up Pioneer Square, then walk in. Lower-bowl seats away from the roof edge catch the most trapped noise; aim for the south supporters' end for maximum atmosphere.",
+ "id": "lumen",
+ "name": "Lumen Field",
+ "fifaName": "Seattle Stadium",
+ "nickname": "The 12s' House",
+ "city": "Seattle",
+ "country": "USA",
+ "cc": "USA",
+ "role": null,
+ "tagline": "The loudest stadium on Earth meets one of America's deepest soccer cultures, steps from downtown Seattle.",
+ "hero": "img/stadiums/lumen.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~68,740"
+  },
+  {
+   "label": "Opened",
+   "value": "2002"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "6"
+  },
+  {
+   "label": "Loudest crowd",
+   "value": "137.6 dB (Guinness record)"
+  },
+  {
+   "label": "Roof",
+   "value": "Covers ~70% of seats"
+  },
+  {
+   "label": "To downtown",
+   "value": "15-min walk"
+  }
+ ],
+ "why": [
+  {
+   "title": "Engineered Loud",
+   "text": "The horseshoe bowl and partial roof are built to trap and slam crowd noise back onto the pitch. Seattle's Seahawks fans set a 137.6 dB Guinness world record here."
+  },
+  {
+   "title": "Real Soccer City",
+   "text": "The Sounders routinely pack 30,000 to 69,000 fans, among the biggest crowds in North America. This is a venue that already lives and breathes the game."
+  },
+  {
+   "title": "USMNT Home Game",
+   "text": "The USA play their June 19 group match against Australia here, making Seattle a guaranteed host-nation party."
+  },
+  {
+   "title": "Walk To Everything",
+   "text": "Pioneer Square, Pike Place Market, the waterfront and downtown are all a short walk or one quick light-rail stop away."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 15",
+   "round": "Group G",
+   "fixture": "Belgium vs Egypt",
+   "ko": "3:00 PM",
+   "group": "G"
+  },
+  {
+   "date": "Jun 19",
+   "round": "Group D",
+   "fixture": "USA vs Australia",
+   "ko": "12:00 PM",
+   "group": "D"
+  },
+  {
+   "date": "Jun 24",
+   "round": "Group B",
+   "fixture": "Bosnia and Herzegovina vs Qatar",
+   "ko": "12:00 PM",
+   "group": "B"
+  },
+  {
+   "date": "Jun 26",
+   "round": "Group G",
+   "fixture": "Egypt vs IR Iran",
+   "ko": "8:00 PM",
+   "group": "G"
+  },
+  {
+   "date": "Jul 1",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "1:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 6",
+   "round": "Round of 16",
+   "fixture": "TBD",
+   "ko": "2:00 PM",
+   "group": null
+  }
+ ],
+ "around": {
   "food": [
-    "Pike Place Market: original Starbucks, fish tossing, Dungeness crab and oysters",
-    "F.X. McRory's, Pioneer Square institution since 1977 for whiskey, chowder and oysters",
-    "King Street Bar & Oven, opens 2+ hours pre-game with big family-friendly portions",
-    "Seattle's world-class coffee scene plus salmon and seafood everywhere you look"
+   {
+    "name": "Din Tai Fung",
+    "where": "Main concourse",
+    "note": "Soup dumplings as good as the Bellevue original",
+    "why": [
+     "Iconic Seattle-area soup dumplings, in-stadium",
+     "Beats every other concession line"
+    ]
+   },
+   {
+    "name": "Ivar's",
+    "where": "Lower concourse",
+    "note": "Clam chowder, fish and chips, garlic fries",
+    "why": [
+     "Seattle waterfront classic since 1938",
+     "Clam chowder that locals actually order"
+    ]
+   },
+   {
+    "name": "Tutta Bella",
+    "where": "Sections 137 and 107",
+    "note": "Real Neapolitan pizza, far above stadium fare",
+    "why": [
+     "Certified Neapolitan pizza, not stadium slop",
+     "Wood-fired quality at your seat"
+    ]
+   },
+   {
+    "name": "Legion Sports Bar",
+    "where": "Club level",
+    "note": "Sherman and Chancellor concept; loaded game-day plates",
+    "why": [
+     "Built by Seahawks Legion of Boom legends",
+     "Loaded plates with full match views"
+    ]
+   }
   ],
-  "tips": [
-    "Take Link light rail, not a car. Stadium Station is one minute from the gates and trains pack densely on matchdays.",
-    "Do the March to the Match: join the Emerald City Supporters' parade from Occidental Park ~60-90 min before kickoff. It's the soul of Seattle soccer.",
-    "Sit lower-bowl, away from the roof edge, near the south supporters' end for the loudest atmosphere.",
-    "Eat and drink in Pioneer Square pre-match, then walk in, instead of fighting concession lines.",
-    "For post-match rideshare, walk 3-5 blocks toward downtown before opening Uber or Lyft to dodge the surge, or just hop Link.",
-    "Pack a light jacket for evening kickoffs, which can cool into the 50s even on warm days.",
-    "Clear-bag policy: clear bags up to 12 x 6 x 12 inches or a one-gallon freezer bag only."
+  "pre": [
+   {
+    "name": "Seattle Center Fan Celebration (LET'S PLAY SEA '26)",
+    "where": "Seattle Center, ~2.5 mi / Westlake to Stadium Station ~10 min on Link 1 Line",
+    "why": [
+     "Official free FIFA fan zone, 39 days",
+     "Match screenings under the Space Needle"
+    ],
+    "fifa": true
+   },
+   {
+    "name": "F.X. McRory's",
+    "where": "Pioneer Square, 10-min walk",
+    "note": "1977 institution; whiskey, oysters, packed pre-kickoff",
+    "why": [
+     "Pioneer Square institution since 1977",
+     "Whiskey wall and oysters before kickoff"
+    ]
+   },
+   {
+    "name": "Fadó Irish Pub",
+    "where": "Pioneer Square, 8-min walk",
+    "note": "Brick-walled soccer den, big match crowds",
+    "why": [
+     "Brick-walled soccer den, packed match days",
+     "Where supporters sing before walking in"
+    ]
+   },
+   {
+    "name": "Flatstick Pub",
+    "where": "Pioneer Square, 9-min walk",
+    "note": "Mini-golf, local beer, rowdy supporter energy",
+    "why": [
+     "Indoor mini-golf and only WA craft beer",
+     "Rowdy supporter energy before the march"
+    ]
+   },
+   {
+    "name": "King Street Bar & Oven",
+    "where": "SoDo, 4-min walk",
+    "note": "Opens two hours early; giant family portions",
+    "why": [
+     "Opens two hours pre-kickoff",
+     "Closest sit-down spot to the gates"
+    ]
+   }
   ],
-  "weather": "Seattle is arguably the best-weather venue of the tournament, dry and mild with July highs around 76F and just a 10% rain chance, so pack a light layer for cool evenings rather than rain gear.",
-  "lore": [
-    "Guinness World Record for loudest crowd roar at 137.6 dB, set in 2013 against the New Orleans Saints.",
-    "Built in 2000-2002 on the footprint of the imploded Kingdome, funded by Microsoft co-founder Paul Allen and Washington voters.",
-    "Home of the Sounders, who won MLS Cups in 2016 and 2019 and became the first MLS side to win the CONCACAF Champions League in 2022.",
-    "Soccer attendance record of 69,314 set in August 2025; also hosted six 2025 FIFA Club World Cup matches."
+  "post": [
+   {
+    "name": "The Central Saloon",
+    "where": "Pioneer Square, 9-min walk",
+    "note": "Seattle's oldest bar; live music, late nights",
+    "why": [
+     "Seattle's oldest bar, open since 1892",
+     "Live music keeps the night going"
+    ]
+   },
+   {
+    "name": "Good Bar",
+    "where": "Pioneer Square, 10-min walk",
+    "note": "Old bank vault, sharp cocktails, lingering crowd",
+    "why": [
+     "Cocktails poured inside an old bank vault",
+     "Crowd lingers long past final whistle"
+    ]
+   },
+   {
+    "name": "13 Coins",
+    "where": "SoDo, 6-min walk",
+    "note": "Big-screen sports bar, energetic post-whistle scene",
+    "why": [
+     "Big screens for replays and other matches",
+     "Closest SoDo bar to celebrate at"
+    ]
+   },
+   {
+    "name": "Damn the Weather",
+    "where": "Pioneer Square, 9-min walk",
+    "note": "Cocktails and small plates, unwind after final whistle",
+    "why": [
+     "Sharp cocktails and small plates",
+     "Calmer Pioneer Square wind-down"
+    ]
+   }
   ]
+ },
+ "gettingThere": "Lumen Field sits in SoDo just south of downtown, bordering historic Pioneer Square, and is one of the most transit-friendly venues of the whole tournament. Light rail drops you a one-minute walk from the gates.",
+ "transit": [
+  "Link light rail 1 Line: Stadium Station is a 1-min walk, International District/Chinatown a 5-min walk",
+  "Direct from SEA airport to Stadium Station in ~35-40 min, no transfer",
+  "Washington State Ferries dock at Colman Dock, a ~15-min walk north",
+  "Driving: park-and-ride free at Angle Lake, Tukwila or Northgate, or prepay SoDo lots ~$30-75"
+ ],
+ "matchday": "Arrive early and soak up Pioneer Square, then walk in. Lower-bowl seats away from the roof edge catch the most trapped noise; aim for the south supporters' end for maximum atmosphere.",
+ "food": [
+  "Pike Place Market: original Starbucks, fish tossing, Dungeness crab and oysters",
+  "F.X. McRory's, Pioneer Square institution since 1977 for whiskey, chowder and oysters",
+  "King Street Bar & Oven, opens 2+ hours pre-game with big family-friendly portions",
+  "Seattle's world-class coffee scene plus salmon and seafood everywhere you look"
+ ],
+ "tips": [
+  "Take Link light rail, not a car. Stadium Station is one minute from the gates and trains pack densely on matchdays.",
+  "Do the March to the Match: join the Emerald City Supporters' parade from Occidental Park ~60-90 min before kickoff. It's the soul of Seattle soccer.",
+  "Sit lower-bowl, away from the roof edge, near the south supporters' end for the loudest atmosphere.",
+  "Eat and drink in Pioneer Square pre-match, then walk in, instead of fighting concession lines.",
+  "For post-match rideshare, walk 3-5 blocks toward downtown before opening Uber or Lyft to dodge the surge, or just hop Link.",
+  "Pack a light jacket for evening kickoffs, which can cool into the 50s even on warm days.",
+  "Clear-bag policy: clear bags up to 12 x 6 x 12 inches or a one-gallon freezer bag only."
+ ],
+ "weather": "Seattle is arguably the best-weather venue of the tournament, dry and mild with July highs around 76F and just a 10% rain chance, so pack a light layer for cool evenings rather than rain gear.",
+ "lore": [
+  "Guinness World Record for loudest crowd roar at 137.6 dB, set in 2013 against the New Orleans Saints.",
+  "Built in 2000-2002 on the footprint of the imploded Kingdome, funded by Microsoft co-founder Paul Allen and Washington voters.",
+  "Home of the Sounders, who won MLS Cups in 2016 and 2019 and became the first MLS side to win the CONCACAF Champions League in 2022.",
+  "Soccer attendance record of 69,314 set in August 2025; also hosted six 2025 FIFA Club World Cup matches."
+ ],
+ "transport": {
+  "summary": "Lumen Field is one of the most transit-friendly venues of the tournament. It sits in SoDo, a 15-minute walk south of downtown and bordering Pioneer Square, with two Link light rail stations, the Sounder commuter train at King Street Station, 15+ bus routes and ferries all within walking distance. Going car-free is strongly recommended on matchdays.",
+  "rail": [
+   {
+    "name": "Link light rail 1 Line",
+    "station": "Stadium Station / International District-Chinatown Station",
+    "detail": "Best option. Stadium Station is a 1-minute walk to the gates; ID/Chinatown Station is about a 5-minute walk. The 1 Line runs from SEA airport in the south through downtown to Lynnwood in the north. Note Link stops running around midnight, so late knockout matches may push the last train.",
+    "points": [
+     {
+      "b": "Stadium Station",
+      "t": "is a 1-minute walk to the gates."
+     },
+     {
+      "b": "Runs SEA to Lynnwood",
+      "t": "through downtown, north-south spine."
+     },
+     {
+      "b": "Last train midnight",
+      "t": "may strand late knockout matches."
+     }
+    ],
+    "deal": "Adult fare $3.25-$5.75 by distance; a $6 ORCA Regional Day Pass gives unlimited all-day rides and youth 18 and under ride free."
+   },
+   {
+    "name": "Sounder commuter train (event service)",
+    "station": "King Street Station (about one football field from the stadium)",
+    "detail": "Sound Transit runs special Sounder event trains on matchdays: N Line from Everett and S Line from Lakewood/Tacoma. For Sounders-style soccer events trains typically depart about 45 minutes after the final whistle. Event service is planned for all six World Cup matches; confirm exact schedules on the Sound Transit event calendar closer to the tournament.",
+    "points": [
+     {
+      "b": "Event trains only",
+      "t": "N Line Everett, S Line Tacoma."
+     },
+     {
+      "b": "Departs post-match",
+      "t": "about 45 minutes after final whistle."
+     },
+     {
+      "b": "All six matches",
+      "t": "planned; confirm schedule closer to tournament."
+     }
+    ],
+    "deal": "Adult fare $3.25-$5.75 by distance; covered by the $6 ORCA Regional Day Pass; youth 18 and under free."
+   }
+  ],
+  "bus": [
+   {
+    "name": "King County Metro",
+    "from": "Across Seattle and downtown",
+    "detail": "More than 15 daily bus routes stop within three blocks of the stadium, plus Sound Transit regional buses connecting Pierce, King and Snohomish counties. Use the Sound Transit Trip Planner for routes.",
+    "points": [
+     {
+      "b": "15+ routes",
+      "t": "stop within three blocks of the stadium."
+     },
+     {
+      "b": "Regional buses",
+      "t": "link Pierce, King and Snohomish counties."
+     },
+     {
+      "b": "Plan routes",
+      "t": "via the Sound Transit Trip Planner."
+     }
+    ],
+    "deal": "Pay with an ORCA card or contactless tap-to-pay; the $6 ORCA Regional Day Pass covers buses too."
+   },
+   {
+    "name": "Seattle Streetcar (First Hill Line)",
+    "from": "Capitol Hill / First Hill",
+    "detail": "Stops at S Jackson & Occidental (about 0.3 mi) and 5th & Jackson (about 0.4 mi), a handy link from First Hill and the ID.",
+    "points": [
+     {
+      "b": "Nearest stop",
+      "t": "S Jackson & Occidental, about 0.3 mi."
+     },
+     {
+      "b": "Second stop",
+      "t": "5th & Jackson, about 0.4 mi out."
+     },
+     {
+      "b": "Handy link",
+      "t": "from First Hill and the ID."
+     }
+    ],
+    "deal": "ORCA accepted; included in the Regional Day Pass."
+   }
+  ],
+  "shuttle": [],
+  "fromAirport": "Take Link light rail 1 Line directly from SEA airport (Sea-Tac) to Stadium Station with no transfer in roughly 35-40 minutes for a few dollars. Taxi or rideshare runs about 25-40 minutes and $45-70+, and surges heavily on matchdays.",
+  "rideshare": "Official Uber/Lyft pickup and drop-off zones are at King St & Occidental (north side) and Royal Brougham Way & Occidental (south side). Expect heavy post-match surge and gridlock; locals walk 3-5 blocks toward downtown or Pioneer Square before requesting a ride, or simply hop Link.",
+  "bike": "Bike racks are located at the north end of the stadium. The flat SoDo/waterfront setting and protected lanes make cycling in from downtown or nearby neighborhoods easy.",
+  "tips": [
+   "Take Link, not a car. Stadium Station is one minute from the gates and trains pack densely both before and after matches.",
+   "Buy an ORCA card or use contactless tap-to-pay before you travel to skip ticket-machine lines; the $6 Regional Day Pass pays for itself with a round trip.",
+   "If you must drive, use free park-and-ride at Angle Lake, Tukwila Int'l Blvd or Northgate Link stations and ride in to avoid downtown traffic entirely.",
+   "For late knockout kickoffs, check the last Link departure (around midnight) or plan for Sounder/rideshare instead."
+  ]
+ },
+ "parking": {
+  "summary": "On-site parking is limited and largely held by season pass holders, so non-pass-holding World Cup fans should prepay a SoDo lot in advance or, better, skip driving and take transit. Two stadium lots and many nearby SoDo garages exist, but they sell out and surge on event days.",
+  "lots": [
+   {
+    "name": "Lumen Field Parking Garage",
+    "price": "Varies by event (roughly $30-$75); pre-purchase via the event calendar",
+    "detail": "Indoor garage attached to the Event Center at 330 S Royal Brougham Way, south of the stadium. Opens 6am on event days, closes about 2 hours after. Has a Level 2 accessible entrance. StubHub parking passes are not accepted.",
+    "points": [
+     {
+      "b": "Indoor garage",
+      "t": "at 330 S Royal Brougham Way, south side."
+     },
+     {
+      "b": "Opens 6am",
+      "t": "and closes about 2 hours post-event."
+     },
+     {
+      "b": "Level 2 accessible",
+      "t": "entrance; no StubHub passes."
+     }
+    ]
+   },
+   {
+    "name": "North Lot",
+    "price": "Varies by event (roughly $30-$75); pre-purchase via the event calendar",
+    "detail": "Outdoor lot north of the stadium at 521 Stadium Pl S; fits oversized vehicles above 8'3\". Opens 6am, closes about 2 hours post-event. No overnight or RV parking.",
+    "points": [
+     {
+      "b": "Outdoor lot",
+      "t": "north of the stadium, 521 Stadium Pl S."
+     },
+     {
+      "b": "Fits oversized",
+      "t": "vehicles taller than 8 feet 3 inches."
+     },
+     {
+      "b": "Opens 6am",
+      "t": "closes 2 hours after; no overnight or RV."
+     }
+    ]
+   },
+   {
+    "name": "Nearby SoDo lots (SpotHero / ParkWhiz)",
+    "price": "About $30-$75 prepaid",
+    "detail": "Third-party apps list many nearby garages and lots, often cheaper than official lots if booked early. Prepay to lock a price, since on-site rates climb on the day for high-demand events.",
+    "points": [
+     {
+      "b": "Many nearby lots",
+      "t": "listed across SpotHero and ParkWhiz."
+     },
+     {
+      "b": "Often cheaper",
+      "t": "than official lots if booked early."
+     },
+     {
+      "b": "Prepay to lock",
+      "t": "a price; on-site rates surge on the day."
+     }
+    ]
+   }
+  ],
+  "prepaid": "Reserve in advance through SpotHero (integrated with Lumen Field) or ParkWhiz, or pre-purchase the official lots by selecting your event in the Lumen Field events calendar. Reservation contact: parking@seahawksfgi.com.",
+  "accessible": "Designated ADA parking is available in both stadium lots (first-come, first-served, including the Union Station Garage). The Parking Garage has a Level 2 accessible entrance, and ADA passenger drop-off is at 1st Ave S and S Charles St near the Pro Shop. Wheelchairs are available on-site.",
+  "tailgating": "No dedicated tailgating; the dense urban SoDo/Pioneer Square setting means fans gather in bars and at Occidental Park for the March to the Match rather than in parking lots.",
+  "tips": [
+   "Prepay through SpotHero before matchday; official North Lot and Garage spaces are effectively sold out to season pass holders.",
+   "Free park-and-ride at Angle Lake, Tukwila and Northgate Link stations lets you avoid downtown parking and traffic altogether.",
+   "Lots close about 2 hours after the event, so don't plan to leave your car overnight."
+  ]
+ }
 }

@@ -1,135 +1,525 @@
 {
-  "id": "sofi",
-  "name": "SoFi Stadium",
-  "fifaName": "Los Angeles Stadium",
-  "nickname": "SoFi",
-  "city": "Los Angeles",
-  "country": "USA",
-  "cc": "USA",
-  "role": null,
-  "tagline": "The $5B indoor-outdoor spaceship hosting the USA's World Cup opener under the wildest screen in sports.",
-  "hero": "img/stadiums/sofi.jpg",
-  "stats": [
-    {
-      "label": "Capacity",
-      "value": "~70,000 (WC config)"
-    },
-    {
-      "label": "Opened",
-      "value": "2020"
-    },
-    {
-      "label": "WC2026 Matches",
-      "value": "8 (incl. quarter-final)"
-    },
-    {
-      "label": "Cost",
-      "value": "~$5B+ (priciest ever)"
-    },
-    {
-      "label": "Infinity Screen",
-      "value": "2.2M-lb, 80M-pixel dual 4K board"
-    },
-    {
-      "label": "Roof",
-      "value": "Translucent ETFE canopy, open sides"
-    }
-  ],
-  "why": [
-    {
-      "title": "USA's Opener",
-      "text": "The home side kicks off its World Cup right here on June 12 vs Paraguay. If you want USMNT energy, this is ground zero."
-    },
-    {
-      "title": "The Infinity Screen",
-      "text": "A 2.2-million-pound oval videoboard floats over the field with 80 million pixels and 260 speakers. There's nothing else like it in the world."
-    },
-    {
-      "title": "Most Expensive Ever",
-      "text": "Built for $5B-plus entirely with private money, SoFi was the costliest stadium on earth at opening, over 3x MetLife's price tag."
-    },
-    {
-      "title": "Grass Grown Indoors",
-      "text": "Crews trucked in 74,000 sq ft of real grass and roll LED grow-lights across it 18 hours a day to keep a natural pitch alive under the canopy."
-    }
-  ],
-  "matches": [
-    {
-      "date": "Jun 12",
-      "round": "Group D",
-      "fixture": "USA vs Paraguay",
-      "ko": "6:00 PM PT"
-    },
-    {
-      "date": "Jun 15",
-      "round": "Group G",
-      "fixture": "Iran vs New Zealand",
-      "ko": "6:00 PM PT"
-    },
-    {
-      "date": "Jun 18",
-      "round": "Group B",
-      "fixture": "Switzerland vs Play-Off Winner",
-      "ko": "12:00 PM PT"
-    },
-    {
-      "date": "Jun 21",
-      "round": "Group G",
-      "fixture": "Belgium vs Iran",
-      "ko": "12:00 PM PT"
-    },
-    {
-      "date": "Jun 25",
-      "round": "Group D",
-      "fixture": "Play-Off Winner vs USA",
-      "ko": "7:00 PM PT"
-    },
-    {
-      "date": "Jun 28",
-      "round": "Round of 32",
-      "fixture": "TBD",
-      "ko": "12:00 PM PT"
-    },
-    {
-      "date": "Jul 2",
-      "round": "Round of 32",
-      "fixture": "TBD",
-      "ko": "12:00 PM PT"
-    },
-    {
-      "date": "Jul 10",
-      "round": "Quarter-Final",
-      "fixture": "TBD",
-      "ko": "12:00 PM PT"
-    }
-  ],
-  "gettingThere": "SoFi sits just 3 miles from LAX, one of the closest airport-to-stadium hops in US sports. Skip driving and parking entirely: take Metro plus the free game-day shuttle or hop a rideshare outside surge hours.",
-  "transit": [
-    "Metro C Line to Hawthorne/Lennox station, then a ~15-min walk east to the stadium.",
-    "Free game-day shuttles run from the LAX/Metro Transit Center (Bus Bay 8) every 3-5 min, starting 3 hours pre-match.",
-    "Base Metro fare is $1.75 one-way; pre-load a TAP card or use contactless to dodge lines.",
-    "Rideshare from LAX is ~$10-15 normally but surges to $30-50 with 20-40 min waits after a sellout."
-  ],
-  "matchday": "SoFi anchors the brand-new Hollywood Park district, a polished 300-acre development with a 6-acre lake, walkable paseos, the YouTube Theater and Kia Forum steps away. The official FIFA Fan Festival runs at the LA Memorial Coliseum in Exposition Park, with satellite fan zones at Union Station, the Original Farmers Market and beyond.",
+ "id": "sofi",
+ "name": "SoFi Stadium",
+ "fifaName": "Los Angeles Stadium",
+ "nickname": "SoFi",
+ "city": "Los Angeles",
+ "country": "USA",
+ "cc": "USA",
+ "role": null,
+ "tagline": "The $5B indoor-outdoor spaceship hosting the USA's World Cup opener under the wildest screen in sports.",
+ "hero": "img/stadiums/sofi.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~70,000 (WC config)"
+  },
+  {
+   "label": "Opened",
+   "value": "2020"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "8 (incl. quarter-final)"
+  },
+  {
+   "label": "Cost",
+   "value": "~$5B+ (priciest ever)"
+  },
+  {
+   "label": "Infinity Screen",
+   "value": "2.2M-lb, 80M-pixel dual 4K board"
+  },
+  {
+   "label": "Roof",
+   "value": "Translucent ETFE canopy, open sides"
+  }
+ ],
+ "why": [
+  {
+   "title": "USA's Opener",
+   "text": "The home side kicks off its World Cup right here on June 12 vs Paraguay. If you want USMNT energy, this is ground zero."
+  },
+  {
+   "title": "The Infinity Screen",
+   "text": "A 2.2-million-pound oval videoboard floats over the field with 80 million pixels and 260 speakers. There's nothing else like it in the world."
+  },
+  {
+   "title": "Most Expensive Ever",
+   "text": "Built for $5B-plus entirely with private money, SoFi was the costliest stadium on earth at opening, over 3x MetLife's price tag."
+  },
+  {
+   "title": "Grass Grown Indoors",
+   "text": "Crews trucked in 74,000 sq ft of real grass and roll LED grow-lights across it 18 hours a day to keep a natural pitch alive under the canopy."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 12",
+   "round": "Group D",
+   "fixture": "USA vs Paraguay",
+   "ko": "6:00 PM",
+   "group": "D"
+  },
+  {
+   "date": "Jun 15",
+   "round": "Group G",
+   "fixture": "IR Iran vs New Zealand",
+   "ko": "9:00 PM",
+   "group": "G"
+  },
+  {
+   "date": "Jun 18",
+   "round": "Group B",
+   "fixture": "Switzerland vs Bosnia and Herzegovina",
+   "ko": "12:00 PM",
+   "group": "B"
+  },
+  {
+   "date": "Jun 21",
+   "round": "Group G",
+   "fixture": "Belgium vs IR Iran",
+   "ko": "12:00 PM",
+   "group": "G"
+  },
+  {
+   "date": "Jun 25",
+   "round": "Group D",
+   "fixture": "Türkiye vs USA",
+   "ko": "7:00 PM",
+   "group": "D"
+  },
+  {
+   "date": "Jun 28",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "12:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 2",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "12:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 10",
+   "round": "Quarter-final",
+   "fixture": "TBD",
+   "ko": "12:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "SoFi sits just 3 miles from LAX, one of the closest airport-to-stadium hops in US sports. Skip driving and parking entirely: take Metro plus the free game-day shuttle or hop a rideshare outside surge hours.",
+ "transit": [
+  "Metro C Line to Hawthorne/Lennox station, then a ~15-min walk east to the stadium.",
+  "Free game-day shuttles run from the LAX/Metro Transit Center (Bus Bay 8) every 3-5 min, starting 3 hours pre-match.",
+  "Base Metro fare is $1.75 one-way; pre-load a TAP card or use contactless to dodge lines.",
+  "Rideshare from LAX is ~$10-15 normally but surges to $30-50 with 20-40 min waits after a sellout."
+ ],
+ "matchday": "SoFi anchors the brand-new Hollywood Park district, a polished 300-acre development with a 6-acre lake, walkable paseos, the YouTube Theater and Kia Forum steps away. The official FIFA Fan Festival runs at the LA Memorial Coliseum in Exposition Park, with satellite fan zones at Union Station, the Original Farmers Market and beyond.",
+ "around": {
   "food": [
-    "Hollywood Park's retail district and Market Street, Inglewood for bars and bites right by the venue.",
-    "Beach-city pub scene in Manhattan and Hermosa Beach, a short drive west for post-match.",
-    "Koreatown, East LA and Westwood for raucous national-team supporter bars across the metro.",
-    "The stadium is fully cashless, so tap-to-pay for everything inside."
+   {
+    "name": "Jon & Vinny's L.A. Eats",
+    "where": "Fairfax Ave stands, all levels",
+    "note": "Beard-winning chefs' LA-street concepts; the marquee bite",
+    "why": [
+     "James Beard chefs cooking inside the stadium",
+     "The marquee bite, on every level"
+    ]
+   },
+   {
+    "name": "LA Street Dog",
+    "where": "Olvera St concourse stands",
+    "note": "Bacon-wrapped dog, caramelized onions, jalapeno aioli",
+    "why": [
+     "Iconic LA bacon-wrapped street dog",
+     "Caramelized onions and jalapeno aioli"
+    ]
+   },
+   {
+    "name": "Hawaiian Plate Lunch",
+    "where": "Sawtelle Blvd Asian-fusion hub",
+    "note": "Soy-glaze beef bowl and coconut haupia tart",
+    "why": [
+     "Soy-glaze beef bowl hits the spot",
+     "Finish with coconut haupia tart"
+    ]
+   },
+   {
+    "name": "Loaded BBQ Fries",
+    "where": "Legends BBQ stands, main concourse",
+    "note": "Stadium staple; grilled street corn nearby too",
+    "why": [
+     "Loaded fries, the reliable stadium staple",
+     "Grilled street corn right nearby"
+    ]
+   }
   ],
-  "tips": [
-    "Skip driving: on-site parking is permit-only, pricey, and gridlocked after the whistle. Take Metro plus the free shuttle.",
-    "Arrive 2-3 hours early. FIFA security, clear-bag screening, and a brand-new transit crowd mean long lines.",
-    "Midday 12 PM kickoffs are hottest. The canopy shades most of the bowl but lower-bowl corners catch full sun.",
-    "Best value: upper-bowl sideline (Level 5) for the full Infinity Screen view and ocean breeze.",
-    "Corner seats were removed to widen the pitch, so end sections differ from the NFL map. Check the WC seating chart before buying.",
-    "Bring an empty reusable bottle to fill, plus a hat and sunscreen. Misting fans deploy above 80F."
+  "pre": [
+   {
+    "name": "FIFA Fan Festival Los Angeles",
+    "where": "LA Memorial Coliseum, Exposition Park; ~10 mi NE, Metro E Line to Expo Park/USC",
+    "why": [
+     "Free official fan zone with giant screens",
+     "Metro E Line straight to the gate"
+    ],
+    "fifa": true
+   },
+   {
+    "name": "Cork & Batter",
+    "where": "Hollywood Park, 2-min walk",
+    "note": "Three-story bourbon-and-sliders spot, rooftop skyline views",
+    "why": [
+     "Two-minute walk to the gates",
+     "Rooftop skyline views, bourbon and sliders"
+    ]
+   },
+   {
+    "name": "Tom's Watch Bar",
+    "where": "3900 W Century, steps away",
+    "note": "Wall-to-wall screens, 360-degree all-sports hype hub",
+    "why": [
+     "Wall-to-wall screens, 360-degree match views",
+     "Steps from the stadium gates"
+    ]
+   },
+   {
+    "name": "Raise Lounge",
+    "where": "Hollywood Park Casino, blocks away",
+    "note": "Casino bar, pregame screens, LA's diehard fans",
+    "why": [
+     "Where LA's diehard fans gather pregame",
+     "Casino-bar buzz with match screens"
+    ]
+   },
+   {
+    "name": "Three Weavers Brewing",
+    "where": "Manchester Blvd, ~1.5 mi",
+    "note": "Woman-led taproom, picnic tables, award-winning Kolsch",
+    "why": [
+     "Award-winning Kolsch at a woman-led taproom",
+     "Picnic tables for a chill pregame"
+    ]
+   }
   ],
-  "weather": "Warm, dry, and reliably sunny with June highs of 75-82F and July 78-85F, often a cool morning marine layer first; pack sunscreen, a hat, sunglasses, and light layers.",
-  "lore": [
-    "Built on the old Hollywood Park Racetrack, SoFi helped pull near-bankrupt Inglewood back from the brink.",
-    "Hosted Super Bowl LVI in 2022 (Rams beat the Bengals 23-20 at home) and returns for Super Bowl LXI in 2027.",
-    "WrestleMania 39 drew 161,892 fans across two nights, then the highest-grossing WWE event ever.",
-    "Up next: the 2028 Olympics opening and closing ceremonies plus swimming in a record temporary 38,000-seat pool."
+  "post": [
+   {
+    "name": "Cork & Batter Rooftop",
+    "where": "Hollywood Park, 2-min walk",
+    "note": "Open-air rooftop, late crowds, full bourbon list",
+    "why": [
+     "Open-air rooftop that runs late",
+     "Full bourbon list, two minutes out"
+    ]
+   },
+   {
+    "name": "The Nile Bar",
+    "where": "Inglewood, short drive",
+    "note": "Local-legend dive with DJs, karaoke, personality",
+    "why": [
+     "Local-legend Inglewood dive with real personality",
+     "DJs and karaoke keep it loud"
+    ]
+   },
+   {
+    "name": "Cosm Los Angeles",
+    "where": "Hollywood Park, adjacent",
+    "note": "Immersive dome venue, replays on giant screen",
+    "why": [
+     "Immersive dome relives the match",
+     "Adjacent to the stadium, no drive"
+    ]
+   },
+   {
+    "name": "Three Weavers Brewing",
+    "where": "Manchester Blvd, ~1.5 mi",
+    "note": "Chill taproom to decompress, limited-release taps",
+    "why": [
+     "Chill taproom to decompress post-match",
+     "Limited-release taps worth the detour"
+    ]
+   }
   ]
+ },
+ "food": [
+  "Hollywood Park's retail district and Market Street, Inglewood for bars and bites right by the venue.",
+  "Beach-city pub scene in Manhattan and Hermosa Beach, a short drive west for post-match.",
+  "Koreatown, East LA and Westwood for raucous national-team supporter bars across the metro.",
+  "The stadium is fully cashless, so tap-to-pay for everything inside."
+ ],
+ "tips": [
+  "Skip driving: on-site parking is permit-only, pricey, and gridlocked after the whistle. Take Metro plus the free shuttle.",
+  "Arrive 2-3 hours early. FIFA security, clear-bag screening, and a brand-new transit crowd mean long lines.",
+  "Midday 12 PM kickoffs are hottest. The canopy shades most of the bowl but lower-bowl corners catch full sun.",
+  "Best value: upper-bowl sideline (Level 5) for the full Infinity Screen view and ocean breeze.",
+  "Corner seats were removed to widen the pitch, so end sections differ from the NFL map. Check the WC seating chart before buying.",
+  "Bring an empty reusable bottle to fill, plus a hat and sunscreen. Misting fans deploy above 80F."
+ ],
+ "weather": "Warm, dry, and reliably sunny with June highs of 75-82F and July 78-85F, often a cool morning marine layer first; pack sunscreen, a hat, sunglasses, and light layers.",
+ "lore": [
+  "Built on the old Hollywood Park Racetrack, SoFi helped pull near-bankrupt Inglewood back from the brink.",
+  "Hosted Super Bowl LVI in 2022 (Rams beat the Bengals 23-20 at home) and returns for Super Bowl LXI in 2027.",
+  "WrestleMania 39 drew 161,892 fans across two nights, then the highest-grossing WWE event ever.",
+  "Up next: the 2028 Olympics opening and closing ceremonies plus swimming in a record temporary 38,000-seat pool."
+ ],
+ "transport": {
+  "summary": "For the World Cup, LA Metro runs direct, no-transfer shuttles to the stadium from rail stations and regional park-and-rides across Southern California; transit is the official recommendation and far cheaper than the $250-300 FIFA parking passes.",
+  "rail": [
+   {
+    "name": "Metro K Line / C Line",
+    "station": "LAX/Metro Transit Center",
+    "detail": "Both lines stop here; transfer to the free World Cup shuttle (~15 min) that drops at Lot S, a 5-10 min walk to the gates. Shuttles run every 10 min starting ~3 hrs 15 min pre-match.",
+    "points": [
+     {
+      "b": "Free WC shuttle",
+      "t": "~15 min ride to Lot S"
+     },
+     {
+      "b": "Drops at Lot S",
+      "t": "5-10 min walk to gates"
+     },
+     {
+      "b": "Runs every 10 min",
+      "t": "from ~3 hrs 15 min pre-match"
+     }
+    ],
+    "deal": "Metro fare $1.75 each way; shuttle is free"
+   },
+   {
+    "name": "Metro K Line / C Line",
+    "station": "Crenshaw or Hawthorne/Lennox",
+    "detail": "Shuttle from either station (~15 min) drops at Lot R by Gate E. Hawthorne/Lennox is the classic NFL walk-up station (~15-min walk) but the WC shuttle is the easier play.",
+    "points": [
+     {
+      "b": "Shuttle ~15 min",
+      "t": "drops at Lot R by Gate E"
+     },
+     {
+      "b": "Hawthorne/Lennox",
+      "t": "classic ~15-min walk-up option"
+     },
+     {
+      "b": "WC shuttle",
+      "t": "the easier play of the two"
+     }
+    ],
+    "deal": "$1.75 each way + free shuttle; reserved park-and-ride here is ~$95 via SpotHero"
+   },
+   {
+    "name": "Metro A/B/D/J + regional rail",
+    "station": "Union Station",
+    "detail": "Direct ~40-min World Cup bus runs straight to Lot R (Gate E) every 10 min. Metrolink and Amtrak riders get one free transfer to this service.",
+    "points": [
+     {
+      "b": "Direct ~40-min bus",
+      "t": "straight to Lot R, Gate E"
+     },
+     {
+      "b": "Every 10 min",
+      "t": "no transfers needed en route"
+     },
+     {
+      "b": "Metrolink/Amtrak",
+      "t": "get one free transfer in"
+     }
+    ],
+    "deal": "Free Metrolink-to-Metro transfer; Metro fare $1.75"
+   },
+   {
+    "name": "Metro B/G Lines",
+    "station": "North Hollywood",
+    "detail": "Direct WC shuttle from the Valley (~75 min) drops at Lot T by Gate B, every 10 min. Useful base for fans staying north of the hills.",
+    "points": [
+     {
+      "b": "Direct from Valley",
+      "t": "~75 min to Lot T, Gate B"
+     },
+     {
+      "b": "Every 10 min",
+      "t": "no transfer over the hills"
+     },
+     {
+      "b": "Good base",
+      "t": "for fans staying up north"
+     }
+    ],
+    "deal": "Park-and-ride here ~$55 early bird via SpotHero"
+   }
+  ],
+  "bus": [
+   {
+    "name": "Anaheim direct shuttle (ARTIC)",
+    "from": "ARTIC, Anaheim",
+    "detail": "Free/low-cost direct WC bus from Anaheim Regional Transportation Intermodal Center (~70 min) to Lot R, Gate E, every 10 min. Good for Orange County / Disneyland-area fans.",
+    "points": [
+     {
+      "b": "Direct from ARTIC",
+      "t": "~70 min to Lot R, Gate E"
+     },
+     {
+      "b": "Every 10 min",
+      "t": "no transfers along the way"
+     },
+     {
+      "b": "Best for OC",
+      "t": "Disneyland-area fans heading up"
+     }
+    ],
+    "deal": "$10.50 reserved parking covers round-trip for all passengers in the vehicle"
+   },
+   {
+    "name": "Long Beach direct shuttle",
+    "from": "Downtown Long Beach",
+    "detail": "Direct WC bus (~50 min) to Lot R, Gate E, every 10 min.",
+    "points": [
+     {
+      "b": "Direct ~50-min bus",
+      "t": "to Lot R, Gate E"
+     },
+     {
+      "b": "Every 10 min",
+      "t": "frequent, no transfers needed"
+     }
+    ],
+    "deal": "Reserved park-and-ride ~$12"
+   },
+   {
+    "name": "Newport Transportation Center",
+    "from": "Newport Beach",
+    "detail": "Direct WC bus (~75 min) to Lot R, Gate E, but only every 30 min, so time your return.",
+    "points": [
+     {
+      "b": "Direct ~75-min bus",
+      "t": "to Lot R, Gate E"
+     },
+     {
+      "b": "Only every 30 min",
+      "t": "so time your return carefully"
+     }
+    ],
+    "deal": "$10.50 reserved parking includes round-trip service"
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "Free Metro World Cup shuttles",
+    "detail": "All shuttles run every ~10 min (Newport/Pierce College every 30 min), starting ~3 hrs 15 min before kickoff (an hour earlier for the Jun 12 USA-Paraguay opener) and continuing until 90 min after the final whistle.",
+    "points": [
+     {
+      "b": "Every ~10 min",
+      "t": "Newport/Pierce College every 30"
+     },
+     {
+      "b": "Start 3 hrs 15 pre-KO",
+      "t": "an hour earlier for Jun 12"
+     },
+     {
+      "b": "Run until +90 min",
+      "t": "after the final whistle"
+     }
+    ]
+   },
+   {
+    "name": "Drop-off lots by gate",
+    "detail": "Shuttles land at Lot R (Gate E) from most stations, Lot S (LAX/Metro Transit Center, 5-10 min walk), or Lot T (Gate B) from North Hollywood. Note your return lot, as it matches your inbound shuttle.",
+    "points": [
+     {
+      "b": "Lot R, Gate E",
+      "t": "from most stations"
+     },
+     {
+      "b": "Lot S",
+      "t": "from LAX, 5-10 min walk"
+     },
+     {
+      "b": "Return lot matches",
+      "t": "your inbound shuttle, so note it"
+     }
+    ]
+   }
+  ],
+  "fromAirport": "LAX is only ~3 miles away. Take the free LAX Automated People Mover to the LAX/Metro Transit Center, then the free World Cup shuttle to Lot S. Rideshare from LAX is normally ~$10-15 / 10 min but surges to $30-50 with 20-40 min waits after a sellout.",
+  "rideshare": "Drop-off is the northbound curb lane on Kareem Court; pick-up is at Kareem Court and Manchester Boulevard. Expect heavy surge pricing and long post-match pickup waits; walking a few blocks out before requesting a car helps.",
+  "bike": "Bike parking is available throughout the Hollywood Park district on a first-come basis, but you must bring your own lock. Unattended bikes blocking pedestrian or vehicle paths can be removed.",
+  "tips": [
+   "Pay all fares by tapping a contactless bank card (Visa/Mastercard/Amex/Discover/UnionPay) or a TAP card in Apple Wallet; no need to buy paper tickets.",
+   "Pick a station with a direct shuttle (LAX/Metro Transit Center, Crenshaw, Union Station) to avoid transfers entirely.",
+   "Metrolink/Amtrak tickets include one free transfer to Metro plus the Union Station direct bus, so regional rail fans don't pay twice.",
+   "Reserve park-and-ride via SpotHero only if you must drive; lot prices run $10.50-$105 depending on location and include the round-trip shuttle at most sites."
+  ]
+ },
+ "parking": {
+  "summary": "For the World Cup, FIFA's official vendor is JustPark and on-site general passes run roughly $250-300 per match; everything is prepaid online with no day-of sales, so most fans are far better off taking transit.",
+  "lots": [
+   {
+    "name": "Official FIFA general parking (JustPark)",
+    "price": "$250-300",
+    "detail": "FIFA-run on-site lots booked only through JustPark via the FIFA site. Prices rise 24 hrs before kickoff. Lots open ~4 hrs pre-match; arrive ~3 hrs early.",
+    "points": [
+     {
+      "b": "Book via JustPark",
+      "t": "FIFA-run on-site lots only"
+     },
+     {
+      "b": "Prices rise",
+      "t": "24 hrs before kickoff"
+     },
+     {
+      "b": "Lots open 4 hrs early",
+      "t": "arrive ~3 hrs pre-match"
+     }
+    ]
+   },
+   {
+    "name": "Off-site reserved lots (ParkWhiz/SpotHero)",
+    "price": "~$10.50-$105",
+    "detail": "Park-and-ride sites tied to Metro's World Cup shuttles (e.g. Long Beach ~$12, Anaheim/Newport ~$10.50, Hawthorne/Lennox/Crenshaw ~$95, Culver City ~$105); most include the round-trip shuttle.",
+    "points": [
+     {
+      "b": "Park-and-ride sites",
+      "t": "tied to Metro WC shuttles"
+     },
+     {
+      "b": "Round-trip shuttle",
+      "t": "included at most locations"
+     },
+     {
+      "b": "Skip stadium gridlock",
+      "t": "by parking remote and riding"
+     }
+    ]
+   },
+   {
+    "name": "NFL standard on-site (non-WC reference)",
+    "price": "$40-100",
+    "detail": "For comparison, regular Rams/Chargers prepaid lots run $40-100 by zone (adjacent Lots 1-3 ~$80-100, remote shuttle lots ~$30-40). WC pricing is much higher.",
+    "points": [
+     {
+      "b": "NFL reference only",
+      "t": "not the World Cup rate"
+     },
+     {
+      "b": "Adjacent Lots 1-3",
+      "t": "priciest; remote lots cheapest"
+     },
+     {
+      "b": "WC pricing",
+      "t": "runs much higher than this"
+     }
+    ]
+   }
+  ],
+  "prepaid": "All World Cup parking must be bought in advance through JustPark; there are no on-site or day-of sales and you will be turned away without a pass. You must use the same email as your match-ticket purchase, only match-ticket holders can buy, and it's one pass per customer per match. Passes are mobile-only and zone-specific.",
+  "accessible": "ADA parking is in reserved lots near the World Cup entrance points and must be pre-purchased through JustPark (typically the same $250-300 rate). You need both the parking pass and a valid DMV disability placard or plate. For standard SoFi events, ADA drop-off/pick-up uses the Hyundai Orange zone entry.",
+  "tailgating": "Under SoFi's standard policy, tailgating is allowed only in designated zones (primarily Hyundai Pink) with a paid pass, directly behind your vehicle up to the fire lane, propane/natural-gas grills only, no glass, max 9ft x 18ft, and it ends at kickoff. FIFA had not published a separate WC tailgating policy, so assume restrictions may be tighter; confirm with your parking pass.",
+  "tips": [
+   "Skip parking entirely if you can: a $1.75 transit fare beats a $250-300 FIFA lot pass, and post-match lot exits are gridlocked.",
+   "Buy any parking pass early; prices jump 24 hrs before kickoff and there are zero day-of sales.",
+   "Use the exact email tied to your match ticket or FIFA may cancel your parking pass.",
+   "Download your zone-specific mobile pass before arriving; a pass for one color zone won't open another zone's gate."
+  ]
+ }
 }

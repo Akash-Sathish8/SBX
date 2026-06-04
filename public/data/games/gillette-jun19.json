@@ -1,0 +1,13 @@
+{
+ "id": "gillette-jun19", "venue": "gillette", "venueName": "Gillette Stadium", "city": "Boston",
+ "date": "Jun 19", "ko": "6:00 PM", "round": "Group C", "home": "Scotland", "away": "Morocco",
+ "preview": {
+  "summary": "Scotland face a sterner test against reigning AFCON champions Morocco, the top-ranked African side and a 2022 semi-finalist. Steve Clarke's men will look to frustrate a Moroccan team that presses high and dominates possession. With Brazil also in Group C, both sides know a result here could be decisive for the knockout race.",
+  "homeForm": "Scotland qualified by topping UEFA Group C, ending a 28-year wait to return to the World Cup.",
+  "awayForm": "Morocco won the 2025 AFCON on home soil and sit eighth in the FIFA rankings, top of Africa.",
+  "homeKey": "Scott McTominay, Napoli midfielder and Scotland's biggest goal threat.",
+  "awayKey": "Achraf Hakimi, PSG full-back driving Morocco's attacking width.",
+  "storylines": ["Morocco's new attack-minded era under Mohamed Ouahbi", "Scotland's defence versus Africa's most fluid side", "Brahim Diaz leading Morocco's creative new generation"],
+  "h2h": "Scotland and Morocco last met at the 1998 World Cup, where Morocco won 3-0."
+ }
+}

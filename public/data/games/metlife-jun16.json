@@ -1,0 +1,13 @@
+{
+ "id": "metlife-jun16", "venue": "metlife", "venueName": "MetLife Stadium", "city": "New York / NJ",
+ "date": "Jun 16", "ko": "3:00 PM", "round": "Group I", "home": "France", "away": "Senegal",
+ "preview": {
+  "summary": "Top-ranked France open their campaign against Africa's standard-bearers Senegal in a Group I heavyweight clash. Deschamps' attacking talent meets a Senegal side built on physical power and big-game pedigree, with both expected to push for the knockouts.",
+  "homeForm": "France enter as the world's No. 1 ranked side, loaded with attacking depth and among the tournament favourites.",
+  "awayForm": "Senegal, ranked 14th, qualified unbeaten atop their African group and arrive as arguably the continent's strongest team.",
+  "homeKey": "Kylian Mbappe: captain and talisman chasing World Cup goal records.",
+  "awayKey": "Sadio Mane: experienced talisman in his farewell international tournament.",
+  "storylines": ["Rematch of the 2002 shock when Senegal beat France on debut", "Mbappe leads France's loaded forward line", "Mane plays his final international tournament before retirement"],
+  "h2h": "Their only senior meeting was Senegal's famous 1-0 win over reigning champions France at the 2002 World Cup."
+ }
+}

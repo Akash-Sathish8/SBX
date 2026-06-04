@@ -1,0 +1,24 @@
+{
+ "id": "bmo-jun20",
+ "venue": "bmo",
+ "venueName": "BMO Field",
+ "city": "Toronto",
+ "date": "Jun 20",
+ "ko": "4:00 PM",
+ "round": "Group E",
+ "home": "Germany",
+ "away": "Côte d'Ivoire",
+ "preview": {
+  "summary": "Germany face a dangerous Ivory Coast in Group E at BMO Field, pitting Julian Nagelsmann's possession-based side against the highest-valued African squad at the tournament. The Germans boast elite attacking midfield talent, while the Elephants counter with athletic, Premier League-laced quality. A test of German control versus Ivorian transition speed.",
+  "homeForm": "Ranked 10th by FIFA, rebuilding under Nagelsmann with Manuel Neuer back in goal at 40.",
+  "awayForm": "Ranked around 34th, topping their CAF group unbeaten with the best goal difference in African qualifying.",
+  "homeKey": "Florian Wirtz, the creative force in Germany's attack",
+  "awayKey": "Franck Kessié, the captain leading the Elephants from midfield",
+  "storylines": [
+   "Wirtz and Musiala dovetailing in Germany's final third",
+   "Ivory Coast's first World Cup since 2014",
+   "Amad Diallo's pace as Ivory Coast's attacking outlet"
+  ],
+  "h2h": "The nations have met only in friendlies, with no prior World Cup encounter."
+ }
+}

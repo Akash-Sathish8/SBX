@@ -1,0 +1,13 @@
+{
+ "id": "gillette-jun26", "venue": "gillette", "venueName": "Gillette Stadium", "city": "Boston",
+ "date": "Jun 26", "ko": "3:00 PM", "round": "Group I", "home": "Norway", "away": "France",
+ "preview": {
+  "summary": "A heavyweight Group I finale pits the world's top-ranked side France against an emerging Norway built around Erling Haaland. France arrive as title favourites in Didier Deschamps' farewell tournament, while Norway's prolific attack makes them dangerous opponents. This Haaland-versus-Mbappe duel could decide top spot in the group.",
+  "homeForm": "Norway won all eight qualifiers with 37 goals, returning to the World Cup after 28 years; ranked 31st.",
+  "awayForm": "France topped UEFA Group D and enter as the top-ranked nation in the world.",
+  "homeKey": "Erling Haaland, Europe's standout qualifying scorer with 16 goals.",
+  "awayKey": "Kylian Mbappe, captain chasing Klose's all-time World Cup goal record.",
+  "storylines": ["Haaland versus Mbappe in a marquee striker duel", "Deschamps' final tournament in charge of France", "Norway's golden generation testing the favourites"],
+  "h2h": "France and Norway last met competitively at the 1998 World Cup, a goalless group-stage draw."
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "id": "metlife-jun27", "venue": "metlife", "venueName": "MetLife Stadium", "city": "New York / NJ",
+ "date": "Jun 27", "ko": "5:00 PM", "round": "Group L", "home": "Panama", "away": "England",
+ "preview": {
+  "summary": "Group L underdogs Panama host title contenders England in a rematch of their 2018 World Cup meeting. Panama's compact, hard-running side will look to frustrate a Tuchel team rich in attacking talent.",
+  "homeForm": "Panama, ranked 33rd, qualified unbeaten from CONCACAF and enter as the group's lowest-ranked side.",
+  "awayForm": "England, ranked 4th, were the first European side to qualify but drew boos for patchy recent friendly form.",
+  "homeKey": "Jose Fajardo: joint top scorer in Panama's qualifying campaign.",
+  "awayKey": "Harry Kane: prolific captain at his third World Cup.",
+  "storylines": ["Rematch of England's 6-1 win over Panama in 2018", "Kane returns to face the side he scored a hat-trick against", "Panama's unbeaten qualifiers test England's favourites tag"],
+  "h2h": "Their only meeting was at the 2018 World Cup, a 6-1 England win featuring a Kane hat-trick."
+ }
+}

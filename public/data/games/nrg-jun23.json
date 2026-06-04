@@ -1,0 +1,13 @@
+{
+ "id": "nrg-jun23", "venue": "nrg", "venueName": "NRG Stadium", "city": "Houston",
+ "date": "Jun 23", "ko": "12:00 PM", "round": "Group K", "home": "Portugal", "away": "Uzbekistan",
+ "preview": {
+  "summary": "Portugal continue their Group K campaign against tournament debutants Uzbekistan, the first Central Asian nation to reach a World Cup. The European side are strong favourites, but Fabio Cannavaro's disciplined newcomers aim to make their historic bow count.",
+  "homeForm": "Portugal qualified comfortably atop UEFA Group F and rank 5th in the world among the pre-tournament favourites.",
+  "awayForm": "Uzbekistan qualified for a maiden World Cup and sit around 50th in the FIFA rankings, an emerging Asian force.",
+  "homeKey": "Cristiano Ronaldo, talisman leading Portugal at a sixth World Cup.",
+  "awayKey": "Eldor Shomurodov, experienced striker and Uzbekistan's biggest star.",
+  "storylines": ["Uzbekistan are the first Central Asian nation ever to reach a World Cup", "2006 winner Fabio Cannavaro coaches the debutants", "Man City's Abdukodir Khusanov anchors Uzbekistan's defence"],
+  "h2h": "The nations have no prior competitive history, meeting for the first time."
+ }
+}

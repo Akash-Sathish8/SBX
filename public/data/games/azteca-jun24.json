@@ -1,0 +1,24 @@
+{
+ "id": "azteca-jun24",
+ "venue": "azteca",
+ "venueName": "Estadio Azteca",
+ "city": "Mexico City",
+ "date": "Jun 24",
+ "ko": "7:00 PM",
+ "round": "Group A",
+ "home": "Czechia",
+ "away": "Mexico",
+ "preview": {
+  "summary": "Co-hosts Mexico close out Group A against Czech Republic at a roaring Azteca, with both sides likely chasing the points they need to settle their knockout fate. Expect El Tri to press forward backed by 87,000 fans while Czech Republic lean on their set-piece threat and Patrik Schick up top.",
+  "homeForm": "Mexico (FIFA #15) are tournament co-hosts and favored to win Group A, advancing in the vast majority of pre-tournament simulations.",
+  "awayForm": "Czech Republic (FIFA #42) reached the finals through European qualifying and scored seven goals from corners, more than any other European nation.",
+  "homeKey": "Raul Jimenez — Fulham striker and prolific national-team scorer leads the line.",
+  "awayKey": "Patrik Schick — Czech Republic's main goal source, climbing their all-time charts.",
+  "storylines": [
+   "A likely group decider at a packed Estadio Azteca",
+   "Mexico's home crowd vs Czech Republic's dangerous set-piece game",
+   "Mexico unbeaten against Czech Republic in two prior World Cup meetings"
+  ],
+  "h2h": "Mexico won both previous World Cup meetings (3-1 in 1998, 2-1 in 2018) and the sides drew 2-2 in a 2025 friendly."
+ }
+}

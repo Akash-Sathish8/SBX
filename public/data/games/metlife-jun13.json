@@ -1,0 +1,48 @@
+{
+ "id": "metlife-jun13",
+ "venue": "metlife",
+ "venueName": "MetLife Stadium",
+ "city": "New York / NJ",
+ "date": "Jun 13",
+ "dateISO": "2026-06-13",
+ "ko": "6:00 PM ET",
+ "round": "Group C",
+ "home": "Brazil",
+ "away": "Morocco",
+ "verified": true,
+ "verifyNote": "Confirmed Brazil vs Morocco, Group C (Match 7), 6:00 PM ET via MetLife Stadium official events page and NY/NJ Host Committee schedule (post Dec 5 2025 final draw).",
+ "hype": {
+  "score": 9.2,
+  "label": "Unmissable",
+  "blurb": "Five-time champ Brazil opens against the team that humiliated them 2-1 in Tangier in 2023, in front of the loudest neutral-but-not-neutral crowd of the group stage. If you can get in, you go.",
+  "factors": [
+   {"k": "Stakes", "v": "Tournament-opening Group C statement game; both expect to advance, neither wants to drop points"},
+   {"k": "Atmosphere", "v": "Heavy Brazilian samba presence plus a famously thunderous Moroccan traveling support in the NY metro"},
+   {"k": "Rivalry/Storyline", "v": "Revenge angle: Morocco beat Brazil 2-1 in 2023 after their 2022 World Cup semifinal run"},
+   {"k": "Star power", "v": "Vinicius Jr and Rodrygo vs Hakimi, Bounou and Brahim Diaz: elite end to end"}
+  ]
+ },
+ "preview": {
+  "summary": "Brazil arrive as perennial favorites chasing a sixth star, but Morocco are no longer anyone's underdog after reaching the 2022 semifinals and beating Brazil in a 2023 friendly. This is a heavyweight Group C opener where the loser instantly faces qualification pressure. Expect tactical caution early, then fireworks.",
+  "homeForm": "Brazil come in as one of the top-ranked sides, rebuilt around pace and attacking flair after a bumpy qualifying stretch.",
+  "awayForm": "Morocco are the most dangerous non-traditional power in the tournament, organized, fast in transition, and battle-tested on big stages.",
+  "homeKey": "Vinicius Jr: game-breaking dribbler who can settle it in one moment",
+  "awayKey": "Achraf Hakimi: marauding right back who turns defense into attack",
+  "storylines": [
+   "Can Morocco repeat the 2023 upset, or was that a one-off against a transitioning Brazil side?",
+   "Vinicius Jr and Rodrygo finally given a stage to define a tournament from match one",
+   "Bounou vs Brazil's front line: the goalkeeper who broke Spanish hearts in 2022"
+  ],
+  "h2h": "Morocco stunned Brazil 2-1 in a March 2023 friendly in Tangier, their most famous result against the Selecao.",
+  "prediction": "Brazil edge a tense, end-to-end 2-1, but Morocco make them sweat into the final ten minutes and the neutral fan leaves having gotten their money's worth."
+ },
+ "tickets": {
+  "from": "$1,150",
+  "ceiling": "$5,000+",
+  "demand": "High",
+  "sellout": "Effectively sold out at face value; resale-only for most buyers and prices have climbed well above FIFA's original $60-$620 group-stage estimate.",
+  "bestValue": "Category 4 / upper-tier corners (cheapest official tier, best price-to-view ratio)",
+  "atmosphere": "Lower-bowl behind the goals and the upper-tier ends, where Brazilian and Moroccan supporter groups cluster",
+  "note": "Resale prices ($1,150 and up across TickPick, Goal, Vivid Seats, StubHub) are estimates that move fast; buy from verified resale and target the upper ends for noise over a quieter pricey midfield seat."
+ }
+}
