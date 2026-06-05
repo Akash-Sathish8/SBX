@@ -495,41 +495,52 @@ export default function StadiumDrawer({
           )}
         </div>
 
-        {/* Casey's Agenda + Casey's Bets — triggers; each opens its own modal. */}
-        {currentMatch && (
-          <div className="grid grid-cols-1 gap-2.5 bg-snap-black/40 px-4 py-3">
-            <button
-              type="button"
-              onClick={() => {
-                setOpenAgendaFor(currentMatch.matchNumber);
-                setOpenBetsFor(null);
-              }}
-              className="group flex items-center justify-between border border-snap-ash bg-snap-coal px-4 py-3.5 transition-colors hover:border-snap-yellow hover:bg-snap-smoke/40"
-            >
-              <span className="font-display text-[20px] sm:text-[22px] tracking-wide text-snap-chalk transition-colors group-hover:text-snap-yellow">
-                CASEY&apos;S AGENDA
-              </span>
-              <span className="font-mono text-[10px] tracking-[0.2em] text-snap-mist transition-colors group-hover:text-snap-yellow">
-                GAMEDAY →
-              </span>
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setOpenBetsFor(currentMatch.matchNumber);
-                setOpenAgendaFor(null);
-              }}
-              className="group flex items-center justify-between border border-snap-yellow/50 bg-gradient-to-r from-snap-yellow/10 to-snap-coal px-4 py-3.5 transition-colors hover:border-snap-yellow hover:from-snap-yellow/20"
-            >
-              <span className="font-display text-[20px] sm:text-[22px] tracking-wide text-snap-yellow">
-                CASEY&apos;S BETS
-              </span>
-              <span className="font-mono text-[10px] tracking-[0.2em] text-snap-mist transition-colors group-hover:text-snap-yellow">
-                UNDERDOG →
-              </span>
-            </button>
-          </div>
-        )}
+        {/* Casey's Agenda + Casey's Bets — each shown ONLY when the current carousel
+            match actually has that content; each opens a modal for that match. */}
+        {currentMatch &&
+          (() => {
+            const hasAgenda = parseAgenda(currentMatch.agenda).length > 0;
+            const hasBets = Boolean(currentMatch.betSlipImage);
+            if (!hasAgenda && !hasBets) return null;
+            return (
+              <div className="grid grid-cols-1 gap-2.5 bg-snap-black/40 px-4 py-3">
+                {hasAgenda && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpenAgendaFor(currentMatch.matchNumber);
+                      setOpenBetsFor(null);
+                    }}
+                    className="group flex items-center justify-between border border-snap-ash bg-snap-coal px-4 py-3.5 transition-colors hover:border-snap-yellow hover:bg-snap-smoke/40"
+                  >
+                    <span className="font-display text-[20px] sm:text-[22px] tracking-wide text-snap-chalk transition-colors group-hover:text-snap-yellow">
+                      CASEY&apos;S AGENDA
+                    </span>
+                    <span className="font-mono text-[10px] tracking-[0.2em] text-snap-mist transition-colors group-hover:text-snap-yellow">
+                      GAMEDAY →
+                    </span>
+                  </button>
+                )}
+                {hasBets && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpenBetsFor(currentMatch.matchNumber);
+                      setOpenAgendaFor(null);
+                    }}
+                    className="group flex items-center justify-between border border-snap-yellow/50 bg-gradient-to-r from-snap-yellow/10 to-snap-coal px-4 py-3.5 transition-colors hover:border-snap-yellow hover:from-snap-yellow/20"
+                  >
+                    <span className="font-display text-[20px] sm:text-[22px] tracking-wide text-snap-yellow">
+                      CASEY&apos;S BETS
+                    </span>
+                    <span className="font-mono text-[10px] tracking-[0.2em] text-snap-mist transition-colors group-hover:text-snap-yellow">
+                      UNDERDOG →
+                    </span>
+                  </button>
+                )}
+              </div>
+            );
+          })()}
       </aside>
 
       <style>{`
