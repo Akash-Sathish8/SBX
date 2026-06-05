@@ -562,7 +562,7 @@ export default function StadiumDrawer({
                 {events.map((ev, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-3 border border-snap-ash bg-snap-black/40 px-3 py-2.5"
+                    className="flex items-start gap-3 border border-solid border-snap-ash border-l-[3px] border-l-snap-yellow/70 bg-snap-carbon px-3.5 py-3"
                   >
                     {ev.time ? (
                       <span className="min-w-[54px] whitespace-nowrap pt-0.5 font-display text-[16px] leading-none tracking-wide text-snap-yellow">
