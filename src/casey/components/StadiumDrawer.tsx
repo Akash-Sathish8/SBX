@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { formatInTimezone } from '@/lib/time';
 import { zonedTimeToUtc } from '@/lib/time';
 import { shareMatch } from '@/lib/share';
+import { parseAgenda } from '@/lib/agenda';
 import Flag from './Flag';
 import FollowStar from './FollowStar';
 import { groupStandingsSearch } from '@/lib/external-links';
@@ -554,9 +555,40 @@ export default function StadiumDrawer({
       )}
       {currentMatch && openAgendaFor === currentMatch.matchNumber && (
         <CaseyInfoModal title="CASEY'S AGENDA" onClose={() => setOpenAgendaFor(null)}>
-          <div className="py-8 text-center font-mono text-[12px] leading-relaxed tracking-[0.14em] text-snap-mist">
-            Casey&apos;s gameday agenda — coming soon.
-          </div>
+          {(() => {
+            const events = parseAgenda(currentMatch.agenda);
+            if (events.length === 0) {
+              return (
+                <div className="py-8 text-center font-mono text-[12px] tracking-[0.14em] text-snap-mist">
+                  Casey hasn&apos;t posted his agenda for this game yet.
+                </div>
+              );
+            }
+            return (
+              <ol className="space-y-2.5">
+                {events.map((ev, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 border border-snap-ash bg-snap-black/40 px-3 py-2.5"
+                  >
+                    {ev.time ? (
+                      <span className="min-w-[54px] whitespace-nowrap pt-0.5 font-display text-[16px] leading-none tracking-wide text-snap-yellow">
+                        {ev.time}
+                      </span>
+                    ) : (
+                      <span
+                        className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-snap-yellow"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span className="font-body text-[13px] leading-snug text-snap-chalk">
+                      {ev.text}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            );
+          })()}
         </CaseyInfoModal>
       )}
       {currentMatch && openBetsFor === currentMatch.matchNumber && (

@@ -59,6 +59,7 @@ export interface ItineraryMatch {
   transportMode?: TransportMode | null;
   routeVia?: RouteVia | null;
   betSlipImage?: string;
+  agenda?: string;
 }
 
 export type CaseyState =
@@ -136,6 +137,7 @@ export interface MatchFieldOverride {
   sleepLng?: number;
   notes?: string | null;
   betSlipImage?: string;
+  agenda?: string;
 }
 
 export interface StadiumOverride {

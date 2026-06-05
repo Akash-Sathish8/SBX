@@ -218,6 +218,7 @@ function MatchEditor({
     sleepLat: match.sleepLat,
     sleepLng: match.sleepLng,
     notes: match.notes ?? '',
+    agenda: match.agenda ?? '',
   });
   const [betSlipImage, setBetSlipImage] = useState(match.betSlipImage ?? '');
   const [betSlipProcessing, setBetSlipProcessing] = useState(false);
@@ -356,6 +357,14 @@ function MatchEditor({
               onChange={(e) => setFields({ ...fields, notes: e.target.value })}
             />
           </Field>
+          <Field label="Gameday agenda (natural language — shown as cards in CASEY'S AGENDA)">
+            <textarea
+              className={`${inputCls} h-28 resize-none`}
+              value={fields.agenda}
+              onChange={(e) => setFields({ ...fields, agenda: e.target.value })}
+              placeholder={'One item per line works best, e.g.\n9am — land in Mexico City\nbreakfast at the hotel\n2pm — stadium tour\n5pm — kickoff'}
+            />
+          </Field>
           <button
             type="button"
             className={btnCls}
@@ -365,6 +374,7 @@ function MatchEditor({
                 fields: {
                   ...fields,
                   notes: fields.notes || null,
+                  agenda: fields.agenda || null,
                 },
               })
             }

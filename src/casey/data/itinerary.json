@@ -23,7 +23,8 @@
       "name": "Hotel Catedral",
       "type": "hotel"
     },
-    "betSlipImage": "/casey/bets/sample.jpg"
+    "betSlipImage": "/casey/bets/sample.jpg",
+    "agenda": "9am — land in Mexico City\nbreakfast at the hotel\n12pm — explore the Zocalo and grab tacos\n2:30pm — Estadio Azteca stadium tour\n5pm — Mexico vs South Africa kickoff\npost-match vlog from the hotel"
   },
   {
     "matchNumber": 2,
