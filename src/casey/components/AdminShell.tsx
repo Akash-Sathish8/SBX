@@ -331,6 +331,7 @@ function MatchEditor({
               <input
                 className={inputCls}
                 type="number"
+                onWheel={(e) => e.currentTarget.blur()}
                 step="any"
                 value={fields.sleepLat}
                 onChange={(e) =>
@@ -342,6 +343,7 @@ function MatchEditor({
               <input
                 className={inputCls}
                 type="number"
+                onWheel={(e) => e.currentTarget.blur()}
                 step="any"
                 value={fields.sleepLng}
                 onChange={(e) =>
@@ -394,6 +396,7 @@ function MatchEditor({
               <input
                 className={inputCls}
                 type="number"
+                onWheel={(e) => e.currentTarget.blur()}
                 value={result.homeScore ?? ''}
                 onChange={(e) =>
                   setResult({
@@ -407,6 +410,7 @@ function MatchEditor({
               <input
                 className={inputCls}
                 type="number"
+                onWheel={(e) => e.currentTarget.blur()}
                 value={result.awayScore ?? ''}
                 onChange={(e) =>
                   setResult({
@@ -791,6 +795,7 @@ function PositionTab({
               <input
                 className={inputCls}
                 type="number"
+                onWheel={(e) => e.currentTarget.blur()}
                 step="any"
                 value={lat}
                 onChange={(e) => setLat(Number(e.target.value))}
@@ -800,6 +805,7 @@ function PositionTab({
               <input
                 className={inputCls}
                 type="number"
+                onWheel={(e) => e.currentTarget.blur()}
                 step="any"
                 value={lng}
                 onChange={(e) => setLng(Number(e.target.value))}
@@ -1036,6 +1042,7 @@ function SpendTab({
           <input
             className={inputCls}
             type="number"
+            onWheel={(e) => e.currentTarget.blur()}
             value={s.budgetTotal}
             onChange={(e) => upd('budgetTotal', Number(e.target.value))}
           />
@@ -1046,6 +1053,7 @@ function SpendTab({
             <input
               className={inputCls}
               type="number"
+              onWheel={(e) => e.currentTarget.blur()}
               value={s.travelBudget}
               onChange={(e) => upd('travelBudget', Number(e.target.value))}
             />
@@ -1054,6 +1062,7 @@ function SpendTab({
             <input
               className={inputCls}
               type="number"
+              onWheel={(e) => e.currentTarget.blur()}
               value={s.travelActual}
               onChange={(e) => upd('travelActual', Number(e.target.value))}
             />
@@ -1062,6 +1071,7 @@ function SpendTab({
             <input
               className={inputCls}
               type="number"
+              onWheel={(e) => e.currentTarget.blur()}
               value={s.ticketsBudget}
               onChange={(e) => upd('ticketsBudget', Number(e.target.value))}
             />
@@ -1070,6 +1080,7 @@ function SpendTab({
             <input
               className={inputCls}
               type="number"
+              onWheel={(e) => e.currentTarget.blur()}
               value={s.ticketsActual}
               onChange={(e) => upd('ticketsActual', Number(e.target.value))}
             />
@@ -1078,6 +1089,7 @@ function SpendTab({
             <input
               className={inputCls}
               type="number"
+              onWheel={(e) => e.currentTarget.blur()}
               value={s.incidentalsBudget}
               onChange={(e) => upd('incidentalsBudget', Number(e.target.value))}
             />
@@ -1086,6 +1098,7 @@ function SpendTab({
             <input
               className={inputCls}
               type="number"
+              onWheel={(e) => e.currentTarget.blur()}
               value={s.incidentalsActual}
               onChange={(e) => upd('incidentalsActual', Number(e.target.value))}
             />
