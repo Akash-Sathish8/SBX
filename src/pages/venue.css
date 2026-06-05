@@ -162,7 +162,6 @@ section.block.alt h2,section.block.alt h3,section.block.alt .ssub{color:inherit}
 
 /* section header */
 .eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:#000;margin-bottom:11px}
-.eyebrow::before{content:"";width:22px;height:3px;background:var(--y)}
 .shead{font-family:'Anton','Barlow',sans-serif;font-size:clamp(28px,3.6vw,40px);color:var(--ink);letter-spacing:.5px;margin-bottom:5px}
 .ssub{color:var(--gray);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:26px}
 .elead{font-size:16px;line-height:1.55;color:var(--body);max-width:74ch;margin-bottom:20px}

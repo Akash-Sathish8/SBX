@@ -24,7 +24,6 @@ header.nav{position:sticky;top:0;z-index:50;background:var(--k);border-bottom:4p
 section.block{padding:48px 0;background:#fff}
 section.block.tint{background:#f7f6f2}
 .eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:#000;margin-bottom:11px}
-.eyebrow::before{content:"";width:22px;height:3px;background:var(--y)}
 .shead{font-family:'Anton','Barlow',sans-serif;font-size:clamp(28px,3.6vw,40px);color:var(--ink);letter-spacing:.5px;margin-bottom:20px}
 .shead:has(+ .ssub){margin-bottom:7px}
 .subhead{font-family:'Anton','Barlow',sans-serif;font-size:22px;color:var(--ink);letter-spacing:.5px;margin:30px 0 14px;display:flex;align-items:center;gap:10px}

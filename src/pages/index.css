@@ -49,7 +49,6 @@ h4{font-size:clamp(24px,2.4vw,32px);letter-spacing:1px}
 p{line-height:1.65;max-width:65ch}
 .lead{font-size:20px;line-height:1.65}
 .eyebrow{font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sb-gray);display:inline-flex;align-items:center;gap:8px}
-.eyebrow::before{content:"";width:12px;height:12px;background:var(--sb-yellow);display:inline-block;clip-path:polygon(0 0,100% 0,100% 70%,70% 100%,0 100%)}
 a{color:inherit}
 
 /* ---- layout ---- */

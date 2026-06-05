@@ -102,11 +102,13 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
       <div className="bld-tabs">
         <button className={'bld-tab' + (mode === 'matchup' ? ' on' : '')} onClick={() => setMode('matchup')}>By matchup</button>
         <button className={'bld-tab' + (mode === 'venue' ? ' on' : '')} onClick={() => { setMode('venue'); setVenue('') }}>By venue</button>
+        {mode === 'matchup' ? (
+          <div className="search bld-search"><span className="si">🔍</span><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
+        ) : null}
       </div>
 
       {mode === 'matchup' ? (
         <>
-          <div className="search bld-search"><span className="si">🔍</span><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
           <div className="bld-list">
             {matchupList.map((x) => (
               <button key={x.id} className="bld-mrow" onClick={() => onPick(x.id)}>
@@ -124,6 +126,7 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
             <div className="bld-venues">
               {venues.map((v: any) => (
                 <button key={v.id} className="bld-venue" onClick={() => setVenue(v.id)}>
+                  <img className="bld-vthumb" src={'/img/stadiums/' + v.id + '.jpg'} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} />
                   <span className="bld-vn">{v.name}</span>
                   <span className="bld-vc">{v.city} · {v.n} matches</span>
                 </button>
@@ -153,35 +156,54 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
 function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const [venue, setVenue] = useState<any>(null)
   const [weather, setWeather] = useState<{ temp: string; label: string } | null>(null)
+  const [getI, setGetI] = useState(0)
+  const [parkI, setParkI] = useState(0)
   const [preI, setPreI] = useState(0)
   const [eatI, setEatI] = useState(0)
   const [postI, setPostI] = useState(0)
   const [busy, setBusy] = useState('')
   const storyRef = useRef<HTMLDivElement>(null)
-  const squareRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let alive = true
-    setVenue(null); setWeather(null); setPreI(0); setEatI(0); setPostI(0)
+    setVenue(null); setWeather(null); setGetI(0); setParkI(0); setPreI(0); setEatI(0); setPostI(0)
     fetch('/data/venues/' + g.venue + '.json').then((r) => r.json()).then((v) => { if (alive) setVenue(v) }).catch(() => {})
     fetchMatchWeather(g.venue, g.dateISO).then((w) => { if (alive) setWeather(w) })
     return () => { alive = false }
   }, [g.venue, g.dateISO, g.id])
 
-  const intel = fi?.venues ? fi.venues[g.venue] : null
   const marches = fi?.marches ? fi.marches.filter((m: any) => marchRelevant(m, g)) : []
   const around = (venue && venue.around) || {}
   const preOpts: any[] = (around.pre || []).filter((s: any) => !s.fifa)
   const eatOpts: any[] = around.food || []
   const postOpts: any[] = around.post || []
-  const gtField = (intel?.fields || []).find((f: any) => f.label === 'Getting there')
-  const gettingThere = gtField ? (gtField.points && gtField.points.length ? gtField.points[0] : firstSentence(gtField.text)) : null
-  let parking: string | null = null
-  if (venue?.parking) {
-    if (venue.parking.lots && venue.parking.lots.length) parking = venue.parking.lots[0].name + (venue.parking.lots[0].price ? ' · ' + venue.parking.lots[0].price : '')
-    else if (venue.parking.summary) parking = firstSentence(venue.parking.summary)
-  }
   const fanwalk = marches.length ? { name: marches[0].title.replace(/—.*$/, '').trim(), note: firstSentence(marches[0].route) } : null
+
+  // Getting there: real, researched options pulled from the venue's transport + parking data.
+  const getThereOpts: any[] = useMemo(() => {
+    const t = (venue && venue.transport) || {}
+    const sentences = (s: any) => String(s || '').split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter(Boolean)
+    const bulletsOf = (item: any) => (item.points && item.points.length)
+      ? item.points.map((p: any) => (p.b ? p.b + (p.t ? ' — ' + p.t : '') : p.t))
+      : sentences(item.detail).slice(0, 3)
+    const o: any[] = []
+    ;(t.rail || []).forEach((r: any) => o.push({ name: r.name, tag: 'Train', bullets: bulletsOf(r), deal: r.deal }))
+    ;(t.bus || []).forEach((b: any) => o.push({ name: b.name, tag: 'Bus', bullets: bulletsOf(b), deal: b.deal }))
+    ;(t.shuttle || []).forEach((s: any) => o.push({ name: s.name, tag: 'Shuttle', bullets: bulletsOf(s), deal: s.deal }))
+    if (t.rideshare) o.push({ name: 'Rideshare & taxi', tag: 'Rideshare', bullets: sentences(t.rideshare).slice(0, 2) })
+    if (t.bike) o.push({ name: 'Bike & scooter', tag: 'Active', bullets: sentences(t.bike).slice(0, 2) })
+    if (venue && venue.parking) {
+      const lots: any[] = venue.parking.lots || []
+      o.push({ name: 'Drive & park', tag: 'Driving', driving: true, bullets: sentences(venue.parking.summary).slice(0, 2), lots })
+    }
+    return o
+  }, [venue])
+
+  const selGet = getThereOpts[getI] || null
+  const gettingThere = selGet ? selGet.name : null
+  const parkLots: any[] = selGet && selGet.driving ? (selGet.lots || []) : []
+  const selLot = parkLots[parkI] || null
+  const parking = selLot ? selLot.name + (selLot.price ? ' · ' + selLot.price : '') : null
 
   const plan: Plan = {
     home: teamName(g.home), away: teamName(g.away), homeFlag: teamFlag(g.home), awayFlag: teamFlag(g.away),
@@ -192,14 +214,14 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     post: postOpts[postI] ? { name: postOpts[postI].name, note: postOpts[postI].note } : null,
   }
 
-  async function download(fmt: 'story' | 'square') {
-    const node = (fmt === 'story' ? storyRef : squareRef).current
+  async function download(fmt: 'story') {
+    const node = storyRef.current
     if (!node) return
     setBusy(fmt)
     try {
       await new Promise((r) => setTimeout(r, 60))
-      const url = await toPng(node, { pixelRatio: 1, cacheBust: true, skipFonts: true, width: 1080, height: fmt === 'story' ? 1920 : 1080 })
-      const a = document.createElement('a'); a.href = url; a.download = `snapback-${g.id}-${fmt}.png`; a.click()
+      const url = await toPng(node, { pixelRatio: 1, cacheBust: true, skipFonts: true, width: 1080, height: 1920 })
+      const a = document.createElement('a'); a.href = url; a.download = `snapback-${g.id}-story.png`; a.click()
     } catch { /* noop */ } finally { setBusy('') }
   }
 
@@ -212,36 +234,87 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     </div>
   )
 
+  const GettingThere = ({ opts, val, set }: { opts: any[]; val: number; set: (n: number) => void }) => (
+    <div className="sb-group sb-getgroup">
+      <div className="sb-glab">Getting there <span className="sb-ghint">— pick how you'll arrive</span></div>
+      {opts.length ? (
+        <div className="gt-list">
+          {opts.map((o, i) => (
+            <div key={i} className={'gt-opt' + (val === i ? ' on' : '')} onClick={() => set(i)}>
+              <div className="gt-head">
+                <input type="radio" checked={val === i} onChange={() => set(i)} />
+                <span className="gt-name">{o.name}</span>
+                <span className="gt-tag">{o.tag}</span>
+              </div>
+              {val === i ? (
+                <ul className="gt-bul">
+                  {o.bullets.map((b: string, j: number) => <li key={j}>{b}</li>)}
+                  {o.deal ? <li className="gt-deal">Fare · {o.deal}</li> : null}
+                  {o.driving ? <li className="gt-deal">Pick your lot in the Parking tab below ↓</li> : null}
+                </ul>
+              ) : null}
+            </div>
+          ))}
+        </div>
+      ) : <div className="sb-opt" style={{ color: '#999' }}>No transport options listed for this venue yet.</div>}
+    </div>
+  )
+
+  const Parking = ({ lots, val, set }: { lots: any[]; val: number; set: (n: number) => void }) => (
+    <div className="sb-group sb-getgroup sb-parkgroup">
+      <div className="sb-glab">🅿 Parking <span className="sb-ghint">— where you'll leave the car</span></div>
+      {lots.length ? (
+        <div className="gt-list">
+          {lots.map((l, i) => (
+            <div key={i} className={'gt-opt' + (val === i ? ' on' : '')} onClick={() => set(i)}>
+              <div className="gt-head">
+                <input type="radio" checked={val === i} onChange={() => set(i)} />
+                <span className="gt-name">{l.name}</span>
+              </div>
+              {l.price ? <div className="gt-price">{l.price}</div> : null}
+              {val === i ? (
+                <ul className="gt-bul">
+                  {(l.points && l.points.length
+                    ? l.points.map((p: any) => (p.b ? p.b + (p.t ? ' — ' + p.t : '') : p.t))
+                    : [firstSentence(l.detail)]).map((b: string, j: number) => <li key={j}>{b}</li>)}
+                </ul>
+              ) : null}
+            </div>
+          ))}
+        </div>
+      ) : <div className="sb-opt" style={{ color: '#999' }}>No fan parking listed — transit is the move here.</div>}
+    </div>
+  )
+
   return (
     <section className="block"><div className="container">
-      <button className="bld-backlink" onClick={onBack}>← Choose another match</button>
-      <div className="eyebrow">Step 2 · {teamName(g.home)} v {teamName(g.away)}</div>
+      <div className="bld-tophead">
+        <button className="bld-backlink" onClick={onBack}>← Choose another match</button>
+        <div className="eyebrow bld-step">Step 2 · {teamName(g.home)} v {teamName(g.away)}</div>
+      </div>
       <h2 className="shead">Make your decisions</h2>
       <div className="ssub">{g.date}{g.ko ? ' · ' + g.ko : ''} · {g.venueName}</div>
       <div className="sb-wrap">
         <div className="sb-auto">
           {weather ? <span className="sb-pill">Weather · {weather.temp} {weather.label}</span> : null}
-          {gettingThere ? <span className="sb-pill">Getting there ✓</span> : null}
-          {parking ? <span className="sb-pill">Parking ✓</span> : null}
-          {fanwalk ? <span className="sb-pill">Fan walk ✓</span> : null}
+          {fanwalk ? <span className="sb-pill">Fan walk · {fanwalk.name}</span> : null}
         </div>
+        <GettingThere opts={getThereOpts} val={getI} set={setGetI} />
+        {selGet && selGet.driving ? <Parking lots={parkLots} val={parkI} set={setParkI} /> : null}
         <div className="sb-row">
           <Picker label="Before the match" opts={preOpts} val={preI} set={setPreI} />
           <Picker label="Eat inside" opts={eatOpts} val={eatI} set={setEatI} />
           <Picker label="After the whistle" opts={postOpts} val={postI} set={setPostI} />
         </div>
         <div className="sb-actions">
-          <button className="sb-btn" disabled={!!busy} onClick={() => download('story')}>{busy === 'story' ? 'Rendering…' : 'Download story (9:16)'}</button>
-          <button className="sb-btn dark" disabled={!!busy} onClick={() => download('square')}>{busy === 'square' ? 'Rendering…' : 'Download square (1:1)'}</button>
+          <button className="sb-btn" disabled={!!busy} onClick={() => download('story')}>{busy === 'story' ? 'Rendering…' : 'Share'}</button>
         </div>
         <div className="sb-preview">
           <div className="sb-pvbox"><div className="sb-pvcap">Story · 9:16</div><div className="sb-scale-story"><ShareCard plan={plan} format="story" /></div></div>
-          <div className="sb-pvbox"><div className="sb-pvcap">Square · 1:1</div><div className="sb-scale-square"><ShareCard plan={plan} format="square" /></div></div>
         </div>
       </div>
       <div className="sb-stage" aria-hidden>
         <ShareCard ref={storyRef} plan={plan} format="story" />
-        <ShareCard ref={squareRef} plan={plan} format="square" />
       </div>
     </div></section>
   )

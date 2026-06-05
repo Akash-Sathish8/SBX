@@ -160,13 +160,13 @@ function Home() {
           <div className="sec-head">
             <span className="eyebrow">The guide</span>
             <h2>Know before you go</h2>
-            <p>Fan zones, how to get there, supporter marches and the details that matter — for all 16 World Cup venues.</p>
+            <p>How to get there, what to do before, where to eat during and where to go after — for all 16 World Cup venues.</p>
           </div>
           <div className="kbyg-grid">
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">★</div><div className="kt">Fan zones</div><div className="kd">Where to gather and watch in every host city.</div></a>
             <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">▦</div><div className="kt">Getting there</div><div className="kd">Transit, parking and the last mile to each stadium.</div></a>
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">⚑</div><div className="kt">Supporter marches</div><div className="kd">When and where each nation walks in together.</div></a>
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">✓</div><div className="kt">Stadium tips</div><div className="kd">Bag rules, food, altitude and heat — what to expect.</div></a>
+            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">⚑</div><div className="kt">Before the match</div><div className="kd">Fan zones, supporter marches and where to be pre-kickoff.</div></a>
+            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">★</div><div className="kt">Where to eat</div><div className="kd">Food and drink around the ground and inside the stadium.</div></a>
+            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">✓</div><div className="kt">After the whistle</div><div className="kd">Where to head once the final whistle blows, win or lose.</div></a>
           </div>
           <a href="/wc26-fan-intel.html" className="kbyg-more">Open the full guide <span className="kb-arrow">→</span></a>
         </div>
