@@ -17,6 +17,16 @@ import { Route as GameRouteImport } from './routes/game'
 import { Route as CaseyRouteImport } from './routes/casey'
 import { Route as BuildRouteImport } from './routes/build'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiVisibilityRouteImport } from './routes/api/visibility'
+import { Route as ApiTodayRouteImport } from './routes/api/today'
+import { Route as ApiStandingsRouteImport } from './routes/api/standings'
+import { Route as ApiMatchScoreRouteImport } from './routes/api/match-score'
+import { Route as ApiLiveTodayRouteImport } from './routes/api/live-today'
+import { Route as ApiLiveRouteImport } from './routes/api/live'
+import { Route as ApiBracketRouteImport } from './routes/api/bracket'
+import { Route as ApiBootstrapRouteImport } from './routes/api/bootstrap'
+import { Route as CaseyMatchNumberRouteImport } from './routes/casey.match.$number'
+import { Route as ApiStandingsAllRouteImport } from './routes/api/standings.all'
 
 const VenuesRoute = VenuesRouteImport.update({
   id: '/venues',
@@ -58,37 +68,117 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiVisibilityRoute = ApiVisibilityRouteImport.update({
+  id: '/api/visibility',
+  path: '/api/visibility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTodayRoute = ApiTodayRouteImport.update({
+  id: '/api/today',
+  path: '/api/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStandingsRoute = ApiStandingsRouteImport.update({
+  id: '/api/standings',
+  path: '/api/standings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMatchScoreRoute = ApiMatchScoreRouteImport.update({
+  id: '/api/match-score',
+  path: '/api/match-score',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiLiveTodayRoute = ApiLiveTodayRouteImport.update({
+  id: '/api/live-today',
+  path: '/api/live-today',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiLiveRoute = ApiLiveRouteImport.update({
+  id: '/api/live',
+  path: '/api/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiBracketRoute = ApiBracketRouteImport.update({
+  id: '/api/bracket',
+  path: '/api/bracket',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiBootstrapRoute = ApiBootstrapRouteImport.update({
+  id: '/api/bootstrap',
+  path: '/api/bootstrap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseyMatchNumberRoute = CaseyMatchNumberRouteImport.update({
+  id: '/match/$number',
+  path: '/match/$number',
+  getParentRoute: () => CaseyRoute,
+} as any)
+const ApiStandingsAllRoute = ApiStandingsAllRouteImport.update({
+  id: '/all',
+  path: '/all',
+  getParentRoute: () => ApiStandingsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/build': typeof BuildRoute
-  '/casey': typeof CaseyRoute
+  '/casey': typeof CaseyRouteWithChildren
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
+  '/api/bootstrap': typeof ApiBootstrapRoute
+  '/api/bracket': typeof ApiBracketRoute
+  '/api/live': typeof ApiLiveRoute
+  '/api/live-today': typeof ApiLiveTodayRoute
+  '/api/match-score': typeof ApiMatchScoreRoute
+  '/api/standings': typeof ApiStandingsRouteWithChildren
+  '/api/today': typeof ApiTodayRoute
+  '/api/visibility': typeof ApiVisibilityRoute
+  '/api/standings/all': typeof ApiStandingsAllRoute
+  '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/build': typeof BuildRoute
-  '/casey': typeof CaseyRoute
+  '/casey': typeof CaseyRouteWithChildren
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
+  '/api/bootstrap': typeof ApiBootstrapRoute
+  '/api/bracket': typeof ApiBracketRoute
+  '/api/live': typeof ApiLiveRoute
+  '/api/live-today': typeof ApiLiveTodayRoute
+  '/api/match-score': typeof ApiMatchScoreRoute
+  '/api/standings': typeof ApiStandingsRouteWithChildren
+  '/api/today': typeof ApiTodayRoute
+  '/api/visibility': typeof ApiVisibilityRoute
+  '/api/standings/all': typeof ApiStandingsAllRoute
+  '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/build': typeof BuildRoute
-  '/casey': typeof CaseyRoute
+  '/casey': typeof CaseyRouteWithChildren
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
+  '/api/bootstrap': typeof ApiBootstrapRoute
+  '/api/bracket': typeof ApiBracketRoute
+  '/api/live': typeof ApiLiveRoute
+  '/api/live-today': typeof ApiLiveTodayRoute
+  '/api/match-score': typeof ApiMatchScoreRoute
+  '/api/standings': typeof ApiStandingsRouteWithChildren
+  '/api/today': typeof ApiTodayRoute
+  '/api/visibility': typeof ApiVisibilityRoute
+  '/api/standings/all': typeof ApiStandingsAllRoute
+  '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +191,16 @@ export interface FileRouteTypes {
     | '/guide'
     | '/venue'
     | '/venues'
+    | '/api/bootstrap'
+    | '/api/bracket'
+    | '/api/live'
+    | '/api/live-today'
+    | '/api/match-score'
+    | '/api/standings'
+    | '/api/today'
+    | '/api/visibility'
+    | '/api/standings/all'
+    | '/casey/match/$number'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +211,16 @@ export interface FileRouteTypes {
     | '/guide'
     | '/venue'
     | '/venues'
+    | '/api/bootstrap'
+    | '/api/bracket'
+    | '/api/live'
+    | '/api/live-today'
+    | '/api/match-score'
+    | '/api/standings'
+    | '/api/today'
+    | '/api/visibility'
+    | '/api/standings/all'
+    | '/casey/match/$number'
   id:
     | '__root__'
     | '/'
@@ -121,17 +231,35 @@ export interface FileRouteTypes {
     | '/guide'
     | '/venue'
     | '/venues'
+    | '/api/bootstrap'
+    | '/api/bracket'
+    | '/api/live'
+    | '/api/live-today'
+    | '/api/match-score'
+    | '/api/standings'
+    | '/api/today'
+    | '/api/visibility'
+    | '/api/standings/all'
+    | '/casey/match/$number'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuildRoute: typeof BuildRoute
-  CaseyRoute: typeof CaseyRoute
+  CaseyRoute: typeof CaseyRouteWithChildren
   GameRoute: typeof GameRoute
   GamesRoute: typeof GamesRoute
   GuideRoute: typeof GuideRoute
   VenueRoute: typeof VenueRoute
   VenuesRoute: typeof VenuesRoute
+  ApiBootstrapRoute: typeof ApiBootstrapRoute
+  ApiBracketRoute: typeof ApiBracketRoute
+  ApiLiveRoute: typeof ApiLiveRoute
+  ApiLiveTodayRoute: typeof ApiLiveTodayRoute
+  ApiMatchScoreRoute: typeof ApiMatchScoreRoute
+  ApiStandingsRoute: typeof ApiStandingsRouteWithChildren
+  ApiTodayRoute: typeof ApiTodayRoute
+  ApiVisibilityRoute: typeof ApiVisibilityRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,18 +320,118 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/visibility': {
+      id: '/api/visibility'
+      path: '/api/visibility'
+      fullPath: '/api/visibility'
+      preLoaderRoute: typeof ApiVisibilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/today': {
+      id: '/api/today'
+      path: '/api/today'
+      fullPath: '/api/today'
+      preLoaderRoute: typeof ApiTodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/standings': {
+      id: '/api/standings'
+      path: '/api/standings'
+      fullPath: '/api/standings'
+      preLoaderRoute: typeof ApiStandingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/match-score': {
+      id: '/api/match-score'
+      path: '/api/match-score'
+      fullPath: '/api/match-score'
+      preLoaderRoute: typeof ApiMatchScoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/live-today': {
+      id: '/api/live-today'
+      path: '/api/live-today'
+      fullPath: '/api/live-today'
+      preLoaderRoute: typeof ApiLiveTodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/live': {
+      id: '/api/live'
+      path: '/api/live'
+      fullPath: '/api/live'
+      preLoaderRoute: typeof ApiLiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/bracket': {
+      id: '/api/bracket'
+      path: '/api/bracket'
+      fullPath: '/api/bracket'
+      preLoaderRoute: typeof ApiBracketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/bootstrap': {
+      id: '/api/bootstrap'
+      path: '/api/bootstrap'
+      fullPath: '/api/bootstrap'
+      preLoaderRoute: typeof ApiBootstrapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/casey/match/$number': {
+      id: '/casey/match/$number'
+      path: '/match/$number'
+      fullPath: '/casey/match/$number'
+      preLoaderRoute: typeof CaseyMatchNumberRouteImport
+      parentRoute: typeof CaseyRoute
+    }
+    '/api/standings/all': {
+      id: '/api/standings/all'
+      path: '/all'
+      fullPath: '/api/standings/all'
+      preLoaderRoute: typeof ApiStandingsAllRouteImport
+      parentRoute: typeof ApiStandingsRoute
+    }
   }
 }
+
+interface CaseyRouteChildren {
+  CaseyMatchNumberRoute: typeof CaseyMatchNumberRoute
+}
+
+const CaseyRouteChildren: CaseyRouteChildren = {
+  CaseyMatchNumberRoute: CaseyMatchNumberRoute,
+}
+
+const CaseyRouteWithChildren = CaseyRoute._addFileChildren(CaseyRouteChildren)
+
+interface ApiStandingsRouteChildren {
+  ApiStandingsAllRoute: typeof ApiStandingsAllRoute
+}
+
+const ApiStandingsRouteChildren: ApiStandingsRouteChildren = {
+  ApiStandingsAllRoute: ApiStandingsAllRoute,
+}
+
+const ApiStandingsRouteWithChildren = ApiStandingsRoute._addFileChildren(
+  ApiStandingsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuildRoute: BuildRoute,
-  CaseyRoute: CaseyRoute,
+  CaseyRoute: CaseyRouteWithChildren,
   GameRoute: GameRoute,
   GamesRoute: GamesRoute,
   GuideRoute: GuideRoute,
   VenueRoute: VenueRoute,
   VenuesRoute: VenuesRoute,
+  ApiBootstrapRoute: ApiBootstrapRoute,
+  ApiBracketRoute: ApiBracketRoute,
+  ApiLiveRoute: ApiLiveRoute,
+  ApiLiveTodayRoute: ApiLiveTodayRoute,
+  ApiMatchScoreRoute: ApiMatchScoreRoute,
+  ApiStandingsRoute: ApiStandingsRouteWithChildren,
+  ApiTodayRoute: ApiTodayRoute,
+  ApiVisibilityRoute: ApiVisibilityRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
