@@ -495,52 +495,34 @@ export default function StadiumDrawer({
           )}
         </div>
 
-        {/* Casey's Agenda + Casey's Bets — each shown ONLY when the current carousel
-            match actually has that content; each opens a modal for that match. */}
-        {currentMatch &&
-          (() => {
-            const hasAgenda = parseAgenda(currentMatch.agenda).length > 0;
-            const hasBets = Boolean(currentMatch.betSlipImage);
-            if (!hasAgenda && !hasBets) return null;
-            return (
-              <div className="grid grid-cols-1 gap-2.5 bg-snap-black/40 px-4 py-3">
-                {hasAgenda && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setOpenAgendaFor(currentMatch.matchNumber);
-                      setOpenBetsFor(null);
-                    }}
-                    className="group flex items-center justify-between border border-snap-ash bg-snap-coal px-4 py-3.5 transition-colors hover:border-snap-yellow hover:bg-snap-smoke/40"
-                  >
-                    <span className="font-display text-[20px] sm:text-[22px] tracking-wide text-snap-chalk transition-colors group-hover:text-snap-yellow">
-                      CASEY&apos;S AGENDA
-                    </span>
-                    <span className="font-mono text-[10px] tracking-[0.2em] text-snap-mist transition-colors group-hover:text-snap-yellow">
-                      GAMEDAY →
-                    </span>
-                  </button>
-                )}
-                {hasBets && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setOpenBetsFor(currentMatch.matchNumber);
-                      setOpenAgendaFor(null);
-                    }}
-                    className="group flex items-center justify-between border border-snap-yellow/50 bg-gradient-to-r from-snap-yellow/10 to-snap-coal px-4 py-3.5 transition-colors hover:border-snap-yellow hover:from-snap-yellow/20"
-                  >
-                    <span className="font-display text-[20px] sm:text-[22px] tracking-wide text-snap-yellow">
-                      CASEY&apos;S BETS
-                    </span>
-                    <span className="font-mono text-[10px] tracking-[0.2em] text-snap-mist transition-colors group-hover:text-snap-yellow">
-                      UNDERDOG →
-                    </span>
-                  </button>
-                )}
-              </div>
-            );
-          })()}
+        {/* Casey's Agenda + Casey's Bets — always shown for the current carousel match;
+            greyed/disabled (with a hover hint) when that match has no content yet. */}
+        {currentMatch && (
+          <div className="grid grid-cols-1 gap-2.5 bg-snap-black/40 px-4 py-3">
+            <CaseyActionButton
+              label="CASEY'S AGENDA"
+              enabled={parseAgenda(currentMatch.agenda).length > 0}
+              accent="chalk"
+              activeHint="GAMEDAY →"
+              emptyTitle="Casey hasn't mapped out this gameday yet"
+              onClick={() => {
+                setOpenAgendaFor(currentMatch.matchNumber);
+                setOpenBetsFor(null);
+              }}
+            />
+            <CaseyActionButton
+              label="CASEY'S BETS"
+              enabled={Boolean(currentMatch.betSlipImage)}
+              accent="yellow"
+              activeHint="UNDERDOG →"
+              emptyTitle="Casey hasn't dropped his bet for this gameday yet"
+              onClick={() => {
+                setOpenBetsFor(currentMatch.matchNumber);
+                setOpenAgendaFor(null);
+              }}
+            />
+          </div>
+        )}
       </aside>
 
       <style>{`
@@ -628,6 +610,63 @@ export default function StadiumDrawer({
         </CaseyInfoModal>
       )}
     </div>
+  );
+}
+
+function CaseyActionButton({
+  label,
+  enabled,
+  accent,
+  activeHint,
+  emptyTitle,
+  onClick,
+}: {
+  label: string;
+  enabled: boolean;
+  accent: 'yellow' | 'chalk';
+  activeHint: string;
+  emptyTitle: string;
+  onClick: () => void;
+}) {
+  if (!enabled) {
+    return (
+      <button
+        type="button"
+        disabled
+        title={emptyTitle}
+        className="group flex cursor-not-allowed items-center justify-between border border-snap-ash/40 bg-snap-coal/30 px-4 py-3.5"
+      >
+        <span className="font-display text-[20px] sm:text-[22px] tracking-wide text-snap-fog">
+          {label}
+        </span>
+        <span className="whitespace-nowrap font-mono text-[10px] tracking-[0.16em] text-snap-fog">
+          <span className="group-hover:hidden">— NOT YET</span>
+          <span className="hidden text-snap-mist group-hover:inline">not posted yet</span>
+        </span>
+      </button>
+    );
+  }
+  const shell =
+    accent === 'yellow'
+      ? 'border-snap-yellow/50 bg-gradient-to-r from-snap-yellow/10 to-snap-coal hover:border-snap-yellow hover:from-snap-yellow/20'
+      : 'border-snap-ash bg-snap-coal hover:border-snap-yellow hover:bg-snap-smoke/40';
+  const labelCls =
+    accent === 'yellow'
+      ? 'text-snap-yellow'
+      : 'text-snap-chalk transition-colors group-hover:text-snap-yellow';
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group flex items-center justify-between border px-4 py-3.5 transition-colors ${shell}`}
+    >
+      <span className={`font-display text-[20px] sm:text-[22px] tracking-wide ${labelCls}`}>
+        {label}
+      </span>
+      <span className="font-mono text-[10px] tracking-[0.2em] text-snap-mist transition-colors group-hover:text-snap-yellow">
+        {activeHint}
+      </span>
+    </button>
   );
 }
 
