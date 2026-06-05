@@ -27,10 +27,8 @@ import { Route as ApiLiveRouteImport } from './routes/api/live'
 import { Route as ApiBracketRouteImport } from './routes/api/bracket'
 import { Route as ApiBootstrapRouteImport } from './routes/api/bootstrap'
 import { Route as CaseyMatchNumberRouteImport } from './routes/casey.match.$number'
-import { Route as ApiTweetsMatchNumberRouteImport } from './routes/api/tweets/$matchNumber'
 import { Route as ApiStandingsAllRouteImport } from './routes/api/standings.all'
 import { Route as ApiAdminUpdateRouteImport } from './routes/api/admin/update'
-import { Route as ApiAdminTweetsRouteImport } from './routes/api/admin/tweets'
 import { Route as ApiAdminLoginRouteImport } from './routes/api/admin/login'
 import { Route as ApiAdminEspnHealthRouteImport } from './routes/api/admin/espn-health'
 import { Route as ApiAdminBootstrapRouteImport } from './routes/api/admin/bootstrap'
@@ -126,11 +124,6 @@ const CaseyMatchNumberRoute = CaseyMatchNumberRouteImport.update({
   path: '/match/$number',
   getParentRoute: () => CaseyRoute,
 } as any)
-const ApiTweetsMatchNumberRoute = ApiTweetsMatchNumberRouteImport.update({
-  id: '/api/tweets/$matchNumber',
-  path: '/api/tweets/$matchNumber',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiStandingsAllRoute = ApiStandingsAllRouteImport.update({
   id: '/all',
   path: '/all',
@@ -139,11 +132,6 @@ const ApiStandingsAllRoute = ApiStandingsAllRouteImport.update({
 const ApiAdminUpdateRoute = ApiAdminUpdateRouteImport.update({
   id: '/api/admin/update',
   path: '/api/admin/update',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminTweetsRoute = ApiAdminTweetsRouteImport.update({
-  id: '/api/admin/tweets',
-  path: '/api/admin/tweets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAdminLoginRoute = ApiAdminLoginRouteImport.update({
@@ -189,10 +177,8 @@ export interface FileRoutesByFullPath {
   '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
   '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
   '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/tweets': typeof ApiAdminTweetsRoute
   '/api/admin/update': typeof ApiAdminUpdateRoute
   '/api/standings/all': typeof ApiStandingsAllRoute
-  '/api/tweets/$matchNumber': typeof ApiTweetsMatchNumberRoute
   '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
 export interface FileRoutesByTo {
@@ -216,10 +202,8 @@ export interface FileRoutesByTo {
   '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
   '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
   '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/tweets': typeof ApiAdminTweetsRoute
   '/api/admin/update': typeof ApiAdminUpdateRoute
   '/api/standings/all': typeof ApiStandingsAllRoute
-  '/api/tweets/$matchNumber': typeof ApiTweetsMatchNumberRoute
   '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
 export interface FileRoutesById {
@@ -245,10 +229,8 @@ export interface FileRoutesById {
   '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
   '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
   '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/tweets': typeof ApiAdminTweetsRoute
   '/api/admin/update': typeof ApiAdminUpdateRoute
   '/api/standings/all': typeof ApiStandingsAllRoute
-  '/api/tweets/$matchNumber': typeof ApiTweetsMatchNumberRoute
   '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
 export interface FileRouteTypes {
@@ -275,10 +257,8 @@ export interface FileRouteTypes {
     | '/api/admin/bootstrap'
     | '/api/admin/espn-health'
     | '/api/admin/login'
-    | '/api/admin/tweets'
     | '/api/admin/update'
     | '/api/standings/all'
-    | '/api/tweets/$matchNumber'
     | '/casey/match/$number'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -302,10 +282,8 @@ export interface FileRouteTypes {
     | '/api/admin/bootstrap'
     | '/api/admin/espn-health'
     | '/api/admin/login'
-    | '/api/admin/tweets'
     | '/api/admin/update'
     | '/api/standings/all'
-    | '/api/tweets/$matchNumber'
     | '/casey/match/$number'
   id:
     | '__root__'
@@ -330,10 +308,8 @@ export interface FileRouteTypes {
     | '/api/admin/bootstrap'
     | '/api/admin/espn-health'
     | '/api/admin/login'
-    | '/api/admin/tweets'
     | '/api/admin/update'
     | '/api/standings/all'
-    | '/api/tweets/$matchNumber'
     | '/casey/match/$number'
   fileRoutesById: FileRoutesById
 }
@@ -357,9 +333,7 @@ export interface RootRouteChildren {
   ApiAdminBootstrapRoute: typeof ApiAdminBootstrapRoute
   ApiAdminEspnHealthRoute: typeof ApiAdminEspnHealthRoute
   ApiAdminLoginRoute: typeof ApiAdminLoginRoute
-  ApiAdminTweetsRoute: typeof ApiAdminTweetsRoute
   ApiAdminUpdateRoute: typeof ApiAdminUpdateRoute
-  ApiTweetsMatchNumberRoute: typeof ApiTweetsMatchNumberRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -490,13 +464,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseyMatchNumberRouteImport
       parentRoute: typeof CaseyRoute
     }
-    '/api/tweets/$matchNumber': {
-      id: '/api/tweets/$matchNumber'
-      path: '/api/tweets/$matchNumber'
-      fullPath: '/api/tweets/$matchNumber'
-      preLoaderRoute: typeof ApiTweetsMatchNumberRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/standings/all': {
       id: '/api/standings/all'
       path: '/all'
@@ -509,13 +476,6 @@ declare module '@tanstack/react-router' {
       path: '/api/admin/update'
       fullPath: '/api/admin/update'
       preLoaderRoute: typeof ApiAdminUpdateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/tweets': {
-      id: '/api/admin/tweets'
-      path: '/api/admin/tweets'
-      fullPath: '/api/admin/tweets'
-      preLoaderRoute: typeof ApiAdminTweetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/login': {
@@ -595,9 +555,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminBootstrapRoute: ApiAdminBootstrapRoute,
   ApiAdminEspnHealthRoute: ApiAdminEspnHealthRoute,
   ApiAdminLoginRoute: ApiAdminLoginRoute,
-  ApiAdminTweetsRoute: ApiAdminTweetsRoute,
   ApiAdminUpdateRoute: ApiAdminUpdateRoute,
-  ApiTweetsMatchNumberRoute: ApiTweetsMatchNumberRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
