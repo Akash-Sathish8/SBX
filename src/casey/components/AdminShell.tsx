@@ -26,7 +26,7 @@ const inputCls =
 const btnCls =
   'bg-snap-yellow text-snap-black font-mono text-xs tracking-widest px-4 py-2 hover:bg-snap-yellowDim transition-colors disabled:opacity-50';
 const btnDimCls =
-  'border border-snap-ash text-snap-mist font-mono text-xs tracking-widest px-4 py-2 hover:text-snap-yellow hover:border-snap-yellow transition-colors';
+  'border border-snap-yellow/50 bg-snap-yellow/5 text-snap-yellow font-mono text-xs tracking-widest px-4 py-2 hover:bg-snap-yellow/15 hover:border-snap-yellow transition-colors';
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (

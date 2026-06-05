@@ -16,12 +16,17 @@
 .casey-shell *, .casey-shell *::before, .casey-shell *::after { box-sizing: border-box; }
 
 /* Tailwind preflight is disabled (to avoid resetting SBX's nav), so re-add the one reset that
-   matters here: native <button> background. Element-level specificity lets Tailwind bg-*
-   utilities still win. Fixes SPEND/OPENER showing the OS-default light-grey button bg. */
-button, [type='button'], [type='reset'], [type='submit'] {
-  -webkit-appearance: button;
-  background-color: transparent;
-  background-image: none;
+   matters: native <button> background. MUST live in @layer base so the Tailwind bg-* utilities
+   (later layer) still win — otherwise this `[type='button']` rule (same specificity, emitted
+   after the utilities) blanks out every yellow <button> (e.g. admin SAVE / login ENTER),
+   leaving them transparent until :hover. Bare buttons with no bg class (tracker SPEND/OPENER)
+   still get a transparent reset. */
+@layer base {
+  button, [type='button'], [type='reset'], [type='submit'] {
+    -webkit-appearance: button;
+    background-color: transparent;
+    background-image: none;
+  }
 }
 
 .font-display { font-family:'Bebas Neue','Oswald',Impact,sans-serif; letter-spacing:.01em; }
