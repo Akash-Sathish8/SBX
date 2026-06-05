@@ -33,6 +33,7 @@ interface AdminData {
   stadiums?: Record<string, Stadium>;
   spend?: SpendTracker;
   override?: PositionOverride | null;
+  underdogReferral?: string;
 }
 
 function AdminRoute() {
@@ -91,6 +92,7 @@ function AdminRoute() {
           stadiums={state.stadiums!}
           spend={state.spend!}
           override={state.override ?? null}
+          underdogReferral={state.underdogReferral ?? ''}
           onRefresh={load}
         />
       </div>

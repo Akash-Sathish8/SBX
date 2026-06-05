@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { verifyAdminFromRequest } from '@/lib/auth';
 import { getMergedItinerary, getMergedStadiums } from '@/lib/merged-itinerary';
-import { getPositionOverride, getSpend } from '@/lib/kv';
+import { getPositionOverride, getSpend, getUnderdogReferral } from '@/lib/kv';
 
 // Admin page data + auth gate in one call. The /admin route component
 // fetches this on mount: { authed:false } → render AdminLogin; otherwise
@@ -17,14 +17,15 @@ export const Route = createFileRoute('/api/admin/bootstrap')({
             { headers: { 'Cache-Control': 'no-store, max-age=0' } },
           );
         }
-        const [itinerary, stadiums, spend, override] = await Promise.all([
+        const [itinerary, stadiums, spend, override, underdogReferral] = await Promise.all([
           getMergedItinerary(),
           getMergedStadiums(),
           getSpend(),
           getPositionOverride(),
+          getUnderdogReferral(),
         ]);
         return Response.json(
-          { ok: true, authed: true, itinerary, stadiums, spend, override },
+          { ok: true, authed: true, itinerary, stadiums, spend, override, underdogReferral },
           { headers: { 'Cache-Control': 'no-store, max-age=0' } },
         );
       },

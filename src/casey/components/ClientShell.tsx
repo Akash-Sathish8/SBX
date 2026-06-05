@@ -37,6 +37,7 @@ interface Props {
   stadiums: Record<string, Stadium>;
   initialMatchNumber?: number;
   visibility?: { showLodging: boolean; showTransport: boolean };
+  underdogReferral?: string;
   simTimeIso?: string | null;
 }
 
@@ -59,6 +60,7 @@ export default function ClientShell({
   stadiums,
   initialMatchNumber,
   visibility = { showLodging: false, showTransport: false },
+  underdogReferral = '',
   simTimeIso = null,
 }: Props) {
   const [location, setLocation] = useState(initialLocation);
@@ -306,6 +308,7 @@ export default function ClientShell({
           highlightMatchNumber={highlightMatchNumber}
           onClose={closeStadiumDrawer}
           visibility={visibility}
+          underdogReferral={underdogReferral}
         />
       )}
       <ScheduleDrawer

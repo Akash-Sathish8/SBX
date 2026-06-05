@@ -22,7 +22,8 @@
     "lodging": {
       "name": "Hotel Catedral",
       "type": "hotel"
-    }
+    },
+    "betSlipImage": "/casey/bets/sample.jpg"
   },
   {
     "matchNumber": 2,
