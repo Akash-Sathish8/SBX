@@ -9,8 +9,7 @@ import {
   setYouTubeId,
   setStadiumOverride,
   setVisibilityFlags,
-  setTweetTag,
-  clearTweetTag,
+  setUnderdogReferral,
 } from '@/lib/kv';
 
 export const Route = createFileRoute('/api/admin/update')({
@@ -60,22 +59,8 @@ export const Route = createFileRoute('/api/admin/update')({
                 showTransport: Boolean(payload.showTransport),
               });
               break;
-            case 'set-tweet-tag': {
-              const matchNumbers: number[] = Array.isArray(payload.matchNumbers)
-                ? payload.matchNumbers
-                    .map((n: unknown) => Number(n))
-                    .filter((n: number) => Number.isFinite(n))
-                : [];
-              await setTweetTag(payload.tweetId, {
-                matchNumbers,
-                confidence: 1,
-                manual: true,
-                taggedAt: new Date().toISOString(),
-              });
-              break;
-            }
-            case 'clear-tweet-tag':
-              await clearTweetTag(payload.tweetId);
+            case 'set-underdog-referral':
+              await setUnderdogReferral(payload.url ?? '');
               break;
             default:
               return Response.json(

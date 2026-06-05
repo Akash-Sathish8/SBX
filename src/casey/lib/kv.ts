@@ -8,7 +8,6 @@ import type {
   StadiumOverride,
 } from './types';
 import type { HealthRecord } from './health';
-import type { Tweet } from './x';
 
 const KV_TABLE = 'kv';
 
@@ -235,76 +234,15 @@ export async function setHealthRecord(rec: HealthRecord): Promise<void> {
 }
 
 // ──────────────────────────────────────────────────────────────────
-// X / Twitter feed storage
+// Underdog Fantasy referral link (global)
 // ──────────────────────────────────────────────────────────────────
 
-const KEY_TWEETS = 'x:tweets';                   // Record<tweetId, Tweet>
-const KEY_TWEETS_NEWEST_ID = 'x:tweets:newest';  // string — for since_id polling
-const KEY_TWEET_TAGS = 'x:tweet-tags';           // Record<tweetId, TweetTag>
+const KEY_UNDERDOG_REFERRAL = 'underdog:referral';
 
-export interface TweetTag {
-  matchNumbers: number[];
-  confidence: number;
-  manual?: boolean;
-  taggedAt?: string;
+export async function getUnderdogReferral(): Promise<string> {
+  return (await kvGet<string>(KEY_UNDERDOG_REFERRAL)) ?? '';
 }
 
-export async function getStoredTweets(): Promise<Record<string, Tweet>> {
-  return (await kvGet<Record<string, Tweet>>(KEY_TWEETS)) ?? {};
-}
-
-export async function upsertTweets(tweets: Tweet[]): Promise<void> {
-  if (tweets.length === 0) return;
-  const existing = await getStoredTweets();
-  for (const t of tweets) existing[t.id] = t;
-  await kvSet(KEY_TWEETS, existing);
-}
-
-export async function getNewestTweetId(): Promise<string | null> {
-  return kvGet<string>(KEY_TWEETS_NEWEST_ID);
-}
-
-export async function setNewestTweetId(id: string): Promise<void> {
-  await kvSet(KEY_TWEETS_NEWEST_ID, id);
-}
-
-export async function getTweetTags(): Promise<Record<string, TweetTag>> {
-  return (await kvGet<Record<string, TweetTag>>(KEY_TWEET_TAGS)) ?? {};
-}
-
-export async function setTweetTag(tweetId: string, tag: TweetTag): Promise<void> {
-  const tags = await getTweetTags();
-  tags[tweetId] = tag;
-  await kvSet(KEY_TWEET_TAGS, tags);
-}
-
-export async function bulkSetTweetTags(updates: Record<string, TweetTag>): Promise<void> {
-  if (Object.keys(updates).length === 0) return;
-  const tags = await getTweetTags();
-  for (const [id, tag] of Object.entries(updates)) tags[id] = tag;
-  await kvSet(KEY_TWEET_TAGS, tags);
-}
-
-export async function clearTweetTag(tweetId: string): Promise<void> {
-  const tags = await getTweetTags();
-  delete tags[tweetId];
-  await kvSet(KEY_TWEET_TAGS, tags);
-}
-
-// Per-match on-demand buzz cache. Keyed by match number; holds the last
-// fetched Bluesky posts + a timestamp so the public route can serve from
-// cache for a short TTL instead of hitting Bluesky on every page view.
-const keyBuzzCache = (n: number) => `buzz:cache:${n}`;
-
-export interface BuzzCache {
-  tweets: Tweet[];
-  fetchedAt: string;
-}
-
-export async function getBuzzCache(matchNumber: number): Promise<BuzzCache | null> {
-  return kvGet<BuzzCache>(keyBuzzCache(matchNumber));
-}
-
-export async function setBuzzCache(matchNumber: number, cache: BuzzCache): Promise<void> {
-  await kvSet(keyBuzzCache(matchNumber), cache);
+export async function setUnderdogReferral(url: string): Promise<void> {
+  await kvSet(KEY_UNDERDOG_REFERRAL, url);
 }

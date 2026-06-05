@@ -15,10 +15,11 @@ interface Props {
   spend: SpendTracker;
   override: PositionOverride | null;
   stadiums: Record<string, Stadium>;
+  underdogReferral: string;
   onRefresh: () => void;
 }
 
-type Tab = 'attention' | 'matches' | 'stadiums' | 'position' | 'spend' | 'visibility' | 'tweets' | 'health';
+type Tab = 'attention' | 'matches' | 'stadiums' | 'position' | 'spend' | 'visibility' | 'health';
 
 const inputCls =
   'w-full bg-snap-black border border-snap-ash px-2 py-1.5 font-mono text-xs text-snap-chalk focus:outline-none focus:border-snap-yellow';
@@ -38,7 +39,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export default function AdminShell({ itinerary, spend, override, stadiums, onRefresh }: Props) {
+export default function AdminShell({ itinerary, spend, override, stadiums, underdogReferral, onRefresh }: Props) {
   const [tab, setTab] = useState<Tab>('attention');
   const [toast, setToast] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
 
@@ -94,7 +95,7 @@ export default function AdminShell({ itinerary, spend, override, stadiums, onRef
           </div>
         </div>
         <div className="flex border-t border-snap-ash">
-          {(['attention', 'matches', 'stadiums', 'position', 'spend', 'visibility', 'tweets', 'health'] as Tab[]).map((t) => (
+          {(['attention', 'matches', 'stadiums', 'position', 'spend', 'visibility', 'health'] as Tab[]).map((t) => (
             <button
               key={t}
               type="button"
@@ -120,8 +121,7 @@ export default function AdminShell({ itinerary, spend, override, stadiums, onRef
           <PositionTab override={override} stadiums={stadiums} post={post} />
         )}
         {tab === 'spend' && <SpendTab spend={spend} post={post} />}
-        {tab === 'visibility' && <VisibilityTab post={post} />}
-        {tab === 'tweets' && <TweetsTab itinerary={itinerary} post={post} />}
+        {tab === 'visibility' && <VisibilityTab post={post} initialUnderdogReferral={underdogReferral} />}
         {tab === 'attention' && <AttentionTab onJumpToMatch={(n) => { setTab('matches'); /* match editor opens by ID */ void n; }} />}
         {tab === 'health' && <HealthTab />}
       </main>
@@ -219,6 +219,36 @@ function MatchEditor({
     sleepLng: match.sleepLng,
     notes: match.notes ?? '',
   });
+  const [betSlipImage, setBetSlipImage] = useState(match.betSlipImage ?? '');
+  const [betSlipProcessing, setBetSlipProcessing] = useState(false);
+  const [betSlipErr, setBetSlipErr] = useState<string | null>(null);
+  const betSlipFileRef = useRef<HTMLInputElement>(null);
+
+  async function handleBetSlipFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBetSlipErr(null);
+    setBetSlipProcessing(true);
+    try {
+      const dataUrl = await resizeImageToDataUrl(file, {
+        maxWidth: 1400,
+        maxHeight: 1800,
+        quality: 0.78,
+      });
+      const bytes = estimateDataUrlBytes(dataUrl);
+      if (bytes > 3_000_000) {
+        setBetSlipErr(`image still ${(bytes / 1024 / 1024).toFixed(1)} MB after resize — try a smaller photo`);
+        return;
+      }
+      setBetSlipImage(dataUrl);
+    } catch (err) {
+      setBetSlipErr((err as Error).message);
+    } finally {
+      setBetSlipProcessing(false);
+      if (betSlipFileRef.current) betSlipFileRef.current.value = '';
+    }
+  }
+
   const [result, setResult] = useState({
     homeScore: match.result?.homeScore ?? null,
     awayScore: match.result?.awayScore ?? null,
@@ -438,6 +468,68 @@ function MatchEditor({
             >
               SAVE YOUTUBE
             </button>
+          </div>
+
+          <div className="pt-3 border-t border-snap-ash">
+            <h3 className="font-mono text-[10px] tracking-[0.18em] text-snap-yellow mb-3">
+              BET SLIP IMAGE
+            </h3>
+            <div className="flex gap-2 flex-wrap items-start">
+              {betSlipImage && (
+                <img
+                  src={betSlipImage}
+                  alt="Bet slip preview"
+                  className="h-20 w-auto border border-snap-ash flex-shrink-0 object-contain"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
+              )}
+            </div>
+            <div className="mt-2 flex gap-2 flex-wrap">
+              <input
+                ref={betSlipFileRef}
+                type="file"
+                accept="image/*"
+                onChange={handleBetSlipFileChange}
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => betSlipFileRef.current?.click()}
+                disabled={betSlipProcessing}
+                className={btnDimCls + ' disabled:opacity-50'}
+              >
+                {betSlipProcessing ? 'PROCESSING…' : '↑ UPLOAD SLIP'}
+              </button>
+              <button
+                type="button"
+                onClick={() => { setBetSlipImage(''); setBetSlipErr(null); }}
+                disabled={!betSlipImage || betSlipProcessing}
+                className={btnDimCls + ' disabled:opacity-30'}
+              >
+                CLEAR
+              </button>
+              <button
+                type="button"
+                className={btnCls}
+                disabled={betSlipProcessing}
+                onClick={() =>
+                  post('set-match-fields', {
+                    matchNumber: match.matchNumber,
+                    fields: { betSlipImage: betSlipImage || '' },
+                  })
+                }
+              >
+                SAVE SLIP
+              </button>
+            </div>
+            {betSlipErr && (
+              <div className="mt-2 px-2 py-1 bg-live/10 border-l-2 border-live font-mono text-[10px] text-live">
+                {betSlipErr}
+              </div>
+            )}
+            <div className="mt-2 font-mono text-[9px] tracking-[0.15em] text-snap-fog">
+              shown in the &quot;CASEY&apos;S BETS&quot; panel on the public stadium card.
+            </div>
           </div>
         </div>
       </section>
@@ -1002,11 +1094,19 @@ function SpendTab({
   );
 }
 
-function VisibilityTab({ post }: { post: (a: string, p: any) => Promise<boolean> }) {
+function VisibilityTab({
+  post,
+  initialUnderdogReferral = '',
+}: {
+  post: (a: string, p: any) => Promise<boolean>;
+  initialUnderdogReferral?: string;
+}) {
   const [showLodging, setShowLodging] = useState(false);
   const [showTransport, setShowTransport] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [underdogUrl, setUnderdogUrl] = useState(initialUnderdogReferral);
+  const [savingReferral, setSavingReferral] = useState(false);
 
   useEffect(() => {
     fetch('/api/visibility', { cache: 'no-store' })
@@ -1030,6 +1130,12 @@ function VisibilityTab({ post }: { post: (a: string, p: any) => Promise<boolean>
       setShowTransport(nextTransport);
     }
     setSaving(false);
+  }
+
+  async function saveReferral() {
+    setSavingReferral(true);
+    await post('set-underdog-referral', { url: underdogUrl.trim() });
+    setSavingReferral(false);
   }
 
   if (!loaded) {
@@ -1098,6 +1204,46 @@ function VisibilityTab({ post }: { post: (a: string, p: any) => Promise<boolean>
       <div className="font-mono text-[10px] text-snap-fog leading-relaxed">
         Changes apply on the next page load for public visitors. Disabled fields never reach the
         client bundle — they&apos;re stripped at the server-side boundary.
+      </div>
+
+      {/* Underdog referral link — global, shown on all bet panels */}
+      <div className="border border-snap-ash bg-snap-coal p-4">
+        <div className="font-display text-[20px] text-snap-chalk">UNDERDOG REFERRAL LINK</div>
+        <p className="font-body text-[13px] text-snap-mist mt-2 leading-relaxed">
+          Global referral URL shown on every &quot;CASEY&apos;S BETS&quot; panel after the bet slip image.
+          Leave blank to fall back to <span className="font-mono text-snap-fog">underdogfantasy.com</span>.
+        </p>
+        <div className="mt-3 space-y-2">
+          <Field label="Underdog referral URL">
+            <input
+              className={inputCls}
+              value={underdogUrl}
+              onChange={(e) => setUnderdogUrl(e.target.value)}
+              placeholder="https://underdogfantasy.com/refer/..."
+            />
+          </Field>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              className={btnCls}
+              disabled={savingReferral}
+              onClick={saveReferral}
+            >
+              {savingReferral ? 'SAVING…' : 'SAVE REFERRAL'}
+            </button>
+            <button
+              type="button"
+              className={btnDimCls}
+              disabled={!underdogUrl || savingReferral}
+              onClick={() => setUnderdogUrl('')}
+            >
+              CLEAR
+            </button>
+          </div>
+          <div className="font-mono text-[9px] tracking-[0.15em] text-snap-fog">
+            code shown below the link: <span className="text-snap-mist">TKALINOWSKI12</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -1493,282 +1639,3 @@ function formatAgo(iso: string): string {
   return `${Math.round(ms / 86_400_000)} d ago`;
 }
 
-// ────────────────────────────────────────────────────────────────────────
-// TWEETS TAB — cherry-picked from feat/x-tweets-and-ui-pass (Akash)
-// ────────────────────────────────────────────────────────────────────────
-
-interface AdminTweetItem {
-  tweet: {
-    id: string;
-    text: string;
-    createdAt: string;
-    author: { username: string; name: string };
-  };
-  tag: {
-    matchNumbers: number[];
-    confidence: number;
-    manual?: boolean;
-  } | null;
-}
-
-function TweetsTab({
-  itinerary,
-  post,
-}: {
-  itinerary: ItineraryMatch[];
-  post: (a: string, p: any) => Promise<boolean>;
-}) {
-  const [items, setItems] = useState<AdminTweetItem[] | null>(null);
-  const [filter, setFilter] = useState<'all' | 'untagged' | 'low-confidence' | 'manual'>('all');
-  const [polling, setPolling] = useState(false);
-  const [pollMsg, setPollMsg] = useState<string | null>(null);
-
-  async function load() {
-    try {
-      const res = await fetch('/api/admin/tweets', { cache: 'no-store' });
-      const json = await res.json();
-      if (json?.ok) setItems(json.items ?? []);
-    } catch {
-      setItems([]);
-    }
-  }
-
-  useEffect(() => {
-    void load();
-  }, []);
-
-  async function triggerPoll() {
-    setPolling(true);
-    setPollMsg(null);
-    try {
-      const res = await fetch('/api/admin/tweets', { method: 'POST', cache: 'no-store' });
-      const json = await res.json();
-      if (json?.ok) {
-        setPollMsg(`fetched ${json.fetched ?? 0}, tagged ${json.tagged ?? 0}`);
-        await load();
-      } else {
-        setPollMsg(`error: ${json.error ?? 'unknown'}`);
-      }
-    } catch (e) {
-      setPollMsg(`error: ${(e as Error).message}`);
-    }
-    setPolling(false);
-    setTimeout(() => setPollMsg(null), 4000);
-  }
-
-  async function saveTag(tweetId: string, matchNumbers: number[]) {
-    const ok = await post('set-tweet-tag', { tweetId, matchNumbers });
-    if (ok) await load();
-  }
-
-  async function clearTag(tweetId: string) {
-    const ok = await post('clear-tweet-tag', { tweetId });
-    if (ok) await load();
-  }
-
-  const visible = (items ?? []).filter((it) => {
-    if (filter === 'all') return true;
-    if (filter === 'untagged') return !it.tag || it.tag.matchNumbers.length === 0;
-    if (filter === 'manual') return Boolean(it.tag?.manual);
-    if (filter === 'low-confidence') {
-      return it.tag && it.tag.matchNumbers.length > 0 && it.tag.confidence < 0.6 && !it.tag.manual;
-    }
-    return true;
-  });
-
-  return (
-    <div className="space-y-4 max-w-3xl">
-      <div className="flex items-center justify-between gap-3 flex-wrap border border-snap-ash bg-snap-coal p-4">
-        <div>
-          <div className="font-display text-[22px] text-snap-chalk">CASEY&apos;S X TIMELINE</div>
-          <div className="font-mono text-[10px] tracking-[0.18em] text-snap-mist mt-1">
-            {items?.length ?? 0} tweets · auto-tagged by team, time, and location signals.
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={triggerPoll}
-          disabled={polling}
-          className={btnCls + ' disabled:opacity-50'}
-        >
-          {polling ? 'POLLING…' : pollMsg ?? '↻ REFRESH BUZZ'}
-        </button>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-1">
-        {(['all', 'untagged', 'low-confidence', 'manual'] as const).map((f) => (
-          <button
-            key={f}
-            type="button"
-            onClick={() => setFilter(f)}
-            className={`px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] border transition-colors ${
-              filter === f
-                ? 'border-snap-yellow bg-snap-yellow/10 text-snap-yellow'
-                : 'border-snap-ash text-snap-mist hover:text-snap-chalk hover:border-snap-mist'
-            }`}
-          >
-            {f.replace('-', ' ').toUpperCase()}
-          </button>
-        ))}
-      </div>
-
-      {items === null && (
-        <div className="font-mono text-[11px] text-snap-mist py-8 text-center">
-          loading tweets…
-        </div>
-      )}
-
-      {items !== null && visible.length === 0 && (
-        <div className="font-mono text-[11px] text-snap-mist py-8 text-center">
-          no tweets match this filter
-        </div>
-      )}
-
-      <div className="space-y-2">
-        {visible.slice(0, 100).map((it) => (
-          <TweetRow
-            key={it.tweet.id}
-            item={it}
-            itinerary={itinerary}
-            onSave={saveTag}
-            onClear={clearTag}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function TweetRow({
-  item,
-  itinerary,
-  onSave,
-  onClear,
-}: {
-  item: AdminTweetItem;
-  itinerary: ItineraryMatch[];
-  onSave: (id: string, matchNumbers: number[]) => Promise<void>;
-  onClear: (id: string) => Promise<void>;
-}) {
-  const initial = item.tag?.matchNumbers ?? [];
-  const [selected, setSelected] = useState<number[]>(initial);
-  const [dirty, setDirty] = useState(false);
-
-  function toggleMatch(n: number) {
-    setSelected((prev) => {
-      const next = prev.includes(n) ? prev.filter((x) => x !== n) : [...prev, n];
-      setDirty(true);
-      return next;
-    });
-  }
-
-  const created = new Date(item.tweet.createdAt);
-  const status = item.tag?.manual
-    ? { label: 'MANUAL', color: 'text-snap-chalk border-snap-chalk' }
-    : (item.tag?.matchNumbers?.length ?? 0) > 0
-    ? {
-        label: `AUTO · ${Math.round((item.tag?.confidence ?? 0) * 100)}%`,
-        color: 'text-snap-yellow border-snap-yellow',
-      }
-    : { label: 'UNTAGGED', color: 'text-snap-fog border-snap-fog' };
-
-  return (
-    <div className="border border-snap-ash bg-snap-coal p-3">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 font-mono text-[9px] tracking-[0.18em] text-snap-mist flex-wrap">
-            <span className="text-snap-chalk">@{item.tweet.author.username}</span>
-            <span>·</span>
-            <span>
-              {created.toLocaleString(undefined, {
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-              })}
-            </span>
-            <span className={`border px-1.5 py-0.5 ${status.color}`}>{status.label}</span>
-          </div>
-          <div className="mt-1.5 text-[13px] text-snap-chalk leading-snug whitespace-pre-wrap break-words">
-            {item.tweet.text}
-          </div>
-        </div>
-        <a
-          href={`https://x.com/${item.tweet.author.username}/status/${item.tweet.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-mono text-[9px] tracking-[0.18em] text-snap-mist hover:text-snap-yellow flex-shrink-0"
-        >
-          OPEN ↗
-        </a>
-      </div>
-
-      <div className="mt-3 flex items-center gap-2 flex-wrap">
-        <span className="font-mono text-[9px] tracking-[0.18em] text-snap-mist">
-          TAG TO MATCH:
-        </span>
-        <select
-          onChange={(e) => {
-            const n = Number(e.target.value);
-            if (n && !selected.includes(n)) toggleMatch(n);
-            e.target.value = '';
-          }}
-          className="bg-snap-black border border-snap-ash px-2 py-1 font-mono text-[11px] text-snap-chalk focus:outline-none focus:border-snap-yellow"
-          defaultValue=""
-        >
-          <option value="" disabled>
-            + add match…
-          </option>
-          {itinerary.map((m) => (
-            <option key={m.matchNumber} value={m.matchNumber}>
-              #{m.matchNumber} · {m.homeTeam} vs {m.awayTeam} · {m.date}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {selected.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {selected.map((n) => {
-            const m = itinerary.find((x) => x.matchNumber === n);
-            return (
-              <span
-                key={n}
-                className="inline-flex items-center gap-1 bg-snap-black border border-snap-ash px-2 py-0.5 font-mono text-[10px] text-snap-chalk"
-              >
-                #{n} {m ? `${m.homeTeam}-${m.awayTeam}` : ''}
-                <button
-                  type="button"
-                  onClick={() => toggleMatch(n)}
-                  className="text-snap-mist hover:text-live ml-1"
-                  aria-label="Remove"
-                >
-                  ×
-                </button>
-              </span>
-            );
-          })}
-        </div>
-      )}
-
-      <div className="mt-3 flex items-center gap-2">
-        <button
-          type="button"
-          onClick={async () => {
-            await onSave(item.tweet.id, selected);
-            setDirty(false);
-          }}
-          disabled={!dirty}
-          className={btnCls + ' disabled:opacity-40'}
-        >
-          {dirty ? 'SAVE' : 'SAVED'}
-        </button>
-        {item.tag && (
-          <button type="button" onClick={() => onClear(item.tweet.id)} className={btnDimCls}>
-            CLEAR TAG
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}

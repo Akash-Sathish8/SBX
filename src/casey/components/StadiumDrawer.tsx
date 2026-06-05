@@ -8,7 +8,6 @@ import FollowStar from './FollowStar';
 import { groupStandingsSearch } from '@/lib/external-links';
 import InlineMatchScore from './InlineMatchScore';
 import StandingsModal from './StandingsModal';
-import MatchTweets from './MatchTweets';
 import type { ItineraryMatch, MatchStatus, Stadium } from '@/lib/types';
 
 interface Props {
@@ -17,6 +16,7 @@ interface Props {
   highlightMatchNumber?: number | null;
   onClose: () => void;
   visibility?: { showLodging: boolean; showTransport: boolean };
+  underdogReferral?: string;
 }
 
 function countryAccent(code: string): string {
@@ -64,8 +64,11 @@ export default function StadiumDrawer({
   highlightMatchNumber,
   onClose,
   visibility = { showLodging: false, showTransport: false },
+  underdogReferral = '',
 }: Props) {
   const [openDetailsFor, setOpenDetailsFor] = useState<number | null>(null);
+  const [openAgendaFor, setOpenAgendaFor] = useState<number | null>(null);
+  const [openBetsFor, setOpenBetsFor] = useState<number | null>(null);
   const showLogisticsButton = visibility.showLodging || visibility.showTransport;
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -491,18 +494,81 @@ export default function StadiumDrawer({
           )}
         </div>
 
-        {/* Match-buzz feed for the currently-visible match. Sits beneath the
-            full carousel card; flex-1 lets it fill the rest of the drawer on
-            tall screens, min-height keeps it present on short ones. */}
+        {/* Casey's Agenda + Casey's Bets — stacked below the carousel. */}
         {currentMatch && (
-          <div className="flex-1 min-h-[220px] bg-snap-black/40 px-5 py-4">
-            <div className="font-mono text-[10px] tracking-[0.22em] text-snap-yellow mb-1">
-              MATCH BUZZ · #{currentMatch.matchNumber}
+          <div className="bg-snap-black/40 px-4 py-3 space-y-2">
+            {/* CASEY'S AGENDA */}
+            <div className="border border-snap-ash">
+              <button
+                type="button"
+                onClick={() => {
+                  const n = currentMatch.matchNumber;
+                  setOpenAgendaFor((prev) => (prev === n ? null : n));
+                  setOpenBetsFor(null);
+                }}
+                className="w-full flex items-center justify-between px-4 py-3 font-mono text-[11px] tracking-[0.22em] text-snap-mist hover:text-snap-yellow hover:border-snap-yellow transition-colors bg-snap-coal hover:bg-snap-smoke/30"
+                aria-expanded={openAgendaFor === currentMatch.matchNumber}
+              >
+                <span>CASEY&apos;S AGENDA</span>
+                <span className="text-snap-yellow text-[14px] leading-none">
+                  {openAgendaFor === currentMatch.matchNumber ? '−' : '+'}
+                </span>
+              </button>
+              {openAgendaFor === currentMatch.matchNumber && (
+                <div className="border-t border-snap-ash px-4 py-4 bg-snap-black/60">
+                  <div className="font-mono text-[11px] tracking-[0.15em] text-snap-mist">
+                    Casey&apos;s gameday agenda — coming soon.
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="font-mono text-[9px] tracking-[0.15em] text-snap-fog mb-3">
-              {currentMatch.homeTeam} VS {currentMatch.awayTeam}
+
+            {/* CASEY'S BETS */}
+            <div className="border border-snap-ash">
+              <button
+                type="button"
+                onClick={() => {
+                  const n = currentMatch.matchNumber;
+                  setOpenBetsFor((prev) => (prev === n ? null : n));
+                  setOpenAgendaFor(null);
+                }}
+                className="w-full flex items-center justify-between px-4 py-3 font-mono text-[11px] tracking-[0.22em] text-snap-mist hover:text-snap-yellow hover:border-snap-yellow transition-colors bg-snap-coal hover:bg-snap-smoke/30"
+                aria-expanded={openBetsFor === currentMatch.matchNumber}
+              >
+                <span>CASEY&apos;S BETS</span>
+                <span className="text-snap-yellow text-[14px] leading-none">
+                  {openBetsFor === currentMatch.matchNumber ? '−' : '+'}
+                </span>
+              </button>
+              {openBetsFor === currentMatch.matchNumber && (
+                <div className="border-t border-snap-ash px-4 py-4 bg-snap-black/60 space-y-4">
+                  {currentMatch.betSlipImage ? (
+                    <>
+                      <img
+                        src={currentMatch.betSlipImage}
+                        alt="Casey's Underdog pick"
+                        className="w-full rounded border border-snap-ash"
+                      />
+                      <a
+                        href={underdogReferral || 'https://underdogfantasy.com'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full text-center bg-snap-yellow text-snap-black font-mono text-[11px] tracking-[0.22em] px-4 py-3 hover:bg-snap-yellowDim transition-colors"
+                      >
+                        MAKE THIS PICK ON UNDERDOG →
+                      </a>
+                      <div className="font-mono text-[10px] tracking-[0.18em] text-snap-fog text-center">
+                        use code TKALINOWSKI12
+                      </div>
+                    </>
+                  ) : (
+                    <div className="font-mono text-[11px] tracking-[0.15em] text-snap-mist">
+                      Casey hasn&apos;t dropped his bet for this game yet.
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-            <MatchTweets matchNumber={currentMatch.matchNumber} />
           </div>
         )}
       </aside>
