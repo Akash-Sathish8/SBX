@@ -50,7 +50,7 @@ function PlatedFallback({
 
   return (
     <span
-      className={`relative inline-flex items-center justify-center bg-snap-yellow text-snap-black ${className}`}
+      className={`relative inline-flex items-center justify-center bg-snap-yellow text-snap-chalk ${className}`}
       style={dimStyle}
       aria-label="Snapback Sports"
     >

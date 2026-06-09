@@ -10,7 +10,7 @@ import type {
   TripStats,
 } from '@/lib/types';
 
-const MAP_STYLE_URL = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+const MAP_STYLE_URL = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
 // Computed from the actual 13 stadiums (Mexico City southernmost, Vancouver
 // northwest, Foxborough easternmost, Miami southeast) with a small margin so
@@ -93,6 +93,11 @@ export default function MapView({
   const caseyIconElRef = useRef<HTMLDivElement | null>(null);
   const stadiumMarkersRef = useRef<Marker[]>([]);
   const [ready, setReady] = useState(false);
+  // When WebGL is unavailable (iOS Low Power Mode, in-app webviews, old GPUs,
+  // exhausted context limits) the maplibre constructor throws. We catch it and
+  // degrade to a static backdrop so the rest of the tracker keeps working
+  // instead of the whole page hitting the route error boundary.
+  const [mapFailed, setMapFailed] = useState(false);
 
   const displayPosRef = useRef({ lat: location.lat, lng: location.lng });
   const targetPosRef = useRef({ lat: location.lat, lng: location.lng });
@@ -112,35 +117,67 @@ export default function MapView({
     const bounds = computeBounds(stadiums);
     const padding = computePadding();
 
-    const map = new maplibregl.Map({
-      container: containerRef.current,
-      style: MAP_STYLE_URL,
-      bounds,
-      fitBoundsOptions: { padding },
-      attributionControl: false,
-      maxZoom: 8,
-      minZoom: 2.5,
-      dragRotate: false,
-      pitchWithRotate: false,
-      touchPitch: false,
+    // Web: the map is a fixed, framed showcase — no panning/zooming, it stays
+    // locked on the journey. Mobile: fully interactive so you can explore and it
+    // tracks Casey live (see the follow-on-load below + ClientShell default).
+    const isMobileView = window.innerWidth < 640;
+
+    let map: MlMap;
+    try {
+      map = new maplibregl.Map({
+        container: containerRef.current,
+        style: MAP_STYLE_URL,
+        bounds,
+        fitBoundsOptions: { padding },
+        attributionControl: false,
+        maxZoom: 8,
+        minZoom: 2.5,
+        dragRotate: false,
+        pitchWithRotate: false,
+        touchPitch: false,
+        interactive: isMobileView,
+      });
+    } catch (err) {
+      // WebGL context could not be created — degrade gracefully.
+      console.warn('[casey] map unavailable, using static backdrop:', err);
+      setMapFailed(true);
+      return;
+    }
+    // Swallow non-fatal runtime errors (tile fetch hiccups, transient context
+    // loss) so they never bubble to the React error boundary mid-session.
+    map.on('error', (e) => {
+      console.warn('[casey] map runtime error:', e?.error ?? e);
     });
     map.addControl(
       new maplibregl.AttributionControl({ compact: true, customAttribution: '© Snapback Sports' }),
       'bottom-right',
     );
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    // Zoom buttons + pinch-rotate only make sense on the interactive (mobile) map.
+    if (isMobileView) {
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      map.touchZoomRotate.disableRotation();
+    }
 
     map.on('load', () => {
       mapRef.current = map;
       setReady(true);
       // Re-fit with measured overlay heights once the DOM has settled.
-      // The initial constructor fit may have measured before the React
-      // tree fully laid out; this second pass guarantees accuracy.
+      // The initial constructor fit may have measured before the React tree
+      // fully laid out. If we're following Casey (mobile, trip active) frame
+      // him instead of the whole journey; otherwise frame the whole journey.
       requestAnimationFrame(() => {
-        map.fitBounds(computeBounds(stadiums), {
-          padding: computePadding(),
-          duration: 0,
-        });
+        if (followingRef.current) {
+          map.easeTo({
+            center: [location.lng, location.lat],
+            zoom: Math.max(map.getZoom(), 4.5),
+            duration: 0,
+          });
+        } else {
+          map.fitBounds(computeBounds(stadiums), {
+            padding: computePadding(),
+            duration: 0,
+          });
+        }
       });
     });
 
@@ -757,5 +794,11 @@ export default function MapView({
     };
   }, [ready]);
 
-  return <div ref={containerRef} className="absolute inset-0 bg-snap-black" />;
+  return (
+    <div
+      ref={containerRef}
+      className="absolute inset-0 bg-snap-black"
+      data-map-failed={mapFailed ? 'true' : undefined}
+    />
+  );
 }

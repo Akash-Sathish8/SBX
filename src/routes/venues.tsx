@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
+import { PageCssGuard } from '../components/PageCssGuard'
 import css from '../pages/venues.css?url'
 
 export const Route = createFileRoute('/venues')({
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css }],
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'venues' }],
     meta: [{ title: 'Snapback — World Cup Venues' }],
   }),
   component: Venues,
@@ -39,6 +40,7 @@ function Venues() {
   const pill = (cc: string) => 'pill' + (filter === cc ? ' on' : '')
   return (
     <>
+      <PageCssGuard id="venues" />
       <SiteNav active="venues" />
       <section className="head">
         <div className="container">
@@ -59,7 +61,8 @@ function Venues() {
           <div className="grid" id="grid">
             {list.map((v) => (
               <Link key={v.img} className="vcard" to="/venue" search={{ id: v.img }}>
-                <div className="photo" style={{ backgroundImage: `url('/img/stadiums/${v.img}.jpg')` }}>
+                <div className="photo">
+                  <img className="photo-img" src={`/img/stadiums/${v.img}.jpg`} alt="" loading="lazy" decoding="async" />
                   <span className="citytag"><span className="flag">{FL[v.cc]}</span>{v.city}</span>
                   {v.role ? <span className="role">{v.role}</span> : null}
                 </div>

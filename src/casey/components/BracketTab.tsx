@@ -139,7 +139,7 @@ function BracketColumn({
       <div
         className={`text-center font-mono text-[10px] tracking-[0.22em] px-2 py-1.5 mb-2 ${
           isFinal
-            ? 'bg-snap-yellow text-snap-black'
+            ? 'bg-snap-yellow text-snap-chalk'
             : 'border border-snap-ash text-snap-yellow bg-snap-black/40'
         }`}
       >

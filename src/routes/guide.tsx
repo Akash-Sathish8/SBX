@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
+import { PageCssGuard } from '../components/PageCssGuard'
 import css from '../pages/guide.css?url'
 
 export const Route = createFileRoute('/guide')({
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css }],
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'guide' }],
     meta: [{ title: 'Snapback — Build your match guide' }],
   }),
   component: Guide,
@@ -15,6 +16,7 @@ const MOSAIC = ['metlife', 'azteca', 'att', 'sofi', 'mercedes', 'hardrock', 'bcp
 function Guide() {
   return (
     <>
+      <PageCssGuard id="guide" />
       <SiteNav active="guide" />
       <section className="head">
         <div className="container">
@@ -35,7 +37,7 @@ function Guide() {
               </div>
               <div className="body">
                 <div className="t">Start with a venue</div>
-                <div className="x">Pick one of the 16 host stadiums, then choose your match there — the build flow stitches in transit, fan walk, food and weather automatically.</div>
+                <div className="x">Pick one of the 16 host stadiums, then choose your match there<span className="xtra"> — the build flow stitches in transit, fan walk, food and weather automatically</span>.</div>
                 <span className="go">Choose a venue →</span>
               </div>
             </Link>
@@ -47,7 +49,7 @@ function Guide() {
               </div>
               <div className="body">
                 <div className="t">Pick a specific game</div>
-                <div className="x">Jump straight to any of the 104 fixtures, in date order, then build a shareable matchday plan for it.</div>
+                <div className="x">Jump straight to any of the 104 fixtures, in date order<span className="xtra">, then build a shareable matchday plan for it</span>.</div>
                 <span className="go">Choose a match →</span>
               </div>
             </Link>

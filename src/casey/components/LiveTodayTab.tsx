@@ -96,7 +96,7 @@ export default function LiveTodayTab({ onMatchClick }: Props = {}) {
                     className="absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
                   />
-                  <div className="absolute top-1 left-1 bg-snap-yellow text-snap-black font-mono text-[8px] tracking-[0.18em] px-1 py-0.5">
+                  <div className="absolute top-1 left-1 bg-snap-yellow text-snap-chalk font-mono text-[8px] tracking-[0.18em] px-1 py-0.5">
                     ▶ VLOG
                   </div>
                 </div>

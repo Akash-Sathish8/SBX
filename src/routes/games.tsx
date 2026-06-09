@@ -1,12 +1,13 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
+import { PageCssGuard } from '../components/PageCssGuard'
 import { teamName, teamFlag } from '../lib/teams'
 import css from '../pages/games.css?url'
 
 export const Route = createFileRoute('/games')({
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css }],
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'games' }],
     meta: [{ title: 'Snapback — Games & Tickets' }],
   }),
   component: Games,
@@ -65,11 +66,11 @@ function Games() {
 
   return (
     <>
+      <PageCssGuard id="games" />
       <SiteNav active="games" />
       <section className="head">
         <div className="container">
           <h1>Every World Cup <span className="hl">game</span></h1>
-          <p className="sub">All 104 matches across 16 venues, in date order. Tap any game for the audited matchday fan guide.</p>
         </div>
       </section>
 

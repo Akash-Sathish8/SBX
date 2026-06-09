@@ -383,7 +383,7 @@ function MatchRow({
         )}
         <div className="relative">
           <div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.22em] text-snap-yellow">
-            <span className="bg-snap-yellow text-snap-black px-1.5 py-0.5">NEXT UP</span>
+            <span className="bg-snap-yellow text-snap-chalk px-1.5 py-0.5">NEXT UP</span>
             <span className="text-snap-mist">·</span>
             <span>{m.stage.toUpperCase()}</span>
           </div>

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
+import { PageCssGuard } from '../components/PageCssGuard'
 import css from '../pages/index.css?url'
 
 export const Route = createFileRoute('/')({
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css }],
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'home' }],
     meta: [{ title: 'Snapback Experiences' }],
   }),
   component: Home,
@@ -63,7 +64,13 @@ const MARQUEE: Card[] = [
 
 function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
   return (
-    <div className="card venue interactive" aria-hidden={hidden ? 'true' : undefined}>
+    <Link
+      to="/venue"
+      search={{ id: c.img }}
+      className="card venue interactive"
+      aria-hidden={hidden ? 'true' : undefined}
+      tabIndex={hidden ? -1 : undefined}
+    >
       <div className="photo" style={{ backgroundImage: `url('/img/stadiums/${c.img}.jpg')` }}><span className="tag">{c.tag}</span></div>
       <div className="body">
         <h4>{c.name}</h4>
@@ -73,7 +80,7 @@ function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
           <div className="score fan"><div className="v">{c.fan}</div><div className="k">Fans</div></div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -99,6 +106,7 @@ function Home() {
 
   return (
     <>
+      <PageCssGuard id="home" />
       <SiteNav />
 
       {/* HERO (concept A: split / share + compare) */}
@@ -108,10 +116,18 @@ function Home() {
             <span className="eyebrow">World Cup 2026 · 16 venues</span>
             <h1><span className="ln">Build your</span> <span className="hl">matchday</span></h1>
           </div>
-          <div className="reveal" style={{ animationDelay: '.2s', marginTop: 'auto' }}>
+          <div className="reveal" style={{ animationDelay: '.12s' }}>
+            <div className="a-quick">
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🚆</span></span><span className="a-quick-lb">Getting there</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🍺</span></span><span className="a-quick-lb">Before the match</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🍔</span></span><span className="a-quick-lb">Where to eat</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🏁</span></span><span className="a-quick-lb">After the whistle</span></Link>
+            </div>
+          </div>
+          <div className="reveal" style={{ animationDelay: '.2s' }}>
             <div className="a-cta">
               <Link to="/guide" className="btn btn-brand btn-xl">Build your match guide</Link>
-              <a href="#experiences" className="btn btn-brand btn-xl">See what Casey did</a>
+              <Link to="/casey" className="btn btn-brand btn-xl">See what Casey did</Link>
               <a href="#ranking" className="btn btn-dark btn-lg">Rank your experience</a>
             </div>
           </div>
@@ -154,24 +170,6 @@ function Home() {
         </div>
       </section>
 
-      {/* KNOW BEFORE YOU GO */}
-      <section id="rankings" className="sec-light-2 grid-bg">
-        <div className="container">
-          <div className="sec-head">
-            <span className="eyebrow">The guide</span>
-            <h2>Know before you go</h2>
-            <p>How to get there, what to do before, where to eat during and where to go after — for all 16 World Cup venues.</p>
-          </div>
-          <div className="kbyg-grid">
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">▦</div><div className="kt">Getting there</div><div className="kd">Transit, parking and the last mile to each stadium.</div></a>
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">⚑</div><div className="kt">Before the match</div><div className="kd">Fan zones, supporter marches and where to be pre-kickoff.</div></a>
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">★</div><div className="kt">Where to eat</div><div className="kd">Food and drink around the ground and inside the stadium.</div></a>
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">✓</div><div className="kt">After the whistle</div><div className="kd">Where to head once the final whistle blows, win or lose.</div></a>
-          </div>
-          <a href="/wc26-fan-intel.html" className="kbyg-more">Open the full guide <span className="kb-arrow">→</span></a>
-        </div>
-      </section>
-
       {/* MAKE YOUR OWN RANKING */}
       <section id="ranking" className="sec-light grid-bg">
         <div className="container">
@@ -191,28 +189,12 @@ function Home() {
         </div>
       </section>
 
-      {/* JOIN / NEWSLETTER */}
-      <section id="join" className="sec-dark grid-bg">
-        <div className="container">
-          <div className="sec-head" style={{ marginBottom: '8px' }}>
-            <span className="eyebrow">Join the crowd</span>
-            <h2>Your take counts.</h2>
-            <p>Rate venues, settle debates, and climb the fan board. Free, and very loud.</p>
-          </div>
-          <form className="news" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="you@email.com" aria-label="Email" />
-            <button className="btn btn-brand btn-lg" type="submit">Sign up</button>
-          </form>
-        </div>
-      </section>
-
       <footer>
         <div className="container">
           <div className="logo"><img className="logo-img" src="/img/logo.png" alt="Snapback Sports" />SNAPBACK<span className="wc">WC 2026</span></div>
           <div className="fnav">
             <a href="#experiences">Experiences</a>
-            <a href="#rankings">Guide</a>
-            <a href="#join">Join</a>
+            <a href="/wc26-fan-intel.html">Guide</a>
           </div>
           <div className="fine">Snapback Experiences — arcade concept build. Tetris design system, reskinned to the Snapback color theme (yellow #F7DF02 / black #111111 / white).</div>
         </div>

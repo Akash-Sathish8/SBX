@@ -92,7 +92,7 @@ export default function TimeTravelPanel({
     <>
       {active && (
         <div
-          className="pointer-events-none absolute left-1/2 -translate-x-1/2 z-50 bg-snap-yellow text-snap-black font-mono text-[10px] tracking-[0.22em] px-3 py-1 shadow-lg whitespace-nowrap"
+          className="pointer-events-none absolute left-1/2 -translate-x-1/2 z-50 bg-snap-yellow text-snap-chalk font-mono text-[10px] tracking-[0.22em] px-3 py-1 shadow-lg whitespace-nowrap"
           style={{ top: '4px' }}
         >
           {playing ? '▶ SIMULATING' : '⏸ PAUSED'} · {formatSim(simTimeMs!)}
@@ -104,7 +104,7 @@ export default function TimeTravelPanel({
         onClick={() => setOpen((o) => !o)}
         className={`pointer-events-auto fixed z-50 flex items-center gap-1.5 px-2.5 py-1.5 font-mono text-[9px] tracking-[0.22em] transition-colors ${
           active
-            ? 'bg-snap-yellow text-snap-black border border-snap-yellow'
+            ? 'bg-snap-yellow text-snap-chalk border border-snap-yellow'
             : 'bg-snap-black/80 text-snap-mist border border-snap-ash hover:text-snap-yellow hover:border-snap-yellow'
         }`}
         style={{ bottom: '12px', right: '12px' }}
@@ -144,7 +144,7 @@ export default function TimeTravelPanel({
                 <button
                   type="button"
                   onClick={() => onStart()}
-                  className="w-full bg-snap-yellow text-snap-black font-mono text-[12px] tracking-[0.22em] py-3 hover:bg-snap-yellowDim transition-colors"
+                  className="w-full bg-snap-yellow text-snap-chalk font-mono text-[12px] tracking-[0.22em] py-3 hover:bg-snap-yellowDim transition-colors"
                 >
                   ▶ PLAY FROM DEPARTURE
                 </button>
@@ -188,7 +188,7 @@ export default function TimeTravelPanel({
                       <button
                         type="button"
                         onClick={onPause}
-                        className="bg-snap-yellow text-snap-black font-mono text-[11px] tracking-[0.2em] py-2"
+                        className="bg-snap-yellow text-snap-chalk font-mono text-[11px] tracking-[0.2em] py-2"
                       >
                         ⏸ PAUSE
                       </button>
@@ -196,7 +196,7 @@ export default function TimeTravelPanel({
                       <button
                         type="button"
                         onClick={onResume}
-                        className="bg-snap-yellow text-snap-black font-mono text-[11px] tracking-[0.2em] py-2 hover:bg-snap-yellowDim transition-colors"
+                        className="bg-snap-yellow text-snap-chalk font-mono text-[11px] tracking-[0.2em] py-2 hover:bg-snap-yellowDim transition-colors"
                       >
                         ▶ PLAY
                       </button>
@@ -274,7 +274,7 @@ export default function TimeTravelPanel({
                   type="button"
                   onClick={jumpCustom}
                   disabled={!custom}
-                  className="bg-snap-yellow text-snap-black font-mono text-[9px] tracking-[0.2em] px-2.5 py-1 disabled:opacity-40 hover:bg-snap-yellowDim transition-colors"
+                  className="bg-snap-yellow text-snap-chalk font-mono text-[9px] tracking-[0.2em] px-2.5 py-1 disabled:opacity-40 hover:bg-snap-yellowDim transition-colors"
                 >
                   GO
                 </button>

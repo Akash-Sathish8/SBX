@@ -96,7 +96,7 @@ section{padding:96px 0;position:relative;overflow:hidden}
 .btn:hover{filter:drop-shadow(6px 6px 0 var(--gradient-shadow)) brightness(1.05)}
 .btn:active{transform:translate(3px,3px);filter:drop-shadow(3px 3px 0 var(--gradient-shadow))}
 .btn:focus-visible{outline:4px solid var(--sb-yellow-deep);outline-offset:2px}
-.btn-brand{background:linear-gradient(135deg,var(--gradient-from) 0%,var(--gradient-to) 100%);color:var(--sb-black)}
+.btn-brand{background:var(--sb-yellow);color:var(--sb-black)}
 .btn-dark{background:var(--sb-black);color:#fff;filter:drop-shadow(6px 6px 0 var(--sb-yellow))}
 .btn-dark:hover{filter:drop-shadow(6px 6px 0 var(--sb-yellow)) brightness(1.1)}
 .btn-dark:active{filter:drop-shadow(3px 3px 0 var(--sb-yellow))}
@@ -104,6 +104,12 @@ section{padding:96px 0;position:relative;overflow:hidden}
 .btn-navcta{padding:9px 20px;font-size:13px;box-shadow:inset 0 0 0 2px var(--sb-yellow)}
 .btn-lg{font-size:22px;padding:17px 34px}
 .btn-xl{font-size:29px;padding:22px 46px;letter-spacing:1.2px}
+/* Mobile: the hero CTAs read smaller so they don't dominate the landing screen.
+   Web keeps the full billboard-size buttons. */
+@media(max-width:860px){
+  .a-cta .btn-xl{font-size:19px;padding:14px 28px;letter-spacing:.6px}
+  .a-cta .btn-lg{font-size:15px;padding:12px 24px}
+}
 .btn-ghost{background:transparent;box-shadow:none;color:inherit;filter:none}
 .btn-ghost:hover{filter:none}
 .btn-ghost:hover{background:rgba(255,255,255,.08)}
@@ -155,6 +161,36 @@ body{overflow-x:hidden}
 .proof .txt b{color:var(--sb-ink)}
 .a-sub{font-size:19px;max-width:46ch;color:var(--sb-body);margin-bottom:34px;line-height:1.6}
 .a-cta{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+
+/* Quick guide links that live in the hero's open space (replaces the old
+   "Know before you go" section). White emoji glyphs on black tiles, stacked
+   vertically so they fill the space. */
+.a-quick{display:flex;flex-direction:column}
+.a-quick-item{display:flex;align-items:center;text-decoration:none;color:var(--sb-ink)}
+.a-quick-ic{display:flex;align-items:center;justify-content:center;background:#111;border:2px solid #111;border-radius:12px;flex:0 0 auto}
+/* brightness(0) flattens the colour emoji to black, invert(1) flips it to a
+   clean white silhouette — white icon on the black tile. */
+.a-quick-gl{filter:brightness(0) invert(1);line-height:1}
+.a-quick-lb{font-family:'Anton';letter-spacing:.5px;line-height:1.05}
+/* Web: large, roomy stack with even spacing above + below (matches the gap to
+   the CTAs). */
+@media(min-width:861px){
+  .a-left{justify-content:center;gap:48px}
+  .a-hero h1{margin-bottom:0}
+  .a-quick{gap:18px;max-width:560px}
+  .a-quick-item{gap:18px}
+  .a-quick-ic{width:68px;height:68px;font-size:32px}
+  .a-quick-lb{font-size:30px}
+  .a-quick-item:hover .a-quick-ic{box-shadow:4px 4px 0 0 var(--sb-yellow)}
+  .a-quick-item:hover .a-quick-lb{color:var(--sb-yellow-deep)}
+}
+/* Mobile: same vertical stack, sized up from the old icon row. */
+@media(max-width:860px){
+  .a-quick{gap:12px}
+  .a-quick-item{gap:13px}
+  .a-quick-ic{width:48px;height:48px;font-size:23px;border-radius:10px}
+  .a-quick-lb{font-size:19px}
+}
 .a-right{position:relative;background:#000;overflow:hidden;min-height:420px}
 .a-right .img{position:absolute;inset:0;background:url('/img/stadiums/sofi.jpg') center/cover}
 .a-right .img::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(17,17,17,.55),rgba(17,17,17,.05) 45%,rgba(17,17,17,.45))}
@@ -165,7 +201,35 @@ body{overflow-x:hidden}
 .a-venue .cv{font-family:'Anton';font-size:30px;color:#fff;letter-spacing:1px;margin-bottom:12px}
 .a-venue .scorechip{margin-bottom:14px}
 .a-venue .scorechip .s{background:#1b1b1b}.a-venue .scorechip .s .v{color:#fff}.a-venue .scorechip .s.fan .v{color:var(--sb-yellow)}
-@media(max-width:860px){.a-hero{grid-template-columns:1fr}.a-right{min-height:440px}}
+@media(max-width:860px){
+  .a-hero{grid-template-columns:1fr}
+  /* Landing = the title + CTAs, filling the first screen. The stadium panel and
+     everything below it sit past the fold, so you scroll to reach them.
+     dvh (not vh) so it's exact under the mobile browser's address bar. */
+  .a-left{min-height:calc(100dvh - 72px);justify-content:space-between}
+  .a-right{min-height:440px}
+}
+/* Phones: the fan post + venue cards become small corner blurbs so they frame
+   the stadium photo instead of covering it. Drop the long quote and the rating
+   bars — a blurb only needs who / score / venue. */
+@media(max-width:640px){
+  .a-right{min-height:360px}
+  .a-post{top:12px;right:12px;max-width:47%;padding:9px 11px;border-width:3px;box-shadow:5px 5px 0 0 #111}
+  .a-post .hd{gap:7px;margin-bottom:5px}
+  .a-post .avatar{width:30px;height:30px;font-size:15px;border-width:2px}
+  .a-post .nm{font-size:12px}
+  .a-post .mt{font-size:10px}
+  .a-post .stars{font-size:12px}
+  .a-post .q,.a-post .wasthere{display:none}
+  .a-venue{left:12px;bottom:12px;width:auto;max-width:50%;padding:10px 12px;border-width:4px;box-shadow:6px 6px 0 0 rgba(0,0,0,.45)}
+  .a-venue .cc{font-size:10px}
+  .a-venue .cv{font-size:17px;line-height:1;margin-bottom:8px}
+  .a-venue .scorechip{gap:7px;margin-bottom:0}
+  .a-venue .scorechip .s{min-width:0;padding:5px 9px}
+  .a-venue .scorechip .s .v{font-size:22px}
+  .a-venue .scorechip .s .k{font-size:8px}
+  .a-venue .detrow{display:none}
+}
 
 /* atoms: scorechip, fan post, stars, detail rows */
 .scorechip{display:flex;gap:10px}
@@ -221,6 +285,7 @@ body{overflow-x:hidden}
   background:var(--sb-white);border:8px solid var(--sb-black);border-radius:4px;
   box-shadow:8px 8px 0 0 var(--sb-black);padding:28px;position:relative;
   transition:transform 100ms ease-out,border-color 150ms,box-shadow 150ms;
+  color:inherit;text-decoration:none;display:block;
 }
 .card.interactive{cursor:pointer}
 .card.interactive:hover{border-color:var(--sb-yellow);box-shadow:10px 10px 0 0 var(--sb-black)}

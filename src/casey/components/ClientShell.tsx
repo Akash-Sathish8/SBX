@@ -72,7 +72,17 @@ export default function ClientShell({
   );
   const [followingOpen, setFollowingOpen] = useState(false);
   const [welcomeForce, setWelcomeForce] = useState(false);
-  const [following, setFollowing] = useState(false);
+  // On phones the map is a live tracker: default to following Casey once the
+  // trip is underway (pre/post-trip keeps the whole-journey overview). Desktop
+  // map is a locked showcase, so following stays off there.
+  const [following, setFollowing] = useState(() => {
+    try {
+      const s = initialLocation.state;
+      return window.innerWidth < 640 && s !== 'pre-trip' && s !== 'post-trip';
+    } catch {
+      return false;
+    }
+  });
   const [lastUpdateAt, setLastUpdateAt] = useState<number>(Date.now());
   const [connectionLost, setConnectionLost] = useState(false);
 
