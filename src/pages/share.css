@@ -6,8 +6,9 @@
 .sc-pad{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:70px 72px 56px}
 
 .sc-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:38px}
-.sc-logo{font-family:'Anton','Barlow',sans-serif;font-size:58px;letter-spacing:4px;color:#111;text-transform:uppercase}
-.sc-logo span{background:#F7DF02;color:#111;padding:0 14px;border-radius:8px}
+.sc-logo{display:flex;align-items:center;gap:18px}
+.sc-cap{width:92px;height:92px;border-radius:16px;box-shadow:5px 5px 0 #111;flex:none}
+.sc-wm{font-family:'Anton','Barlow',sans-serif;font-size:46px;line-height:.9;letter-spacing:1px;text-transform:uppercase;color:#111}
 .sc-planlab{font-family:'Anton','Barlow',sans-serif;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#111;background:#F7DF02;padding:10px 18px;border-radius:8px}
 
 .sc-rnd{font-size:26px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#9a7e00;margin-bottom:26px}
@@ -17,21 +18,29 @@
 .sc-nm{font-family:'Anton','Barlow',sans-serif;font-size:58px;letter-spacing:1px;text-transform:uppercase;text-align:center;line-height:.95;color:#111}
 .sc-vs{font-family:'Anton','Barlow',sans-serif;font-size:46px;color:#111}
 
-.sc-when{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.sc-when{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:22px}
 .sc-chip{display:inline-flex;align-items:center;gap:10px;font-size:30px;font-weight:700;background:#111;color:#fff;padding:14px 24px;border-radius:50px}
 .sc-chip.y{background:#F7DF02;color:#111;font-weight:800}
-.sc-venue{font-size:30px;color:#666;font-weight:600;margin-bottom:44px}
+.sc-venue{font-size:30px;color:#666;font-weight:600;text-align:center;margin-bottom:44px}
 
-/* story timeline */
-.sc-tl{position:relative;flex:1;padding-left:58px}
-.sc-tl::before{content:"";position:absolute;left:16px;top:14px;bottom:24px;width:4px;background:#e3d98f}
-.sc-step{position:relative;margin-bottom:34px}
+/* story timeline — steps distribute to fill the full card height */
+.sc-tl{position:relative;flex:0 0 auto;padding-left:58px;display:flex;flex-direction:column;justify-content:flex-start;gap:30px}
+.sc-tl::before{content:"";position:absolute;left:16px;top:14px;bottom:14px;width:4px;background:#e3d98f}
+.sc-step{position:relative}
 .sc-step::before{content:"";position:absolute;left:-58px;top:6px;width:34px;height:34px;border-radius:50%;background:#F7DF02;border:6px solid #f7f6f2;box-shadow:0 0 0 4px #F7DF02}
 .sc-step.walk::before{background:#111;box-shadow:0 0 0 4px #111}
-.sc-slab{font-size:24px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#9a7e00}
+.sc-slab{font-size:25px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#9a7e00}
 .sc-step.walk .sc-slab{color:#111}
-.sc-sname{font-family:'Anton','Barlow',sans-serif;font-size:42px;letter-spacing:.5px;color:#111;line-height:1.02;margin-top:4px}
-.sc-snote{font-size:27px;color:#555;line-height:1.35;margin-top:6px}
+.sc-sname{font-family:'Anton','Barlow',sans-serif;font-size:44px;letter-spacing:.5px;color:#111;line-height:1.02;margin-top:6px}
+.sc-snote{font-size:27px;color:#555;line-height:1.34;margin-top:8px}
+.sc-swhere{font-size:23px;color:#8a8a8a;line-height:1.3;margin-top:7px}
+
+/* content-aware fill: timeline fills the frame; type auto-scales via --scf (set in JS) so it never overflows or floats */
+.sc-story .sc-tl{flex:1 1 auto;justify-content:space-between;gap:calc(30px * var(--scf,1))}
+.sc-story .sc-slab{font-size:calc(25px * var(--scf,1))}
+.sc-story .sc-sname{font-size:calc(44px * var(--scf,1))}
+.sc-story .sc-snote{font-size:calc(27px * var(--scf,1))}
+.sc-story .sc-swhere{font-size:calc(23px * var(--scf,1))}
 
 /* square: 2-column grid, no timeline line */
 .sc-square .sc-fl{font-size:84px}
@@ -44,11 +53,14 @@
 .sc-square .sc-sname{font-size:34px}
 .sc-square .sc-snote{font-size:23px}
 
-.sc-foot{display:flex;align-items:center;justify-content:space-between;border-top:3px solid #ddd;padding-top:26px;margin-top:20px}
+.sc-foot{display:flex;align-items:center;justify-content:space-between;border-top:3px solid #ddd;padding-top:26px;margin-top:auto}
 .sc-foot span{font-size:24px;color:#888;font-weight:600}
 .sc-foot .sc-hand{color:#111;font-weight:800}
 
 /* ===== builder UI (on game page) ===== */
+/* Pull Step 1 / the wizard up closer to the hero (share.css only loads on the
+   build page, so this doesn't touch the game detail page's sections). */
+section.block{padding-top:22px}
 .sb-wrap{margin-top:6px}
 .sb-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
 @media(max-width:760px){.sb-row{grid-template-columns:1fr}}
@@ -62,7 +74,64 @@
 .sb-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .sb-btn{font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;letter-spacing:.6px;font-size:15px;color:#111;background:#F7DF02;border:0;border-radius:8px;padding:13px 22px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.1)}
 .sb-btn.dark{background:#111;color:#fff}
+.sb-btn.ghost{background:#fff;border:2px solid #111;box-shadow:none}
 .sb-btn:disabled{opacity:.5;cursor:wait}
+
+/* ---- one-decision-at-a-time wizard ---- */
+/* Compact top bar: back link (left) + step progress (right) on one row. */
+.wz-top{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin-bottom:14px}
+.wz-top .bld-backlink{margin-bottom:0}
+.wz-top .wz-prog{margin:0}
+/* Consolidated context, stacked: match (brand chip) on top, then a meta line
+   with venue + weather (dot-separated). */
+.wz-context{display:flex;flex-direction:column;align-items:flex-start;gap:11px;margin-bottom:22px}
+.wz-cmatch{font-family:'Anton','Barlow',sans-serif;font-size:14px;letter-spacing:.4px;text-transform:uppercase;color:#111;background:#F7DF02;padding:6px 13px;border-radius:6px;box-shadow:3px 3px 0 #111}
+.wz-cmeta-row{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.wz-cmeta{font-size:12.5px;font-weight:700;letter-spacing:.3px;color:#666;text-transform:uppercase;display:inline-flex;align-items:center}
+.wz-cmeta-row .wz-cmeta:not(:first-child)::before{content:"";width:4px;height:4px;border-radius:50%;background:#cfcfcf;margin-right:9px;flex:none}
+.wz-cwalk{text-transform:none;color:#9a7e00}
+
+/* Per-match bottom bar — both flags + VS. Fills the space the footer left and
+   keeps the matchup in view while you build. Spacer reserves in-flow height so
+   nothing hides behind the fixed bar. */
+.matchbar-spacer{height:calc(240px + env(safe-area-inset-bottom))}
+.matchbar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:flex;align-items:stretch;min-height:106px;background:#111;border-top:4px solid #F7DF02;padding-bottom:env(safe-area-inset-bottom)}
+/* Each half is the country's real flag, faded behind its name. */
+.matchbar-side{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-size:cover;background-position:center;padding:0 16px}
+.matchbar-side::before{content:"";position:absolute;inset:0;background:rgba(17,17,17,.72)}
+.matchbar-team{position:relative;z-index:1;font-family:'Anton','Barlow',sans-serif;font-size:clamp(18px,5vw,28px);color:#fff;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.matchbar-vs{flex:none;align-self:center;position:relative;z-index:2;font-family:'Anton','Barlow',sans-serif;font-size:clamp(15px,4.2vw,20px);color:#F7DF02;letter-spacing:1px;padding:0 8px}
+.wz-prog{display:flex;align-items:center;gap:7px;margin:6px 0 16px}
+.wz-dot{width:9px;height:9px;border-radius:50%;background:#dcdcd6;transition:background .15s,transform .15s}
+.wz-dot.done{background:#caa600}
+.wz-dot.on{background:#F7DF02;box-shadow:0 0 0 2px #111;transform:scale(1.1)}
+.wz-progtxt{margin-left:8px;font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#999}
+.wz-ctx{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 2px;font-size:12.5px;font-weight:700;color:#666}
+.wz-scroll{display:flex;gap:14px;overflow-x:auto;padding:18px 2px 20px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.wz-scroll::-webkit-scrollbar{height:9px}
+.wz-scroll::-webkit-scrollbar-thumb{background:#d2d2cc;border-radius:20px}
+.wz-card{flex:0 0 290px;scroll-snap-align:start;text-align:left;background:#fff;border:1px solid #ececec;border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.05);padding:18px;cursor:pointer;display:flex;flex-direction:column;gap:11px;transition:transform .12s,box-shadow .12s,border-color .12s}
+.wz-card:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.1);border-color:#cfcfcf}
+.wz-card.on{border-color:#111;background:#fffdf3;box-shadow:0 14px 30px rgba(0,0,0,.12)}
+.wz-cardtop{display:flex;align-items:flex-start;gap:10px}
+.wz-cardname{font-family:'Anton','Barlow',sans-serif;font-size:18px;color:#111;letter-spacing:.2px;line-height:1.15}
+.wz-cardtag{margin-left:auto;flex:none;max-width:50%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#7a6700;background:#fff3b0;border:1px solid #ecd96b;border-radius:20px;padding:3px 9px}
+.wz-cardprice{font-size:12.5px;font-weight:700;color:#7a6700;line-height:1.35;overflow-wrap:anywhere}
+.wz-cardmeta{display:flex;flex-wrap:wrap;align-items:center;gap:5px 12px;margin:-3px 0 1px}
+.wz-cardrating{font-size:12px;font-weight:800;letter-spacing:.2px;color:#b8860b}
+.wz-carddist{font-size:12px;font-weight:700;color:#777}
+.wz-cardbul{list-style:none;margin:0;padding:0;display:grid;gap:7px;flex:1}
+.wz-cardbul li{position:relative;padding-left:15px;font-size:13px;color:#444;line-height:1.42;text-wrap:pretty;overflow-wrap:anywhere}
+.wz-cardbul li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#F7DF02;box-shadow:0 0 0 1px #caa600}
+.wz-pick{margin-top:2px;font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#111}
+.wz-card.on .wz-pick{color:#7a6700}
+.wz-empty{padding:30px 4px;color:#999;font-weight:600}
+/* Nav sits as a fixed bar right above the flags footer: Back on the left,
+   Skip stacked above Next on the right. Gradient lets cards fade behind it. */
+.wz-nav{position:fixed;left:0;right:0;bottom:calc(106px + env(safe-area-inset-bottom));z-index:44;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;max-width:1180px;margin:0 auto;padding:24px 28px 14px;background:linear-gradient(to top,#f7f6f2 78%,rgba(247,246,242,0));pointer-events:none}
+.wz-nav>*{pointer-events:auto}
+.wz-nav-stack{display:flex;flex-direction:column;gap:8px;align-items:stretch;flex:none}
+.wz-share .sb-actions{margin-top:20px}
 .sb-preview{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
 .sb-pvbox{background:#e9e7e0;border-radius:14px;padding:16px;box-shadow:inset 0 2px 8px rgba(0,0,0,.06)}
 .sb-pvcap{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#888;margin-bottom:8px;text-align:center}
@@ -81,7 +150,7 @@
 .bld-search{margin:0 0 0 auto;max-width:420px;flex:1 1 240px}
 .search{display:flex;align-items:center;gap:9px;background:#fff;border:2px solid #111;border-radius:8px;box-shadow:4px 4px 0 0 #111;padding:9px 14px}
 .search .si{font-size:15px;opacity:.7;line-height:1}
-.search input{border:0;outline:0;background:transparent;font-family:'Barlow',sans-serif;font-size:15px;font-weight:600;color:#111;width:100%}
+.search input{border:0;outline:0;background:transparent;font-family:'Barlow',sans-serif;font-size:16px;font-weight:600;color:#111;width:100%}
 .search input::placeholder{color:#9a9a9a;font-weight:500}
 @media(max-width:600px){.bld-search{margin:6px 0 0;flex-basis:100%;max-width:none}}
 .bld-list{display:grid;gap:10px}

@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { toPng } from 'html-to-image'
 import { SiteNav } from '../components/SiteNav'
+import { PageCssGuard } from '../components/PageCssGuard'
 import { ShareCard, type Plan } from '../components/ShareCard'
-import { teamName, teamFlag } from '../lib/teams'
+import { getShareFontEmbedCss } from '../lib/shareFonts'
+import { byDistance, isInside } from '../lib/dist'
+import { teamName, teamFlag, teamCode } from '../lib/teams'
 import gameCss from '../pages/game.css?url'
 import shareCss from '../pages/share.css?url'
 
@@ -13,7 +16,10 @@ export const Route = createFileRoute('/build')({
     mode: s.mode === 'venue' ? 'venue' : 'matchup',
   }),
   head: () => ({
-    links: [{ rel: 'stylesheet', href: gameCss }, { rel: 'stylesheet', href: shareCss }],
+    links: [
+      { rel: 'stylesheet', href: gameCss, 'data-page-css': 'game build' },
+      { rel: 'stylesheet', href: shareCss, 'data-page-css': 'build' },
+    ],
     meta: [{ title: 'Snapback — Build Match Guide' }],
   }),
   component: BuildPage,
@@ -41,11 +47,30 @@ async function fetchMatchWeather(venue: string, dateISO: string): Promise<{ temp
 function marchRelevant(m: any, g: any) {
   if (m.venue !== g.venue) return false
   const hay = ((m.title || '') + ' ' + (m.note || '') + ' ' + (m.when || '')).toLowerCase()
+  // Exclude entries that are NOT a supporter walk (e.g. security corridors,
+  // "no walking" advisories) — these aren't a fan walk to opt into.
+  if (/not a supporter march|no walking|no walk|bans pedestrian|pedestrian corridor/.test(hay)) return false
+  // Must read like an actual supporter walk / march / gathering.
+  if (!/fanwalk|fan walk|fan march|supporter march|banderazo|parade|tartan army/.test(hay)) return false
+  // And it must be tied to one of THIS match's teams (date/team specific).
   const teams = [g.home, g.away, teamName(g.home), teamName(g.away)].filter(Boolean).map((s: string) => s.toLowerCase())
-  if (teams.some((t: string) => t && hay.indexOf(t) > -1)) return true
-  return /every match day|all matches|each match day|match day/.test(hay) && !/match:/.test(hay)
+  return teams.some((t: string) => t && hay.indexOf(t) > -1)
 }
 const firstSentence = (t?: string) => (t ? String(t).split(/(?<=[.!?])\s+/)[0].replace(/\.$/, '') : '')
+
+// A supporter march walks you to the gates, so it IS the "getting there" leg.
+// Pull the meet point (start of the route) and the gather/depart times out of
+// the march so the plan can show fans exactly where and when to show up.
+function buildFanwalk(m: any): { name: string; note?: string; where?: string } {
+  // Meet point + address now come from the structured `meet` field (researched
+  // per fan walk); times are still parsed from `when`.
+  const meet = m.meet || {}
+  const gather = (String(m.when || '').match(/gather\s+([0-9:apm.\s]+?)(?:[,;·]|$)/i) || [])[1]?.trim()
+  const depart = (String(m.when || '').match(/depart\s+([0-9:apm.\s]+?)(?:[,;·]|$)/i) || [])[1]?.trim()
+  const times = [gather && `gather ${gather}`, depart && `depart ${depart}`].filter(Boolean).join(', ')
+  const where = [meet.address, times].filter(Boolean).join(' · ') || (String(m.when || '') || undefined)
+  return { name: String(m.title || '').replace(/—.*$/, '').trim(), note: meet.spot || undefined, where }
+}
 
 function BuildPage() {
   const { game, mode } = Route.useSearch()
@@ -65,18 +90,22 @@ function BuildPage() {
 
   return (
     <>
+      <PageCssGuard id="build" />
       <SiteNav active="games" />
       <main id="app">
-        <section className="ghero"><div className="container">
-          <div className="ground">Snapback · World Cup 2026</div>
-          <h1 className="bld-h1">Build your match guide</h1>
-          <div className="gmeta">Pick a match, choose your spots, download a shareable card.</div>
-        </div></section>
+        {/* Intro hero only while choosing a match; once a match is picked the
+            guide wizard takes over the full page. */}
+        {!g && (
+          <section className="ghero"><div className="container">
+            <div className="ground">Snapback · World Cup 2026</div>
+            <h1 className="bld-h1">Build your match guide</h1>
+            <div className="gmeta">Pick a match, choose your spots, share a plan.</div>
+          </div></section>
+        )}
         {!index ? <div className="loadwrap">Loading…</div>
           : g ? <Builder g={g} fi={fi} onBack={() => setGame('')} />
             : <Chooser index={index} onPick={setGame} initialMode={mode} />}
       </main>
-      <footer><div className="container">© 2026 Snapback Sports — World Cup Games. <Link to="/games">← All games</Link></div></footer>
     </>
   )
 }
@@ -158,15 +187,19 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const [weather, setWeather] = useState<{ temp: string; label: string } | null>(null)
   const [getI, setGetI] = useState(0)
   const [parkI, setParkI] = useState(0)
-  const [preI, setPreI] = useState(0)
-  const [eatI, setEatI] = useState(0)
-  const [postI, setPostI] = useState(0)
+  // pre / eat / merch / post are multi-select: arrays of chosen option indices.
+  const [preSel, setPreSel] = useState<number[]>([])
+  const [eatSel, setEatSel] = useState<number[]>([])
+  const [postSel, setPostSel] = useState<number[]>([])
+  const [merchSel, setMerchSel] = useState<number[]>([])
+  const [walkI, setWalkI] = useState(0)
+  const [step, setStep] = useState(0)
   const [busy, setBusy] = useState('')
   const storyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let alive = true
-    setVenue(null); setWeather(null); setGetI(0); setParkI(0); setPreI(0); setEatI(0); setPostI(0)
+    setVenue(null); setWeather(null); setStep(0); setWalkI(0); setGetI(0); setParkI(0); setPreSel([]); setEatSel([]); setPostSel([]); setMerchSel([])
     fetch('/data/venues/' + g.venue + '.json').then((r) => r.json()).then((v) => { if (alive) setVenue(v) }).catch(() => {})
     fetchMatchWeather(g.venue, g.dateISO).then((w) => { if (alive) setWeather(w) })
     return () => { alive = false }
@@ -174,17 +207,22 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
 
   const marches = fi?.marches ? fi.marches.filter((m: any) => marchRelevant(m, g)) : []
   const around = (venue && venue.around) || {}
-  const preOpts: any[] = (around.pre || []).filter((s: any) => !s.fifa)
-  const eatOpts: any[] = around.food || []
-  const postOpts: any[] = around.post || []
-  const fanwalk = marches.length ? { name: marches[0].title.replace(/—.*$/, '').trim(), note: firstSentence(marches[0].route) } : null
+  // "Eat inside" is only the truly in-stadium food; nearby food spots become
+  // before-the-match options (you grab them on the walk in). Sorted nearest-first.
+  const rawFood: any[] = around.food || []
+  const nearbyFood: any[] = rawFood.filter((f: any) => !isInside(f))
+  const eatOpts: any[] = byDistance(rawFood.filter((f: any) => isInside(f)))
+  const preOpts: any[] = byDistance([...(around.pre || []).filter((s: any) => !s.fifa), ...nearbyFood])
+  const postOpts: any[] = byDistance(around.post || [])
+  const merchOpts: any[] = byDistance(around.merch || [])
+  const fanwalk = marches.length ? buildFanwalk(marches[0]) : null
 
   // Getting there: real, researched options pulled from the venue's transport + parking data.
   const getThereOpts: any[] = useMemo(() => {
     const t = (venue && venue.transport) || {}
     const sentences = (s: any) => String(s || '').split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter(Boolean)
     const bulletsOf = (item: any) => (item.points && item.points.length)
-      ? item.points.map((p: any) => (p.b ? p.b + (p.t ? ' — ' + p.t : '') : p.t))
+      ? item.points.map((p: any) => (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t))
       : sentences(item.detail).slice(0, 3)
     const o: any[] = []
     ;(t.rail || []).forEach((r: any) => o.push({ name: r.name, tag: 'Train', bullets: bulletsOf(r), deal: r.deal }))
@@ -199,123 +237,217 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     return o
   }, [venue])
 
+  const point = (p: any) => p ? (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t) : ''
+  const spot = (o: any) => o ? {
+    name: o.name,
+    note: o.note || (o.why && o.why[0]) || '',
+    where: [o.where, o.why && o.why[1], o.rating ? `★ ${o.rating}` : null, o.dist].filter(Boolean).join(' · '),
+  } : null
+
   const selGet = getThereOpts[getI] || null
-  const gettingThere = selGet ? selGet.name : null
+  const gettingThere = selGet ? {
+    name: selGet.name,
+    note: [selGet.tag, selGet.bullets && selGet.bullets[0]].filter(Boolean).join(' · '),
+    where: [selGet.bullets && selGet.bullets[1], selGet.deal ? 'Fare · ' + selGet.deal : null].filter(Boolean).join('  ·  '),
+  } : null
   const parkLots: any[] = selGet && selGet.driving ? (selGet.lots || []) : []
   const selLot = parkLots[parkI] || null
-  const parking = selLot ? selLot.name + (selLot.price ? ' · ' + selLot.price : '') : null
+  const parking = selLot ? {
+    name: selLot.name,
+    note: [selLot.price, point(selLot.points && selLot.points[0])].filter(Boolean).join(' · '),
+    where: point(selLot.points && selLot.points[1]),
+  } : null
+
+  // Special event (fan walk / supporter march). When one exists it becomes the
+  // first question of the build: are you joining it?
+  const walkOpts: any[] = fanwalk ? [
+    { name: "Yes, I'm in", note: fanwalk.note || 'Meet the crowd and march in together.', attend: true },
+    { name: 'No, head straight in', note: 'Skip the march and go right to the stadium.', attend: false },
+  ] : []
+  const attendingWalk = !!fanwalk && walkOpts[walkI]?.attend !== false
 
   const plan: Plan = {
     home: teamName(g.home), away: teamName(g.away), homeFlag: teamFlag(g.home), awayFlag: teamFlag(g.away),
-    round: g.round, date: g.date, ko: g.ko || '', venueName: g.venueName, city: g.city, weather, gettingThere, parking,
-    pre: preOpts[preI] ? { name: preOpts[preI].name, note: preOpts[preI].note } : null,
-    fanwalk,
-    eat: eatOpts[eatI] ? { name: eatOpts[eatI].name, note: eatOpts[eatI].note } : null,
-    post: postOpts[postI] ? { name: postOpts[postI].name, note: postOpts[postI].note } : null,
+    round: g.round, date: g.date, ko: g.ko || '', venueName: g.venueName, city: g.city, weather,
+    // The fan walk delivers you to the gates, so when fans opt in we drop the
+    // "getting there" + parking legs entirely (the walk replaces them).
+    gettingThere: attendingWalk ? null : gettingThere,
+    parking: attendingWalk ? null : parking,
+    pre: preSel.map((i) => spot(preOpts[i])).filter(Boolean) as any,
+    fanwalk: attendingWalk ? fanwalk : null,
+    eat: eatSel.map((i) => spot(eatOpts[i])).filter(Boolean) as any,
+    merch: merchSel.map((i) => spot(merchOpts[i])).filter(Boolean) as any,
+    post: postSel.map((i) => spot(postOpts[i])).filter(Boolean) as any,
   }
 
-  async function download(fmt: 'story') {
+  async function renderBlob(): Promise<Blob | null> {
     const node = storyRef.current
-    if (!node) return
-    setBusy(fmt)
+    if (!node) return null
+    // Ensure the live node is laid out with the real fonts before capture.
+    try { await (document as any).fonts?.ready } catch { /* ignore */ }
+    await new Promise((r) => setTimeout(r, 60))
+    // Inline the brand fonts so the isolated export SVG renders Anton/Barlow
+    // (not a wide fallback that wraps headings and breaks the layout). Falls
+    // back to skipFonts only if the font fetch fails (offline).
+    let fontEmbedCSS: string | undefined
+    try { fontEmbedCSS = await getShareFontEmbedCss() } catch { fontEmbedCSS = undefined }
+    const url = await toPng(node, {
+      pixelRatio: 1,
+      cacheBust: true,
+      width: 1080,
+      height: 1920,
+      ...(fontEmbedCSS ? { fontEmbedCSS } : { skipFonts: true }),
+    })
+    return await (await fetch(url)).blob()
+  }
+
+  async function download() {
+    setBusy('download')
     try {
-      await new Promise((r) => setTimeout(r, 60))
-      const url = await toPng(node, { pixelRatio: 1, cacheBust: true, skipFonts: true, width: 1080, height: 1920 })
+      const blob = await renderBlob(); if (!blob) return
+      const url = URL.createObjectURL(blob)
       const a = document.createElement('a'); a.href = url; a.download = `snapback-${g.id}-story.png`; a.click()
+      URL.revokeObjectURL(url)
     } catch { /* noop */ } finally { setBusy('') }
   }
 
-  const Picker = ({ label, opts, val, set }: { label: string; opts: any[]; val: number; set: (n: number) => void }) => (
-    <div className="sb-group">
-      <div className="sb-glab">{label}</div>
-      {opts.length ? opts.map((o, i) => (
-        <label key={i} className="sb-opt"><input type="radio" checked={val === i} onChange={() => set(i)} /><span><b>{o.name}</b>{o.note ? ' — ' + o.note : ''}</span></label>
-      )) : <div className="sb-opt" style={{ color: '#999' }}>None listed</div>}
-    </div>
-  )
+  // Opens the OS share sheet (choose any platform). Falls back to a download
+  // when the browser can't share a file.
+  async function share() {
+    setBusy('share')
+    try {
+      const blob = await renderBlob(); if (!blob) return
+      const file = new File([blob], `snapback-${g.id}.png`, { type: 'image/png' })
+      const text = `My matchday plan for ${teamName(g.home)} v ${teamName(g.away)} at ${g.venueName}.`
+      const nav: any = navigator
+      if (nav.canShare && nav.canShare({ files: [file] })) {
+        await nav.share({ files: [file], title: 'Snapback matchday plan', text })
+      } else if (nav.share) {
+        await nav.share({ title: 'Snapback matchday plan', text })
+      } else {
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a'); a.href = url; a.download = file.name; a.click()
+        URL.revokeObjectURL(url)
+      }
+    } catch { /* user dismissed the share sheet */ } finally { setBusy('') }
+  }
 
-  const GettingThere = ({ opts, val, set }: { opts: any[]; val: number; set: (n: number) => void }) => (
-    <div className="sb-group sb-getgroup">
-      <div className="sb-glab">Getting there <span className="sb-ghint">— pick how you'll arrive</span></div>
-      {opts.length ? (
-        <div className="gt-list">
-          {opts.map((o, i) => (
-            <div key={i} className={'gt-opt' + (val === i ? ' on' : '')} onClick={() => set(i)}>
-              <div className="gt-head">
-                <input type="radio" checked={val === i} onChange={() => set(i)} />
-                <span className="gt-name">{o.name}</span>
-                <span className="gt-tag">{o.tag}</span>
-              </div>
-              {val === i ? (
-                <ul className="gt-bul">
-                  {o.bullets.map((b: string, j: number) => <li key={j}>{b}</li>)}
-                  {o.deal ? <li className="gt-deal">Fare · {o.deal}</li> : null}
-                  {o.driving ? <li className="gt-deal">Pick your lot in the Parking tab below ↓</li> : null}
-                </ul>
-              ) : null}
-            </div>
-          ))}
-        </div>
-      ) : <div className="sb-opt" style={{ color: '#999' }}>No transport options listed for this venue yet.</div>}
-    </div>
-  )
+  // ---- one-decision-at-a-time wizard ----
+  const driving = !!(selGet && selGet.driving)
+  // Toggle helper for the multi-select steps (add / remove an option index).
+  const toggle = (setter: (fn: (prev: number[]) => number[]) => void) => (i: number) =>
+    setter((prev) => (prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]))
+  const flow: any[] = [
+    ...(fanwalk ? [{ key: 'walk', title: 'Are you joining the fan walk?', sub: fanwalk.name, opts: walkOpts, sel: walkI, set: setWalkI, empty: '' }] : []),
+    // Joining the walk means you arrive on foot — skip the transport + parking steps.
+    ...(attendingWalk ? [] : [{ key: 'get', title: 'Choose how to get there', sub: 'Pick your way to the stadium', opts: getThereOpts, sel: getI, set: setGetI, empty: 'No transport options listed for this venue yet.' }]),
+    ...(driving && !attendingWalk ? [{ key: 'park', title: 'Choose where to park', sub: 'Pick a lot for the car', opts: parkLots, sel: parkI, set: setParkI, empty: 'No fan parking listed for this venue.' }] : []),
+    { key: 'pre', title: 'Before the match', sub: 'Pick any spots to hit before kickoff', opts: preOpts, sel: preSel, toggle: toggle(setPreSel), multi: true, empty: 'Nothing listed near this ground yet.' },
+    { key: 'eat', title: 'Eat inside', sub: 'Grab anything you like in the concourse', opts: eatOpts, sel: eatSel, toggle: toggle(setEatSel), multi: true, empty: 'No in-stadium food listed yet.' },
+    ...(merchOpts.length ? [{ key: 'merch', title: 'Grab some merch', sub: 'Official shops at the stadium', opts: merchOpts, sel: merchSel, toggle: toggle(setMerchSel), multi: true, empty: '' }] : []),
+    { key: 'post', title: 'After the whistle', sub: 'Pick where to head once it ends', opts: postOpts, sel: postSel, toggle: toggle(setPostSel), multi: true, empty: 'Nothing listed for after the match yet.' },
+    { key: 'share', title: 'Your matchday plan', sub: 'Save it and share', share: true },
+  ]
+  const stepIdx = Math.min(step, flow.length - 1)
+  const cur = flow[stepIdx]
 
-  const Parking = ({ lots, val, set }: { lots: any[]; val: number; set: (n: number) => void }) => (
-    <div className="sb-group sb-getgroup sb-parkgroup">
-      <div className="sb-glab">🅿 Parking <span className="sb-ghint">— where you'll leave the car</span></div>
-      {lots.length ? (
-        <div className="gt-list">
-          {lots.map((l, i) => (
-            <div key={i} className={'gt-opt' + (val === i ? ' on' : '')} onClick={() => set(i)}>
-              <div className="gt-head">
-                <input type="radio" checked={val === i} onChange={() => set(i)} />
-                <span className="gt-name">{l.name}</span>
-              </div>
-              {l.price ? <div className="gt-price">{l.price}</div> : null}
-              {val === i ? (
-                <ul className="gt-bul">
-                  {(l.points && l.points.length
-                    ? l.points.map((p: any) => (p.b ? p.b + (p.t ? ' — ' + p.t : '') : p.t))
-                    : [firstSentence(l.detail)]).map((b: string, j: number) => <li key={j}>{b}</li>)}
-                </ul>
-              ) : null}
-            </div>
-          ))}
-        </div>
-      ) : <div className="sb-opt" style={{ color: '#999' }}>No fan parking listed — transit is the move here.</div>}
-    </div>
-  )
+  const cardLines = (key: string, o: any): string[] => {
+    if (key === 'park') return (o.points && o.points.length ? o.points.map((p: any) => (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t)) : [firstSentence(o.detail)]).filter(Boolean)
+    if (key === 'get') { const l = [...(o.bullets || [])]; if (o.deal) l.push('Fare · ' + o.deal); if (o.driving) l.push('Next: choose your parking lot →'); return l }
+    return o.note ? [o.note] : []
+  }
+  // Multi steps toggle (stay on the page); single steps select and advance.
+  const pick = (i: number) => { if (cur.multi) { cur.toggle(i) } else { cur.set(i); setStep((s) => s + 1) } }
 
   return (
+    <>
     <section className="block"><div className="container">
-      <div className="bld-tophead">
+      <div className="wz-top">
         <button className="bld-backlink" onClick={onBack}>← Choose another match</button>
-        <div className="eyebrow bld-step">Step 2 · {teamName(g.home)} v {teamName(g.away)}</div>
+        <div className="wz-prog">
+          {flow.map((s, i) => <span key={s.key} className={'wz-dot' + (i === stepIdx ? ' on' : '') + (i < stepIdx ? ' done' : '')} />)}
+          <span className="wz-progtxt">{stepIdx + 1} / {flow.length}</span>
+        </div>
       </div>
-      <h2 className="shead">Make your decisions</h2>
-      <div className="ssub">{g.date}{g.ko ? ' · ' + g.ko : ''} · {g.venueName}</div>
+
+      <div className="wz-context">
+        <span className="wz-cmatch">{teamName(g.home)} v {teamName(g.away)}</span>
+        <div className="wz-cmeta-row">
+          <span className="wz-cmeta">{g.venueName}</span>
+          {weather && !cur.share ? <span className="wz-cmeta wz-cwx">{weather.temp} · {weather.label}</span> : null}
+          {attendingWalk && cur.key !== 'walk' ? <span className="wz-cmeta wz-cwalk">🚩 {fanwalk.name}</span> : null}
+        </div>
+      </div>
+
+      <h2 className="shead">{cur.title}</h2>
+      <div className="ssub">{cur.sub}</div>
+
       <div className="sb-wrap">
-        <div className="sb-auto">
-          {weather ? <span className="sb-pill">Weather · {weather.temp} {weather.label}</span> : null}
-          {fanwalk ? <span className="sb-pill">Fan walk · {fanwalk.name}</span> : null}
-        </div>
-        <GettingThere opts={getThereOpts} val={getI} set={setGetI} />
-        {selGet && selGet.driving ? <Parking lots={parkLots} val={parkI} set={setParkI} /> : null}
-        <div className="sb-row">
-          <Picker label="Before the match" opts={preOpts} val={preI} set={setPreI} />
-          <Picker label="Eat inside" opts={eatOpts} val={eatI} set={setEatI} />
-          <Picker label="After the whistle" opts={postOpts} val={postI} set={setPostI} />
-        </div>
-        <div className="sb-actions">
-          <button className="sb-btn" disabled={!!busy} onClick={() => download('story')}>{busy === 'story' ? 'Rendering…' : 'Share'}</button>
-        </div>
-        <div className="sb-preview">
-          <div className="sb-pvbox"><div className="sb-pvcap">Story · 9:16</div><div className="sb-scale-story"><ShareCard plan={plan} format="story" /></div></div>
-        </div>
+        {cur.share ? (
+          <div className="wz-share">
+            <div className="sb-preview">
+              <div className="sb-pvbox"><div className="sb-pvcap">Story · 9:16</div><div className="sb-scale-story"><ShareCard plan={plan} format="story" /></div></div>
+            </div>
+            <div className="sb-actions">
+              <button className="sb-btn ghost" onClick={() => setStep((s) => s - 1)}>← Back</button>
+              <button className="sb-btn" disabled={!!busy} onClick={download}>{busy === 'download' ? 'Rendering…' : '↓ Download'}</button>
+              <button className="sb-btn dark" disabled={!!busy} onClick={share}>{busy === 'share' ? 'Preparing…' : 'Share'}</button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="wz-scroll" key={cur.key}>
+              {cur.opts.length ? cur.opts.map((o: any, i: number) => {
+                const on = cur.multi ? (cur.sel as number[]).includes(i) : cur.sel === i
+                return (
+                <button key={i} className={'wz-card' + (on ? ' on' : '')} onClick={() => pick(i)}>
+                  <div className="wz-cardtop">
+                    <span className="wz-cardname">{o.name}</span>
+                    {cur.key === 'get' && o.tag ? <span className="wz-cardtag">{o.tag}</span> : null}
+                  </div>
+                  {cur.key === 'park' && o.price ? <div className="wz-cardprice">{o.price}</div> : null}
+                  {o.rating || o.dist ? (
+                    <div className="wz-cardmeta">
+                      {o.rating ? <span className="wz-cardrating">★ {o.rating}</span> : null}
+                      {o.dist ? <span className="wz-carddist">📍 {o.dist}</span> : null}
+                    </div>
+                  ) : null}
+                  <ul className="wz-cardbul">
+                    {cardLines(cur.key, o).map((l: string, j: number) => <li key={j}>{l}</li>)}
+                  </ul>
+                  <span className="wz-pick">{on ? (cur.multi ? 'Added ✓ · tap to remove' : 'Selected ✓ · tap to continue') : (cur.multi ? 'Add +' : 'Choose →')}</span>
+                </button>
+                )
+              }) : <div className="wz-empty">{cur.empty}</div>}
+            </div>
+            <div className="wz-nav">
+              <button className="sb-btn ghost" onClick={() => (stepIdx > 0 ? setStep((s) => s - 1) : onBack())}>← Back</button>
+              <div className="wz-nav-stack">
+                <button className="sb-btn ghost wz-skip" onClick={() => setStep((s) => s + 1)}>Skip</button>
+                <button className="sb-btn dark" onClick={() => setStep((s) => s + 1)} disabled={!cur.opts.length}>Next →</button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div className="sb-stage" aria-hidden>
         <ShareCard ref={storyRef} plan={plan} format="story" />
       </div>
     </div></section>
+    {!cur.share && teamCode(g.home) && teamCode(g.away) ? (
+      <>
+        <div className="matchbar-spacer" aria-hidden />
+        <div className="matchbar" aria-hidden>
+          <div className="matchbar-side" style={{ backgroundImage: `url(https://flagcdn.com/${teamCode(g.home)}.svg)` }}>
+            <span className="matchbar-team">{teamName(g.home)}</span>
+          </div>
+          <span className="matchbar-vs">VS</span>
+          <div className="matchbar-side matchbar-away" style={{ backgroundImage: `url(https://flagcdn.com/${teamCode(g.away)}.svg)` }}>
+            <span className="matchbar-team">{teamName(g.away)}</span>
+          </div>
+        </div>
+      </>
+    ) : null}
+    </>
   )
 }
