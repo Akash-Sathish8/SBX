@@ -122,12 +122,15 @@
   "food": [
    {
     "name": "Fuku",
-    "where": "Sections 115 & 319",
+    "where": "Sections 116 & 319",
     "note": "David Chang's spicy fried chicken sandwich, the CBR",
     "why": [
      "The cult fried chicken sandwich, in-stadium",
      "Skip the lower-bowl lines, two locations"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Shorty's Bar-B-Q",
@@ -136,7 +139,10 @@
     "why": [
      "Miami BBQ icon since 1951",
      "Found at five sections, easy to reach"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Jackson Soul Food",
@@ -145,7 +151,10 @@
     "why": [
      "Fried conch, a true Miami plate",
      "Overtown soul-food legend, not concession-stand generic"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Mojo Donuts",
@@ -154,92 +163,145 @@
     "why": [
      "South Florida's cult donut, hand-crafted",
      "Cafe-con-leche energy for a sweet halftime"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
    {
     "name": "FIFA Fan Festival",
-    "where": "Bayfront Park, Downtown Miami; ~15 mi south of stadium, Metromover to Bayfront Park station, then Brightline+shuttle to the gates",
+    "where": "Bayfront Park, Downtown Miami; Metromover to Bayfront Park station, then Brightline+shuttle to the gates",
     "why": [
      "Free fan zone on Biscayne Bay",
      "All 7 Miami matches on giant screens"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "15.0 mi",
+    "distMi": 15
    },
    {
     "name": "Grails Wynwood",
-    "where": "Wynwood, ~20 min south",
+    "where": "2800 N Miami Ave, Wynwood/Midtown",
     "note": "75+ TVs, bilingual crowd, real stadium energy",
     "why": [
      "75+ TVs, no bad sightline",
      "Bilingual Wynwood crowd, electric atmosphere"
-    ]
+    ],
+    "rating": 4.7,
+    "dist": "12.8 mi",
+    "distMi": 12.8
    },
    {
     "name": "Cerveceria La Tropical",
-    "where": "Wynwood, ~20 min south",
+    "where": "42 NE 25th St, Wynwood",
     "note": "Inter Miami's brewery, Cuban roots, big screens",
     "why": [
      "Inter Miami's own Cuban-rooted brewery",
      "Big screens, open-air Wynwood beer garden"
-    ]
+    ],
+    "rating": 4.6,
+    "dist": "13.0 mi",
+    "distMi": 13
    },
    {
     "name": "American Social",
-    "where": "Brickell, ~25 min south",
+    "where": "690 SW 1st Ct, Brickell (Miami River)",
     "note": "Riverfront patio, skyline views, game-day specials",
     "why": [
      "Miami River patio with skyline views",
      "Game-day drink specials, big sports crowd"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "14.8 mi",
+    "distMi": 14.8
    },
    {
     "name": "305 Sports Bar",
-    "where": "Brickell, ~25 min south",
+    "where": "919 Brickell Ave, Brickell",
     "note": "Big screens, wings and tacos, indoor-outdoor seats",
     "why": [
      "Pure 305 sports-bar energy in Brickell",
      "Indoor-outdoor seats, wings and tacos"
-    ]
+    ],
+    "rating": 4.6,
+    "dist": "15.2 mi",
+    "distMi": 15.2
    }
   ],
   "post": [
    {
-    "name": "Bar Tulio",
-    "where": "Wynwood, ~20 min south",
+    "name": "Bar Tulio's",
+    "where": "2839 NW 1st Ave, Wynwood",
     "note": "Birria tacos, 100 tequilas, 14 screens late",
     "why": [
      "Birria tacos and 100 tequilas",
      "14 screens, stays loud and late"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "12.5 mi",
+    "distMi": 12.5
    },
    {
     "name": "Cantina La Veinte",
-    "where": "Brickell, ~25 min south",
+    "where": "495 Brickell Ave, Brickell",
     "note": "Waterfront Mexican, projector screens, upscale crowd",
     "why": [
      "Upscale waterfront Mexican on Biscayne Bay",
      "Projector screens, polished post-match crowd"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "14.5 mi",
+    "distMi": 14.5
    },
    {
     "name": "Cafe La Trova",
-    "where": "Little Havana, ~25 min south",
+    "where": "971 SW 8th St, Little Havana",
     "note": "World's-50-Best bar, live salsa, cantinero cocktails",
     "why": [
      "World's-50-Best bar on Calle Ocho",
      "Live salsa, old-Havana cantinero cocktails"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "14.0 mi",
+    "distMi": 14
    },
    {
     "name": "Ball & Chain",
-    "where": "Little Havana, ~25 min south",
+    "where": "1513 SW 8th St, Little Havana",
     "note": "Calle Ocho landmark, live salsa, mojitos nightly",
     "why": [
      "Historic Calle Ocho landmark since 1935",
      "Nightly live salsa and fresh mojitos"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "14.2 mi",
+    "distMi": 14.2
+   }
+  ],
+  "merch": [
+   {
+    "name": "South Gate Plaza Team Store",
+    "where": "Ground level, South Gate Plaza, Hard Rock Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "New Era Team Store",
+    "where": "100 Level, Section 110, Hard Rock Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Throwback Team Store",
+    "where": "100 Level, Section 132, Hard Rock Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ]
  },

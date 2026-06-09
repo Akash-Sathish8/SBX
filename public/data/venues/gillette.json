@@ -121,7 +121,10 @@
     "why": [
      "House-smoked brisket, not reheated stadium fare",
      "Right by the Lighthouse end gates"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Italian Sausage stand",
@@ -130,7 +133,10 @@
     "why": [
      "New England gameday classic, peppers and onions",
      "Found on every main concourse"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Papa Gino's / Stadium Pizza",
@@ -139,7 +145,10 @@
     "why": [
      "Homegrown New England pizza chain",
      "Get the fried dough for dessert"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "The Taproom",
@@ -148,37 +157,49 @@
     "why": [
      "Dozens of local craft beers on tap",
      "Beer-hall vibe over standard kiosk lines"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
    {
     "name": "FIFA Fan Festival - Boston",
-    "where": "Boston City Hall Plaza, 1 City Hall Square, downtown Boston; ~30 mi north of Gillette in Foxborough. Take the MBTA Boston Stadium Train back from South Station (Blue/Green Line to Gov't Center, steps away)",
+    "where": "Boston City Hall Plaza, 1 City Hall Square, downtown Boston; ~26 mi north of Gillette in Foxborough. Take the MBTA Boston Stadium Train back from South Station (Blue/Green Line to Gov't Center, steps away)",
     "note": "free official FIFA fan zone, June 12-27, with daily live match broadcasts and a local cultural showcase; free but advance registration required",
     "why": [
      "Official free fan zone, big-screen match broadcasts",
      "Downtown hub before training out to Foxborough"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "26 mi (downtown Boston)",
+    "distMi": 26
    },
    {
-    "name": "CBS Scene Restaurant & Bar",
-    "where": "Patriot Place, steps from gates",
-    "note": "three-story sports temple with projection wall, packed",
+    "name": "CBS Sporting Club",
+    "where": "200 Patriot Pl, steps from gates (former CBS Scene space)",
+    "note": "three-story sports bar with a 25-ft LED wall and stadium views, packed on gamedays",
     "why": [
-     "Three-story projection wall, closest big-screen scene",
-     "Literally steps from the stadium gates"
-    ]
+     "Giant LED wall, closest big-screen scene to the gates",
+     "Three-story sports bar literally steps from the stadium"
+    ],
+    "rating": 3.9,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
     "name": "The Harp",
-    "where": "Patriot Place, ~3-min walk",
+    "where": "200 Patriot Pl, ~3-min walk",
     "note": "Boston bar with patio overlooking the stadium",
     "why": [
      "Boston-institution bar with stadium-view patio",
      "Three-minute walk from the gates"
-    ]
+    ],
+    "rating": 3.6,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
     "name": "Davio's Northern Italian Steakhouse",
@@ -187,45 +208,60 @@
     "why": [
      "Upscale steakhouse for a proper pre-match meal",
      "Lively bar, but book ahead"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "Six String Grill & Stage",
-    "where": "Patriot Place, steps from gates",
+    "where": "275 Patriot Pl, steps from gates",
     "note": "live music, big screens, craft and domestic beers",
     "why": [
      "Live music builds the matchday energy",
      "Big screens and beers steps from gates"
-    ]
+    ],
+    "rating": 3.9,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    }
   ],
   "post": [
    {
     "name": "The Harp",
-    "where": "Patriot Place, ~3-min walk",
+    "where": "200 Patriot Pl, ~3-min walk",
     "note": "seasonal patio, local beers, post-game crowd buzz",
     "why": [
      "Seasonal patio catches the post-game crowd buzz",
      "Local beers, three minutes from gates"
-    ]
+    ],
+    "rating": 3.6,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
-    "name": "Howl at Splitsville",
-    "where": "Patriot Place, ~4-min walk",
-    "note": "bowling, golf suites, late-night drinks and pizza",
+    "name": "Howl Splitsville Golf Suites",
+    "where": "220 Patriot Pl, ~4-min walk",
+    "note": "bowling, Full Swing golf suites, live bands, late-night drinks and food",
     "why": [
      "Bowling and golf suites kill the exit gridlock",
-     "Late-night drinks and pizza"
-    ]
+     "Live bands and late-night drinks"
+    ],
+    "rating": 4.2,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "Bar Louie",
-    "where": "Patriot Place, ~5-min walk",
+    "where": "232 Patriot Pl, ~5-min walk",
     "note": "casual gastrobar, cocktails, easy wind-down spot",
     "why": [
      "Casual gastrobar for an easy wind-down",
      "Cocktails without the crush"
-    ]
+    ],
+    "rating": 3.9,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "Tavolino",
@@ -234,7 +270,26 @@
     "why": [
      "Calmer Italian spot for late-evening dining",
      "Wait out the lot gridlock here"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   }
+  ],
+  "merch": [
+   {
+    "name": "Patriots ProShop",
+    "where": "Gillette Stadium complex, Foxborough (370 Patriot Pl; temporarily relocated to South Marketplace, next to Petco, during the World Cup)",
+    "rating": null,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "Patriots Hall of Fame (museum + gift shop)",
+    "where": "2 Patriot Pl, adjacent to the ProShop; note: the Hall is CLOSED May 14-July 2026 during the World Cup",
+    "rating": null,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    }
   ]
  },

@@ -282,7 +282,10 @@
     "why": [
      "Real whiz-wit, no concourse-stand shortcuts",
      "Local legend with a celebrity cosign"
-    ]
+    ],
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
    },
    {
     "name": "Tony Luke's",
@@ -291,7 +294,10 @@
     "why": [
      "Roast pork rivals the cheesesteak here",
      "Order before lines snake the concourse"
-    ]
+    ],
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
    },
    {
     "name": "Chickie's & Pete's",
@@ -300,7 +306,10 @@
     "why": [
      "Crabfries with cheese sauce are iconic",
      "Stands on every level, no detour"
-    ]
+    ],
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
    },
    {
     "name": "Wing Kitchen",
@@ -309,7 +318,10 @@
     "why": [
      "Chopped competition pedigree behind the wings",
      "Crisp finish, bone-in or boneless"
-    ]
+    ],
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
    }
   ],
   "pre": [
@@ -320,81 +332,131 @@
      "Free e-ticket, matches on a stage-size screen",
      "Concerts, food markets, play pitches all 39 days"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "distMi": 6,
+    "dist": "6 mi"
    },
    {
     "name": "Xfinity Live!",
-    "where": "Across the lot, 2-min walk",
+    "where": "1100 Pattison Ave, across the lot from the Linc",
     "note": "85-screen mega complex; Victory Beer Hall, fire pits, 2,000 fans.",
     "why": [
-     "Closest pre-game party, 2 minutes from gates",
+     "Closest pre-game party, steps from the gates",
      "85 screens and 2,000 roaring fans"
-    ]
+    ],
+    "rating": 4.3,
+    "distMi": 0.2,
+    "dist": "0.2 mi"
    },
    {
     "name": "Chickie's & Pete's",
-    "where": "Packer Ave, 5-min walk",
+    "where": "1526 Packer Ave",
     "note": "South Philly's premier sports bar; three bars, Crabfries ritual.",
     "why": [
      "Three bars soak up the pre-match crowd",
      "Crabfries ritual before kickoff"
-    ]
+    ],
+    "rating": 4.3,
+    "distMi": 0.4,
+    "dist": "0.4 mi"
    },
    {
     "name": "McCusker's Tavern",
-    "where": "20th & Wolf, short ride",
+    "where": "2601 S 17th St (17th & Wolf)",
     "note": "Cash-only wood-paneled dive with old Vet Stadium seats.",
     "why": [
      "Actual Vet Stadium seats inside",
      "Cash-only dive away from tourist crush"
-    ]
+    ],
+    "rating": 4.7,
+    "distMi": 1.1,
+    "dist": "1.1 mi"
    },
    {
     "name": "Philadium",
-    "where": "20th & Passyunk, short ride",
+    "where": "1631 Packer Ave",
     "note": "Boisterous row-home vibe where locals and celebs gather.",
     "why": [
      "Loud row-home local vibe, not a chain",
      "Locals and celebs share the bar"
-    ]
+    ],
+    "rating": 4.6,
+    "distMi": 0.5,
+    "dist": "0.5 mi"
    }
   ],
   "post": [
    {
     "name": "Broad Street Bullies Pub",
-    "where": "Inside Xfinity Live!",
+    "where": "Inside Xfinity Live!, 1100 Pattison Ave",
     "note": "Flyers-themed pub; rowdy crowd to relive the result.",
     "why": [
      "Steps from gates to keep celebrating",
      "Rowdy crowd reliving every goal"
-    ]
+    ],
+    "rating": 4,
+    "distMi": 0.2,
+    "dist": "0.2 mi"
    },
    {
-    "name": "Garage East Passyunk",
-    "where": "East Passyunk, short ride",
+    "name": "Garage Passyunk",
+    "where": "1231 E Passyunk Ave, East Passyunk",
     "note": "Huge canned-beer list, Skee-Ball, pinball, late nights.",
     "why": [
      "Skee-Ball and pinball with the beers",
      "Late hours for post-knockout nights"
-    ]
+    ],
+    "rating": 4.4,
+    "distMi": 2.2,
+    "dist": "2.2 mi"
    },
    {
     "name": "Pat's King of Steaks",
-    "where": "9th & Passyunk, short ride",
+    "where": "1237 E Passyunk Ave (9th & Passyunk)",
     "note": "24-hour cheesesteak counter; the original rivalry corner.",
     "why": [
      "The original Pat's-vs-Geno's rivalry corner",
      "24-hour counter for post-match steaks"
-    ]
+    ],
+    "rating": 4.2,
+    "distMi": 1.8,
+    "dist": "1.8 mi"
    },
    {
     "name": "Geno's Steaks",
-    "where": "9th & Passyunk, short ride",
+    "where": "1219 S 9th St (9th & Passyunk)",
     "note": "Neon-lit 24-hour rival across the street from Pat's.",
     "why": [
      "Neon-lit rival right across the street",
      "Open 24 hours for late-night whiz-wit"
-    ]
+    ],
+    "rating": 4.1,
+    "distMi": 1.8,
+    "dist": "1.8 mi"
+   }
+  ],
+  "merch": [
+   {
+    "name": "Eagles Pro Shop at Lincoln Financial Field",
+    "where": "Pepsi Plaza, Lincoln Financial Field Way; 6,000+ sq ft flagship team store at the stadium",
+    "rating": 4.3,
+    "distMi": 0,
+    "dist": "At stadium"
+   },
+   {
+    "name": "FIFA World Cup 2026 official merchandise (Rally House)",
+    "where": "Official FIFA World Cup merch sold at Lincoln Financial Field via Rally House on match days",
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
+   },
+   {
+    "name": "Linc in-stadium merchandise stands",
+    "where": "13 merchandise stands scattered throughout the concourses inside the stadium",
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
    }
   ]
  }

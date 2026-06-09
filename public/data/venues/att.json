@@ -135,7 +135,10 @@
     "why": [
      "The signature stadium hot dog",
      "Quick all-beef grab on the concourse"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Texas Burrito (Vaqueros)",
@@ -144,7 +147,10 @@
     "why": [
      "Hearty Tex-Mex that fills you up",
      "Carts on four sections, no long walk"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Frito Pie Burger",
@@ -153,7 +159,10 @@
     "why": [
      "Chili and Fritos piled on a burger",
      "Peak only-in-Texas concourse eat"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Dessert Nachos",
@@ -162,7 +171,10 @@
     "why": [
      "Sweet cinnamon-chip twist on nachos",
      "Perfect shareable halftime treat"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
@@ -173,81 +185,117 @@
      "Free fan zone, up to 35,000 inside",
      "Live broadcasts, concerts, mini-pitches Jun 11-Jul 19"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "20 mi",
+    "distMi": 20
    },
    {
     "name": "PBR Texas",
-    "where": "Texas Live!, 2-min walk",
+    "where": "Texas Live!, 1650 E Randol Mill Rd, short walk from the gates",
     "note": "two mechanical bulls, rowdy pregame energy",
     "why": [
      "Two mechanical bulls to ride",
      "Rowdiest pregame energy at Texas Live!"
-    ]
+    ],
+    "rating": 4.2,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
     "name": "Rangers Republic",
-    "where": "Texas Live!, 2-min walk",
-    "note": "DFW's top sports bar, 100-ft screen",
+    "where": "Texas Live!, 1650 E Randol Mill Rd, short walk from the gates",
+    "note": "Rangers fan clubhouse, Tex-Mex-infused menu",
     "why": [
-     "DFW's biggest sports bar",
-     "100-ft screen for the buildup"
-    ]
+     "Rangers fan clubhouse next to Globe Life",
+     "Tex-Mex menu steps from AT&T Stadium"
+    ],
+    "rating": 4.0,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
     "name": "Arlington Backyard",
-    "where": "Texas Live! outdoor, 2-min walk",
+    "where": "Texas Live! outdoor, 1650 E Randol Mill Rd, short walk from the gates",
     "note": "open-air World Cup watch-party hub",
     "why": [
      "Open-air watch-party hub",
      "Big-crowd buildup steps from the gates"
-    ]
+    ],
+    "rating": 4.6,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
     "name": "J. Gilligan's Bar & Grill",
-    "where": "~0.8 mi, free shuttle",
+    "where": "400 E Abram St, Arlington; free shuttle to AT&T events",
     "note": "laid-back local, famous Irish nachos",
     "why": [
      "Famous Irish nachos worth the trip",
      "Laid-back local escape from the crowds"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "1.6 mi",
+    "distMi": 1.6
    }
   ],
   "post": [
    {
     "name": "Sports & Social Arlington",
-    "where": "Texas Live!, 2-min walk",
+    "where": "Texas Live!, 1650 E Randol Mill Rd, short walk from the gates",
     "note": "wall-to-wall TVs, late-night crowd games",
     "why": [
      "Wall-to-wall TVs for replays",
      "Bar games keep the night going"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
     "name": "Troy's",
-    "where": "Texas Live!, 2-min walk",
+    "where": "Texas Live!, 1650 E Randol Mill Rd, short walk from the gates",
     "note": "Aikman-branded bar, live music nightly",
     "why": [
      "Troy Aikman's bar, live music nightly",
      "Steps from the gates"
-    ]
+    ],
+    "rating": 4.0,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
     "name": "Division Brewing",
-    "where": "~1.2 mi from gates",
+    "where": "506 E Main St, downtown Arlington",
     "note": "Arlington's first brewery, chill experimental taps",
     "why": [
      "Arlington's first brewery",
      "Chill experimental taps away from crowds"
-    ]
+    ],
+    "rating": 4.6,
+    "dist": "1.8 mi",
+    "distMi": 1.8
    },
    {
     "name": "4 Kahunas Tiki Lounge",
-    "where": "~1.2 mi from gates",
+    "where": "506 E Division St, downtown Arlington",
     "note": "tiki escape, flaming cocktails, island vibe",
     "why": [
      "Flaming tiki cocktails",
      "Island-vibe escape from the stadium scene"
-    ]
+    ],
+    "rating": 4.6,
+    "dist": "1.8 mi",
+    "distMi": 1.8
+   }
+  ],
+  "merch": [
+   {
+    "name": "Dallas Cowboys Pro Shop",
+    "where": "Inside AT&T Stadium, 1 AT&T Way, Arlington (main team store)",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ]
  },

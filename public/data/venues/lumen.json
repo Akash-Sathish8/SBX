@@ -106,7 +106,10 @@
     "why": [
      "Iconic Seattle-area soup dumplings, in-stadium",
      "Beats every other concession line"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Ivar's",
@@ -115,7 +118,10 @@
     "why": [
      "Seattle waterfront classic since 1938",
      "Clam chowder that locals actually order"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Tutta Bella",
@@ -124,7 +130,10 @@
     "why": [
      "Certified Neapolitan pizza, not stadium slop",
      "Wood-fired quality at your seat"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Legion Sports Bar",
@@ -133,7 +142,10 @@
     "why": [
      "Built by Seahawks Legion of Boom legends",
      "Loaded plates with full match views"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
@@ -144,81 +156,124 @@
      "Official free FIFA fan zone, 39 days",
      "Match screenings under the Space Needle"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "2.5 mi",
+    "distMi": 2.5
    },
    {
-    "name": "F.X. McRory's",
-    "where": "Pioneer Square, 10-min walk",
-    "note": "1977 institution; whiskey, oysters, packed pre-kickoff",
+    "name": "Collins Pub",
+    "where": "526 2nd Ave, Pioneer Square / downtown edge",
+    "note": "22 rotating NW taps and scratch pub food; dependable pre-match pint",
     "why": [
-     "Pioneer Square institution since 1977",
-     "Whiskey wall and oysters before kickoff"
-    ]
+     "20-plus Northwest microbrews on tap",
+     "Classic Pioneer Square pub before the walk in"
+    ],
+    "rating": 4.4,
+    "dist": "0.7 mi",
+    "distMi": 0.7
    },
    {
-    "name": "Fadó Irish Pub",
-    "where": "Pioneer Square, 8-min walk",
-    "note": "Brick-walled soccer den, big match crowds",
+    "name": "Tat's Delicatessen",
+    "where": "159 Yesler Way, Pioneer Square",
+    "note": "East Coast-style cheesesteaks and the tat'strami; fuel up before kickoff",
     "why": [
-     "Brick-walled soccer den, packed match days",
-     "Where supporters sing before walking in"
-    ]
+     "Cheesesteaks locals rate among Seattle's best",
+     "Quick, hearty pre-match fuel near the gates"
+    ],
+    "rating": 4.7,
+    "dist": "0.4 mi",
+    "distMi": 0.4
    },
    {
     "name": "Flatstick Pub",
-    "where": "Pioneer Square, 9-min walk",
+    "where": "240 2nd Ave S, Pioneer Square",
     "note": "Mini-golf, local beer, rowdy supporter energy",
     "why": [
      "Indoor mini-golf and only WA craft beer",
      "Rowdy supporter energy before the march"
-    ]
+    ],
+    "rating": 4.6,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "King Street Bar & Oven",
-    "where": "SoDo, 4-min walk",
-    "note": "Opens two hours early; giant family portions",
+    "where": "170 S King St, Pioneer Square",
+    "note": "Opens early on event days; pizzas, calzones and big portions near the gates",
     "why": [
-     "Opens two hours pre-kickoff",
+     "Opens early pre-kickoff",
      "Closest sit-down spot to the gates"
-    ]
+    ],
+    "rating": 4.2,
+    "dist": "0.1 mi",
+    "distMi": 0.1
    }
   ],
   "post": [
    {
     "name": "The Central Saloon",
-    "where": "Pioneer Square, 9-min walk",
+    "where": "207 1st Ave S, Pioneer Square",
     "note": "Seattle's oldest bar; live music, late nights",
     "why": [
      "Seattle's oldest bar, open since 1892",
      "Live music keeps the night going"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "0.4 mi",
+    "distMi": 0.4
    },
    {
     "name": "Good Bar",
-    "where": "Pioneer Square, 10-min walk",
+    "where": "240 2nd Ave S, Pioneer Square",
     "note": "Old bank vault, sharp cocktails, lingering crowd",
     "why": [
      "Cocktails poured inside an old bank vault",
      "Crowd lingers long past final whistle"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "13 Coins",
-    "where": "SoDo, 6-min walk",
-    "note": "Big-screen sports bar, energetic post-whistle scene",
+    "where": "255 S King St, Pioneer Square",
+    "note": "All-night Seattle institution since 1967; high-backed booths, open late",
     "why": [
-     "Big screens for replays and other matches",
-     "Closest SoDo bar to celebrate at"
-    ]
+     "Open late for a post-match meal or drink",
+     "Steps from the gates inside the Embassy Suites"
+    ],
+    "rating": 4.1,
+    "dist": "0.2 mi",
+    "distMi": 0.2
    },
    {
     "name": "Damn the Weather",
-    "where": "Pioneer Square, 9-min walk",
+    "where": "116 1st Ave S, Pioneer Square",
     "note": "Cocktails and small plates, unwind after final whistle",
     "why": [
      "Sharp cocktails and small plates",
      "Calmer Pioneer Square wind-down"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "0.5 mi",
+    "distMi": 0.5
+   }
+  ],
+  "merch": [
+   {
+    "name": "The Pro Shop at Lumen Field",
+    "where": "800 Occidental Ave S, Suite 300 (stadium complex); official Seahawks and Sounders retailer",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Simply Seattle (Pier 54)",
+    "where": "1001 Alaskan Way #103, Pier 54, Seattle waterfront; carries official FIFA World Cup 26 gear",
+    "rating": 4.6,
+    "dist": "0.9 mi",
+    "distMi": 0.9
    }
   ]
  },

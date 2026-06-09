@@ -280,7 +280,10 @@
     "why": [
      "Last bite inside the security perimeter",
      "Quesabirria with consomé, no detour"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Última Milla corridor stalls",
@@ -289,7 +292,10 @@
     "why": [
      "Eat your way down the walk-in",
      "Cheap street tacos, mariachi energy"
-    ]
+    ],
+    "rating": null,
+    "dist": "0.5 mi",
+    "distMi": 0.5
    },
    {
     "name": "Tortas Ahogadas Noel",
@@ -298,16 +304,22 @@
     "why": [
      "Zapopan-side, closest real ahogadas to stadium",
      "Family-run, birote drowned in chile de árbol"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "2.3 mi",
+    "distMi": 2.3
    },
    {
     "name": "Birriería Las Nueve Esquinas",
-    "where": "Centro (near cathedral, ~30 min)",
-    "note": "Iconic goat birria and ahogadas since 1986",
+    "where": "Centro (near cathedral)",
+    "note": "Iconic goat birria and ahogadas",
     "why": [
-     "Guadalajara's landmark goat birria since 1986",
+     "Guadalajara's landmark goat birria",
      "Worth the Centro trip on off-days"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "7.2 mi",
+    "distMi": 7.2
    }
   ],
   "pre": [
@@ -318,7 +330,10 @@
      "Free fan zone, giant screens, live music",
      "Centro Histórico heart between the Cathedral and Degollado"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "7.5 mi",
+    "distMi": 7.5
    },
    {
     "name": "Cervecería Chapultepec",
@@ -327,7 +342,10 @@
     "why": [
      "One flat price per beer",
      "Right on a Ride al Estadio hub"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "6.2 mi",
+    "distMi": 6.2
    },
    {
     "name": "El Perdón Cantina",
@@ -336,25 +354,34 @@
     "why": [
      "Cantaritos in clay pots, Jalisco-style",
      "Agave-forward and loud before kickoff"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "6.2 mi",
+    "distMi": 6.2
    },
    {
     "name": "Cantina La No. 20",
-    "where": "Providencia (shuttle-adjacent)",
+    "where": "The Landmark, Puerta de Hierro, Zapopan (shuttle-adjacent)",
     "note": "Traditional cantina meets polished cocktails, easy crowd",
     "why": [
      "Classic cantina, cleaned-up cocktails",
      "Easy Providencia crowd near shuttle pickup"
-    ]
+    ],
+    "rating": 4.7,
+    "dist": "3.5 mi",
+    "distMi": 3.5
    },
    {
     "name": "Palmer Bar",
-    "where": "Providencia",
+    "where": "Ladrón de Guevara (Av. Morelos 2048)",
     "note": "Upscale cocktails, chic if you want one good drink",
     "why": [
      "One sharp cocktail before the green tide",
-     "Chic Providencia spot, not a beer barn"
-    ]
+     "Chic spot, not a beer barn"
+    ],
+    "rating": 4.6,
+    "dist": "5.6 mi",
+    "distMi": 5.6
    }
   ],
   "post": [
@@ -365,7 +392,10 @@
     "why": [
      "1921 Centro institution, live mariachi",
      "Late ahogadas when the night runs"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "7.6 mi",
+    "distMi": 7.6
    },
    {
     "name": "Cantina Mexicaltzingo",
@@ -374,7 +404,10 @@
     "why": [
      "Starts mellow, becomes a dance floor",
      "Chapultepec, walkable between late stops"
-    ]
+    ],
+    "rating": 4.2,
+    "dist": "6.2 mi",
+    "distMi": 6.2
    },
    {
     "name": "Cervecería Chapultepec (original)",
@@ -383,7 +416,10 @@
     "why": [
      "Cheap flat-price rounds till late",
      "Packed Chivas-crowd energy post-whistle"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "6.2 mi",
+    "distMi": 6.2
    },
    {
     "name": "Las Nueve Esquinas plaza",
@@ -392,7 +428,26 @@
     "why": [
      "Birria and beers at 1am",
      "Historic plaza for the long night"
-    ]
+    ],
+    "rating": null,
+    "dist": "7.2 mi",
+    "distMi": 7.2
+   }
+  ],
+  "merch": [
+   {
+    "name": "Tienda Oficial Chivas (Estadio Akron)",
+    "where": "Inside Estadio Akron / Estadio Guadalajara, Av. Circuito JVC 2800, El Bajío, Zapopan",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store (Guadalajara host-city merch)",
+    "where": "FIFA megastore / official retail at the stadium complex during the tournament",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ]
  },

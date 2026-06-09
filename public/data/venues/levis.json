@@ -114,7 +114,10 @@
     "why": [
      "Only in-stadium stand with real milkshakes",
      "Cult SF burger chain, organic beef"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Araujo's Mexican Grill",
@@ -123,7 +126,10 @@
     "why": [
      "Carne asada fries are the move",
      "Real San Jose food-truck roots"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Blue Line Pizza",
@@ -132,7 +138,10 @@
     "why": [
      "Fast New York-style slice on the go",
      "Local Bay Area chain, not generic"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "IB's Cheesesteaks",
@@ -141,7 +150,10 @@
     "why": [
      "Bulgogi cheesesteak is the signature",
      "Berkeley import with crispy wings"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
@@ -152,81 +164,124 @@
      "One of the Bay's largest free fan zones",
      "Giant screens, food vendors, waterfront views"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "45 mi",
+    "distMi": 45
    },
    {
     "name": "Clara's Junction",
-    "where": "Tasman Dr, 10-min walk",
+    "where": "2221 Tasman Dr, Santa Clara",
     "note": "Outdoor garden, firepits, taco truck, BBQ; tailgate energy.",
     "why": [
-     "Closest pre-match spot, 10-min walk",
+     "Closest pre-match spot, short walk",
      "Firepits and taco truck, real tailgate feel"
-    ]
+    ],
+    "rating": 4.0,
+    "dist": "0.9 mi",
+    "distMi": 0.9
    },
    {
     "name": "HiroNori Craft Ramen",
-    "where": "Strip mall, ~1 mi",
+    "where": "4300 Great America Pkwy, Santa Clara",
     "note": "Quick craft ramen bowl before the gates open.",
     "why": [
      "Fast craft ramen before gates open",
      "Walkable from the stadium"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "Pizza My Heart",
-    "where": "Strip mall, ~1 mi",
+    "where": "4300 Great America Pkwy, Santa Clara",
     "note": "Santa Cruz surf-shop pizza; fast pre-match slice.",
     "why": [
      "Quick Santa Cruz surf-shop slice",
      "Beloved NorCal pizza institution"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "Taplands",
-    "where": "Old Quad, 10-min drive",
+    "where": "1171 Homestead Rd, Santa Clara; ~3.5 mi (10-min drive)",
     "note": "Neighborhood brewery and bottle shop; mellow craft taproom.",
     "why": [
      "Mellow neighborhood taproom escape",
      "Deep craft list plus bottle shop"
-    ]
+    ],
+    "rating": 4.6,
+    "dist": "3.6 mi",
+    "distMi": 3.6
    }
   ],
   "post": [
    {
     "name": "San Pedro Square Market",
-    "where": "Downtown San Jose, 15 min",
+    "where": "87 N San Pedro St, San Jose",
     "note": "Official fan zone; giant screens, all 104 matches free.",
     "why": [
      "Official fan zone, all 104 matches free",
      "Closest big-screen scene to the stadium"
-    ]
+    ],
+    "rating": null,
+    "dist": "5.5 mi",
+    "distMi": 5.5
    },
    {
     "name": "Barebottle Brewing",
-    "where": "Downtown San Jose, ~2 mi",
+    "where": "2520 Augustine Dr, Santa Clara",
     "note": "Craft-beer favorite; big taplist and easy crowd.",
     "why": [
      "Huge taplist of award-winning beers",
      "Easy crowd for a post-match pint"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "1.4 mi",
+    "distMi": 1.4
    },
    {
     "name": "Puesto",
-    "where": "Downtown San Jose, ~2 mi",
+    "where": "2752 Augustine Dr, Santa Clara",
     "note": "Popular tacos and margaritas for a lively nightcap.",
     "why": [
      "Tacos and margaritas for a nightcap",
      "Lively, buzzing late-night room"
-    ]
+    ],
+    "rating": 4.2,
+    "dist": "1.4 mi",
+    "distMi": 1.4
    },
    {
     "name": "The Sportsmen's Lounge",
-    "where": "Santa Clara, ~5 mi",
+    "where": "2368 Pruneridge Ave, Santa Clara",
     "note": "Classic dive bar for a cheap post-match beer.",
     "why": [
      "Cheap beer, no-frills dive vibe",
      "Local Santa Clara classic"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "2.5 mi",
+    "distMi": 2.5
+   }
+  ],
+  "merch": [
+   {
+    "name": "49ers Team Store presented by Visa",
+    "where": "Inside Xfinity Gate A, 4900 Marie P. DeBartolo Way, Levi's Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store (match-day kiosks)",
+    "where": "Levi's Stadium concourses and gate plazas on match days",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ]
  },

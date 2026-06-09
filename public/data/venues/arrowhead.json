@@ -120,7 +120,10 @@
     "why": [
      "Real KC pitmasters, not stadium chains",
      "Burnt ends straight from the smoker"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Smoke Brewing Co.",
@@ -129,7 +132,10 @@
     "why": [
      "Deep-fried burnt ends you won't find elsewhere",
      "Crispy pork belly with local craft beer"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Mac Shack",
@@ -138,7 +144,10 @@
     "why": [
      "Burnt ends piled on mac and cheese",
      "Four locations, no long bowl walk"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Little Pig BBQ",
@@ -147,7 +156,10 @@
     "why": [
      "Burnt-end sandwich done KC-style",
      "The BBQ sundae is a must-try"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
@@ -158,7 +170,10 @@
      "Free fan zone, 45-foot screen, 25k capacity",
      "Headliners and watch parties near downtown"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "5.9 mi",
+    "distMi": 5.9
    },
    {
     "name": "Tailgate lots",
@@ -167,72 +182,112 @@
     "why": [
      "Best tailgate scene in American sport",
      "Smoked-meat aromas right at the gates"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Johnny's Tavern",
-    "where": "Power & Light, ~9 mi",
+    "where": "1310 Grand Blvd, Power & Light",
     "note": "heart of P&L, packed gameday fan crowd",
     "why": [
      "Heart of the Power & Light crowd",
      "Packed gameday energy before kickoff"
-    ]
+    ],
+    "rating": 4.1,
+    "dist": "6.4 mi",
+    "distMi": 6.4
    },
    {
     "name": "KC Live! Block",
-    "where": "Power & Light, ~9 mi",
+    "where": "1343 Wyandotte St, Power & Light",
     "note": "giant open-air watch party, thousands roaring",
     "why": [
      "Giant open-air watch party downtown",
      "Thousands roaring at every goal"
-    ]
+    ],
+    "rating": null,
+    "dist": "6.5 mi",
+    "distMi": 6.5
    },
    {
     "name": "Kelly's Westport Inn",
-    "where": "Westport, ~9 mi",
+    "where": "500 Westport Rd, Westport",
     "note": "classic dive, cheap beer before kickoff",
     "why": [
      "KC's oldest building, true dive cred",
      "Cheap beer before you head out"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "5.7 mi",
+    "distMi": 5.7
    }
   ],
   "post": [
    {
     "name": "No Other Pub",
-    "where": "Power & Light, ~9 mi",
+    "where": "1370 Grand Blvd, Power & Light",
     "note": "bowling, shuffleboard, ping pong, late drinks",
     "why": [
      "Bowling, shuffleboard and ping pong",
      "Late drinks steps from KC Live!"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "6.3 mi",
+    "distMi": 6.3
    },
    {
     "name": "Tin Roof",
-    "where": "Westport, ~9 mi",
+    "where": "424 Westport Rd, Westport",
     "note": "live bands, open-air, loud and lively",
     "why": [
      "Live bands every night, open-air",
      "Loud and lively post-match scene"
-    ]
+    ],
+    "rating": 3.8,
+    "dist": "5.7 mi",
+    "distMi": 5.7
    },
    {
     "name": "Char Bar",
-    "where": "Westport, ~9 mi",
+    "where": "4050 Pennsylvania Ave, Westport",
     "note": "piled-high brisket and burnt-end sandwiches",
     "why": [
      "Late-night brisket and burnt-end sandwiches",
      "Westport patio to refuel after the match"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "5.8 mi",
+    "distMi": 5.8
    },
    {
     "name": "Mosaic",
-    "where": "Power & Light, ~9 mi",
+    "where": "1331 Walnut St, Power & Light",
     "note": "moody nightclub, DJ, LED wall, VIP",
     "why": [
      "Moody nightclub with DJ and LED wall",
      "VIP bottle service for a big night"
-    ]
+    ],
+    "rating": 3.1,
+    "dist": "6.5 mi",
+    "distMi": 6.5
+   }
+  ],
+  "merch": [
+   {
+    "name": "Chiefs Pro Shop",
+    "where": "North side of GEHA Field at Arrowhead, behind Founders Plaza (1 Arrowhead Dr)",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA Official Store (online for KC Host City)",
+    "where": "store.fifa.com / on-site FIFA merch points at the stadium on match days",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ]
  },

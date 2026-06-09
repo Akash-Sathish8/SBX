@@ -134,7 +134,10 @@
      "Lumache in spicy vodka sauce, fresh-made",
      "Chicken cutlet add-on, real sit-down pasta"
     ],
-    "note": "Lumache pasta, spicy vodka sauce, chicken cutlet add-on"
+    "note": "Lumache pasta, spicy vodka sauce, chicken cutlet add-on",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Shah's Halal",
@@ -143,7 +146,10 @@
      "Chicken or lamb over rice, NYC-cart classic",
      "Gyros and pakora chips, big halal portions"
     ],
-    "note": "Chicken or lamb over rice, gyros, pakora chips"
+    "note": "Chicken or lamb over rice, gyros, pakora chips",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Garden State Rippers",
@@ -152,7 +158,10 @@
      "Thumann's natural-casing deep-fried Jersey dogs",
      "The local rite-of-passage stadium dog"
     ],
-    "note": "Thumann's natural-casing all-beef Jersey deep-fried dogs"
+    "note": "Thumann's natural-casing all-beef Jersey deep-fried dogs",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Craft Beer Hall",
@@ -161,7 +170,10 @@
      "40-plus rotating taps in one spot",
      "Strong regional NJ brewery lineup"
     ],
-    "note": "40-plus rotating taps, strong regional NJ brewery lineup"
+    "note": "40-plus rotating taps, strong regional NJ brewery lineup",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
@@ -172,7 +184,10 @@
      "Official free fan zone, replaced cancelled Liberty State Park site",
      "60-ft pitch screen, all 104 matches, PATH-direct"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "6 mi",
+    "distMi": 6
    },
    {
     "name": "Bolero Snort Brewery",
@@ -181,7 +196,10 @@
      "Closest real brewery to the gates",
      "Local NJ taproom, fresh pours pre-match"
     ],
-    "note": "Local taproom, closest real brewery to the gates"
+    "note": "Local taproom, closest real brewery to the gates",
+    "rating": 4.8,
+    "dist": "2 mi",
+    "distMi": 2
    },
    {
     "name": "Blarney Station Pub",
@@ -190,7 +208,10 @@
      "Great Guinness pours, matchday Irish crowd",
      "Walkable-close, friendly pre-game energy"
     ],
-    "note": "Irish pub, excellent Guinness, friendly matchday crowd"
+    "note": "Irish pub, excellent Guinness, friendly matchday crowd",
+    "rating": 4.4,
+    "dist": "1.4 mi",
+    "distMi": 1.4
    },
    {
     "name": "Steve's Sizzling Steaks",
@@ -199,7 +220,10 @@
      "1936 roadhouse, sizzling steak platters",
      "Cold beer, old-school Jersey institution"
     ],
-    "note": "1936 roadhouse, sizzling platters and cold beer"
+    "note": "1936 roadhouse, sizzling platters and cold beer",
+    "rating": 4.5,
+    "dist": "1.7 mi",
+    "distMi": 1.7
    },
    {
     "name": "Marcus Live! Bar & Grille",
@@ -208,7 +232,10 @@
      "Marcus Samuelsson gameday wings and smash burgers",
      "Big screens, bridge-walk to the gates"
     ],
-    "note": "Samuelsson's gameday wings, smash burgers, big screens"
+    "note": "Samuelsson's gameday wings, smash burgers, big screens",
+    "rating": 4.3,
+    "dist": "0.5 mi",
+    "distMi": 0.5
    }
   ],
   "post": [
@@ -219,7 +246,10 @@
      "Hoboken's go-to soccer bar, multiple rooms",
      "Chants and supporters' energy after the whistle"
     ],
-    "note": "The Hoboken soccer bar, multiple rooms, chants"
+    "note": "The Hoboken soccer bar, multiple rooms, chants",
+    "rating": 4.6,
+    "dist": "7 mi",
+    "distMi": 7
    },
    {
     "name": "Madd Hatter",
@@ -228,7 +258,10 @@
      "40-plus screens, every angle covered",
      "350-cap party room for the big crowd"
     ],
-    "note": "40-plus screens, 350 capacity, full party energy"
+    "note": "40-plus screens, 350 capacity, full party energy",
+    "rating": 4.2,
+    "dist": "7 mi",
+    "distMi": 7
    },
    {
     "name": "Wicked Wolf Tavern",
@@ -237,7 +270,10 @@
      "50-plus TVs plus Hudson skyline views",
      "Big sound system, riverfront postgame scene"
     ],
-    "note": "50-plus TVs, Hudson views, big sound system"
+    "note": "50-plus TVs, Hudson views, big sound system",
+    "rating": 4.1,
+    "dist": "7 mi",
+    "distMi": 7
    },
    {
     "name": "Pier 13",
@@ -246,7 +282,33 @@
      "Outdoor watch party with NYC skyline backdrop",
      "Food trucks and waterfront beer garden"
     ],
-    "note": "Outdoor watch party, food trucks, skyline backdrop"
+    "note": "Outdoor watch party, food trucks, skyline backdrop",
+    "rating": 4.5,
+    "dist": "7 mi",
+    "distMi": 7
+   }
+  ],
+  "merch": [
+   {
+    "name": "MetLife Stadium Flagship Team Store",
+    "where": "Main concourse, MetLife Stadium (Giants/Jets official store)",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "adidas Soccer Flagship Store",
+    "where": "American Dream, Court D, Level 2, East Rutherford (first US soccer-only adidas flagship, opened Feb 2026, by the pedestrian bridge)",
+    "rating": null,
+    "dist": "0.5 mi",
+    "distMi": 0.5
+   },
+   {
+    "name": "American Dream World Cup Vendor Village",
+    "where": "Inside American Dream, steps from the pedestrian bridge to the stadium",
+    "rating": null,
+    "dist": "0.5 mi",
+    "distMi": 0.5
    }
   ]
  },

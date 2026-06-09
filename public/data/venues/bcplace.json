@@ -10,7 +10,10 @@
     "why": [
      "Crispy Korean fried chicken, not basic concession fare",
      "Nods to Vancouver's deep Asian food scene"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "The Poutinerie",
@@ -19,7 +22,10 @@
     "why": [
      "Short rib poutine, the Canadian stadium move",
      "Hearty enough to carry you to full-time"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Bombay South Asian Kitchen",
@@ -28,7 +34,10 @@
     "why": [
      "Lamb korma rarely found inside a stadium",
      "Reflects Metro Vancouver's huge South Asian community"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Dawson's Hot Dogs",
@@ -37,7 +46,10 @@
     "why": [
      "Cheapest sure-thing dog at $5",
      "Foot-long Nathan's for the bigger appetite"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
@@ -48,81 +60,131 @@
      "Official free fan zone, 25,000 fans daily",
      "70+ matches on screens plus live concerts"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "5.0 mi",
+    "distMi": 5.0
    },
    {
     "name": "The Pint Public House",
-    "where": "Gastown, 5-min walk",
+    "where": "455 Abbott St, Stadium-Chinatown",
     "note": "Dozens of screens, packed soccer crowd, steps away",
     "why": [
      "Steps from the stadium, dozens of screens",
      "Packed soccer crowd before kickoff"
-    ]
+    ],
+    "rating": 4.0,
+    "dist": "0.4 mi",
+    "distMi": 0.4
    },
    {
     "name": "Yaletown Brewing Company",
-    "where": "Yaletown, 7-min walk",
+    "where": "1111 Mainland St, Yaletown",
     "note": "Craft beer and burgers, handles big crowds",
     "why": [
      "Yaletown craft beer right next to BC Place",
      "Big patio absorbs the pre-match rush"
-    ]
+    ],
+    "rating": 4.0,
+    "dist": "0.4 mi",
+    "distMi": 0.4
    },
    {
     "name": "Shark Club Sports Bar",
-    "where": "Downtown, 3-min walk",
+    "where": "180 W Georgia St, Downtown",
     "note": "Twelve-foot screens, jerseys, true stadium roar",
     "why": [
-     "Closest true sports bar, 3-min walk",
+     "Closest true sports bar, short walk away",
      "Twelve-foot screens deliver the stadium roar"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "Good Co.",
-    "where": "Granville strip, 10-min walk",
+    "where": "965 Granville St, Downtown",
     "note": "Arcade games, weekend DJs, social sports vibe",
     "why": [
      "Arcade games and DJs on the Granville strip",
      "Social vibe for a younger pre-match crowd"
-    ]
+    ],
+    "rating": 4.0,
+    "dist": "0.6 mi",
+    "distMi": 0.6
    }
   ],
   "post": [
    {
     "name": "Steamworks Brewpub",
-    "where": "Gastown, 8-min walk",
+    "where": "375 Water St, Gastown",
     "note": "House-brewed lagers, BC salmon, waterfront-edge pub",
     "why": [
      "House-brewed lagers and BC salmon in Gastown",
      "Waterfront-edge views to wind down post-match"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "0.7 mi",
+    "distMi": 0.7
    },
    {
     "name": "GRETA Bar",
-    "where": "Gastown, 8-min walk",
+    "where": "50 W Cordova St, Gastown",
     "note": "Fifty arcade games, cocktails, late-night energy",
     "why": [
      "Fifty arcade games keep the night going",
      "Cocktails and late-night Gastown energy"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "0.6 mi",
+    "distMi": 0.6
    },
    {
-    "name": "G Sports Bar & Grill",
-    "where": "Granville, 12-min walk",
-    "note": "Twenty-four HD TVs, nine-foot projection screen",
+    "name": "Library Square Public House",
+    "where": "300 W Georgia St, Crosstown",
+    "note": "Two blocks from BC Place, 22-foot big screen, 24 taps, late-night sports programming",
     "why": [
-     "Catch every replay on 24 HD TVs",
-     "Nine-foot projection screen for the late game"
-    ]
+     "Big 22-foot screen and 24 taps two blocks from the stadium",
+     "Sports programming, live bands and late-night energy post-match"
+    ],
+    "rating": 3.9,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
-    "name": "Dominion Hotel Pub",
-    "where": "Gastown, 7-min walk",
-    "note": "Historic 1899 room, brick, flatscreens, late drinks",
+    "name": "The Lamplighter Public House",
+    "where": "92 Water St, Gastown",
+    "note": "Vancouver's oldest pub in the 1899 Dominion building, brick, flatscreens, late drinks",
     "why": [
      "Drink in an 1899 Gastown heritage room",
      "Exposed brick and flatscreens for late rounds"
-    ]
+    ],
+    "rating": 4.1,
+    "dist": "0.7 mi",
+    "distMi": 0.7
+   }
+  ],
+  "merch": [
+   {
+    "name": "FIFA World Cup 2026 BC Place Stadium Store",
+    "where": "Inside BC Place, along the Last Mile Match Day Spectator Route",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store (Granville)",
+    "where": "810 Granville St, near Robson, Downtown Vancouver",
+    "rating": null,
+    "dist": "0.6 mi",
+    "distMi": 0.6
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store (CF Pacific Centre)",
+    "where": "CF Pacific Centre mall, 701 W Georgia St, Downtown Vancouver",
+    "rating": null,
+    "dist": "0.5 mi",
+    "distMi": 0.5
    }
   ]
  },

@@ -1,1211 +1,1268 @@
 {
- "venues": {
-  "sofi": {
-   "wcName": "Los Angeles Stadium",
-   "location": "Los Angeles / Inglewood · USA",
-   "capacity": {
-    "text": "70,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "8 matches (5 group · 2 R32 · 1 QF). Jun 12 USA v Paraguay (USMNT opener); QF Jul 10. Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "8 matches (5 group · 2 R32 · 1 QF)",
-      "Jun 12 USA v Paraguay (USMNT opener)",
-      "QF Jul 10",
-      "Opponents draw-dependent"
-     ]
+  "venues": {
+    "sofi": {
+      "wcName": "Los Angeles Stadium",
+      "location": "Los Angeles / Inglewood · USA",
+      "capacity": {
+        "text": "70,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "8 matches (5 group · 2 R32 · 1 QF). Jun 12 USA v Paraguay (USMNT opener); QF Jul 10. Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "8 matches (5 group · 2 R32 · 1 QF)",
+            "Jun 12 USA v Paraguay (USMNT opener)",
+            "QF Jul 10",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "LA Memorial Coliseum opening celebration Jun 11–14; LA LIVE / Crypto.com Arena watch parties. No single full-run hub confirmed.",
+          "badge": "reported",
+          "points": [
+            "LA Memorial Coliseum opening celebration Jun 11–14",
+            "LA LIVE / Crypto.com Arena watch parties",
+            "No single full-run hub confirmed"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Ye Olde King's Head (Santa Monica), Fox & Hounds (Studio City · Arsenal), Joxer Daly's (Culver City), The Greyhound (Highland Park · Spurs).",
+          "badge": "reported",
+          "points": [
+            "Ye Olde King's Head (Santa Monica)",
+            "Fox & Hounds (Studio City · Arsenal)",
+            "Joxer Daly's (Culver City)",
+            "The Greyhound (Highland Park · Spurs)"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "No on-site parking. Metro K Line to Westchester/Veterans + shuttle; Metro direct match buses from park-and-rides.",
+          "badge": "verified",
+          "points": [
+            "No on-site parking",
+            "Metro K Line to Westchester/Veterans + shuttle",
+            "Metro direct match buses from park-and-rides"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Large security operation; transit strongly preferred. Per-venue food/entry specifics not found.",
+          "badge": "reported",
+          "points": [
+            "Large security operation",
+            "transit strongly preferred",
+            "Per-venue food/entry specifics not found"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – LA",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/los-angeles-stadium-host-usa-opening-game"
+        },
+        {
+          "label": "SoFi parking/transit",
+          "url": "https://www.sofistadium.com/plan-your-visit/parking-and-transportation/fifa-world-cup-26-parking-public-transportation"
+        }
+      ]
     },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "LA Memorial Coliseum opening celebration Jun 11–14; LA LIVE / Crypto.com Arena watch parties. No single full-run hub confirmed.",
-     "badge": "reported",
-     "points": [
-      "LA Memorial Coliseum opening celebration Jun 11–14",
-      "LA LIVE / Crypto.com Arena watch parties",
-      "No single full-run hub confirmed"
-     ]
+    "levis": {
+      "wcName": "San Francisco Bay Area Stadium",
+      "location": "Santa Clara · USA",
+      "capacity": {
+        "text": "71,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "6 matches (5 group · 1 R32). R32 Jul 1. Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "6 matches (5 group · 1 R32)",
+            "R32 Jul 1",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Distributed — no single FIFA hub. Thrive City @ Chase Center (SF), China Basin Park, San Pedro Square Market (San Jose).",
+          "badge": "reported",
+          "points": [
+            "Distributed — no single FIFA hub",
+            "Thrive City @ Chase Center (SF), China Basin Park, San Pedro Square Market (San Jose)"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Mad Dog in the Fog (Haight), Danny Coyle's, Kezar Pub, McTeague's Saloon (SF).",
+          "badge": "reported",
+          "points": [
+            "Mad Dog in the Fog (Haight)",
+            "Danny Coyle's",
+            "Kezar Pub",
+            "McTeague's Saloon (SF)"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "VTA Light Rail to Great America Station (most direct). Caltrain+VTA from SF; BART to Milpitas+VTA. Parking ticket-holder only, no tailgating.",
+          "badge": "verified",
+          "points": [
+            "VTA Light Rail to Great America Station (most direct)",
+            "Caltrain+VTA from SF",
+            "BART to Milpitas+VTA",
+            "Parking ticket-holder only, no tailgating"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Security perimeter expands well beyond 49ers gamedays; take transit.",
+          "badge": "reported",
+          "points": [
+            "Security perimeter expands well beyond 49ers gamedays",
+            "take transit"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – SF Bay Area",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/san-francisco-bay-area-host-six-matches-stadium"
+        },
+        {
+          "label": "Levi's transit",
+          "url": "https://levisstadium.com/getting-here/public-transportation/"
+        }
+      ]
     },
-    {
-     "label": "Where fans gather",
-     "text": "Ye Olde King's Head (Santa Monica), Fox & Hounds (Studio City · Arsenal), Joxer Daly's (Culver City), The Greyhound (Highland Park · Spurs).",
-     "badge": "reported",
-     "points": [
-      "Ye Olde King's Head (Santa Monica)",
-      "Fox & Hounds (Studio City · Arsenal)",
-      "Joxer Daly's (Culver City)",
-      "The Greyhound (Highland Park · Spurs)"
-     ]
+    "lumen": {
+      "wcName": "Seattle Stadium",
+      "location": "Seattle · USA",
+      "capacity": {
+        "text": "69,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "6 matches (4 group · 1 R32 · 1 R16). Jun 19 USA v Australia; R16 Jul 6. Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "6 matches (4 group · 1 R32 · 1 R16)",
+            "Jun 19 USA v Australia",
+            "R16 Jul 6",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Distributed 'Unity Loop' — Seattle Center (Armory), Pacific Place (Seattle's largest screen), Waterfront Park, Victory Hall (SoDo).",
+          "badge": "reported",
+          "points": [
+            "Distributed 'Unity Loop' — Seattle Center (Armory)",
+            "Pacific Place (Seattle's largest screen)",
+            "Waterfront Park",
+            "Victory Hall (SoDo)"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Pioneer Square hub — Occidental Park (pre-game heart), The NINETY (Sounders), Rhein Haus, Flatstick Pub.",
+          "badge": "reported",
+          "points": [
+            "Pioneer Square hub — Occidental Park (pre-game heart)",
+            "The NINETY (Sounders)",
+            "Rhein Haus",
+            "Flatstick Pub"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "Link light rail to Stadium Station — steps from the gates; ~40 min / $3 from Sea-Tac.",
+          "badge": "verified",
+          "points": [
+            "Link light rail to Stadium Station — steps from the gates",
+            "~40 min / $3 from Sea-Tac"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "SoDo driving/parking heavily restricted on match days.",
+          "badge": "reported",
+          "points": [
+            "SoDo driving/parking heavily restricted on match days"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Seattle",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/seattle-host-six-matches-stadium"
+        },
+        {
+          "label": "Sound Transit – Lumen",
+          "url": "https://www.soundtransit.org/ride-with-us/popular-destinations/lumen-field"
+        }
+      ]
     },
-    {
-     "label": "Getting there",
-     "text": "No on-site parking. Metro K Line to Westchester/Veterans + shuttle; Metro direct match buses from park-and-rides.",
-     "badge": "verified",
-     "points": [
-      "No on-site parking",
-      "Metro K Line to Westchester/Veterans + shuttle",
-      "Metro direct match buses from park-and-rides"
-     ]
+    "bcplace": {
+      "wcName": "BC Place (no rebrand)",
+      "location": "Vancouver · Canada",
+      "capacity": {
+        "text": "54,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "7 matches (5 group · 1 R32 · 1 R16). Canada home games: Jun 18 v Qatar, Jun 24 v Switzerland; R16 Jul 7.",
+          "badge": "verified",
+          "points": [
+            "7 matches (5 group · 1 R32 · 1 R16)",
+            "Canada home games: Jun 18 v Qatar, Jun 24 v Switzerland",
+            "R16 Jul 7"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "PNE / Hastings Park — Jun 11–Jul 19, new 10,000-cap amphitheatre, free GA, all matches on screens.",
+          "badge": "verified",
+          "points": [
+            "PNE / Hastings Park — Jun 11–Jul 19",
+            "new 10,000-cap amphitheatre",
+            "free GA",
+            "all matches on screens"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "The Blarney Stone (Whitecaps Southsiders HQ), Shark Club (steps away · 'Canada House'), The Cambie, The Park Pub.",
+          "badge": "reported",
+          "points": [
+            "The Blarney Stone (Whitecaps Southsiders HQ)",
+            "Shark Club (steps away · 'Canada House')",
+            "The Cambie",
+            "The Park Pub"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "Main Street–Science World Station + 'Last Mile' walk. Note: Stadium–Chinatown (normally closest) has limited access on local match days.",
+          "badge": "verified",
+          "points": [
+            "Main Street–Science World Station + 'Last Mile' walk",
+            "Note: Stadium–Chinatown (normally closest) has limited access on local match days"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Only downtown-core host stadium; retractable roof. Pacific Blvd closed ~2 months.",
+          "badge": "reported",
+          "points": [
+            "Only downtown-core host stadium",
+            "retractable roof",
+            "Pacific Blvd closed ~2 months"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Vancouver",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/vancouver-host-seven-matches-canada-stadium-bc-place"
+        },
+        {
+          "label": "TransLink WC guide",
+          "url": "https://www.translink.ca/rider-guide/taking-transit-to-the-world-cup"
+        }
+      ]
     },
-    {
-     "label": "Matchday tips",
-     "text": "Large security operation; transit strongly preferred. Per-venue food/entry specifics not found.",
-     "badge": "reported",
-     "points": [
-      "Large security operation",
-      "transit strongly preferred",
-      "Per-venue food/entry specifics not found"
-     ]
+    "arrowhead": {
+      "wcName": "Kansas City Stadium",
+      "location": "Kansas City · USA",
+      "capacity": {
+        "text": "73,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "6 matches (4 group · 1 R32 · 1 QF). QF Jul 11. Reported Tunisia v Netherlands Jun 25 — draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "6 matches (4 group · 1 R32 · 1 QF)",
+            "QF Jul 11",
+            "Reported Tunisia v Netherlands Jun 25 — draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "National WWI Museum & Memorial (south lawn) — Jun 11+, free, up to 25,000, free digital pass.",
+          "badge": "verified",
+          "points": [
+            "National WWI Museum & Memorial (south lawn) — Jun 11+",
+            "free",
+            "up to 25,000",
+            "free digital pass"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Power & Light District (KC Live! 'Soccer in the City') — No Other Pub (Sporting KC), McFadden's.",
+          "badge": "reported",
+          "points": [
+            "Power & Light District (KC Live! 'Soccer in the City') — No Other Pub (Sporting KC)",
+            "McFadden's"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "ConnectKC26 'Stadium Direct' shuttles from 4 park-and-rides; stadium parking cut to ~3–4k spaces. Shuttle price conflicts ($11 vs $15).",
+          "badge": "reported",
+          "points": [
+            "ConnectKC26 'Stadium Direct' shuttles from 4 park-and-rides",
+            "stadium parking cut to ~3–4k spaces",
+            "Shuttle price conflicts ($11 vs $15)"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "FIFA clear-bag policy. Concession specifics not found.",
+          "badge": "reported",
+          "points": [
+            "FIFA clear-bag policy",
+            "Concession specifics not found"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Kansas City",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/usa/kansas-city"
+        },
+        {
+          "label": "KC Fan Festival",
+          "url": "https://www.kc2026.com/fifa-fan-festival/"
+        }
+      ]
+    },
+    "att": {
+      "wcName": "Dallas Stadium",
+      "location": "Arlington (DFW) · USA",
+      "capacity": {
+        "text": "94,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "9 matches — tournament high (5 group · 2 R32 · 1 R16 · 1 SEMIFINAL Jul 14). Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "9 matches — tournament high (5 group · 2 R32 · 1 R16 · 1 SEMIFINAL Jul 14)",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Fair Park (The Pavilion + Lots 9/10) — Jun 11–Jul 19, free, up to 35,000.",
+          "badge": "verified",
+          "points": [
+            "Fair Park (The Pavilion + Lots 9/10) — Jun 11–Jul 19",
+            "free",
+            "up to 35,000"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Deep Ellum (Backyard Dallas), Harwood Arms (Chelsea), Texas Live! Arlington (closest large venue to stadium).",
+          "badge": "reported",
+          "points": [
+            "Deep Ellum (Backyard Dallas)",
+            "Harwood Arms (Chelsea)",
+            "Texas Live! Arlington (closest large venue to stadium)"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "No direct rail. TRE to CentrePort + complimentary charter bus (incl. with ticket), ~90 min from downtown. Parking pre-book $75–175.",
+          "badge": "verified",
+          "points": [
+            "No direct rail",
+            "TRE to CentrePort + complimentary charter bus (incl",
+            "with ticket), ~90 min from downtown",
+            "Parking pre-book $75–175"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Strict clear-bag; no outside food; mobile lockers ~$20/bag.",
+          "badge": "reported",
+          "points": [
+            "Strict clear-bag",
+            "no outside food",
+            "mobile lockers ~$20/bag"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Dallas (9 matches)",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/dallas-stadium-host-nine-world-cup-matches"
+        },
+        {
+          "label": "Dallas FWC26",
+          "url": "https://www.dallasfwc26.com/our-venues/match-schedule/"
+        }
+      ]
+    },
+    "nrg": {
+      "wcName": "Houston Stadium",
+      "location": "Houston · USA",
+      "capacity": {
+        "text": "72,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "7 matches (5 group · 1 R32 Jun 29 · 1 R16 Jul 4). Reported Netherlands v Sweden Jun 20 — draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "7 matches (5 group · 1 R32 Jun 29 · 1 R16 Jul 4)",
+            "Reported Netherlands v Sweden Jun 20 — draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "East Downtown (EaDo) near Shell Energy Stadium — Jun 11–Jul 19, free, ~7,500, 7v7 pitch + 360° experience.",
+          "badge": "verified",
+          "points": [
+            "East Downtown (EaDo) near Shell Energy Stadium — Jun 11–Jul 19",
+            "free",
+            "~7,500",
+            "7v7 pitch + 360° experience"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "EaDo epicenter — Pitch 25, Velvet Oak (Arsenal/Barça), RBar (Man Utd), Texas T Tavern ('TeamNL House').",
+          "badge": "reported",
+          "points": [
+            "EaDo epicenter — Pitch 25",
+            "Velvet Oak (Arsenal/Barça)",
+            "RBar (Man Utd)",
+            "Texas T Tavern ('TeamNL House')"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "METRORail Red Line to Stadium Park/Astrodome (adjacent), ~21 min from downtown, $1.25.",
+          "badge": "verified",
+          "points": [
+            "METRORail Red Line to Stadium Park/Astrodome (adjacent)",
+            "~21 min from downtown",
+            "$1.25"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Climate-controlled (AC + retractable roof) — big comfort edge in June heat. FIFA clear-bag.",
+          "badge": "verified",
+          "points": [
+            "Climate-controlled (AC + retractable roof) — big comfort edge in June heat",
+            "FIFA clear-bag"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Houston",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/usa/houston"
+        },
+        {
+          "label": "RideMETRO – World Cup",
+          "url": "https://www.ridemetro.org/world-cup"
+        }
+      ]
+    },
+    "mercedes": {
+      "wcName": "Atlanta Stadium",
+      "location": "Atlanta · USA",
+      "capacity": {
+        "text": "75,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "8 matches (group + R16 Jul 7 + SEMIFINAL Jul 15). Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "8 matches (group + R16 Jul 7 + SEMIFINAL Jul 15)",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Centennial Olympic Park — Jun 11–Jul 19, free, pre-registration required.",
+          "badge": "verified",
+          "points": [
+            "Centennial Olympic Park — Jun 11–Jul 19",
+            "free",
+            "pre-registration required"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Brewhouse Cafe (new South Downtown loc near stadium), STATS Brewpub, Park Bar, Sports & Social.",
+          "badge": "verified",
+          "points": [
+            "Brewhouse Cafe (new South Downtown loc near stadium)",
+            "STATS Brewpub",
+            "Park Bar",
+            "Sports & Social"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "MARTA to SEC District Station (stadium doorstep), $2.50, trains ~every 5 min. Rideshare cannot drop at stadium.",
+          "badge": "verified",
+          "points": [
+            "MARTA to SEC District Station (stadium doorstep), $2.50, trains ~every 5 min",
+            "Rideshare cannot drop at stadium"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Fan-first concessions kept for WC ($2 hot dogs, $5 domestic beers). Clear-bag; arrive 2–3 hrs early.",
+          "badge": "verified",
+          "points": [
+            "Fan-first concessions kept for WC ($2 hot dogs, $5 domestic beers)",
+            "Clear-bag",
+            "arrive 2–3 hrs early"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Atlanta (8 matches)",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/atlanta-host-eight-matches-usa-stadium"
+        },
+        {
+          "label": "MBS guidelines",
+          "url": "https://www.mercedesbenzstadium.com/guidelines"
+        }
+      ]
+    },
+    "metlife": {
+      "wcName": "New York New Jersey Stadium",
+      "location": "East Rutherford, NJ · USA",
+      "capacity": {
+        "text": "82,500",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "8 matches (5 group · R32 Jun 30 · R16 Jul 5 · FINAL Jul 19, 3pm ET). Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "8 matches (5 group · R32 Jun 30 · R16 Jul 5 · FINAL Jul 19, 3pm ET)",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Liberty State Park, Jersey City — Jun 11–Jul 19, free, up to 45,000/day. Also Fan Zone Queens & Rockefeller Center.",
+          "badge": "reported",
+          "points": [
+            "Liberty State Park, Jersey City — Jun 11–Jul 19, free, up to 45,000/day",
+            "Also Fan Zone Queens & Rockefeller Center"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Smithfield Hall (Chelsea), Legends / The Football Factory (Midtown · 30+ clubs), The Long Acre (Times Sq).",
+          "badge": "reported",
+          "points": [
+            "Smithfield Hall (Chelsea)",
+            "Legends / The Football Factory (Midtown · 30+ clubs)",
+            "The Long Acre (Times Sq)"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "No general parking. NJ Transit via Secaucus Junction (matchday train, ticket holders, advance ~$150); shuttles from Port Authority.",
+          "badge": "verified",
+          "points": [
+            "No general parking",
+            "NJ Transit via Secaucus Junction (matchday train, ticket holders, advance ~$150)",
+            "shuttles from Port Authority"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Clear-bag; cashless; no outside food. Arrive 2+ hrs (3 hrs for the Final).",
+          "badge": "verified",
+          "points": [
+            "Clear-bag",
+            "cashless",
+            "no outside food",
+            "Arrive 2+ hrs (3 hrs for the Final)"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "NY/NJ FWC26 schedule",
+          "url": "https://nynjfwc26.com/schedule/"
+        },
+        {
+          "label": "Getting to the stadium",
+          "url": "https://nynjfwc26.com/getting-to-nynj-stadium/"
+        }
+      ]
+    },
+    "gillette": {
+      "wcName": "Boston Stadium",
+      "location": "Foxborough, MA · USA",
+      "capacity": {
+        "text": "65,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "7 matches (5 group · R32 Jun 29 · QF Jul 9). Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "7 matches (5 group · R32 Jun 29 · QF Jul 9)",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Boston City Hall Plaza. Dates conflict (Jun 12–27 vs 'tournament-long') — verify.",
+          "badge": "reported",
+          "points": [
+            "Boston City Hall Plaza",
+            "Dates conflict (Jun 12–27 vs 'tournament-long') — verify"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "The Banshee (Dorchester · 12+ clubs), Phoenix Landing (Cambridge), The Haven (near TD Garden).",
+          "badge": "reported",
+          "points": [
+            "The Banshee (Dorchester · 12+ clubs)",
+            "Phoenix Landing (Cambridge)",
+            "The Haven (near TD Garden)"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "MBTA 'Boston Stadium Train' express South Station↔Foxboro, roundtrip $80 advance via mTicket.",
+          "badge": "verified",
+          "points": [
+            "MBTA 'Boston Stadium Train' express South Station↔Foxboro",
+            "roundtrip $80 advance via mTicket"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Limited tailgating; strict fan rules. Parking ~5,000 spots, pre-paid ~$175. Clear-bag.",
+          "badge": "reported",
+          "points": [
+            "Limited tailgating",
+            "strict fan rules",
+            "Parking ~5,000 spots, pre-paid ~$175",
+            "Clear-bag"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "MBTA World Cup guide",
+          "url": "https://www.mbta.com/guides/world-cup-guide"
+        },
+        {
+          "label": "Boston FWC26",
+          "url": "https://bostonfwc26.com/the-stadium/"
+        }
+      ]
+    },
+    "linc": {
+      "wcName": "Philadelphia Stadium",
+      "location": "Philadelphia, PA · USA",
+      "capacity": {
+        "text": "69,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "6 matches (5 group · R16 Jul 4 — US 250th birthday). Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "6 matches (5 group · R16 Jul 4 — US 250th birthday)",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Lemon Hill, East Fairmount Park — the only US city running its Fan Fest all 39 days.",
+          "badge": "reported",
+          "points": [
+            "Lemon Hill",
+            "East Fairmount Park — the only US city running its Fan Fest all 39 days"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Fadó Irish Pub (Center City), Misconduct Tavern (Arsenal), Tír na nÓg (Chelsea/City), Cavanaugh's (Union).",
+          "badge": "reported",
+          "points": [
+            "Fadó Irish Pub (Center City)",
+            "Misconduct Tavern (Arsenal)",
+            "Tír na nÓg (Chelsea/City)",
+            "Cavanaugh's (Union)"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "SEPTA Broad Street Line to NRG Station (~5-min walk). Rides home after matches are FREE.",
+          "badge": "verified",
+          "points": [
+            "SEPTA Broad Street Line to NRG Station (~5-min walk)",
+            "Rides home after matches are FREE"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Clear-bag; cashless. Subway strongly recommended; arrive 90–120 min early.",
+          "badge": "verified",
+          "points": [
+            "Clear-bag",
+            "cashless",
+            "Subway strongly recommended",
+            "arrive 90–120 min early"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "Visit Philly – World Cup",
+          "url": "https://www.visitphilly.com/things-to-do/events/world-cup/"
+        },
+        {
+          "label": "SEPTA plan (Billy Penn)",
+          "url": "https://billypenn.com/2026/05/18/septa-service-plan-release-fifa-world-cup-games-philly-linc-stadium-lemon-hill-fan-fest/"
+        }
+      ]
+    },
+    "hardrock": {
+      "wcName": "Miami Stadium",
+      "location": "Miami Gardens, FL · USA",
+      "capacity": {
+        "text": "65,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "7 matches (4 group · R32 Jul 3 · QF Jul 11 · THIRD-PLACE Jul 18). Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "7 matches (4 group · R32 Jul 3 · QF Jul 11 · THIRD-PLACE Jul 18)",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Bayfront Park, downtown — Jun 13–Jul 5, up to 30,000/day. FIFA app registration required.",
+          "badge": "reported",
+          "points": [
+            "Bayfront Park, downtown — Jun 13–Jul 5, up to 30,000/day",
+            "FIFA app registration required"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "American Social (Brickell · Arsenal MASC), Grails Wynwood (75+ TVs), The Bar (Coral Gables · Gooners).",
+          "badge": "reported",
+          "points": [
+            "American Social (Brickell · Arsenal MASC)",
+            "Grails Wynwood (75+ TVs)",
+            "The Bar (Coral Gables · Gooners)"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "Brightline to Aventura + free Hard Rock Stadium Connect shuttle. Stadium parking reported sold out — use park-and-ride.",
+          "badge": "verified",
+          "points": [
+            "Brightline to Aventura + free Hard Rock Stadium Connect shuttle",
+            "Stadium parking reported sold out — use park-and-ride"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Clear-bag; cashless; FIFA app tied to Fan Fest entry. Arrive 60–90 min early.",
+          "badge": "reported",
+          "points": [
+            "Clear-bag",
+            "cashless",
+            "FIFA app tied to Fan Fest entry",
+            "Arrive 60–90 min early"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Miami",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/miami-stadium-host-seven-matches"
+        },
+        {
+          "label": "Brightline – Hard Rock",
+          "url": "https://www.hardrockstadium.com/faq-items/brightline/"
+        }
+      ]
+    },
+    "bmo": {
+      "wcName": "Toronto Stadium",
+      "location": "Toronto · Canada",
+      "capacity": {
+        "text": "45,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "6 matches (5 group · 1 R32). Hosts Canada's opening match Jun 12. Opponent draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "6 matches (5 group · 1 R32)",
+            "Hosts Canada's opening match Jun 12",
+            "Opponent draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Fort York & The Bentway — Jun 11–Jul 19, all 104 matches on screens, 30+ vendors. Free ward watch parties citywide.",
+          "badge": "verified",
+          "points": [
+            "Fort York & The Bentway — Jun 11–Jul 19, all 104 matches on screens, 30+ vendors",
+            "Free ward watch parties citywide"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Little Italy (Café Diplomatico), Kensington Market, Liberty Village near venue (The Brazen Head), Greektown/Little Portugal.",
+          "badge": "verified",
+          "points": [
+            "Little Italy (Café Diplomatico)",
+            "Kensington Market",
+            "Liberty Village near venue (The Brazen Head)",
+            "Greektown/Little Portugal"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "GO Transit to Exhibition GO Station (2–5 min walk). TTC 509/511 streetcars. Parking very limited.",
+          "badge": "verified",
+          "points": [
+            "GO Transit to Exhibition GO Station (2–5 min walk)",
+            "TTC 509/511 streetcars",
+            "Parking very limited"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Open-air lakeside; arrive early for temp-seat layout. Employers planning WFH for traffic.",
+          "badge": "reported",
+          "points": [
+            "Open-air lakeside",
+            "arrive early for temp-seat layout",
+            "Employers planning WFH for traffic"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Toronto",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/vancouver-host-seven-matches-canada-stadium-bc-place"
+        },
+        {
+          "label": "Toronto Fan Festival",
+          "url": "https://torontofwc26.ca/FIFAFanFestival"
+        }
+      ]
+    },
+    "azteca": {
+      "wcName": "Mexico City Stadium (sponsor: Estadio Banorte)",
+      "location": "Mexico City · Mexico",
+      "capacity": {
+        "text": "83,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "5 matches (3 group · R32 Jun 30 · R16 Jul 5). HOSTS THE TOURNAMENT OPENER Jun 11 (Mexico). Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "5 matches (3 group · R32 Jun 30 · R16 Jul 5)",
+            "HOSTS THE TOURNAMENT OPENER Jun 11 (Mexico)",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Zócalo (main square) — free, 80,000+ cap, Jun 11–Jul 19, all matches on giant screens.",
+          "badge": "verified",
+          "points": [
+            "Zócalo (main square) — free",
+            "80,000+ cap",
+            "Jun 11–Jul 19",
+            "all matches on giant screens"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Roma Norte / Condesa (The Dog House Pub · European fans), Coyoacán (Sport and Chips), Parque México watch parties.",
+          "badge": "reported",
+          "points": [
+            "Roma Norte / Condesa (The Dog House Pub · European fans)",
+            "Coyoacán (Sport and Chips)",
+            "Parque México watch parties"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "Metro Line 2 → Tasqueña, transfer to Tren Ligero → Estadio Azteca station (drops at stadium).",
+          "badge": "verified",
+          "points": [
+            "Metro Line 2 → Tasqueña",
+            "transfer to Tren Ligero → Estadio Azteca station (drops at stadium)"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "ALTITUDE ~2,200 m / 7,200 ft — highest venue of the tournament. Hydrate, acclimatize 24–48h. Arrive ~3h early.",
+          "badge": "verified",
+          "points": [
+            "ALTITUDE ~2,200 m / 7,200 ft — highest venue of the tournament",
+            "Hydrate, acclimatize 24–48h",
+            "Arrive ~3h early"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Azteca opener",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/estadio-azteca-mexico-city-host-opening-match-world-cup-2026"
+        },
+        {
+          "label": "FIFA Fan Fest – CDMX",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/fifa-fan-festival/mexico-city"
+        }
+      ]
+    },
+    "akron": {
+      "wcName": "Estadio Guadalajara",
+      "location": "Guadalajara / Zapopan · Mexico",
+      "capacity": {
+        "text": "48,000",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "4 matches, all group stage (Jun 11, 18, 23, 26). Includes a Mexico group match. Opponents draw-dependent.",
+          "badge": "verified",
+          "points": [
+            "4 matches, all group stage (Jun 11, 18, 23, 26)",
+            "Includes a Mexico group match",
+            "Opponents draw-dependent"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Plaza Liberación (historic centre, between the Cathedral & Teatro Degollado) — full tournament.",
+          "badge": "verified",
+          "points": [
+            "Plaza Liberación (historic centre, between the Cathedral & Teatro Degollado) — full tournament"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Avenida Chapultepec (nightlife spine, street party on match days) — Cervecería Chapultepec, La Insurgente.",
+          "badge": "reported",
+          "points": [
+            "Avenida Chapultepec (nightlife spine, street party on match days) — Cervecería Chapultepec",
+            "La Insurgente"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "SITEUR Mi Tren Line 3 + Autotrén pods to the gates; official 'Ride al Estadio' shuttles from 10 metro points.",
+          "badge": "reported",
+          "points": [
+            "SITEUR Mi Tren Line 3 + Autotrén pods to the gates",
+            "official 'Ride al Estadio' shuttles from 10 metro points"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "Mild altitude ~1,560 m. June heat on the last-mile walk — Autotrén/Andador help.",
+          "badge": "reported",
+          "points": [
+            "Mild altitude ~1,560 m",
+            "June heat on the last-mile walk — Autotrén/Andador help"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Guadalajara (ES)",
+          "url": "https://www.fifa.com/es/tournaments/mens/worldcup/canadamexicousa2026/articles/guadalajara-cuatro-partidos-estadio-copa-mundial-2026"
+        },
+        {
+          "label": "Getting to the stadium",
+          "url": "https://gotoguadalajara.com/how-to-get-to-guadalajara-stadium-for-the-world-cup-2026/"
+        }
+      ]
+    },
+    "bbva": {
+      "wcName": "Estadio Monterrey",
+      "location": "Monterrey / Guadalupe · Mexico",
+      "capacity": {
+        "text": "53,500",
+        "badge": "verified"
+      },
+      "fields": [
+        {
+          "label": "Matches",
+          "text": "4 matches (3 group · 1 R32), ~Jun 14–29. Opponents not confirmed vs FIFA.",
+          "badge": "verified",
+          "points": [
+            "4 matches (3 group · 1 R32), ~Jun 14–29",
+            "Opponents not confirmed vs FIFA"
+          ]
+        },
+        {
+          "label": "FIFA Fan Festival",
+          "text": "Parque Fundidora (142-ha former steelworks) — free, Jun 11–Jul 19, all matches. Metro Line 2 (Parque Fundidora).",
+          "badge": "verified",
+          "points": [
+            "Parque Fundidora (142-ha former steelworks) — free, Jun 11–Jul 19, all matches",
+            "Metro Line 2 (Parque Fundidora)"
+          ]
+        },
+        {
+          "label": "Where fans gather",
+          "text": "Barrio Antiguo (main hub, walkable from central hotels) — Mercado Barrio Antiguo, Bola Ocho.",
+          "badge": "reported",
+          "points": [
+            "Barrio Antiguo (main hub, walkable from central hotels) — Mercado Barrio Antiguo",
+            "Bola Ocho"
+          ]
+        },
+        {
+          "label": "Getting there",
+          "text": "No direct stop. Metrorrey Line 1 → Exposición, then 'Fan Walk' through Parque La Pastora to the gates.",
+          "badge": "reported",
+          "points": [
+            "No direct stop",
+            "Metrorrey Line 1 → Exposición, then 'Fan Walk' through Parque La Pastora to the gates"
+          ]
+        },
+        {
+          "label": "Matchday tips",
+          "text": "'El Gigante de Acero' with Cerro de la Silla backdrop. Low altitude (~540 m). Intense June heat — hydrate.",
+          "badge": "reported",
+          "points": [
+            "'El Gigante de Acero' with Cerro de la Silla backdrop",
+            "Low altitude (~540 m)",
+            "Intense June heat — hydrate"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "FIFA – Monterrey",
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/monterrey-host-four-matches-stadium-estadio"
+        },
+        {
+          "label": "FIFA Fan Fest – Monterrey (ES)",
+          "url": "https://www.fifa.com/es/tournaments/mens/worldcup/canadamexicousa2026/fifa-fan-festival/monterrey"
+        }
+      ]
     }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – LA",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/los-angeles-stadium-host-usa-opening-game"
-    },
-    {
-     "label": "SoFi parking/transit",
-     "url": "https://www.sofistadium.com/plan-your-visit/parking-and-transportation/fifa-world-cup-26-parking-public-transportation"
-    }
-   ]
   },
-  "levis": {
-   "wcName": "San Francisco Bay Area Stadium",
-   "location": "Santa Clara · USA",
-   "capacity": {
-    "text": "71,000",
-    "badge": "verified"
-   },
-   "fields": [
+  "marches": [
     {
-     "label": "Matches",
-     "text": "6 matches (5 group · 1 R32). R32 Jul 1. Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "6 matches (5 group · 1 R32)",
-      "R32 Jul 1",
-      "Opponents draw-dependent"
-     ]
+      "flag": "🇳🇱",
+      "title": "Netherlands — Oranje Fanwalk",
+      "badge": "verified",
+      "city": "Arlington / Dallas",
+      "when": "Sun Jun 14 · gather 10:00am, depart 11:15am",
+      "sources": [],
+      "venue": "att",
+      "points": [
+        "Route: Road to Six Flags St (by Choctaw Stadium) → AT&T Stadium",
+        "Led by the double-decker Oranjebus + DJ",
+        "Billed as the tournament's first fanwalk",
+        "Match: Netherlands v Japan"
+      ],
+      "meet": {
+        "spot": "Choctaw Stadium · Road to Six Flags St",
+        "address": "1000 Ballpark Way, Arlington, TX 76011"
+      }
     },
     {
-     "label": "FIFA Fan Festival",
-     "text": "Distributed — no single FIFA hub. Thrive City @ Chase Center (SF), China Basin Park, San Pedro Square Market (San Jose).",
-     "badge": "reported",
-     "points": [
-      "Distributed — no single FIFA hub",
-      "Thrive City @ Chase Center (SF), China Basin Park, San Pedro Square Market (San Jose)"
-     ]
+      "flag": "🇳🇱",
+      "title": "Netherlands — Oranje Fanwalk",
+      "badge": "verified",
+      "city": "Houston",
+      "when": "Sat Jun 20 · entertainment 8:00am, depart 8:45am",
+      "sources": [],
+      "venue": "nrg",
+      "points": [
+        "Route: Rice Stadium (Rice University) → ~2.5 mi → NRG Stadium",
+        "KNVB-organized, led by the Oranjebus",
+        "~10,000 expected; coordinated with Houston PD",
+        "Match: Netherlands v Sweden"
+      ],
+      "meet": {
+        "spot": "Rice Stadium, Rice University",
+        "address": "6100 S Main St, Houston, TX 77005"
+      }
     },
     {
-     "label": "Where fans gather",
-     "text": "Mad Dog in the Fog (Haight), Danny Coyle's, Kezar Pub, McTeague's Saloon (SF).",
-     "badge": "reported",
-     "points": [
-      "Mad Dog in the Fog (Haight)",
-      "Danny Coyle's",
-      "Kezar Pub",
-      "McTeague's Saloon (SF)"
-     ]
+      "flag": "🇳🇱",
+      "title": "Netherlands — Oranje Fanwalk",
+      "badge": "verified",
+      "city": "Kansas City",
+      "when": "Thu Jun 25 · gather 11:00am, depart 12:15pm",
+      "sources": [],
+      "venue": "arrowhead",
+      "points": [
+        "Route: KC Live! (Power & Light) → downtown → FIFA Fan Festival (WWI Museum)",
+        "Free to attend",
+        "Match: Netherlands v Tunisia (6pm)"
+      ],
+      "meet": {
+        "spot": "KC Live!, Power & Light District",
+        "address": "Grand Blvd at 13th St, Kansas City, MO 64106"
+      }
     },
     {
-     "label": "Getting there",
-     "text": "VTA Light Rail to Great America Station (most direct). Caltrain+VTA from SF; BART to Milpitas+VTA. Parking ticket-holder only, no tailgating.",
-     "badge": "verified",
-     "points": [
-      "VTA Light Rail to Great America Station (most direct)",
-      "Caltrain+VTA from SF",
-      "BART to Milpitas+VTA",
-      "Parking ticket-holder only, no tailgating"
-     ]
+      "flag": "🇦🇷",
+      "title": "Argentina — Banderazo",
+      "badge": "verified",
+      "city": "Kansas City",
+      "when": "Mon Jun 15 · 6:00pm",
+      "sources": [],
+      "venue": "arrowhead",
+      "points": [
+        "Mass rally at Mill Creek Park (not a stadium march)",
+        "Flag-and-chant gathering",
+        "Day before Argentina v Algeria"
+      ],
+      "meet": {
+        "spot": "J.C. Nichols Fountain, Mill Creek Park",
+        "address": "47th St & J.C. Nichols Pkwy, Kansas City, MO 64112"
+      }
     },
     {
-     "label": "Matchday tips",
-     "text": "Security perimeter expands well beyond 49ers gamedays; take transit.",
-     "badge": "reported",
-     "points": [
-      "Security perimeter expands well beyond 49ers gamedays",
-      "take transit"
-     ]
+      "flag": "🇪🇨",
+      "title": "Ecuador — Banderazo",
+      "badge": "verified",
+      "city": "Kansas City",
+      "when": "Sat Jun 20 · 6:15pm",
+      "sources": [],
+      "venue": "arrowhead",
+      "points": [
+        "At Liberty Memorial — drums, flags, chants",
+        "Before Ecuador v Curacao"
+      ],
+      "meet": {
+        "spot": "Liberty Memorial (National WWI Museum)",
+        "address": "2 Memorial Dr, Kansas City, MO 64108"
+      }
+    },
+    {
+      "flag": "🇲🇽",
+      "title": "Mexico City — 7 official pedestrian corridors",
+      "badge": "verified",
+      "city": "Estadio Azteca / Banorte",
+      "when": "Every match day",
+      "sources": [],
+      "venue": "azteca",
+      "points": [
+        "7 signed pedestrian routes (corredores peatonales)",
+        "Santa Úrsula · Parque Cantera · Periférico · Paseo Acoxpa · El Vergel light rail",
+        "10–30 min walks, with maps + QR codes",
+        "City-run 'last mile' security corridors — the official way in",
+        "Not a supporter march"
+      ]
+    },
+    {
+      "flag": "🏴",
+      "title": "Scotland — Tartan Army",
+      "badge": "verified",
+      "city": "Providence, RI / Boston",
+      "when": "Pipe-band parade Thu Jun 18",
+      "sources": [],
+      "venue": "gillette",
+      "points": [
+        "Pipe-band parade in Providence, RI (Rhode Island Highlanders)",
+        "No stadium march — Gillette is 20+ mi from Boston",
+        "Fans gather at Boston Common / City Hall Plaza",
+        "Organized marches need a permit (<90 min, 150+ people, no pyro)",
+        "Scotland plays Haiti & Morocco at Gillette, Brazil at Miami"
+      ],
+      "meet": {
+        "spot": "Downtown Providence, RI · pipe-band parade (Jun 18)",
+        "address": "Providence, RI — Tartan Army HQ at G Pub (~25 mi from Gillette)"
+      }
+    },
+    {
+      "flag": "🏴",
+      "title": "England — no walking to the stadium",
+      "badge": "verified",
+      "city": "MetLife, NY/NJ",
+      "when": "Sat Jun 27 (England v Panama)",
+      "sources": [],
+      "venue": "metlife",
+      "points": [
+        "MetLife reachable only by train / bus / car",
+        "NJ law bans pedestrians on the highways around the stadium",
+        "FA's Supporters Travel Club (ESTC) posts city meetup points 1–2 weeks before each match"
+      ]
+    },
+    {
+      "flag": "🇸🇪",
+      "title": "Sweden / Monterrey — march UNVERIFIED",
+      "badge": "unverified",
+      "city": "Estadio Monterrey",
+      "when": "Sun Jun 14 (Sweden v Tunisia)",
+      "sources": [],
+      "venue": "bbva",
+      "points": [
+        "~8 km official pedestrian corridor: downtown → stadium",
+        "Anchored at Parque Fundidora",
+        "The corridor is real — a Sweden 'fan walk' is not confirmed",
+        "The '3,000+' figure couldn't be verified (flagged by review)"
+      ]
     }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – SF Bay Area",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/san-francisco-bay-area-host-six-matches-stadium"
-    },
-    {
-     "label": "Levi's transit",
-     "url": "https://levisstadium.com/getting-here/public-transportation/"
-    }
-   ]
-  },
-  "lumen": {
-   "wcName": "Seattle Stadium",
-   "location": "Seattle · USA",
-   "capacity": {
-    "text": "69,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "6 matches (4 group · 1 R32 · 1 R16). Jun 19 USA v Australia; R16 Jul 6. Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "6 matches (4 group · 1 R32 · 1 R16)",
-      "Jun 19 USA v Australia",
-      "R16 Jul 6",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Distributed 'Unity Loop' — Seattle Center (Armory), Pacific Place (Seattle's largest screen), Waterfront Park, Victory Hall (SoDo).",
-     "badge": "reported",
-     "points": [
-      "Distributed 'Unity Loop' — Seattle Center (Armory)",
-      "Pacific Place (Seattle's largest screen)",
-      "Waterfront Park",
-      "Victory Hall (SoDo)"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Pioneer Square hub — Occidental Park (pre-game heart), The NINETY (Sounders), Rhein Haus, Flatstick Pub.",
-     "badge": "reported",
-     "points": [
-      "Pioneer Square hub — Occidental Park (pre-game heart)",
-      "The NINETY (Sounders)",
-      "Rhein Haus",
-      "Flatstick Pub"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "Link light rail to Stadium Station — steps from the gates; ~40 min / $3 from Sea-Tac.",
-     "badge": "verified",
-     "points": [
-      "Link light rail to Stadium Station — steps from the gates",
-      "~40 min / $3 from Sea-Tac"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "SoDo driving/parking heavily restricted on match days.",
-     "badge": "reported",
-     "points": [
-      "SoDo driving/parking heavily restricted on match days"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Seattle",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/seattle-host-six-matches-stadium"
-    },
-    {
-     "label": "Sound Transit – Lumen",
-     "url": "https://www.soundtransit.org/ride-with-us/popular-destinations/lumen-field"
-    }
-   ]
-  },
-  "bcplace": {
-   "wcName": "BC Place (no rebrand)",
-   "location": "Vancouver · Canada",
-   "capacity": {
-    "text": "54,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "7 matches (5 group · 1 R32 · 1 R16). Canada home games: Jun 18 v Qatar, Jun 24 v Switzerland; R16 Jul 7.",
-     "badge": "verified",
-     "points": [
-      "7 matches (5 group · 1 R32 · 1 R16)",
-      "Canada home games: Jun 18 v Qatar, Jun 24 v Switzerland",
-      "R16 Jul 7"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "PNE / Hastings Park — Jun 11–Jul 19, new 10,000-cap amphitheatre, free GA, all matches on screens.",
-     "badge": "verified",
-     "points": [
-      "PNE / Hastings Park — Jun 11–Jul 19",
-      "new 10,000-cap amphitheatre",
-      "free GA",
-      "all matches on screens"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "The Blarney Stone (Whitecaps Southsiders HQ), Shark Club (steps away · 'Canada House'), The Cambie, The Park Pub.",
-     "badge": "reported",
-     "points": [
-      "The Blarney Stone (Whitecaps Southsiders HQ)",
-      "Shark Club (steps away · 'Canada House')",
-      "The Cambie",
-      "The Park Pub"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "Main Street–Science World Station + 'Last Mile' walk. Note: Stadium–Chinatown (normally closest) has limited access on local match days.",
-     "badge": "verified",
-     "points": [
-      "Main Street–Science World Station + 'Last Mile' walk",
-      "Note: Stadium–Chinatown (normally closest) has limited access on local match days"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Only downtown-core host stadium; retractable roof. Pacific Blvd closed ~2 months.",
-     "badge": "reported",
-     "points": [
-      "Only downtown-core host stadium",
-      "retractable roof",
-      "Pacific Blvd closed ~2 months"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Vancouver",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/vancouver-host-seven-matches-canada-stadium-bc-place"
-    },
-    {
-     "label": "TransLink WC guide",
-     "url": "https://www.translink.ca/rider-guide/taking-transit-to-the-world-cup"
-    }
-   ]
-  },
-  "arrowhead": {
-   "wcName": "Kansas City Stadium",
-   "location": "Kansas City · USA",
-   "capacity": {
-    "text": "73,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "6 matches (4 group · 1 R32 · 1 QF). QF Jul 11. Reported Tunisia v Netherlands Jun 25 — draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "6 matches (4 group · 1 R32 · 1 QF)",
-      "QF Jul 11",
-      "Reported Tunisia v Netherlands Jun 25 — draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "National WWI Museum & Memorial (south lawn) — Jun 11+, free, up to 25,000, free digital pass.",
-     "badge": "verified",
-     "points": [
-      "National WWI Museum & Memorial (south lawn) — Jun 11+",
-      "free",
-      "up to 25,000",
-      "free digital pass"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Power & Light District (KC Live! 'Soccer in the City') — No Other Pub (Sporting KC), McFadden's.",
-     "badge": "reported",
-     "points": [
-      "Power & Light District (KC Live! 'Soccer in the City') — No Other Pub (Sporting KC)",
-      "McFadden's"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "ConnectKC26 'Stadium Direct' shuttles from 4 park-and-rides; stadium parking cut to ~3–4k spaces. Shuttle price conflicts ($11 vs $15).",
-     "badge": "reported",
-     "points": [
-      "ConnectKC26 'Stadium Direct' shuttles from 4 park-and-rides",
-      "stadium parking cut to ~3–4k spaces",
-      "Shuttle price conflicts ($11 vs $15)"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "FIFA clear-bag policy. Concession specifics not found.",
-     "badge": "reported",
-     "points": [
-      "FIFA clear-bag policy",
-      "Concession specifics not found"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Kansas City",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/usa/kansas-city"
-    },
-    {
-     "label": "KC Fan Festival",
-     "url": "https://www.kc2026.com/fifa-fan-festival/"
-    }
-   ]
-  },
-  "att": {
-   "wcName": "Dallas Stadium",
-   "location": "Arlington (DFW) · USA",
-   "capacity": {
-    "text": "94,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "9 matches — tournament high (5 group · 2 R32 · 1 R16 · 1 SEMIFINAL Jul 14). Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "9 matches — tournament high (5 group · 2 R32 · 1 R16 · 1 SEMIFINAL Jul 14)",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Fair Park (The Pavilion + Lots 9/10) — Jun 11–Jul 19, free, up to 35,000.",
-     "badge": "verified",
-     "points": [
-      "Fair Park (The Pavilion + Lots 9/10) — Jun 11–Jul 19",
-      "free",
-      "up to 35,000"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Deep Ellum (Backyard Dallas), Harwood Arms (Chelsea), Texas Live! Arlington (closest large venue to stadium).",
-     "badge": "reported",
-     "points": [
-      "Deep Ellum (Backyard Dallas)",
-      "Harwood Arms (Chelsea)",
-      "Texas Live! Arlington (closest large venue to stadium)"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "No direct rail. TRE to CentrePort + complimentary charter bus (incl. with ticket), ~90 min from downtown. Parking pre-book $75–175.",
-     "badge": "verified",
-     "points": [
-      "No direct rail",
-      "TRE to CentrePort + complimentary charter bus (incl",
-      "with ticket), ~90 min from downtown",
-      "Parking pre-book $75–175"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Strict clear-bag; no outside food; mobile lockers ~$20/bag.",
-     "badge": "reported",
-     "points": [
-      "Strict clear-bag",
-      "no outside food",
-      "mobile lockers ~$20/bag"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Dallas (9 matches)",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/dallas-stadium-host-nine-world-cup-matches"
-    },
-    {
-     "label": "Dallas FWC26",
-     "url": "https://www.dallasfwc26.com/our-venues/match-schedule/"
-    }
-   ]
-  },
-  "nrg": {
-   "wcName": "Houston Stadium",
-   "location": "Houston · USA",
-   "capacity": {
-    "text": "72,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "7 matches (5 group · 1 R32 Jun 29 · 1 R16 Jul 4). Reported Netherlands v Sweden Jun 20 — draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "7 matches (5 group · 1 R32 Jun 29 · 1 R16 Jul 4)",
-      "Reported Netherlands v Sweden Jun 20 — draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "East Downtown (EaDo) near Shell Energy Stadium — Jun 11–Jul 19, free, ~7,500, 7v7 pitch + 360° experience.",
-     "badge": "verified",
-     "points": [
-      "East Downtown (EaDo) near Shell Energy Stadium — Jun 11–Jul 19",
-      "free",
-      "~7,500",
-      "7v7 pitch + 360° experience"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "EaDo epicenter — Pitch 25, Velvet Oak (Arsenal/Barça), RBar (Man Utd), Texas T Tavern ('TeamNL House').",
-     "badge": "reported",
-     "points": [
-      "EaDo epicenter — Pitch 25",
-      "Velvet Oak (Arsenal/Barça)",
-      "RBar (Man Utd)",
-      "Texas T Tavern ('TeamNL House')"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "METRORail Red Line to Stadium Park/Astrodome (adjacent), ~21 min from downtown, $1.25.",
-     "badge": "verified",
-     "points": [
-      "METRORail Red Line to Stadium Park/Astrodome (adjacent)",
-      "~21 min from downtown",
-      "$1.25"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Climate-controlled (AC + retractable roof) — big comfort edge in June heat. FIFA clear-bag.",
-     "badge": "verified",
-     "points": [
-      "Climate-controlled (AC + retractable roof) — big comfort edge in June heat",
-      "FIFA clear-bag"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Houston",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/usa/houston"
-    },
-    {
-     "label": "RideMETRO – World Cup",
-     "url": "https://www.ridemetro.org/world-cup"
-    }
-   ]
-  },
-  "mercedes": {
-   "wcName": "Atlanta Stadium",
-   "location": "Atlanta · USA",
-   "capacity": {
-    "text": "75,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "8 matches (group + R16 Jul 7 + SEMIFINAL Jul 15). Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "8 matches (group + R16 Jul 7 + SEMIFINAL Jul 15)",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Centennial Olympic Park — Jun 11–Jul 19, free, pre-registration required.",
-     "badge": "verified",
-     "points": [
-      "Centennial Olympic Park — Jun 11–Jul 19",
-      "free",
-      "pre-registration required"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Brewhouse Cafe (new South Downtown loc near stadium), STATS Brewpub, Park Bar, Sports & Social.",
-     "badge": "verified",
-     "points": [
-      "Brewhouse Cafe (new South Downtown loc near stadium)",
-      "STATS Brewpub",
-      "Park Bar",
-      "Sports & Social"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "MARTA to SEC District Station (stadium doorstep), $2.50, trains ~every 5 min. Rideshare cannot drop at stadium.",
-     "badge": "verified",
-     "points": [
-      "MARTA to SEC District Station (stadium doorstep), $2.50, trains ~every 5 min",
-      "Rideshare cannot drop at stadium"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Fan-first concessions kept for WC ($2 hot dogs, $5 domestic beers). Clear-bag; arrive 2–3 hrs early.",
-     "badge": "verified",
-     "points": [
-      "Fan-first concessions kept for WC ($2 hot dogs, $5 domestic beers)",
-      "Clear-bag",
-      "arrive 2–3 hrs early"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Atlanta (8 matches)",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/atlanta-host-eight-matches-usa-stadium"
-    },
-    {
-     "label": "MBS guidelines",
-     "url": "https://www.mercedesbenzstadium.com/guidelines"
-    }
-   ]
-  },
-  "metlife": {
-   "wcName": "New York New Jersey Stadium",
-   "location": "East Rutherford, NJ · USA",
-   "capacity": {
-    "text": "82,500",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "8 matches (5 group · R32 Jun 30 · R16 Jul 5 · FINAL Jul 19, 3pm ET). Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "8 matches (5 group · R32 Jun 30 · R16 Jul 5 · FINAL Jul 19, 3pm ET)",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Liberty State Park, Jersey City — Jun 11–Jul 19, free, up to 45,000/day. Also Fan Zone Queens & Rockefeller Center.",
-     "badge": "reported",
-     "points": [
-      "Liberty State Park, Jersey City — Jun 11–Jul 19, free, up to 45,000/day",
-      "Also Fan Zone Queens & Rockefeller Center"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Smithfield Hall (Chelsea), Legends / The Football Factory (Midtown · 30+ clubs), The Long Acre (Times Sq).",
-     "badge": "reported",
-     "points": [
-      "Smithfield Hall (Chelsea)",
-      "Legends / The Football Factory (Midtown · 30+ clubs)",
-      "The Long Acre (Times Sq)"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "No general parking. NJ Transit via Secaucus Junction (matchday train, ticket holders, advance ~$150); shuttles from Port Authority.",
-     "badge": "verified",
-     "points": [
-      "No general parking",
-      "NJ Transit via Secaucus Junction (matchday train, ticket holders, advance ~$150)",
-      "shuttles from Port Authority"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Clear-bag; cashless; no outside food. Arrive 2+ hrs (3 hrs for the Final).",
-     "badge": "verified",
-     "points": [
-      "Clear-bag",
-      "cashless",
-      "no outside food",
-      "Arrive 2+ hrs (3 hrs for the Final)"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "NY/NJ FWC26 schedule",
-     "url": "https://nynjfwc26.com/schedule/"
-    },
-    {
-     "label": "Getting to the stadium",
-     "url": "https://nynjfwc26.com/getting-to-nynj-stadium/"
-    }
-   ]
-  },
-  "gillette": {
-   "wcName": "Boston Stadium",
-   "location": "Foxborough, MA · USA",
-   "capacity": {
-    "text": "65,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "7 matches (5 group · R32 Jun 29 · QF Jul 9). Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "7 matches (5 group · R32 Jun 29 · QF Jul 9)",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Boston City Hall Plaza. Dates conflict (Jun 12–27 vs 'tournament-long') — verify.",
-     "badge": "reported",
-     "points": [
-      "Boston City Hall Plaza",
-      "Dates conflict (Jun 12–27 vs 'tournament-long') — verify"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "The Banshee (Dorchester · 12+ clubs), Phoenix Landing (Cambridge), The Haven (near TD Garden).",
-     "badge": "reported",
-     "points": [
-      "The Banshee (Dorchester · 12+ clubs)",
-      "Phoenix Landing (Cambridge)",
-      "The Haven (near TD Garden)"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "MBTA 'Boston Stadium Train' express South Station↔Foxboro, roundtrip $80 advance via mTicket.",
-     "badge": "verified",
-     "points": [
-      "MBTA 'Boston Stadium Train' express South Station↔Foxboro",
-      "roundtrip $80 advance via mTicket"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Limited tailgating; strict fan rules. Parking ~5,000 spots, pre-paid ~$175. Clear-bag.",
-     "badge": "reported",
-     "points": [
-      "Limited tailgating",
-      "strict fan rules",
-      "Parking ~5,000 spots, pre-paid ~$175",
-      "Clear-bag"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "MBTA World Cup guide",
-     "url": "https://www.mbta.com/guides/world-cup-guide"
-    },
-    {
-     "label": "Boston FWC26",
-     "url": "https://bostonfwc26.com/the-stadium/"
-    }
-   ]
-  },
-  "linc": {
-   "wcName": "Philadelphia Stadium",
-   "location": "Philadelphia, PA · USA",
-   "capacity": {
-    "text": "69,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "6 matches (5 group · R16 Jul 4 — US 250th birthday). Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "6 matches (5 group · R16 Jul 4 — US 250th birthday)",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Lemon Hill, East Fairmount Park — the only US city running its Fan Fest all 39 days.",
-     "badge": "reported",
-     "points": [
-      "Lemon Hill",
-      "East Fairmount Park — the only US city running its Fan Fest all 39 days"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Fadó Irish Pub (Center City), Misconduct Tavern (Arsenal), Tír na nÓg (Chelsea/City), Cavanaugh's (Union).",
-     "badge": "reported",
-     "points": [
-      "Fadó Irish Pub (Center City)",
-      "Misconduct Tavern (Arsenal)",
-      "Tír na nÓg (Chelsea/City)",
-      "Cavanaugh's (Union)"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "SEPTA Broad Street Line to NRG Station (~5-min walk). Rides home after matches are FREE.",
-     "badge": "verified",
-     "points": [
-      "SEPTA Broad Street Line to NRG Station (~5-min walk)",
-      "Rides home after matches are FREE"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Clear-bag; cashless. Subway strongly recommended; arrive 90–120 min early.",
-     "badge": "verified",
-     "points": [
-      "Clear-bag",
-      "cashless",
-      "Subway strongly recommended",
-      "arrive 90–120 min early"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "Visit Philly – World Cup",
-     "url": "https://www.visitphilly.com/things-to-do/events/world-cup/"
-    },
-    {
-     "label": "SEPTA plan (Billy Penn)",
-     "url": "https://billypenn.com/2026/05/18/septa-service-plan-release-fifa-world-cup-games-philly-linc-stadium-lemon-hill-fan-fest/"
-    }
-   ]
-  },
-  "hardrock": {
-   "wcName": "Miami Stadium",
-   "location": "Miami Gardens, FL · USA",
-   "capacity": {
-    "text": "65,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "7 matches (4 group · R32 Jul 3 · QF Jul 11 · THIRD-PLACE Jul 18). Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "7 matches (4 group · R32 Jul 3 · QF Jul 11 · THIRD-PLACE Jul 18)",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Bayfront Park, downtown — Jun 13–Jul 5, up to 30,000/day. FIFA app registration required.",
-     "badge": "reported",
-     "points": [
-      "Bayfront Park, downtown — Jun 13–Jul 5, up to 30,000/day",
-      "FIFA app registration required"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "American Social (Brickell · Arsenal MASC), Grails Wynwood (75+ TVs), The Bar (Coral Gables · Gooners).",
-     "badge": "reported",
-     "points": [
-      "American Social (Brickell · Arsenal MASC)",
-      "Grails Wynwood (75+ TVs)",
-      "The Bar (Coral Gables · Gooners)"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "Brightline to Aventura + free Hard Rock Stadium Connect shuttle. Stadium parking reported sold out — use park-and-ride.",
-     "badge": "verified",
-     "points": [
-      "Brightline to Aventura + free Hard Rock Stadium Connect shuttle",
-      "Stadium parking reported sold out — use park-and-ride"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Clear-bag; cashless; FIFA app tied to Fan Fest entry. Arrive 60–90 min early.",
-     "badge": "reported",
-     "points": [
-      "Clear-bag",
-      "cashless",
-      "FIFA app tied to Fan Fest entry",
-      "Arrive 60–90 min early"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Miami",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/miami-stadium-host-seven-matches"
-    },
-    {
-     "label": "Brightline – Hard Rock",
-     "url": "https://www.hardrockstadium.com/faq-items/brightline/"
-    }
-   ]
-  },
-  "bmo": {
-   "wcName": "Toronto Stadium",
-   "location": "Toronto · Canada",
-   "capacity": {
-    "text": "45,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "6 matches (5 group · 1 R32). Hosts Canada's opening match Jun 12. Opponent draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "6 matches (5 group · 1 R32)",
-      "Hosts Canada's opening match Jun 12",
-      "Opponent draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Fort York & The Bentway — Jun 11–Jul 19, all 104 matches on screens, 30+ vendors. Free ward watch parties citywide.",
-     "badge": "verified",
-     "points": [
-      "Fort York & The Bentway — Jun 11–Jul 19, all 104 matches on screens, 30+ vendors",
-      "Free ward watch parties citywide"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Little Italy (Café Diplomatico), Kensington Market, Liberty Village near venue (The Brazen Head), Greektown/Little Portugal.",
-     "badge": "verified",
-     "points": [
-      "Little Italy (Café Diplomatico)",
-      "Kensington Market",
-      "Liberty Village near venue (The Brazen Head)",
-      "Greektown/Little Portugal"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "GO Transit to Exhibition GO Station (2–5 min walk). TTC 509/511 streetcars. Parking very limited.",
-     "badge": "verified",
-     "points": [
-      "GO Transit to Exhibition GO Station (2–5 min walk)",
-      "TTC 509/511 streetcars",
-      "Parking very limited"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Open-air lakeside; arrive early for temp-seat layout. Employers planning WFH for traffic.",
-     "badge": "reported",
-     "points": [
-      "Open-air lakeside",
-      "arrive early for temp-seat layout",
-      "Employers planning WFH for traffic"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Toronto",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/vancouver-host-seven-matches-canada-stadium-bc-place"
-    },
-    {
-     "label": "Toronto Fan Festival",
-     "url": "https://torontofwc26.ca/FIFAFanFestival"
-    }
-   ]
-  },
-  "azteca": {
-   "wcName": "Mexico City Stadium (sponsor: Estadio Banorte)",
-   "location": "Mexico City · Mexico",
-   "capacity": {
-    "text": "83,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "5 matches (3 group · R32 Jun 30 · R16 Jul 5). HOSTS THE TOURNAMENT OPENER Jun 11 (Mexico). Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "5 matches (3 group · R32 Jun 30 · R16 Jul 5)",
-      "HOSTS THE TOURNAMENT OPENER Jun 11 (Mexico)",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Zócalo (main square) — free, 80,000+ cap, Jun 11–Jul 19, all matches on giant screens.",
-     "badge": "verified",
-     "points": [
-      "Zócalo (main square) — free",
-      "80,000+ cap",
-      "Jun 11–Jul 19",
-      "all matches on giant screens"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Roma Norte / Condesa (The Dog House Pub · European fans), Coyoacán (Sport and Chips), Parque México watch parties.",
-     "badge": "reported",
-     "points": [
-      "Roma Norte / Condesa (The Dog House Pub · European fans)",
-      "Coyoacán (Sport and Chips)",
-      "Parque México watch parties"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "Metro Line 2 → Tasqueña, transfer to Tren Ligero → Estadio Azteca station (drops at stadium).",
-     "badge": "verified",
-     "points": [
-      "Metro Line 2 → Tasqueña",
-      "transfer to Tren Ligero → Estadio Azteca station (drops at stadium)"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "ALTITUDE ~2,200 m / 7,200 ft — highest venue of the tournament. Hydrate, acclimatize 24–48h. Arrive ~3h early.",
-     "badge": "verified",
-     "points": [
-      "ALTITUDE ~2,200 m / 7,200 ft — highest venue of the tournament",
-      "Hydrate, acclimatize 24–48h",
-      "Arrive ~3h early"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Azteca opener",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/estadio-azteca-mexico-city-host-opening-match-world-cup-2026"
-    },
-    {
-     "label": "FIFA Fan Fest – CDMX",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/fifa-fan-festival/mexico-city"
-    }
-   ]
-  },
-  "akron": {
-   "wcName": "Estadio Guadalajara",
-   "location": "Guadalajara / Zapopan · Mexico",
-   "capacity": {
-    "text": "48,000",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "4 matches, all group stage (Jun 11, 18, 23, 26). Includes a Mexico group match. Opponents draw-dependent.",
-     "badge": "verified",
-     "points": [
-      "4 matches, all group stage (Jun 11, 18, 23, 26)",
-      "Includes a Mexico group match",
-      "Opponents draw-dependent"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Plaza Liberación (historic centre, between the Cathedral & Teatro Degollado) — full tournament.",
-     "badge": "verified",
-     "points": [
-      "Plaza Liberación (historic centre, between the Cathedral & Teatro Degollado) — full tournament"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Avenida Chapultepec (nightlife spine, street party on match days) — Cervecería Chapultepec, La Insurgente.",
-     "badge": "reported",
-     "points": [
-      "Avenida Chapultepec (nightlife spine, street party on match days) — Cervecería Chapultepec",
-      "La Insurgente"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "SITEUR Mi Tren Line 3 + Autotrén pods to the gates; official 'Ride al Estadio' shuttles from 10 metro points.",
-     "badge": "reported",
-     "points": [
-      "SITEUR Mi Tren Line 3 + Autotrén pods to the gates",
-      "official 'Ride al Estadio' shuttles from 10 metro points"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "Mild altitude ~1,560 m. June heat on the last-mile walk — Autotrén/Andador help.",
-     "badge": "reported",
-     "points": [
-      "Mild altitude ~1,560 m",
-      "June heat on the last-mile walk — Autotrén/Andador help"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Guadalajara (ES)",
-     "url": "https://www.fifa.com/es/tournaments/mens/worldcup/canadamexicousa2026/articles/guadalajara-cuatro-partidos-estadio-copa-mundial-2026"
-    },
-    {
-     "label": "Getting to the stadium",
-     "url": "https://gotoguadalajara.com/how-to-get-to-guadalajara-stadium-for-the-world-cup-2026/"
-    }
-   ]
-  },
-  "bbva": {
-   "wcName": "Estadio Monterrey",
-   "location": "Monterrey / Guadalupe · Mexico",
-   "capacity": {
-    "text": "53,500",
-    "badge": "verified"
-   },
-   "fields": [
-    {
-     "label": "Matches",
-     "text": "4 matches (3 group · 1 R32), ~Jun 14–29. Opponents not confirmed vs FIFA.",
-     "badge": "verified",
-     "points": [
-      "4 matches (3 group · 1 R32), ~Jun 14–29",
-      "Opponents not confirmed vs FIFA"
-     ]
-    },
-    {
-     "label": "FIFA Fan Festival",
-     "text": "Parque Fundidora (142-ha former steelworks) — free, Jun 11–Jul 19, all matches. Metro Line 2 (Parque Fundidora).",
-     "badge": "verified",
-     "points": [
-      "Parque Fundidora (142-ha former steelworks) — free, Jun 11–Jul 19, all matches",
-      "Metro Line 2 (Parque Fundidora)"
-     ]
-    },
-    {
-     "label": "Where fans gather",
-     "text": "Barrio Antiguo (main hub, walkable from central hotels) — Mercado Barrio Antiguo, Bola Ocho.",
-     "badge": "reported",
-     "points": [
-      "Barrio Antiguo (main hub, walkable from central hotels) — Mercado Barrio Antiguo",
-      "Bola Ocho"
-     ]
-    },
-    {
-     "label": "Getting there",
-     "text": "No direct stop. Metrorrey Line 1 → Exposición, then 'Fan Walk' through Parque La Pastora to the gates.",
-     "badge": "reported",
-     "points": [
-      "No direct stop",
-      "Metrorrey Line 1 → Exposición, then 'Fan Walk' through Parque La Pastora to the gates"
-     ]
-    },
-    {
-     "label": "Matchday tips",
-     "text": "'El Gigante de Acero' with Cerro de la Silla backdrop. Low altitude (~540 m). Intense June heat — hydrate.",
-     "badge": "reported",
-     "points": [
-      "'El Gigante de Acero' with Cerro de la Silla backdrop",
-      "Low altitude (~540 m)",
-      "Intense June heat — hydrate"
-     ]
-    }
-   ],
-   "sources": [
-    {
-     "label": "FIFA – Monterrey",
-     "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/monterrey-host-four-matches-stadium-estadio"
-    },
-    {
-     "label": "FIFA Fan Fest – Monterrey (ES)",
-     "url": "https://www.fifa.com/es/tournaments/mens/worldcup/canadamexicousa2026/fifa-fan-festival/monterrey"
-    }
-   ]
-  }
- },
- "marches": [
-  {
-   "flag": "🇳🇱",
-   "title": "Netherlands — Oranje Fanwalk",
-   "badge": "verified",
-   "city": "Arlington / Dallas",
-   "when": "Sun Jun 14 · gather 10:00am, depart 11:15am",
-   "route": "Road to Six Flags St (by Choctaw Stadium) → AT&T Stadium",
-   "note": "Led by the double-decker Oranjebus + DJ. Billed as the tournament's first fanwalk. Match: Netherlands v Japan.",
-   "sources": [],
-   "venue": "att"
-  },
-  {
-   "flag": "🇳🇱",
-   "title": "Netherlands — Oranje Fanwalk",
-   "badge": "verified",
-   "city": "Houston",
-   "when": "Sat Jun 20 · entertainment 8:00am, depart 8:45am",
-   "route": "Rice Stadium (Rice University) → ~2.5 mi → NRG Stadium",
-   "note": "KNVB-organized, led by the Oranjebus, ~10,000 expected, coordinated with Houston PD. Match: Netherlands v Sweden.",
-   "sources": [],
-   "venue": "nrg"
-  },
-  {
-   "flag": "🇳🇱",
-   "title": "Netherlands — Oranje Fanwalk",
-   "badge": "verified",
-   "city": "Kansas City",
-   "when": "Thu Jun 25 · gather 11:00am, depart 12:15pm",
-   "route": "KC Live! (Power & Light District) → downtown → FIFA Fan Festival (WWI Museum & Memorial)",
-   "note": "Free to attend. Match: Netherlands v Tunisia (6pm).",
-   "sources": [],
-   "venue": "arrowhead"
-  },
-  {
-   "flag": "🇦🇷",
-   "title": "Argentina — Banderazo",
-   "badge": "verified",
-   "city": "Kansas City",
-   "when": "Mon Jun 15 · 6:00pm",
-   "route": "Mill Creek Park (mass rally — not a stadium march)",
-   "note": "Flag-and-chant gathering the day before Argentina v Algeria.",
-   "sources": [],
-   "venue": "arrowhead"
-  },
-  {
-   "flag": "🇪🇨",
-   "title": "Ecuador — Banderazo",
-   "badge": "verified",
-   "city": "Kansas City",
-   "when": "Sat Jun 20 · 6:15pm",
-   "route": "Liberty Memorial (drums, flags, chants)",
-   "note": "Before Ecuador v Curacao.",
-   "sources": [],
-   "venue": "arrowhead"
-  },
-  {
-   "flag": "🇲🇽",
-   "title": "Mexico City — 7 official pedestrian corridors",
-   "badge": "verified",
-   "city": "Estadio Azteca / Banorte",
-   "when": "Every match day",
-   "route": "7 signed 'rutas/corredores peatonales' (Santa Úrsula, Parque Cantera, Periférico routes, Paseo Acoxpa, El Vergel light rail…), 10–30 min walks with maps + QR codes",
-   "note": "City-government 'last mile' security corridors — not a supporter march, but the official way fans walk in.",
-   "sources": [],
-   "venue": "azteca"
-  },
-  {
-   "flag": "🏴",
-   "title": "Scotland — Tartan Army",
-   "badge": "verified",
-   "city": "Providence, RI / Boston",
-   "when": "Pipe-band parade Thu Jun 18",
-   "route": "Providence, RI — parade led by the Rhode Island Highlanders pipe band",
-   "note": "Organized marches need a local permit (under 90 min, 150+ people, no pyro). Gillette is 20+ mi from Boston, so no stadium march — fans gather at Boston Common / City Hall Plaza. Scotland: Haiti & Morocco at Gillette, Brazil at Miami.",
-   "sources": [],
-   "venue": "gillette"
-  },
-  {
-   "flag": "🏴",
-   "title": "England — no walking to the stadium",
-   "badge": "verified",
-   "city": "MetLife, NY/NJ",
-   "when": "Sat Jun 27 (England v Panama)",
-   "route": "MetLife reachable only by train / bus / car",
-   "note": "New Jersey law bans pedestrians on the highways around the stadium. The FA's Supporters Travel Club (ESTC) posts official city meetup points 1–2 weeks before each match, not earlier.",
-   "sources": [],
-   "venue": "metlife"
-  },
-  {
-   "flag": "🇸🇪",
-   "title": "Sweden / Monterrey — march UNVERIFIED",
-   "badge": "unverified",
-   "city": "Estadio Monterrey",
-   "when": "Sun Jun 14 (Sweden v Tunisia)",
-   "route": "An ~8 km official downtown → stadium pedestrian corridor exists (anchored at Parque Fundidora)",
-   "note": "A Sweden-organized 'fan walk' and the '3,000+' figure could NOT be independently confirmed — flagged by the second-opinion check. The pedestrian corridor is real; the supporter-march framing is not.",
-   "sources": [],
-   "venue": "bbva"
-  }
- ]
+  ]
 }

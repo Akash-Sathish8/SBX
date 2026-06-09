@@ -128,7 +128,10 @@
     "why": [
      "James Beard chefs cooking inside the stadium",
      "The marquee bite, on every level"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "LA Street Dog",
@@ -137,7 +140,10 @@
     "why": [
      "Iconic LA bacon-wrapped street dog",
      "Caramelized onions and jalapeno aioli"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Hawaiian Plate Lunch",
@@ -146,7 +152,10 @@
     "why": [
      "Soy-glaze beef bowl hits the spot",
      "Finish with coconut haupia tart"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    },
    {
     "name": "Loaded BBQ Fries",
@@ -155,92 +164,133 @@
     "why": [
      "Loaded fries, the reliable stadium staple",
      "Grilled street corn right nearby"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
    {
     "name": "FIFA Fan Festival Los Angeles",
-    "where": "LA Memorial Coliseum, Exposition Park; ~10 mi NE, Metro E Line to Expo Park/USC",
+    "where": "LA Memorial Coliseum, Exposition Park; ~9.5 mi NE, Metro E Line to Expo Park/USC",
     "why": [
      "Free official fan zone with giant screens",
      "Metro E Line straight to the gate"
     ],
-    "fifa": true
-   },
-   {
-    "name": "Cork & Batter",
-    "where": "Hollywood Park, 2-min walk",
-    "note": "Three-story bourbon-and-sliders spot, rooftop skyline views",
-    "why": [
-     "Two-minute walk to the gates",
-     "Rooftop skyline views, bourbon and sliders"
-    ]
+    "fifa": true,
+    "rating": null,
+    "dist": "9.5 mi",
+    "distMi": 9.5
    },
    {
     "name": "Tom's Watch Bar",
-    "where": "3900 W Century, steps away",
-    "note": "Wall-to-wall screens, 360-degree all-sports hype hub",
+    "where": "3900 W Century Blvd, Inglewood",
+    "note": "Wall-to-wall screens, 360-degree all-sports hype hub (opened 2025 in the former Cork & Batter space)",
     "why": [
      "Wall-to-wall screens, 360-degree match views",
      "Steps from the stadium gates"
-    ]
+    ],
+    "rating": 4.0,
+    "dist": "0.4 mi",
+    "distMi": 0.4
    },
    {
     "name": "Raise Lounge",
-    "where": "Hollywood Park Casino, blocks away",
+    "where": "Hollywood Park Casino, 3883 W Century Blvd, Inglewood",
     "note": "Casino bar, pregame screens, LA's diehard fans",
     "why": [
      "Where LA's diehard fans gather pregame",
      "Casino-bar buzz with match screens"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "0.4 mi",
+    "distMi": 0.4
    },
    {
     "name": "Three Weavers Brewing",
-    "where": "Manchester Blvd, ~1.5 mi",
+    "where": "1031 W Manchester Blvd, Inglewood",
     "note": "Woman-led taproom, picnic tables, award-winning Kolsch",
     "why": [
      "Award-winning Kolsch at a woman-led taproom",
      "Picnic tables for a chill pregame"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "1.3 mi",
+    "distMi": 1.3
    }
   ],
   "post": [
    {
-    "name": "Cork & Batter Rooftop",
-    "where": "Hollywood Park, 2-min walk",
-    "note": "Open-air rooftop, late crowds, full bourbon list",
+    "name": "Tom's Watch Bar Rooftop",
+    "where": "3900 W Century Blvd, Inglewood",
+    "note": "Open-air rooftop bar and lounge that runs late (former Cork & Batter rooftop space)",
     "why": [
      "Open-air rooftop that runs late",
-     "Full bourbon list, two minutes out"
-    ]
+     "Two minutes from the gates"
+    ],
+    "rating": 4.0,
+    "dist": "0.4 mi",
+    "distMi": 0.4
    },
    {
     "name": "The Nile Bar",
-    "where": "Inglewood, short drive",
+    "where": "207 S Market St, Inglewood",
     "note": "Local-legend dive with DJs, karaoke, personality",
     "why": [
      "Local-legend Inglewood dive with real personality",
      "DJs and karaoke keep it loud"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "1.2 mi",
+    "distMi": 1.2
    },
    {
     "name": "Cosm Los Angeles",
-    "where": "Hollywood Park, adjacent",
-    "note": "Immersive dome venue, replays on giant screen",
+    "where": "1252 District Dr, Hollywood Park, Inglewood",
+    "note": "Immersive 87-ft LED dome venue, replays on giant screen",
     "why": [
      "Immersive dome relives the match",
      "Adjacent to the stadium, no drive"
-    ]
+    ],
+    "rating": 3.8,
+    "dist": "0.3 mi",
+    "distMi": 0.3
    },
    {
     "name": "Three Weavers Brewing",
-    "where": "Manchester Blvd, ~1.5 mi",
+    "where": "1031 W Manchester Blvd, Inglewood",
     "note": "Chill taproom to decompress, limited-release taps",
     "why": [
      "Chill taproom to decompress post-match",
      "Limited-release taps worth the detour"
-    ]
+    ],
+    "rating": 4.4,
+    "dist": "1.3 mi",
+    "distMi": 1.3
+   }
+  ],
+  "merch": [
+   {
+    "name": "The Equipment Room",
+    "where": "Level 5, south side, adjacent to American Airlines Plaza, inside SoFi Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store - The Bloc",
+    "where": "The Bloc, 700 S Flower St, Downtown Los Angeles",
+    "rating": null,
+    "dist": "11 mi",
+    "distMi": 11
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store - Del Amo Fashion Center",
+    "where": "Del Amo Fashion Center, 3525 W Carson St, Torrance",
+    "rating": null,
+    "dist": "9 mi",
+    "distMi": 9
    }
   ]
  },

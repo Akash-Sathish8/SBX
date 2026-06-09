@@ -108,12 +108,15 @@
   "food": [
    {
     "name": "Birria El Michoacaníssimo",
-    "where": "Santa Úrsula, walk from the gates",
+    "where": "San Valentín 866, Pedregal de Santa Úrsula",
     "note": "Crowded weekend birria institution; consomé and quesabirria",
     "why": [
      "Quesabirria and consomé worth the line",
      "Local since 1988, steps from gates"
-    ]
+    ],
+    "rating": 4.5,
+    "dist": "0.7 mi",
+    "distMi": 0.7
    },
    {
     "name": "Carnitas Gudiño",
@@ -122,16 +125,22 @@
     "why": [
      "Slow-cooked costilla tacos are the move",
      "34-year neighborhood institution"
-    ]
+    ],
+    "rating": null,
+    "dist": "0.6 mi",
+    "distMi": 0.6
    },
    {
     "name": "Las Muñecas",
-    "where": "10 min from stadium, Santa Úrsula",
+    "where": "Calle Toltecas, Pedregal de Santo Domingo, Coyoacán",
     "note": "24-hour suadero tacos, red or green salsa",
     "why": [
      "Open 24 hours, perfect post-match",
      "Cheap suadero tacos, pick your salsa"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "1.5 mi",
+    "distMi": 1.5
    },
    {
     "name": "Santa Úrsula tianguis (basket-bike tacos)",
@@ -140,92 +149,138 @@
     "why": [
      "Cheaper and better than concourse food",
      "Right at Gate 3, no walk"
-    ]
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ],
   "pre": [
    {
     "name": "FIFA Fan Festival CDMX",
-    "where": "Zócalo (Plaza de la Constitución), Historic Center; Metro Zócalo (Line 2) ~45 min from stadium",
+    "where": "Zócalo (Plaza de la Constitución), Historic Center; Metro Zócalo (Line 2)",
     "why": [
      "Free entry, official FIFA fan zone",
      "30-meter giant screen, live music"
     ],
-    "fifa": true
+    "fifa": true,
+    "rating": null,
+    "dist": "9 mi",
+    "distMi": 9
    },
    {
-    "name": "Cantina La Guadalupana",
-    "where": "Coyoacán center, ~15 min north",
-    "note": "1932 fan cantina, free botanas, Pumas crowd",
+    "name": "El Hijo del Cuervo",
+    "where": "Jardín Centenario 17, Villa Coyoacán (Coyoacán center)",
+    "note": "Iconic Coyoacán bar on the plaza, barrel beer, live music",
     "why": [
-     "1932 cantina with free botanas",
-     "Pumas faithful set the mood"
-    ]
+     "Bohemian Coyoacán institution on Jardín Centenario",
+     "Cerveza de barril and live music before kickoff"
+    ],
+    "rating": 4.3,
+    "dist": "4 mi",
+    "distMi": 4
    },
    {
     "name": "Sport and Chips Coyoacán",
-    "where": "Coyoacán, ~15 min from stadium",
+    "where": "Av. Miguel Ángel de Quevedo, San Andrés 1144, Coyoacán",
     "note": "Big-screen sports bar, beers flowing, rowdy",
     "why": [
      "Big screens and a rowdy crowd",
      "Beers flowing, classic sports-bar energy"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "3 mi",
+    "distMi": 3
    },
    {
     "name": "La Coyoacana",
-    "where": "Coyoacán center, ~15 min north",
+    "where": "Higuera 14, La Concepción (Coyoacán center)",
     "note": "Friendly cantina, roving musicians, weekend buzz",
     "why": [
      "Roving musicians and weekend buzz",
      "Friendly cantina close to stadium"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "4 mi",
+    "distMi": 4
    },
    {
     "name": "Salón Ríos",
-    "where": "Condesa, fan-gathering district",
+    "where": "Río Nilo 71, Colonia Cuauhtémoc, fan-gathering district",
     "note": "Screens everywhere, El Tri faithful, arrive early",
     "why": [
      "Screens everywhere, packed El Tri crowd",
      "Heart of the Condesa fan district"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "8 mi",
+    "distMi": 8
    }
   ],
   "post": [
    {
     "name": "Salón Covadonga",
-    "where": "Vicente Suárez 42, Condesa",
+    "where": "Puebla 121, Roma Norte",
     "note": "1940 Asturian cantina, huge room, late nights",
     "why": [
      "Cavernous 1940 Asturian cantina",
      "Domino slap and late-night energy"
-    ]
+    ],
+    "rating": 4.3,
+    "dist": "7 mi",
+    "distMi": 7
    },
    {
     "name": "Cantina El Centenario",
-    "where": "Condesa, ~30 min from stadium",
+    "where": "Av. Vicente Suárez 42, Colonia Condesa",
     "note": "1948 favorite, free botanas, weekend live music",
     "why": [
      "1948 classic with free botanas",
      "Weekend live music keeps it buzzing"
-    ]
+    ],
+    "rating": 4.2,
+    "dist": "7 mi",
+    "distMi": 7
    },
    {
     "name": "La Bipolar",
-    "where": "Coyoacán, ~15 min north",
+    "where": "Malintzin 155, Del Carmen, Coyoacán",
     "note": "DJs, live bands, karaoke, no cover",
     "why": [
      "DJs, live bands, karaoke, no cover",
      "Close-in Coyoacán party spot"
-    ]
+    ],
+    "rating": 4.2,
+    "dist": "3.5 mi",
+    "distMi": 3.5
    },
    {
     "name": "Cervecería de Barrio",
-    "where": "Condesa/Roma, fan district",
+    "where": "Av. Vicente Suárez 38, Colonia Condesa",
     "note": "Beers and mariscos, packed when Mexico plays",
     "why": [
      "Cold beers and big mariscos plates",
      "Packed whenever Mexico plays"
-    ]
+    ],
+    "rating": 4.1,
+    "dist": "7 mi",
+    "distMi": 7
+   }
+  ],
+  "merch": [
+   {
+    "name": "AmeShop (Tienda Oficial Club América)",
+    "where": "Inside Estadio Azteca / Banorte, Santa Úrsula Coapa",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Nike Store Estadio Azteca",
+    "where": "Calzada de Tlalpan 3465, Estadio Azteca, Santa Úrsula Coapa",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
    }
   ]
  },
