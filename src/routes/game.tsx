@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
+import { PageCssGuard } from '../components/PageCssGuard'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
 import css from '../pages/game.css?url'
 
 export const Route = createFileRoute('/game')({
   validateSearch: (s: Record<string, unknown>) => ({ id: typeof s.id === 'string' ? s.id : '' }),
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css }],
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'game build' }],
     meta: [{ title: 'Snapback — Game' }],
   }),
   component: GamePage,
@@ -69,6 +70,7 @@ function GamePage() {
 
   return (
     <>
+      <PageCssGuard id="game" />
       <SiteNav active="games" />
       <main id="app">{renderBody()}</main>
       <footer>
@@ -103,9 +105,9 @@ function GameContent({ g, intel, marches, detail }: { g: any; intel: any; marche
             <div className="gmatch"><span className="gname tbd">To be confirmed</span></div>
           ) : (
             <div className="gmatch">
-              <div className="gteam"><span className="gname">{teamName(g.home)}</span></div>
+              <div className="gteam home"><span className="gflag">{teamFlag(g.home)}</span><span className="gname">{teamName(g.home)}</span></div>
               <span className="gvs">vs</span>
-              <div className="gteam"><span className="gname">{teamName(g.away)}</span></div>
+              <div className="gteam away"><span className="gflag">{teamFlag(g.away)}</span><span className="gname">{teamName(g.away)}</span></div>
             </div>
           )}
           <div className="gmeta">
@@ -184,8 +186,12 @@ function GameContent({ g, intel, marches, detail }: { g: any; intel: any; marche
               <div key={i} className={'march-card' + (m.badge === 'unverified' ? ' u' : '')}>
                 <div className="mc-h"><span className="mc-flag">{m.flag}</span>{m.title} <Badge k={m.badge} /></div>
                 {m.when ? <div className="mc-when">{m.when}</div> : null}
-                {m.route ? <div className="mc-route">{m.route}</div> : null}
-                {m.note ? <div className="mc-note">{m.note}</div> : null}
+                {m.points && m.points.length
+                  ? <ul className="fi-points mc-points">{m.points.map((p: string, j: number) => <li key={j}>{cap(p)}</li>)}</ul>
+                  : <>
+                      {m.route ? <div className="mc-route">{m.route}</div> : null}
+                      {m.note ? <div className="mc-note">{m.note}</div> : null}
+                    </>}
                 <Sources list={m.sources} />
               </div>
             ))}
@@ -204,8 +210,8 @@ function GameContent({ g, intel, marches, detail }: { g: any; intel: any; marche
       ) : null}
 
       {/* CTA */}
-      <section className="block"><div className="container">
-        <Link to="/venue" search={{ id: g.venue }} className="guidecta">Plan the full matchday at {g.venueName} →</Link>
+      <section className="block endband"><div className="container">
+        <Link to="/venue" search={{ id: g.venue }} className="guidecta lg">Plan the full matchday at {g.venueName} →</Link>
       </div></section>
     </>
   )

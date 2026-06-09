@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
+import { PageCssGuard } from '../components/PageCssGuard'
 import { displayFixture } from '../lib/teams'
+import { byDistance, isInside } from '../lib/dist'
 import css from '../pages/venue.css?url'
 
 export const Route = createFileRoute('/venue')({
   validateSearch: (s: Record<string, unknown>) => ({ id: typeof s.id === 'string' ? s.id : '' }),
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css }],
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'venue' }],
     meta: [{ title: 'Snapback — Venue' }],
   }),
   component: VenuePage,
@@ -33,6 +35,7 @@ function VenuePage() {
 
   return (
     <>
+      <PageCssGuard id="venue" />
       <SiteNav active="venues" />
       <main id="app">{renderBody()}</main>
       <footer>
@@ -290,16 +293,23 @@ function TipsDropdown({ tips }: { tips?: string[] }) {
     </details>
   )
 }
-function AgendaCol({ title, items }: { title: string; items?: any[] }) {
+function AgendaCol({ title, items, hscroll }: { title: string; items?: any[]; hscroll?: boolean }) {
   if (!items || !items.length) return null
+  const sorted = byDistance(items)
   return (
-    <div className="agcol">
+    <div className={'agcol' + (hscroll ? ' agcol-hscroll' : '')}>
       <div className="agtitle">{title}</div>
-      <div className="aglist">
-        {items.map((s: any, i: number) => (
+      <div className={'aglist' + (hscroll ? ' aglist-hscroll' : '')}>
+        {sorted.map((s: any, i: number) => (
           <div key={i} className={'agspot' + (s.fifa ? ' fifa' : '')}>
             {s.fifa ? <span className="agtag">Official FIFA</span> : null}
             <div className="agname">{s.name}</div>
+            {s.rating || s.dist ? (
+              <div className="agmeta">
+                {s.rating ? <span className="agrating">★ {s.rating}</span> : null}
+                {s.dist ? <span className="agdist">📍 {s.dist}</span> : null}
+              </div>
+            ) : null}
             {s.where ? <div className="agwhere">{s.where}</div> : null}
             {s.why && s.why.length ? (
               <ul className="agwhy">{s.why.map((w: string, j: number) => <li key={j}>{cap(w)}</li>)}</ul>
@@ -381,11 +391,14 @@ function VenueContent({ v }: { v: any }) {
           <div className="eyebrow">Your matchday</div>
           <h2 className="shead">Around the ground</h2><div className="ssub">Pre-game · eat inside · post-game</div>
           {v.around ? (
-            <div className="agenda">
-              <AgendaCol title="Before the match" items={v.around.pre} />
-              <AgendaCol title="Inside the stadium" items={v.around.food} />
-              <AgendaCol title="After the whistle" items={v.around.post} />
-            </div>
+            <>
+              <div className="agenda">
+                <AgendaCol title="Before the match" items={[...(v.around.pre || []), ...((v.around.food || []).filter((f: any) => !isInside(f)))]} />
+                <AgendaCol title="Inside the stadium" items={(v.around.food || []).filter((f: any) => isInside(f))} />
+                <AgendaCol title="Merch & shops" items={v.around.merch} />
+              </div>
+              <AgendaCol title="After the whistle" items={v.around.post} hscroll />
+            </>
           ) : (
             v.food && v.food.length ? <ul className="ul">{v.food.map((f: string, i: number) => <li key={i}>{f}</li>)}</ul> : null
           )}
