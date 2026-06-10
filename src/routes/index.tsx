@@ -85,7 +85,7 @@ function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
 }
 
 // Matchday agenda mockups, dealt like a hand of playing cards. Each card carries a
-// playing-card rank (A/K/Q/J/10 + ball suit); every card opens the agenda builder.
+// playing-card rank (A/K/Q/J/10 + ball suit); every card opens the match-guide builder.
 type AgendaRow = [string, string, string] // [glyph, section label, sample plan]
 type AgendaMock = { game: string; rank: string; match: string; venue: string; when: string; rows: AgendaRow[] }
 const AGENDAS: AgendaMock[] = [
@@ -128,7 +128,7 @@ const AGENDAS: AgendaMock[] = [
 
 function AgendaCard({ a }: { a: AgendaMock }) {
   return (
-    <Link to="/agenda" search={{ game: '' }} className="acard">
+    <Link to="/guide" className="acard">
       <span className="acorner tl" aria-hidden="true"><b>{a.rank}</b><i>⚽</i></span>
       <span className="acorner br" aria-hidden="true"><b>{a.rank}</b><i>⚽</i></span>
       <span className="acard-hd">
@@ -246,7 +246,7 @@ function Home() {
             {AGENDAS.map((a) => <AgendaCard key={a.game} a={a} />)}
           </div>
           <div className="agenda-cta">
-            <Link to="/agenda" search={{ game: '' }} className="btn btn-brand btn-lg">Build your agenda</Link>
+            <Link to="/guide" className="btn btn-brand btn-lg">Build your agenda</Link>
           </div>
         </div>
       </section>
@@ -258,7 +258,6 @@ function Home() {
             <a href="#experiences">Experiences</a>
             <Link to="/guide">Guide</Link>
           </div>
-          <div className="fine">Snapback Experiences — arcade concept build. Tetris design system, reskinned to the Snapback color theme (yellow #F7DF02 / black #111111 / white).</div>
         </div>
       </footer>
     </>
