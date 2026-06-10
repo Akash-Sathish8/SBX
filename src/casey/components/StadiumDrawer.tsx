@@ -18,6 +18,8 @@ interface Props {
   onClose: () => void;
   visibility?: { showLodging: boolean; showTransport: boolean };
   underdogReferral?: string;
+  /** When set, auto-open that modal for the highlighted match (feed deep-link). */
+  initialModal?: 'bets' | 'agenda' | null;
 }
 
 function countryAccent(code: string): string {
@@ -66,6 +68,7 @@ export default function StadiumDrawer({
   onClose,
   visibility = { showLodging: false, showTransport: false },
   underdogReferral = '',
+  initialModal = null,
 }: Props) {
   const [openDetailsFor, setOpenDetailsFor] = useState<number | null>(null);
   const [openAgendaFor, setOpenAgendaFor] = useState<number | null>(null);
@@ -129,9 +132,18 @@ export default function StadiumDrawer({
         // from the pagination buttons.
         el.scrollTo({ left: idx * el.clientWidth, behavior: 'auto' });
       }
+      // Feed deep-link: open the requested modal for the highlighted match
+      // (the gated modals key off currentMatch, which is now this match).
+      if (highlightMatchNumber && initialModal === 'bets') {
+        setOpenBetsFor(highlightMatchNumber);
+        setOpenAgendaFor(null);
+      } else if (highlightMatchNumber && initialModal === 'agenda') {
+        setOpenAgendaFor(highlightMatchNumber);
+        setOpenBetsFor(null);
+      }
     }, 320); // wait for the drawer's slide-in animation to complete
     return () => clearTimeout(t);
-  }, [highlightMatchNumber, matches]);
+  }, [highlightMatchNumber, matches, initialModal]);
 
   // Sync currentIndex with scroll position as the user swipes.
   function handleCarouselScroll() {

@@ -1,10 +1,11 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { formatCountdown } from '@/lib/stats';
 import Ticker from './Ticker';
 import HeroPanel from './HeroPanel';
 import CountUp from './CountUp';
 import { useFollows } from '@/lib/follows';
+import { buildFeed, countLiveAndToday } from '@/lib/feed';
 import type { CaseyLocation, ItineraryMatch, TripStats } from '@/lib/types';
 
 interface Props {
@@ -95,30 +96,14 @@ export default function StatsBar({
   const staleMinutes = Math.floor(staleAge / 60_000);
   const [collapsed, setCollapsed] = useState(false);
   const { count: followingCount } = useFollows();
-  const [todayCount, setTodayCount] = useState<number | null>(null);
 
-  // Fetches the same /api/today endpoint the LIVE TODAY tab uses, but
-  // only cares about the item count for the pill label. Cheap: edge
-  // cached at the route. Refreshes every 2 min so the count tracks
-  // live results as they finalize.
-  useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      try {
-        const res = await fetch('/api/today', { cache: 'no-store' });
-        const data = await res.json();
-        if (!cancelled && data?.ok) setTodayCount((data.items ?? []).length);
-      } catch {
-        // ignore
-      }
-    };
-    void load();
-    const id = setInterval(load, 2 * 60 * 1000);
-    return () => {
-      cancelled = true;
-      clearInterval(id);
-    };
-  }, []);
+  // The TODAY pill counts what the Today feed considers live-or-today, built
+  // from the same itinerary the modal uses so the badge and modal never disagree.
+  // lastUpdateAt advances on each live poll, refreshing the count as games flip.
+  const todayCount = useMemo(
+    () => countLiveAndToday(buildFeed(itinerary, lastUpdateAt)),
+    [itinerary, lastUpdateAt],
+  );
 
   useEffect(() => {
     try {

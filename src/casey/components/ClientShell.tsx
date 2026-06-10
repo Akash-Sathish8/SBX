@@ -11,6 +11,8 @@ import LiveBanner from './LiveBanner';
 import TimeTravelPanel from './TimeTravelPanel';
 import WhereIsCaseyBadge from './WhereIsCaseyBadge';
 import FollowingModal from './FollowingModal';
+import TodayModal from './TodayModal';
+import type { FeedEventType } from '@/lib/feed';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
 import type {
@@ -73,6 +75,9 @@ export default function ClientShell({
     'schedule',
   );
   const [followingOpen, setFollowingOpen] = useState(false);
+  const [todayOpen, setTodayOpen] = useState(false);
+  // Feed deep-link: which modal StadiumDrawer should auto-open on the next openMatch.
+  const [pendingModal, setPendingModal] = useState<'bets' | 'agenda' | null>(null);
   const [welcomeForce, setWelcomeForce] = useState(false);
   const [following, setFollowing] = useState(false);
   const [lastUpdateAt, setLastUpdateAt] = useState<number>(Date.now());
@@ -203,6 +208,8 @@ export default function ClientShell({
     (matchNumber: number) => {
       const m = itinerary.find((x) => x.matchNumber === matchNumber);
       if (!m) return;
+      // Default: no deep-linked modal. The feed handler re-sets this after.
+      setPendingModal(null);
       setSelectedStadiumId(m.stadiumId);
       setHighlightMatchNumber(matchNumber);
       setScheduleOpen(false);
@@ -217,9 +224,22 @@ export default function ClientShell({
     [itinerary],
   );
 
+  // Tapping a Today-feed event routes into the tracker: open the match, and for
+  // bet/agenda events deep-link straight into that modal.
+  const openFeedEvent = useCallback(
+    (matchNumber: number, type: FeedEventType) => {
+      setTodayOpen(false);
+      openMatch(matchNumber); // resets pendingModal to null
+      if (type === 'bet') setPendingModal('bets');
+      else if (type === 'agenda') setPendingModal('agenda');
+    },
+    [openMatch],
+  );
+
   const closeStadiumDrawer = useCallback(() => {
     setSelectedStadiumId(null);
     setHighlightMatchNumber(null);
+    setPendingModal(null);
     try {
       const url = new URL(window.location.href);
       url.searchParams.delete('match');
@@ -285,10 +305,7 @@ export default function ClientShell({
           setScheduleTab('schedule');
           setScheduleOpen(true);
         }}
-        onOpenToday={() => {
-          setScheduleTab('live');
-          setScheduleOpen(true);
-        }}
+        onOpenToday={() => setTodayOpen(true)}
         onOpenFollowing={() => setFollowingOpen(true)}
         onOpenMatch={openMatch}
         lastUpdateAt={lastUpdateAt}
@@ -309,6 +326,7 @@ export default function ClientShell({
           onClose={closeStadiumDrawer}
           visibility={visibility}
           underdogReferral={underdogReferral}
+          initialModal={pendingModal}
         />
       )}
       <ScheduleDrawer
@@ -334,6 +352,13 @@ export default function ClientShell({
         open={followingOpen}
         onClose={() => setFollowingOpen(false)}
         itinerary={itinerary}
+      />
+      <TodayModal
+        open={todayOpen}
+        onClose={() => setTodayOpen(false)}
+        itinerary={itinerary}
+        nowMs={simTimeMs ?? lastUpdateAt}
+        onOpenEvent={openFeedEvent}
       />
       <TimeTravelPanel
         simTimeMs={simTimeMs}
