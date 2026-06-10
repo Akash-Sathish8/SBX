@@ -1,0 +1,527 @@
+{
+ "id": "hardrock",
+ "name": "Hard Rock Stadium",
+ "fifaName": "Miami Stadium",
+ "nickname": "The Rock",
+ "city": "Miami",
+ "country": "USA",
+ "cc": "USA",
+ "role": "Third place",
+ "tagline": "Miami's shade-canopy fortress hosts the Bronze Final, the only knockout-tier showdown in the southeastern US.",
+ "hero": "img/stadiums/hardrock.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~65,000 (WC config)"
+  },
+  {
+   "label": "Opened",
+   "value": "1987 (renovated 2016)"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "7 (incl. Bronze Final)"
+  },
+  {
+   "label": "Shade Canopy",
+   "value": "~92% of seats covered"
+  },
+  {
+   "label": "June-July Heat",
+   "value": "~90F, ~75% humidity"
+  },
+  {
+   "label": "Also Hosts",
+   "value": "Miami Open, F1, Dolphins"
+  }
+ ],
+ "why": [
+  {
+   "title": "Hosts the Bronze Final",
+   "text": "Miami stages the July 18 third-place play-off, the day before the Final. It's the only knockout-final-tier match in the southeastern US."
+  },
+  {
+   "title": "The Shade Canopy",
+   "text": "A 14-acre, 17,000-ton steel roof shades about 92% of the seats while leaving the pitch open to the sky. In a Miami summer, that canopy is your best friend."
+  },
+  {
+   "title": "Latin Football Capital",
+   "text": "Huge Brazilian, Colombian, Argentine and Cuban communities make this the most Latin-flavored US host city. Expect electric, partisan, full-volume crowds."
+  },
+  {
+   "title": "Stacked Group Draws",
+   "text": "Brazil, Portugal, Colombia and Uruguay all roll through in the group stage, so the marquee names show up early and often."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 15",
+   "round": "Group H",
+   "fixture": "Saudi Arabia vs Uruguay",
+   "ko": "6:00 PM",
+   "group": "H"
+  },
+  {
+   "date": "Jun 21",
+   "round": "Group H",
+   "fixture": "Uruguay vs Cabo Verde",
+   "ko": "6:00 PM",
+   "group": "H"
+  },
+  {
+   "date": "Jun 24",
+   "round": "Group C",
+   "fixture": "Scotland vs Brazil",
+   "ko": "6:00 PM",
+   "group": "C"
+  },
+  {
+   "date": "Jun 27",
+   "round": "Group K",
+   "fixture": "Colombia vs Portugal",
+   "ko": "7:30 PM",
+   "group": "K"
+  },
+  {
+   "date": "Jul 3",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "6:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 11",
+   "round": "Quarter-final",
+   "fixture": "TBD",
+   "ko": "5:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 18",
+   "round": "Third place",
+   "fixture": "TBD",
+   "ko": "5:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "The stadium sits in Miami Gardens, about 15 miles north of Downtown amid highways and parking lots, with no rail line to the door. The smart move is Brightline to Aventura, then the free shuttle.",
+ "transit": [
+  "Brightline + free 'Hard Rock Stadium Connect' shuttle from Aventura Station is the least stressful route; shuttles leave about 10 min after each train.",
+  "From South Beach there's no direct rail: bus or Metromover to a Brightline station, then train to Aventura, ~60-90 min door-to-door.",
+  "Driving is ~19 min from Downtown and ~24 min from MIA airport; stadium lots sell out, so buy a Park & Ride pass instead.",
+  "Rideshare has designated lots and steep match-night surge; Uber Shuttle offers fixed-fare seats bookable up to 7 days ahead."
+ ],
+ "matchday": "There's nothing walkable around the stadium, so the scene lives downtown: FIFA's free Fan Festival at Bayfront Park runs ~13 days with a 10,000-seat amphitheater and giant screens. Fans pre-game in Wynwood, Brickell and Little Havana, then funnel north to the venue.",
+ "food": [
+  "Little Havana (Calle Ocho) is the cultural heart: Cuban sandwiches, ropa vieja, croquetas and cafe cubano.",
+  "Cafe La Trova in Little Havana, a World's-50-Best-ranked bar, plus Ball & Chain for live salsa.",
+  "Wynwood for casual watch parties: Cerveceria La Tropical (Inter Miami's brewery), Beaker & Gray, Spanglish.",
+  "Colombian and Venezuelan arepas and Argentine steak round out Miami's Latin food scene."
+ ],
+ "around": {
+  "food": [
+   {
+    "name": "Fuku",
+    "where": "Sections 116 & 319",
+    "note": "David Chang's spicy fried chicken sandwich, the CBR",
+    "why": [
+     "The cult fried chicken sandwich, in-stadium",
+     "Skip the lower-bowl lines, two locations"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Shorty's Bar-B-Q",
+    "where": "Sections 104, 132, 219, 247, 313",
+    "note": "Local pulled pork and smoked brisket plates",
+    "why": [
+     "Miami BBQ icon since 1951",
+     "Found at five sections, easy to reach"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Jackson Soul Food",
+    "where": "Sections 134 & 329",
+    "note": "Fried conch, mac and cheese, banana pudding",
+    "why": [
+     "Fried conch, a true Miami plate",
+     "Overtown soul-food legend, not concession-stand generic"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Mojo Donuts",
+    "where": "Section 213",
+    "note": "Local cult favorite hand-crafted donuts and coffee",
+    "why": [
+     "South Florida's cult donut, hand-crafted",
+     "Cafe-con-leche energy for a sweet halftime"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ],
+  "pre": [
+   {
+    "name": "FIFA Fan Festival",
+    "where": "Bayfront Park, Downtown Miami; Metromover to Bayfront Park station, then Brightline+shuttle to the gates",
+    "why": [
+     "Free fan zone on Biscayne Bay",
+     "All 7 Miami matches on giant screens"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "15.0 mi",
+    "distMi": 15
+   },
+   {
+    "name": "Grails Wynwood",
+    "where": "2800 N Miami Ave, Wynwood/Midtown",
+    "note": "75+ TVs, bilingual crowd, real stadium energy",
+    "why": [
+     "75+ TVs, no bad sightline",
+     "Bilingual Wynwood crowd, electric atmosphere"
+    ],
+    "rating": 4.7,
+    "dist": "12.8 mi",
+    "distMi": 12.8
+   },
+   {
+    "name": "Cerveceria La Tropical",
+    "where": "42 NE 25th St, Wynwood",
+    "note": "Inter Miami's brewery, Cuban roots, big screens",
+    "why": [
+     "Inter Miami's own Cuban-rooted brewery",
+     "Big screens, open-air Wynwood beer garden"
+    ],
+    "rating": 4.6,
+    "dist": "13.0 mi",
+    "distMi": 13
+   },
+   {
+    "name": "American Social",
+    "where": "690 SW 1st Ct, Brickell (Miami River)",
+    "note": "Riverfront patio, skyline views, game-day specials",
+    "why": [
+     "Miami River patio with skyline views",
+     "Game-day drink specials, big sports crowd"
+    ],
+    "rating": 4.3,
+    "dist": "14.8 mi",
+    "distMi": 14.8
+   },
+   {
+    "name": "305 Sports Bar",
+    "where": "919 Brickell Ave, Brickell",
+    "note": "Big screens, wings and tacos, indoor-outdoor seats",
+    "why": [
+     "Pure 305 sports-bar energy in Brickell",
+     "Indoor-outdoor seats, wings and tacos"
+    ],
+    "rating": 4.6,
+    "dist": "15.2 mi",
+    "distMi": 15.2
+   }
+  ],
+  "post": [
+   {
+    "name": "Bar Tulio's",
+    "where": "2839 NW 1st Ave, Wynwood",
+    "note": "Birria tacos, 100 tequilas, 14 screens late",
+    "why": [
+     "Birria tacos and 100 tequilas",
+     "14 screens, stays loud and late"
+    ],
+    "rating": 4.5,
+    "dist": "12.5 mi",
+    "distMi": 12.5
+   },
+   {
+    "name": "Cantina La Veinte",
+    "where": "495 Brickell Ave, Brickell",
+    "note": "Waterfront Mexican, projector screens, upscale crowd",
+    "why": [
+     "Upscale waterfront Mexican on Biscayne Bay",
+     "Projector screens, polished post-match crowd"
+    ],
+    "rating": 4.4,
+    "dist": "14.5 mi",
+    "distMi": 14.5
+   },
+   {
+    "name": "Cafe La Trova",
+    "where": "971 SW 8th St, Little Havana",
+    "note": "World's-50-Best bar, live salsa, cantinero cocktails",
+    "why": [
+     "World's-50-Best bar on Calle Ocho",
+     "Live salsa, old-Havana cantinero cocktails"
+    ],
+    "rating": 4.5,
+    "dist": "14.0 mi",
+    "distMi": 14
+   },
+   {
+    "name": "Ball & Chain",
+    "where": "1513 SW 8th St, Little Havana",
+    "note": "Calle Ocho landmark, live salsa, mojitos nightly",
+    "why": [
+     "Historic Calle Ocho landmark since 1935",
+     "Nightly live salsa and fresh mojitos"
+    ],
+    "rating": 4.5,
+    "dist": "14.2 mi",
+    "distMi": 14.2
+   }
+  ],
+  "merch": [
+   {
+    "name": "South Gate Plaza Team Store",
+    "where": "Ground level, South Gate Plaza, Hard Rock Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "New Era Team Store",
+    "where": "100 Level, Section 110, Hard Rock Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Throwback Team Store",
+    "where": "100 Level, Section 132, Hard Rock Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ]
+ },
+ "tips": [
+  "Arrive very early, 2.5-3 hours before kickoff. After the 2024 Copa final gate breach here, expect a wider, slower outer security ring than at NFL games.",
+  "Sit under the canopy (nearly all seats are): lower-bowl sideline 100-level keeps you driest and coolest, and avoid front rows by the open field in storms.",
+  "Beat the heat: evening kickoffs help, but hydrate hard and pre-game in shade; afternoon storms usually roll through then clear.",
+  "Take Brightline to Aventura and the free shuttle to skip parking gridlock, and pre-book your return seat.",
+  "Base in Brickell or Downtown for the best mix of Fan Festival access, Brightline and nightlife; South Beach is fun but a long surge-priced ride.",
+  "Bring no bag or one clear plastic bag (max 12x6x12) to clear security fastest."
+ ],
+ "transport": {
+  "summary": "No rail runs to the door, so the move is the free Miami Game Day Express shuttle for ticket holders from four transit hubs (Aventura Brightline, Golden Glades/Tri-Rail, MLK Jr. Metrorail, Seminole Hard Rock Hotel); otherwise it's drive-and-park or rideshare into Miami Gardens.",
+  "rail": [
+   {
+    "name": "Brightline",
+    "station": "Aventura Station (19796 W Dixie Hwy)",
+    "detail": "Take Brightline from Orlando, West Palm Beach, Boca Raton, Fort Lauderdale or MiamiCentral to Aventura, then board the free Game Day Express stadium shuttle. Look for the FIFA World Cup 2026 icon when booking so your train syncs with the shuttle.",
+    "points": [
+     {
+      "b": "Ride to Aventura",
+      "t": "from Orlando, WPB, Boca, FLL or MiamiCentral."
+     },
+     {
+      "b": "Free shuttle there",
+      "t": "Game Day Express runs to the stadium."
+     },
+     {
+      "b": "Book the WC icon",
+      "t": "so your train syncs with the shuttle."
+     }
+    ],
+    "deal": "Shuttle is free for verified match-ticket holders; you still buy the Brightline train fare."
+   },
+   {
+    "name": "Tri-Rail",
+    "station": "Golden Glades Multimodal Transit Station",
+    "detail": "Tri-Rail and Metrobus feed the Golden Glades hub; from there catch the free Game Day Express shuttle (Lot 95) to the stadium. Paid Park & Ride parking is on site.",
+    "points": [
+     {
+      "b": "Reach Golden Glades",
+      "t": "via Tri-Rail or Metrobus."
+     },
+     {
+      "b": "Free shuttle from Lot 95",
+      "t": "Game Day Express to the stadium."
+     },
+     {
+      "b": "Park & Ride on site",
+      "t": "paid parking at the hub."
+     }
+    ],
+    "deal": "Free stadium shuttle for ticket holders."
+   },
+   {
+    "name": "Metrorail",
+    "station": "Dr. Martin Luther King Jr. Plaza Station",
+    "detail": "Miami-Dade Metrorail to the MLK Jr. Plaza hub connects to a free Game Day Express shuttle. A slower budget route from the urban core but no parking stress.",
+    "points": [
+     {
+      "b": "Metrorail to MLK Jr. Plaza",
+      "t": "from the urban core."
+     },
+     {
+      "b": "Free shuttle connects",
+      "t": "Game Day Express to the stadium."
+     },
+     {
+      "b": "Slow but budget",
+      "t": "no parking stress either way."
+     }
+    ],
+    "deal": "Free stadium shuttle for ticket holders."
+   }
+  ],
+  "bus": [
+   {
+    "name": "Metrobus",
+    "from": "Golden Glades / MLK Jr. transit hubs",
+    "detail": "Metrobus feeds the Golden Glades and MLK Jr. Metrorail hubs that anchor the Game Day Express shuttle; check Miami-Dade's WC26 mobility page for match-day routing.",
+    "points": [
+     {
+      "b": "Feeds the shuttle hubs",
+      "t": "Golden Glades and MLK Jr. Metrorail."
+     },
+     {
+      "b": "Connects to Game Day Express",
+      "t": "for the final leg in."
+     },
+     {
+      "b": "Check WC26 mobility page",
+      "t": "for match-day routing."
+     }
+    ],
+    "deal": ""
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "Miami Game Day Express (free)",
+    "detail": "Free roundtrip shuttle from four hubs (Aventura Brightline, Golden Glades/Tri-Rail, MLK Jr. Metrorail, Seminole Hard Rock Hotel) for verified ticket holders only. First shuttle leaves each hub 3.5 hours before kickoff; ticket scanning starts ~4 hours out. First-come, first-served, returns run continuously after the final whistle until everyone is moved.",
+    "points": [
+     {
+      "b": "Four hubs, ticket holders only",
+      "t": "Aventura, Golden Glades, MLK Jr., Seminole."
+     },
+     {
+      "b": "First bus 3.5 hrs out",
+      "t": "scanning starts ~4 hours before kickoff."
+     },
+     {
+      "b": "First-come, first-served",
+      "t": "returns run nonstop after the whistle."
+     }
+    ]
+   },
+   {
+    "name": "GEICO HRS Express Park & Ride",
+    "detail": "Paid $10 Park & Ride shuttle from Lot 70 (Seminole Hard Rock Hotel, Fort Lauderdale) and Lot 95 (Golden Glades Garage). Buy the Park & Ride pass via Ticketmaster; free if you're staying at the Seminole Hard Rock Hotel.",
+    "points": [
+     {
+      "b": "Runs from two lots",
+      "t": "Lot 70 (Seminole) and Lot 95 (Golden Glades)."
+     },
+     {
+      "b": "Buy via Ticketmaster",
+      "t": "the Park & Ride pass in advance."
+     },
+     {
+      "b": "Free for hotel guests",
+      "t": "at the Seminole Hard Rock."
+     }
+    ]
+   }
+  ],
+  "fromAirport": "MIA is ~14 mi (~24 min drive); Fort Lauderdale FLL is ~20 mi and often cheaper/closer from the north. No direct transit from either airport to the stadium; rideshare, or rail to a Brightline/Tri-Rail hub then the Game Day Express shuttle.",
+  "rideshare": "Uber and Lyft cannot drop at the stadium perimeter. Designated pickup/dropoff is Lot 44 at the Betty T. Ferguson Recreational Complex (3000 NW 199th St), roughly a 25-min walk from the gates; surge pricing is steep on match nights. Stadium advises riders use the free HRS Express shuttle hubs (Lot 70 / Lot 95) where hailing a return car is easier. Uber Shuttle also sells fixed-fare bookable seats up to 7 days ahead.",
+  "bike": "Not a practical bike destination: the stadium sits amid highways and vast lots with no walkable approach. No notable bike infrastructure or valet promoted.",
+  "tips": [
+   "Game Day Express and the Brightline shuttle both require a valid match ticket for that day and run first-come, first-served, so leave a generous buffer.",
+   "Brightline to Aventura plus the free shuttle is the least stressful route and skips parking gridlock; pre-book your return train.",
+   "If you rideshare, expect a long walk from Lot 44 or use a Park & Ride hub instead for an easier post-match pickup.",
+   "After the 2024 Copa final gate breach, the security perimeter is pushed wide; arrive 2.5-3 hours before kickoff."
+  ]
+ },
+ "parking": {
+  "summary": "Roughly 26,700 spaces but on-site lots sell out well in advance and must be prepaid online; World Cup match parking runs about $175-$250, with the July 18 Bronze Final the priciest. Park & Ride is the budget fallback.",
+  "lots": [
+   {
+    "name": "Stadium on-site lots (Inner/Outer)",
+    "price": "~$175-$250 (WC matches); Bronze Final ~$249.99",
+    "detail": "Prepaid only via Ticketmaster; routinely sold out in advance and not sold at the gate on match day. Expect heavy post-match egress congestion.",
+    "points": [
+     {
+      "b": "Prepaid via Ticketmaster",
+      "t": "no sales at the gate."
+     },
+     {
+      "b": "Sells out early",
+      "t": "routinely gone well in advance."
+     },
+     {
+      "b": "Brutal exit",
+      "t": "heavy post-match egress congestion."
+     }
+    ]
+   },
+   {
+    "name": "Lot 95 - Golden Glades Garage (Park & Ride)",
+    "price": "$10 Park & Ride pass",
+    "detail": "Drive to the Golden Glades garage in Miami, then the GEICO HRS Express shuttle to the stadium. Tri-Rail/Metrobus also reach this hub.",
+    "points": [
+     {
+      "b": "Park at Golden Glades",
+      "t": "the garage in Miami."
+     },
+     {
+      "b": "HRS Express shuttle in",
+      "t": "GEICO bus to the stadium."
+     },
+     {
+      "b": "Transit reaches it too",
+      "t": "Tri-Rail and Metrobus serve the hub."
+     }
+    ]
+   },
+   {
+    "name": "Lot 70 - Seminole Hard Rock Hotel (Park & Ride)",
+    "price": "$10 Park & Ride pass (free for hotel guests)",
+    "detail": "Park at the Seminole Hard Rock Hotel in Fort Lauderdale and take the HRS Express shuttle; complimentary shuttle if you're a hotel guest.",
+    "points": [
+     {
+      "b": "Park at the Seminole",
+      "t": "Hard Rock Hotel in Fort Lauderdale."
+     },
+     {
+      "b": "HRS Express shuttle in",
+      "t": "rides to the stadium and back."
+     },
+     {
+      "b": "Free for hotel guests",
+      "t": "shuttle is complimentary if staying."
+     }
+    ]
+   }
+  ],
+  "prepaid": "Yes - all stadium parking and Park & Ride passes must be bought in advance online through Ticketmaster. Nothing is sold at the stadium on event day, and stadium lots typically sell out, so Park & Ride passes are usually the last option left.",
+  "accessible": "ADA parking available. Inner Lot needs a pre-purchased ADA Reserved pass for some events; for World Cup it's generally first-come at Gates 1A or 4. Outer-lot ADA spaces are in Yellow lots (14, 15/16, 18) and Gray Lot 40, first-come, with mobility-assistance shuttles and gate-to-seat wheelchair escorts (request at any gate or Guest Experience HQ).",
+  "tailgating": "Tailgating is a tradition in the surrounding lots, but for World Cup expect a tighter, pushed-out security perimeter and tougher rules on unticketed crowds after the 2024 Copa breach; do not linger in lots without a ticket.",
+  "tips": [
+   "Buy parking the moment it goes on sale; on-site lots sell out and there's no day-of sale.",
+   "If lots are gone, a $10 Park & Ride pass (Lot 70 or Lot 95) is the cheapest way in and out.",
+   "Budget for a slow exit - egress from the lots after a 65,000 crowd is brutal."
+  ]
+ },
+ "weather": "Hot, humid and stormy June-July with highs near 90F and near-daily brief afternoon thunderstorms, so pack sunscreen, a hat, a sealed clear water bottle and a compact rain layer.",
+ "lore": [
+  "Hosted six Super Bowls, including LIV in February 2020, plus the Orange Bowl annually and the 2026 CFP national title game.",
+  "El Clasico came to town in 2017: Barcelona edged Real Madrid 3-2 in front of 66,014 fans.",
+  "The 2024 Copa America Final descended into chaos when ticketless fans breached the gates and delayed kickoff 80-plus minutes, the cautionary tale shaping WC security here.",
+  "The campus moonlights as the Miami Open tennis grounds and an F1 Grand Prix circuit laid out through its parking lots since 2022."
+ ]
+}

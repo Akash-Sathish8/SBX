@@ -1,0 +1,453 @@
+{
+ "id": "gillette",
+ "name": "Gillette Stadium",
+ "fifaName": "Boston Stadium",
+ "nickname": "The Razor",
+ "city": "Boston",
+ "country": "USA",
+ "cc": "USA",
+ "role": null,
+ "tagline": "Home of the Patriots dynasty, crowned by a 218-foot lighthouse, hosting Scotland's Tartan Army and a quarterfinal.",
+ "hero": "img/stadiums/gillette.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "63,815 (WC config)"
+  },
+  {
+   "label": "Opened",
+   "value": "2002"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "7 (incl. a QF)"
+  },
+  {
+   "label": "Signature",
+   "value": "218-ft Lighthouse tower"
+  },
+  {
+   "label": "Location",
+   "value": "Foxborough, between Boston & Providence"
+  },
+  {
+   "label": "Home Teams",
+   "value": "Patriots (NFL), Revolution (MLS)"
+  }
+ ],
+ "why": [
+  {
+   "title": "The Lighthouse",
+   "text": "A 218-foot tower inspired by New England's maritime heritage anchors the north end, with a 360-degree observation deck and the largest outdoor curved video board in America right beside it."
+  },
+  {
+   "title": "Tartan Army Invasion",
+   "text": "Scotland plays two group matches here, and thousands of kilted supporters are basing in Providence and Boston. It's the marquee fan story of the venue."
+  },
+  {
+   "title": "Turf Ripped Out for Grass",
+   "text": "Crews tore out nearly 20 years of FieldTurf and built a sand-based root zone with real Kentucky bluegrass sod, so the ball rolls slower and truer than it ever has here."
+  },
+  {
+   "title": "A Quarterfinal Stage",
+   "text": "Beyond five group games and a Round of 32, Boston Stadium hosts a July 9 quarterfinal, one of just eight in the entire tournament."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 13",
+   "round": "Group C",
+   "fixture": "Haiti vs Scotland",
+   "ko": "9:00 PM",
+   "group": "C"
+  },
+  {
+   "date": "Jun 16",
+   "round": "Group I",
+   "fixture": "Iraq vs Norway",
+   "ko": "6:00 PM",
+   "group": "I"
+  },
+  {
+   "date": "Jun 19",
+   "round": "Group C",
+   "fixture": "Scotland vs Morocco",
+   "ko": "6:00 PM",
+   "group": "C"
+  },
+  {
+   "date": "Jun 23",
+   "round": "Group L",
+   "fixture": "England vs Ghana",
+   "ko": "4:00 PM",
+   "group": "L"
+  },
+  {
+   "date": "Jun 26",
+   "round": "Group I",
+   "fixture": "Norway vs France",
+   "ko": "3:00 PM",
+   "group": "I"
+  },
+  {
+   "date": "Jun 29",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "4:30 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 9",
+   "round": "Quarter-final",
+   "fixture": "TBD",
+   "ko": "4:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "The stadium sits in Foxborough, a transit island about 25 miles from both Boston and Providence, with no everyday train service. On every match day the MBTA runs dedicated express Boston Stadium Trains from South Station straight to Foxboro Station, an 8-minute walk from the gates.",
+ "transit": [
+  "Boston Stadium Trains run non-stop from South Station to Foxboro on all 7 match days, a ~1-hour ride; buy the $80 round-trip ONLY in the MBTA mTicket app.",
+  "Last inbound train arrives ~90 min before kickoff; return trains start ~30 min after the whistle and leave every ~15 min until cleared.",
+  "Driving is ~45 min from Boston or ~30-40 min from Providence, but lots fill fast and exit gridlock is notorious.",
+  "Flying in: Boston Logan (BOS) is ~27 mi; T.F. Green in Providence (PVD) is ~18 mi and often cheaper for southbound fans."
+ ],
+ "matchday": "There's no fan district at the stadium itself, just Patriot Place, the open-air dining and entertainment complex wrapped around it. The real party is in downtown Boston (City Hall Plaza Fan Festival, June 12-27) and Providence, where Scotland fans gather before busing or training in.",
+ "around": {
+  "food": [
+   {
+    "name": "Smokehouse Grill",
+    "where": "Lighthouse end concourse stands",
+    "note": "house-smoked brisket and Buffalo wings done right",
+    "why": [
+     "House-smoked brisket, not reheated stadium fare",
+     "Right by the Lighthouse end gates"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Italian Sausage stand",
+    "where": "Multiple main-concourse locations",
+    "note": "sausage with grilled peppers and onions, classic",
+    "why": [
+     "New England gameday classic, peppers and onions",
+     "Found on every main concourse"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Papa Gino's / Stadium Pizza",
+    "where": "Main concourse, both levels",
+    "note": "local New England pizza chain and fried dough",
+    "why": [
+     "Homegrown New England pizza chain",
+     "Get the fried dough for dessert"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "The Taproom",
+    "where": "Upper concourse beer hall",
+    "note": "dozens of local craft beers on tap",
+    "why": [
+     "Dozens of local craft beers on tap",
+     "Beer-hall vibe over standard kiosk lines"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ],
+  "pre": [
+   {
+    "name": "FIFA Fan Festival - Boston",
+    "where": "Boston City Hall Plaza, 1 City Hall Square, downtown Boston; ~26 mi north of Gillette in Foxborough. Take the MBTA Boston Stadium Train back from South Station (Blue/Green Line to Gov't Center, steps away)",
+    "note": "free official FIFA fan zone, June 12-27, with daily live match broadcasts and a local cultural showcase; free but advance registration required",
+    "why": [
+     "Official free fan zone, big-screen match broadcasts",
+     "Downtown hub before training out to Foxborough"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "26 mi (downtown Boston)",
+    "distMi": 26
+   },
+   {
+    "name": "CBS Sporting Club",
+    "where": "200 Patriot Pl, steps from gates (former CBS Scene space)",
+    "note": "three-story sports bar with a 25-ft LED wall and stadium views, packed on gamedays",
+    "why": [
+     "Giant LED wall, closest big-screen scene to the gates",
+     "Three-story sports bar literally steps from the stadium"
+    ],
+    "rating": 3.9,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   },
+   {
+    "name": "The Harp",
+    "where": "200 Patriot Pl, ~3-min walk",
+    "note": "Boston bar with patio overlooking the stadium",
+    "why": [
+     "Boston-institution bar with stadium-view patio",
+     "Three-minute walk from the gates"
+    ],
+    "rating": 3.6,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   },
+   {
+    "name": "Davio's Northern Italian Steakhouse",
+    "where": "236 Patriot Pl, ~5-min walk",
+    "note": "upscale steakhouse, lively bar, reservations smart",
+    "why": [
+     "Upscale steakhouse for a proper pre-match meal",
+     "Lively bar, but book ahead"
+    ],
+    "rating": 4.4,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "Six String Grill & Stage",
+    "where": "275 Patriot Pl, steps from gates",
+    "note": "live music, big screens, craft and domestic beers",
+    "why": [
+     "Live music builds the matchday energy",
+     "Big screens and beers steps from gates"
+    ],
+    "rating": 3.9,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   }
+  ],
+  "post": [
+   {
+    "name": "The Harp",
+    "where": "200 Patriot Pl, ~3-min walk",
+    "note": "seasonal patio, local beers, post-game crowd buzz",
+    "why": [
+     "Seasonal patio catches the post-game crowd buzz",
+     "Local beers, three minutes from gates"
+    ],
+    "rating": 3.6,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   },
+   {
+    "name": "Howl Splitsville Golf Suites",
+    "where": "220 Patriot Pl, ~4-min walk",
+    "note": "bowling, Full Swing golf suites, live bands, late-night drinks and food",
+    "why": [
+     "Bowling and golf suites kill the exit gridlock",
+     "Live bands and late-night drinks"
+    ],
+    "rating": 4.2,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "Bar Louie",
+    "where": "232 Patriot Pl, ~5-min walk",
+    "note": "casual gastrobar, cocktails, easy wind-down spot",
+    "why": [
+     "Casual gastrobar for an easy wind-down",
+     "Cocktails without the crush"
+    ],
+    "rating": 3.9,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "Tavolino",
+    "where": "274 Patriot Pl, ~5-min walk",
+    "note": "Italian bar and dining, calmer late-evening vibe",
+    "why": [
+     "Calmer Italian spot for late-evening dining",
+     "Wait out the lot gridlock here"
+    ],
+    "rating": 4.3,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   }
+  ],
+  "merch": [
+   {
+    "name": "Patriots ProShop",
+    "where": "Gillette Stadium complex, Foxborough (370 Patriot Pl; temporarily relocated to South Marketplace, next to Petco, during the World Cup)",
+    "rating": null,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "Patriots Hall of Fame (museum + gift shop)",
+    "where": "2 Patriot Pl, adjacent to the ProShop; note: the Hall is CLOSED May 14-July 2026 during the World Cup",
+    "rating": null,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   }
+  ]
+ },
+ "food": [
+  "Patriot Place: restaurants, bars and a cinema right outside the gates, far better than concourse lines.",
+  "Boston classics: lobster rolls, clam chowder ('chowdah') and oysters are the local must-eat canon.",
+  "North End: Boston's Italian neighborhood for the best pre-match pasta and cannoli in the city.",
+  "Faneuil Hall / Quincy Market and the Seaport: the pub-dense zones where fans pack in to watch."
+ ],
+ "tips": [
+  "Buy the $80 Boston Stadium Train ticket EARLY in the mTicket app; it's the best way in and includes the return. R32/QF train tickets drop later, so set a reminder.",
+  "Arrive 2+ hours pre-kickoff: the last train lands ~90 min out and security plus the 8-min walk eat into that window.",
+  "Be patient on the way out; return trains clear the queue every ~15 min and beat driving out of the lots every time.",
+  "Best atmosphere is the north (Lighthouse) end by the giant video board; mid-level sideline 100s-200s give the cleanest sight lines.",
+  "Clear-bag policy is enforced: clear bags up to 12x6x12 or a small clutch up to 4.5x6.5x2; lockers handle non-compliant bags.",
+  "Stay in Providence to save money (Scotland fans proved it), or Boston for the Fan Festival and nightlife; match lodging to your priority."
+ ],
+ "weather": "Open-air with no roof and mild for a US venue: June highs ~76F and the July 9 QF ~85F, so pack sunscreen, a hat and a rain shell for afternoon thunderstorms.",
+ "lore": [
+  "Ground zero for the Patriots dynasty: the Brady-Belichick era and multiple Super Bowl runs launched from here.",
+  "Built entirely with private money by owner Robert Kraft for ~$325M, opening in 2002 as the first major Boston-area stadium in 100 years.",
+  "A serious soccer venue already: it staged Copa America Centenario 2016, Copa America 2024 and Gold Cup rounds, and holds a 65,612 soccer-crowd record.",
+  "A premier concert stop with a Taylor Swift bond: she's played here 13 times, the only venue she's hit on every headlining tour."
+ ],
+ "transport": {
+  "summary": "Gillette is a transit island in Foxborough with no everyday rail service, so for the World Cup the MBTA and Boston Host Committee run match-day-only Boston Stadium Trains and Express Buses. Organizers expect ~70% of fans to arrive by public transit and explicitly warn against walking or biking the route.",
+  "rail": [
+   {
+    "name": "Boston Stadium Train (MBTA)",
+    "station": "South Station -> Foxboro",
+    "detail": "14 express, non-stop trains run on each of the 7 match days, a ~1-hour ride to Foxboro Station, an under-10-min walk from the gates. Last inbound train arrives ~90 min before kickoff; return trains leave every ~15 min starting ~30 min after the final whistle. Fully accessible; buy ONLY in the MBTA mTicket app ('Buy Tickets to Boston Stadium') and you must hold a same-day match ticket.",
+    "deal": "$80 round-trip, also valid on all Commuter Rail trains that day",
+    "points": [
+     {
+      "b": "South Station to Foxboro",
+      "t": "non-stop, ~1-hr ride, all 7 days"
+     },
+     {
+      "b": "Arrive early",
+      "t": "last inbound train lands ~90 min pre-kickoff"
+     },
+     {
+      "b": "Returns every 15 min",
+      "t": "starting ~30 min after the whistle"
+     },
+     {
+      "b": "mTicket app only",
+      "t": "same-day match ticket required"
+     }
+    ]
+   }
+  ],
+  "bus": [
+   {
+    "name": "Boston Stadium Express",
+    "from": "Greater Boston, Logan Airport & Providence",
+    "detail": "Official Host Committee coach service with 20+ pickup points at hotels across Greater Boston plus Logan Airport and the Rhode Island Convention Center in Providence. Departs 3-4.5 hrs before kickoff, returns starting 30 min after the whistle, drops within a 10-min walk; over half the fleet is ADA accessible. Advance booking only at bostonstadiumexpress.com, same-day match ticket required.",
+    "deal": "$95 round-trip",
+    "points": [
+     {
+      "b": "20+ pickup points",
+      "t": "Boston hotels, Logan, Providence"
+     },
+     {
+      "b": "Departs 3-4.5 hrs out",
+      "t": "returns ~30 min after whistle"
+     },
+     {
+      "b": "Drops 10-min walk away",
+      "t": "over half the fleet ADA accessible"
+     },
+     {
+      "b": "Book in advance",
+      "t": "match ticket required, no walk-up"
+     }
+    ]
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "South Station connections",
+    "detail": "At South Station, transfer to the Red Line, Silver Line and Commuter Rail; subway and select bus routes run until ~2 AM after weekday matches and ~4 AM after the Sat Jun 13 night match.",
+    "points": [
+     {
+      "b": "Transfers at South Station",
+      "t": "Red Line, Silver Line, Commuter Rail"
+     },
+     {
+      "b": "Runs late",
+      "t": "until ~2 AM after weekday matches"
+     },
+     {
+      "b": "Extended Jun 13",
+      "t": "service to ~4 AM after the night match"
+     }
+    ]
+   }
+  ],
+  "fromAirport": "Boston Logan (BOS) is ~27 mi and a Boston Stadium Express pickup point; T.F. Green / Providence (PVD) is ~18 mi and often cheaper for southbound fans, with Express buses from the nearby RI Convention Center. From downtown Boston, take the train from South Station; from Providence, take an Express bus.",
+  "rideshare": "Designated rideshare drop-off and pickup zones are in Lot 16 (next to Bass Pro Shops) and Lot 15 (near the CVS Health Gate); a post-match on-demand rideshare shuttle is also expected. Surge pricing is severe, with normal $50-80 fares pushing to $100-200+ on match days, and the same exit gridlock as driving.",
+  "bike": "Not recommended. Organizers explicitly warn against walking or cycling along Route 1 to the stadium, describing the route as unsafe.",
+  "tips": [
+   "Buy the $80 train ticket EARLY in the mTicket app; it includes the return and is valid on all Commuter Rail that day. R32/QF tickets release closer to those dates, so set a reminder.",
+   "From Providence (the Scotland base), the $95 Boston Stadium Express from the RI Convention Center is the cleanest option; ~1,100 Tartan Army fans instead chartered yellow school buses at ~$47/person to save money.",
+   "The train and Express bus require a same-day match ticket to purchase, and both sell out; do not assume walk-up transit exists.",
+   "Be patient on the way out: return trains clear the queue every ~15 min and beat driving out of the lots every time."
+  ]
+ },
+ "parking": {
+  "summary": "Classic suburban big-lot setup with ~10,000+ spaces, but for the World Cup ALL parking is ticket-holder-only and strictly prepaid, with no walk-up or cash parking on match day. Lots open ~4 hours before kickoff.",
+  "lots": [
+   {
+    "name": "Official stadium lots (JustPark)",
+    "price": "$175 (group) up to ~$600",
+    "detail": "~5,000 FIFA-managed spaces sold in advance only through JustPark (justpark.com), FIFA's official parking partner. Group-stage prices ran ~$175-600 per spot, with knockout games higher. Over-sized/RV parking is available via advance booking.",
+    "points": [
+     {
+      "b": "~5,000 FIFA-managed spaces",
+      "t": "the official stadium-side lots"
+     },
+     {
+      "b": "JustPark only",
+      "t": "sold in advance, no walk-up"
+     },
+     {
+      "b": "RV parking available",
+      "t": "book the over-sized option ahead"
+     }
+    ]
+   },
+   {
+    "name": "Satellite lots along Route 1",
+    "price": "varies",
+    "detail": "5,000+ additional spaces in independent lots lining Route 1 at varying, often cheaper rates; book ahead and expect notorious post-match exit congestion.",
+    "points": [
+     {
+      "b": "5,000+ extra spaces",
+      "t": "independent lots lining Route 1"
+     },
+     {
+      "b": "Often cheaper",
+      "t": "varying rates, book ahead"
+     },
+     {
+      "b": "Exit congestion",
+      "t": "notorious post-match gridlock"
+     }
+    ]
+   }
+  ],
+  "prepaid": "Mandatory. All match-day parking is prepaid and ticket-holder-only; official lots are bought in advance via JustPark. There is no cash or walk-up parking, and non-ticketed fans cannot enter the lots ('If you don't have a ticket, don't come to Gillette').",
+  "accessible": "Accessible parking is available near stadium entrances; book the ADA option in advance through JustPark. Wheelchair-accessible taxis and MBTA paratransit (to South Station) are also available. Accessibility line: (800) 543-1776.",
+  "tailgating": "Permitted for valid match-ticket holders only, in line with the prepaid lot rules; the stadium-side lots open ~4 hours before kickoff. Patriot Place dining and bars sit right outside if you'd rather skip the lot scene.",
+  "tips": [
+   "Reserve a JustPark spot well ahead; with no walk-up parking, arriving without a prepaid pass means no entry.",
+   "Driving from Boston is ~45 min and Providence ~30-40 min, but lots clog and exit gridlock is famous, so the train usually wins overall.",
+   "Satellite Route 1 lots can be cheaper than the $175+ official spots if you book early.",
+   "Do NOT plan to be dropped off and walk in along Route 1; organizers call that route unsafe."
+  ]
+ }
+}

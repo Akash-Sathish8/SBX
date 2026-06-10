@@ -1,0 +1,24 @@
+{
+ "id": "sofi-jun25",
+ "venue": "sofi",
+ "venueName": "SoFi Stadium",
+ "city": "Los Angeles",
+ "date": "Jun 25",
+ "ko": "7:00 PM",
+ "round": "Group D",
+ "home": "Türkiye",
+ "away": "USA",
+ "preview": {
+  "summary": "A Group D meeting with knockout-qualification stakes as Turkey, back at a World Cup for the first time since their 2002 run, face co-hosts USA in front of a partisan LA crowd. Turkey carry one of the tournament's most exciting young cores, while the USMNT lean on a settled spine and home-field momentum. With both sides eyeing the round of 32, the result could shape the entire group.",
+  "homeForm": "Reached the finals via the European playoffs in March, their first appearance since 2002.",
+  "awayForm": "As co-hosts with no qualifying, Pochettino's side enters with a long runway and a settled core.",
+  "homeKey": "Arda Guler, Real Madrid playmaker and Turkey's creative spark",
+  "awayKey": "Christian Pulisic, the most-capped USMNT player and talisman",
+  "storylines": [
+   "Turkey's first World Cup since their 2002 third-place finish",
+   "USMNT's home-soil push to reach the knockouts",
+   "Guler and Yildiz vs a Pulisic-led American attack"
+  ],
+  "h2h": "Tight history across four meetings, with the USA holding a narrow edge but Turkey winning the most recent, a 2-1 friendly in June 2025."
+ }
+}

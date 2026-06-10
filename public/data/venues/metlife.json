@@ -1,0 +1,466 @@
+{
+ "id": "metlife",
+ "name": "MetLife Stadium",
+ "fifaName": "New York New Jersey Stadium",
+ "nickname": "The Meadowlands",
+ "city": "New York / NJ",
+ "country": "USA",
+ "cc": "USA",
+ "role": "Final",
+ "tagline": "This is where it all ends: the first-ever 48-team World Cup Final lands at the biggest stadium of the tournament.",
+ "hero": "img/stadiums/metlife.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~80,800 (WC config)"
+  },
+  {
+   "label": "Opened",
+   "value": "2010"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "8 (most of any venue)"
+  },
+  {
+   "label": "Roof",
+   "value": "Open-air, no roof"
+  },
+  {
+   "label": "Surface",
+   "value": "Natural grass (turf for WC)"
+  },
+  {
+   "label": "Cost",
+   "value": "~$1.6B"
+  }
+ ],
+ "why": [
+  {
+   "title": "Hosts the Final",
+   "text": "MetLife stages the July 19 World Cup Final, the showpiece match of the entire tournament. The road to the trophy ends right here."
+  },
+  {
+   "title": "Biggest in the Cup",
+   "text": "At ~80,800 seats it's the largest venue at WC2026, and the largest stadium in the NFL. Size is exactly why it landed the final."
+  },
+  {
+   "title": "Turned Turf to Grass",
+   "text": "Crews buried the artificial turf under two feet of sand and stitched in a hybrid Bermudagrass pitch built to survive eight matches in summer heat."
+  },
+  {
+   "title": "Proven Big-Match Stage",
+   "text": "It already hosted the 2016 Copa America Centenario final and the 2025 Club World Cup final. This building knows how to throw a championship."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 13",
+   "round": "Group C",
+   "fixture": "Brazil vs Morocco",
+   "ko": "6:00 PM",
+   "group": "C"
+  },
+  {
+   "date": "Jun 16",
+   "round": "Group I",
+   "fixture": "France vs Senegal",
+   "ko": "3:00 PM",
+   "group": "I"
+  },
+  {
+   "date": "Jun 22",
+   "round": "Group I",
+   "fixture": "Norway vs Senegal",
+   "ko": "8:00 PM",
+   "group": "I"
+  },
+  {
+   "date": "Jun 25",
+   "round": "Group E",
+   "fixture": "Ecuador vs Germany",
+   "ko": "4:00 PM",
+   "group": "E"
+  },
+  {
+   "date": "Jun 27",
+   "round": "Group L",
+   "fixture": "Panama vs England",
+   "ko": "5:00 PM",
+   "group": "L"
+  },
+  {
+   "date": "Jun 30",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "5:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 5",
+   "round": "Round of 16",
+   "fixture": "TBD",
+   "ko": "4:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 19",
+   "round": "Final",
+   "fixture": "TBD",
+   "ko": "3:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "Take the NJ Transit train, not a car. From Manhattan, ride from Penn Station to Secaucus Junction, then hop the Meadowlands shuttle that drops you at the stadium's front door in about 10 minutes.",
+ "transit": [
+  "Meadowlands Rail Line runs straight to the stadium for every WC match; transfer at Secaucus Junction (marked 'SEC').",
+  "Penn Station NYC to Secaucus to stadium runs ~45-60 min, ~$12-15 each way.",
+  "Coach USA 351 'Meadowlands Express' bus runs from Port Authority to Lot K, starting ~2.5 hours before kickoff.",
+  "Driving is the backup, not the plan: event parking ~$40-60 and final-day lots already sold out."
+ ],
+ "matchday": "There's no real neighborhood around the stadium, so the party lives across the river: FIFA's official NY/NJ Fan Festival, a converted mini-pitch at Rockefeller Center (Jul 6-19), and a free fan hub at Sports Illustrated Stadium in Harrison. Fans pre-game in NYC, Hoboken and Jersey City bars, then funnel onto the trains.",
+ "food": [
+  "Jones Wood Foundry (Upper East Side): British gastropub and the prime England-supporters spot.",
+  "Smithfield Hall (Chelsea): a soccer-bar institution home to eight European supporters' clubs.",
+  "Football Factory at Legends (Koreatown): three levels of soccer-only chaos for big matches.",
+  "Hudson Hall (Jersey City): a big Eastern-European beerhall that takes reservations, ideal for groups on the NJ side."
+ ],
+ "around": {
+  "food": [
+   {
+    "name": "Pasta Fresca by Nonna Fusco's",
+    "where": "Stand 118, East & West Clubs",
+    "why": [
+     "Lumache in spicy vodka sauce, fresh-made",
+     "Chicken cutlet add-on, real sit-down pasta"
+    ],
+    "note": "Lumache pasta, spicy vodka sauce, chicken cutlet add-on",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Shah's Halal",
+    "where": "Stand 126, MetLife Central & 314",
+    "why": [
+     "Chicken or lamb over rice, NYC-cart classic",
+     "Gyros and pakora chips, big halal portions"
+    ],
+    "note": "Chicken or lamb over rice, gyros, pakora chips",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Garden State Rippers",
+    "where": "MetLife Central, 317, East & West Clubs",
+    "why": [
+     "Thumann's natural-casing deep-fried Jersey dogs",
+     "The local rite-of-passage stadium dog"
+    ],
+    "note": "Thumann's natural-casing all-beef Jersey deep-fried dogs",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Craft Beer Hall",
+    "where": "Club level concourse",
+    "why": [
+     "40-plus rotating taps in one spot",
+     "Strong regional NJ brewery lineup"
+    ],
+    "note": "40-plus rotating taps, strong regional NJ brewery lineup",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ],
+  "pre": [
+   {
+    "name": "NYNJ World Cup 26 Jersey Fan Hub (Sports Illustrated Stadium)",
+    "where": "Harrison, NJ; PATH to Harrison station, ~30 min from stadium via Secaucus",
+    "why": [
+     "Official free fan zone, replaced cancelled Liberty State Park site",
+     "60-ft pitch screen, all 104 matches, PATH-direct"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "6 mi",
+    "distMi": 6
+   },
+   {
+    "name": "Bolero Snort Brewery",
+    "where": "Carlstadt, ~2 mi from stadium",
+    "why": [
+     "Closest real brewery to the gates",
+     "Local NJ taproom, fresh pours pre-match"
+    ],
+    "note": "Local taproom, closest real brewery to the gates",
+    "rating": 4.8,
+    "dist": "2 mi",
+    "distMi": 2
+   },
+   {
+    "name": "Blarney Station Pub",
+    "where": "East Rutherford, ~1.5 mi",
+    "why": [
+     "Great Guinness pours, matchday Irish crowd",
+     "Walkable-close, friendly pre-game energy"
+    ],
+    "note": "Irish pub, excellent Guinness, friendly matchday crowd",
+    "rating": 4.4,
+    "dist": "1.4 mi",
+    "distMi": 1.4
+   },
+   {
+    "name": "Steve's Sizzling Steaks",
+    "where": "Carlstadt, ~2 mi",
+    "why": [
+     "1936 roadhouse, sizzling steak platters",
+     "Cold beer, old-school Jersey institution"
+    ],
+    "note": "1936 roadhouse, sizzling platters and cold beer",
+    "rating": 4.5,
+    "dist": "1.7 mi",
+    "distMi": 1.7
+   },
+   {
+    "name": "Marcus Live! Bar & Grille",
+    "where": "American Dream, bridge to stadium",
+    "why": [
+     "Marcus Samuelsson gameday wings and smash burgers",
+     "Big screens, bridge-walk to the gates"
+    ],
+    "note": "Samuelsson's gameday wings, smash burgers, big screens",
+    "rating": 4.3,
+    "dist": "0.5 mi",
+    "distMi": 0.5
+   }
+  ],
+  "post": [
+   {
+    "name": "Mulligan's Pub",
+    "where": "Hoboken, ~9 mi by train",
+    "why": [
+     "Hoboken's go-to soccer bar, multiple rooms",
+     "Chants and supporters' energy after the whistle"
+    ],
+    "note": "The Hoboken soccer bar, multiple rooms, chants",
+    "rating": 4.6,
+    "dist": "7 mi",
+    "distMi": 7
+   },
+   {
+    "name": "Madd Hatter",
+    "where": "Hoboken, ~9 mi",
+    "why": [
+     "40-plus screens, every angle covered",
+     "350-cap party room for the big crowd"
+    ],
+    "note": "40-plus screens, 350 capacity, full party energy",
+    "rating": 4.2,
+    "dist": "7 mi",
+    "distMi": 7
+   },
+   {
+    "name": "Wicked Wolf Tavern",
+    "where": "Hoboken riverfront",
+    "why": [
+     "50-plus TVs plus Hudson skyline views",
+     "Big sound system, riverfront postgame scene"
+    ],
+    "note": "50-plus TVs, Hudson views, big sound system",
+    "rating": 4.1,
+    "dist": "7 mi",
+    "distMi": 7
+   },
+   {
+    "name": "Pier 13",
+    "where": "Hoboken waterfront",
+    "why": [
+     "Outdoor watch party with NYC skyline backdrop",
+     "Food trucks and waterfront beer garden"
+    ],
+    "note": "Outdoor watch party, food trucks, skyline backdrop",
+    "rating": 4.5,
+    "dist": "7 mi",
+    "distMi": 7
+   }
+  ],
+  "merch": [
+   {
+    "name": "MetLife Stadium Flagship Team Store",
+    "where": "Main concourse, MetLife Stadium (Giants/Jets official store)",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "adidas Soccer Flagship Store",
+    "where": "American Dream, Court D, Level 2, East Rutherford (first US soccer-only adidas flagship, opened Feb 2026, by the pedestrian bridge)",
+    "rating": null,
+    "dist": "0.5 mi",
+    "distMi": 0.5
+   },
+   {
+    "name": "American Dream World Cup Vendor Village",
+    "where": "Inside American Dream, steps from the pedestrian bridge to the stadium",
+    "rating": null,
+    "dist": "0.5 mi",
+    "distMi": 0.5
+   }
+  ]
+ },
+ "tips": [
+  "Beat the post-match train crush: either sprint to the platform the instant the whistle blows, or linger 30-45 min to let the first wave clear. The slow middle is the worst.",
+  "Load your return fare BEFORE the match so you're not stuck in a ticket line with 80,000 people.",
+  "Arrive 2-3 hours early for the final: airport-style security on 80k fans and a tighter perimeter make gates brutal.",
+  "Clear-bag policy is strict: clear plastic bag max 12x6x12, a gallon Ziploc, or a tiny clutch. No backpacks.",
+  "For the 3 PM July final, the west-facing upper deck bakes in full sun; aim for east-side or lower-bowl shade if heat-sensitive.",
+  "Base in Hoboken or Jersey City for cheaper rooms and a shorter transit hop than Manhattan."
+ ],
+ "weather": "Expect a hot, humid mid-summer afternoon (June ~77F, July final ~87F) in full open-air sun, so pack sunscreen, a hat, and a sealed clear water bottle under 20 oz.",
+ "lore": [
+  "Copa America Centenario Final 2016: Chile beat Argentina on penalties, the biggest soccer final here before the World Cup.",
+  "Hosted Super Bowl XLVIII (2014), the first cold-weather Super Bowl in the NY/NJ area.",
+  "Staged the 2025 FIFA Club World Cup Final, the venue's full dress rehearsal for the big one.",
+  "A top-tier concert and WrestleMania stage (WrestleMania 29 and 35), built for ~$1.6B as the priciest US stadium ever at completion."
+ ],
+ "transport": {
+  "summary": "This is a transit-only World Cup: there is no general parking, so the NJ Transit train via Secaucus Junction is the move. A match ticket is required to buy any official transport, and everything must be pre-purchased.",
+  "rail": [
+   {
+    "name": "NJ Transit Meadowlands Rail (World Cup special)",
+    "station": "Meadowlands Sports Complex station, at the stadium's front door (~5 min walk to the MetLife/Verizon gates)",
+    "detail": "From NYC Penn Station, ride to Secaucus Junction then take the matchday-only Meadowlands shuttle train (~10 min) to the stadium. Service starts a few hours before kickoff and runs a couple hours post-match; capped at 40,000 riders per match, so it sells out. Allow 60-90 min Midtown-to-seat. Buy on the NJ Transit app only (njtworldcup.com); ticket holders only.",
+    "points": [
+     {
+      "b": "Transfer at",
+      "t": "Secaucus, then 10-min shuttle to stadium"
+     },
+     {
+      "b": "Capped at",
+      "t": "40,000 riders per match, sells out"
+     },
+     {
+      "b": "App only",
+      "t": "NJ Transit app, ticket holders"
+     }
+    ],
+    "deal": "$98 round trip (a World Cup special; normal Meadowlands fare is ~$12.90)"
+   }
+  ],
+  "bus": [
+   {
+    "name": "Official NYNJ Stadium Shuttle (FIFA)",
+    "from": "Four hubs: Midtown North (Red), Midtown East (Green), Port Authority Bus Terminal (Blue), Hackensack Meridian School of Medicine (Yellow)",
+    "detail": "Direct round-trip coach service to the stadium, ticket-holders only, non-transferable, accessible options available. Advance purchase via fevo.com/official-nynj-stadium-shuttles.",
+    "points": [
+     {
+      "b": "Direct coach",
+      "t": "round trip from four NYC/NJ hubs"
+     },
+     {
+      "b": "Ticket holders",
+      "t": "only, non-transferable, accessible options"
+     },
+     {
+      "b": "Book on",
+      "t": "fevo.com in advance"
+     }
+    ],
+    "deal": "NYC bus slashed to $20 round trip"
+   },
+   {
+    "name": "Coach USA 351 Meadowlands Express",
+    "from": "Port Authority Bus Terminal, South Wing 3rd floor (Gates 411-414)",
+    "detail": "Standard MetLife event bus to Lot K near the Quest Diagnostics Performance Center (~20 min). Service begins ~2.5-3 hrs before the event; last bus ~1 hr after it ends. Buy online for priority boarding at 351express.com.",
+    "points": [
+     {
+      "b": "Drops at",
+      "t": "Lot K, a ~20-min ride"
+     },
+     {
+      "b": "Runs from",
+      "t": "~2.5-3 hrs pre-event to ~1 hr after"
+     },
+     {
+      "b": "Book online",
+      "t": "at 351express.com for priority boarding"
+     }
+    ],
+    "deal": "$18 round trip"
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "NYNJ Stadium Shuttle (color lines)",
+    "detail": "FIFA's official park-and-ride/express coach network. Catch the Red, Green, Blue or Yellow line at its named hub; round trip, pre-booked, ~$20 from NYC. Same system as the bus above.",
+    "points": [
+     {
+      "b": "Four lines",
+      "t": "Red, Green, Blue, Yellow at named hubs"
+     },
+     {
+      "b": "Pre-booked",
+      "t": "round trip, same system as bus"
+     }
+    ]
+   }
+  ],
+  "fromAirport": "Newark Liberty (EWR) is closest and in NJ; from EWR take NJ Transit to Secaucus Junction, then the matchday Meadowlands train. From JFK/LGA, get into Manhattan (NYC Penn or Port Authority) and take the rail or official shuttle from there.",
+  "rideshare": "Uber/Lyft drop-off and pickup are NOT allowed on stadium property. The designated rideshare zone is at Meadowlands Racing and Entertainment, ~1.3 miles (2.1 km) from the gates via a marked walking path. Expect heavy surge pricing and long post-match waits.",
+  "bike": "",
+  "tips": [
+   "You must hold a valid match ticket to buy ANY official transport (rail, shuttle, parking) and tickets are non-transferable and checked before boarding.",
+   "Rail is capped at 40,000 per match and sells out; book the NJ Transit app ticket the moment it opens and have your return loaded before kickoff.",
+   "Post-match return at Secaucus is the #1 bottleneck for 80,000 fans; either sprint to the platform on the final whistle or linger 30-45 min to let the first wave clear.",
+   "Don't try to walk in from NYC or nearby roads, they're highways with no pedestrian access."
+  ]
+ },
+ "parking": {
+  "summary": "MetLife is transit-only for the World Cup: there is NO general spectator parking and NO tailgating at any match, including the Final. The only car option is a pricey pre-booked off-site space.",
+  "lots": [
+   {
+    "name": "American Dream Mall (off-site)",
+    "price": "$225 per match day (dynamic pricing, prepaid only)",
+    "detail": "Several thousand spaces connected to the stadium by two pedestrian bridges. Must be pre-purchased through JustPark, FIFA's official parking partner; no on-site or gate payment accepted.",
+    "points": [
+     {
+      "b": "Walk via",
+      "t": "two pedestrian bridges to the stadium"
+     },
+     {
+      "b": "Prepaid only",
+      "t": "through JustPark, no gate payment"
+     }
+    ]
+   },
+   {
+    "name": "Accessible J Lot (ADA)",
+    "price": "prepaid only",
+    "detail": "ADA accessible parking passes for the stadium's J Lot are sold in advance through JustPark / the official FIFA site. Requires a valid match ticket.",
+    "points": [
+     {
+      "b": "ADA passes",
+      "t": "for J Lot, sold via JustPark"
+     },
+     {
+      "b": "Requires",
+      "t": "a valid match ticket"
+     }
+    ]
+   }
+  ],
+  "prepaid": "All parking is prepaid only via JustPark (justpark.com), FIFA's official 2026 partner. No on-site payments are accepted; a valid match ticket is required to reserve.",
+  "accessible": "ADA accessible parking is in J Lot (prepaid via JustPark). For guests who don't need to park, a free ADA drop-off zone operates in Lot C near the Verizon Gate.",
+  "tailgating": "Tailgating is explicitly banned at all World Cup matches, a sharp break from the normal NFL Meadowlands tailgate scene.",
+  "tips": [
+   "Skip driving entirely: with no general parking and no tailgating, the $98 train is cheaper and faster than the $225 American Dream space.",
+   "If you must drive, reserve American Dream on JustPark early, it's capped and surges in price.",
+   "Need an ADA drop-off but not parking? Use the free Lot C zone by the Verizon Gate.",
+   "Standard NFL Giants/Jets parking ($40-60, on-site, tailgating allowed) does NOT apply to the World Cup, don't assume the usual setup."
+  ]
+ }
+}

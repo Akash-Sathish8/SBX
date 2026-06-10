@@ -1,0 +1,13 @@
+{
+ "id": "lumen-jun15", "venue": "lumen", "venueName": "Lumen Field", "city": "Seattle",
+ "date": "Jun 15", "ko": "3:00 PM", "round": "Group G", "home": "Belgium", "away": "Egypt",
+ "preview": {
+  "summary": "Belgium's golden-generation core opens Group G against a confident Egypt side built around Mohamed Salah. Expect Belgium to dominate possession while Egypt look to strike on the counter through their Liverpool talisman.",
+  "homeForm": "Belgium qualified unbeaten from UEFA, topping their group with 18 points and 29 goals, and arrive ranked 9th in the world.",
+  "awayForm": "Egypt cruised through African qualifying with a near-flawless campaign, topping their group with a game to spare.",
+  "homeKey": "Kevin De Bruyne, creative engine playing in his fourth World Cup.",
+  "awayKey": "Mohamed Salah, qualifying's joint top African scorer with nine goals.",
+  "storylines": ["De Bruyne and Salah, ex-Premier League rivals, square off", "Belgium chasing redemption after recent tournament flops", "Egypt eyeing a first-ever World Cup knockout berth"],
+  "h2h": "Belgium and Egypt have met three times since 2005, with Egypt winning two, though Belgium took the last meeting 3-0; they have never faced off at a World Cup."
+ }
+}

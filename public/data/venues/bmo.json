@@ -1,0 +1,502 @@
+{
+  "id": "bmo",
+  "name": "BMO Field",
+  "fifaName": "Toronto Stadium",
+  "nickname": null,
+  "city": "Toronto",
+  "country": "Canada",
+  "cc": "CAN",
+  "role": null,
+  "tagline": "Canada's home turf opens the World Cup here on June 12, the first men's WC match ever on Canadian soil.",
+  "hero": "img/stadiums/bmo.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~45,700 (WC config)"
+    },
+    {
+      "label": "Opened",
+      "value": "2007"
+    },
+    {
+      "label": "WC2026 Matches",
+      "value": "6 (5 group + R32)"
+    },
+    {
+      "label": "Host Of",
+      "value": "Canada's opening match"
+    },
+    {
+      "label": "Setup",
+      "value": "~17,000 temporary seats added"
+    },
+    {
+      "label": "Location",
+      "value": "Exhibition Place, Lake Ontario shore"
+    }
+  ],
+  "why": [
+    {
+      "title": "Canada's Opener",
+      "text": "BMO Field hosts Canada vs the UEFA play-off winner on June 12, the first men's World Cup match ever played on Canadian soil. The whole country will be watching this one."
+    },
+    {
+      "title": "Smallest, Loudest",
+      "text": "It's the tiniest stadium in the tournament, a compact European-style bowl that traps noise. The atmosphere punches way above the seat count."
+    },
+    {
+      "title": "Built Up For the Cup",
+      "text": "Crews bolted on roughly 17,000 temporary seats north and south to push capacity past 28,000 toward 45,700, all to be torn back down after the final whistle."
+    },
+    {
+      "title": "Real Grass, Lakeside",
+      "text": "Natural hybrid grass was already in place, so no turf conversion was needed, and the open-air bowl sits right on the Lake Ontario waterfront."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 12",
+      "round": "Group B",
+      "fixture": "Canada vs Bosnia and Herzegovina",
+      "ko": "3:00 PM",
+      "group": "B"
+    },
+    {
+      "date": "Jun 17",
+      "round": "Group L",
+      "fixture": "Ghana vs Panama",
+      "ko": "7:00 PM",
+      "group": "L"
+    },
+    {
+      "date": "Jun 20",
+      "round": "Group E",
+      "fixture": "Germany vs Côte d'Ivoire",
+      "ko": "4:00 PM",
+      "group": "E"
+    },
+    {
+      "date": "Jun 23",
+      "round": "Group L",
+      "fixture": "Panama vs Croatia",
+      "ko": "7:00 PM",
+      "group": "L"
+    },
+    {
+      "date": "Jun 26",
+      "round": "Group I",
+      "fixture": "Senegal vs Iraq",
+      "ko": "3:00 PM",
+      "group": "I"
+    },
+    {
+      "date": "Jul 2",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "7:00 PM",
+      "group": null
+    }
+  ],
+  "gettingThere": "Skip the car and take the train. From Union Station, the GO Lakeshore West line reaches Exhibition GO in about 7-8 minutes, a 2-5 minute walk from the gates and the single fastest matchday option.",
+  "transit": [
+    "GO Transit Lakeshore West: Union Station to Exhibition GO in ~7-8 min, then a short walk to the stadium.",
+    "TTC streetcars 509 Harbourfront (scenic via Queens Quay) and 511 Bathurst both terminate at Exhibition Loop next door; fare ~C$3.35.",
+    "From Pearson (YYZ), ride the UP Express to Union in ~25 min, then GO west one stop to Exhibition.",
+    "Driving is the worst option: limited parking runs C$40-80 on event days with road closures and heavy congestion."
+  ],
+  "matchday": "The stadium sits inside Exhibition Place on the waterfront, with young, walkable Liberty Village right next door. The party hub is FIFA's Fan Festival at Fort York and The Bentway (June 11-July 19), a short walk east, showing all 104 matches with global food and live music.",
+  "food": [
+    "Brazen Head (Liberty Village): Irish pub, the Toronto FC crowd's favourite, all fans welcome.",
+    "Amigos da Dundas (Little Portugal): bifana, pastel de nata and Super Bock at a TFC supporters' haunt.",
+    "Cafe Diplomatico (Little Italy): 'the Dip' patio on College St for Italian and Latin crowds.",
+    "Real Sports Bar & Grill (Financial District): one of the biggest sports bars in North America."
+  ],
+  "tips": [
+    "Take the GO train from Union over the streetcars on matchday, and load your Presto or tap a card before the post-match crush.",
+    "Arrive 90+ minutes early; WC security perimeters and clear-bag checks add real time, especially for the June 12 opener and July 2 Round of 32.",
+    "For afternoon kickoffs (Jun 12, 20, 26) the open bowl bakes in sun; the covered west grandstand is the prized shaded side.",
+    "The south end is the traditional supporters' and singing section if you want the loudest atmosphere.",
+    "Pack light: only a clear bag fits the policy and there's no stadium bag check, so stash luggage downtown via Stasher or Bounce.",
+    "Make a day of it: combine Exhibition Place, the waterfront trail and Liberty Village patios with the Fort York Fan Festival nearby."
+  ],
+  "weather": "Expect warm, humid mid-June to early-July Toronto days (highs ~24-30C) with lakeside breezes and possible afternoon storms, so pack sunscreen, water and a packable rain layer.",
+  "lore": [
+    "Opened in 2007 as Canada's first soccer-specific stadium, built for the 2007 FIFA U-20 World Cup and home of Toronto FC.",
+    "Toronto FC won the 2017 MLS Cup here, beating Seattle 2-0 a year after losing the 2016 final to them on penalties.",
+    "FIFA bans corporate stadium names at its events, so for the World Cup BMO Field is officially 'Toronto Stadium'.",
+    "Hosted the 2017 NHL Centennial Classic outdoor game before a then-record 40,148, a high-water mark topped by the 2026 expansion test."
+  ],
+  "transport": {
+    "summary": "BMO Field sits inside Exhibition Place on the lakeshore with its own GO station at the gates, so go transit-first: on-site parking is tiny and pricey and matchday road closures choke driving. The GO train from Union is the single fastest option; TTC streetcars to Exhibition Loop are the cheap backup.",
+    "rail": [
+      {
+        "name": "GO Transit Lakeshore West",
+        "station": "Exhibition GO (one stop west of Union)",
+        "detail": "Union Station to Exhibition GO in ~7-8 min, then a ~2-5 min walk over the Liberty Village pedestrian bridge to the gates. Trains run roughly every 30 min, late into the night on event days; pre-game westbound trains mostly use the south platform, post-game trains depart both platforms.",
+        "points": [
+          {
+            "b": "From Union",
+            "t": "to Exhibition GO in ~7-8 min."
+          },
+          {
+            "b": "Short walk",
+            "t": "~2-5 min over the pedestrian bridge."
+          },
+          {
+            "b": "Every 30 min",
+            "t": "late into the night on event days."
+          }
+        ],
+        "deal": "Tap PRESTO or buy an e-ticket / one-day weekend pass in advance. Note: GO's '25% off' deal is a Toronto FC ticket-bundle promo (code PRESTOTFC), not a WC fare discount."
+      },
+      {
+        "name": "UP Express (from Pearson Airport)",
+        "station": "Union Station, then transfer to GO",
+        "detail": "Pearson (YYZ) to Union in ~25 min, then GO Lakeshore West one stop west to Exhibition. The cleanest airport-to-stadium route, bypassing highway traffic.",
+        "points": [
+          {
+            "b": "Pearson to Union",
+            "t": "in ~25 min direct."
+          },
+          {
+            "b": "Then GO west",
+            "t": "one stop to Exhibition."
+          },
+          {
+            "b": "Skips highways",
+            "t": "cleanest airport-to-stadium route."
+          }
+        ],
+        "deal": "Tap PRESTO or a contactless card; UP Express fare is ~C$12.55-13 one way."
+      }
+    ],
+    "bus": [
+      {
+        "name": "TTC 511 Bathurst streetcar",
+        "from": "Bathurst Station (Line 2)",
+        "detail": "Runs south down Bathurst to the Exhibition Loop right beside the stadium. Note matchday/construction can swap in a 509/511 replacement bus for the final leg.",
+        "points": [
+          {
+            "b": "South on Bathurst",
+            "t": "to Exhibition Loop beside the stadium."
+          },
+          {
+            "b": "Watch for swaps",
+            "t": "509/511 replacement bus on the final leg."
+          }
+        ],
+        "deal": "Flat TTC fare ~C$3.35 by PRESTO or contactless tap; one fare covers 2 hours of transfers."
+      },
+      {
+        "name": "TTC 509 Harbourfront streetcar",
+        "from": "Union Station",
+        "detail": "Scenic ride west along Queens Quay to the Exhibition Loop next to the gates. Slower and more crowded than the GO train on matchday but very cheap.",
+        "points": [
+          {
+            "b": "Scenic Queens Quay",
+            "t": "ride west to Exhibition Loop."
+          },
+          {
+            "b": "Slow but cheap",
+            "t": "more crowded than the GO train."
+          }
+        ],
+        "deal": "Flat TTC fare ~C$3.35 by PRESTO or contactless tap."
+      },
+      {
+        "name": "TTC 29 Dufferin bus",
+        "from": "Dufferin Station (Line 2)",
+        "detail": "Runs south on Dufferin to the Exhibition grounds, a handy alternative if you're coming from the west end or want to skip the streetcar transfer.",
+        "points": [
+          {
+            "b": "South on Dufferin",
+            "t": "straight to the Exhibition grounds."
+          },
+          {
+            "b": "West-end pick",
+            "t": "skips the streetcar transfer."
+          }
+        ],
+        "deal": "Flat TTC fare ~C$3.35 by PRESTO or contactless tap."
+      }
+    ],
+    "shuttle": [
+      {
+        "name": "GO accessibility shuttle",
+        "detail": "The Exhibition GO elevator has been out for station upgrades; GO offers an accessibility shuttle with 48-hour advance notice (call 416-869-3200). Confirm the current status before matchday.",
+        "points": [
+          {
+            "b": "Elevator out",
+            "t": "Exhibition GO is under station upgrades."
+          },
+          {
+            "b": "Book 48h ahead",
+            "t": "shuttle on request, call 416-869-3200."
+          },
+          {
+            "b": "Confirm status",
+            "t": "check before matchday travel."
+          }
+        ]
+      }
+    ],
+    "fromAirport": "From Pearson (YYZ), take the UP Express to Union (~25 min, ~C$12.55-13), then ride GO Lakeshore West one stop west to Exhibition. Billy Bishop island airport (YTZ) is the closest airport, a short streetcar or taxi hop via the Bathurst St foot tunnel.",
+    "rideshare": "Set your destination to BMO Field, 170 Princes' Blvd; the nearest drop-off is around Lake Shore Blvd W & Strachan Ave, set back from the secure perimeter. Strachan Ave closes ~2 hours before kickoff and Lake Shore Blvd near Exhibition ~1 hour before, so expect reroutes. Post-match surge can spike 2-4x within minutes; walk ~15 min north to Liberty Village (King St W & Hanna Ave) to request a cheaper pickup.",
+    "bike": "Bike racks are spread throughout Exhibition Place and the surrounding parks, and the Martin Goodman waterfront trail runs right past the grounds, making cycling a fast car-free option.",
+    "tips": [
+      "Take the GO train from Union over the streetcars on matchday: ~7-8 min versus a slow, packed streetcar crawl.",
+      "Load PRESTO or have a contactless card ready before the post-match crush; both GO and TTC accept tap-to-pay.",
+      "Verify the Exhibition GO elevator and any 509/511 replacement-bus status before you travel, as station upgrades and matchday closures shift the last leg.",
+      "After the final whistle, walking north to Liberty Village to catch your train, streetcar or rideshare beats fighting the queue at the gates."
+    ]
+  },
+  "parking": {
+    "summary": "On-site parking at Exhibition Place is very limited and gets expensive and congested on event days, with matchday road closures making it the worst option. Treat driving as a last resort and take GO or TTC instead.",
+    "lots": [
+      {
+        "name": "Exhibition Place surface lots (Red P)",
+        "price": "~C$15 base, up to ~C$30 on big events",
+        "detail": "Surface lots around the grounds; expect WC matchday rates and heavy congestion well above normal event pricing. No cash, pay by card, Apple/Google Pay or the Green P app.",
+        "points": [
+          {
+            "b": "Surface lots",
+            "t": "spread around the grounds."
+          },
+          {
+            "b": "Heavy congestion",
+            "t": "WC matchday rates well above normal."
+          },
+          {
+            "b": "No cash",
+            "t": "card, Apple/Google Pay or Green P app."
+          }
+        ]
+      },
+      {
+        "name": "Exhibition Place underground garage (Yellow P)",
+        "price": "~C$15 base, +C$3 peak days, up to ~C$30",
+        "detail": "Indoor garage with the bulk of the accessible spaces; covered option but fills fast and empties slowly post-match.",
+        "points": [
+          {
+            "b": "Covered garage",
+            "t": "holds most accessible spaces."
+          },
+          {
+            "b": "Fills fast",
+            "t": "and empties slowly post-match."
+          }
+        ]
+      },
+      {
+        "name": "Lots 852 / 856 (west of BMO Field)",
+        "price": "Varies; Lot 856 reduced rates",
+        "detail": "Lot 852 is Green P app-exclusive with no cash or credit accepted at the gate; Lot 856 west of the stadium offers reduced rates when available.",
+        "points": [
+          {
+            "b": "Lot 852",
+            "t": "Green P app only, no gate payment."
+          },
+          {
+            "b": "Lot 856",
+            "t": "west of the stadium, reduced rates."
+          }
+        ]
+      }
+    ],
+    "prepaid": "Prepay and reserve through the Green P Parking app (required for Lot 852) or third-party services like SpotHero; on big-event days expect quoted rates of C$40-80 and book early, since on-site capacity is small.",
+    "accessible": "Exhibition Place has 88 wheelchair-accessible spaces across the surface lots and indoor garage, plus 5 parent-child spaces (indoor garage, Lots 1 & 3) and 14 hybrid-vehicle spaces. TTC Wheel-Trans and accessible routes also serve the grounds.",
+    "tailgating": "No traditional tailgating; Exhibition Place is a paved urban event ground, not an open tailgate lot, and FIFA matchday security perimeters further restrict lot activity.",
+    "tips": [
+      "Skip driving if you can: limited lots, C$40-80 event-day rates and road closures make GO or TTC far easier.",
+      "If you must drive, prepay via the Green P app before arriving, since several lots take no cash or credit at the gate.",
+      "Park-and-ride from a suburban GO station and take Lakeshore West in to dodge downtown traffic and lot scarcity entirely."
+    ]
+  },
+  "around": {
+    "food": [
+      {
+        "name": "Panini stand",
+        "where": "Concourse, throughout",
+        "note": "Carved-to-order 12-hour roast porchetta sandwich, the signature.",
+        "why": [
+          "12-hour roast porchetta, carved to order",
+          "BMO's signature, worth the concourse line"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "Frites stand",
+        "where": "Main concourse",
+        "note": "Triple-cooked poutine; try the pork birria fries.",
+        "why": [
+          "Triple-cooked poutine done right",
+          "Pork birria fries are the move"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "Pizza Pizza",
+        "where": "Concourse stands",
+        "note": "Hot Canadian-chain slices, quick grab between halves.",
+        "why": [
+          "Hot Canadian-chain slices, fast",
+          "Easy halftime grab, no fuss"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "King Club bar",
+        "where": "Premium club level",
+        "note": "Big craft beer list and full cocktail selection.",
+        "why": [
+          "Deep craft beer list",
+          "Full cocktails on the club level"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      }
+    ],
+    "pre": [
+      {
+        "name": "FIFA Fan Festival (Fort York & The Bentway)",
+        "where": "250 Fort York Blvd; ~10-min walk east of the stadium, or one stop on the 509/511 streetcar",
+        "why": [
+          "Free fan zone, all 104 matches live",
+          "30+ global food vendors, music by the lake"
+        ],
+        "fifa": true,
+        "rating": null,
+        "dist": "0.7 mi",
+        "distMi": 0.7
+      },
+      {
+        "name": "Brazen Head Irish Pub",
+        "where": "165 East Liberty St, Liberty Village",
+        "note": "TFC's unofficial home, sea of red, wraparound patio.",
+        "why": [
+          "TFC supporters' unofficial home, sea of red",
+          "Wraparound Liberty Village patio, closest pint"
+        ],
+        "rating": 4.5,
+        "dist": "0.4 mi",
+        "distMi": 0.4
+      },
+      {
+        "name": "LOCAL Public Eatery",
+        "where": "171 East Liberty St, Liberty Village",
+        "note": "Big boisterous sports-bar patio with 20+ taps, right by the stadium.",
+        "why": [
+          "Boisterous patio sports bar, every game on",
+          "20+ taps, closest pre-match crowd in Liberty Village"
+        ],
+        "rating": 4.4,
+        "dist": "0.4 mi",
+        "distMi": 0.4
+      },
+      {
+        "name": "Left Field Brewery (Liberty Village)",
+        "where": "40 Hanna Ave, Liberty Village",
+        "note": "Baseball-themed taproom with six location-exclusive in-house beers.",
+        "why": [
+          "Brews its own beer on-site, six exclusive pours",
+          "Easy Liberty Village walk before kickoff"
+        ],
+        "rating": 4.5,
+        "dist": "0.5 mi",
+        "distMi": 0.5
+      },
+      {
+        "name": "King Taps King West",
+        "where": "620 King St W, King West",
+        "note": "Multi-floor beer hall with 50+ taps and every screen on the match.",
+        "why": [
+          "Sprawling beer hall, 50+ taps for gameday",
+          "Every screen on the match on King West"
+        ],
+        "rating": 4.6,
+        "dist": "1.2 mi",
+        "distMi": 1.2
+      }
+    ],
+    "post": [
+      {
+        "name": "Brazen Head Irish Pub",
+        "where": "165 East Liberty St, Liberty Village",
+        "note": "Open till 2am, red jerseys post-match, $7 pints.",
+        "why": [
+          "Open till 2am, $7 pints",
+          "Red jerseys spill in after the whistle"
+        ],
+        "rating": 4.5,
+        "dist": "0.4 mi",
+        "distMi": 0.4
+      },
+      {
+        "name": "Baro",
+        "where": "485 King St W, King West",
+        "note": "Latin flair across levels, dinner turns to nightlife.",
+        "why": [
+          "Latin flair, dinner rolls into nightlife",
+          "Multi-level King West party spot"
+        ],
+        "rating": 4.5,
+        "dist": "1.3 mi",
+        "distMi": 1.3
+      },
+      {
+        "name": "Lavelle",
+        "where": "627 King St W, King West",
+        "note": "Rooftop bar and pool with skyline views.",
+        "why": [
+          "Rooftop pool with skyline views",
+          "King West's glam late-night perch"
+        ],
+        "rating": 3.7,
+        "dist": "1.2 mi",
+        "distMi": 1.2
+      },
+      {
+        "name": "416 Snack Bar",
+        "where": "181 Bathurst St (Queen & Bathurst)",
+        "note": "Tiny electric late-night spot, global small plates.",
+        "why": [
+          "Tiny, electric late-night room",
+          "Global small plates till close"
+        ],
+        "rating": 4.3,
+        "dist": "1.4 mi",
+        "distMi": 1.4
+      }
+    ],
+    "merch": [
+      {
+        "name": "Real Sports Apparel (BMO Field kiosks)",
+        "where": "Nine merchandise kiosks throughout BMO Field, 170 Princes' Blvd; gates-open access with a valid ticket",
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "FIFA Official Store - Toronto Host City",
+        "where": "Official FIFA World Cup 2026 Toronto Host City collection (store.fifa.com); host-city retail",
+        "rating": null,
+        "dist": "Host city / online",
+        "distMi": null
+      },
+      {
+        "name": "Real Sports Apparel (flagship)",
+        "where": "Scotiabank Arena, Gate 1 Galleria, 50 Bay St; largest team-licensed store in the city (TFC, Leafs, Raptors gear)",
+        "rating": 3.6,
+        "dist": "1.9 mi",
+        "distMi": 1.9
+      }
+    ]
+  }
+}

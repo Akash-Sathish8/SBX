@@ -1,0 +1,24 @@
+{
+ "id": "bbva-jun24",
+ "venue": "bbva",
+ "venueName": "Estadio BBVA",
+ "city": "Monterrey",
+ "date": "Jun 24",
+ "ko": "7:00 PM",
+ "round": "Group A",
+ "home": "South Africa",
+ "away": "Korea Republic",
+ "preview": {
+  "summary": "A Group A meeting of Hugo Broos's rebuilt Bafana Bafana against a South Korea side led by captain Son Heung-min. With co-hosts Mexico in the group, both could be fighting for crucial points in Monterrey.",
+  "homeForm": "South Africa reached their best FIFA ranking in over 25 years at 60th, reward for Broos's steady rebuild since 2021.",
+  "awayForm": "South Korea dominated AFC Group C with five wins and no defeats, qualifying for a 12th World Cup and ranked 25th.",
+  "homeKey": "Ronwen Williams, captain and penalty-saving hero in goal.",
+  "awayKey": "Son Heung-min, talisman captain at his fourth World Cup.",
+  "storylines": [
+   "Son Heung-min leading Korea at his fourth and likely final World Cup",
+   "Broos's disciplined Bafana chasing a rare World Cup knockout berth",
+   "Williams' shot-stopping versus Korea's Lee Kang-in and Hwang Hee-chan"
+  ],
+  "h2h": "The sides have met sparingly, with their friendlies historically tight and low-scoring."
+ }
+}

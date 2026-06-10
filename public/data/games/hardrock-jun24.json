@@ -1,0 +1,13 @@
+{
+ "id": "hardrock-jun24", "venue": "hardrock", "venueName": "Hard Rock Stadium", "city": "Miami",
+ "date": "Jun 24", "ko": "6:00 PM", "round": "Group C", "home": "Scotland", "away": "Brazil",
+ "preview": {
+  "summary": "Steve Clarke's Scotland face a star-studded Brazil under Carlo Ancelotti in a Group C heavyweight test. The Scots will sit deep, defend in numbers and look to spring McTominay on the break, while Brazil's attacking talent demands sustained pressure. A defining group-stage fixture for Scotland's knockout hopes.",
+  "homeForm": "Scotland reached the finals via Europe but lost talisman Billy Gilmour to a late injury before the tournament.",
+  "awayForm": "Brazil are ranked sixth in the world and managed by Carlo Ancelotti with a deep attacking pool.",
+  "homeKey": "Scott McTominay, Napoli midfielder and Scotland's goal threat.",
+  "awayKey": "Vinicius Junior, electric winger leading Brazil's attack.",
+  "storylines": ["Ancelotti's Brazil bring Vinicius, Raphinha and Neymar to Miami", "Scotland missing injured playmaker Billy Gilmour", "A rematch of group-stage history from France 1998"],
+  "h2h": "Brazil have won every prior meeting, including 1-0 in 1990 and 2-1 in the 1998 World Cup opener."
+ }
+}

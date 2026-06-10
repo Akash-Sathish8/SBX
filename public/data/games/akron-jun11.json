@@ -1,0 +1,24 @@
+{
+ "id": "akron-jun11",
+ "venue": "akron",
+ "venueName": "Estadio Akron",
+ "city": "Guadalajara",
+ "date": "Jun 11",
+ "ko": "8:00 PM",
+ "round": "Group A",
+ "home": "Korea Republic",
+ "away": "Czechia",
+ "preview": {
+  "summary": "A Group A opener pairing Asia's most consistent qualifier against a Czech Republic side back at the finals after a 20-year absence. South Korea's technical, pacey attack meets a physical Czech team that thrives on set pieces and aerial duels, making this an intriguing clash of styles.",
+  "homeForm": "South Korea were the only Asian side to go unbeaten in qualifying, though recent friendlies were rocky, including a 4-0 loss to Ivory Coast and a 1-0 defeat to Austria.",
+  "awayForm": "Czech Republic booked their return to the World Cup after 20 years by winning playoff penalty shootouts against the Republic of Ireland and Denmark.",
+  "homeKey": "Son Heung-min, talisman chasing his country's World Cup scoring record.",
+  "awayKey": "Czech Republic's set-piece and aerial threat, their main route to goals.",
+  "storylines": [
+   "Son Heung-min plays his fourth World Cup, one goal from history",
+   "Czech Republic return to the finals after two decades away",
+   "Korea's flair versus Czech physicality and dead-ball danger"
+  ],
+  "h2h": "The two nations have rarely met competitively, with no prior World Cup meeting between them."
+ }
+}

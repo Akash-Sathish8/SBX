@@ -1,0 +1,422 @@
+/* =========================================================================
+   TETRIS DESIGN SYSTEM — reskinned to the SNAPBACK SPORTS color theme.
+   Signatures kept: Bangers headings, 8px solid cards, hard offset slabs,
+   clip-path notched buttons, alternating sections, tetris grid pattern.
+   Only the COLOR THEME changed: pink brand -> Snapback yellow, #1C202B
+   slab -> #111111, soft-blue light section -> off-white.
+   ========================================================================= */
+:root{
+  /* --- Snapback palette --- */
+  --sb-yellow:#F7DF02;        /* brand (was #E22D6D) */
+  --sb-yellow-deep:#FFD000;   /* gradient partner */
+  --sb-black:#222222;         /* slab + dark sections (was #1C202B) */
+  --sb-black-strong:#000000;
+  --sb-white:#FFFFFF;
+  --sb-light:#F4F4F4;         /* light section (was #DFE7FF) */
+  --sb-light-2:#FBFBF3;       /* faint warm tint */
+  --sb-ink:#222222;           /* heading */
+  --sb-body:#33352f;          /* body text */
+  --sb-gray:#6b6b6b;
+
+  /* tokens */
+  --gradient-from:var(--sb-yellow-deep);
+  --gradient-to:var(--sb-yellow);
+  --gradient-shadow:var(--sb-black);
+
+  --slab:#111111;
+  --color-1-400:rgba(255,255,255,0.5);
+  --color-1-700:rgba(17,17,17,0.45);
+
+  --notch:polygon(calc(100% - 10px) 0px, 100% 10px, 100% 100%, 10px 100%, 0px calc(100% - 10px), 0px 0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Barlow',system-ui,sans-serif;
+  color:var(--sb-body);
+  background:var(--sb-light);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:'Anton',cursive;font-weight:400;
+  text-transform:uppercase;color:var(--sb-ink);
+  letter-spacing:2px;line-height:1.02;
+}
+h1{font-size:clamp(44px,8vw,96px)}
+h2{font-size:clamp(36px,5.5vw,64px);letter-spacing:1.5px}
+h3{font-size:clamp(28px,3vw,44px);letter-spacing:1px}
+h4{font-size:clamp(24px,2.4vw,32px);letter-spacing:1px}
+p{line-height:1.65;max-width:65ch}
+.lead{font-size:20px;line-height:1.65}
+.eyebrow{font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sb-gray);display:inline-flex;align-items:center;gap:8px}
+a{color:inherit}
+
+/* ---- layout ---- */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+section{padding:96px 0;position:relative;overflow:hidden}
+.sec-light{background:var(--sb-light)}
+.sec-light-2{background:var(--sb-light-2)}
+.sec-dark{background:var(--sb-black);color:#e9e9e3}
+.sec-dark h1,.sec-dark h2,.sec-dark h3,.sec-dark h4{color:#fff}
+.sec-head{margin-bottom:48px;max-width:760px}
+.sec-head p{color:inherit;opacity:.85;margin-top:16px}
+
+/* ---- tetris grid pattern ---- */
+.grid-bg::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;user-select:none;
+  background-image:linear-gradient(rgba(17,17,17,.06) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(17,17,17,.06) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.sec-dark.grid-bg::after{
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+}
+.container{position:relative;z-index:1}
+
+/* floating tetromino scatter */
+.tetro{position:absolute;z-index:0;pointer-events:none;opacity:.10}
+.tetro b{display:block;width:18px;height:18px}
+.t-y b{background:var(--sb-yellow)}
+.t-w b{background:#fff}
+.t-g b{background:#888}
+
+/* ---- buttons ---- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:10px;
+  font-family:'Barlow';font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:1px;
+  padding:12px 24px;border:0;border-radius:0;cursor:pointer;color:var(--sb-ink);
+  background:var(--sb-light);clip-path:var(--notch);
+  box-shadow:inset var(--color-1-400) 0 6px 0 -5px;
+  /* hard offset slab via drop-shadow so it follows the notched silhouette AND sits behind */
+  filter:drop-shadow(6px 6px 0 var(--gradient-shadow));
+  transition:transform 80ms ease-out,filter 120ms;
+  text-decoration:none;
+}
+.btn:hover{filter:drop-shadow(6px 6px 0 var(--gradient-shadow)) brightness(1.05)}
+.btn:active{transform:translate(3px,3px);filter:drop-shadow(3px 3px 0 var(--gradient-shadow))}
+.btn:focus-visible{outline:4px solid var(--sb-yellow-deep);outline-offset:2px}
+.btn-brand{background:var(--sb-yellow);color:var(--sb-black)}
+.btn-dark{background:var(--sb-black);color:#fff;filter:drop-shadow(6px 6px 0 var(--sb-yellow))}
+.btn-dark:hover{filter:drop-shadow(6px 6px 0 var(--sb-yellow)) brightness(1.1)}
+.btn-dark:active{filter:drop-shadow(3px 3px 0 var(--sb-yellow))}
+/* nav CTA: black with an inset yellow ring so it pops on the black bar */
+.btn-navcta{padding:9px 20px;font-size:13px;box-shadow:inset 0 0 0 2px var(--sb-yellow)}
+.btn-lg{font-size:22px;padding:17px 34px}
+.btn-xl{font-size:29px;padding:22px 46px;letter-spacing:1.2px}
+/* Mobile: the hero CTAs read smaller so they don't dominate the landing screen.
+   Web keeps the full billboard-size buttons. */
+@media(max-width:860px){
+  .a-cta .btn-xl{font-size:19px;padding:14px 28px;letter-spacing:.6px}
+}
+.btn-ghost{background:transparent;box-shadow:none;color:inherit;filter:none}
+.btn-ghost:hover{filter:none}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.sec-light .btn-ghost:hover{background:rgba(17,17,17,.06)}
+
+/* ---- nav ---- */
+header.nav{position:sticky;top:0;z-index:50;background:var(--sb-black);border-bottom:4px solid var(--sb-yellow)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:100%;margin:0;padding:0 28px}
+.logo{font-family:'Anton';color:#fff;font-size:28px;letter-spacing:2px;display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
+.logo-img{height:42px;width:42px;display:block;border-radius:8px;box-shadow:3px 3px 0 0 var(--sb-black-strong)}
+.logo .wc{font-family:'Barlow';font-weight:700;font-size:10px;letter-spacing:1px;color:#111;background:var(--sb-yellow);padding:2px 7px;border-radius:3px;margin-left:2px;align-self:center}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:#cfcfcf;text-decoration:none;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.5px}
+.nav-links a:hover{color:var(--sb-yellow)}
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:transparent;border:0;cursor:pointer;padding:0;z-index:60}
+.hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
+.hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+@media(max-width:760px){
+  .hamburger{display:flex}
+  .nav-links{position:absolute;top:68px;left:0;right:0;background:var(--sb-black);flex-direction:column;align-items:stretch;gap:0;padding:6px 0 14px;border-bottom:4px solid var(--sb-yellow);display:none}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px 28px;font-size:15px}
+  .nav-links a.btn-navcta{margin:10px 28px 4px;justify-content:center}
+}
+
+/* ---- hero (concept A: split / share + compare) ---- */
+body{overflow-x:hidden}
+.hl{color:var(--sb-ink);background:var(--sb-yellow);padding:0 10px;box-shadow:6px 6px 0 0 var(--sb-black);display:inline-block;transform:rotate(-1.5deg)}
+.a-hero{display:grid;grid-template-columns:46% 54%;min-height:calc(100vh - 72px);width:100%;padding:0}
+.a-leftcol{display:flex;flex-direction:column;min-width:0}
+.a-ctabar{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:22px clamp(24px,5vw,80px);background:var(--sb-light);border-bottom:4px solid var(--sb-black);position:relative;z-index:2}
+.a-left{padding:36px clamp(24px,5vw,72px) 32px;display:flex;flex-direction:column;justify-content:flex-start;gap:24px;position:relative;z-index:1;container-type:inline-size;min-width:0}
+.a-left .eyebrow{margin-bottom:18px}
+.a-hero h1{font-family:'Monument Extended','Anton',sans-serif;font-size:clamp(58px,22cqw,176px);max-width:100%;margin:16px 0 24px;line-height:.92;letter-spacing:1px;overflow-wrap:break-word}
+.a-hero h1 .ln{display:block}
+.a-hero h1 .hl{max-width:100%;margin-top:.22em}
+.a-blurb{font-size:33px;max-width:32ch;color:var(--sb-body);line-height:1.38;margin:0;font-weight:500}
+.a-blurb strong{color:var(--sb-ink)}
+/* feature chips + social proof (variant 3) */
+.feats{display:flex;flex-direction:column;gap:18px}
+.feat{display:flex;align-items:center;gap:14px;font-weight:700;color:var(--sb-ink);font-size:24px}
+.proof{display:flex;align-items:center;gap:12px}
+.proof .avs{display:flex}
+.proof .avs span{width:32px;height:32px;border-radius:50%;border:2px solid #fff;background:var(--sb-black);color:var(--sb-yellow);font-family:'Anton';font-size:14px;display:flex;align-items:center;justify-content:center;margin-left:-8px}
+.proof .avs span:first-child{margin-left:0}
+.proof .txt{font-size:13px;color:var(--sb-gray);font-weight:600}
+.proof .txt b{color:var(--sb-ink)}
+.a-sub{font-size:19px;max-width:46ch;color:var(--sb-body);margin-bottom:34px;line-height:1.6}
+.a-cta{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+
+/* Quick guide links that live in the hero's open space (replaces the old
+   "Know before you go" section). White emoji glyphs on black tiles, stacked
+   vertically so they fill the space. */
+.a-quick{display:flex;flex-direction:column}
+.a-quick-item{display:flex;align-items:center;text-decoration:none;color:var(--sb-ink)}
+.a-quick-ic{display:flex;align-items:center;justify-content:center;background:#111;border:2px solid #111;border-radius:12px;flex:0 0 auto}
+/* brightness(0) flattens the colour emoji to black, invert(1) flips it to a
+   clean white silhouette — white icon on the black tile. */
+.a-quick-gl{filter:brightness(0) invert(1);line-height:1}
+.a-quick-lb{font-family:'Anton';letter-spacing:.5px;line-height:1.05}
+/* Web: large, roomy stack with even spacing above + below (matches the gap to
+   the CTAs). */
+@media(min-width:861px){
+  .a-left{justify-content:center;gap:48px}
+  .a-hero h1{margin-bottom:0}
+  .a-quick{gap:18px;max-width:560px}
+  .a-quick-item{gap:18px}
+  .a-quick-ic{width:68px;height:68px;font-size:32px}
+  .a-quick-lb{font-size:30px}
+  .a-quick-item:hover .a-quick-ic{box-shadow:4px 4px 0 0 var(--sb-yellow)}
+  .a-quick-item:hover .a-quick-lb{color:var(--sb-yellow-deep)}
+}
+/* Mobile: same vertical stack, sized up from the old icon row. */
+@media(max-width:860px){
+  .a-quick{gap:12px}
+  .a-quick-item{gap:13px}
+  .a-quick-ic{width:48px;height:48px;font-size:23px;border-radius:10px}
+  .a-quick-lb{font-size:19px}
+}
+.a-right{position:relative;background:#000;overflow:hidden;min-height:420px}
+.a-right .img{position:absolute;inset:0;background:url('/img/stadiums/sofi.jpg') center/cover}
+.a-right .img::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(17,17,17,.55),rgba(17,17,17,.05) 45%,rgba(17,17,17,.45))}
+.a-right::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--sb-yellow);z-index:3}
+.a-post{position:absolute;top:30px;right:30px;z-index:4;max-width:280px}
+.a-venue{position:absolute;left:34px;bottom:38px;z-index:4;background:var(--sb-black);color:#fff;border:6px solid var(--sb-yellow);border-radius:6px;padding:18px 20px;box-shadow:12px 12px 0 0 rgba(0,0,0,.45);width:330px;max-width:calc(100% - 68px)}
+.a-venue .cc{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--sb-yellow);margin-bottom:2px}
+.a-venue .cv{font-family:'Anton';font-size:30px;color:#fff;letter-spacing:1px;margin-bottom:12px}
+.a-venue .scorechip{margin-bottom:14px}
+.a-venue .scorechip .s{background:#1b1b1b}.a-venue .scorechip .s .v{color:#fff}.a-venue .scorechip .s.fan .v{color:var(--sb-yellow)}
+@media(max-width:860px){
+  .a-hero{grid-template-columns:1fr}
+  /* Landing = the title + CTAs, filling the first screen. The stadium panel and
+     everything below it sit past the fold, so you scroll to reach them.
+     dvh (not vh) so it's exact under the mobile browser's address bar. */
+  .a-left{min-height:calc(100dvh - 72px);justify-content:space-between}
+  .a-right{min-height:440px}
+}
+/* Phones: the fan post + venue cards become small corner blurbs so they frame
+   the stadium photo instead of covering it. Drop the long quote and the rating
+   bars — a blurb only needs who / score / venue. */
+@media(max-width:640px){
+  .a-right{min-height:360px}
+  .a-post{top:12px;right:12px;max-width:47%;padding:9px 11px;border-width:3px;box-shadow:5px 5px 0 0 #111}
+  .a-post .hd{gap:7px;margin-bottom:5px}
+  .a-post .avatar{width:30px;height:30px;font-size:15px;border-width:2px}
+  .a-post .nm{font-size:12px}
+  .a-post .mt{font-size:10px}
+  .a-post .stars{font-size:12px}
+  .a-post .q,.a-post .wasthere{display:none}
+  .a-venue{left:12px;bottom:12px;width:auto;max-width:50%;padding:10px 12px;border-width:4px;box-shadow:6px 6px 0 0 rgba(0,0,0,.45)}
+  .a-venue .cc{font-size:10px}
+  .a-venue .cv{font-size:17px;line-height:1;margin-bottom:8px}
+  .a-venue .scorechip{gap:7px;margin-bottom:0}
+  .a-venue .scorechip .s{min-width:0;padding:5px 9px}
+  .a-venue .scorechip .s .v{font-size:22px}
+  .a-venue .scorechip .s .k{font-size:8px}
+  .a-venue .detrow{display:none}
+}
+
+/* atoms: scorechip, fan post, stars, detail rows */
+.scorechip{display:flex;gap:10px}
+.scorechip .s{border:3px solid var(--sb-black);border-radius:4px;padding:8px 14px;text-align:center;background:#fff;min-width:78px}
+.scorechip .s.fan{border-color:var(--sb-yellow-deep)}
+.scorechip .s .v{font-family:'Anton';font-size:32px;line-height:1;color:var(--sb-ink)}
+.scorechip .s.fan .v{color:#b89e00}
+.scorechip .s .k{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--sb-gray);margin-top:2px}
+.stars{color:var(--sb-yellow-deep);font-size:14px;letter-spacing:2px;line-height:1}
+.stars .e{color:#cfcfcf}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--sb-yellow);color:#111;font-family:'Anton';font-size:21px;display:flex;align-items:center;justify-content:center;border:2px solid #111;flex:0 0 auto}
+.detrow{display:flex;align-items:center;gap:10px;margin:8px 0}
+.detrow .dl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--sb-gray);width:92px}
+.detrow .db{flex:1;height:10px;background:#e7e7e7;border:2px solid #111;display:flex}
+.detrow .db i{display:block;background:var(--sb-yellow)}
+.detrow .dv{font-family:'Anton';font-size:17px;color:var(--sb-ink);width:24px;text-align:right}
+.on-dark .detrow .dl{color:#b8b8b8}.on-dark .detrow .db{background:#2b2b2b;border-color:#000}.on-dark .detrow .dv{color:#fff}
+.fanpost{background:#fff;border:4px solid #111;border-radius:6px;box-shadow:8px 8px 0 0 #111;padding:14px 16px}
+.fanpost .hd{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.fanpost .nm{font-weight:700;font-size:14px;color:#111;line-height:1.1}
+.fanpost .mt{font-size:11px;color:var(--sb-gray);font-weight:600}
+.fanpost .q{font-size:14px;color:#222;line-height:1.45}
+.wasthere{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#111;background:var(--sb-yellow);padding:3px 8px;border-radius:3px;margin-top:10px}
+.reveal{opacity:0;transform:translateY(-18px);animation:drop .55s cubic-bezier(.5,0,.75,0) forwards}
+@keyframes drop{to{opacity:1;transform:none}}
+
+/* ---- stats band ---- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.stat{background:var(--sb-black);color:#fff;padding:28px;clip-path:var(--notch)}
+.stat .n{font-family:'Anton';font-size:54px;color:var(--sb-yellow);line-height:1}
+.stat .l{font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:13px;color:#bdbdbd;margin-top:6px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- cards ---- */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.grid3{grid-template-columns:1fr}}
+
+/* auto-cycling venue marquee (infinite loop, ~3.5 visible, pause on hover) */
+.marquee{position:relative;overflow:hidden;padding:14px 0 24px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.marquee-track{display:flex;gap:24px;width:max-content;
+  animation:venue-scroll 70s linear infinite;will-change:transform}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee .card{flex:0 0 280px}
+@media(max-width:520px){.marquee .card{flex:0 0 76vw}}
+@keyframes venue-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none}.marquee{overflow-x:auto}}
+.rail-hint{display:flex;align-items:center;gap:8px;font-weight:700;text-transform:uppercase;
+  font-size:12px;letter-spacing:.5px;color:var(--sb-gray);margin-bottom:4px}
+.rail-count{background:var(--sb-yellow);color:#111;padding:1px 8px;border-radius:3px}
+.card{
+  background:var(--sb-white);border:8px solid var(--sb-black);border-radius:4px;
+  box-shadow:8px 8px 0 0 var(--sb-black);padding:28px;position:relative;
+  transition:transform 100ms ease-out,border-color 150ms,box-shadow 150ms;
+  color:inherit;text-decoration:none;display:block;
+}
+.card.interactive{cursor:pointer}
+.card.interactive:hover{border-color:var(--sb-yellow);box-shadow:10px 10px 0 0 var(--sb-black)}
+.card.interactive:active{transform:translate(4px,4px)}
+.sec-dark .card{background:#1b1b1b;border-color:#e9e9e3;box-shadow:8px 8px 0 0 var(--sb-yellow)}
+.sec-dark .card h4{color:#fff}
+.card h4{margin-bottom:10px}
+.card p{font-size:15px;color:var(--sb-body)}
+.sec-dark .card p{color:#cfcfcf}
+
+/* venue / dual-score card */
+.venue{padding:0;overflow:hidden}
+.venue .photo{height:160px;background:#1b1b1b center/cover no-repeat;position:relative;display:flex;align-items:flex-end;padding:14px}
+.venue .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.35) 100%);z-index:0}
+.venue .photo .tag{position:relative;z-index:1;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#111;background:var(--sb-yellow);padding:4px 10px;clip-path:polygon(0 0,100% 0,100% 70%,90% 100%,0 100%)}
+.venue .body{padding:20px}
+.venue h4{margin-bottom:4px}
+.venue .city{font-size:13px;color:var(--sb-gray);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
+.scores{display:flex;gap:14px}
+.score{flex:1;border:3px solid var(--sb-black);border-radius:4px;padding:10px;text-align:center}
+.score.fan{border-color:var(--sb-yellow-deep)}
+.score .v{font-family:'Anton';font-size:36px;line-height:1;color:var(--sb-ink)}
+.score.crit .v{color:var(--sb-ink)}
+.score.fan .v{color:#b89e00}
+.score .k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--sb-gray);margin-top:4px}
+
+/* head-to-head versus */
+.versus{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center}
+@media(max-width:760px){.versus{grid-template-columns:1fr;text-align:center}}
+.vs-side{background:#1b1b1b;border:8px solid #e9e9e3;border-radius:4px;box-shadow:8px 8px 0 0 var(--sb-yellow);padding:28px;text-align:center;cursor:pointer;transition:transform 100ms,box-shadow 150ms}
+.vs-side:hover{box-shadow:10px 10px 0 0 var(--sb-yellow);transform:translate(-1px,-1px)}
+.vs-side .name{font-family:'Anton';font-size:34px;color:#fff;letter-spacing:1px}
+.vs-side .pct{color:var(--sb-yellow);font-family:'Anton';font-size:48px;line-height:1.1}
+.vs-side .meta{font-size:12px;color:#aaa;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.vs-mid{font-family:'Anton';font-size:40px;color:var(--sb-yellow);text-align:center}
+
+/* leaderboard */
+.board{border:8px solid #e9e9e3;border-radius:4px;box-shadow:8px 8px 0 0 var(--sb-yellow);background:#1b1b1b;overflow:hidden}
+.row{display:grid;grid-template-columns:56px 1fr auto auto;gap:16px;align-items:center;padding:16px 22px;border-bottom:2px solid #2a2a2a}
+.row:last-child{border-bottom:0}
+.row .rank{font-family:'Anton';font-size:30px;color:var(--sb-yellow)}
+.row .vname{font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px}
+.row .vcity{font-size:12px;color:#999;font-weight:600}
+.row .pill{background:var(--sb-yellow);color:#111;font-family:'Anton';font-size:22px;padding:2px 12px;border-radius:3px}
+.row .critpill{color:#cfcfcf;font-weight:700;font-size:14px}
+@media(max-width:760px){.row{grid-template-columns:44px 1fr auto}.row .critpill{display:none}}
+
+/* newsletter */
+.news{display:flex;gap:14px;flex-wrap:wrap;max-width:560px;margin-top:24px}
+.news input{flex:1;min-width:240px;border:4px solid #e9e9e3;background:#1b1b1b;color:#fff;padding:14px 16px;font-family:'Barlow';font-size:16px;border-radius:0}
+.news input::placeholder{color:#888}
+.news input:focus{outline:4px solid var(--sb-yellow);outline-offset:2px}
+
+/* footer */
+footer{background:#000;color:#9a9a9a;padding:56px 0 40px}
+footer .logo{margin-bottom:18px}
+footer .fnav{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:24px}
+footer a{text-decoration:none;font-weight:700;text-transform:uppercase;font-size:13px;letter-spacing:.5px;color:#bdbdbd}
+footer a:hover{color:var(--sb-yellow)}
+.fine{font-size:12px;color:#666;margin-top:18px}
+/* browse-venues dark band (replaces the stats band) */
+.browse-band{position:relative;background:var(--sb-black);padding:34px 0 30px;overflow:hidden}
+.browse-band::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:32px 32px}
+.browse-band .container{position:relative;z-index:1}
+.browse-band .container{max-width:100%;margin:0;padding:0 28px}
+.browse-band .rail-hint{margin-bottom:0}
+.browse-band .rail-count{background:#fff;color:#111;font-size:12px}
+.browse-band .venue .photo{height:148px}
+.browse-band .scores{display:none}
+/* notched corners on the sliding venue cards, matching the buttons */
+.browse-band .card{clip-path:var(--notch);border-radius:0;box-shadow:none;filter:drop-shadow(8px 8px 0 var(--sb-black));transition:transform 100ms ease-out,border-color 150ms,filter 150ms}
+.browse-band .card.interactive:hover{border-color:var(--sb-yellow);filter:drop-shadow(10px 10px 0 var(--sb-black))}
+.browse-link{display:inline-flex;align-items:center;gap:9px;text-decoration:none;cursor:pointer}
+.browse-link .kb-arrow{color:#fff;font-size:18px;font-weight:700;line-height:1;transition:transform .15s ease-out}
+.browse-link:hover .kb-arrow{transform:translateX(4px)}
+.browse-link:hover .rail-count{background:var(--sb-yellow)}
+/* know before you go (replaces the leaderboard) */
+.kbyg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:900px){.kbyg-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.kbyg-grid{grid-template-columns:1fr}}
+.kbyg-card{display:block;background:#fff;border:6px solid var(--sb-black);border-radius:6px;box-shadow:8px 8px 0 0 var(--sb-black);padding:22px;text-decoration:none;color:inherit;transition:transform .12s ease-out,box-shadow .15s,border-color .15s}
+.kbyg-card:hover{border-color:var(--sb-yellow);box-shadow:10px 10px 0 0 var(--sb-black);transform:translate(-1px,-1px)}
+.kbyg-card .ki{width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--sb-yellow);border:2px solid #111;border-radius:8px;margin-bottom:14px}
+.kbyg-card .kt{font-family:'Anton';font-size:22px;letter-spacing:.5px;color:var(--sb-ink);margin-bottom:6px}
+.kbyg-card .kd{font-size:13px;color:var(--sb-body);line-height:1.45}
+.kbyg-more{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:var(--sb-black);color:#fff;font-family:'Barlow';font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:15px;padding:14px 26px;clip-path:var(--notch);text-decoration:none;filter:drop-shadow(6px 6px 0 var(--sb-yellow));transition:filter 120ms}
+.kbyg-more .kb-arrow{color:#fff;font-size:18px;transition:transform .15s ease-out}
+.kbyg-more:hover .kb-arrow{transform:translateX(5px)}
+/* get your matchday agenda — mockup agendas dealt like a hand of playing cards.
+   Web: overlapping fan with rotation arc, hover lifts a card out of the hand.
+   Phones: the hand becomes a swipeable scroll-snap rail with a light alternating tilt. */
+.agenda-fan{display:flex;justify-content:center;align-items:flex-start;padding:26px 0 52px}
+.acard{position:relative;flex:0 0 252px;aspect-ratio:5/7;background:#fff;border:5px solid var(--sb-black);border-radius:14px;box-shadow:8px 8px 0 0 var(--sb-black);padding:36px 18px 14px;display:flex;flex-direction:column;text-decoration:none;color:inherit;overflow:hidden;transition:transform .16s ease-out,box-shadow .15s,border-color .15s}
+.acard+.acard{margin-left:-38px}
+.acard:nth-child(1){transform:rotate(-8deg) translateY(30px)}
+.acard:nth-child(2){transform:rotate(-4deg) translateY(9px)}
+.acard:nth-child(3){transform:rotate(0)}
+.acard:nth-child(4){transform:rotate(4deg) translateY(9px)}
+.acard:nth-child(5){transform:rotate(8deg) translateY(30px)}
+.acard:hover{transform:rotate(0) translateY(-16px) scale(1.04);z-index:10;border-color:var(--sb-yellow);box-shadow:12px 12px 0 0 var(--sb-black)}
+.acard:focus-visible{outline:4px solid var(--sb-yellow-deep);outline-offset:2px;z-index:10}
+/* playing-card corner index: rank + ball suit, mirrored bottom-right */
+.acorner{position:absolute;display:flex;flex-direction:column;align-items:center;line-height:1}
+.acorner b{font-family:'Anton';font-weight:400;font-size:17px;color:var(--sb-ink);letter-spacing:0}
+.acorner i{font-style:normal;font-size:9px;filter:brightness(0);margin-top:2px}
+.acorner.tl{top:10px;left:12px}
+.acorner.br{bottom:10px;right:12px;transform:rotate(180deg)}
+.acard-hd{display:block;text-align:center;margin-bottom:12px}
+.acard-match{display:block;font-family:'Anton';font-size:23px;letter-spacing:1px;color:var(--sb-ink);line-height:1.05}
+.acard-meta{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--sb-gray);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acard-rows{display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;flex:1;min-height:0}
+.acard-row{display:flex;align-items:center;gap:9px;min-width:0}
+.acard-row .ai{flex:0 0 auto;width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:var(--sb-yellow);border:2px solid #111;border-radius:7px}
+.acard-row .ai i{font-style:normal;font-size:13px;line-height:1;filter:brightness(0)}
+.acard-row .at{display:flex;flex-direction:column;min-width:0}
+.acard-row .at b{font-size:8.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--sb-gray)}
+.acard-row .at span{font-size:12px;font-weight:600;color:var(--sb-ink);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acard-ft{display:block;margin-top:10px;text-align:center;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b5b5b5;border-top:2px solid #eee;padding-top:7px}
+.agenda-cta{display:flex;justify-content:center}
+@media(max-width:760px){
+  .agenda-fan{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:16px 24px 36px;margin:0 -24px;-webkit-overflow-scrolling:touch}
+  .acard{flex:0 0 240px;scroll-snap-align:center}
+  .acard+.acard{margin-left:0}
+  .acard:nth-child(odd){transform:rotate(-1.6deg)}
+  .acard:nth-child(even){transform:rotate(1.6deg)}
+}
+/* rotating photo extras: superlative tag + rotation dots */
+.a-tag{position:absolute;top:26px;left:30px;z-index:4;background:var(--sb-yellow);color:#111;font-family:'Anton';font-size:18px;letter-spacing:.5px;padding:7px 15px;border:2px solid #111;box-shadow:4px 4px 0 0 #111;transform:rotate(-2deg);transition:opacity .45s ease}
+.a-dots{position:absolute;bottom:30px;right:34px;z-index:4;display:flex;gap:9px}
+.a-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.3);transition:background .3s,transform .3s}
+.a-dots span.on{background:var(--sb-yellow);transform:scale(1.3)}
+
+/* responsive images: ensure media scales fluidly and never overflows */
+img{max-width:100%;height:auto}

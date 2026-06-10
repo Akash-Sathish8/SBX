@@ -1,0 +1,13 @@
+{
+ "id": "att-jun14", "venue": "att", "venueName": "AT&T Stadium", "city": "Dallas",
+ "date": "Jun 14", "ko": "3:00 PM", "round": "Group F", "home": "Netherlands", "away": "Japan",
+ "preview": {
+  "summary": "A Group F opener pitting the Netherlands' depth and pedigree against Japan's quick, well-drilled pressing side. Expect the Dutch to dominate possession while Japan look to spring forward through pace on the flanks. Both arrive in strong form, making this an early test of group order.",
+  "homeForm": "Ranked 7th by FIFA and unbeaten across eight qualifiers under Ronald Koeman.",
+  "awayForm": "Ranked 18th, Japan qualified first of any non-host, winning six straight without conceding.",
+  "homeKey": "Cody Gakpo, sharp in attack alongside record scorer Memphis Depay.",
+  "awayKey": "Takefusa Kubo, Japan's designated difference-maker against deep blocks.",
+  "storylines": ["Koeman's Dutch chase a first World Cup trophy", "Japan missing the injured Kaoru Mitoma", "Virgil van Dijk anchors a heavily favored Dutch back line"],
+  "h2h": "Their only World Cup meeting came in 2010, the Netherlands winning 1-0 via a Wesley Sneijder strike."
+ }
+}

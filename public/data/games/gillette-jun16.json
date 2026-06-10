@@ -1,0 +1,13 @@
+{
+ "id": "gillette-jun16", "venue": "gillette", "venueName": "Gillette Stadium", "city": "Boston",
+ "date": "Jun 16", "ko": "6:00 PM", "round": "Group I", "home": "Iraq", "away": "Norway",
+ "preview": {
+  "summary": "Two sides ending long World Cup droughts collide in Group I, with Iraq back after 40 years and Norway after 28. Norway arrive as one of Europe's form teams, while Iraq survived the intercontinental playoff to reach Boston. Expect Erling Haaland's firepower to test a disciplined, defensively minded Iraqi block.",
+  "homeForm": "Iraq qualified via the intercontinental playoff, beating Bolivia 2-1 to claim the final World Cup berth.",
+  "awayForm": "Norway won all eight qualifiers, scoring 37 goals including wins home and away over Italy; ranked 31st.",
+  "homeKey": "Aymen Hussein, striker whose goals carried Iraq through the playoffs.",
+  "awayKey": "Erling Haaland, scored 16 goals in qualifying, double any European rival.",
+  "storylines": ["Iraq's first World Cup appearance since 1986", "Haaland makes his major-tournament debut", "Will Martin Odegaard be fit to pull Norway's strings"],
+  "h2h": "Iraq and Norway have never met in a competitive fixture."
+ }
+}

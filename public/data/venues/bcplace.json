@@ -1,0 +1,491 @@
+{
+ "id": "bcplace",
+ "name": "BC Place",
+ "around": {
+  "food": [
+   {
+    "name": "Seoul Food",
+    "where": "Section 206",
+    "note": "Korean fried chicken with the spicy glaze",
+    "why": [
+     "Crispy Korean fried chicken, not basic concession fare",
+     "Nods to Vancouver's deep Asian food scene"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "The Poutinerie",
+    "where": "Sections 212, 239",
+    "note": "Short rib poutine, the local stadium classic",
+    "why": [
+     "Short rib poutine, the Canadian stadium move",
+     "Hearty enough to carry you to full-time"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Bombay South Asian Kitchen",
+    "where": "Section 220",
+    "note": "Lamb korma, a Vancouver concourse standout",
+    "why": [
+     "Lamb korma rarely found inside a stadium",
+     "Reflects Metro Vancouver's huge South Asian community"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Dawson's Hot Dogs",
+    "where": "Concourse 200-level booths",
+    "note": "Nathan's foot-long or the $5 value dog",
+    "why": [
+     "Cheapest sure-thing dog at $5",
+     "Foot-long Nathan's for the bigger appetite"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ],
+  "pre": [
+   {
+    "name": "FIFA Fan Festival (PNE / Hastings Park)",
+    "where": "Hastings Park, East Van; ~25 min via SkyTrain + Fan Festival shuttle from stadium",
+    "why": [
+     "Official free fan zone, 25,000 fans daily",
+     "70+ matches on screens plus live concerts"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "5.0 mi",
+    "distMi": 5.0
+   },
+   {
+    "name": "The Pint Public House",
+    "where": "455 Abbott St, Stadium-Chinatown",
+    "note": "Dozens of screens, packed soccer crowd, steps away",
+    "why": [
+     "Steps from the stadium, dozens of screens",
+     "Packed soccer crowd before kickoff"
+    ],
+    "rating": 4.0,
+    "dist": "0.4 mi",
+    "distMi": 0.4
+   },
+   {
+    "name": "Yaletown Brewing Company",
+    "where": "1111 Mainland St, Yaletown",
+    "note": "Craft beer and burgers, handles big crowds",
+    "why": [
+     "Yaletown craft beer right next to BC Place",
+     "Big patio absorbs the pre-match rush"
+    ],
+    "rating": 4.0,
+    "dist": "0.4 mi",
+    "distMi": 0.4
+   },
+   {
+    "name": "Shark Club Sports Bar",
+    "where": "180 W Georgia St, Downtown",
+    "note": "Twelve-foot screens, jerseys, true stadium roar",
+    "why": [
+     "Closest true sports bar, short walk away",
+     "Twelve-foot screens deliver the stadium roar"
+    ],
+    "rating": 4.4,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "Good Co.",
+    "where": "965 Granville St, Downtown",
+    "note": "Arcade games, weekend DJs, social sports vibe",
+    "why": [
+     "Arcade games and DJs on the Granville strip",
+     "Social vibe for a younger pre-match crowd"
+    ],
+    "rating": 4.0,
+    "dist": "0.6 mi",
+    "distMi": 0.6
+   }
+  ],
+  "post": [
+   {
+    "name": "Steamworks Brewpub",
+    "where": "375 Water St, Gastown",
+    "note": "House-brewed lagers, BC salmon, waterfront-edge pub",
+    "why": [
+     "House-brewed lagers and BC salmon in Gastown",
+     "Waterfront-edge views to wind down post-match"
+    ],
+    "rating": 4.4,
+    "dist": "0.7 mi",
+    "distMi": 0.7
+   },
+   {
+    "name": "GRETA Bar",
+    "where": "50 W Cordova St, Gastown",
+    "note": "Fifty arcade games, cocktails, late-night energy",
+    "why": [
+     "Fifty arcade games keep the night going",
+     "Cocktails and late-night Gastown energy"
+    ],
+    "rating": 4.3,
+    "dist": "0.6 mi",
+    "distMi": 0.6
+   },
+   {
+    "name": "Library Square Public House",
+    "where": "300 W Georgia St, Crosstown",
+    "note": "Two blocks from BC Place, 22-foot big screen, 24 taps, late-night sports programming",
+    "why": [
+     "Big 22-foot screen and 24 taps two blocks from the stadium",
+     "Sports programming, live bands and late-night energy post-match"
+    ],
+    "rating": 3.9,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "The Lamplighter Public House",
+    "where": "92 Water St, Gastown",
+    "note": "Vancouver's oldest pub in the 1899 Dominion building, brick, flatscreens, late drinks",
+    "why": [
+     "Drink in an 1899 Gastown heritage room",
+     "Exposed brick and flatscreens for late rounds"
+    ],
+    "rating": 4.1,
+    "dist": "0.7 mi",
+    "distMi": 0.7
+   }
+  ],
+  "merch": [
+   {
+    "name": "FIFA World Cup 2026 BC Place Stadium Store",
+    "where": "Inside BC Place, along the Last Mile Match Day Spectator Route",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store (Granville)",
+    "where": "810 Granville St, near Robson, Downtown Vancouver",
+    "rating": null,
+    "dist": "0.6 mi",
+    "distMi": 0.6
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store (CF Pacific Centre)",
+    "where": "CF Pacific Centre mall, 701 W Georgia St, Downtown Vancouver",
+    "rating": null,
+    "dist": "0.5 mi",
+    "distMi": 0.5
+   }
+  ]
+ },
+ "fifaName": "Vancouver Stadium",
+ "nickname": null,
+ "city": "Vancouver",
+ "country": "Canada",
+ "cc": "CAN",
+ "role": null,
+ "tagline": "Canada's busiest World Cup venue, where the home side fights for a knockout spot under a downtown retractable roof.",
+ "hero": "img/stadiums/bcplace.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~54,000 (WC config)"
+  },
+  {
+   "label": "Opened",
+   "value": "1983"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "7 (incl. Round of 16)"
+  },
+  {
+   "label": "Roof",
+   "value": "World's largest cable-supported retractable"
+  },
+  {
+   "label": "Location",
+   "value": "Downtown, on False Creek"
+  },
+  {
+   "label": "SkyTrain",
+   "value": "Stadium-Chinatown, 5-min walk"
+  }
+ ],
+ "why": [
+  {
+   "title": "Canada's Home Base",
+   "text": "Both of Canada's decisive group games are here, vs Qatar and vs Switzerland. This is where the host nation lives in the group stage."
+  },
+  {
+   "title": "Busiest in Canada",
+   "text": "Seven matches, more than any other Canadian venue, and the only one going beyond the Round of 32 with two knockout games."
+  },
+  {
+   "title": "The Retractable Roof",
+   "text": "Billed as the world's largest cable-supported retractable roof, it tucks into a central pod above the videoboard and opens or closes in about 20 minutes."
+  },
+  {
+   "title": "Grass Grown for FIFA",
+   "text": "Crews ripped out the artificial turf and laid a hybrid natural pitch in spring 2026, grown in the Fraser Valley and kept alive with six grow-light rigs."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 13",
+   "round": "Group D",
+   "fixture": "Australia vs Türkiye",
+   "ko": "9:00 PM",
+   "group": "D"
+  },
+  {
+   "date": "Jun 18",
+   "round": "Group B",
+   "fixture": "Canada vs Qatar",
+   "ko": "3:00 PM",
+   "group": "B"
+  },
+  {
+   "date": "Jun 21",
+   "round": "Group G",
+   "fixture": "New Zealand vs Egypt",
+   "ko": "6:00 PM",
+   "group": "G"
+  },
+  {
+   "date": "Jun 24",
+   "round": "Group B",
+   "fixture": "Switzerland vs Canada",
+   "ko": "12:00 PM",
+   "group": "B"
+  },
+  {
+   "date": "Jun 26",
+   "round": "Group G",
+   "fixture": "New Zealand vs Belgium",
+   "ko": "8:00 PM",
+   "group": "G"
+  },
+  {
+   "date": "Jul 2",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "8:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 7",
+   "round": "Round of 16",
+   "fixture": "TBD",
+   "ko": "1:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "BC Place sits right in downtown Vancouver, so most of the core is a 10-20 minute walk away. From YVR airport, ride the Canada Line SkyTrain to Waterfront, then one Expo Line stop to Stadium-Chinatown, about 30-35 minutes total for roughly CA$10.",
+ "transit": [
+  "Expo Line to Stadium-Chinatown station is the closest, a 5-minute walk; exit to Beatty Street for the main gates.",
+  "Alternate route: Canada Line to Yaletown-Roundhouse, then a 10-minute walk northeast through Yaletown.",
+  "Driving and parking are strongly discouraged on match days; use a regional Park & Ride and finish by SkyTrain.",
+  "Tap a Compass Card or contactless to skip ticket lines; budget about CA$10 round-trip from the airport."
+ ],
+ "matchday": "The stadium hugs the north shore of False Creek beside Yaletown, steps from Rogers Arena and the adjacent Parq Vancouver casino-resort. The official FIFA Fan Festival runs free at Hastings Park (PNE grounds) from June 11 to July 19, showing 70-plus matches on big screens.",
+ "food": [
+  "Yaletown next door for craft breweries, cocktail bars, and patios within a short walk.",
+  "Gastown's cobblestone streets and lively bars, plus nearby Chinatown for late eats.",
+  "Parq Vancouver beside the stadium has a 50-foot sportsbook screen and restaurants like The Victor.",
+  "Vancouver runs strong on fresh seafood, sushi, and Asian cuisine across downtown."
+ ],
+ "tips": [
+  "Get there by SkyTrain, not car; Stadium-Chinatown is a 5-minute walk and parking gridlocks after the whistle.",
+  "Beat the post-match crush by walking 10-15 minutes to Yaletown-Roundhouse, a far less mobbed station.",
+  "Pack a light jacket for evening kickoffs, which cool to 11-13C, and sunscreen for day games and the Fan Festival.",
+  "The roof handles any rain, so never let a forecast deter you from attending.",
+  "Lower bowl behind the goals carries the loudest Whitecaps Southsiders energy; west-side mid-tier seats face the videoboard and Northern Lights facade.",
+  "Clear-bag policy is in effect: bags must be clear plastic, max 12 by 6 by 12 inches."
+ ],
+ "weather": "June and July in Vancouver are mild and dry with highs around 18-21C, long daylight, and a UV index up to 8; pack sunscreen and a light layer for cool evenings.",
+ "lore": [
+  "Opened in 1983 for Expo 86 as the world's largest air-supported domed stadium, before a 2011 overhaul swapped the inflatable roof for the retractable one.",
+  "Hosted the 2015 FIFA Women's World Cup Final, where the USA beat Japan 5-2 on a Carli Lloyd hat-trick.",
+  "Staged the 2010 Winter Olympics opening and closing ceremonies and has hosted the CFL's Grey Cup 10 times.",
+  "Its all-time attendance record is 65,061 for an Ed Sheeran concert in September 2023; the venue's LED Northern Lights facade animates the night skyline."
+ ],
+ "transport": {
+  "summary": "BC Place is in the heart of downtown Vancouver, so transit and walking dominate; driving is strongly discouraged. Critical World Cup change: the usual Stadium-Chinatown exit beside the stadium is closed on match days, so all ticketed fans ride to Main Street-Science World station and walk the car-free Last Mile promenade to the only spectator entrance at Carrall Street and Pacific Boulevard. Pacific Boulevard is closed to traffic from May 23 through end of July.",
+  "rail": [
+   {
+    "name": "Expo Line (SkyTrain) - match-day route",
+    "station": "Main Street-Science World",
+    "detail": "On all seven match days fans must use this station, not Stadium-Chinatown, whose adjacent Expo Boulevard exit is closed. Exit and join the Last Mile car-free walk along Quebec Street and Pacific Boulevard to the Carrall Street entrance. The spectator route opens 4 hours before kickoff; aim to start walking at least 1 hour pre-match.",
+    "points": [
+     {
+      "b": "Match-day station",
+      "t": "use this, not Stadium-Chinatown"
+     },
+     {
+      "b": "Last Mile walk",
+      "t": "car-free to Carrall Street entrance"
+     },
+     {
+      "b": "Arrive early",
+      "t": "route opens 4 hrs pre-kickoff"
+     }
+    ],
+    "deal": "Trains run through downtown every 2 to 2.5 minutes before and after matches; service extended one hour later on June 13, June 26, and July 2."
+   },
+   {
+    "name": "Expo Line (SkyTrain) - non-match-day",
+    "station": "Stadium-Chinatown",
+    "detail": "Closest station for non-match events: up the stairs to Beatty Street, turn left, about a 5-minute walk to Gates A, B and H. Beatty and Keefer Street entrances stay open year-round; only the lower Expo Boulevard exit closes on World Cup match days.",
+    "points": [
+     {
+      "b": "Non-match events",
+      "t": "closest station, 5-min walk"
+     },
+     {
+      "b": "Exit Beatty Street",
+      "t": "turn left to Gates A, B, H"
+     },
+     {
+      "b": "Open year-round",
+      "t": "only Expo Boulevard exit closes match days"
+     }
+    ],
+    "deal": ""
+   },
+   {
+    "name": "Canada Line (SkyTrain)",
+    "station": "Yaletown-Roundhouse",
+    "detail": "Direct line from YVR airport; on the downtown peninsula side, walk northeast along Mainland Street then Robson, roughly 10 minutes, to reach the Last Mile secondary entrance from Keefer Street. Fare gate capacity here was boosted 66% for the crowds.",
+    "points": [
+     {
+      "b": "Direct from YVR",
+      "t": "airport line, no transfer"
+     },
+     {
+      "b": "10-minute walk",
+      "t": "northeast via Mainland and Robson"
+     },
+     {
+      "b": "Secondary entrance",
+      "t": "Last Mile from Keefer Street"
+     }
+    ],
+    "deal": ""
+   }
+  ],
+  "bus": [
+   {
+    "name": "Downtown service boost",
+    "from": "Across Metro Vancouver",
+    "detail": "TransLink adds about 600 extra bus trips per day during the tournament, with more frequency on downtown routes including R5, 14, 19 and 23. SeaBus runs every 10 minutes before and after matches for North Shore fans.",
+    "points": [
+     {
+      "b": "600 extra trips",
+      "t": "added daily during the tournament"
+     },
+     {
+      "b": "Boosted routes",
+      "t": "downtown R5, 14, 19 and 23"
+     },
+     {
+      "b": "SeaBus",
+      "t": "every 10 min for North Shore"
+     }
+    ],
+    "deal": ""
+   },
+   {
+    "name": "Fan Festival shuttle",
+    "from": "Expo and Millennium Lines to PNE",
+    "detail": "Dedicated shuttle connects the FIFA Fan Festival at Hastings Park/PNE to both SkyTrain lines, plus extra service on existing PNE routes.",
+    "points": [
+     {
+      "b": "Fan Festival link",
+      "t": "shuttle to Hastings Park/PNE"
+     },
+     {
+      "b": "Connects both lines",
+      "t": "Expo and Millennium SkyTrain"
+     },
+     {
+      "b": "Extra service",
+      "t": "added on existing PNE routes"
+     }
+    ],
+    "deal": ""
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "West Coast Express specials",
+    "detail": "Special round-trip commuter-rail service on Saturday June 13 and Sunday June 21 only: a westbound train leaves Mission about 4 hours before kickoff and an eastbound returns from Waterfront about 2 hours after the final whistle.",
+    "points": [
+     {
+      "b": "Two dates only",
+      "t": "Saturday June 13 and Sunday June 21"
+     },
+     {
+      "b": "Westbound out",
+      "t": "leaves Mission 4 hrs pre-kickoff"
+     },
+     {
+      "b": "Eastbound back",
+      "t": "from Waterfront 2 hrs post-match"
+     }
+    ]
+   }
+  ],
+  "fromAirport": "From YVR, ride the Canada Line SkyTrain straight downtown (about 25 minutes, no transfer), then transfer at Waterfront to the Expo Line. On match days continue to Main Street-Science World rather than Stadium-Chinatown. Total roughly 30-40 minutes; budget about CA$10 including the airport surcharge added on departures from YVR.",
+  "rideshare": "Do not set Uber, Lyft or taxi to the stadium door on match days; road closures and the secure footprint make it impossible. The official drop-off is 1510 Quebec Street (Quebec and Terminal, beside Science World), with a secondary point at 525 W 2nd Avenue near Olympic Village station; walk the Last Mile from there. Tipping rideshare/taxi 15-20% is customary in Canada.",
+  "bike": "Free supervised Bike Valet takes bicycles, e-bikes and scooters near the stadium, and Mobi public bikeshare docks sit throughout the area. The scenic False Creek Seawall is a flat, car-free ride from much of the city.",
+  "tips": [
+   "TransLink is not surging fares for the World Cup; pay with a Compass card, contactless credit/debit, or a mobile wallet by tapping in and out.",
+   "Memorize the swap: ride to Main Street-Science World, not Stadium-Chinatown, on every match day.",
+   "Post-match trains are packed; walk 10-15 minutes into Yaletown or Gastown and board a quieter station, or grab food first to let the first wave clear.",
+   "A DayPass (about CA$12.55) beats single fares if you are riding several times on match day."
+  ]
+ },
+ "parking": {
+  "summary": "Downtown parking is very limited and strongly discouraged on match days, when Pacific Boulevard and surrounding streets are closed to general traffic. Treat any drive as park-on-the-edge-and-ride: stash the car at a regional TransLink Park and Ride and finish on SkyTrain. Lots nearest the stadium normally run CA$10 to CA$30 and fill fast.",
+  "lots": [
+   {
+    "name": "Stadium-area event lots (Rogers Arena / Plaza of Nations vicinity)",
+    "price": "CA$10-$30",
+    "detail": "The cluster of lots that serve Rogers Arena and BC Place events; expect higher event pricing, early sellouts, and slow exits, with match-day road closures cutting access right around the stadium.",
+    "points": [
+     {
+      "b": "Nearest lots",
+      "t": "serve Rogers Arena and BC Place"
+     },
+     {
+      "b": "Sell out early",
+      "t": "expect slow post-match exits"
+     },
+     {
+      "b": "Closures cut access",
+      "t": "match-day roads shut around stadium"
+     }
+    ]
+   }
+  ],
+  "prepaid": "If you must drive, reserve ahead through SpotHero or similar so you have a guaranteed spot and a fixed price; do not count on day-of street parking near the venue on a match day.",
+  "accessible": "A dedicated accessible drop-off (the 147 Accessible Entrance) is at street level on Pacific Boulevard under Gate F for guests using mobility devices; on-site accessible parking is very limited. HandyDART door-to-door service is available to eligible visitors by application.",
+  "tailgating": "No stadium tailgating; this is a dense downtown venue with no surface tailgate lots. Pre-match atmosphere lives in Yaletown and Gastown pubs and at the FIFA Fan Festival at Hastings Park.",
+  "tips": [
+   "Skip driving entirely; SkyTrain plus the Last Mile walk is faster than fighting closures and CA$30 lots.",
+   "If a car is unavoidable, use a regional Park and Ride and ride the Expo Line into Main Street-Science World.",
+   "Accessible drop-off is under Gate F on Pacific Boulevard; arrive early as match-day closures reroute approaches."
+  ]
+ }
+}

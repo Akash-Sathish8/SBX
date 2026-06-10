@@ -1,0 +1,13 @@
+{
+ "id": "nrg-jun20", "venue": "nrg", "venueName": "NRG Stadium", "city": "Houston",
+ "date": "Jun 20", "ko": "12:00 PM", "round": "Group F", "home": "Netherlands", "away": "Sweden",
+ "preview": {
+  "summary": "Group F favourites the Netherlands meet a dangerous Sweden side in a meeting of two European heavyweights with attacking firepower. The Dutch carry the deeper squad, but Sweden's strikers make this a potential group-defining contest.",
+  "homeForm": "The Netherlands are clear Group F favourites and one of the tournament's most settled European sides.",
+  "awayForm": "Sweden, now coached by Graham Potter, have historically started World Cups strongly and arrive among the group's tougher outsiders.",
+  "homeKey": "Virgil van Dijk, captain and defensive anchor at the back.",
+  "awayKey": "Viktor Gyökeres, prolific striker spearheading Sweden's attack.",
+  "storylines": ["Alexander Isak and Gyökeres give Sweden a fearsome strike pairing", "Frenkie de Jong orchestrates the Dutch midfield", "A rematch echoing their goalless 1974 World Cup group draw"],
+  "h2h": "Across 20 prior meetings the Netherlands have the edge, last winning 2-0 in 2017 qualifying."
+ }
+}

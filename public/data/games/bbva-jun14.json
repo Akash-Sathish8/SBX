@@ -1,0 +1,13 @@
+{
+ "id": "bbva-jun14", "venue": "bbva", "venueName": "Estadio BBVA", "city": "Monterrey",
+ "date": "Jun 14", "ko": "8:00 PM", "round": "Group F", "home": "Sweden", "away": "Tunisia",
+ "preview": {
+  "summary": "Two sides chasing an opening foothold in a brutal Group F that also features Netherlands and Japan. Sweden's firepower meets a Tunisia outfit built on disciplined, miserly defending, making for a contrast of styles in Monterrey.",
+  "homeForm": "Sweden scraped through the UEFA play-offs under Graham Potter without winning their qualifying group, and sit around 38th in the FIFA rankings.",
+  "awayForm": "Tunisia stormed CAF Group H with nine wins, one draw and zero goals conceded, qualifying for a seventh World Cup and ranked 44th.",
+  "homeKey": "Viktor Gyokeres, whose play-off goals carried Sweden to the finals.",
+  "awayKey": "Ellyes Skhiri, captain and midfield anchor of Lamouchi's system.",
+  "storylines": ["Sweden's Gyokeres-Isak attack versus a defence that conceded none in qualifying", "Potter looking for a first competitive win with Sweden", "Group F's likely battle for third behind Netherlands and Japan"],
+  "h2h": "The nations have rarely met, making this a fresh tactical test between Sweden's attack and Tunisia's organisation."
+ }
+}

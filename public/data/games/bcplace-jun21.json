@@ -1,0 +1,13 @@
+{
+ "id": "bcplace-jun21", "venue": "bcplace", "venueName": "BC Place", "city": "Vancouver",
+ "date": "Jun 21", "ko": "6:00 PM", "round": "Group G", "home": "New Zealand", "away": "Egypt",
+ "preview": {
+  "summary": "A pivotal Group G meeting as New Zealand's All Whites, the clear underdogs, face an Egypt side eyeing a first-ever knockout run. Egypt's Salah-led attack should dominate the ball, with New Zealand banking on physicality and set-pieces around Chris Wood.",
+  "homeForm": "New Zealand return to the World Cup ranked 85th, the lowest seed in Group G, captained by record scorer Chris Wood.",
+  "awayForm": "Egypt qualified as African heavyweights ranked 29th, with Mohamed Salah their top scorer in qualifying with nine goals.",
+  "homeKey": "Chris Wood, Nottingham Forest forward and all-time top scorer.",
+  "awayKey": "Mohamed Salah, captain and talisman chasing Egypt's scoring record.",
+  "storylines": ["Egypt hunt a first-ever World Cup quarter-final", "Wood and Smith become first Kiwi men at two World Cups", "Marmoush and Salah against a resolute New Zealand block"],
+  "h2h": "Their only previous meeting, in 2024, ended in a 1-0 Egypt win."
+ }
+}

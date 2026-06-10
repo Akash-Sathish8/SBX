@@ -1,0 +1,493 @@
+{
+ "id": "att",
+ "name": "AT&T Stadium",
+ "fifaName": "Dallas Stadium",
+ "nickname": "Jerry World",
+ "city": "Dallas",
+ "country": "USA",
+ "cc": "USA",
+ "role": "Semifinal",
+ "tagline": "The biggest stage of WC26: nine matches, a semifinal, and a climate-controlled palace that laughs at Texas heat.",
+ "hero": "img/stadiums/att.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~80,000"
+  },
+  {
+   "label": "Opened",
+   "value": "2009"
+  },
+  {
+   "label": "WC26 Matches",
+   "value": "9 (most of any venue)"
+  },
+  {
+   "label": "Roof",
+   "value": "Retractable, fully AC'd"
+  },
+  {
+   "label": "Video Board",
+   "value": "160 ft wide center-hung 'Jerry-tron'"
+  },
+  {
+   "label": "Cost",
+   "value": "~$1.3 billion"
+  }
+ ],
+ "why": [
+  {
+   "title": "Most Matches",
+   "text": "Nine games, more than any other venue across the US, Canada and Mexico. This is the beating heart of WC26."
+  },
+  {
+   "title": "Semifinal Host",
+   "text": "One of only two semifinal venues. July 14 is the marquee day of the entire tournament here."
+  },
+  {
+   "title": "Beat The Heat",
+   "text": "Fully enclosed and air-conditioned to a comfy 70s while North Texas bakes outside at 100 plus. Comfort no other Sun Belt venue can match."
+  },
+  {
+   "title": "Pink Glow Pitch",
+   "text": "Real grass grown in Colorado, kept alive indoors by first-of-its-kind pink LED grow lights that lift away on match days."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 14",
+   "round": "Group F",
+   "fixture": "Netherlands vs Japan",
+   "ko": "3:00 PM",
+   "group": "F"
+  },
+  {
+   "date": "Jun 17",
+   "round": "Group L",
+   "fixture": "England vs Croatia",
+   "ko": "3:00 PM",
+   "group": "L"
+  },
+  {
+   "date": "Jun 22",
+   "round": "Group J",
+   "fixture": "Argentina vs Austria",
+   "ko": "12:00 PM",
+   "group": "J"
+  },
+  {
+   "date": "Jun 25",
+   "round": "Group F",
+   "fixture": "Japan vs Sweden",
+   "ko": "6:00 PM",
+   "group": "F"
+  },
+  {
+   "date": "Jun 27",
+   "round": "Group J",
+   "fixture": "Jordan vs Argentina",
+   "ko": "9:00 PM",
+   "group": "J"
+  },
+  {
+   "date": "Jun 30",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "12:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 3",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "12:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 6",
+   "round": "Round of 16",
+   "fixture": "TBD",
+   "ko": "2:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 14",
+   "round": "Semi-final",
+   "fixture": "TBD",
+   "ko": "2:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "The stadium sits in Arlington's entertainment district, midway between Dallas and Fort Worth, but Arlington has no permanent public transit, so plan your arrival deliberately. For WC26, organizers built a temporary match-day-only network.",
+ "transit": [
+  "Trinity Railway Express (TRE) from Downtown Dallas (Union Station) or Fort Worth (Central Station) to CentrePort, then a charter shuttle and a half-mile walk to the gates.",
+  "TRE runs about every 30 minutes on match days and fills up fast, so arrive at your downtown station early.",
+  "Driving: ~12,000 stadium spaces in numbered lots at $75-$100 plus; they sell out weeks ahead, so pre-buy.",
+  "Rideshare works but post-match surge is brutal and pickup zones are pushed away from the stadium."
+ ],
+ "matchday": "Texas Live! next door is the party HQ: 11 restaurants, 22 bars and a 100-ft LED screen, the default pre and post-match gathering spot. The free official FIFA Fan Festival is at Fair Park in Dallas, about 20 miles east, with screenings, music and activities.",
+ "around": {
+  "food": [
+   {
+    "name": "The Rowdy Dog",
+    "where": "Specialty Dog Carts, main concourse",
+    "note": "loaded all-beef dog, the stadium signature",
+    "why": [
+     "The signature stadium hot dog",
+     "Quick all-beef grab on the concourse"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Texas Burrito (Vaqueros)",
+    "where": "stands by sec 204, 229, 416, 446",
+    "note": "stacked Tex-Mex burrito, quick concourse grab",
+    "why": [
+     "Hearty Tex-Mex that fills you up",
+     "Carts on four sections, no long walk"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Frito Pie Burger",
+    "where": "main concourse grills",
+    "note": "chili-and-Fritos-topped burger, a Texas classic",
+    "why": [
+     "Chili and Fritos piled on a burger",
+     "Peak only-in-Texas concourse eat"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Dessert Nachos",
+    "where": "Grab N Go Markets, upper concourse",
+    "note": "sweet cinnamon-chip nachos, the postgame treat",
+    "why": [
+     "Sweet cinnamon-chip twist on nachos",
+     "Perfect shareable halftime treat"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ],
+  "pre": [
+   {
+    "name": "FIFA Fan Festival Dallas",
+    "where": "Fair Park (The Pavilion, Lots 9 & 10), ~20 mi east in Dallas; reach via DART Green Line to Fair Park station",
+    "why": [
+     "Free fan zone, up to 35,000 inside",
+     "Live broadcasts, concerts, mini-pitches Jun 11-Jul 19"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "20 mi",
+    "distMi": 20
+   },
+   {
+    "name": "PBR Texas",
+    "where": "Texas Live!, 1650 E Randol Mill Rd, short walk from the gates",
+    "note": "two mechanical bulls, rowdy pregame energy",
+    "why": [
+     "Two mechanical bulls to ride",
+     "Rowdiest pregame energy at Texas Live!"
+    ],
+    "rating": 4.2,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   },
+   {
+    "name": "Rangers Republic",
+    "where": "Texas Live!, 1650 E Randol Mill Rd, short walk from the gates",
+    "note": "Rangers fan clubhouse, Tex-Mex-infused menu",
+    "why": [
+     "Rangers fan clubhouse next to Globe Life",
+     "Tex-Mex menu steps from AT&T Stadium"
+    ],
+    "rating": 4.0,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   },
+   {
+    "name": "Arlington Backyard",
+    "where": "Texas Live! outdoor, 1650 E Randol Mill Rd, short walk from the gates",
+    "note": "open-air World Cup watch-party hub",
+    "why": [
+     "Open-air watch-party hub",
+     "Big-crowd buildup steps from the gates"
+    ],
+    "rating": 4.6,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   },
+   {
+    "name": "J. Gilligan's Bar & Grill",
+    "where": "400 E Abram St, Arlington; free shuttle to AT&T events",
+    "note": "laid-back local, famous Irish nachos",
+    "why": [
+     "Famous Irish nachos worth the trip",
+     "Laid-back local escape from the crowds"
+    ],
+    "rating": 4.5,
+    "dist": "1.6 mi",
+    "distMi": 1.6
+   }
+  ],
+  "post": [
+   {
+    "name": "Sports & Social Arlington",
+    "where": "Texas Live!, 1650 E Randol Mill Rd, short walk from the gates",
+    "note": "wall-to-wall TVs, late-night crowd games",
+    "why": [
+     "Wall-to-wall TVs for replays",
+     "Bar games keep the night going"
+    ],
+    "rating": 4.5,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   },
+   {
+    "name": "Troy's",
+    "where": "Texas Live!, 1650 E Randol Mill Rd, short walk from the gates",
+    "note": "Aikman-branded bar, live music nightly",
+    "why": [
+     "Troy Aikman's bar, live music nightly",
+     "Steps from the gates"
+    ],
+    "rating": 4.0,
+    "dist": "0.2 mi",
+    "distMi": 0.2
+   },
+   {
+    "name": "Division Brewing",
+    "where": "506 E Main St, downtown Arlington",
+    "note": "Arlington's first brewery, chill experimental taps",
+    "why": [
+     "Arlington's first brewery",
+     "Chill experimental taps away from crowds"
+    ],
+    "rating": 4.6,
+    "dist": "1.8 mi",
+    "distMi": 1.8
+   },
+   {
+    "name": "4 Kahunas Tiki Lounge",
+    "where": "506 E Division St, downtown Arlington",
+    "note": "tiki escape, flaming cocktails, island vibe",
+    "why": [
+     "Flaming tiki cocktails",
+     "Island-vibe escape from the stadium scene"
+    ],
+    "rating": 4.6,
+    "dist": "1.8 mi",
+    "distMi": 1.8
+   }
+  ],
+  "merch": [
+   {
+    "name": "Dallas Cowboys Pro Shop",
+    "where": "Inside AT&T Stadium, 1 AT&T Way, Arlington (main team store)",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ]
+ },
+ "food": [
+  "Hurtado Barbecue: Central-Texas brisket with a Tex-Mex twist, famous brisket tostadas.",
+  "Smoke'N Ash: Michelin-recognized Tex-Ethiopian smokehouse, a only-in-Arlington experience.",
+  "225 Barbecue: brisket elote and birria ramen.",
+  "Pappasito's Cantina and LOMA TXMX for elevated Tex-Mex fixes."
+ ],
+ "tips": [
+  "The July 14 semifinal is the crown jewel: book hotels and parking earliest, it's the priciest, busiest day.",
+  "Noon and 1-2 PM kickoffs mean peak-sun arrivals, so pre-hydrate and don't linger in the lots; it's cool once you're inside.",
+  "Using TRE? Get to your downtown rail station early, trains run only every 30 min and pack out.",
+  "After the whistle, walk a few blocks from the stadium before requesting a ride to dodge the surge cordon, or wait it out at Texas Live!.",
+  "Stay in the Arlington district (Live! by Loews or Gaylord) to walk or take the Red Trolley and skip the regional commute.",
+  "The giant center-hung board gives a great view from anywhere, so upper-deck and Party Pass standing seats are smart value."
+ ],
+ "weather": "June-July North Texas is brutal outside at 95-105F with humidity, but the bowl stays a cool ~70s, so dress light, pack sun protection and bring a clear water bottle for the walk in.",
+ "lore": [
+  "Nicknamed 'Jerry World' after Cowboys owner Jerry Jones, who built it as a billion-dollar entertainment palace, not just a stadium.",
+  "Its twin arched roof trusses span ~1,225 feet, among the longest single-span roof structures on Earth.",
+  "Hosted Super Bowl XLV in 2011 with a record 105,121 crowd, plus the first CFP National Championship and two WrestleManias.",
+  "Canelo Alvarez vs Billy Joe Saunders drew 73,000-plus here in 2021, the largest indoor boxing crowd in history."
+ ],
+ "transport": {
+  "summary": "Arlington is the largest US city with no permanent public transit, so there is no train or city bus to the stadium. For WC26, organizers built a temporary match-day-only network: take the TRE train to CentrePort, then a free charter shuttle to a bus hub a 10-minute walk away.",
+  "rail": [
+   {
+    "name": "Trinity Railway Express (TRE)",
+    "station": "Victory Station (Dallas) or Fort Worth Central Station",
+    "detail": "Board downtown and ride to CentrePort/DFW Airport Station, then transfer to a free charter shuttle. Runs ~every 30 min on match days, with longer trains up to ~2,400 passengers. Buy via the GoPass app.",
+    "points": [
+     {
+      "b": "Ride to",
+      "t": "CentrePort, then free charter shuttle"
+     },
+     {
+      "b": "Every 30 min",
+      "t": "on match days, trains hold ~2,400"
+     },
+     {
+      "b": "Buy tickets",
+      "t": "in advance via the GoPass app"
+     }
+    ],
+    "deal": "Charter shuttle from CentrePort to the stadium is complimentary with a valid match ticket"
+   }
+  ],
+  "bus": [
+   {
+    "name": "Match-day charter shuttle (Bus Hub)",
+    "from": "CentrePort/DFW Airport Station",
+    "detail": "Complimentary buses run CentrePort to the Bus Hub just north of the stadium (~20-min ride in normal traffic), then a ~10-minute walk to the gates. Service starts 5 hours pre-match and runs until ~3 hours after.",
+    "points": [
+     {
+      "b": "Goes to",
+      "t": "Bus Hub north of the stadium"
+     },
+     {
+      "b": "~20-min ride",
+      "t": "then a ~10-minute walk to gates"
+     },
+     {
+      "b": "Runs from",
+      "t": "5 hours pre to ~3 hours post"
+     }
+    ],
+    "deal": "Free with a valid match ticket"
+   },
+   {
+    "name": "Dynamic Charter Service (backup)",
+    "from": "Victory Station (Dallas) or Fort Worth Central Station",
+    "detail": "If the TRE fills up, direct charter buses run straight from the downtown stations to the Bus Hub, skipping the rail leg.",
+    "points": [
+     {
+      "b": "Direct route",
+      "t": "downtown stations straight to Bus Hub"
+     },
+     {
+      "b": "Skips rail",
+      "t": "no TRE transfer needed"
+     },
+     {
+      "b": "Backup option",
+      "t": "for when the TRE fills up"
+     }
+    ],
+    "deal": "Free with a valid match ticket"
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "Arlington Red Trolley / Via On-Demand",
+    "detail": "Red Trolley circulates the entertainment district (drop-off near E. Road to Six Flags, north of Choctaw Stadium); many Arlington hotels have access. Via On-Demand rideshare got a $350k FTA grant but is restricted near the stadium on match days. Uber Shuttle runs alongside the trolleys.",
+    "points": [
+     {
+      "b": "Red Trolley",
+      "t": "loops the entertainment district hotels"
+     },
+     {
+      "b": "Via On-Demand",
+      "t": "restricted near the stadium on match days"
+     },
+     {
+      "b": "Uber Shuttle",
+      "t": "also runs alongside the trolleys"
+     }
+    ]
+   }
+  ],
+  "fromAirport": "DFW International (~12-15 mi) is the main gateway; from DFW you can connect to the TRE at CentrePort and ride the match-day shuttle. Dallas Love Field (~20 mi) is closer to Dallas proper. Door-to-seat via TRE plus shuttle takes about 1.5 hours.",
+  "rideshare": "Works but messy on match days. Pickup/drop-off is pushed to the rideshare lot west of the Esports Stadium (next to the Medal of Honor Museum, ~half-mile walk); cars must enter via Ballpark Way and exit AT&T Way. Drop-offs are banned in the cordon bounded by I-30, Ballpark Way/Stadium Dr, Sanford St and Collins St. Post-match surge and waits are severe.",
+  "bike": "Not a practical option in this car-dependent district; no dedicated stadium bike infrastructure for match crowds.",
+  "tips": [
+   "Get to your downtown TRE station early: trains run only ~every 30 min and pack out fast.",
+   "Allow about 1.5 hours door-to-seat on the TRE-plus-shuttle route, more at egress.",
+   "After the whistle, walk a few blocks out of the cordon before requesting a ride to dodge surge pricing, or wait it out at Texas Live!.",
+   "Staying in the Arlington district (Live! by Loews or Gaylord) lets you walk or take the Red Trolley and skip the regional commute."
+  ]
+ },
+ "parking": {
+  "summary": "About 12,000 stadium spaces sit in 15 numbered lots, plus nearly 12,000 more around adjacent Globe Life Field. For WC26, all stadium parking must be prepaid through JustPark (FIFA's official platform) and is priced by round, not by lot, climbing from $75 for group games to $175 for the semifinal.",
+  "lots": [
+   {
+    "name": "Blue Lots 1 & 2 / closest stadium lots",
+    "price": "WC26 from $75 (group/Ro32)",
+    "detail": "Standard parking nearest the gates; quickest in and out. For Cowboys games these premium lots run ~$75-100.",
+    "points": [
+     {
+      "b": "Closest lots",
+      "t": "standard parking nearest the gates"
+     },
+     {
+      "b": "Quickest",
+      "t": "in and out after the match"
+     }
+    ]
+   },
+   {
+    "name": "Tailgate lots (4-7, 10-13)",
+    "price": "Cowboys ~$50-60",
+    "detail": "Tailgating-permitted lots a bit further out; the default for groups wanting to grill. WC26 pricing is by round, not lot.",
+    "points": [
+     {
+      "b": "Tailgating allowed",
+      "t": "the default for groups wanting to grill"
+     },
+     {
+      "b": "A bit further",
+      "t": "out from the gates than Blue lots"
+     }
+    ]
+   },
+   {
+    "name": "Silver Lot 14 (RV/oversized)",
+    "price": "$150",
+    "detail": "For RVs and oversized vehicles; tailgating permitted.",
+    "points": [
+     {
+      "b": "RVs & oversized",
+      "t": "vehicles only"
+     },
+     {
+      "b": "Tailgating",
+      "t": "permitted in this lot"
+     }
+    ]
+   },
+   {
+    "name": "Lot 15 (bus & rideshare)",
+    "price": "Varies",
+    "detail": "Designated for bus parking and rideshare staging rather than general fan parking.",
+    "points": [
+     {
+      "b": "Buses & rideshare",
+      "t": "staging area, not fan parking"
+     },
+     {
+      "b": "Not for",
+      "t": "general fan vehicles"
+     }
+    ]
+   }
+  ],
+  "prepaid": "Essential. WC26 stadium parking must be bought in advance via JustPark, FIFA's official partner: ~$75 group stage and Round of 32, $100 Round of 16, $125-$145 quarterfinals, $175 the semifinal. For Cowboys games, prepay through SeatGeek or the Cowboys app to save ~$10-20 over cash at the gate. Lots sell out weeks ahead.",
+  "accessible": "Accessible parking is available in all lots on a first-come basis; you need a valid parking pass plus a state-issued disability placard or license plate. The stadium also has designated ADA drop-off/pick-up zones and power-assisted doors. Guest Services: (817) 892-4161.",
+  "tailgating": "Allowed in lots 4-7 and 10-15, on grassy perimeter areas only, max 9 ft wide by 12 ft deep, with charcoal or gas grills. No deep fryers, open fires, weapons, fireworks, amplified sound or commercial activity. Note the brutal June-July heat in the lots.",
+  "tips": [
+   "Pre-buy on JustPark for WC26 (or SeatGeek for Cowboys games) the moment you have tickets; lots sell out and the semifinal day is the priciest.",
+   "Lots open about 5 hours before kickoff, useful for beating traffic and tailgating.",
+   "Don't linger in the lots in peak Texas sun; pre-hydrate and head into the AC'd bowl.",
+   "Globe Life Field's lots next door add ~12,000 more spaces if stadium lots are gone."
+  ]
+ }
+}

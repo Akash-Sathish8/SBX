@@ -1,0 +1,37 @@
+/* Near-empty by design: each route injects its original page CSS verbatim via a
+   per-route <link> (see src/pages/*.css), so base/reset/:root rules swap per page.
+
+   The only global rules that live here are ones that must apply on EVERY page and
+   survive the per-page Tailwind recompile: mobile safe-area insets. They are all
+   ADDITIVE via max(existing, env(inset)) and @supports-gated, so on devices /
+   browsers without notches (where insets report 0) they are exact no-ops. */
+
+/* Native-app mobile feel, applied everywhere:
+   - text-size-adjust: stop iOS inflating body text when rotating to landscape.
+   - tap-highlight: kill the grey flash box iOS draws over tapped links/buttons. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+a, button, [role='button'], input, select, textarea, label, .chip, .pill {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The "WC 2026" nav badge must never wrap to two lines (no page CSS sets
+   white-space on it, so this global rule wins cleanly on every page). */
+.logo .wc { white-space: nowrap; }
+
+@supports (padding: max(0px)) {
+  /* Sticky top bar: keep nav contents clear of the landscape notch / rounded
+     corners. Higher specificity than the per-page `.nav-in` so it wins. */
+  header.nav .nav-in {
+    padding-left: max(28px, env(safe-area-inset-left));
+    padding-right: max(28px, env(safe-area-inset-right));
+  }
+
+  /* Casey tracker: the bottom video strip / control overlay must clear the
+     home indicator so its tap targets aren't cut off. */
+  .casey-shell [data-map-overlay='bottom'] {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

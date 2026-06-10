@@ -1,0 +1,450 @@
+{
+  "id": "nrg",
+  "name": "NRG Stadium",
+  "fifaName": "Houston Stadium",
+  "nickname": null,
+  "city": "Houston",
+  "country": "USA",
+  "cc": "USA",
+  "role": null,
+  "tagline": "Seven matches in the NFL's first retractable-roof stadium, where the roof closes and AC laughs off the Houston heat.",
+  "hero": "img/stadiums/nrg.jpg",
+  "stats": [
+    {
+      "label": "Capacity",
+      "value": "~72,000"
+    },
+    {
+      "label": "Opened",
+      "value": "2002"
+    },
+    {
+      "label": "WC26 Matches",
+      "value": "7"
+    },
+    {
+      "label": "Roof",
+      "value": "First NFL retractable roof, AC'd"
+    },
+    {
+      "label": "Roof Speed",
+      "value": "Opens or closes in ~7 min"
+    },
+    {
+      "label": "Cost",
+      "value": "$352 million"
+    }
+  ],
+  "why": [
+    {
+      "title": "Beat The Heat",
+      "text": "One of the few WC26 venues that can close the roof and air-condition the bowl, guaranteeing comfortable play in the worst of Gulf Coast summer."
+    },
+    {
+      "title": "Busy Slate",
+      "text": "Seven matches including a Round of 32 and a Round of 16, making it one of the busiest US host venues outside the final site."
+    },
+    {
+      "title": "July 4 Showdown",
+      "text": "Hosts a Round of 16 knockout on US Independence Day, a marquee, high-demand date for the city."
+    },
+    {
+      "title": "Indoor-Grown Grass",
+      "text": "Real Kentucky bluegrass trucked in and kept alive under LED grow lights shipped from the Netherlands, since a dome gets no sunlight."
+    }
+  ],
+  "matches": [
+    {
+      "date": "Jun 14",
+      "round": "Group E",
+      "fixture": "Germany vs Curaçao",
+      "ko": "12:00 PM",
+      "group": "E"
+    },
+    {
+      "date": "Jun 17",
+      "round": "Group K",
+      "fixture": "Portugal vs DR Congo",
+      "ko": "12:00 PM",
+      "group": "K"
+    },
+    {
+      "date": "Jun 20",
+      "round": "Group F",
+      "fixture": "Netherlands vs Sweden",
+      "ko": "12:00 PM",
+      "group": "F"
+    },
+    {
+      "date": "Jun 23",
+      "round": "Group K",
+      "fixture": "Portugal vs Uzbekistan",
+      "ko": "12:00 PM",
+      "group": "K"
+    },
+    {
+      "date": "Jun 26",
+      "round": "Group H",
+      "fixture": "Cabo Verde vs Saudi Arabia",
+      "ko": "7:00 PM",
+      "group": "H"
+    },
+    {
+      "date": "Jun 29",
+      "round": "Round of 32",
+      "fixture": "TBD",
+      "ko": "12:00 PM",
+      "group": null
+    },
+    {
+      "date": "Jul 4",
+      "round": "Round of 16",
+      "fixture": "TBD",
+      "ko": "12:00 PM",
+      "group": null
+    }
+  ],
+  "gettingThere": "NRG Stadium sits in NRG Park about 6-7 miles south of Downtown, just below the Texas Medical Center. The smartest play is the METRORail Red Line, which drops you steps from the gates and skips the game-day traffic and parking crush.",
+  "transit": [
+    "METRORail Red Line to the Stadium Park/Astrodome stop, roughly a 20-27 minute ride from Downtown; exit toward Gate 2.",
+    "From IAH airport (~24 miles, 30-50 min by car), rideshare is fastest; transit means the 500 IAH Express bus to Downtown then the Red Line south.",
+    "Driving: on-site NRG Park lots charge a fee and street parking nearby is extremely limited on event days, so reserve ahead.",
+    "Rideshare runs ~$15-25 from Downtown and ~$35-50 from IAH, but expect heavy surge pricing around kickoff and full-time."
+  ],
+  "matchday": "The immediate NRG area is mostly parking lots, so do your pregame in Rice Village or the Medical Center nearby. The free official FIFA Fan Festival is in East Downtown (EaDo) by Shell Energy Stadium, open daily June 11 to July 19 with a match-ball projection dome, a 7v7 turf field and a 45-ft video board.",
+  "around": {
+    "food": [
+      {
+        "name": "Trill Burgers",
+        "where": "Sections 115, 135, 520, 548",
+        "note": "Bun B's smash burgers; get the OG Trill",
+        "why": [
+          "Rapper Bun B's viral smash burger",
+          "OG Trill won best burger in America"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "Truth BBQ",
+        "where": "Main concourse stands",
+        "note": "Houston's cult brisket and smoked meats",
+        "why": [
+          "Texas Monthly top-ranked brisket",
+          "Houston's cult smokehouse, in the bowl"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "El Tiempo Cantina",
+        "where": "Sections 118, 138, 501, 527",
+        "note": "Sizzling fajita tacos, queso, loaded nachos",
+        "why": [
+          "Houston's go-to Tex-Mex fajitas",
+          "Sizzling tacos, queso and loaded nachos"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "Hugo's",
+        "where": "Club Level, sections 309, 337",
+        "note": "Chef Ortega tacos, street corn, Hugoritas",
+        "why": [
+          "James Beard chef Hugo Ortega",
+          "Real interior-Mexican tacos and Hugoritas"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      }
+    ],
+    "pre": [
+      {
+        "name": "FIFA Fan Festival Houston",
+        "where": "East Downtown (EaDo), by Shell Energy Stadium; Green/Purple Line to EaDo/Stadium Station then 5-min walk",
+        "why": [
+          "Free official fan zone, June 11-July 19",
+          "45-ft video board and 7v7 turf field"
+        ],
+        "fifa": true,
+        "rating": null,
+        "dist": "5.5 mi",
+        "distMi": 5.5
+      },
+      {
+        "name": "Bar 5015",
+        "where": "5015 Almeda Rd, Third Ward/Museum District side",
+        "note": "Black-owned neighborhood bar; frozen drinks, wings, charbroiled oysters",
+        "why": [
+          "Lively neighborhood bar on the way in from Downtown",
+          "Frozen drinks and a strong food menu"
+        ],
+        "rating": 4.3,
+        "dist": "3.4 mi",
+        "distMi": 3.4
+      },
+      {
+        "name": "Red River Ice House",
+        "where": "10308 S Main St, South Loop, just up the road from NRG",
+        "note": "Cold crafts, pool, darts, cornhole, sports",
+        "why": [
+          "Texas ice house right by NRG",
+          "Pool, darts and cornhole pregame"
+        ],
+        "rating": 4.6,
+        "dist": "1.8 mi",
+        "distMi": 1.8
+      },
+      {
+        "name": "Little Woodrow's Rice Village",
+        "where": "5611 Morningside Dr, Rice Village",
+        "note": "Huge beer list, cheap Lone Star, patio",
+        "why": [
+          "Nearest walkable bar cluster to NRG",
+          "Cheap Lone Star and a big patio"
+        ],
+        "rating": 4.6,
+        "dist": "2.2 mi",
+        "distMi": 2.2
+      },
+      {
+        "name": "Social Beer Garden HTX",
+        "where": "3101 San Jacinto St, Midtown, Red Line ride",
+        "note": "Big outdoor garden, 20-foot screen, sports",
+        "why": [
+          "20-foot screen for watch parties",
+          "Huge open-air Midtown beer garden"
+        ],
+        "rating": 4.7,
+        "dist": "4.5 mi",
+        "distMi": 4.5
+      }
+    ],
+    "post": [
+      {
+        "name": "Anvil Bar & Refuge",
+        "where": "1424 Westheimer Rd, Montrose",
+        "note": "Houston's landmark craft cocktail destination",
+        "why": [
+          "Houston's most famous cocktail bar",
+          "Bartender's-bar pedigree, James Beard nods"
+        ],
+        "rating": 4.5,
+        "dist": "4.3 mi",
+        "distMi": 4.3
+      },
+      {
+        "name": "West Alabama Ice House",
+        "where": "1919 W Alabama St, Montrose",
+        "note": "Houston's beloved open-air icehouse, open since 1928; cold beer, picnic tables, dog-friendly",
+        "why": [
+          "Classic Houston icehouse, a true local institution",
+          "Cheap cold beer under the oaks after the match"
+        ],
+        "rating": 4.6,
+        "dist": "3.7 mi",
+        "distMi": 3.7
+      },
+      {
+        "name": "Axelrad Beer Garden",
+        "where": "1517 Alabama St, Midtown edge",
+        "note": "Hammocks, communal tables, beer, next-door pizza",
+        "why": [
+          "Chill hammocks under the oak trees",
+          "Beer plus next-door wood-fired pizza"
+        ],
+        "rating": 4.7,
+        "dist": "4.4 mi",
+        "distMi": 4.4
+      },
+      {
+        "name": "Pour Behavior",
+        "where": "2211 Travis St, Midtown, Red Line ride",
+        "note": "Massive bar, 44 TVs, video walls",
+        "why": [
+          "44 TVs for late match replays",
+          "Massive Midtown bar, video walls everywhere"
+        ],
+        "rating": 4.1,
+        "dist": "4.7 mi",
+        "distMi": 4.7
+      }
+    ],
+    "merch": [
+      {
+        "name": "Houston Texans Team Shop",
+        "where": "Inside NRG Stadium, south end at Bud Light Plaza (entry via Bud Light Plaza)",
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "FIFA Official Store - Sugar Land",
+        "where": "2191 Texas Dr, Sugar Land (Greater Houston's first official FIFA WC26 merch store)",
+        "rating": null,
+        "dist": "16 mi",
+        "distMi": 16
+      }
+    ]
+  },
+  "food": [
+    "El Tiempo Cantina: the de facto Tex-Mex pregame spot with potent margaritas, near Kirby and Rice Village.",
+    "Pappas Bar-B-Q: Texas brisket, ribs and sausage smokehouse going since 1967.",
+    "Bellaire Blvd / Chinatown: one of the best Vietnamese scenes in the US for pho, banh mi and Viet-Cajun crawfish.",
+    "Rice Village (~2 mi north): the nearest walkable cluster of bars and restaurants."
+  ],
+  "tips": [
+    "Take the Red Line to Stadium Park/Astrodome and exit toward Gate 2; far easier than parking, but time your return since trains pack hard at full-time.",
+    "Beat the heat at the noon kickoffs: arrive hydrated and trust the roof to be closed with AC on inside.",
+    "Carry an empty clear bottle to refill at fountains; sealed water up to 20 oz is often allowed in.",
+    "Clear-bag policy only (up to 12 x 6 x 12 inches) with no on-site bag storage, so pack light.",
+    "Arrive 60-90 minutes before kickoff; security screening lines are long for 60,000-plus crowds.",
+    "The July 4 Round of 16 means Independence Day crowds and premium demand, so book transport and lodging well ahead."
+  ],
+  "weather": "Houston in June-July is brutally hot and humid with heat indexes around 111-120F, so pack light breathable clothes, sunscreen and a clear water bottle; the bowl itself stays cool with the roof closed.",
+  "lore": [
+    "The first NFL stadium with a retractable roof, splitting at the 50-yard line on two super-trusses each about 675 feet long.",
+    "Hosted Super Bowl LI in 2017, the first Super Bowl decided in overtime, with the Patriots' famous 28-3 comeback over Atlanta.",
+    "Also home to the world's largest livestock show and rodeo each spring and the 2024 CFP National Championship.",
+    "Concert juggernaut: three sold-out Taylor Swift Eras Tour shows in 2023 and a record 80,203 crowd in March 2026."
+  ],
+  "transport": {
+    "summary": "The METRORail Red Line drops you steps from the gates for a flat $1.25 and skips the worst of Houston's game-day traffic, making it the clear winner over driving. METRO runs enhanced World Cup service June 7 to July 11.",
+    "rail": [
+      {
+        "name": "METRORail Red Line",
+        "station": "Stadium Park / Astrodome",
+        "detail": "Direct ride from Downtown, Midtown, Museum District and the Medical Center; ~20-21 min from Downtown, then a short walk toward Gate 2. Trains run every 6-12 min on match days, roughly 5am-1am.",
+        "points": [
+          {
+            "b": "Direct from Downtown",
+            "t": "Midtown, Museum District and Medical Center too"
+          },
+          {
+            "b": "~20-21 min ride",
+            "t": "then short walk toward Gate 2"
+          },
+          {
+            "b": "Every 6-12 min",
+            "t": "on match days, roughly 5am-1am"
+          }
+        ],
+        "deal": "$1.25 flat single ride (60c reduced); fare is not raised for the World Cup."
+      },
+      {
+        "name": "METRORail Red Line",
+        "station": "Smith Lands",
+        "detail": "The adjacent stop just south of Stadium Park/Astrodome; an alternate exit point to spread out the post-match crowd.",
+        "points": [
+          {
+            "b": "Adjacent stop",
+            "t": "just south of Stadium Park/Astrodome"
+          },
+          {
+            "b": "Alternate exit",
+            "t": "spreads out the post-match crowd"
+          }
+        ],
+        "deal": "Same $1.25 fare; free transfers between METRO services for up to 3 hours."
+      }
+    ],
+    "bus": [
+      {
+        "name": "500 IAH Express + Red Line",
+        "from": "George Bush Intercontinental (IAH)",
+        "detail": "Take the 500 IAH Express bus into Downtown, then transfer south to the Red Line. Doable car-free but slow; rideshare is much faster from the airport.",
+        "points": [
+          {
+            "b": "500 Express to Downtown",
+            "t": "then transfer south to Red Line"
+          },
+          {
+            "b": "Car-free but slow",
+            "t": "rideshare much faster from airport"
+          }
+        ],
+        "deal": "Standard $1.25 fare with free 3-hour transfers; cash accepted on local and Park & Ride buses."
+      }
+    ],
+    "shuttle": [
+      {
+        "name": "NRG Park internal trams",
+        "detail": "Free trams circulate between the public parking lots and the NRG Stadium, NRG Center and NRG Arena grounds on event days.",
+        "points": [
+          {
+            "b": "Circulate the grounds",
+            "t": "lots to Stadium, Center and Arena"
+          },
+          {
+            "b": "Event days only",
+            "t": "free shuttle between parking and gates"
+          }
+        ]
+      }
+    ],
+    "fromAirport": "IAH is ~24 miles (30-50 min by car) and Hobby (HOU) is closer to the southeast; rideshare runs ~$35-50 from IAH. Car-free, use the 500 IAH Express bus to Downtown then the Red Line south.",
+    "rideshare": "Designated Uber/Lyft pickup is in the Yellow Lot off McNee Road. Expect long waits and surge pricing right after the final whistle when ~70,000 fans request at once; walk 10-15 min from the stadium or take the Red Line downtown first, then catch your ride.",
+    "bike": "Houston's BCycle bike-share and on-street bike routes serve the Med Center and Museum District corridor north of NRG; no official details published for dedicated World Cup bike valet at the stadium (flag as unconfirmed).",
+    "tips": [
+      "Pay rail fare with the RideMETRO Fare Card, a credit/debit tap, or Apple/Google Pay; cash works only on buses.",
+      "Time your return trip; Red Line platforms pack hard at full-time, so a quick post-match drink lets the crush clear.",
+      "Fannin South Park & Ride lets you park then ride the Red Line one stop in, a flexible alternative to NRG's no-reentry lots."
+    ]
+  },
+  "parking": {
+    "summary": "On-site NRG Park lots are color-coded and cashless, with no in-and-out re-entry on a single pass. Pre-book online, since lots sell out for high-demand matches and nearby free or street parking is extremely limited on event days.",
+    "lots": [
+      {
+        "name": "NRG Park public lots (Yellow, 610, OST and others)",
+        "price": "~$25 typical event day; surges to ~$60-80 for high-demand World Cup matches",
+        "detail": "Color-coded lots (Maroon, Red, Orange, Yellow, Blue, Teal, Green, Purple, Tan); cashless payment, no overnight parking, no refunds, and free trams shuttle you to the gates.",
+        "points": [
+          {
+            "b": "Color-coded lots",
+            "t": "Maroon, Yellow, Blue, Green and more"
+          },
+          {
+            "b": "Cashless only",
+            "t": "no overnight parking, no refunds"
+          },
+          {
+            "b": "Free trams",
+            "t": "shuttle you to the gates"
+          }
+        ]
+      },
+      {
+        "name": "Fannin South Park & Ride",
+        "price": "~$50 World Cup match day (per METRO); ~$25 for Texans games",
+        "detail": "Park at 1604 West Bellfort Ave and ride the Red Line one stop to Stadium Park/Astrodome; fee covers round-trip rail for everyone in the vehicle. Credit/debit only. (Price differs by event; verify the World Cup rate.)",
+        "points": [
+          {
+            "b": "Park at 1604 W Bellfort",
+            "t": "ride Red Line one stop in"
+          },
+          {
+            "b": "Covers round-trip rail",
+            "t": "for everyone in the vehicle"
+          },
+          {
+            "b": "Credit/debit only",
+            "t": "verify the World Cup rate"
+          }
+        ]
+      }
+    ],
+    "prepaid": "Reserve ahead through JustPark, NRG Park's official prepaid partner. For the World Cup, FIFA also directs fans to pre-book guaranteed spots via its official parking portal; pre-booked spots start around $25 and rise sharply for marquee dates.",
+    "accessible": "All METRORail vehicles are ADA accessible and METROLift paratransit is available (apply via METROLiftFIFA@RideMETRO.org). NRG offers ADA parking; see NRG Park's Accessibility Guide for designated accessible lot locations.",
+    "tailgating": "NRG Park has a long tailgating tradition in its surface lots for Texans games, but FIFA may impose World Cup-specific restrictions; tailgating rules are not published on NRG's parking page (flag as unconfirmed for the tournament).",
+    "tips": [
+      "Your parking pass is single-event only; re-entry to the complex costs an additional parking fee, so plan to stay put.",
+      "Lots fill fast and exit slowly; arrive early (3-4 hours for big matches) or skip it entirely for the Red Line.",
+      "Avoid driving for the July 4 Round of 16; Independence Day plus a knockout means peak demand and the steepest parking surge."
+    ]
+  }
+}

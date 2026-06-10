@@ -1,0 +1,461 @@
+{
+ "id": "akron",
+ "name": "Estadio Akron",
+ "fifaName": "Estadio Guadalajara",
+ "nickname": "The Grass Volcano",
+ "city": "Guadalajara",
+ "country": "Mexico",
+ "cc": "MEX",
+ "role": null,
+ "tagline": "Chivas' grass-covered volcano on Guadalajara's edge hosts four group games, including a Mexico home night.",
+ "hero": "img/stadiums/akron.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~48,000"
+  },
+  {
+   "label": "Opened",
+   "value": "2010"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "4 (group stage)"
+  },
+  {
+   "label": "Design",
+   "value": "Grass-volcano roof"
+  },
+  {
+   "label": "Home Club",
+   "value": "Chivas Guadalajara"
+  },
+  {
+   "label": "Altitude",
+   "value": "~5,100 ft"
+  }
+ ],
+ "why": [
+  {
+   "title": "The Grass Volcano",
+   "text": "The bowl rises out of the earth wrapped in a vast grass-covered hill, with a floating elliptical 'cloud' roof hovering above. It's a volcano-and-cloud motif, not a stadium plopped on a lot."
+  },
+  {
+   "title": "Chivas Fortress",
+   "text": "Home of Club Deportivo Guadalajara, one of Mexico's two biggest clubs and the one that fields only Mexican-born players. The passion here is the real thing."
+  },
+  {
+   "title": "Mexico Plays Here",
+   "text": "One of the four group games is a home-nation Mexico match, turning the whole metro area into a sea of green, white, and red."
+  },
+  {
+   "title": "Tequila & Mariachi Capital",
+   "text": "Guadalajara invented mariachi, birria, and tortas ahogadas, and the town of Tequila is a day trip away. The host city is half the experience."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 11",
+   "round": "Group A",
+   "fixture": "Korea Republic vs Czechia",
+   "ko": "8:00 PM",
+   "group": "A"
+  },
+  {
+   "date": "Jun 18",
+   "round": "Group A",
+   "fixture": "Mexico vs Korea Republic",
+   "ko": "9:00 PM",
+   "group": "A"
+  },
+  {
+   "date": "Jun 23",
+   "round": "Group K",
+   "fixture": "Colombia vs DR Congo",
+   "ko": "8:00 PM",
+   "group": "K"
+  },
+  {
+   "date": "Jun 26",
+   "round": "Group H",
+   "fixture": "Uruguay vs Spain",
+   "ko": "6:00 PM",
+   "group": "H"
+  }
+ ],
+ "gettingThere": "The stadium sits on the northwest fringe in Zapopan, far from the center, and on matchdays the entire perimeter is closed to private cars with no public parking. Plan your ride before you leave.",
+ "transit": [
+  "Official 'Ride al Estadio' shuttle: ~500 MXN ($25) per person, from 10 hubs (Chapultepec, Auditorio Telmex, Zona Galerias and more), departing ~4 hours before kickoff",
+  "Mi Macro Periferico BRT to 'Estadio Chivas' station, then about a 1 km walk in",
+  "Uber/DiDi drop you at the edge of the restricted zone with a final walk on foot",
+  "Shuttles end at the 'ultima milla,' an ~800 m walk through a food and culture corridor"
+ ],
+ "matchday": "Arrive early: security screening plus the ~800 m última-milla walk eat up time, and there's a lively food corridor on the approach. Lower exposed rows can get wet in a storm, so gear up.",
+ "transport": {
+  "summary": "The stadium sits on Zapopan's northwest fringe with no direct rail and, on matchdays, FIFA has banned all public parking and sealed the perimeter to private cars. Your realistic options are the official Ride al Estadio shuttle, the Mi Macro Periférico BRT to Estadio Chivas station, or a rideshare dropped at the edge of the closed zone. Decide before you leave; do not plan to drive in.",
+  "rail": [
+   {
+    "name": "Tren Ligero Línea 3 + BRT transfer",
+    "station": "Periférico Belenes (transfer to BRT)",
+    "detail": "No light-rail line reaches the stadium. Ride Línea 3 toward Arcos de Zapopan to Periférico Belenes, then transfer to the Mi Macro Periférico BRT toward Estadio Chivas station.",
+    "points": [
+     {
+      "b": "No direct rail",
+      "t": "to the stadium itself."
+     },
+     {
+      "b": "Línea 3",
+      "t": "to Periférico Belenes stop."
+     },
+     {
+      "b": "Transfer to BRT",
+      "t": "toward Estadio Chivas station."
+     }
+    ],
+    "deal": "Unified 11 MXN fare; 50% transfer discount within 60 min using the Mi Movilidad card (~30 MXN, cash often not accepted)"
+   },
+   {
+    "name": "Tren Ligero Línea 1 + BRT transfer",
+    "station": "Periférico Norte (transfer to BRT)",
+    "detail": "Alternative feed: take Línea 1 to Periférico Norte and transfer to the Mi Macro Periférico BRT toward Estadio Chivas station.",
+    "points": [
+     {
+      "b": "Línea 1",
+      "t": "to Periférico Norte stop."
+     },
+     {
+      "b": "Transfer to BRT",
+      "t": "toward Estadio Chivas station."
+     },
+     {
+      "b": "Backup feed",
+      "t": "to the main BRT route."
+     }
+    ],
+    "deal": "Same 11 MXN unified fare with card-based transfer discount"
+   }
+  ],
+  "bus": [
+   {
+    "name": "Mi Macro Periférico BRT (SITEUR)",
+    "from": "Estadio Chivas station (also signed Estadio Guadalajara)",
+    "detail": "The main public route. Take BRT services toward Carretera a Chapala / Chapalita Inn and exit at Estadio Chivas station, then follow the purpose-built Andador Chivas pedestrian walkway (~under 10 min walk; some sources say a longer ~15 min). Service runs ~5am–11pm, extended to ~1am on match nights, with reinforced service at the Estadio Guadalajara, Ciudad Granja and Ciudad Judicial stations.",
+    "points": [
+     {
+      "b": "Main public route",
+      "t": "exit at Estadio Chivas station."
+     },
+     {
+      "b": "Andador Chivas walk",
+      "t": "roughly 10–15 min in."
+     },
+     {
+      "b": "Runs 5am–1am",
+      "t": "extended on match nights."
+     }
+    ],
+    "deal": "~11 MXN (under $1) per ride with Mi Movilidad card"
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "Ride al Estadio (official FIFA shuttle, park-and-ride)",
+    "detail": "Official ticketholder shuttle: 500 MXN (~$25) per person ROUND TRIP, sold only in advance via Boleto Móvil (boletomovil.com/guadalajara-fwc-2026); you must already hold a match ticket; max 4 passes/person, no same-day sales. Departs ~4 hours before kickoff with only a 5-min tolerance (arrive 20 min early); return buses leave right after the final whistle. Drops at an exclusive zone ~800 m from the gates. FREE parking at Auditorio Telmex, Zona Valle Real, Plaza Patria, Plaza Vía Viva, Paseo de Gracia (Universidad), Titanes and Expo GDL; PAID parking at Zona Galerías, Zona San Ignacio and Zona Chapultepec (subject to availability).",
+    "points": [
+     {
+      "b": "Advance only",
+      "t": "via Boleto Móvil; ticketholders, max 4."
+     },
+     {
+      "b": "Departs 4 hrs early",
+      "t": "5-min tolerance; arrive 20 min ahead."
+     },
+     {
+      "b": "Drops ~800 m out",
+      "t": "free or paid parking at hubs."
+     }
+    ]
+   }
+  ],
+  "fromAirport": "GDL (Miguel Hidalgo) is southeast of the city, opposite the northwest stadium. Official fixed-rate airport taxi ~$15–25 USD, or Uber/DiDi ~200–350 MXN ($12–20) and 35–50 min in normal traffic. Public transit from the airport is impractical (2+ transfers, ~2 hours). On matchdays, route via Carretera GDL–Chapala to Periférico and allow generous extra time.",
+  "rideshare": "Uber and DiDi are the cleanest non-shuttle option: ~150–250 MXN ($8–13), 25–35 min from the center or hotel zones in normal traffic. Cars cannot enter the sealed perimeter, so you'll be dropped a block or two from the closed zone with a final walk. Expect heavy surge and a 2–3 hour road backup after the whistle.",
+  "bike": "No promoted World Cup bike route or valet to the stadium; the suburban Periférico ring location and matchday road closures make cycling impractical for most visitors. (low confidence)",
+  "tips": [
+   "Buy the Ride al Estadio pass early and remember it's round-trip from your chosen hub; the free-parking hubs (Valle Real, Plaza Patria, Expo GDL, etc.) are the de facto park-and-ride",
+   "Get a Mi Movilidad card on arrival; many BRT/rail units no longer take cash, and it unlocks the 60-minute transfer discount",
+   "Shuttles leave ~4 hours before kickoff with only a 5-minute tolerance, so treat the departure time as firm",
+   "After the match, walk a few blocks past the closure before booking a rideshare to dodge surge and the 2–3 hour exit jam"
+  ]
+ },
+ "parking": {
+  "summary": "By FIFA order there is NO public parking at Estadio Guadalajara during the World Cup, and the surrounding streets fall under the 'Última Milla' road-closure operation. Authorities explicitly tell fans not to drive a private car to the stadium. The only sanctioned 'parking' is the free/paid lots at the Ride al Estadio shuttle hubs across the city.",
+  "lots": [
+   {
+    "name": "Stadium lots (Estadio Guadalajara)",
+    "price": "Closed to general public",
+    "detail": "The ~4,800-space stadium parking footprint is reserved for media, staff and accredited use during the tournament; not available to ticketholders.",
+    "points": [
+     {
+      "b": "~4,800 spaces",
+      "t": "the full stadium footprint."
+     },
+     {
+      "b": "Accredited only",
+      "t": "media and staff during tournament."
+     },
+     {
+      "b": "No ticketholders",
+      "t": "closed to general fans."
+     }
+    ]
+   },
+   {
+    "name": "Ride al Estadio hubs — free parking",
+    "price": "Free (with shuttle pass)",
+    "detail": "Park free and ride at Auditorio Telmex, Zona Valle Real, Plaza Patria, Plaza Vía Viva, Paseo de Gracia (Universidad), Titanes and Expo GDL.",
+    "points": [
+     {
+      "b": "Seven free hubs",
+      "t": "park-and-ride across the city."
+     },
+     {
+      "b": "Telmex & Valle Real",
+      "t": "plus Plaza Patria, Vía Viva."
+     },
+     {
+      "b": "Also Expo GDL",
+      "t": "Titanes and Paseo de Gracia."
+     }
+    ]
+   },
+   {
+    "name": "Ride al Estadio hubs — paid parking",
+    "price": "Paid (varies, subject to availability)",
+    "detail": "Zona Galerías, Zona San Ignacio and Zona Chapultepec offer paid parking alongside the shuttle pickup.",
+    "points": [
+     {
+      "b": "Three paid hubs",
+      "t": "parking beside the shuttle pickup."
+     },
+     {
+      "b": "Galerías & Chapultepec",
+      "t": "plus Zona San Ignacio."
+     },
+     {
+      "b": "Subject to availability",
+      "t": "fees vary by lot."
+     }
+    ]
+   }
+  ],
+  "prepaid": "No prepaid stadium parking is sold. Parking is bundled with the Ride al Estadio shuttle pass (boletomovil.com/guadalajara-fwc-2026) — buy the shuttle in advance and park at the hub; free at seven hubs, paid at three.",
+  "accessible": "The Ride al Estadio shuttle guarantees universal accessibility: note reduced-mobility needs at purchase to be assigned an equipped vehicle with disembarking support near the security checkpoints. Accessible/ADA stadium seating is via FIFA/On Location in advance. The ~800 m última-milla walk from any drop-off is significant for limited-mobility fans — arrange assistance ahead.",
+  "tailgating": "No sanctioned tailgating; the perimeter is a vehicle-free pedestrian corridor with a food-and-culture zone on the última-milla approach rather than lot parking. Outside alcohol is banned.",
+  "tips": [
+   "Don't drive to the stadium — FIFA has closed public parking and the streets are under road-closure control",
+   "If you want to drive at all, drive to a free Ride al Estadio hub (Valle Real, Expo GDL, Plaza Patria) and take the shuttle in",
+   "Andares/Zapopan hotels are only ~10–15 min away, making walking-plus-rideshare or a hotel-area hub realistic"
+  ]
+ },
+ "food": [
+  "Birria, Jalisco's gift to the world: goat or lamb slow-cooked in chile adobo",
+  "Tortas ahogadas, carnitas on crusty birote bread 'drowned' in fiery chile de árbol sauce, uniquely Guadalajaran",
+  "Cantaritos, the local pour of tequila, citrus, and mineral water served in a clay pot",
+  "Hit Mercado San Juan de Dios or El Parián in Tlaquepaque for the full spread with mariachi"
+ ],
+ "tips": [
+  "Take the official shuttle or BRT, never a private car, since the stadium perimeter is sealed to vehicles",
+  "Pack a packable poncho, not an umbrella (banned), for the rainy-season afternoon storms",
+  "After the final whistle, walk a few blocks out before booking a rideshare to dodge surge pricing",
+  "Bring cash in pesos for street food and small vendors, and use bank ATMs only",
+  "Hydrate for the moderate altitude (~1,560 m) and heat, and pace the tequila accordingly",
+  "FIFA clear-bag rules apply: only transparent bags up to 30x15x30 cm, no backpacks"
+ ],
+ "around": {
+  "food": [
+   {
+    "name": "Fiesta Rebaño food court",
+    "where": "at stadium, between lot and gates",
+    "note": "Tortas ahogadas, quesabirria with consomé, carne asada",
+    "why": [
+     "Last bite inside the security perimeter",
+     "Quesabirria with consomé, no detour"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Última Milla corridor stalls",
+    "where": "~800 m walk to gates",
+    "note": "Street-food and culture run up to entrance",
+    "why": [
+     "Eat your way down the walk-in",
+     "Cheap street tacos, mariachi energy"
+    ],
+    "rating": null,
+    "dist": "0.5 mi",
+    "distMi": 0.5
+   },
+   {
+    "name": "Tortas Ahogadas Noel",
+    "where": "Colinas de la Primavera, Zapopan",
+    "note": "Family spot for ahogadas, carnitas, birria tacos",
+    "why": [
+     "Zapopan-side, closest real ahogadas to stadium",
+     "Family-run, birote drowned in chile de árbol"
+    ],
+    "rating": 4.4,
+    "dist": "2.3 mi",
+    "distMi": 2.3
+   },
+   {
+    "name": "Birriería Las Nueve Esquinas",
+    "where": "Centro (near cathedral)",
+    "note": "Iconic goat birria and ahogadas",
+    "why": [
+     "Guadalajara's landmark goat birria",
+     "Worth the Centro trip on off-days"
+    ],
+    "rating": 4.5,
+    "dist": "7.2 mi",
+    "distMi": 7.2
+   }
+  ],
+  "pre": [
+   {
+    "name": "FIFA Fan Festival Guadalajara",
+    "where": "Plaza de la Liberación, Centro Histórico (by the Cathedral / Teatro Degollado); ~30 min via Uber/DiDi or Tren Ligero L3 from Zapopan, then BRT to stadium",
+    "why": [
+     "Free fan zone, giant screens, live music",
+     "Centro Histórico heart between the Cathedral and Degollado"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "7.5 mi",
+    "distMi": 7.5
+   },
+   {
+    "name": "Cervecería Chapultepec",
+    "where": "Av. Chapultepec, Colonia Americana (shuttle hub)",
+    "note": "Cheap one-price beers, loud pre-match buzz",
+    "why": [
+     "One flat price per beer",
+     "Right on a Ride al Estadio hub"
+    ],
+    "rating": 4.4,
+    "dist": "6.2 mi",
+    "distMi": 6.2
+   },
+   {
+    "name": "El Perdón Cantina",
+    "where": "Chapultepec corridor",
+    "note": "Cantaritos and mezcal, agave-forward and lively",
+    "why": [
+     "Cantaritos in clay pots, Jalisco-style",
+     "Agave-forward and loud before kickoff"
+    ],
+    "rating": 4.3,
+    "dist": "6.2 mi",
+    "distMi": 6.2
+   },
+   {
+    "name": "Cantina La No. 20",
+    "where": "The Landmark, Puerta de Hierro, Zapopan (shuttle-adjacent)",
+    "note": "Traditional cantina meets polished cocktails, easy crowd",
+    "why": [
+     "Classic cantina, cleaned-up cocktails",
+     "Easy Providencia crowd near shuttle pickup"
+    ],
+    "rating": 4.7,
+    "dist": "3.5 mi",
+    "distMi": 3.5
+   },
+   {
+    "name": "Palmer Bar",
+    "where": "Ladrón de Guevara (Av. Morelos 2048)",
+    "note": "Upscale cocktails, chic if you want one good drink",
+    "why": [
+     "One sharp cocktail before the green tide",
+     "Chic spot, not a beer barn"
+    ],
+    "rating": 4.6,
+    "dist": "5.6 mi",
+    "distMi": 5.6
+   }
+  ],
+  "post": [
+   {
+    "name": "Cantina La Fuente",
+    "where": "Centro, Pino Suárez 78",
+    "note": "1921 institution, mariachi from 11pm, late ahogadas",
+    "why": [
+     "1921 Centro institution, live mariachi",
+     "Late ahogadas when the night runs"
+    ],
+    "rating": 4.5,
+    "dist": "7.6 mi",
+    "distMi": 7.6
+   },
+   {
+    "name": "Cantina Mexicaltzingo",
+    "where": "Chapultepec area",
+    "note": "Mellow cantina early, turns dance-floor lively late",
+    "why": [
+     "Starts mellow, becomes a dance floor",
+     "Chapultepec, walkable between late stops"
+    ],
+    "rating": 4.2,
+    "dist": "6.2 mi",
+    "distMi": 6.2
+   },
+   {
+    "name": "Cervecería Chapultepec (original)",
+    "where": "Chapultepec at Mexicaltzingo",
+    "note": "Late, packed, cheap rounds to keep going",
+    "why": [
+     "Cheap flat-price rounds till late",
+     "Packed Chivas-crowd energy post-whistle"
+    ],
+    "rating": 4.4,
+    "dist": "6.2 mi",
+    "distMi": 6.2
+   },
+   {
+    "name": "Las Nueve Esquinas plaza",
+    "where": "Centro, Plaza Nueve Esquinas",
+    "note": "Birria and beers if the night runs long",
+    "why": [
+     "Birria and beers at 1am",
+     "Historic plaza for the long night"
+    ],
+    "rating": null,
+    "dist": "7.2 mi",
+    "distMi": 7.2
+   }
+  ],
+  "merch": [
+   {
+    "name": "Tienda Oficial Chivas (Estadio Akron)",
+    "where": "Inside Estadio Akron / Estadio Guadalajara, Av. Circuito JVC 2800, El Bajío, Zapopan",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store (Guadalajara host-city merch)",
+    "where": "FIFA megastore / official retail at the stadium complex during the tournament",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ]
+ },
+ "weather": "Hot, humid June-July highs around 32-33°C with brief but intense afternoon thunderstorms, so pack a poncho, quick-dry layers, and sunscreen.",
+ "lore": [
+  "Opened in 2010 with Guadalajara beating Manchester United 3-2; Chicharito Hernández scored the venue's first-ever goal",
+  "Designed by French architect Jean-Marie Massaud with Populous, conceived as a 'volcano covered in vegetation' blending into the Jalisco landscape",
+  "This is Guadalajara's first World Cup venue; the famous 1970 and 1986 matches were at the older Estadio Jalisco, not here",
+  "Hosted the 2011 Pan American Games ceremonies and the 2011 FIFA U-17 World Cup that Mexico won on home soil"
+ ]
+}

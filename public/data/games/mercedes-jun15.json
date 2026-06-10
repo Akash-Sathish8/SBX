@@ -1,0 +1,24 @@
+{
+ "id": "mercedes-jun15",
+ "venue": "mercedes",
+ "venueName": "Mercedes-Benz Stadium",
+ "city": "Atlanta",
+ "date": "Jun 15",
+ "ko": "12:00 PM",
+ "round": "Group H",
+ "home": "Spain",
+ "away": "Cabo Verde",
+ "preview": {
+  "summary": "The world's top-ranked side and EURO 2024 champions open Group H against tournament debutants Cape Verde. Spain bring a possession-heavy, technically dominant style; the Blue Sharks aim to prove they belong on the biggest stage in their first-ever World Cup match.",
+  "homeForm": "Spain top the FIFA rankings, are reigning European champions and Paris 2024 Olympic gold medallists, entering as one of the title favourites.",
+  "awayForm": "Cape Verde, ranked around 69th, qualified for the first time in their history after winning eight of ten qualifiers to top their group.",
+  "homeKey": "Lamine Yamal, Barcelona prodigy and Ballon d'Or runner-up, drives the attack.",
+  "awayKey": "Dailon Livramento, the side's main attacking reference and qualifying matchwinner.",
+  "storylines": [
+   "Spain field eight Barcelona players and zero from Real Madrid",
+   "Cape Verde's historic first World Cup appearance after seven failed attempts",
+   "Villarreal's Logan Costa anchors the Blue Sharks' backline against Yamal"
+  ],
+  "h2h": "The nations have never met before at any level, making this a genuine first encounter."
+ }
+}

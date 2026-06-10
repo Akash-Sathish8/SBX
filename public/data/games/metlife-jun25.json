@@ -1,0 +1,13 @@
+{
+ "id": "metlife-jun25", "venue": "metlife", "venueName": "MetLife Stadium", "city": "New York / NJ",
+ "date": "Jun 25", "ko": "4:00 PM", "round": "Group E", "home": "Ecuador", "away": "Germany",
+ "preview": {
+  "summary": "Ecuador's disciplined, defensively miserly side meet a Germany team blending youth and experience in a Group E clash. La Tri's organisation and counterattacks face Nagelsmann's creative midfield in a potential group decider.",
+  "homeForm": "Ecuador finished second in South American qualifying, conceding just five goals across 18 matches, the fewest of any side.",
+  "awayForm": "Germany, ranked 10th, eased through qualifying with five wins from six under Julian Nagelsmann.",
+  "homeKey": "Moises Caicedo: midfield engine driving Ecuador's qualifying run.",
+  "awayKey": "Florian Wirtz: creative spark and 2025 German Footballer of the Year.",
+  "storylines": ["Ecuador's elite defence faces Germany's creative attack", "Wirtz and Musiala headline Germany's young core", "Caicedo and Pacho anchor an organised Ecuador"],
+  "h2h": "Their only World Cup meeting came in 2006, a 3-0 Germany win in the group stage."
+ }
+}

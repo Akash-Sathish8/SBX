@@ -1,0 +1,535 @@
+{
+ "id": "levis",
+ "name": "Levi's Stadium",
+ "fifaName": "San Francisco Bay Area Stadium",
+ "nickname": null,
+ "city": "San Francisco Bay",
+ "country": "USA",
+ "cc": "USA",
+ "role": null,
+ "tagline": "Silicon Valley's high-tech open-air bowl hosts six matches, 45 miles south of San Francisco in sun-baked Santa Clara.",
+ "hero": "img/stadiums/levis.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~70,000 (WC config)"
+  },
+  {
+   "label": "Opened",
+   "value": "2014"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "6 (incl. Round of 32)"
+  },
+  {
+   "label": "Design",
+   "value": "Silicon Valley tech-forward, LEED Gold"
+  },
+  {
+   "label": "Heat Warning",
+   "value": "East side bakes in the sun"
+  },
+  {
+   "label": "Location",
+   "value": "Santa Clara, 45 mi from SF"
+  }
+ ],
+ "why": [
+  {
+   "title": "Stadium of the Future",
+   "text": "Built as the most connected venue in sports, with a 40 Gbps backbone, dense Wi-Fi, and an app that lets you order food to your seat and watch instant replays."
+  },
+  {
+   "title": "Knockout Stakes",
+   "text": "Five group games plus a Round of 32 knockout on July 1 mean real win-or-go-home drama on the schedule."
+  },
+  {
+   "title": "Soccer Pedigree",
+   "text": "Hosted four Copa America Centenario matches in 2016, including Chile's stunning 7-0 demolition of Mexico in front of 70,000-plus."
+  },
+  {
+   "title": "Green Machine",
+   "text": "A 27,000 sq ft living green roof, 1,000-plus solar panels, and recycled water make it the first LEED Gold NFL stadium."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 13",
+   "round": "Group B",
+   "fixture": "Qatar vs Switzerland",
+   "ko": "12:00 PM",
+   "group": "B"
+  },
+  {
+   "date": "Jun 16",
+   "round": "Group J",
+   "fixture": "Austria vs Jordan",
+   "ko": "9:00 PM",
+   "group": "J"
+  },
+  {
+   "date": "Jun 19",
+   "round": "Group D",
+   "fixture": "Türkiye vs Paraguay",
+   "ko": "9:00 PM",
+   "group": "D"
+  },
+  {
+   "date": "Jun 22",
+   "round": "Group J",
+   "fixture": "Jordan vs Algeria",
+   "ko": "8:00 PM",
+   "group": "J"
+  },
+  {
+   "date": "Jun 25",
+   "round": "Group D",
+   "fixture": "Paraguay vs Australia",
+   "ko": "7:00 PM",
+   "group": "D"
+  },
+  {
+   "date": "Jul 1",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "5:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "Despite the name, this stadium is in Santa Clara, 45 miles south of San Francisco deep in Silicon Valley. Fly into San Jose (SJC), just 5 miles away, rather than SFO.",
+ "transit": [
+  "VTA Orange Line light rail drops you at Great America Station on the stadium's north side, the easiest car-free arrival.",
+  "From San Francisco, take Caltrain to Mountain View then transfer to the VTA Orange Line; budget 1.5 to 2 hours each way.",
+  "Driving is roughly 45 minutes from SF without traffic but far longer on match days; pre-purchase parking.",
+  "Rideshare from SF runs $65-70-plus and 75-plus minutes with heavy match-day surge; from San Jose it's quick and cheap."
+ ],
+ "matchday": "The stadium sits among office parks, tech campuses, and the Great America theme park next door, with no bar or restaurant strip nearby. The real atmosphere lives in downtown San Jose (15 min) or San Francisco (45 mi).",
+ "around": {
+  "food": [
+   {
+    "name": "Super Duper Burgers",
+    "where": "Concourse concession",
+    "note": "SF favorite; the only stand serving real milkshakes.",
+    "why": [
+     "Only in-stadium stand with real milkshakes",
+     "Cult SF burger chain, organic beef"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Araujo's Mexican Grill",
+    "where": "Concourse concession",
+    "note": "San Jose food-truck roots; get the carne asada fries.",
+    "why": [
+     "Carne asada fries are the move",
+     "Real San Jose food-truck roots"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Blue Line Pizza",
+    "where": "Concourse concession",
+    "note": "Bay Area chain; grab a New York-style slice.",
+    "why": [
+     "Fast New York-style slice on the go",
+     "Local Bay Area chain, not generic"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "IB's Cheesesteaks",
+    "where": "Concourse concession",
+    "note": "Berkeley import; try the bulgogi cheesesteak and wings.",
+    "why": [
+     "Bulgogi cheesesteak is the signature",
+     "Berkeley import with crispy wings"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ],
+  "pre": [
+   {
+    "name": "FIFA Fan Zone - China Basin Park at Mission Rock",
+    "where": "SF waterfront, Mission Rock (near Oracle Park); 45 mi from stadium, ~1.5-2 hr via Caltrain/VTA",
+    "why": [
+     "One of the Bay's largest free fan zones",
+     "Giant screens, food vendors, waterfront views"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "45 mi",
+    "distMi": 45
+   },
+   {
+    "name": "Clara's Junction",
+    "where": "2221 Tasman Dr, Santa Clara",
+    "note": "Outdoor garden, firepits, taco truck, BBQ; tailgate energy.",
+    "why": [
+     "Closest pre-match spot, short walk",
+     "Firepits and taco truck, real tailgate feel"
+    ],
+    "rating": 4.0,
+    "dist": "0.9 mi",
+    "distMi": 0.9
+   },
+   {
+    "name": "HiroNori Craft Ramen",
+    "where": "4300 Great America Pkwy, Santa Clara",
+    "note": "Quick craft ramen bowl before the gates open.",
+    "why": [
+     "Fast craft ramen before gates open",
+     "Walkable from the stadium"
+    ],
+    "rating": 4.4,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "Pizza My Heart",
+    "where": "4300 Great America Pkwy, Santa Clara",
+    "note": "Santa Cruz surf-shop pizza; fast pre-match slice.",
+    "why": [
+     "Quick Santa Cruz surf-shop slice",
+     "Beloved NorCal pizza institution"
+    ],
+    "rating": 4.3,
+    "dist": "0.3 mi",
+    "distMi": 0.3
+   },
+   {
+    "name": "Taplands",
+    "where": "1171 Homestead Rd, Santa Clara; ~3.5 mi (10-min drive)",
+    "note": "Neighborhood brewery and bottle shop; mellow craft taproom.",
+    "why": [
+     "Mellow neighborhood taproom escape",
+     "Deep craft list plus bottle shop"
+    ],
+    "rating": 4.6,
+    "dist": "3.6 mi",
+    "distMi": 3.6
+   }
+  ],
+  "post": [
+   {
+    "name": "San Pedro Square Market",
+    "where": "87 N San Pedro St, San Jose",
+    "note": "Official fan zone; giant screens, all 104 matches free.",
+    "why": [
+     "Official fan zone, all 104 matches free",
+     "Closest big-screen scene to the stadium"
+    ],
+    "rating": null,
+    "dist": "5.5 mi",
+    "distMi": 5.5
+   },
+   {
+    "name": "Barebottle Brewing",
+    "where": "2520 Augustine Dr, Santa Clara",
+    "note": "Craft-beer favorite; big taplist and easy crowd.",
+    "why": [
+     "Huge taplist of award-winning beers",
+     "Easy crowd for a post-match pint"
+    ],
+    "rating": 4.4,
+    "dist": "1.4 mi",
+    "distMi": 1.4
+   },
+   {
+    "name": "Puesto",
+    "where": "2752 Augustine Dr, Santa Clara",
+    "note": "Popular tacos and margaritas for a lively nightcap.",
+    "why": [
+     "Tacos and margaritas for a nightcap",
+     "Lively, buzzing late-night room"
+    ],
+    "rating": 4.2,
+    "dist": "1.4 mi",
+    "distMi": 1.4
+   },
+   {
+    "name": "The Sportsmen's Lounge",
+    "where": "2368 Pruneridge Ave, Santa Clara",
+    "note": "Classic dive bar for a cheap post-match beer.",
+    "why": [
+     "Cheap beer, no-frills dive vibe",
+     "Local Santa Clara classic"
+    ],
+    "rating": 4.4,
+    "dist": "2.5 mi",
+    "distMi": 2.5
+   }
+  ],
+  "merch": [
+   {
+    "name": "49ers Team Store presented by Visa",
+    "where": "Inside Xfinity Gate A, 4900 Marie P. DeBartolo Way, Levi's Stadium",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA World Cup 2026 Official Store (match-day kiosks)",
+    "where": "Levi's Stadium concourses and gate plazas on match days",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
+  ]
+ },
+ "food": [
+  "In-seat food and merch ordering through the Levi's Stadium app, delivered right to your row.",
+  "California-forward concessions and craft offerings across the modern concourse.",
+  "Refill stations inside for your clear, transparent water bottle (under 24 oz allowed).",
+  "Pre-game eats are best in downtown San Jose's San Pedro Square, screening all 104 matches free."
+ ],
+ "tips": [
+  "Sit on the SHADED WEST side for day games (sideline sections ~132-144 and the 200s mezzanine); avoid the east sideline for the Jun 13 noon and Jul 1 5 PM kickoffs.",
+  "Pack a hat, sunglasses, SPF, and a clear refillable water bottle; the open bowl and reflective east concrete get brutal.",
+  "Take VTA light rail to Great America Station to dodge the nightmare post-match parking exit.",
+  "Don't base your whole trip at the stadium; it's quiet, so stay in downtown San Jose or San Francisco.",
+  "Arrive early; single-screening metal detection plus clear-bag checks and FIFA protocols make lines slow, and there's no re-entry.",
+  "Evening matches (8-9 PM) are the comfortable ones as the marine layer cools things fast after dark."
+ ],
+ "weather": "Hot, dry, and sunny in June-July with highs in the 80s and spikes into the 90s, plus a high UV index; pack sunscreen, a hat, sunglasses, and a refillable water bottle, with a light layer for cool evenings.",
+ "lore": [
+  "Hosted Super Bowl 50 (2016) and Super Bowl LX (2026, Bad Bunny halftime), making it a two-time Super Bowl host just months before the World Cup.",
+  "Home of the San Francisco 49ers since replacing beloved Candlestick Park in 2014.",
+  "An early reputation for shaky turf, including the grass collapsing under a kicker in 2015 and Super Bowl 50 player complaints, since fixed with a hybrid Bermuda field.",
+  "Concert powerhouse: Ed Sheeran drew a record 80,058 fans, and the Grateful Dead's 2015 farewell pulled roughly 151,650 over three nights."
+ ],
+ "transport": {
+  "summary": "Rail is the smart play for this Santa Clara venue. Four train operators stop within a short walk of the stadium, and VTA light rail to Great America Station drops you right on the north side. From SF or the Peninsula it's Caltrain to Mountain View, then a same-platform VTA Orange Line connection. Pay with a Clipper card or tap a contactless card; match tickets do NOT include free transit (verify near match dates).",
+  "rail": [
+   {
+    "name": "VTA Light Rail (Orange Line)",
+    "station": "Santa Clara-Great America Station (stadium north side)",
+    "detail": "Most direct transit; serves Mountain View, Sunnyvale, Milpitas, San Jose and Santa Clara. Extra event trains run on match days; the station is steps from the gates.",
+    "points": [
+     {
+      "b": "Most direct route",
+      "t": "to the stadium gates."
+     },
+     {
+      "b": "Serves",
+      "t": "Mountain View, Sunnyvale, Milpitas, San Jose."
+     },
+     {
+      "b": "Extra event trains",
+      "t": "run on match days."
+     }
+    ],
+    "deal": "$2.50 single ride or $5 unlimited 8-hour day pass (adult); the 8-hour Excursion/day pass, sold at station vending machines, is the value pick. Free transfers within VTA."
+   },
+   {
+    "name": "Caltrain (from SF / Peninsula)",
+    "station": "Mountain View, then transfer to VTA Orange Line",
+    "detail": "Main car-free route from San Francisco: Caltrain south to Mountain View, cross to the VTA Orange Line for Great America. Budget 1.5-2 hours door-to-door from SF.",
+    "points": [
+     {
+      "b": "Best car-free route",
+      "t": "from San Francisco."
+     },
+     {
+      "b": "Transfer at",
+      "t": "Mountain View to VTA Orange Line."
+     },
+     {
+      "b": "Budget",
+      "t": "1.5-2 hours door-to-door from SF."
+     }
+    ],
+    "deal": "Joint Caltrain + VTA day pass is about $7.50 on top of your Caltrain fare, covering the light-rail leg both ways."
+   },
+   {
+    "name": "ACE (Altamont Corridor Express)",
+    "station": "Santa Clara-Great America Station",
+    "detail": "Direct from the East Bay/Central Valley: Stockton, Tracy, Livermore, Pleasanton, Fremont. Stops right at Great America, steps from the gates. Note: World Cup afternoon ACE shuttle is rerouted to the Santa Clara station due to road closures.",
+    "points": [
+     {
+      "b": "Direct from",
+      "t": "East Bay and Central Valley."
+     },
+     {
+      "b": "Stops at Great America",
+      "t": "steps from gates."
+     },
+     {
+      "b": "WC afternoon shuttle",
+      "t": "rerouted to Santa Clara station."
+     }
+    ],
+    "deal": ""
+   },
+   {
+    "name": "Capitol Corridor (Amtrak)",
+    "station": "Santa Clara-Great America Station",
+    "detail": "Direct from Sacramento, Davis, Martinez, Richmond, Berkeley, Oakland and Fremont to Great America. Best heavy-rail option from the northern/East Bay corridor.",
+    "points": [
+     {
+      "b": "Direct from",
+      "t": "Sacramento, Oakland, Berkeley, Richmond."
+     },
+     {
+      "b": "Stops at",
+      "t": "Great America Station."
+     },
+     {
+      "b": "Best heavy-rail option",
+      "t": "from the northern corridor."
+     }
+    ],
+    "deal": ""
+   }
+  ],
+  "bus": [
+   {
+    "name": "BART + VTA connection",
+    "from": "Milpitas BART Station",
+    "detail": "From SF/East Bay via BART, ride to Milpitas, then transfer to the VTA Orange Line light rail to Great America. Muni and SamTrans feed the BART/Caltrain hubs.",
+    "points": [
+     {
+      "b": "From SF/East Bay",
+      "t": "ride BART to Milpitas."
+     },
+     {
+      "b": "Transfer to",
+      "t": "VTA Orange Line for Great America."
+     },
+     {
+      "b": "Muni and SamTrans",
+      "t": "feed the BART hubs."
+     }
+    ],
+    "deal": "Pay-as-you-go with Clipper or a contactless card across BART and VTA."
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "VTA event light-rail service",
+    "detail": "VTA runs added Orange Line event trains before and after matches; arrive early as post-match boarding queues at Great America build fast.",
+    "points": [
+     {
+      "b": "Added Orange Line trains",
+      "t": "before and after matches."
+     },
+     {
+      "b": "Post-match queues",
+      "t": "at Great America build fast."
+     },
+     {
+      "b": "Arrive early",
+      "t": "to beat the boarding crush."
+     }
+    ]
+   }
+  ],
+  "fromAirport": "Fly into San Jose (SJC), just ~5 miles / 10-15 min away, not SFO. From SJC, rideshare or the free VTA airport-area connections reach the Orange Line. SFO is ~30 mi north (40-50 min driving, or BART/Caltrain transfers); Oakland (OAK) is ~30+ mi via the East Bay.",
+  "rideshare": "Two official drop-off/pickup zones: Ride Share North (Red Lot 7) and Ride Share South (Freedom Circle). Post-match pickups don't start until about 1 hour after kickoff and surge hard; walking 10-15 minutes from the stadium before requesting cuts your wait. From SF expect $65-70+ and 75+ minutes one-way; from San Jose it's quick and cheap.",
+  "bike": "Bike and pedestrian access changes are in place around the stadium on match days; the Guadalupe River Trail and San Tomas Aquino Creek Trail reach the venue, with bike parking near Great America. Confirm match-day routes as temporary closures apply.",
+  "tips": [
+   "Take VTA, ACE, or Capitol Corridor to Great America Station to skip the brutal post-match parking exit.",
+   "Buy the $5 VTA 8-hour day pass (or $7.50 Caltrain+VTA combo) instead of single rides; load it on Clipper or tap a contactless card.",
+   "From San Francisco, plan 1.5-2 hours each way via Caltrain to Mountain View, then the Orange Line.",
+   "Match tickets are not confirmed to include free transit; verify the official FIFA matchday transit guidance closer to the date."
+  ]
+ },
+ "parking": {
+  "summary": "All stadium parking is cashless and must be pre-purchased online; there is no day-of, drive-up access for World Cup matches, and one parking pass is allowed per match ticket. Color-coded lots ring the stadium and California's Great America next door. Lots open about 4 hours before kickoff. Many off-site lots are a 15-20 minute walk in. Given the post-match gridlock, rail is strongly recommended over driving.",
+  "lots": [
+   {
+    "name": "Blue Lot 1 / Green Lot 1 (outer)",
+    "price": "~$50-60 prepaid",
+    "detail": "Standard outer lots; farther walk but the value option. World Cup pricing will run higher than 49ers game rates.",
+    "points": [
+     {
+      "b": "Standard outer lots",
+      "t": "and the value option."
+     },
+     {
+      "b": "Farther walk",
+      "t": "to the stadium gates."
+     },
+     {
+      "b": "WC pricing",
+      "t": "runs higher than 49ers rates."
+     }
+    ]
+   },
+   {
+    "name": "Red Lot 1 (premium / close-in)",
+    "price": "~$85 prepaid",
+    "detail": "Premium close-in parking on the stadium side; sells out first.",
+    "points": [
+     {
+      "b": "Premium close-in",
+      "t": "parking on the stadium side."
+     },
+     {
+      "b": "Shortest walk",
+      "t": "to the gates."
+     },
+     {
+      "b": "Sells out first",
+      "t": "so book early."
+     }
+    ]
+   },
+   {
+    "name": "Official stadium lots (World Cup range)",
+    "price": "~$80-120+ prepaid",
+    "detail": "World Cup match-day passes are pricier than NFL rates; exact FIFA pricing varies by match and was not officially confirmed at time of writing.",
+    "points": [
+     {
+      "b": "WC passes",
+      "t": "cost more than NFL rates."
+     },
+     {
+      "b": "Pricing varies",
+      "t": "by match."
+     },
+     {
+      "b": "Not yet confirmed",
+      "t": "officially by FIFA."
+     }
+    ]
+   },
+   {
+    "name": "VTA light-rail station park-and-ride",
+    "price": "Free or ~$5",
+    "detail": "Park at a VTA light-rail station lot, then ride the Orange/Green Line to Great America. The cheapest way to combine driving with transit and dodge stadium exits.",
+    "points": [
+     {
+      "b": "Park at",
+      "t": "a VTA light-rail station lot."
+     },
+     {
+      "b": "Ride",
+      "t": "the Orange/Green Line to Great America."
+     },
+     {
+      "b": "Dodges",
+      "t": "the brutal stadium parking exit."
+     }
+    ]
+   }
+  ],
+  "prepaid": "Mandatory. Buy in advance via Ticketmaster (linked from levisstadium.com) or the official resale market; no cash and no day-of sales for World Cup matches. One pass per ticket. Prices vary by match.",
+  "accessible": "ADA accessible parking is available in designated lots near accessible entrances; request/book it in advance through the box office (Visa Box Office 408-579-4449). Great America Station and the stadium approaches are step-free.",
+  "tailgating": "Tailgating has historically been permitted in 49ers stadium lots, but FIFA World Cup matches may impose tighter security perimeters and restrictions; confirm the official matchday rules before planning a tailgate.",
+  "tips": [
+   "Pre-purchase is required for World Cup; there is no drive-up parking on match days.",
+   "Parking a few blocks farther out and walking in can save 30-45 minutes on the post-match exit.",
+   "Arrive 2-3 hours early; lots open about 4 hours before kickoff and road closures snarl approach traffic.",
+   "For the cheapest car-plus-transit combo, park free/~$5 at a VTA station and ride the Orange Line in."
+  ]
+ }
+}
