@@ -195,11 +195,17 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const [walkI, setWalkI] = useState(0)
   const [step, setStep] = useState(0)
   const [busy, setBusy] = useState('')
+  // Free-typed "Add Custom Option" text per step. Single-select steps mark the
+  // custom tile as chosen with sel index -1; multi steps include it whenever
+  // the text is non-empty. Custom lines render on the share card as {name}.
+  const blankCustom = { get: '', park: '', pre: '', eat: '', merch: '', post: '' }
+  const [custom, setCustom] = useState<Record<string, string>>(blankCustom)
+  const customLine = (k: string) => (custom[k] || '').trim()
   const storyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let alive = true
-    setVenue(null); setWeather(null); setStep(0); setWalkI(0); setGetI(0); setParkI(0); setPreSel([]); setEatSel([]); setPostSel([]); setMerchSel([])
+    setVenue(null); setWeather(null); setStep(0); setWalkI(0); setGetI(0); setParkI(0); setPreSel([]); setEatSel([]); setPostSel([]); setMerchSel([]); setCustom(blankCustom)
     fetch('/data/venues/' + g.venue + '.json').then((r) => r.json()).then((v) => { if (alive) setVenue(v) }).catch(() => {})
     fetchMatchWeather(g.venue, g.dateISO).then((w) => { if (alive) setWeather(w) })
     return () => { alive = false }
@@ -249,14 +255,14 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     name: selGet.name,
     note: [selGet.tag, selGet.bullets && selGet.bullets[0]].filter(Boolean).join(' · '),
     where: [selGet.bullets && selGet.bullets[1], selGet.deal ? 'Fare · ' + selGet.deal : null].filter(Boolean).join('  ·  '),
-  } : null
+  } : (getI === -1 && customLine('get') ? { name: customLine('get') } : null)
   const parkLots: any[] = selGet && selGet.driving ? (selGet.lots || []) : []
   const selLot = parkLots[parkI] || null
   const parking = selLot ? {
     name: selLot.name,
     note: [selLot.price, point(selLot.points && selLot.points[0])].filter(Boolean).join(' · '),
     where: point(selLot.points && selLot.points[1]),
-  } : null
+  } : (parkI === -1 && customLine('park') ? { name: customLine('park') } : null)
 
   // Special event (fan walk / supporter march). When one exists it becomes the
   // first question of the build: are you joining it?
@@ -273,11 +279,12 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     // "getting there" + parking legs entirely (the walk replaces them).
     gettingThere: attendingWalk ? null : gettingThere,
     parking: attendingWalk ? null : parking,
-    pre: preSel.map((i) => spot(preOpts[i])).filter(Boolean) as any,
+    // Multi-select sections append the custom line whenever one is typed.
+    pre: [...preSel.map((i) => spot(preOpts[i])), customLine('pre') ? { name: customLine('pre') } : null].filter(Boolean) as any,
     fanwalk: attendingWalk ? fanwalk : null,
-    eat: eatSel.map((i) => spot(eatOpts[i])).filter(Boolean) as any,
-    merch: merchSel.map((i) => spot(merchOpts[i])).filter(Boolean) as any,
-    post: postSel.map((i) => spot(postOpts[i])).filter(Boolean) as any,
+    eat: [...eatSel.map((i) => spot(eatOpts[i])), customLine('eat') ? { name: customLine('eat') } : null].filter(Boolean) as any,
+    merch: [...merchSel.map((i) => spot(merchOpts[i])), customLine('merch') ? { name: customLine('merch') } : null].filter(Boolean) as any,
+    post: [...postSel.map((i) => spot(postOpts[i])), customLine('post') ? { name: customLine('post') } : null].filter(Boolean) as any,
   }
 
   async function renderBlob(): Promise<Blob | null> {
@@ -331,12 +338,12 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const flow: any[] = [
     ...(fanwalk ? [{ key: 'walk', title: 'Are you joining the fan walk?', sub: fanwalk.name, opts: walkOpts, sel: walkI, set: setWalkI, empty: '' }] : []),
     // Joining the walk means you arrive on foot — skip the transport + parking steps.
-    ...(attendingWalk ? [] : [{ key: 'get', title: 'Choose how to get there', sub: 'Pick your way to the stadium', opts: getThereOpts, sel: getI, set: setGetI, empty: 'No transport options listed for this venue yet.' }]),
-    ...(driving && !attendingWalk ? [{ key: 'park', title: 'Choose where to park', sub: 'Pick a lot for the car', opts: parkLots, sel: parkI, set: setParkI, empty: 'No fan parking listed for this venue.' }] : []),
-    { key: 'pre', title: 'Before the match', sub: 'Pick any spots to hit before kickoff', opts: preOpts, sel: preSel, toggle: toggle(setPreSel), multi: true, empty: 'Nothing listed near this ground yet.' },
-    { key: 'eat', title: 'Eat inside', sub: 'Grab anything you like in the concourse', opts: eatOpts, sel: eatSel, toggle: toggle(setEatSel), multi: true, empty: 'No in-stadium food listed yet.' },
-    ...(merchOpts.length ? [{ key: 'merch', title: 'Grab some merch', sub: 'Official shops at the stadium', opts: merchOpts, sel: merchSel, toggle: toggle(setMerchSel), multi: true, empty: '' }] : []),
-    { key: 'post', title: 'After the whistle', sub: 'Pick where to head once it ends', opts: postOpts, sel: postSel, toggle: toggle(setPostSel), multi: true, empty: 'Nothing listed for after the match yet.' },
+    ...(attendingWalk ? [] : [{ key: 'get', title: 'Choose how to get there', sub: 'Pick your way to the stadium', opts: getThereOpts, sel: getI, set: setGetI, custom: true, empty: 'No transport options listed for this venue yet.' }]),
+    ...(driving && !attendingWalk ? [{ key: 'park', title: 'Choose where to park', sub: 'Pick a lot for the car', opts: parkLots, sel: parkI, set: setParkI, custom: true, empty: 'No fan parking listed for this venue.' }] : []),
+    { key: 'pre', title: 'Before the match', sub: 'Pick any spots to hit before kickoff', opts: preOpts, sel: preSel, toggle: toggle(setPreSel), multi: true, custom: true, empty: 'Nothing listed near this ground yet.' },
+    { key: 'eat', title: 'Eat inside', sub: 'Grab anything you like in the concourse', opts: eatOpts, sel: eatSel, toggle: toggle(setEatSel), multi: true, custom: true, empty: 'No in-stadium food listed yet.' },
+    ...(merchOpts.length ? [{ key: 'merch', title: 'Grab some merch', sub: 'Official shops at the stadium', opts: merchOpts, sel: merchSel, toggle: toggle(setMerchSel), multi: true, custom: true, empty: '' }] : []),
+    { key: 'post', title: 'After the whistle', sub: 'Pick where to head once it ends', opts: postOpts, sel: postSel, toggle: toggle(setPostSel), multi: true, custom: true, empty: 'Nothing listed for after the match yet.' },
     { key: 'share', title: 'Your matchday plan', sub: 'Save it and share', share: true },
   ]
   const stepIdx = Math.min(step, flow.length - 1)
@@ -422,13 +429,41 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
                   <span className="wz-pick">{on ? (cur.multi ? 'Added ✓ · tap to remove' : 'Selected ✓ · tap to continue') : (cur.multi ? 'Add +' : 'Choose →')}</span>
                 </button>
                 )
-              }) : <div className="wz-empty">{cur.empty}</div>}
+              }) : (cur.custom ? null : <div className="wz-empty">{cur.empty}</div>)}
+              {cur.custom ? (() => {
+                const txt = customLine(cur.key)
+                const on = cur.multi ? !!txt : cur.sel === -1 && !!txt
+                return (
+                  <div className={'wz-card wz-custom' + (on ? ' on' : '')}>
+                    <div className="wz-cardtop"><span className="wz-cardname">Add Custom Option</span></div>
+                    <textarea
+                      className="wz-custom-input"
+                      rows={3}
+                      placeholder="Type what you're doing…"
+                      value={custom[cur.key] || ''}
+                      onChange={(e) => {
+                        const v = e.target.value
+                        setCustom((p) => ({ ...p, [cur.key]: v }))
+                        // Single-select steps: typing claims the selection (sel -1 = custom).
+                        if (!cur.multi && v.trim()) cur.set(-1)
+                      }}
+                    />
+                    {cur.multi ? (
+                      <span className="wz-pick">{on ? "Added ✓ · it's on your card" : 'Type to add +'}</span>
+                    ) : (
+                      <button className="wz-custom-use" disabled={!txt} onClick={() => { cur.set(-1); setStep((s) => s + 1) }}>
+                        {on ? 'Selected ✓ · continue →' : 'Use this →'}
+                      </button>
+                    )}
+                  </div>
+                )
+              })() : null}
             </div>
             <div className="wz-nav">
               <button className="sb-btn ghost" onClick={() => (stepIdx > 0 ? setStep((s) => s - 1) : onBack())}>← Back</button>
               <div className="wz-nav-stack">
                 <button className="sb-btn ghost wz-skip" onClick={() => setStep((s) => s + 1)}>Skip</button>
-                <button className="sb-btn dark" onClick={() => setStep((s) => s + 1)} disabled={!cur.opts.length}>Next →</button>
+                <button className="sb-btn dark" onClick={() => setStep((s) => s + 1)} disabled={!cur.opts.length && !cur.custom}>Next →</button>
               </div>
             </div>
           </>
