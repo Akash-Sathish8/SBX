@@ -8,7 +8,6 @@ import WelcomeCard from './WelcomeCard';
 import ScheduleDrawer from './ScheduleDrawer';
 import VideoStrip from './VideoStrip';
 import LiveBanner from './LiveBanner';
-import TimeTravelPanel from './TimeTravelPanel';
 import WhereIsCaseyBadge from './WhereIsCaseyBadge';
 import FollowingModal from './FollowingModal';
 import { computeCaseyLocation } from '@/lib/location';
@@ -39,16 +38,6 @@ interface Props {
   visibility?: { showLodging: boolean; showTransport: boolean };
   simTimeIso?: string | null;
 }
-
-// Sim speed = how many hours of trip time per second of real time.
-// 0.5 = 30 min/sec (32 min for full 40-day trip)
-// 2   = 2 hr/sec  (8 min)
-// 8   = 8 hr/sec  (2 min)
-export type SimSpeed = 0.5 | 2 | 8;
-const TRIP_START_MS = Date.UTC(2026, 5, 10, 12, 0, 0);
-// Extend a bit past the final so the sim plays through the 'wrapped' state.
-const TRIP_END_MS = Date.UTC(2026, 6, 21, 12, 0, 0);
-const TICK_INTERVAL_MS = 200; // 5 ticks/sec — smooth motion
 
 export default function ClientShell({
   initialLocation,
@@ -86,12 +75,10 @@ export default function ClientShell({
   const [lastUpdateAt, setLastUpdateAt] = useState<number>(Date.now());
   const [connectionLost, setConnectionLost] = useState(false);
 
-  // ── Sim state ──
-  const [simTimeMs, setSimTimeMs] = useState<number | null>(
+  // ── Sim state (driven only by the ?simTime URL param) ──
+  const [simTimeMs] = useState<number | null>(
     simTimeIso ? new Date(simTimeIso).getTime() : null,
   );
-  const [playing, setPlaying] = useState(false);
-  const [speed, setSpeed] = useState<SimSpeed>(2);
   const simModeActive = simTimeMs !== null;
 
   // ── Track top-overlay height (StatsBar) so floating badges sit just under it ──
@@ -169,43 +156,6 @@ export default function ClientShell({
     setStats(s);
     setLastUpdateAt(Date.now());
   }, [simTimeMs, initialResults]);
-
-  // ── Auto-play: tick simTimeMs forward at the chosen speed ──
-  useEffect(() => {
-    if (!playing || simTimeMs === null) return;
-    const hoursPerTick = speed * (TICK_INTERVAL_MS / 1000);
-    const msPerTick = hoursPerTick * 3600 * 1000;
-    const id = setInterval(() => {
-      setSimTimeMs((prev) => {
-        if (prev === null) return prev;
-        const next = prev + msPerTick;
-        if (next >= TRIP_END_MS) {
-          // Reached end of trip — stop the playback and clamp.
-          setPlaying(false);
-          return TRIP_END_MS;
-        }
-        return next;
-      });
-    }, TICK_INTERVAL_MS);
-    return () => clearInterval(id);
-  }, [playing, speed, simTimeMs === null]);
-
-  const handleStartSim = useCallback((startMs?: number) => {
-    setSimTimeMs(startMs ?? TRIP_START_MS);
-    setPlaying(true);
-  }, []);
-
-  const handleExitSim = useCallback(() => {
-    setSimTimeMs(null);
-    setPlaying(false);
-    // Reset to server-provided real-time values immediately while polling resumes.
-    setLocation(initialLocation);
-    setStats(initialStats);
-  }, [initialLocation, initialStats]);
-
-  const handleSeek = useCallback((ms: number) => {
-    setSimTimeMs(ms);
-  }, []);
 
   const openMatch = useCallback(
     (matchNumber: number) => {
@@ -341,19 +291,6 @@ export default function ClientShell({
         open={followingOpen}
         onClose={() => setFollowingOpen(false)}
         itinerary={itinerary}
-      />
-      <TimeTravelPanel
-        simTimeMs={simTimeMs}
-        playing={playing}
-        speed={speed}
-        tripStartMs={TRIP_START_MS}
-        tripEndMs={TRIP_END_MS}
-        onStart={handleStartSim}
-        onPause={() => setPlaying(false)}
-        onResume={() => setPlaying(true)}
-        onSeek={handleSeek}
-        onSpeedChange={setSpeed}
-        onExit={handleExitSim}
       />
     </>
   );

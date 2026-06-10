@@ -84,6 +84,71 @@ function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
   )
 }
 
+// Matchday agenda mockups, dealt like a hand of playing cards. Each card carries a
+// playing-card rank (A/K/Q/J/10 + ball suit); every card opens the agenda builder.
+type AgendaRow = [string, string, string] // [glyph, section label, sample plan]
+type AgendaMock = { game: string; rank: string; match: string; venue: string; when: string; rows: AgendaRow[] }
+const AGENDAS: AgendaMock[] = [
+  { game: 'azteca-jun11', rank: 'K', match: 'MEX v RSA', venue: 'Estadio Azteca · Mexico City', when: 'Jun 11 · 1:00 PM', rows: [
+    ['🚆', 'Getting there', 'Tren Ligero, Azteca stop'],
+    ['🍺', 'Before the match', 'Tacos in Coyoacán'],
+    ['🍔', 'Eat inside', 'Churros + michelada'],
+    ['🧢', 'Merch', 'El Tri home jersey'],
+    ['🏁', 'After the whistle', 'Mariachi in Garibaldi'],
+  ] },
+  { game: 'metlife-jun13', rank: 'Q', match: 'BRA v MAR', venue: 'MetLife Stadium · New York', when: 'Jun 13 · 6:00 PM', rows: [
+    ['🚆', 'Getting there', 'NJ Transit from Penn'],
+    ['🍺', 'Before the match', 'Samba in the lots'],
+    ['🍔', 'Eat inside', 'Pretzel + cold lager'],
+    ['🧢', 'Merch', "Seleção '26 kit"],
+    ['🏁', 'After the whistle', 'Train back to Manhattan'],
+  ] },
+  { game: 'sofi-jun12', rank: 'A', match: 'USA v PAR', venue: 'SoFi Stadium · Los Angeles', when: 'Jun 12 · 6:00 PM', rows: [
+    ['🚆', 'Getting there', 'Metro K + SoFi shuttle'],
+    ['🍺', 'Before the match', 'Tailgate on Lot K'],
+    ['🍔', 'Eat inside', 'Food court, section 130'],
+    ['🧢', 'Merch', 'USA scarf, south shop'],
+    ['🏁', 'After the whistle', 'Lake Park fan fest'],
+  ] },
+  { game: 'arrowhead-jun16', rank: 'J', match: 'ARG v ALG', venue: 'Arrowhead Stadium · Kansas City', when: 'Jun 16 · 8:00 PM', rows: [
+    ['🚆', 'Getting there', 'Drive in, Lot G by 9am'],
+    ['🍺', 'Before the match', 'BBQ tailgate till kickoff'],
+    ['🍔', 'Eat inside', 'Burnt ends, section 132'],
+    ['🧢', 'Merch', 'Albiceleste flag'],
+    ['🏁', 'After the whistle', 'Power & Light party'],
+  ] },
+  { game: 'bcplace-jun18', rank: '10', match: 'CAN v QAT', venue: 'BC Place · Vancouver', when: 'Jun 18 · 3:00 PM', rows: [
+    ['🚆', 'Getting there', 'SkyTrain to Chinatown'],
+    ['🍺', 'Before the match', 'Seawall walk to the gates'],
+    ['🍔', 'Eat inside', 'Japadog on the concourse'],
+    ['🧢', 'Merch', 'Maple leaf scarf'],
+    ['🏁', 'After the whistle', 'Gastown patios'],
+  ] },
+]
+
+function AgendaCard({ a }: { a: AgendaMock }) {
+  return (
+    <Link to="/agenda" search={{ game: '' }} className="acard">
+      <span className="acorner tl" aria-hidden="true"><b>{a.rank}</b><i>⚽</i></span>
+      <span className="acorner br" aria-hidden="true"><b>{a.rank}</b><i>⚽</i></span>
+      <span className="acard-hd">
+        <span className="acard-match">{a.match}</span>
+        <span className="acard-meta">{a.venue}</span>
+        <span className="acard-meta">{a.when}</span>
+      </span>
+      <span className="acard-rows">
+        {a.rows.map(([ic, label, val], i) => (
+          <span className="acard-row" key={i}>
+            <span className="ai"><i>{ic}</i></span>
+            <span className="at"><b>{label}</b><span>{val}</span></span>
+          </span>
+        ))}
+      </span>
+      <span className="acard-ft">Snapback · Matchday Agenda</span>
+    </Link>
+  )
+}
+
 function Home() {
   const [dotI, setDotI] = useState(0)
   const [contentI, setContentI] = useState(0)
@@ -127,8 +192,7 @@ function Home() {
           <div className="reveal" style={{ animationDelay: '.2s' }}>
             <div className="a-cta">
               <Link to="/guide" className="btn btn-brand btn-xl">Build your match guide</Link>
-              <Link to="/casey" className="btn btn-brand btn-xl">See what Casey did</Link>
-              <a href="#ranking" className="btn btn-dark btn-lg">Rank your experience</a>
+              <Link to="/casey" className="btn btn-dark btn-xl">See what Casey did</Link>
             </div>
           </div>
         </div>
@@ -170,22 +234,20 @@ function Home() {
         </div>
       </section>
 
-      {/* MAKE YOUR OWN RANKING */}
-      <section id="ranking" className="sec-light grid-bg">
+      {/* GET YOUR MATCHDAY AGENDA */}
+      <section id="agendas" className="sec-light grid-bg">
         <div className="container">
           <div className="sec-head">
-            <span className="eyebrow">Your call</span>
-            <h2>Make your own ranking</h2>
-            <p>Stack the stadiums your way — atmosphere, food, the whole trip. Build your top five and settle it with your crew.</p>
+            <span className="eyebrow">Plan it · Share it</span>
+            <h2>Get your matchday agenda</h2>
+            <p>Your whole day on one card — how you're getting there, where you're drinking, what you're eating, where it ends. Pick a match and deal yourself in.</p>
           </div>
-          <div className="rank-builder">
-            <div className="rrow"><span className="rnum">1</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/sofi.jpg')" }}></div><div className="rname">SoFi Stadium<span>Los Angeles · USA</span></div><span className="rhandle">⋮⋮</span></div>
-            <div className="rrow"><span className="rnum">2</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/azteca.jpg')" }}></div><div className="rname">Estadio Azteca<span>Mexico City · MEX</span></div><span className="rhandle">⋮⋮</span></div>
-            <div className="rrow"><span className="rnum">3</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/arrowhead.jpg')" }}></div><div className="rname">Arrowhead Stadium<span>Kansas City · USA</span></div><span className="rhandle">⋮⋮</span></div>
-            <div className="rrow empty"><span className="rnum">4</span><div className="rname">+ Add a venue</div></div>
-            <div className="rrow empty"><span className="rnum">5</span><div className="rname">+ Add a venue</div></div>
+          <div className="agenda-fan">
+            {AGENDAS.map((a) => <AgendaCard key={a.game} a={a} />)}
           </div>
-          <a href="#" className="btn btn-brand btn-lg">Build your ranking</a>
+          <div className="agenda-cta">
+            <Link to="/agenda" search={{ game: '' }} className="btn btn-brand btn-lg">Build your agenda</Link>
+          </div>
         </div>
       </section>
 
@@ -194,7 +256,7 @@ function Home() {
           <div className="logo"><img className="logo-img" src="/img/logo.png" alt="Snapback Sports" />SNAPBACK<span className="wc">WC 2026</span></div>
           <div className="fnav">
             <a href="#experiences">Experiences</a>
-            <a href="/wc26-fan-intel.html">Guide</a>
+            <Link to="/guide">Guide</Link>
           </div>
           <div className="fine">Snapback Experiences — arcade concept build. Tetris design system, reskinned to the Snapback color theme (yellow #F7DF02 / black #111111 / white).</div>
         </div>

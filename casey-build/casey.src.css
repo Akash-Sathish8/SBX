@@ -19,12 +19,15 @@
 .casey-shell *, .casey-shell *::before, .casey-shell *::after { box-sizing: border-box; }
 
 /* Tailwind preflight is disabled (to avoid resetting SBX's nav), so re-add the one reset that
-   matters here: native <button> background. Element-level specificity lets Tailwind bg-*
-   utilities still win. Fixes SPEND/OPENER showing the OS-default light-grey button bg. */
-button, [type='button'], [type='reset'], [type='submit'] {
-  -webkit-appearance: button;
-  background-color: transparent;
-  background-image: none;
+   matters here: native <button> background. Lives in @layer base so it's emitted BEFORE the
+   utilities layer — [type='button'] has class-level specificity and would otherwise beat
+   same-specificity bg-* utilities. Fixes SPEND/OPENER showing the OS-default light-grey bg. */
+@layer base {
+  button, [type='button'], [type='reset'], [type='submit'] {
+    -webkit-appearance: button;
+    background-color: transparent;
+    background-image: none;
+  }
 }
 
 /* Fonts re-skinned to the SBX type system: Anton (display) + Barlow (everything

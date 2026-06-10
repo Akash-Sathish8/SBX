@@ -95,13 +95,13 @@ section.block{padding-top:22px}
 /* Per-match bottom bar — both flags + VS. Fills the space the footer left and
    keeps the matchup in view while you build. Spacer reserves in-flow height so
    nothing hides behind the fixed bar. */
-.matchbar-spacer{height:calc(240px + env(safe-area-inset-bottom))}
-.matchbar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:flex;align-items:stretch;min-height:106px;background:#111;border-top:4px solid #F7DF02;padding-bottom:env(safe-area-inset-bottom)}
+.matchbar-spacer{height:calc(180px + env(safe-area-inset-bottom))}
+.matchbar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:flex;align-items:stretch;min-height:44px;background:#111;border-top:3px solid #F7DF02;padding-bottom:env(safe-area-inset-bottom)}
 /* Each half is the country's real flag, faded behind its name. */
 .matchbar-side{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-size:cover;background-position:center;padding:0 16px}
 .matchbar-side::before{content:"";position:absolute;inset:0;background:rgba(17,17,17,.72)}
-.matchbar-team{position:relative;z-index:1;font-family:'Anton','Barlow',sans-serif;font-size:clamp(18px,5vw,28px);color:#fff;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 4px rgba(0,0,0,.55)}
-.matchbar-vs{flex:none;align-self:center;position:relative;z-index:2;font-family:'Anton','Barlow',sans-serif;font-size:clamp(15px,4.2vw,20px);color:#F7DF02;letter-spacing:1px;padding:0 8px}
+.matchbar-team{position:relative;z-index:1;font-family:'Anton','Barlow',sans-serif;font-size:clamp(13px,3.6vw,17px);color:#fff;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.matchbar-vs{flex:none;align-self:center;position:relative;z-index:2;font-family:'Anton','Barlow',sans-serif;font-size:clamp(11px,3vw,13px);color:#F7DF02;letter-spacing:1px;padding:0 8px}
 .wz-prog{display:flex;align-items:center;gap:7px;margin:6px 0 16px}
 .wz-dot{width:9px;height:9px;border-radius:50%;background:#dcdcd6;transition:background .15s,transform .15s}
 .wz-dot.done{background:#caa600}
@@ -129,10 +129,46 @@ section.block{padding-top:22px}
 .wz-empty{padding:30px 4px;color:#999;font-weight:600}
 /* Nav sits as a fixed bar right above the flags footer: Back on the left,
    Skip stacked above Next on the right. Gradient lets cards fade behind it. */
-.wz-nav{position:fixed;left:0;right:0;bottom:calc(106px + env(safe-area-inset-bottom));z-index:44;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;max-width:1180px;margin:0 auto;padding:24px 28px 14px;background:linear-gradient(to top,#f7f6f2 78%,rgba(247,246,242,0));pointer-events:none}
+.wz-nav{position:fixed;left:0;right:0;bottom:calc(44px + env(safe-area-inset-bottom));z-index:44;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;max-width:1180px;margin:0 auto;padding:14px 28px 10px;background:linear-gradient(to top,#f7f6f2 78%,rgba(247,246,242,0));pointer-events:none}
 .wz-nav>*{pointer-events:auto}
 .wz-nav-stack{display:flex;flex-direction:column;gap:8px;align-items:stretch;flex:none}
-.wz-share .sb-actions{margin-top:20px}
+/* Phones: each wizard step is ONE fixed screen. The page never scrolls (a
+   scrolling page made the fixed footer/buttons ride up) — the card rail takes
+   the leftover height so every card is fully visible vertically, you swipe
+   sideways for more, and the nav buttons sit in-flow just above the flag bar.
+   Top chrome is compacted hard so the rail gets every spare pixel, and the
+   nav is ONE row (Back · Skip · Next) that can never collapse into the rail
+   or the flag bar. */
+@media(max-width:760px){
+  /* section.wz-screen so this outranks game.css's section.block padding */
+  section.wz-screen{height:calc(100vh - 72px);height:calc(100dvh - 72px);display:flex;flex-direction:column;overflow:hidden;padding:10px 0 calc(48px + env(safe-area-inset-bottom))}
+  /* width:100% — the container's auto side margins disable flex stretch, so
+     without it the box sizes to the card rail's full content width. */
+  .wz-screen>.container{flex:1;display:flex;flex-direction:column;min-height:0;width:100%;max-width:100%;min-width:0}
+  /* compact top chrome: every margin here is rail height the cards lose */
+  .wz-screen .wz-top{margin-bottom:4px}
+  .wz-screen .wz-context{gap:4px;margin-bottom:8px}
+  .wz-screen .wz-cmatch{font-size:12px;padding:5px 11px}
+  .wz-screen .shead{font-size:24px;line-height:1.05}
+  .wz-screen .shead:has(+ .ssub){margin-bottom:3px}
+  .wz-screen .ssub{font-size:12px;margin:0}
+  /* NO min-height:0 — sb-wrap must never shrink below the nav row, otherwise
+     the buttons spill over the rail and the flag bar (the rail absorbs all
+     the squeeze instead). */
+  .wz-screen .sb-wrap{flex:1;display:flex;flex-direction:column}
+  /* Cards keep their natural height so every line of text shows — no internal
+     clipping. If one ever outgrows the leftover space the rail itself scrolls. */
+  .wz-screen .wz-scroll{flex:1;min-height:0;padding:8px 2px;align-items:flex-start;overflow-y:auto}
+  .wz-screen .wz-card{max-height:none}
+  .wz-screen .wz-nav{position:static;max-width:none;margin:0;padding:8px 0 0;background:none;flex:none;align-items:center}
+  .wz-screen .wz-nav-stack{flex-direction:row;gap:10px;align-items:center}
+  .wz-screen+.matchbar-spacer{display:none}
+}
+/* Share step: full-width tabs under the preview — Share Agenda on top, Back
+   below, both spanning exactly the preview card's width (283px story + 16px
+   pvbox padding each side). */
+.wz-share .sb-actions{margin-top:20px;flex-direction:column;align-items:stretch;width:315px;max-width:100%;gap:10px}
+.wz-share .sb-actions .sb-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%}
 .sb-preview{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
 .sb-pvbox{background:#e9e7e0;border-radius:14px;padding:16px;box-shadow:inset 0 2px 8px rgba(0,0,0,.06)}
 .sb-pvcap{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#888;margin-bottom:8px;text-align:center}

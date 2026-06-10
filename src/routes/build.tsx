@@ -13,7 +13,7 @@ import shareCss from '../pages/share.css?url'
 export const Route = createFileRoute('/build')({
   validateSearch: (s: Record<string, unknown>) => ({
     game: typeof s.game === 'string' ? s.game : '',
-    mode: s.mode === 'venue' ? 'venue' : 'matchup',
+    mode: (s.mode === 'venue' ? 'venue' : 'matchup') as 'venue' | 'matchup',
   }),
   head: () => ({
     links: [
@@ -85,7 +85,7 @@ function BuildPage() {
     ]).then(([idx, f]) => { setIndex(idx); setFi(f) }).catch(() => {})
   }, [])
 
-  const setGame = (id: string) => navigate({ to: '/build', search: { game: id } })
+  const setGame = (id: string) => navigate({ to: '/build', search: { game: id, mode } })
   const g = index ? index.find((x) => x.id === game) : null
 
   return (
@@ -301,18 +301,9 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     return await (await fetch(url)).blob()
   }
 
-  async function download() {
-    setBusy('download')
-    try {
-      const blob = await renderBlob(); if (!blob) return
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a'); a.href = url; a.download = `snapback-${g.id}-story.png`; a.click()
-      URL.revokeObjectURL(url)
-    } catch { /* noop */ } finally { setBusy('') }
-  }
-
-  // Opens the OS share sheet (choose any platform). Falls back to a download
-  // when the browser can't share a file.
+  // Share opens the OS share sheet with the rendered image (Save Image,
+  // AirDrop, socials). Falls back to a download when the browser can't
+  // share a file.
   async function share() {
     setBusy('share')
     try {
@@ -361,7 +352,10 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
 
   return (
     <>
-    <section className="block"><div className="container">
+    {/* wz-screen (phones): lock the step to one viewport-high screen — no page
+        scroll, cards swipe sideways, nav + flag footer stay put. The share step
+        keeps natural page flow (its preview is taller than a screen). */}
+    <section className={'block' + (cur.share ? '' : ' wz-screen')}><div className="container">
       <div className="wz-top">
         <button className="bld-backlink" onClick={onBack}>← Choose another match</button>
         <div className="wz-prog">
@@ -389,9 +383,19 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
               <div className="sb-pvbox"><div className="sb-pvcap">Story · 9:16</div><div className="sb-scale-story"><ShareCard plan={plan} format="story" /></div></div>
             </div>
             <div className="sb-actions">
+              <button className="sb-btn" disabled={!!busy} onClick={share}>
+                {busy === 'share' ? 'Preparing…' : (
+                  <>
+                    Share Agenda
+                    <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M8 10V1.8" />
+                      <path d="M5 4.6 8 1.6l3 3" />
+                      <path d="M5 7H3v7.5h10V7h-2" />
+                    </svg>
+                  </>
+                )}
+              </button>
               <button className="sb-btn ghost" onClick={() => setStep((s) => s - 1)}>← Back</button>
-              <button className="sb-btn" disabled={!!busy} onClick={download}>{busy === 'download' ? 'Rendering…' : '↓ Download'}</button>
-              <button className="sb-btn dark" disabled={!!busy} onClick={share}>{busy === 'share' ? 'Preparing…' : 'Share'}</button>
             </div>
           </div>
         ) : (

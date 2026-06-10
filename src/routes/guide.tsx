@@ -28,7 +28,7 @@ function Guide() {
       <section className="block">
         <div className="container">
           <div className="choices">
-            <Link className="choice venue" to="/build" search={{ mode: 'venue' }}>
+            <Link className="choice venue" to="/build" search={{ game: '', mode: 'venue' }}>
               <div className="top mosaic" id="mosaic">
                 {MOSAIC.map((id) => (
                   <div key={id} className="tile" style={{ backgroundImage: `url('/img/stadiums/${id}.jpg')` }}></div>
@@ -41,7 +41,7 @@ function Guide() {
                 <span className="go">Choose a venue →</span>
               </div>
             </Link>
-            <Link className="choice game" to="/build" search={{ mode: 'matchup' }}>
+            <Link className="choice game" to="/build" search={{ game: '', mode: 'matchup' }}>
               <div className="top collage" id="gtop">
                 <div className="ctile" style={{ backgroundImage: "url('/img/celebration.jpg')", backgroundPosition: 'center 42%' }}></div>
                 <div className="ctile" style={{ backgroundImage: "url('/img/celebration2.jpg')", backgroundPosition: 'center 35%' }}></div>
