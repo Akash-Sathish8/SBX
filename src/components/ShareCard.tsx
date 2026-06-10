@@ -85,10 +85,9 @@ export const ShareCard = forwardRef<HTMLDivElement, { plan: Plan; format: 'story
             <div className="sc-logo"><img className="sc-cap" src="/img/logo.png" alt="" /><span className="sc-wm">SNAPBACK<br />SPORTS</span></div>
             <div className="sc-planlab">Matchday plan</div>
           </div>
-          <div className="sc-rnd">{plan.round}</div>
           <div className="sc-match">
             <div className="sc-tm"><span className="sc-fl">{plan.homeFlag}</span><span className="sc-nm">{plan.home}</span></div>
-            <span className="sc-vs">VS</span>
+            <div className="sc-mid"><span className="sc-vs">VS</span>{plan.round ? <span className="sc-rnd">{plan.round}</span> : null}</div>
             <div className="sc-tm"><span className="sc-fl">{plan.awayFlag}</span><span className="sc-nm">{plan.away}</span></div>
           </div>
           <div className="sc-when">

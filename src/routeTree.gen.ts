@@ -16,6 +16,7 @@ import { Route as GamesRouteImport } from './routes/games'
 import { Route as GameRouteImport } from './routes/game'
 import { Route as CaseyRouteImport } from './routes/casey'
 import { Route as BuildRouteImport } from './routes/build'
+import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiVisibilityRouteImport } from './routes/api/visibility'
 import { Route as ApiTodayRouteImport } from './routes/api/today'
@@ -61,6 +62,11 @@ const CaseyRoute = CaseyRouteImport.update({
 const BuildRoute = BuildRouteImport.update({
   id: '/build',
   path: '/build',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgendaRoute = AgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -121,6 +127,7 @@ const ApiStandingsAllRoute = ApiStandingsAllRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
   '/build': typeof BuildRoute
   '/casey': typeof CaseyRouteWithChildren
   '/game': typeof GameRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
   '/build': typeof BuildRoute
   '/casey': typeof CaseyRouteWithChildren
   '/game': typeof GameRoute
@@ -162,6 +170,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
   '/build': typeof BuildRoute
   '/casey': typeof CaseyRouteWithChildren
   '/game': typeof GameRoute
@@ -184,6 +193,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/agenda'
     | '/build'
     | '/casey'
     | '/game'
@@ -204,6 +214,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/agenda'
     | '/build'
     | '/casey'
     | '/game'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/agenda'
     | '/build'
     | '/casey'
     | '/game'
@@ -245,6 +257,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgendaRoute: typeof AgendaRoute
   BuildRoute: typeof BuildRoute
   CaseyRoute: typeof CaseyRouteWithChildren
   GameRoute: typeof GameRoute
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/build'
       fullPath: '/build'
       preLoaderRoute: typeof BuildRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agenda': {
+      id: '/agenda'
+      path: '/agenda'
+      fullPath: '/agenda'
+      preLoaderRoute: typeof AgendaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -417,6 +437,7 @@ const ApiStandingsRouteWithChildren = ApiStandingsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgendaRoute: AgendaRoute,
   BuildRoute: BuildRoute,
   CaseyRoute: CaseyRouteWithChildren,
   GameRoute: GameRoute,

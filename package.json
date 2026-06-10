@@ -9,6 +9,7 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
+    "deploy": "vite build && wrangler deploy",
     "test": "vitest run",
     "casey:css": "npx -y tailwindcss@3.4.16 -c casey-build/tailwind.config.cjs -i casey-build/casey.src.css -o src/pages/casey-tracker.css --minify"
   },
@@ -28,6 +29,7 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.40.1",
     "@tailwindcss/typography": "^0.5.16",
     "@tanstack/devtools-vite": "latest",
     "@testing-library/dom": "^10.4.1",
@@ -39,7 +41,8 @@
     "jsdom": "^28.1.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.5",
+    "wrangler": "^4.99.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

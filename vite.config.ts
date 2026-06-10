@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import { cloudflare } from '@cloudflare/vite-plugin'
 import viteReact from '@vitejs/plugin-react'
 import { fileURLToPath } from 'node:url'
 
@@ -14,7 +15,11 @@ const config = defineConfig({
       '@/data': fileURLToPath(new URL('./src/casey/data', import.meta.url)),
     },
   },
-  plugins: [tanstackStart(), viteReact()],
+  plugins: [
+    cloudflare({ viteEnvironment: { name: 'ssr' } }),
+    tanstackStart(),
+    viteReact(),
+  ],
 })
 
 export default config
