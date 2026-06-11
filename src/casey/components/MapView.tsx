@@ -587,7 +587,7 @@ export default function MapView({
           <div style="font-family: monospace; font-size: 10px; letter-spacing: 0.22em; color: ${modeColor}; margin-bottom: 4px;">
             ${modeLabel}
           </div>
-          <div style="display: flex; align-items: center; gap: 6px; font-family: monospace; font-size: 12px; color: #E8E8E8;">
+          <div style="display: flex; align-items: center; gap: 6px; font-family: monospace; font-size: 12px; color: var(--snap-chalk, #141414);">
             <span>${fromLabel.toUpperCase()}</span>
             <span style="color: ${modeColor}; font-size: 14px;">→</span>
             <span>${toLabel.toUpperCase()}</span>

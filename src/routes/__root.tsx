@@ -6,6 +6,9 @@ import appCss from '../styles.css?url'
 // content (FOUC) from the per-route <link> loading after the HTML paints. Kept as
 // preload (not mounted stylesheets) so it never conflicts with the per-route link
 // that styles each page on first/SSR paint, incl. CSS shared across routes.
+import agendaCss from '../pages/agenda.css?url'
+import caseyCss from '../pages/casey.css?url'
+import caseyTrackerCss from '../pages/casey-tracker.css?url'
 import gameCss from '../pages/game.css?url'
 import gamesCss from '../pages/games.css?url'
 import guideCss from '../pages/guide.css?url'
@@ -44,6 +47,9 @@ export const Route = createRootRoute({
       { rel: 'stylesheet', href: appCss },
       // preload (not prefetch): iOS Safari ignores rel=prefetch, so the warmup
       // never happened on the platform that needs it most.
+      { rel: 'preload', as: 'style', href: agendaCss },
+      { rel: 'preload', as: 'style', href: caseyCss },
+      { rel: 'preload', as: 'style', href: caseyTrackerCss },
       { rel: 'preload', as: 'style', href: gameCss },
       { rel: 'preload', as: 'style', href: gamesCss },
       { rel: 'preload', as: 'style', href: guideCss },

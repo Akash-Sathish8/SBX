@@ -6,7 +6,7 @@ import { ITINERARY } from '@/lib/itinerary';
 import navCss from '../pages/casey.css?url';
 import trackerCss from '../pages/casey-tracker.css?url';
 
-export const Route = createFileRoute('/casey/match/$number')({
+export const Route = createFileRoute('/casey_/match/$number')({
   head: ({ params }) => {
     const n = Number(params.number);
     const match = ITINERARY.find((m) => m.matchNumber === n);

@@ -48,6 +48,9 @@ export default function LiveTodayTab({ onMatchClick }: Props = {}) {
       if (liveJson?.ok) {
         setEvents(liveJson.data ?? []);
         setDate(liveJson.date ?? '');
+        // Clear any error from a previous poll — without this, one transient
+        // failure leaves the error banner up forever next to fresh scores.
+        setFailed(false);
       } else {
         setFailed(true);
       }

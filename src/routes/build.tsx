@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { toPng } from 'html-to-image'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
@@ -79,12 +79,13 @@ function BuildPage() {
   const navigate = useNavigate()
   const [index, setIndex] = useState<any[] | null>(null)
   const [fi, setFi] = useState<any>(null)
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
     Promise.all([
       fetch('/data/games/index.json').then((r) => r.json()),
       fetch('/data/fanintel.json').then((r) => r.json()),
-    ]).then(([idx, f]) => { setIndex(idx); setFi(f) }).catch(() => {})
+    ]).then(([idx, f]) => { setIndex(idx); setFi(f) }).catch(() => setFailed(true))
   }, [])
 
   const setGame = (id: string) => navigate({ to: '/build', search: { game: id, mode } })
@@ -93,7 +94,7 @@ function BuildPage() {
   return (
     <>
       <PageCssGuard id="build" />
-      <SiteNav active="games" />
+      <SiteNav active="guide" />
       <main id="app">
         {/* Intro hero only while choosing a match; once a match is picked the
             guide wizard takes over the full page. */}
@@ -104,9 +105,10 @@ function BuildPage() {
             <div className="gmeta">Pick a match, choose your spots, share a plan.</div>
           </div></section>
         )}
-        {!index ? <div className="loadwrap">Loading…</div>
-          : g ? <Builder g={g} fi={fi} onBack={() => setGame('')} />
-            : <Chooser index={index} onPick={setGame} initialMode={mode} />}
+        {failed ? <div className="loadwrap">Couldn't load match data. <Link to="/" style={{ color: '#222', textDecoration: 'underline' }}>← Home</Link></div>
+          : !index ? <div className="loadwrap">Loading…</div>
+            : g ? <Builder g={g} fi={fi} onBack={() => setGame('')} />
+              : <Chooser index={index} onPick={setGame} initialMode={mode} />}
       </main>
     </>
   )

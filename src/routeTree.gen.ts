@@ -26,7 +26,7 @@ import { Route as ApiLiveTodayRouteImport } from './routes/api/live-today'
 import { Route as ApiLiveRouteImport } from './routes/api/live'
 import { Route as ApiBracketRouteImport } from './routes/api/bracket'
 import { Route as ApiBootstrapRouteImport } from './routes/api/bootstrap'
-import { Route as CaseyMatchNumberRouteImport } from './routes/casey.match.$number'
+import { Route as CaseyMatchNumberRouteImport } from './routes/casey_.match.$number'
 import { Route as ApiStandingsAllRouteImport } from './routes/api/standings.all'
 
 const VenuesRoute = VenuesRouteImport.update({
@@ -115,9 +115,9 @@ const ApiBootstrapRoute = ApiBootstrapRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const CaseyMatchNumberRoute = CaseyMatchNumberRouteImport.update({
-  id: '/match/$number',
-  path: '/match/$number',
-  getParentRoute: () => CaseyRoute,
+  id: '/casey_/match/$number',
+  path: '/casey/match/$number',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiStandingsAllRoute = ApiStandingsAllRouteImport.update({
   id: '/all',
@@ -129,7 +129,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
   '/build': typeof BuildRoute
-  '/casey': typeof CaseyRouteWithChildren
+  '/casey': typeof CaseyRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
@@ -150,7 +150,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
   '/build': typeof BuildRoute
-  '/casey': typeof CaseyRouteWithChildren
+  '/casey': typeof CaseyRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
@@ -172,7 +172,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
   '/build': typeof BuildRoute
-  '/casey': typeof CaseyRouteWithChildren
+  '/casey': typeof CaseyRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
@@ -187,7 +187,7 @@ export interface FileRoutesById {
   '/api/today': typeof ApiTodayRoute
   '/api/visibility': typeof ApiVisibilityRoute
   '/api/standings/all': typeof ApiStandingsAllRoute
-  '/casey/match/$number': typeof CaseyMatchNumberRoute
+  '/casey_/match/$number': typeof CaseyMatchNumberRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -252,14 +252,14 @@ export interface FileRouteTypes {
     | '/api/today'
     | '/api/visibility'
     | '/api/standings/all'
-    | '/casey/match/$number'
+    | '/casey_/match/$number'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgendaRoute: typeof AgendaRoute
   BuildRoute: typeof BuildRoute
-  CaseyRoute: typeof CaseyRouteWithChildren
+  CaseyRoute: typeof CaseyRoute
   GameRoute: typeof GameRoute
   GamesRoute: typeof GamesRoute
   GuideRoute: typeof GuideRoute
@@ -273,6 +273,7 @@ export interface RootRouteChildren {
   ApiStandingsRoute: typeof ApiStandingsRouteWithChildren
   ApiTodayRoute: typeof ApiTodayRoute
   ApiVisibilityRoute: typeof ApiVisibilityRoute
+  CaseyMatchNumberRoute: typeof CaseyMatchNumberRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -396,12 +397,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBootstrapRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/casey/match/$number': {
-      id: '/casey/match/$number'
-      path: '/match/$number'
+    '/casey_/match/$number': {
+      id: '/casey_/match/$number'
+      path: '/casey/match/$number'
       fullPath: '/casey/match/$number'
       preLoaderRoute: typeof CaseyMatchNumberRouteImport
-      parentRoute: typeof CaseyRoute
+      parentRoute: typeof rootRouteImport
     }
     '/api/standings/all': {
       id: '/api/standings/all'
@@ -412,16 +413,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-
-interface CaseyRouteChildren {
-  CaseyMatchNumberRoute: typeof CaseyMatchNumberRoute
-}
-
-const CaseyRouteChildren: CaseyRouteChildren = {
-  CaseyMatchNumberRoute: CaseyMatchNumberRoute,
-}
-
-const CaseyRouteWithChildren = CaseyRoute._addFileChildren(CaseyRouteChildren)
 
 interface ApiStandingsRouteChildren {
   ApiStandingsAllRoute: typeof ApiStandingsAllRoute
@@ -439,7 +430,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgendaRoute: AgendaRoute,
   BuildRoute: BuildRoute,
-  CaseyRoute: CaseyRouteWithChildren,
+  CaseyRoute: CaseyRoute,
   GameRoute: GameRoute,
   GamesRoute: GamesRoute,
   GuideRoute: GuideRoute,
@@ -453,6 +444,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiStandingsRoute: ApiStandingsRouteWithChildren,
   ApiTodayRoute: ApiTodayRoute,
   ApiVisibilityRoute: ApiVisibilityRoute,
+  CaseyMatchNumberRoute: CaseyMatchNumberRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
