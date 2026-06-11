@@ -5,6 +5,7 @@ import {
   getSpend,
   getAllResults,
   getVisibilityFlags,
+  getUnderdogReferral,
 } from '@/lib/kv';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
@@ -18,13 +19,14 @@ export const Route = createFileRoute('/api/bootstrap')({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const [itinerary, stadiums, override, spend, results, visibility] = await Promise.all([
+        const [itinerary, stadiums, override, spend, results, visibility, underdogReferral] = await Promise.all([
           getMergedItinerary(),
           getMergedStadiums(),
           getPositionOverride(),
           getSpend(),
           getAllResults(),
           getVisibilityFlags(),
+          getUnderdogReferral(),
         ]);
 
         const allowDetails = visibility.showLodging || visibility.showTransport;
@@ -50,6 +52,7 @@ export const Route = createFileRoute('/api/bootstrap')({
             itinerary: publicItinerary,
             stadiums,
             visibility,
+            underdogReferral,
             simTime: simTime ? simTime.toISOString() : null,
           },
           { headers: { 'Cache-Control': 'no-store, max-age=0' } },

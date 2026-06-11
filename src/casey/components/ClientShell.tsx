@@ -10,6 +10,8 @@ import VideoStrip from './VideoStrip';
 import LiveBanner from './LiveBanner';
 import WhereIsCaseyBadge from './WhereIsCaseyBadge';
 import FollowingModal from './FollowingModal';
+import TodayModal from './TodayModal';
+import type { FeedEventType } from '@/lib/feed';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
 import type {
@@ -36,6 +38,7 @@ interface Props {
   stadiums: Record<string, Stadium>;
   initialMatchNumber?: number;
   visibility?: { showLodging: boolean; showTransport: boolean };
+  underdogReferral?: string;
   simTimeIso?: string | null;
 }
 
@@ -48,6 +51,7 @@ export default function ClientShell({
   stadiums,
   initialMatchNumber,
   visibility = { showLodging: false, showTransport: false },
+  underdogReferral = '',
   simTimeIso = null,
 }: Props) {
   const [location, setLocation] = useState(initialLocation);
@@ -60,6 +64,9 @@ export default function ClientShell({
     'schedule',
   );
   const [followingOpen, setFollowingOpen] = useState(false);
+  const [todayOpen, setTodayOpen] = useState(false);
+  // Feed deep-link: which modal StadiumDrawer should auto-open on the next openMatch.
+  const [pendingModal, setPendingModal] = useState<'bets' | 'agenda' | null>(null);
   const [welcomeForce, setWelcomeForce] = useState(false);
   // On phones the map is a live tracker: default to following Casey once the
   // trip is underway (pre/post-trip keeps the whole-journey overview). Desktop
@@ -161,6 +168,8 @@ export default function ClientShell({
     (matchNumber: number) => {
       const m = itinerary.find((x) => x.matchNumber === matchNumber);
       if (!m) return;
+      // Default: no deep-linked modal. The feed handler re-sets this after.
+      setPendingModal(null);
       setSelectedStadiumId(m.stadiumId);
       setHighlightMatchNumber(matchNumber);
       setScheduleOpen(false);
@@ -177,9 +186,22 @@ export default function ClientShell({
     [itinerary],
   );
 
+  // Tapping a Today-feed event routes into the tracker: open the match, and for
+  // bet/agenda events deep-link straight into that modal.
+  const openFeedEvent = useCallback(
+    (matchNumber: number, type: FeedEventType) => {
+      setTodayOpen(false);
+      openMatch(matchNumber); // resets pendingModal to null
+      if (type === 'bet') setPendingModal('bets');
+      else if (type === 'agenda') setPendingModal('agenda');
+    },
+    [openMatch],
+  );
+
   const closeStadiumDrawer = useCallback(() => {
     setSelectedStadiumId(null);
     setHighlightMatchNumber(null);
+    setPendingModal(null);
     try {
       const url = new URL(window.location.href);
       url.searchParams.delete('match');
@@ -249,10 +271,7 @@ export default function ClientShell({
           setScheduleTab('schedule');
           setScheduleOpen(true);
         }}
-        onOpenToday={() => {
-          setScheduleTab('live');
-          setScheduleOpen(true);
-        }}
+        onOpenToday={() => setTodayOpen(true)}
         onOpenFollowing={() => setFollowingOpen(true)}
         onOpenMatch={openMatch}
         lastUpdateAt={lastUpdateAt}
@@ -272,6 +291,8 @@ export default function ClientShell({
           highlightMatchNumber={highlightMatchNumber}
           onClose={closeStadiumDrawer}
           visibility={visibility}
+          underdogReferral={underdogReferral}
+          initialModal={pendingModal}
         />
       )}
       <ScheduleDrawer
@@ -298,6 +319,26 @@ export default function ClientShell({
         onClose={() => setFollowingOpen(false)}
         itinerary={itinerary}
       />
+      <TodayModal
+        open={todayOpen}
+        onClose={() => setTodayOpen(false)}
+        itinerary={itinerary}
+        nowMs={simTimeMs ?? lastUpdateAt}
+        onOpenEvent={openFeedEvent}
+      />
+      {/* <TimeTravelPanel
+        simTimeMs={simTimeMs}
+        playing={playing}
+        speed={speed}
+        tripStartMs={TRIP_START_MS}
+        tripEndMs={TRIP_END_MS}
+        onStart={handleStartSim}
+        onPause={() => setPlaying(false)}
+        onResume={() => setPlaying(true)}
+        onSeek={handleSeek}
+        onSpeedChange={setSpeed}
+        onExit={handleExitSim}
+      /> */}
     </>
   );
 }

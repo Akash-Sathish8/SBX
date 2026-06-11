@@ -1,14 +1,14 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { formatInTimezone } from '@/lib/time';
 import { zonedTimeToUtc } from '@/lib/time';
 import { shareMatch } from '@/lib/share';
+import { parseAgenda } from '@/lib/agenda';
 import Flag from './Flag';
 import FollowStar from './FollowStar';
 import { groupStandingsSearch } from '@/lib/external-links';
 import InlineMatchScore from './InlineMatchScore';
 import StandingsModal from './StandingsModal';
-import MatchTweets from './MatchTweets';
 import type { ItineraryMatch, MatchStatus, Stadium } from '@/lib/types';
 
 interface Props {
@@ -17,6 +17,9 @@ interface Props {
   highlightMatchNumber?: number | null;
   onClose: () => void;
   visibility?: { showLodging: boolean; showTransport: boolean };
+  underdogReferral?: string;
+  /** When set, auto-open that modal for the highlighted match (feed deep-link). */
+  initialModal?: 'bets' | 'agenda' | null;
 }
 
 function countryAccent(code: string): string {
@@ -64,8 +67,12 @@ export default function StadiumDrawer({
   highlightMatchNumber,
   onClose,
   visibility = { showLodging: false, showTransport: false },
+  underdogReferral = '',
+  initialModal = null,
 }: Props) {
   const [openDetailsFor, setOpenDetailsFor] = useState<number | null>(null);
+  const [openAgendaFor, setOpenAgendaFor] = useState<number | null>(null);
+  const [openBetsFor, setOpenBetsFor] = useState<number | null>(null);
   const showLogisticsButton = visibility.showLodging || visibility.showTransport;
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -125,9 +132,18 @@ export default function StadiumDrawer({
         // from the pagination buttons.
         el.scrollTo({ left: idx * el.clientWidth, behavior: 'auto' });
       }
+      // Feed deep-link: open the requested modal for the highlighted match
+      // (the gated modals key off currentMatch, which is now this match).
+      if (highlightMatchNumber && initialModal === 'bets') {
+        setOpenBetsFor(highlightMatchNumber);
+        setOpenAgendaFor(null);
+      } else if (highlightMatchNumber && initialModal === 'agenda') {
+        setOpenAgendaFor(highlightMatchNumber);
+        setOpenBetsFor(null);
+      }
     }, 320); // wait for the drawer's slide-in animation to complete
     return () => clearTimeout(t);
-  }, [highlightMatchNumber, matches]);
+  }, [highlightMatchNumber, matches, initialModal]);
 
   // Sync currentIndex with scroll position as the user swipes.
   function handleCarouselScroll() {
@@ -491,18 +507,32 @@ export default function StadiumDrawer({
           )}
         </div>
 
-        {/* Match-buzz feed for the currently-visible match. Sits beneath the
-            full carousel card; flex-1 lets it fill the rest of the drawer on
-            tall screens, min-height keeps it present on short ones. */}
+        {/* Casey's Agenda + Casey's Bets — always shown for the current carousel match;
+            greyed/disabled (with a hover hint) when that match has no content yet. */}
         {currentMatch && (
-          <div className="flex-1 min-h-[220px] bg-snap-black/40 px-5 py-4">
-            <div className="font-mono text-[10px] tracking-[0.22em] text-snap-yellow mb-1">
-              MATCH BUZZ · #{currentMatch.matchNumber}
-            </div>
-            <div className="font-mono text-[9px] tracking-[0.15em] text-snap-fog mb-3">
-              {currentMatch.homeTeam} VS {currentMatch.awayTeam}
-            </div>
-            <MatchTweets matchNumber={currentMatch.matchNumber} />
+          <div className="grid grid-cols-1 gap-2.5 bg-snap-black/40 px-4 py-3">
+            <CaseyActionButton
+              label="CASEY'S AGENDA"
+              enabled={parseAgenda(currentMatch.agenda).length > 0}
+              accent="chalk"
+              activeHint="GAMEDAY →"
+              emptyTitle="Casey hasn't mapped out this gameday yet"
+              onClick={() => {
+                setOpenAgendaFor(currentMatch.matchNumber);
+                setOpenBetsFor(null);
+              }}
+            />
+            <CaseyActionButton
+              label="CASEY'S BETS"
+              enabled={Boolean(currentMatch.betSlipImage)}
+              accent="yellow"
+              activeHint="UNDERDOG →"
+              emptyTitle="Casey hasn't dropped his bet for this gameday yet"
+              onClick={() => {
+                setOpenBetsFor(currentMatch.matchNumber);
+                setOpenAgendaFor(null);
+              }}
+            />
           </div>
         )}
       </aside>
@@ -528,6 +558,168 @@ export default function StadiumDrawer({
           onClose={() => setOpenStandingsGroup(null)}
         />
       )}
+      {currentMatch && openAgendaFor === currentMatch.matchNumber && (
+        <CaseyInfoModal title="CASEY'S AGENDA" onClose={() => setOpenAgendaFor(null)}>
+          {(() => {
+            const events = parseAgenda(currentMatch.agenda);
+            if (events.length === 0) {
+              return (
+                <div className="py-8 text-center font-mono text-[12px] tracking-[0.14em] text-snap-mist">
+                  Casey hasn&apos;t posted his agenda for this game yet.
+                </div>
+              );
+            }
+            return (
+              <ol className="space-y-2.5">
+                {events.map((ev, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 border border-solid border-snap-ash border-l-[3px] border-l-snap-yellow/70 bg-snap-carbon px-3.5 py-3"
+                  >
+                    {ev.time ? (
+                      <span className="min-w-[54px] whitespace-nowrap pt-0.5 font-display text-[16px] leading-none tracking-wide text-snap-yellow">
+                        {ev.time}
+                      </span>
+                    ) : (
+                      <span
+                        className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-snap-yellow"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span className="font-body text-[13px] leading-snug text-snap-chalk">
+                      {ev.text}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            );
+          })()}
+        </CaseyInfoModal>
+      )}
+      {currentMatch && openBetsFor === currentMatch.matchNumber && (
+        <CaseyInfoModal title="CASEY'S BETS" onClose={() => setOpenBetsFor(null)}>
+          {currentMatch.betSlipImage ? (
+            <div className="space-y-4">
+              <img
+                src={currentMatch.betSlipImage}
+                alt="Casey's Underdog pick"
+                className="w-full rounded border border-snap-ash"
+              />
+              <a
+                href={underdogReferral || 'https://underdogfantasy.com'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-snap-yellow px-4 py-3.5 text-center font-display text-[24px] tracking-wide text-snap-black transition-colors hover:bg-snap-yellowDim"
+              >
+                MAKE THIS PICK ON UNDERDOG →
+              </a>
+            </div>
+          ) : (
+            <div className="py-8 text-center font-mono text-[12px] tracking-[0.14em] text-snap-mist">
+              Casey hasn&apos;t dropped his bet for this game yet.
+            </div>
+          )}
+        </CaseyInfoModal>
+      )}
+    </div>
+  );
+}
+
+function CaseyActionButton({
+  label,
+  enabled,
+  accent,
+  activeHint,
+  emptyTitle,
+  onClick,
+}: {
+  label: string;
+  enabled: boolean;
+  accent: 'yellow' | 'chalk';
+  activeHint: string;
+  emptyTitle: string;
+  onClick: () => void;
+}) {
+  if (!enabled) {
+    return (
+      <button
+        type="button"
+        disabled
+        title={emptyTitle}
+        className="group flex cursor-not-allowed items-center justify-between border border-snap-ash/40 bg-snap-coal/30 px-4 py-3.5"
+      >
+        <span className="font-display text-[20px] sm:text-[22px] tracking-wide text-snap-fog">
+          {label}
+        </span>
+        <span className="whitespace-nowrap font-mono text-[10px] tracking-[0.16em] text-snap-fog">
+          <span className="group-hover:hidden">— NOT YET</span>
+          <span className="hidden text-snap-mist group-hover:inline">not posted yet</span>
+        </span>
+      </button>
+    );
+  }
+  const shell =
+    accent === 'yellow'
+      ? 'border-snap-yellow/50 bg-gradient-to-r from-snap-yellow/10 to-snap-coal hover:border-snap-yellow hover:from-snap-yellow/20'
+      : 'border-snap-ash bg-snap-coal hover:border-snap-yellow hover:bg-snap-smoke/40';
+  const labelCls =
+    accent === 'yellow'
+      ? 'text-snap-yellow'
+      : 'text-snap-chalk transition-colors group-hover:text-snap-yellow';
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group flex items-center justify-between border px-4 py-3.5 transition-colors ${shell}`}
+    >
+      <span className={`font-display text-[20px] sm:text-[22px] tracking-wide ${labelCls}`}>
+        {label}
+      </span>
+      <span className="font-mono text-[10px] tracking-[0.2em] text-snap-mist transition-colors group-hover:text-snap-yellow">
+        {activeHint}
+      </span>
+    </button>
+  );
+}
+
+function CaseyInfoModal({
+  title,
+  onClose,
+  children,
+}: {
+  title: string;
+  onClose: () => void;
+  children: ReactNode;
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+  return (
+    <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+      <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
+      <div
+        className="relative w-full max-w-sm overflow-y-auto border border-snap-ash bg-snap-coal no-scrollbar"
+        style={{ maxHeight: '88vh' }}
+      >
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-snap-ash bg-snap-coal px-4 py-3">
+          <h3 className="font-display text-[26px] leading-none tracking-wide text-snap-yellow">
+            {title}
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="flex h-8 w-8 items-center justify-center border border-snap-ash text-snap-mist transition-colors hover:border-snap-yellow hover:text-snap-yellow"
+          >
+            ✕
+          </button>
+        </div>
+        <div className="p-4">{children}</div>
+      </div>
     </div>
   );
 }

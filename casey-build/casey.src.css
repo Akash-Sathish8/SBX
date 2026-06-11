@@ -18,10 +18,7 @@
 .casey-shell { position: fixed; inset: 0; top: 72px; background: var(--snap-coal); color: var(--snap-chalk); overflow: hidden; overscroll-behavior: none; transform: translateZ(0); }
 .casey-shell *, .casey-shell *::before, .casey-shell *::after { box-sizing: border-box; }
 
-/* Tailwind preflight is disabled (to avoid resetting SBX's nav), so re-add the one reset that
-   matters here: native <button> background. Lives in @layer base so it's emitted BEFORE the
-   utilities layer — [type='button'] has class-level specificity and would otherwise beat
-   same-specificity bg-* utilities. Fixes SPEND/OPENER showing the OS-default light-grey bg. */
+
 @layer base {
   button, [type='button'], [type='reset'], [type='submit'] {
     -webkit-appearance: button;
