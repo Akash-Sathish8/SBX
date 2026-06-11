@@ -9,7 +9,7 @@ export async function shareMatch({
   matchName,
   stadium,
 }: ShareMatchOpts): Promise<'shared' | 'copied' | 'failed'> {
-  const shareUrl = `${window.location.origin}/match/${matchNumber}`;
+  const shareUrl = `${window.location.origin}/casey/match/${matchNumber}`;
   const text = `Watching ${matchName} at ${stadium} with Casey · @snapbacksports`;
 
   if (navigator.share) {
