@@ -39,6 +39,12 @@ const TEAM_TO_CODE: Record<string, string> = {
   Sweden: 'se',
   Denmark: 'dk',
   Poland: 'pl',
+  'Czech Republic': 'cz',
+  Czechia: 'cz',
+  'Bosnia & Herzegovina': 'ba',
+  'Bosnia and Herzegovina': 'ba',
+  Turkey: 'tr',
+  Türkiye: 'tr',
   // CAF
   'South Africa': 'za',
   Morocco: 'ma',
@@ -51,6 +57,9 @@ const TEAM_TO_CODE: Record<string, string> = {
   Nigeria: 'ng',
   Cameroon: 'cm',
   'Cape Verde': 'cv',
+  'DR Congo': 'cd',
+  // CONCACAF (continued)
+  Panama: 'pa',
   // AFC
   Japan: 'jp',
   Korea: 'kr',
@@ -59,6 +68,8 @@ const TEAM_TO_CODE: Record<string, string> = {
   Qatar: 'qa',
   Iran: 'ir',
   Iraq: 'iq',
+  Jordan: 'jo',
+  Uzbekistan: 'uz',
   Australia: 'au',
   // OFC
   'New Zealand': 'nz',
@@ -75,6 +86,8 @@ const ALIASES: Record<string, string> = {
   España: 'Spain',
   Italia: 'Italy',
   Holland: 'Netherlands',
+  'Democratic Republic of the Congo': 'DR Congo',
+  'Congo DR': 'DR Congo',
 };
 
 function normalize(team: string): string {
