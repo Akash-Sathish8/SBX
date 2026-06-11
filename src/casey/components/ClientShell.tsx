@@ -167,7 +167,9 @@ export default function ClientShell({
       try {
         const url = new URL(window.location.href);
         url.searchParams.set('match', String(matchNumber));
-        window.history.replaceState(null, '', url.toString());
+        // Preserve TanStack Router's history state (__TSR_index/key) — replacing
+        // with null desyncs back/forward tracking and scroll restoration.
+        window.history.replaceState(window.history.state, '', url.toString());
       } catch {
         // ignore
       }
@@ -181,7 +183,7 @@ export default function ClientShell({
     try {
       const url = new URL(window.location.href);
       url.searchParams.delete('match');
-      window.history.replaceState(null, '', url.toString());
+      window.history.replaceState(window.history.state, '', url.toString());
     } catch {
       // ignore
     }
