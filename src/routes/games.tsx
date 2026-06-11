@@ -101,7 +101,7 @@ function Games() {
         </div>
       </section>
 
-      <footer><div className="container">© 2026 Snapback Sports — Games &amp; Tickets. <a href="/">← Experiences</a></div></footer>
+      <footer><div className="container">© 2026 Snapback Sports — Games &amp; Tickets. <Link to="/">← Experiences</Link></div></footer>
     </>
   )
 }

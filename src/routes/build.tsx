@@ -18,7 +18,9 @@ export const Route = createFileRoute('/build')({
   head: () => ({
     links: [
       { rel: 'stylesheet', href: gameCss, 'data-page-css': 'game build' },
-      { rel: 'stylesheet', href: shareCss, 'data-page-css': 'build' },
+      // 'build agenda': TanStack dedupes head links by href, so the surviving
+      // link must carry every route id that uses this stylesheet.
+      { rel: 'stylesheet', href: shareCss, 'data-page-css': 'build agenda' },
     ],
     meta: [{ title: 'Snapback — Build Match Guide' }],
   }),

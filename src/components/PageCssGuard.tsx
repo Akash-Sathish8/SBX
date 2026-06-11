@@ -45,15 +45,27 @@ export function PageCssGuard({ id }: { id: string }) {
     const pending = mine.filter((l) => !l.sheet)
     if (pending.length === 0) { disableOthers(); return }
     let done = false
-    const finish = () => { if (!done) { done = true; disableOthers() } }
+    const maybeFinish = () => {
+      // Only retire the old page's CSS once EVERY pending sheet has actually
+      // arrived. Never disable on a timer or an error: a stale page's styles
+      // beat a completely unstyled page (the full-screen-logo FOUC).
+      if (!done && pending.every((l) => l.sheet)) { done = true; disableOthers() }
+    }
+    const onError = (e: Event) => {
+      // One retry per link for flaky connections (tunnels, cellular). If it
+      // fails again, the previous page's CSS simply stays active.
+      const l = e.target as HTMLLinkElement
+      if (!l.dataset.cssRetried) { l.dataset.cssRetried = '1'; const href = l.href; l.href = ''; l.href = href }
+    }
     pending.forEach((l) => {
-      l.addEventListener('load', finish, { once: true })
-      l.addEventListener('error', finish, { once: true })
+      l.addEventListener('load', maybeFinish)
+      l.addEventListener('error', onError)
     })
-    const t = setTimeout(finish, 1500) // safety net
+    // Poll as a safety net for load events that raced the listener attach.
+    const iv = setInterval(maybeFinish, 250)
     return () => {
-      clearTimeout(t)
-      pending.forEach((l) => { l.removeEventListener('load', finish); l.removeEventListener('error', finish) })
+      clearInterval(iv)
+      pending.forEach((l) => { l.removeEventListener('load', maybeFinish); l.removeEventListener('error', onError) })
     }
   })
   return null

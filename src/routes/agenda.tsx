@@ -16,7 +16,9 @@ export const Route = createFileRoute('/agenda')({
   validateSearch: (s: Record<string, unknown>) => ({ game: typeof s.game === 'string' ? s.game : '' }),
   head: () => ({
     links: [
-      { rel: 'stylesheet', href: shareCss, 'data-page-css': 'agenda' },
+      // 'build agenda': must match build.tsx's tag — TanStack dedupes by href
+      // and only one link (with one tag) survives across both routes.
+      { rel: 'stylesheet', href: shareCss, 'data-page-css': 'build agenda' },
       { rel: 'stylesheet', href: css, 'data-page-css': 'agenda' },
     ],
     meta: [{ title: 'Snapback — Matchday Agenda' }],

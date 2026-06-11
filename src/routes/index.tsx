@@ -155,15 +155,16 @@ function Home() {
   const [vis, setVis] = useState(1)
 
   useEffect(() => {
+    let fadeT: ReturnType<typeof setTimeout> | undefined
     const id = setInterval(() => {
       setDotI((prev) => {
         const next = (prev + 1) % slides.length
         setVis(0)
-        setTimeout(() => { setContentI(next); setVis(1) }, 470)
+        fadeT = setTimeout(() => { setContentI(next); setVis(1) }, 470)
         return next
       })
     }, 4000)
-    return () => clearInterval(id)
+    return () => { clearInterval(id); if (fadeT) clearTimeout(fadeT) }
   }, [])
 
   const cur = slides[contentI]
@@ -253,7 +254,7 @@ function Home() {
 
       <footer>
         <div className="container">
-          <div className="logo"><img className="logo-img" src="/img/logo.png" alt="Snapback Sports" />SNAPBACK<span className="wc">WC 2026</span></div>
+          <div className="logo"><img className="logo-img" src="/img/logo.png" alt="Snapback Sports" width={42} height={42} />SNAPBACK<span className="wc">WC 2026</span></div>
           <div className="fnav">
             <a href="#experiences">Experiences</a>
             <Link to="/guide">Guide</Link>
