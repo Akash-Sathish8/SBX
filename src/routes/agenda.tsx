@@ -3,7 +3,7 @@
 // read-only and never touches the consumer SBX pages. Pick a match, type a line
 // per section, live-preview the share card, download/share. Auto-saves per match.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { toPng } from 'html-to-image'
 import { ShareCard, type Plan } from '../components/ShareCard'
 import { getShareFontEmbedCss } from '../lib/shareFonts'
@@ -53,7 +53,7 @@ function AgendaPage() {
       <PageCssGuard id="agenda" />
       <main className="ag-wrap">
         <header className="ag-top">
-          <div className="ag-brand"><img src="/img/logo.png" alt="" /><span>Snapback<br />Agenda</span></div>
+          <Link to="/" className="ag-brand" aria-label="Snapback home" style={{ textDecoration: 'none', color: 'inherit' }}><img src="/img/logo.png" alt="" /><span>Snapback<br />Agenda</span></Link>
           {g ? <button className="ag-link" onClick={() => navigate({ to: '/agenda', search: { game: '' } })}>← Change match</button> : null}
         </header>
         {!index ? <div className="ag-load">Loading…</div>
