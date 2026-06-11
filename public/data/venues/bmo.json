@@ -351,12 +351,12 @@
         "distMi": 0
       },
       {
-        "name": "King Club bar",
-        "where": "Premium club level",
-        "note": "Big craft beer list and full cocktail selection.",
+        "name": "Budweiser King Club bar",
+        "where": "200-level concourse, north end (section 107) — open to all fans",
+        "note": "Big Canadian craft beer list.",
         "why": [
           "Deep craft beer list",
-          "Full cocktails on the club level"
+          "Public concourse bar, no premium ticket needed"
         ],
         "rating": null,
         "dist": "At stadium",
@@ -429,9 +429,9 @@
       {
         "name": "Brazen Head Irish Pub",
         "where": "165 East Liberty St, Liberty Village",
-        "note": "Open till 2am, red jerseys post-match, $7 pints.",
+        "note": "Open till 2am Fri-Sat (midnight-1am weeknights); red jerseys post-match.",
         "why": [
-          "Open till 2am, $7 pints",
+          "Late Fri-Sat; weeknights close midnight-1am",
           "Red jerseys spill in after the whistle"
         ],
         "rating": 4.5,

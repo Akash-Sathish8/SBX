@@ -143,20 +143,8 @@
   "around": {
     "food": [
       {
-        "name": "Fox Bros. Bar-B-Q",
-        "where": "main concourse stand",
-        "note": "Big Tex brisket sandwich and loaded Totchos",
-        "why": [
-          "Atlanta's legendary BBQ joint, in-stadium",
-          "Famous Totchos are a must-try"
-        ],
-        "rating": null,
-        "dist": "At stadium",
-        "distMi": 0
-      },
-      {
         "name": "Gamechanger (Kevin Gillespie)",
-        "where": "100-level concourse",
+        "where": "200-level concourse, west end zone",
         "note": "'Closed on Sunday' spicy-sweet chicken sandwich",
         "why": [
           "Top Chef star's stadium kitchen",
@@ -180,11 +168,11 @@
       },
       {
         "name": "Sublime Doughnuts",
-        "where": "concourse dessert stand",
-        "note": "fan-favorite handcrafted doughnuts for the sweet tooth",
+        "where": "Delta Sky360 Club & Mercedes-Benz Club (premium ticket access only)",
+        "note": "fan-favorite handcrafted doughnuts — premium club levels only",
         "why": [
           "Beloved Atlanta doughnut shop inside",
-          "Handcrafted sweet to fuel the match"
+          "Club-level access required"
         ],
         "rating": null,
         "dist": "At stadium",

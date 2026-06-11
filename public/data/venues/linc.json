@@ -278,10 +278,10 @@
    {
     "name": "Philip's Steaks",
     "where": "Sections 101 & 225",
-    "note": "Classic whiz-wit cheesesteak; Ed Sheeran once cooked here.",
+    "note": "Classic whiz-wit cheesesteak from the W. Passyunk legend (Ed Sheeran once cooked at the original shop).",
     "why": [
      "Real whiz-wit, no concourse-stand shortcuts",
-     "Local legend with a celebrity cosign"
+     "South Philly legend with a celebrity cosign"
     ],
     "rating": null,
     "distMi": 0,
@@ -363,7 +363,7 @@
    },
    {
     "name": "McCusker's Tavern",
-    "where": "2601 S 17th St (17th & Wolf)",
+    "where": "2601 S 17th St (17th & Shunk)",
     "note": "Cash-only wood-paneled dive with old Vet Stadium seats.",
     "why": [
      "Actual Vet Stadium seats inside",
@@ -438,18 +438,11 @@
   ],
   "merch": [
    {
-    "name": "Eagles Pro Shop at Lincoln Financial Field",
-    "where": "Pepsi Plaza, Lincoln Financial Field Way; 6,000+ sq ft flagship team store at the stadium",
-    "rating": 4.3,
-    "distMi": 0,
-    "dist": "At stadium"
-   },
-   {
     "name": "FIFA World Cup 2026 official merchandise (Rally House)",
-    "where": "Official FIFA World Cup merch sold at Lincoln Financial Field via Rally House on match days",
+    "where": "Official WC26 merch at Rally House stores near the stadium; in-stadium match-day merch runs through FIFA kiosks",
     "rating": null,
     "distMi": 0,
-    "dist": "At stadium"
+    "dist": "Near stadium"
    },
    {
     "name": "Linc in-stadium merchandise stands",

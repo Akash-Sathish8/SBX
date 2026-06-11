@@ -133,9 +133,9 @@
    {
     "name": "Las Muñecas",
     "where": "Calle Toltecas, Pedregal de Santo Domingo, Coyoacán",
-    "note": "24-hour suadero tacos, red or green salsa",
+    "note": "Suadero tacos 6pm-6am, red or green salsa",
     "why": [
-     "Open 24 hours, perfect post-match",
+     "Open 6pm to 6am — built for evening kickoffs",
      "Cheap suadero tacos, pick your salsa"
     ],
     "rating": 4.3,
@@ -210,7 +210,7 @@
     "note": "Screens everywhere, El Tri faithful, arrive early",
     "why": [
      "Screens everywhere, packed El Tri crowd",
-     "Heart of the Condesa fan district"
+     "Colonia Cuauhtémoc cantina classic"
     ],
     "rating": 4.3,
     "dist": "8 mi",
@@ -221,9 +221,9 @@
    {
     "name": "Salón Covadonga",
     "where": "Puebla 121, Roma Norte",
-    "note": "1940 Asturian cantina, huge room, late nights",
+    "note": "1958 Asturian cantina, huge room, late nights",
     "why": [
-     "Cavernous 1940 Asturian cantina",
+     "Cavernous 1958 Asturian cantina",
      "Domino slap and late-night energy"
     ],
     "rating": 4.3,
@@ -243,7 +243,7 @@
     "distMi": 7
    },
    {
-    "name": "La Bipolar",
+    "name": "La Bipo (ex La Bipolar)",
     "where": "Malintzin 155, Del Carmen, Coyoacán",
     "note": "DJs, live bands, karaoke, no cover",
     "why": [
