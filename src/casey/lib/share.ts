@@ -34,7 +34,7 @@ export async function shareMatch({
 }
 
 export async function shareTracker(): Promise<'shared' | 'copied' | 'failed'> {
-  const shareUrl = window.location.origin;
+  const shareUrl = `${window.location.origin}/casey`;
   const text =
     'Casey is at every 2026 World Cup match · 34 games · 40 days · @snapbacksports';
 
