@@ -18,9 +18,12 @@ import { Route as CaseyRouteImport } from './routes/casey'
 import { Route as BuildRouteImport } from './routes/build'
 import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CaseyIndexRouteImport } from './routes/casey.index'
+import { Route as CaseyAdminRouteImport } from './routes/casey.admin'
 import { Route as ApiVisibilityRouteImport } from './routes/api/visibility'
 import { Route as ApiTodayRouteImport } from './routes/api/today'
 import { Route as ApiStandingsRouteImport } from './routes/api/standings'
+import { Route as ApiOgRouteImport } from './routes/api/og'
 import { Route as ApiMatchScoreRouteImport } from './routes/api/match-score'
 import { Route as ApiLiveTodayRouteImport } from './routes/api/live-today'
 import { Route as ApiLiveRouteImport } from './routes/api/live'
@@ -28,6 +31,11 @@ import { Route as ApiBracketRouteImport } from './routes/api/bracket'
 import { Route as ApiBootstrapRouteImport } from './routes/api/bootstrap'
 import { Route as CaseyMatchNumberRouteImport } from './routes/casey.match.$number'
 import { Route as ApiStandingsAllRouteImport } from './routes/api/standings.all'
+import { Route as ApiAdminUpdateRouteImport } from './routes/api/admin/update'
+import { Route as ApiAdminLoginRouteImport } from './routes/api/admin/login'
+import { Route as ApiAdminEspnHealthRouteImport } from './routes/api/admin/espn-health'
+import { Route as ApiAdminBootstrapRouteImport } from './routes/api/admin/bootstrap'
+import { Route as ApiAdminAttentionRouteImport } from './routes/api/admin/attention'
 
 const VenuesRoute = VenuesRouteImport.update({
   id: '/venues',
@@ -74,6 +82,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CaseyIndexRoute = CaseyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CaseyRoute,
+} as any)
+const CaseyAdminRoute = CaseyAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => CaseyRoute,
+} as any)
 const ApiVisibilityRoute = ApiVisibilityRouteImport.update({
   id: '/api/visibility',
   path: '/api/visibility',
@@ -87,6 +105,11 @@ const ApiTodayRoute = ApiTodayRouteImport.update({
 const ApiStandingsRoute = ApiStandingsRouteImport.update({
   id: '/api/standings',
   path: '/api/standings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOgRoute = ApiOgRouteImport.update({
+  id: '/api/og',
+  path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiMatchScoreRoute = ApiMatchScoreRouteImport.update({
@@ -124,6 +147,31 @@ const ApiStandingsAllRoute = ApiStandingsAllRouteImport.update({
   path: '/all',
   getParentRoute: () => ApiStandingsRoute,
 } as any)
+const ApiAdminUpdateRoute = ApiAdminUpdateRouteImport.update({
+  id: '/api/admin/update',
+  path: '/api/admin/update',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminLoginRoute = ApiAdminLoginRouteImport.update({
+  id: '/api/admin/login',
+  path: '/api/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminEspnHealthRoute = ApiAdminEspnHealthRouteImport.update({
+  id: '/api/admin/espn-health',
+  path: '/api/admin/espn-health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminBootstrapRoute = ApiAdminBootstrapRouteImport.update({
+  id: '/api/admin/bootstrap',
+  path: '/api/admin/bootstrap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminAttentionRoute = ApiAdminAttentionRouteImport.update({
+  id: '/api/admin/attention',
+  path: '/api/admin/attention',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -140,9 +188,17 @@ export interface FileRoutesByFullPath {
   '/api/live': typeof ApiLiveRoute
   '/api/live-today': typeof ApiLiveTodayRoute
   '/api/match-score': typeof ApiMatchScoreRoute
+  '/api/og': typeof ApiOgRoute
   '/api/standings': typeof ApiStandingsRouteWithChildren
   '/api/today': typeof ApiTodayRoute
   '/api/visibility': typeof ApiVisibilityRoute
+  '/casey/admin': typeof CaseyAdminRoute
+  '/casey/': typeof CaseyIndexRoute
+  '/api/admin/attention': typeof ApiAdminAttentionRoute
+  '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
+  '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
+  '/api/admin/login': typeof ApiAdminLoginRoute
+  '/api/admin/update': typeof ApiAdminUpdateRoute
   '/api/standings/all': typeof ApiStandingsAllRoute
   '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
@@ -150,7 +206,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
   '/build': typeof BuildRoute
-  '/casey': typeof CaseyRouteWithChildren
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
@@ -161,9 +216,17 @@ export interface FileRoutesByTo {
   '/api/live': typeof ApiLiveRoute
   '/api/live-today': typeof ApiLiveTodayRoute
   '/api/match-score': typeof ApiMatchScoreRoute
+  '/api/og': typeof ApiOgRoute
   '/api/standings': typeof ApiStandingsRouteWithChildren
   '/api/today': typeof ApiTodayRoute
   '/api/visibility': typeof ApiVisibilityRoute
+  '/casey/admin': typeof CaseyAdminRoute
+  '/casey': typeof CaseyIndexRoute
+  '/api/admin/attention': typeof ApiAdminAttentionRoute
+  '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
+  '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
+  '/api/admin/login': typeof ApiAdminLoginRoute
+  '/api/admin/update': typeof ApiAdminUpdateRoute
   '/api/standings/all': typeof ApiStandingsAllRoute
   '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
@@ -183,9 +246,17 @@ export interface FileRoutesById {
   '/api/live': typeof ApiLiveRoute
   '/api/live-today': typeof ApiLiveTodayRoute
   '/api/match-score': typeof ApiMatchScoreRoute
+  '/api/og': typeof ApiOgRoute
   '/api/standings': typeof ApiStandingsRouteWithChildren
   '/api/today': typeof ApiTodayRoute
   '/api/visibility': typeof ApiVisibilityRoute
+  '/casey/admin': typeof CaseyAdminRoute
+  '/casey/': typeof CaseyIndexRoute
+  '/api/admin/attention': typeof ApiAdminAttentionRoute
+  '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
+  '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
+  '/api/admin/login': typeof ApiAdminLoginRoute
+  '/api/admin/update': typeof ApiAdminUpdateRoute
   '/api/standings/all': typeof ApiStandingsAllRoute
   '/casey/match/$number': typeof CaseyMatchNumberRoute
 }
@@ -206,9 +277,17 @@ export interface FileRouteTypes {
     | '/api/live'
     | '/api/live-today'
     | '/api/match-score'
+    | '/api/og'
     | '/api/standings'
     | '/api/today'
     | '/api/visibility'
+    | '/casey/admin'
+    | '/casey/'
+    | '/api/admin/attention'
+    | '/api/admin/bootstrap'
+    | '/api/admin/espn-health'
+    | '/api/admin/login'
+    | '/api/admin/update'
     | '/api/standings/all'
     | '/casey/match/$number'
   fileRoutesByTo: FileRoutesByTo
@@ -216,7 +295,6 @@ export interface FileRouteTypes {
     | '/'
     | '/agenda'
     | '/build'
-    | '/casey'
     | '/game'
     | '/games'
     | '/guide'
@@ -227,9 +305,17 @@ export interface FileRouteTypes {
     | '/api/live'
     | '/api/live-today'
     | '/api/match-score'
+    | '/api/og'
     | '/api/standings'
     | '/api/today'
     | '/api/visibility'
+    | '/casey/admin'
+    | '/casey'
+    | '/api/admin/attention'
+    | '/api/admin/bootstrap'
+    | '/api/admin/espn-health'
+    | '/api/admin/login'
+    | '/api/admin/update'
     | '/api/standings/all'
     | '/casey/match/$number'
   id:
@@ -248,9 +334,17 @@ export interface FileRouteTypes {
     | '/api/live'
     | '/api/live-today'
     | '/api/match-score'
+    | '/api/og'
     | '/api/standings'
     | '/api/today'
     | '/api/visibility'
+    | '/casey/admin'
+    | '/casey/'
+    | '/api/admin/attention'
+    | '/api/admin/bootstrap'
+    | '/api/admin/espn-health'
+    | '/api/admin/login'
+    | '/api/admin/update'
     | '/api/standings/all'
     | '/casey/match/$number'
   fileRoutesById: FileRoutesById
@@ -270,9 +364,15 @@ export interface RootRouteChildren {
   ApiLiveRoute: typeof ApiLiveRoute
   ApiLiveTodayRoute: typeof ApiLiveTodayRoute
   ApiMatchScoreRoute: typeof ApiMatchScoreRoute
+  ApiOgRoute: typeof ApiOgRoute
   ApiStandingsRoute: typeof ApiStandingsRouteWithChildren
   ApiTodayRoute: typeof ApiTodayRoute
   ApiVisibilityRoute: typeof ApiVisibilityRoute
+  ApiAdminAttentionRoute: typeof ApiAdminAttentionRoute
+  ApiAdminBootstrapRoute: typeof ApiAdminBootstrapRoute
+  ApiAdminEspnHealthRoute: typeof ApiAdminEspnHealthRoute
+  ApiAdminLoginRoute: typeof ApiAdminLoginRoute
+  ApiAdminUpdateRoute: typeof ApiAdminUpdateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -340,6 +440,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/casey/': {
+      id: '/casey/'
+      path: '/'
+      fullPath: '/casey/'
+      preLoaderRoute: typeof CaseyIndexRouteImport
+      parentRoute: typeof CaseyRoute
+    }
+    '/casey/admin': {
+      id: '/casey/admin'
+      path: '/admin'
+      fullPath: '/casey/admin'
+      preLoaderRoute: typeof CaseyAdminRouteImport
+      parentRoute: typeof CaseyRoute
+    }
     '/api/visibility': {
       id: '/api/visibility'
       path: '/api/visibility'
@@ -359,6 +473,13 @@ declare module '@tanstack/react-router' {
       path: '/api/standings'
       fullPath: '/api/standings'
       preLoaderRoute: typeof ApiStandingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/og': {
+      id: '/api/og'
+      path: '/api/og'
+      fullPath: '/api/og'
+      preLoaderRoute: typeof ApiOgRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/match-score': {
@@ -410,14 +531,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiStandingsAllRouteImport
       parentRoute: typeof ApiStandingsRoute
     }
+    '/api/admin/update': {
+      id: '/api/admin/update'
+      path: '/api/admin/update'
+      fullPath: '/api/admin/update'
+      preLoaderRoute: typeof ApiAdminUpdateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/login': {
+      id: '/api/admin/login'
+      path: '/api/admin/login'
+      fullPath: '/api/admin/login'
+      preLoaderRoute: typeof ApiAdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/espn-health': {
+      id: '/api/admin/espn-health'
+      path: '/api/admin/espn-health'
+      fullPath: '/api/admin/espn-health'
+      preLoaderRoute: typeof ApiAdminEspnHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/bootstrap': {
+      id: '/api/admin/bootstrap'
+      path: '/api/admin/bootstrap'
+      fullPath: '/api/admin/bootstrap'
+      preLoaderRoute: typeof ApiAdminBootstrapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/attention': {
+      id: '/api/admin/attention'
+      path: '/api/admin/attention'
+      fullPath: '/api/admin/attention'
+      preLoaderRoute: typeof ApiAdminAttentionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface CaseyRouteChildren {
+  CaseyAdminRoute: typeof CaseyAdminRoute
+  CaseyIndexRoute: typeof CaseyIndexRoute
   CaseyMatchNumberRoute: typeof CaseyMatchNumberRoute
 }
 
 const CaseyRouteChildren: CaseyRouteChildren = {
+  CaseyAdminRoute: CaseyAdminRoute,
+  CaseyIndexRoute: CaseyIndexRoute,
   CaseyMatchNumberRoute: CaseyMatchNumberRoute,
 }
 
@@ -450,9 +610,15 @@ const rootRouteChildren: RootRouteChildren = {
   ApiLiveRoute: ApiLiveRoute,
   ApiLiveTodayRoute: ApiLiveTodayRoute,
   ApiMatchScoreRoute: ApiMatchScoreRoute,
+  ApiOgRoute: ApiOgRoute,
   ApiStandingsRoute: ApiStandingsRouteWithChildren,
   ApiTodayRoute: ApiTodayRoute,
   ApiVisibilityRoute: ApiVisibilityRoute,
+  ApiAdminAttentionRoute: ApiAdminAttentionRoute,
+  ApiAdminBootstrapRoute: ApiAdminBootstrapRoute,
+  ApiAdminEspnHealthRoute: ApiAdminEspnHealthRoute,
+  ApiAdminLoginRoute: ApiAdminLoginRoute,
+  ApiAdminUpdateRoute: ApiAdminUpdateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

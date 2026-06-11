@@ -21,6 +21,7 @@ interface BootstrapData {
   itinerary: ItineraryMatch[];
   stadiums: Record<string, Stadium>;
   visibility: { showLodging: boolean; showTransport: boolean };
+  underdogReferral: string;
   simTime: string | null;
 }
 
@@ -80,6 +81,7 @@ export default function TrackerApp({ initialMatchNumber }: { initialMatchNumber?
         itinerary={data.itinerary}
         stadiums={data.stadiums}
         visibility={data.visibility}
+        underdogReferral={data.underdogReferral}
         simTimeIso={data.simTime}
         initialMatchNumber={initialMatchNumber}
       />
