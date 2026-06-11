@@ -151,7 +151,7 @@
     "pre": [
       {
         "name": "FIFA Fan Festival — Parque Fundidora",
-        "where": "Parque Fundidora, Monterrey (Metro Line 2 to Parque Fundidora; match-day shuttles + fan-walk link it to the stadium)",
+        "where": "Parque Fundidora, Monterrey (Metro Line 1 to Parque Fundidora station — same line as the stadium's Exposición stop; match-day shuttles + fan-walk link it to the stadium)",
         "why": [
           "Free official fan zone, giant screens",
           "Live music plus shuttles straight to kickoff"
@@ -313,7 +313,7 @@
             "t": "'Me Muevo' card or Urbani QR."
           }
         ],
-        "deal": "Metro is the cheapest option (a few pesos); hours extended to ~1–2am for World Cup matches."
+        "deal": "Metro fare is ~10 MXN (about US$0.55) via Me Muevo card or Urbani app; hours extended to ~1–2am for World Cup matches."
       }
     ],
     "bus": [
@@ -369,7 +369,7 @@
     ]
   },
   "parking": {
-    "summary": "About 3,600 on-site spaces across three zones at club games — but for World Cup 2026, general parking at the stadium lots is expected to be prohibited (security perimeter), pushing fans to prepaid satellite lots plus shuttle. Av. Pablo Livas jams badly either way, so arrive 2.5+ hours early or don't drive at all.",
+    "summary": "For World Cup 2026 the stadium's own lots are reserved for operations, FIFA delegations and hospitality — general fans use the official prepaid WC parking zones (roughly 700–2,000 MXN by zone) plus Park & Ride shuttles. Av. Pablo Livas jams badly either way, so arrive 2.5+ hours early or don't drive at all.",
     "lots": [
       {
         "name": "Zona Sur (Av. Pablo Livas)",
@@ -417,7 +417,7 @@
         ]
       }
     ],
-    "prepaid": "Pre-buy strongly recommended. Rayados club parking is bookable online (via the official ticketing platform / Parkimovil), usually MXN 20–50 cheaper than walk-up. For WC2026, plan on prepaid satellite-lot + shuttle passes sold through the FIFA Ticketing app rather than driving to the venue. Low confidence on final WC2026 parking rules — verify via official FIFA/host-city channels.",
+    "prepaid": "Pre-buy strongly recommended. Official WC2026 parking zones run roughly 700–2,000 MXN depending on zone and are sold in advance; stadium-owned lots are not available to general fans during the tournament. Verify final details via official FIFA/host-city channels.",
     "accessible": "Designated ADA spaces exist in all three zones, with the closest paved spots near gate entrances; wheelchair escorts from parking to accessible seating are available on request.",
     "tailgating": "No formal tailgating culture — pre-game energy concentrates in the surrounding lots/streets and at the Parque Fundidora Fan Festival downtown rather than organized car-park gatherings.",
     "tips": [

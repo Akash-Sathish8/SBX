@@ -154,7 +154,7 @@
    },
    {
     "name": "Frito Pie Burger",
-    "where": "main concourse grills",
+    "where": "Smoke House stands, upper concourse (sec 412 & 442)",
     "note": "chili-and-Fritos-topped burger, a Texas classic",
     "why": [
      "Chili and Fritos piled on a burger",
@@ -417,7 +417,7 @@
   ]
  },
  "parking": {
-  "summary": "About 12,000 stadium spaces sit in 15 numbered lots, plus nearly 12,000 more around adjacent Globe Life Field. For WC26, all stadium parking must be prepaid through JustPark (FIFA's official platform) and is priced by round, not by lot, climbing from $75 for group games to $175 for the semifinal.",
+  "summary": "About 12,000 stadium spaces sit in 15 numbered lots, plus nearly 12,000 more around adjacent Globe Life Field. For WC26, all stadium parking must be prepaid through JustPark (FIFA's official platform) and is priced by round with dynamic pricing — currently ~$128 for group games, ~$153 first knockouts, $200+ for the semifinal, and climbing as kickoff nears.",
   "lots": [
    {
     "name": "Blue Lots 1 & 2 / closest stadium lots",
@@ -480,7 +480,7 @@
     ]
    }
   ],
-  "prepaid": "Essential. WC26 stadium parking must be bought in advance via JustPark, FIFA's official partner: ~$75 group stage and Round of 32, $100 Round of 16, $125-$145 quarterfinals, $175 the semifinal. For Cowboys games, prepay through SeatGeek or the Cowboys app to save ~$10-20 over cash at the gate. Lots sell out weeks ahead.",
+  "prepaid": "Essential. WC26 stadium parking must be bought in advance via JustPark, FIFA's official partner — pricing is dynamic and climbing: ~$128 group stage, ~$153 early knockouts, $200+ the semifinal. For Cowboys games, prepay through SeatGeek or the Cowboys app to save ~$10-20 over cash at the gate. Lots sell out weeks ahead.",
   "accessible": "Accessible parking is available in all lots on a first-come basis; you need a valid parking pass plus a state-issued disability placard or license plate. The stadium also has designated ADA drop-off/pick-up zones and power-assisted doors. Guest Services: (817) 892-4161.",
   "tailgating": "Allowed in lots 4-7 and 10-15, on grassy perimeter areas only, max 9 ft wide by 12 ft deep, with charcoal or gas grills. No deep fryers, open fires, weapons, fireworks, amplified sound or commercial activity. Note the brutal June-July heat in the lots.",
   "tips": [

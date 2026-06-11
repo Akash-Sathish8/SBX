@@ -83,7 +83,7 @@
    "group": "H"
   }
  ],
- "gettingThere": "The stadium sits on the northwest fringe in Zapopan, far from the center, and on matchdays the entire perimeter is closed to private cars with no public parking. Plan your ride before you leave.",
+ "gettingThere": "The stadium sits on the northwest fringe in Zapopan, far from the center, and on matchdays the perimeter is closed to private cars — official parking is limited, prepaid (2,300 MXN via Ticketmaster) and sells out. Plan your ride before you leave.",
  "transit": [
   "Official 'Ride al Estadio' shuttle: ~500 MXN ($25) per person, from 10 hubs (Chapultepec, Auditorio Telmex, Zona Galerias and more), departing ~4 hours before kickoff",
   "Mi Macro Periferico BRT to 'Estadio Chivas' station, then about a 1 km walk in",
@@ -188,24 +188,24 @@
   ]
  },
  "parking": {
-  "summary": "By FIFA order there is NO public parking at Estadio Guadalajara during the World Cup, and the surrounding streets fall under the 'Última Milla' road-closure operation. Authorities explicitly tell fans not to drive a private car to the stadium. The only sanctioned 'parking' is the free/paid lots at the Ride al Estadio shuttle hubs across the city.",
+  "summary": "Driving is discouraged: surrounding streets fall under the 'Última Milla' road-closure operation and authorities push fans toward transit and shuttles. Official stadium parking DOES exist but is limited (~4,500 FIFA-capped spaces) and sells per match at 2,300 MXN via Ticketmaster — passes are exchanged at the FIFA distribution center with a valid match ticket. The cheaper play is the free/paid lots at the Ride al Estadio shuttle hubs across the city.",
   "lots": [
    {
     "name": "Stadium lots (Estadio Guadalajara)",
-    "price": "Closed to general public",
-    "detail": "The ~4,800-space stadium parking footprint is reserved for media, staff and accredited use during the tournament; not available to ticketholders.",
+    "price": "2,300 MXN per match, prepaid",
+    "detail": "FIFA capped on-site parking at ~4,500 spaces per match. Passes sell via Ticketmaster and are exchanged at the FIFA pass-distribution center — you need a valid match ticket.",
     "points": [
      {
-      "b": "~4,800 spaces",
-      "t": "the full stadium footprint."
+      "b": "~4,500 spaces",
+      "t": "FIFA-limited capacity per match."
      },
      {
-      "b": "Accredited only",
-      "t": "media and staff during tournament."
+      "b": "2,300 MXN",
+      "t": "per match via Ticketmaster, prepaid only."
      },
      {
-      "b": "No ticketholders",
-      "t": "closed to general fans."
+      "b": "Ticket required",
+      "t": "pass pickup needs a valid match ticket."
      }
     ]
    },
@@ -424,10 +424,10 @@
    {
     "name": "Las Nueve Esquinas plaza",
     "where": "Centro, Plaza Nueve Esquinas",
-    "note": "Birria and beers if the night runs long",
+    "note": "Post-match birria after afternoon kickoffs — birrierías close by 9-10pm",
     "why": [
-     "Birria and beers at 1am",
-     "Historic plaza for the long night"
+     "Legendary goat birria in a historic plaza",
+     "Closes 9-10pm, so go after early kickoffs"
     ],
     "rating": null,
     "dist": "7.2 mi",

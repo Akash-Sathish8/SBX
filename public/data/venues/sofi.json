@@ -114,7 +114,7 @@
  "gettingThere": "SoFi sits just 3 miles from LAX, one of the closest airport-to-stadium hops in US sports. Skip driving and parking entirely: take Metro plus the free game-day shuttle or hop a rideshare outside surge hours.",
  "transit": [
   "Metro C Line to Hawthorne/Lennox station, then a ~15-min walk east to the stadium.",
-  "Free game-day shuttles run from the LAX/Metro Transit Center (Bus Bay 8) every 3-5 min, starting 3 hours pre-match.",
+  "Free World Cup shuttles run from the LAX/Metro Transit Center (Bus Bay 8) every 10 min, starting 3 hrs 15 min pre-match.",
   "Base Metro fare is $1.75 one-way; pre-load a TAP card or use contactless to dodge lines.",
   "Rideshare from LAX is ~$10-15 normally but surges to $30-50 with 20-40 min waits after a sellout."
  ],
@@ -135,7 +135,7 @@
    },
    {
     "name": "LA Street Dog",
-    "where": "Olvera St concourse stands",
+    "where": "Market Grills stands, Level 3 + club stands",
     "note": "Bacon-wrapped dog, caramelized onions, jalapeno aioli",
     "why": [
      "Iconic LA bacon-wrapped street dog",
@@ -147,7 +147,7 @@
    },
    {
     "name": "Hawaiian Plate Lunch",
-    "where": "Sawtelle Blvd Asian-fusion hub",
+    "where": "Level 3 concourse stand",
     "note": "Soy-glaze beef bowl and coconut haupia tart",
     "why": [
      "Soy-glaze beef bowl hits the spot",
@@ -175,7 +175,7 @@
     "name": "FIFA Fan Festival Los Angeles",
     "where": "LA Memorial Coliseum, Exposition Park; ~9.5 mi NE, Metro E Line to Expo Park/USC",
     "why": [
-     "Free official fan zone with giant screens",
+     "Official fan zone with giant screens — $10 GA (under-12s free), Jun 11-14 only",
      "Metro E Line straight to the gate"
     ],
     "fifa": true,
@@ -271,13 +271,6 @@
    }
   ],
   "merch": [
-   {
-    "name": "The Equipment Room",
-    "where": "Level 5, south side, adjacent to American Airlines Plaza, inside SoFi Stadium",
-    "rating": null,
-    "dist": "At stadium",
-    "distMi": 0
-   },
    {
     "name": "FIFA World Cup 2026 Official Store - The Bloc",
     "where": "The Bloc, 700 S Flower St, Downtown Los Angeles",

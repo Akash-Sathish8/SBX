@@ -97,17 +97,18 @@ export default function StatsBar({
   const { count: followingCount } = useFollows();
   const [todayCount, setTodayCount] = useState<number | null>(null);
 
-  // Fetches the same /api/today endpoint the LIVE TODAY tab uses, but
-  // only cares about the item count for the pill label. Cheap: edge
-  // cached at the route. Refreshes every 2 min so the count tracks
+  // Count today's matches from /api/live-today — the same endpoint the LIVE
+  // TODAY tab headline uses, so the pill number always matches what the user
+  // sees after tapping it (/api/today mixes in vlogs and yesterday's results).
+  // Cheap: edge cached at the route. Refreshes every 2 min so the count tracks
   // live results as they finalize.
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
       try {
-        const res = await fetch('/api/today', { cache: 'no-store' });
+        const res = await fetch('/api/live-today', { cache: 'no-store' });
         const data = await res.json();
-        if (!cancelled && data?.ok) setTodayCount((data.items ?? []).length);
+        if (!cancelled && data?.ok) setTodayCount((data.data ?? []).length);
       } catch {
         // ignore
       }

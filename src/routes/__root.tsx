@@ -6,6 +6,9 @@ import appCss from '../styles.css?url'
 // content (FOUC) from the per-route <link> loading after the HTML paints. Kept as
 // preload (not mounted stylesheets) so it never conflicts with the per-route link
 // that styles each page on first/SSR paint, incl. CSS shared across routes.
+import agendaCss from '../pages/agenda.css?url'
+import caseyCss from '../pages/casey.css?url'
+import caseyTrackerCss from '../pages/casey-tracker.css?url'
 import gameCss from '../pages/game.css?url'
 import gamesCss from '../pages/games.css?url'
 import guideCss from '../pages/guide.css?url'
@@ -42,13 +45,18 @@ export const Route = createRootRoute({
       { rel: 'icon', type: 'image/png', href: '/img/logo.png' },
       { rel: 'apple-touch-icon', href: '/img/logo.png' },
       { rel: 'stylesheet', href: appCss },
-      { rel: 'prefetch', as: 'style', href: gameCss },
-      { rel: 'prefetch', as: 'style', href: gamesCss },
-      { rel: 'prefetch', as: 'style', href: guideCss },
-      { rel: 'prefetch', as: 'style', href: indexPageCss },
-      { rel: 'prefetch', as: 'style', href: venueCss },
-      { rel: 'prefetch', as: 'style', href: venuesCss },
-      { rel: 'prefetch', as: 'style', href: shareCss },
+      // preload (not prefetch): iOS Safari ignores rel=prefetch, so the warmup
+      // never happened on the platform that needs it most.
+      { rel: 'preload', as: 'style', href: agendaCss },
+      { rel: 'preload', as: 'style', href: caseyCss },
+      { rel: 'preload', as: 'style', href: caseyTrackerCss },
+      { rel: 'preload', as: 'style', href: gameCss },
+      { rel: 'preload', as: 'style', href: gamesCss },
+      { rel: 'preload', as: 'style', href: guideCss },
+      { rel: 'preload', as: 'style', href: indexPageCss },
+      { rel: 'preload', as: 'style', href: venueCss },
+      { rel: 'preload', as: 'style', href: venuesCss },
+      { rel: 'preload', as: 'style', href: shareCss },
     ],
   }),
   shellComponent: RootDocument,

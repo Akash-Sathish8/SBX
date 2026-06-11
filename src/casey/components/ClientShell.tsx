@@ -167,7 +167,9 @@ export default function ClientShell({
       try {
         const url = new URL(window.location.href);
         url.searchParams.set('match', String(matchNumber));
-        window.history.replaceState(null, '', url.toString());
+        // Preserve TanStack Router's history state (__TSR_index/key) — replacing
+        // with null desyncs back/forward tracking and scroll restoration.
+        window.history.replaceState(window.history.state, '', url.toString());
       } catch {
         // ignore
       }
@@ -181,7 +183,7 @@ export default function ClientShell({
     try {
       const url = new URL(window.location.href);
       url.searchParams.delete('match');
-      window.history.replaceState(null, '', url.toString());
+      window.history.replaceState(window.history.state, '', url.toString());
     } catch {
       // ignore
     }
@@ -189,16 +191,20 @@ export default function ClientShell({
 
   useEffect(() => {
     try {
-      if (initialMatchNumber !== undefined) {
-        openMatch(initialMatchNumber);
-        return;
-      }
+      // ?match wins over the path param: openMatch writes ?match=N onto the
+      // current URL, so on /casey/match/5 browsing to match 12 yields
+      // /casey/match/5?match=12 — the search param is always the freshest state
+      // and must round-trip on reload/share.
       const url = new URL(window.location.href);
       const match = url.searchParams.get('match');
       if (match) {
         const n = Number(match);
-        if (!Number.isNaN(n)) openMatch(n);
+        if (!Number.isNaN(n)) {
+          openMatch(n);
+          return;
+        }
       }
+      if (initialMatchNumber !== undefined) openMatch(initialMatchNumber);
     } catch {
       // ignore
     }

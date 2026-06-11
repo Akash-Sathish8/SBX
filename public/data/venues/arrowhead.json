@@ -139,11 +139,11 @@
    },
    {
     "name": "Mac Shack",
-    "where": "Sec 104, 117, 301, 326",
+    "where": "Sec 103, 117, 127, 311, 325",
     "note": "BBQ burnt-end mac and cheese loaded",
     "why": [
      "Burnt ends piled on mac and cheese",
-     "Four locations, no long bowl walk"
+     "Five locations, no long bowl walk"
     ],
     "rating": null,
     "dist": "At stadium",
@@ -178,10 +178,10 @@
    {
     "name": "Tailgate lots",
     "where": "Truman Complex, at gates",
-    "note": "smoked-meat acres, the best in American sport",
+    "note": "legendary NFL tailgate acres — but expect a scaled-back World Cup version (FIFA fan villages take over much of the lots)",
     "why": [
-     "Best tailgate scene in American sport",
-     "Smoked-meat aromas right at the gates"
+     "Legendary NFL tailgate grounds at the gates",
+     "World Cup matchdays run a different, FIFA-managed setup"
     ],
     "rating": null,
     "dist": "At stadium",
@@ -201,7 +201,7 @@
    },
    {
     "name": "KC Live! Block",
-    "where": "1343 Wyandotte St, Power & Light",
+    "where": "Grand Blvd between 13th & 14th, Power & Light",
     "note": "giant open-air watch party, thousands roaring",
     "why": [
      "Giant open-air watch party downtown",
@@ -275,13 +275,6 @@
    }
   ],
   "merch": [
-   {
-    "name": "Chiefs Pro Shop",
-    "where": "North side of GEHA Field at Arrowhead, behind Founders Plaza (1 Arrowhead Dr)",
-    "rating": null,
-    "dist": "At stadium",
-    "distMi": 0
-   },
    {
     "name": "FIFA Official Store (online for KC Host City)",
     "where": "store.fifa.com / on-site FIFA merch points at the stadium on match days",
@@ -421,7 +414,7 @@
    },
    {
     "name": "Outer / general lots (incl. Lots D & E)",
-    "price": "From ~$125 group stage, up to ~$225+ quarterfinal",
+    "price": "From ~$125 group stage; dynamic pricing has pushed peak matches past $900",
     "detail": "A 10-20 minute walk through the tailgate crowds; Lots D & E offer an easier NW-route exit post-match.",
     "points": [
      {
@@ -454,7 +447,7 @@
     ]
    }
   ],
-  "prepaid": "Yes, and effectively mandatory: official World Cup parking passes must be bought in advance, are only sold to match ticket holders, and must use the same email as your ticket purchase. Reported prices run $125-$900 by date and lot type ($125-150 group stage, up to ~$225 the quarterfinal). Lots open about 4.5 hours before kickoff.",
+  "prepaid": "Yes, and effectively mandatory: official World Cup parking passes must be bought in advance, are only sold to match ticket holders, and must use the same email as your ticket purchase. Pricing is dynamic and climbs as kickoff nears — reported prices run $125 to more than $900 by date and lot type. Lots open about 4.5 hours before kickoff.",
   "accessible": "Accessible parking is available to guests with a valid ADA permit on a first-come, first-served basis. Fans parking in general lots, using rideshare, or arriving by park-and-ride can also be picked up by mobility carts and taken to the stadium entrance. Note the steep bowl limits ADA seating in the highest sections, so request lower-level seats.",
   "tailgating": "Among the best tailgating in American sport. NFL rules permit charcoal and L.P. gas grills (no wood/fire pits), with your total setup limited to 8 feet behind your parking space; no commercial setups or selling, keep emergency lanes (two yellow lines) clear, and tailgating must stop once the match begins. FIFA may impose tighter match-day rules than NFL games, so confirm the official World Cup policy closer to match day.",
   "tips": [

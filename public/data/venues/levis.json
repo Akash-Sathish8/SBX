@@ -184,14 +184,14 @@
    {
     "name": "HiroNori Craft Ramen",
     "where": "4300 Great America Pkwy, Santa Clara",
-    "note": "Quick craft ramen bowl before the gates open.",
+    "note": "Quick craft ramen bowl before the gates open (dine-in is reservation-only).",
     "why": [
      "Fast craft ramen before gates open",
-     "Walkable from the stadium"
+     "About a 1-mile walk to the gates"
     ],
     "rating": 4.4,
-    "dist": "0.3 mi",
-    "distMi": 0.3
+    "dist": "1 mi",
+    "distMi": 1
    },
    {
     "name": "Pizza My Heart",
@@ -202,8 +202,8 @@
      "Beloved NorCal pizza institution"
     ],
     "rating": 4.3,
-    "dist": "0.3 mi",
-    "distMi": 0.3
+    "dist": "1 mi",
+    "distMi": 1
    },
    {
     "name": "Taplands",
@@ -246,10 +246,10 @@
    {
     "name": "Puesto",
     "where": "2752 Augustine Dr, Santa Clara",
-    "note": "Popular tacos and margaritas for a lively nightcap.",
+    "note": "Popular tacos and margaritas — closes 9pm, so it only works after noon/3pm kickoffs.",
     "why": [
-     "Tacos and margaritas for a nightcap",
-     "Lively, buzzing late-night room"
+     "Tacos and margaritas post-match",
+     "Closes 9pm — early kickoffs only"
     ],
     "rating": 4.2,
     "dist": "1.4 mi",
@@ -277,8 +277,8 @@
     "distMi": 0
    },
    {
-    "name": "FIFA World Cup 2026 Official Store (match-day kiosks)",
-    "where": "Levi's Stadium concourses and gate plazas on match days",
+    "name": "FIFA official merch points (expected on match days)",
+    "where": "Levi's Stadium concourses on match days (standard FIFA practice; not yet officially announced)",
     "rating": null,
     "dist": "At stadium",
     "distMi": 0

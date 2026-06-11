@@ -21,6 +21,29 @@ a, button, [role='button'], input, select, textarea, label, .chip, .pill {
    white-space on it, so this global rule wins cleanly on every page). */
 .logo .wc { white-space: nowrap; }
 
+/* ---- Global nav fallback ----
+   The shared SiteNav renders on every page, but its real styling comes from the
+   per-route stylesheet. These base rules guarantee the nav (especially the
+   900x900 logo.png) NEVER paints unstyled during the per-route CSS swap — they
+   use the SAME selectors as the page CSS, which loads later in the document and
+   therefore overrides them freely. */
+body { margin: 0; }
+header.nav { position: sticky; top: 0; z-index: 50; background: #111; border-bottom: 4px solid #F7DF02; }
+.nav-in { display: flex; align-items: center; justify-content: space-between; height: 68px; padding: 0 28px; box-sizing: border-box; }
+.logo { font-family: 'Anton', sans-serif; color: #fff; font-size: 28px; letter-spacing: 2px; display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-img { height: 42px; width: 42px; display: block; border-radius: 8px; }
+.logo .wc { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1px; color: #111; background: #F7DF02; padding: 2px 7px; border-radius: 3px; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a { color: #cfcfcf; text-decoration: none; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+.hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: transparent; border: 0; cursor: pointer; padding: 0; }
+.hamburger span { display: block; width: 26px; height: 3px; background: #fff; border-radius: 2px; }
+@media (max-width: 760px) {
+  .hamburger { display: flex; }
+  .nav-links { position: absolute; top: 68px; left: 0; right: 0; background: #111; flex-direction: column; align-items: stretch; gap: 0; padding: 6px 0 14px; border-bottom: 4px solid #F7DF02; display: none; }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 13px 28px; font-size: 15px; }
+}
+
 @supports (padding: max(0px)) {
   /* Sticky top bar: keep nav contents clear of the landscape notch / rounded
      corners. Higher specificity than the per-page `.nav-in` so it wins. */

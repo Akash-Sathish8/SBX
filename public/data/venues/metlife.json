@@ -114,9 +114,9 @@
  "gettingThere": "Take the NJ Transit train, not a car. From Manhattan, ride from Penn Station to Secaucus Junction, then hop the Meadowlands shuttle that drops you at the stadium's front door in about 10 minutes.",
  "transit": [
   "Meadowlands Rail Line runs straight to the stadium for every WC match; transfer at Secaucus Junction (marked 'SEC').",
-  "Penn Station NYC to Secaucus to stadium runs ~45-60 min, ~$12-15 each way.",
-  "Coach USA 351 'Meadowlands Express' bus runs from Port Authority to Lot K, starting ~2.5 hours before kickoff.",
-  "Driving is the backup, not the plan: event parking ~$40-60 and final-day lots already sold out."
+  "Penn Station NYC to Secaucus to stadium runs ~45-60 min; World Cup rail ticket is $98 round trip (advance purchase, 40,000-rider cap per match).",
+  "Coach USA 351 'Meadowlands Express' bus runs from Port Authority to Lot K, starting ~2.5 hours before kickoff ($18 round trip).",
+  "Driving is not an option: there is NO general parking at World Cup matches — transit only (off-site American Dream parking is prepaid via JustPark)."
  ],
  "matchday": "There's no real neighborhood around the stadium, so the party lives across the river: FIFA's official NY/NJ Fan Festival, a converted mini-pitch at Rockefeller Center (Jul 6-19), and a free fan hub at Sports Illustrated Stadium in Harrison. Fans pre-game in NYC, Hoboken and Jersey City bars, then funnel onto the trains.",
  "food": [
@@ -165,7 +165,7 @@
    },
    {
     "name": "Craft Beer Hall",
-    "where": "Club level concourse",
+    "where": "Main concourses, sections 146 & 320",
     "why": [
      "40-plus rotating taps in one spot",
      "Strong regional NJ brewery lineup"
@@ -182,7 +182,7 @@
     "where": "Harrison, NJ; PATH to Harrison station, ~30 min from stadium via Secaucus",
     "why": [
      "Official free fan zone, replaced cancelled Liberty State Park site",
-     "60-ft pitch screen, all 104 matches, PATH-direct"
+     "60-ft pitch screen, matches shown on select dates, PATH-direct"
     ],
     "fifa": true,
     "rating": null,
@@ -260,18 +260,6 @@
     ],
     "note": "40-plus screens, 350 capacity, full party energy",
     "rating": 4.2,
-    "dist": "7 mi",
-    "distMi": 7
-   },
-   {
-    "name": "Wicked Wolf Tavern",
-    "where": "Hoboken riverfront",
-    "why": [
-     "50-plus TVs plus Hudson skyline views",
-     "Big sound system, riverfront postgame scene"
-    ],
-    "note": "50-plus TVs, Hudson views, big sound system",
-    "rating": 4.1,
     "dist": "7 mi",
     "distMi": 7
    },

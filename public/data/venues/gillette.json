@@ -116,11 +116,11 @@
   "food": [
    {
     "name": "Smokehouse Grill",
-    "where": "Lighthouse end concourse stands",
-    "note": "house-smoked brisket and Buffalo wings done right",
+    "where": "Main concourse, south end zone",
+    "note": "house-smoked brisket done right",
     "why": [
      "House-smoked brisket, not reheated stadium fare",
-     "Right by the Lighthouse end gates"
+     "Main concourse above the south end zone"
     ],
     "rating": null,
     "dist": "At stadium",
@@ -176,18 +176,6 @@
     "rating": null,
     "dist": "26 mi (downtown Boston)",
     "distMi": 26
-   },
-   {
-    "name": "CBS Sporting Club",
-    "where": "200 Patriot Pl, steps from gates (former CBS Scene space)",
-    "note": "three-story sports bar with a 25-ft LED wall and stadium views, packed on gamedays",
-    "why": [
-     "Giant LED wall, closest big-screen scene to the gates",
-     "Three-story sports bar literally steps from the stadium"
-    ],
-    "rating": 3.9,
-    "dist": "0.2 mi",
-    "distMi": 0.2
    },
    {
     "name": "The Harp",

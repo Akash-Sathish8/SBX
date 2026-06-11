@@ -205,7 +205,7 @@ function GameContent({ g, intel, marches, detail }: { g: any; intel: any; marche
           <div className="eyebrow">Make it yours</div>
           <h2 className="shead">Your match guide</h2>
           <div className="ssub">A shareable card of your matchday plan</div>
-          <Link to="/guide" className="guidecta">Build Match Guide →</Link>
+          <Link to="/build" search={{ game: g.id, mode: 'matchup' }} className="guidecta">Build Match Guide →</Link>
         </div></section>
       ) : null}
 

@@ -11,7 +11,9 @@ export function SiteNav({ active }: { active?: 'guide' | 'games' | 'venues' | 'c
     <header className="nav">
       <div className="nav-in">
         <Link className="logo" to="/" aria-label="Snapback home">
-          <img className="logo-img" src="/img/logo.png" alt="Snapback" />
+          {/* Explicit dimensions: logo.png is 900x900, so without these the logo
+              paints full-screen during any gap in the per-route CSS swap. */}
+          <img className="logo-img" src="/img/logo.png" alt="Snapback" width={42} height={42} />
           SNAPBACK<span className="wc">WC 2026</span>
         </Link>
         <nav className={'nav-links' + (open ? ' open' : '')} id="navLinks">

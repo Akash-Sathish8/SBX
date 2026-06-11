@@ -13,8 +13,11 @@ export const Route = createFileRoute('/casey')({
     links: [
       { rel: 'stylesheet', href: navCss, 'data-page-css': 'casey' },
       { rel: 'stylesheet', href: trackerCss, 'data-page-css': 'casey' },
-      // Type now uses SBX's global Anton + Barlow (loaded in __root), so no
-      // tracker-specific font request is needed.
+      // Headlines use SBX's global Anton + Barlow (loaded in __root), but the
+      // compiled tracker CSS (.stamp, .day-watermark, mono readouts) and the map
+      // popups still set Bebas Neue / JetBrains Mono — load them like the
+      // /casey/match/$number route does.
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap', 'data-page-css': 'casey' },
       { rel: 'stylesheet', href: 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css', 'data-page-css': 'casey' },
     ],
   }),
