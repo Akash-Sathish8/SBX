@@ -1,5 +1,5 @@
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import Flag from './Flag';
 import { useFollows } from '@/lib/follows';
 import type { ItineraryMatch } from '@/lib/types';
@@ -28,6 +28,15 @@ export default function FollowingModal({ open, onClose, itinerary }: Props) {
     () => Array.from(follows).sort((a, b) => a.localeCompare(b)),
     [follows],
   );
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
 
   if (!open) return null;
 
