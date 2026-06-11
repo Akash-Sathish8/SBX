@@ -13,7 +13,10 @@ import { Route as VenuesRouteImport } from './routes/venues'
 import { Route as VenueRouteImport } from './routes/venue'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as GamesRouteImport } from './routes/games'
+import { Route as GameRouteImport } from './routes/game'
 import { Route as CaseyRouteImport } from './routes/casey'
+import { Route as BuildRouteImport } from './routes/build'
+import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseyIndexRouteImport } from './routes/casey.index'
 import { Route as CaseyAdminRouteImport } from './routes/casey.admin'
@@ -54,9 +57,24 @@ const GamesRoute = GamesRouteImport.update({
   path: '/games',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GameRoute = GameRouteImport.update({
+  id: '/game',
+  path: '/game',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CaseyRoute = CaseyRouteImport.update({
   id: '/casey',
   path: '/casey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildRoute = BuildRouteImport.update({
+  id: '/build',
+  path: '/build',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgendaRoute = AgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -157,7 +175,10 @@ const ApiAdminAttentionRoute = ApiAdminAttentionRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/build': typeof BuildRoute
   '/casey': typeof CaseyRouteWithChildren
+  '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
   '/venue': typeof VenueRoute
@@ -183,6 +204,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/build': typeof BuildRoute
+  '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
   '/venue': typeof VenueRoute
@@ -209,7 +233,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/build': typeof BuildRoute
   '/casey': typeof CaseyRouteWithChildren
+  '/game': typeof GameRoute
   '/games': typeof GamesRoute
   '/guide': typeof GuideRoute
   '/venue': typeof VenueRoute
@@ -237,7 +264,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/agenda'
+    | '/build'
     | '/casey'
+    | '/game'
     | '/games'
     | '/guide'
     | '/venue'
@@ -263,6 +293,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/agenda'
+    | '/build'
+    | '/game'
     | '/games'
     | '/guide'
     | '/venue'
@@ -288,7 +321,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/agenda'
+    | '/build'
     | '/casey'
+    | '/game'
     | '/games'
     | '/guide'
     | '/venue'
@@ -315,7 +351,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgendaRoute: typeof AgendaRoute
+  BuildRoute: typeof BuildRoute
   CaseyRoute: typeof CaseyRouteWithChildren
+  GameRoute: typeof GameRoute
   GamesRoute: typeof GamesRoute
   GuideRoute: typeof GuideRoute
   VenueRoute: typeof VenueRoute
@@ -366,11 +405,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/game': {
+      id: '/game'
+      path: '/game'
+      fullPath: '/game'
+      preLoaderRoute: typeof GameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/casey': {
       id: '/casey'
       path: '/casey'
       fullPath: '/casey'
       preLoaderRoute: typeof CaseyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/build': {
+      id: '/build'
+      path: '/build'
+      fullPath: '/build'
+      preLoaderRoute: typeof BuildRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agenda': {
+      id: '/agenda'
+      path: '/agenda'
+      fullPath: '/agenda'
+      preLoaderRoute: typeof AgendaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -537,7 +597,10 @@ const ApiStandingsRouteWithChildren = ApiStandingsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgendaRoute: AgendaRoute,
+  BuildRoute: BuildRoute,
   CaseyRoute: CaseyRouteWithChildren,
+  GameRoute: GameRoute,
   GamesRoute: GamesRoute,
   GuideRoute: GuideRoute,
   VenueRoute: VenueRoute,

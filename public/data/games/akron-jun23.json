@@ -1,0 +1,13 @@
+{
+ "id": "akron-jun23", "venue": "akron", "venueName": "Estadio Akron", "city": "Guadalajara",
+ "date": "Jun 23", "ko": "8:00 PM", "round": "Group K", "home": "Colombia", "away": "DR Congo",
+ "preview": {
+  "summary": "Colombia, a top-20 FIFA side packed with European talent, meet a DR Congo team making their first World Cup appearance in 52 years. Nestor Lorenzo's Colombia will be favored, but the Leopards bring pace and directness through a dangerous frontline.",
+  "homeForm": "Colombia arrive ranked inside the FIFA top 20 and confident of progressing from Group K alongside Portugal.",
+  "awayForm": "DR Congo, ranked around 46th, return to the World Cup for the first time in 52 years.",
+  "homeKey": "Luis Diaz, Bayern Munich winger and Colombia's biggest attacking threat.",
+  "awayKey": "Yoane Wissa, Newcastle forward bringing pace and clinical finishing.",
+  "storylines": ["DR Congo's first World Cup in over half a century", "Luis Diaz's Bayern form versus a debutant-feel Congo side", "James Rodriguez orchestrates Colombia's creative play"],
+  "h2h": "The two nations have no significant competitive history at World Cup level."
+ }
+}

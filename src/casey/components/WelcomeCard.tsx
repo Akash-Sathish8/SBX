@@ -104,7 +104,7 @@ export default function WelcomeCard({ forceOpen, onClose }: { forceOpen?: boolea
         <button
           type="button"
           onClick={dismiss}
-          className="mt-6 w-full bg-snap-yellow text-snap-black font-mono text-sm tracking-[0.22em] py-3 hover:bg-snap-yellowDim transition-colors"
+          className="mt-6 w-full bg-snap-yellow text-snap-chalk font-mono text-sm tracking-[0.22em] py-3 hover:bg-snap-yellowDim transition-colors"
         >
           LET&apos;S GO →
         </button>

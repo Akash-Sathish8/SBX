@@ -1,0 +1,13 @@
+{
+ "id": "lumen-jun26", "venue": "lumen", "venueName": "Lumen Field", "city": "Seattle",
+ "date": "Jun 26", "ko": "8:00 PM", "round": "Group G", "home": "Egypt", "away": "IR Iran",
+ "preview": {
+  "summary": "A potentially decisive Group G finale pits Mohamed Salah's Egypt against an organized, experienced Iran. With knockout spots on the line, expect a tense, tactical contest between two of the World Cup's most seasoned non-European sides.",
+  "homeForm": "Egypt topped their African qualifying group comfortably, scoring 19 goals in nine matches with Salah netting nine.",
+  "awayForm": "Iran qualified for a fourth straight World Cup, winning seven of ten games to top their Asian group and arrive ranked 21st.",
+  "homeKey": "Mohamed Salah, closing in on Egypt's all-time scoring record.",
+  "awayKey": "Mehdi Taremi, Olympiacos striker with 10 qualifying goals.",
+  "storylines": ["Salah and Taremi headline a clash of attacking stars", "Iran arrive without omitted striker Sardar Azmoun", "Both nations chasing a rare World Cup knockout berth"],
+  "h2h": "Egypt and Iran have met just twice, most recently a 3-0 Iran win in 2003, and have never met at a World Cup."
+ }
+}

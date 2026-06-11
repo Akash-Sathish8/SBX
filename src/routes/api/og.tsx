@@ -1,6 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import satori from 'satori';
-import { Resvg } from '@resvg/resvg-js';
+import { Resvg, initWasm } from '@resvg/resvg-wasm';
+// Native @resvg/resvg-js can't load in Cloudflare Workers (no native .node
+// addons), so we use the WASM build. The .wasm import resolves to a
+// WebAssembly.Module in the worker environment; initWasm() must run once
+// before any Resvg use.
+import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
 import { getPositionOverride, getAllResults } from '@/lib/kv';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
@@ -30,6 +35,14 @@ async function loadFonts() {
     { name: 'Inter', data: inter, weight: 700, style: 'normal' },
   ];
   return fontCache;
+}
+
+// initWasm throws if called more than once, so share a single init promise
+// across requests for the life of the worker.
+let resvgReady: Promise<void> | null = null;
+function ensureResvg() {
+  if (!resvgReady) resvgReady = initWasm(resvgWasm);
+  return resvgReady;
 }
 
 function tagFor(state: string): { color: string; label: string } {
@@ -77,7 +90,7 @@ export const Route = createFileRoute('/api/og')({
           ? `${focusStadium?.name ?? 'TBD'}${focusStadium?.city ? ' · ' + focusStadium.city : ''}`
           : 'One Game. Every Day. · World Cup 2026';
 
-        const fonts = await loadFonts();
+        const [fonts] = await Promise.all([loadFonts(), ensureResvg()]);
 
         const element = {
           type: 'div',
@@ -188,7 +201,8 @@ export const Route = createFileRoute('/api/og')({
         const pngBuf = new Resvg(svg, { fitTo: { mode: 'width', value: W } })
           .render()
           .asPng();
-        // Copy into a guaranteed ArrayBuffer (Buffer.buffer may be SharedArrayBuffer).
+        // asPng() returns a Uint8Array viewing WASM linear memory; copy the
+        // bytes into a standalone ArrayBuffer so the Response owns stable data.
         const png = pngBuf.buffer.slice(
           pngBuf.byteOffset,
           pngBuf.byteOffset + pngBuf.byteLength,

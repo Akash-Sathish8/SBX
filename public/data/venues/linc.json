@@ -1,123 +1,463 @@
 {
-  "id": "linc",
-  "name": "Lincoln Financial Field",
-  "fifaName": "Philadelphia Stadium",
-  "nickname": "The Linc",
-  "city": "Philadelphia",
-  "country": "USA",
-  "cc": "USA",
-  "role": null,
-  "tagline": "Six matches in the loudest open-air bowl in American sports, capped by a July 4 knockout in the nation's founding city.",
-  "hero": "img/stadiums/linc.jpg",
-  "stats": [
-    {
-      "label": "Capacity",
-      "value": "~69,000"
-    },
-    {
-      "label": "Opened",
-      "value": "2003"
-    },
-    {
-      "label": "WC2026 Matches",
-      "value": "6 (5 group + R16)"
-    },
-    {
-      "label": "Home Team",
-      "value": "Eagles (NFL champs)"
-    },
-    {
-      "label": "Sports Complex",
-      "value": "4 arenas, one walkable district"
-    },
-    {
-      "label": "Subway Access",
-      "value": "Broad Street Line to NRG"
-    }
+ "id": "linc",
+ "name": "Lincoln Financial Field",
+ "fifaName": "Philadelphia Stadium",
+ "nickname": "The Linc",
+ "city": "Philadelphia",
+ "country": "USA",
+ "cc": "USA",
+ "role": null,
+ "tagline": "Six matches in the loudest open-air bowl in American sports, capped by a July 4 knockout in the nation's founding city.",
+ "hero": "img/stadiums/linc.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~69,000"
+  },
+  {
+   "label": "Opened",
+   "value": "2003"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "6 (5 group + R16)"
+  },
+  {
+   "label": "Home Team",
+   "value": "Eagles (NFL champs)"
+  },
+  {
+   "label": "Sports Complex",
+   "value": "4 arenas, one walkable district"
+  },
+  {
+   "label": "Subway Access",
+   "value": "Broad Street Line to NRG"
+  }
+ ],
+ "why": [
+  {
+   "title": "Bird Gang Energy",
+   "text": "Philly fans are the loudest, most passionate crowd in American sports, and the stadium's wing-like canopies amplify every roar into a wall of noise."
+  },
+  {
+   "title": "July 4 Knockout",
+   "text": "The Round of 16 lands on US Independence Day during America's 250th birthday, in the very city where the country was founded. A once-ever overlap."
+  },
+  {
+   "title": "Big Names Coming",
+   "text": "Brazil, France and Croatia all play group games here, so the marquee talent rolls through South Philly."
+  },
+  {
+   "title": "Stadium Cluster",
+   "text": "Four pro venues sit side by side, so the whole district turns into one massive matchday block party."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 14",
+   "round": "Group E",
+   "fixture": "Côte d'Ivoire vs Ecuador",
+   "ko": "7:00 PM",
+   "group": "E"
+  },
+  {
+   "date": "Jun 19",
+   "round": "Group C",
+   "fixture": "Brazil vs Haiti",
+   "ko": "9:00 PM",
+   "group": "C"
+  },
+  {
+   "date": "Jun 22",
+   "round": "Group I",
+   "fixture": "France vs Iraq",
+   "ko": "5:00 PM",
+   "group": "I"
+  },
+  {
+   "date": "Jun 25",
+   "round": "Group E",
+   "fixture": "Curaçao vs Côte d'Ivoire",
+   "ko": "4:00 PM",
+   "group": "E"
+  },
+  {
+   "date": "Jun 27",
+   "round": "Group L",
+   "fixture": "Croatia vs Ghana",
+   "ko": "5:00 PM",
+   "group": "L"
+  },
+  {
+   "date": "Jul 4",
+   "round": "Round of 16",
+   "fixture": "TBD",
+   "ko": "5:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "Skip the car and take the SEPTA Broad Street Line subway straight to NRG Station, the southern terminus, then walk five to ten minutes across the lots to the gates. Philadelphia International Airport is only a 10-15 minute drive away, one of the closest airport-to-stadium pairings of the whole tournament.",
+ "transit": [
+  "Broad Street Line subway south to NRG Station, regular fare $2.90, about 15-20 minutes from Center City.",
+  "World Cup bonus: free SEPTA rides home from NRG for all six matches, starting at halftime and running two hours after.",
+  "Sports Express trains run roughly every 10 minutes on match days with extended late-night service.",
+  "Driving means $40-60 parking plus heavy post-match gridlock, so transit is faster."
+ ],
+ "matchday": "The Linc is an open-air bowl with no roof, anchoring the South Philadelphia Sports Complex alongside three other pro arenas. Tailgating in the lots is legendary, so arrive a couple hours early to soak in the pre-match scene.",
+ "food": [
+  "Chickie's & Pete's steps from the complex, the area's premier sports bar famous for its Crabfries.",
+  "South Philly cheesesteaks: the classic Pat's King of Steaks vs Geno's Steaks rivalry, both nearby.",
+  "East Passyunk Avenue and the Italian Market for a deeper food crawl beyond the stadium.",
+  "Stadium is fully cashless, so bring a card or your phone for concessions."
+ ],
+ "tips": [
+  "Take the subway: it beats traffic, drops you near the gates, and your ride home is free from halftime onward.",
+  "Arrive early for World Cup security; walk-through magnetometer lines run longer than normal NFL game days.",
+  "For afternoon matches (Jun 22, 25, 27 and Jul 4), grab upper-deck sideline seats under the canopy for shade; lower bowl and end zones bake in full sun.",
+  "Want the loudest atmosphere? Head to the end-zone supporter sections; for sightlines, the lower-bowl sidelines win.",
+  "No ticket? The free FIFA Fan Festival runs at Lemon Hill in East Fairmount Park every single day of the tournament; register online for your e-ticket.",
+  "Clear bag policy only: bags up to 12 by 6 by 12 inches or a small clutch are allowed."
+ ],
+ "weather": "Expect hot, humid mid-Atlantic summer with highs in the low 80s in June and mid 80s in July (heat index can hit ~97F), plus brief afternoon storms, so pack sunscreen, a hat and water for the unshaded, roofless bowl.",
+ "lore": [
+  "Home of the Philadelphia Eagles, who won Super Bowl LIX after the 2024 season.",
+  "Passed its World Cup audition by hosting seven Club World Cup matches in June 2025, with FIFA's turf experts praising the natural-grass HERO Hybrid pitch.",
+  "One of the greenest stadiums anywhere: ~11,000 solar panels, 14 wind turbines and LEED Gold certification, running on 100% clean energy.",
+  "Hosted WrestleMania 40 in 2024, drawing a record 145,298 fans across two nights."
+ ],
+ "transport": {
+  "summary": "The Linc sits at the end of SEPTA's Broad Street Line in the South Philadelphia Sports Complex, so transit is by far the easiest way in. SEPTA expects roughly 31,000 riders per match and can move about 15,000 people per hour on the subway with extra World Cup service.",
+  "rail": [
+   {
+    "name": "Broad Street Line (Metro B subway)",
+    "station": "NRG Station",
+    "detail": "Take the B southbound to NRG, the southern terminus at Broad & Pattison, then walk 5-10 minutes across the lots to the gates; about 15-20 minutes from Center City. SEPTA adds 10 extra B trains to NRG before each match plus added post-game trains.",
+    "points": [
+     {
+      "b": "Ride to NRG",
+      "t": "southern terminus at Broad & Pattison"
+     },
+     {
+      "b": "5-10 min walk",
+      "t": "across the lots to the gates"
+     },
+     {
+      "b": "Extra service",
+      "t": "10 added trains, more post-game"
+     }
+    ],
+    "deal": "Free ride home from NRG: complimentary northbound B service starts at halftime and runs until two hours after the final whistle, sponsored by Airbnb. Rides TO the game are the normal $2.90."
+   },
+   {
+    "name": "Market-Frankford Line (Metro L) connection",
+    "station": "15th Street / City Hall",
+    "detail": "From West Philadelphia or University City, ride the L east to 15th Street/City Hall and take a free transfer to the Broad Street Line southbound to NRG.",
+    "points": [
+     {
+      "b": "L eastbound",
+      "t": "from West Philly or University City"
+     },
+     {
+      "b": "Transfer at City Hall",
+      "t": "free switch to the B line"
+     },
+     {
+      "b": "B southbound",
+      "t": "to NRG at the terminus"
+     }
+    ],
+    "deal": "Free L-to-B transfer at 15th Street/City Hall."
+   },
+   {
+    "name": "SEPTA Regional Rail",
+    "station": "Suburban or Jefferson Station",
+    "detail": "Regional Rail riders exit at Suburban Station or Jefferson Station, both a short walk to 15th Street/City Hall, then board the B southbound to NRG.",
+    "points": [
+     {
+      "b": "Exit Suburban or Jefferson",
+      "t": "both short walks to City Hall"
+     },
+     {
+      "b": "Board the B",
+      "t": "southbound from 15th Street"
+     },
+     {
+      "b": "Ride to NRG",
+      "t": "the line's southern terminus"
+     }
+    ],
+    "deal": ""
+   },
+   {
+    "name": "PATCO (from New Jersey)",
+    "station": "12th/13th & Locust",
+    "detail": "From South Jersey, take PATCO to 12th/13th & Locust, walk to SEPTA's Walnut-Locust Station at Broad & Walnut, then ride the B south to NRG.",
+    "points": [
+     {
+      "b": "PATCO from Jersey",
+      "t": "to 12th/13th & Locust"
+     },
+     {
+      "b": "Walk to Walnut-Locust",
+      "t": "SEPTA stop at Broad & Walnut"
+     },
+     {
+      "b": "B south to NRG",
+      "t": "straight to the stadium"
+     }
+    ],
+    "deal": ""
+   }
   ],
-  "why": [
-    {
-      "title": "Bird Gang Energy",
-      "text": "Philly fans are the loudest, most passionate crowd in American sports, and the stadium's wing-like canopies amplify every roar into a wall of noise."
-    },
-    {
-      "title": "July 4 Knockout",
-      "text": "The Round of 16 lands on US Independence Day during America's 250th birthday, in the very city where the country was founded. A once-ever overlap."
-    },
-    {
-      "title": "Big Names Coming",
-      "text": "Brazil, France and Croatia all play group games here, so the marquee talent rolls through South Philly."
-    },
-    {
-      "title": "Stadium Cluster",
-      "text": "Four pro venues sit side by side, so the whole district turns into one massive matchday block party."
-    }
-  ],
-  "matches": [
-    {
-      "date": "Sun Jun 14, 2026",
-      "round": "Group Stage",
-      "fixture": "Cote d'Ivoire vs Ecuador",
-      "ko": "7:00 PM ET"
-    },
-    {
-      "date": "Fri Jun 19, 2026",
-      "round": "Group Stage",
-      "fixture": "Brazil vs Haiti",
-      "ko": "8:30 PM ET"
-    },
-    {
-      "date": "Mon Jun 22, 2026",
-      "round": "Group Stage",
-      "fixture": "France vs Playoff Winner",
-      "ko": "5:00 PM ET"
-    },
-    {
-      "date": "Thu Jun 25, 2026",
-      "round": "Group Stage",
-      "fixture": "Curacao vs Cote d'Ivoire",
-      "ko": "4:00 PM ET"
-    },
-    {
-      "date": "Sat Jun 27, 2026",
-      "round": "Group Stage",
-      "fixture": "Croatia vs Ghana",
-      "ko": "5:00 PM ET"
-    },
-    {
-      "date": "Sat Jul 4, 2026",
-      "round": "Round of 16",
-      "fixture": "TBD",
-      "ko": "5:00 PM ET"
-    }
-  ],
-  "gettingThere": "Skip the car and take the SEPTA Broad Street Line subway straight to NRG Station, the southern terminus, then walk five to ten minutes across the lots to the gates. Philadelphia International Airport is only a 10-15 minute drive away, one of the closest airport-to-stadium pairings of the whole tournament.",
-  "transit": [
-    "Broad Street Line subway south to NRG Station, regular fare $2.90, about 15-20 minutes from Center City.",
-    "World Cup bonus: free SEPTA rides home from NRG for all six matches, starting at halftime and running two hours after.",
-    "Sports Express trains run roughly every 10 minutes on match days with extended late-night service.",
-    "Driving means $40-60 parking plus heavy post-match gridlock, so transit is faster."
-  ],
-  "matchday": "The Linc is an open-air bowl with no roof, anchoring the South Philadelphia Sports Complex alongside three other pro arenas. Tailgating in the lots is legendary, so arrive a couple hours early to soak in the pre-match scene.",
-  "food": [
-    "Chickie's & Pete's steps from the complex, the area's premier sports bar famous for its Crabfries.",
-    "South Philly cheesesteaks: the classic Pat's King of Steaks vs Geno's Steaks rivalry, both nearby.",
-    "East Passyunk Avenue and the Italian Market for a deeper food crawl beyond the stadium.",
-    "Stadium is fully cashless, so bring a card or your phone for concessions."
-  ],
+  "bus": [],
+  "shuttle": [],
+  "fromAirport": "Philadelphia International Airport (PHL) is only a 10-15 minute drive northeast via I-95, one of the closest airport-to-stadium pairings of the whole tournament. There is no direct rail link to the complex; rideshare or taxi is simplest, or connect via Center City on SEPTA.",
+  "rideshare": "Uber and Lyft serve the complex with designated drop-off and pickup zones near the stadium and are considered the most convenient way to drive in. Expect surge pricing and long post-match queues; exact World Cup pickup zones were still being finalized close to the tournament. [confidence: medium on exact zones]",
+  "bike": "Indego, Philadelphia's bike-share, has stations across the city, though the dedicated route into the sports complex is limited; most fans pair a bike with the Broad Street Line.",
   "tips": [
-    "Take the subway: it beats traffic, drops you near the gates, and your ride home is free from halftime onward.",
-    "Arrive early for World Cup security; walk-through magnetometer lines run longer than normal NFL game days.",
-    "For afternoon matches (Jun 22, 25, 27 and Jul 4), grab upper-deck sideline seats under the canopy for shade; lower bowl and end zones bake in full sun.",
-    "Want the loudest atmosphere? Head to the end-zone supporter sections; for sightlines, the lower-bowl sidelines win.",
-    "No ticket? The free FIFA Fan Festival runs at Lemon Hill in East Fairmount Park every single day of the tournament; register online for your e-ticket.",
-    "Clear bag policy only: bags up to 12 by 6 by 12 inches or a small clutch are allowed."
-  ],
-  "weather": "Expect hot, humid mid-Atlantic summer with highs in the low 80s in June and mid 80s in July (heat index can hit ~97F), plus brief afternoon storms, so pack sunscreen, a hat and water for the unshaded, roofless bowl.",
-  "lore": [
-    "Home of the Philadelphia Eagles, who won Super Bowl LIX after the 2024 season.",
-    "Passed its World Cup audition by hosting seven Club World Cup matches in June 2025, with FIFA's turf experts praising the natural-grass HERO Hybrid pitch.",
-    "One of the greenest stadiums anywhere: ~11,000 solar panels, 14 wind turbines and LEED Gold certification, running on 100% clean energy.",
-    "Hosted WrestleMania 40 in 2024, drawing a record 145,298 fans across two nights."
+   "On match days the B and L run overnight, every 30 minutes, departing City Hall on the hour and half-hour, so late knockouts are covered.",
+   "Comcast's NRG Park-and-Ride and employee parking are NOT available on FIFA match days; plan to board the B further up the line.",
+   "Ride down early and tap a card for $2.90, since your trip home from NRG is free from halftime on.",
+   "700+ SEPTA ambassadors are deployed to help riders navigate transfers on match days."
   ]
+ },
+ "parking": {
+  "summary": "The South Philadelphia Sports Complex has roughly 21,000 spaces (about 2,000 right at the Linc), but for the World Cup all parking is prepaid-only with nothing sold on match day, and prices are steep, so transit is the smarter play for most fans.",
+  "lots": [
+   {
+    "name": "Official FIFA parking (complex lots)",
+    "price": "$125 group stage / $155 Round of 16 (Jul 4)",
+    "detail": "Standard car spaces across the sports-complex lots within walking distance of the stadium; sold through FIFA's official parking platform tied to your match ticket.",
+    "points": [
+     {
+      "b": "Standard car spaces",
+      "t": "across the sports-complex lots"
+     },
+     {
+      "b": "Walkable",
+      "t": "within walking distance of the stadium"
+     },
+     {
+      "b": "FIFA platform only",
+      "t": "tied to your match ticket"
+     }
+    ]
+   },
+   {
+    "name": "Oversized vehicle parking",
+    "price": "$500 group stage / $620 Round of 16",
+    "detail": "Select lots fit oversized vehicles larger than a standard space. Trailers and tow-behind units are strictly prohibited.",
+    "points": [
+     {
+      "b": "Select lots",
+      "t": "fit vehicles over a standard space"
+     },
+     {
+      "b": "Oversized only",
+      "t": "for larger-than-standard vehicles"
+     },
+     {
+      "b": "No trailers",
+      "t": "tow-behind units strictly prohibited"
+     }
+    ]
+   }
+  ],
+  "prepaid": "All passes must be bought in advance via FIFA's official parking platform; no on-site payment and no game-day parking. Only match-ticket holders can buy, one pass per ticket, using the same email as the ticket, and prices rise 24 hours before kickoff.",
+  "accessible": "Designated accessible spaces are available for pre-purchase; entry requires a valid state-issued disability placard or plate. North Gate is the stadium's ADA gate, with accessible drop-off areas and a limited number of wheelchairs to ferry guests from gates to seats (arrange via any Gate Supervisor).",
+  "tailgating": "The complex lots are legendary for NFL tailgating, but FIFA typically restricts traditional tailgating, and the World Cup lot rules and hours were being finalized close to the event, so confirm before planning a full tailgate. [confidence: medium]",
+  "tips": [
+   "On-site Linc/complex parking historically ran $40-60, but World Cup prepaid passes start at $125 and climb sharply for the July 4 knockout.",
+   "Buy parking the moment you have match tickets, since passes are capped at one per ticket and get pricier 24 hours out.",
+   "Pair driving with heavy post-match gridlock leaving the complex; the free Broad Street Line ride home is usually faster."
+  ]
+ },
+ "around": {
+  "food": [
+   {
+    "name": "Philip's Steaks",
+    "where": "Sections 101 & 225",
+    "note": "Classic whiz-wit cheesesteak; Ed Sheeran once cooked here.",
+    "why": [
+     "Real whiz-wit, no concourse-stand shortcuts",
+     "Local legend with a celebrity cosign"
+    ],
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
+   },
+   {
+    "name": "Tony Luke's",
+    "where": "Lower concourse",
+    "note": "Household-name Philly cheesesteaks and roast pork; lines build fast.",
+    "why": [
+     "Roast pork rivals the cheesesteak here",
+     "Order before lines snake the concourse"
+    ],
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
+   },
+   {
+    "name": "Chickie's & Pete's",
+    "where": "Various stands, all levels",
+    "note": "The legendary Old Bay Crabfries and buffalo chicken cutlets.",
+    "why": [
+     "Crabfries with cheese sauce are iconic",
+     "Stands on every level, no detour"
+    ],
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
+   },
+   {
+    "name": "Wing Kitchen",
+    "where": "Concourse stand",
+    "note": "Chopped-champ wings, bone-in or boneless, crisp finish.",
+    "why": [
+     "Chopped competition pedigree behind the wings",
+     "Crisp finish, bone-in or boneless"
+    ],
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
+   }
+  ],
+  "pre": [
+   {
+    "name": "FIFA Fan Festival",
+    "where": "Lemon Hill, East Fairmount Park (Kelly & Sedgley Dr); ~6 mi north, Broad Street Line to Center City then bus 7/32/48/49",
+    "why": [
+     "Free e-ticket, matches on a stage-size screen",
+     "Concerts, food markets, play pitches all 39 days"
+    ],
+    "fifa": true,
+    "rating": null,
+    "distMi": 6,
+    "dist": "6 mi"
+   },
+   {
+    "name": "Xfinity Live!",
+    "where": "1100 Pattison Ave, across the lot from the Linc",
+    "note": "85-screen mega complex; Victory Beer Hall, fire pits, 2,000 fans.",
+    "why": [
+     "Closest pre-game party, steps from the gates",
+     "85 screens and 2,000 roaring fans"
+    ],
+    "rating": 4.3,
+    "distMi": 0.2,
+    "dist": "0.2 mi"
+   },
+   {
+    "name": "Chickie's & Pete's",
+    "where": "1526 Packer Ave",
+    "note": "South Philly's premier sports bar; three bars, Crabfries ritual.",
+    "why": [
+     "Three bars soak up the pre-match crowd",
+     "Crabfries ritual before kickoff"
+    ],
+    "rating": 4.3,
+    "distMi": 0.4,
+    "dist": "0.4 mi"
+   },
+   {
+    "name": "McCusker's Tavern",
+    "where": "2601 S 17th St (17th & Wolf)",
+    "note": "Cash-only wood-paneled dive with old Vet Stadium seats.",
+    "why": [
+     "Actual Vet Stadium seats inside",
+     "Cash-only dive away from tourist crush"
+    ],
+    "rating": 4.7,
+    "distMi": 1.1,
+    "dist": "1.1 mi"
+   },
+   {
+    "name": "Philadium",
+    "where": "1631 Packer Ave",
+    "note": "Boisterous row-home vibe where locals and celebs gather.",
+    "why": [
+     "Loud row-home local vibe, not a chain",
+     "Locals and celebs share the bar"
+    ],
+    "rating": 4.6,
+    "distMi": 0.5,
+    "dist": "0.5 mi"
+   }
+  ],
+  "post": [
+   {
+    "name": "Broad Street Bullies Pub",
+    "where": "Inside Xfinity Live!, 1100 Pattison Ave",
+    "note": "Flyers-themed pub; rowdy crowd to relive the result.",
+    "why": [
+     "Steps from gates to keep celebrating",
+     "Rowdy crowd reliving every goal"
+    ],
+    "rating": 4,
+    "distMi": 0.2,
+    "dist": "0.2 mi"
+   },
+   {
+    "name": "Garage Passyunk",
+    "where": "1231 E Passyunk Ave, East Passyunk",
+    "note": "Huge canned-beer list, Skee-Ball, pinball, late nights.",
+    "why": [
+     "Skee-Ball and pinball with the beers",
+     "Late hours for post-knockout nights"
+    ],
+    "rating": 4.4,
+    "distMi": 2.2,
+    "dist": "2.2 mi"
+   },
+   {
+    "name": "Pat's King of Steaks",
+    "where": "1237 E Passyunk Ave (9th & Passyunk)",
+    "note": "24-hour cheesesteak counter; the original rivalry corner.",
+    "why": [
+     "The original Pat's-vs-Geno's rivalry corner",
+     "24-hour counter for post-match steaks"
+    ],
+    "rating": 4.2,
+    "distMi": 1.8,
+    "dist": "1.8 mi"
+   },
+   {
+    "name": "Geno's Steaks",
+    "where": "1219 S 9th St (9th & Passyunk)",
+    "note": "Neon-lit 24-hour rival across the street from Pat's.",
+    "why": [
+     "Neon-lit rival right across the street",
+     "Open 24 hours for late-night whiz-wit"
+    ],
+    "rating": 4.1,
+    "distMi": 1.8,
+    "dist": "1.8 mi"
+   }
+  ],
+  "merch": [
+   {
+    "name": "Eagles Pro Shop at Lincoln Financial Field",
+    "where": "Pepsi Plaza, Lincoln Financial Field Way; 6,000+ sq ft flagship team store at the stadium",
+    "rating": 4.3,
+    "distMi": 0,
+    "dist": "At stadium"
+   },
+   {
+    "name": "FIFA World Cup 2026 official merchandise (Rally House)",
+    "where": "Official FIFA World Cup merch sold at Lincoln Financial Field via Rally House on match days",
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
+   },
+   {
+    "name": "Linc in-stadium merchandise stands",
+    "where": "13 merchandise stands scattered throughout the concourses inside the stadium",
+    "rating": null,
+    "distMi": 0,
+    "dist": "At stadium"
+   }
+  ]
+ }
 }

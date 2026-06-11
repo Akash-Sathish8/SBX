@@ -1,0 +1,13 @@
+{
+ "id": "gillette-jun23", "venue": "gillette", "venueName": "Gillette Stadium", "city": "Boston",
+ "date": "Jun 23", "ko": "4:00 PM", "round": "Group L", "home": "England", "away": "Ghana",
+ "preview": {
+  "summary": "England, among the tournament favourites under Thomas Tuchel, face a Ghana side returning to the World Cup with a young, energetic core. The Three Lions boast elite attacking talent led by an in-form Harry Kane, while Ghana will rely on Mohammed Kudus and pace on the break. Expect England to press for control against a Black Stars side happy to counter.",
+  "homeForm": "England cruised through qualifying under Tuchel and arrive among the favourites with a deep, talented squad.",
+  "awayForm": "Ghana topped CAF Group I with eight wins from ten; ranked in the mid-70s by FIFA.",
+  "homeKey": "Harry Kane, captain fresh off 36 Bundesliga goals for Bayern.",
+  "awayKey": "Mohammed Kudus, West Ham forward and Ghana's qualifying talisman.",
+  "storylines": ["Tuchel's ruthless squad call leaving out Palmer and Foden", "Kudus and Inaki Williams powering Ghana's counter", "England chasing a statement group-stage win"],
+  "h2h": "England and Ghana have met only in a 2011 friendly, which finished 1-1."
+ }
+}

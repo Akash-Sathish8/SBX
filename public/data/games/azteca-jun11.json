@@ -1,0 +1,37 @@
+{
+ "id":"azteca-jun11",
+ "venue":"azteca","venueName":"Estadio Azteca","city":"Mexico City",
+ "date":"Jun 11","dateISO":"2026-06-11","ko":"1:00 PM CST","round":"Group A · Opening Match",
+ "home":"Mexico","away":"South Africa",
+ "verified":true,"verifyNote":"Confirmed via FIFA and Goal.com that the WC2026 opener is Mexico vs South Africa, Group A, June 11 at 1:00 PM Mexico City time (CST) at Estadio Azteca, set by the Dec 5 2025 final draw.",
+ "hype":{
+   "score":9.4,
+   "label":"Unmissable",
+   "blurb":"This is the single biggest kickoff on the planet in 2026: the host nation opening the World Cup in front of 87,000 screaming Mexicans at the only stadium to ever host THREE openers. If you go to one match all tournament, it's this one.",
+   "factors":[
+     {"k":"Stakes","v":"Tournament opener, host nation, all eyes on it"},
+     {"k":"Atmosphere","v":"87k-capacity Azteca, full opening ceremony"},
+     {"k":"Rivalry/Storyline","v":"Exact rematch of the 2010 WC opener"},
+     {"k":"Star power","v":"Giménez + Jiménez leading El Tri at home"}
+   ]
+ },
+ "preview":{
+   "summary":"Co-hosts Mexico open the 2026 World Cup against South Africa in a near-perfect rematch of the 2010 tournament's opening game. El Tri (FIFA #15) are heavy favorites at home over Bafana Bafana (#60) and desperately want a fast start to a campaign they hope ends with a first quarterfinal since 1986. South Africa arrive as a feel-good story, having topped their CAF qualifying group above Nigeria.",
+   "homeForm":"Strong run under Javier Aguirre — 3 wins in their last 5 (4-0 Iceland, 2-0 Ghana, 1-0 Australia) with draws against Portugal and Belgium, conceding just once.",
+   "awayForm":"Resurgent Bafana Bafana finished top of their CAF qualifying group ahead of Nigeria to reach their first World Cup since 2010.",
+   "homeKey":"Santiago Giménez — AC Milan striker back from injury, the focal point up top.",
+   "awayKey":"Bafana's qualifying topped Nigeria — their attacking spine is the surprise package.",
+   "storylines":["Azteca becomes the first stadium ever to host three World Cup openers","Literal rematch: Mexico-South Africa also opened 2010 (1-1 draw)","Mexico chasing a first quarterfinal on home soil since the magic of 1986"],
+   "h2h":"They've met sparingly, most famously the 1-1 draw that opened the 2010 World Cup in Johannesburg.",
+   "prediction":"Mexico ride the Azteca wave to a 2-0 win, and the whole stadium loses it when Giménez buries the opener."
+ },
+ "tickets":{
+   "from":"$60",
+   "ceiling":"$6,000+",
+   "demand":"High",
+   "sellout":"Effectively sold out at face value — this is the hottest ticket of the entire tournament and most inventory is already on resale.",
+   "bestValue":"FIFA's $60 Entry Tier (Category 4) if you can land one, though these are brutally scarce for Mexico's home games; realistically the lower-tier official allocation is your best shot.",
+   "atmosphere":"Lower-bowl behind the goals among the El Tri supporters is where the noise lives, but honestly the whole Azteca will be deafening.",
+   "note":"Prices below are partly estimates — buy only through the Official FIFA Resale Marketplace (or the FIFA Exchange / Mercado de Intercambio for Mexico residents); avoid third-party resellers where opener seats are already listed around $3,900+."
+ }
+}

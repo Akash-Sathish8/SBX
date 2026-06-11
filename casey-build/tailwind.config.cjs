@@ -3,13 +3,17 @@ module.exports = {
   corePlugins: { preflight: false },
   theme: { extend: {
     colors: {
-      snap: { yellow:'#FFD400', yellowDim:'#C9A900', black:'#000000', coal:'#0A0A0A', carbon:'#141414', smoke:'#1F1F1F', ash:'#2A2A2A', fog:'#6E6E6E', mist:'#8A8A8A', chalk:'#E8E8E8' },
-      live:'#FF3838', flight:'#FFD400', upcoming:'#4A4A4A', done:'#2A2A2A',
+      // Re-skinned to the SBX light theme. Token NAMES keep their semantic roles
+      // (black/coal/carbon/smoke = surfaces, chalk = primary text, ash = borders,
+      // fog/mist = muted text) but the VALUES are flipped light. Yellow is the SBX
+      // brand hex; yellow-as-text is handled separately in casey.src.css.
+      snap: { yellow:'#F7DF02', yellowDim:'#E0C400', black:'#FFFFFF', coal:'#FAFAF8', carbon:'#F2F2EE', smoke:'#ECECE6', ash:'#E2E2DA', fog:'#7A7A7A', mist:'#6A6A6A', chalk:'#141414' },
+      live:'#E5202B', flight:'#B89500', upcoming:'#C9C9C0', done:'#E2E2DA',
     },
     fontFamily: {
-      display:['"Bebas Neue"','"Oswald"','Impact','sans-serif'],
-      body:['"Inter"','system-ui','sans-serif'],
-      mono:['"JetBrains Mono"','"Courier New"','monospace'],
+      display:['"Anton"','"Oswald"','Impact','sans-serif'],
+      body:['"Barlow"','system-ui','sans-serif'],
+      mono:['"Barlow"','system-ui','sans-serif'],
     },
     keyframes: {
       'pulse-live':{'0%, 100%':{opacity:'1',transform:'scale(1)'},'50%':{opacity:'0.6',transform:'scale(1.15)'}},

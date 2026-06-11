@@ -1,0 +1,13 @@
+{
+ "id": "linc-jun22", "venue": "linc", "venueName": "Lincoln Financial Field", "city": "Philadelphia",
+ "date": "Jun 22", "ko": "5:00 PM", "round": "Group I", "home": "France", "away": "Iraq",
+ "preview": {
+  "summary": "World Cup finalists France meet Iraq, who ended a 40-year absence from the tournament. Didier Deschamps' star-studded side are clear favorites, but the Lions of Mesopotamia arrive on a wave of belief after their dramatic playoff run.",
+  "homeForm": "Perennial contenders and 2022 finalists, among the tournament favorites in Deschamps' final campaign.",
+  "awayForm": "Qualified via the intercontinental playoffs, beating Bolivia 2-1; first World Cup appearance since Mexico 1986.",
+  "homeKey": "Kylian Mbappé, captain and France's all-time scoring threat.",
+  "awayKey": "Aymen Hussein, record scorer whose goals secured qualification.",
+  "storylines": ["Deschamps' farewell tournament after 13 years in charge", "Mbappé and Ballon d'Or winner Dembélé lead a fearsome attack", "Iraq's 40-year wait ends against the toughest possible opener"],
+  "h2h": "France and Iraq have no significant competitive history, meeting here for the first time on the World Cup stage."
+ }
+}

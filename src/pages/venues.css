@@ -36,7 +36,7 @@ header.nav{position:sticky;top:0;z-index:50;background:var(--k);border-bottom:4p
 .head::after{content:"";position:absolute;inset:0;pointer-events:none;
   background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:32px 32px}
 .head .container{position:relative;z-index:1}
-.eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:#bdbdbd;margin-bottom:14px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:#111;background:var(--y);padding:6px 13px;border-radius:3px;box-shadow:4px 4px 0 #000;margin-bottom:14px}
 .head h1{color:#fff;font-size:clamp(44px,6.4vw,84px);max-width:20ch}
 .head h1 .hl{background:var(--y);color:#111;padding:0 10px;box-shadow:5px 5px 0 #000;display:inline-block}
 .head .sub{color:#d6d6d6;font-size:18px;max-width:none;margin-top:18px;line-height:1.5}
@@ -47,9 +47,11 @@ section.block{padding:46px 0}
 @media(max-width:600px){.grid{grid-template-columns:1fr}}
 
 .vcard{display:block;background:#fff;border:4px solid var(--k);border-radius:8px;overflow:hidden;color:inherit;
-  filter:drop-shadow(8px 8px 0 var(--k));transition:transform .12s ease-out,filter .15s}
+  filter:drop-shadow(8px 8px 0 var(--k));transition:transform .12s ease-out,filter .15s;
+  content-visibility:auto;contain-intrinsic-size:auto 262px}
 .vcard:hover{transform:translate(-2px,-2px);filter:drop-shadow(11px 11px 0 var(--k))}
-.vcard .photo{height:178px;background-size:cover;background-position:center;position:relative}
+.vcard .photo{height:178px;background:#0d0d0d;position:relative}
+.vcard .photo .photo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .vcard .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35))}
 .vcard .citytag{position:absolute;left:12px;top:12px;z-index:2;background:var(--k);color:#fff;font-weight:700;font-size:11px;
   letter-spacing:.5px;text-transform:uppercase;padding:5px 10px;border-radius:3px;display:inline-flex;align-items:center;gap:6px}

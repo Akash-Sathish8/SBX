@@ -1,0 +1,13 @@
+{
+ "id": "gillette-jun13", "venue": "gillette", "venueName": "Gillette Stadium", "city": "Boston",
+ "date": "Jun 13", "ko": "9:00 PM", "round": "Group C", "home": "Haiti", "away": "Scotland",
+ "preview": {
+  "summary": "Two long-awaited returnees open Group C, with Haiti back at a World Cup for the first time since 1974 and Scotland ending a 28-year absence. Both arrive in good qualifying form and know points here are vital in a group also containing Brazil and Morocco. Expect Scotland to control possession against an organised, counter-attacking Haiti.",
+  "homeForm": "Haiti topped CONCACAF Group C to qualify and have won three of their last five; ranked 83rd by FIFA.",
+  "awayForm": "Scotland won UEFA Group C with four wins, scoring 13 goals to qualify directly for the first time since 1982.",
+  "homeKey": "Jean-Ricner Bellegarde, Wolves midfielder driving Haiti's attack.",
+  "awayKey": "Scott McTominay, Napoli's box-crashing midfielder and qualifying joint-top scorer.",
+  "storylines": ["Haiti's first World Cup match in 52 years", "Steve Clarke's Scotland chasing a rare tournament win", "Caribbean flair versus Scottish midfield steel"],
+  "h2h": "The two nations have no competitive history, making this a first World Cup meeting."
+ }
+}

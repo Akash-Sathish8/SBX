@@ -1,123 +1,467 @@
 {
-  "id": "arrowhead",
-  "name": "Arrowhead Stadium",
-  "fifaName": "Kansas City Stadium",
-  "nickname": "The Loudest Stadium in the World",
-  "city": "Kansas City",
-  "country": "USA",
-  "cc": "USA",
-  "role": null,
-  "tagline": "The loudest stadium on Earth turns its Sea of Red into a World Cup wall of sound.",
-  "hero": "img/stadiums/arrowhead.jpg",
-  "stats": [
-    {
-      "label": "Capacity",
-      "value": "~76,000"
-    },
-    {
-      "label": "Opened",
-      "value": "1972"
-    },
-    {
-      "label": "WC2026 Matches",
-      "value": "6"
-    },
-    {
-      "label": "Loudest Stadium",
-      "value": "142.2 dB Guinness record"
-    },
-    {
-      "label": "Home Team",
-      "value": "Kansas City Chiefs"
-    },
-    {
-      "label": "Tailgating",
-      "value": "Best in American sport"
-    }
-  ],
-  "why": [
-    {
-      "title": "World's Loudest",
-      "text": "Chiefs fans hold the Guinness record for loudest sports crowd at 142.2 decibels, set in 2014 and louder than a jet engine. The steep open bowl funnels every roar straight onto the field."
-    },
-    {
-      "title": "Sea of Red",
-      "text": "A continuous steeply-banked single bowl with near-unobstructed sightlines and a true wall-of-sound effect. Expect a packed atmosphere unlike anything else in the tournament."
-    },
-    {
-      "title": "Tailgate Capital",
-      "text": "Acres of parking fuel KC's legendary tailgating culture, with smoked-meat aromas drifting across the lots hours before kickoff."
-    },
-    {
-      "title": "Marquee Knockouts",
-      "text": "Beyond four group games, Kansas City lands a Round of 32 tie and a quarterfinal, one of the biggest stages of the whole tournament."
-    }
-  ],
-  "matches": [
-    {
-      "date": "Mon Jun 16",
-      "round": "Group J",
-      "fixture": "Argentina vs Algeria",
-      "ko": "TBD"
-    },
-    {
-      "date": "Sat Jun 20",
-      "round": "Group E",
-      "fixture": "Ecuador vs Curacao",
-      "ko": "TBD"
-    },
-    {
-      "date": "Thu Jun 25",
-      "round": "Group F",
-      "fixture": "Tunisia vs Netherlands",
-      "ko": "TBD"
-    },
-    {
-      "date": "Sat Jun 27",
-      "round": "Group J",
-      "fixture": "Algeria vs Austria",
-      "ko": "TBD"
-    },
-    {
-      "date": "Fri Jul 3",
-      "round": "Round of 32",
-      "fixture": "TBD",
-      "ko": "TBD"
-    },
-    {
-      "date": "Sat Jul 11",
-      "round": "Quarter-final",
-      "fixture": "TBD",
-      "ko": "TBD"
-    }
-  ],
-  "gettingThere": "The stadium sits in the Truman Sports Complex off I-70, about 8-10 miles east of downtown Kansas City, ringed by huge surface parking lots. There's nothing walkable nearby, so plan your ride in advance.",
-  "transit": [
-    "ConnectKC26: the official tournament shuttle network linking the airport, stadium, and Fan Festival, the best bet if you don't have a car",
-    "Rideshare drop-off is at the Missouri Welcome Center between Gates 1 and 2; budget $40-60 each way from downtown with game-day surge",
-    "RideKC 47-Broadway bus reaches Blue Ridge Cutoff near the gates, the cheap option but slow at 55-70 minutes total",
-    "Driving: lots open about 3.5 hours before kickoff, advance general parking runs $40-60"
-  ],
-  "matchday": "Get to the lots three-plus hours early to soak in the tailgate scene, then clear airport-style security and be inside 60-90 minutes before kickoff. Most KC matches are evening kickoffs, so it cools down but stays muggy.",
+ "id": "arrowhead",
+ "name": "Arrowhead Stadium",
+ "fifaName": "Kansas City Stadium",
+ "nickname": "The Loudest Stadium in the World",
+ "city": "Kansas City",
+ "country": "USA",
+ "cc": "USA",
+ "role": null,
+ "tagline": "The loudest stadium on Earth turns its Sea of Red into a World Cup wall of sound.",
+ "hero": "img/stadiums/arrowhead.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~76,000"
+  },
+  {
+   "label": "Opened",
+   "value": "1972"
+  },
+  {
+   "label": "WC2026 Matches",
+   "value": "6"
+  },
+  {
+   "label": "Loudest Stadium",
+   "value": "142.2 dB Guinness record"
+  },
+  {
+   "label": "Home Team",
+   "value": "Kansas City Chiefs"
+  },
+  {
+   "label": "Tailgating",
+   "value": "Best in American sport"
+  }
+ ],
+ "why": [
+  {
+   "title": "World's Loudest",
+   "text": "Chiefs fans hold the Guinness record for loudest sports crowd at 142.2 decibels, set in 2014 and louder than a jet engine. The steep open bowl funnels every roar straight onto the field."
+  },
+  {
+   "title": "Sea of Red",
+   "text": "A continuous steeply-banked single bowl with near-unobstructed sightlines and a true wall-of-sound effect. Expect a packed atmosphere unlike anything else in the tournament."
+  },
+  {
+   "title": "Tailgate Capital",
+   "text": "Acres of parking fuel KC's legendary tailgating culture, with smoked-meat aromas drifting across the lots hours before kickoff."
+  },
+  {
+   "title": "Marquee Knockouts",
+   "text": "Beyond four group games, Kansas City lands a Round of 32 tie and a quarterfinal, one of the biggest stages of the whole tournament."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 16",
+   "round": "Group J",
+   "fixture": "Argentina vs Algeria",
+   "ko": "8:00 PM",
+   "group": "J"
+  },
+  {
+   "date": "Jun 20",
+   "round": "Group E",
+   "fixture": "Ecuador vs Curaçao",
+   "ko": "7:00 PM",
+   "group": "E"
+  },
+  {
+   "date": "Jun 25",
+   "round": "Group F",
+   "fixture": "Tunisia vs Netherlands",
+   "ko": "6:00 PM",
+   "group": "F"
+  },
+  {
+   "date": "Jun 27",
+   "round": "Group J",
+   "fixture": "Algeria vs Austria",
+   "ko": "9:00 PM",
+   "group": "J"
+  },
+  {
+   "date": "Jul 3",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "8:30 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 11",
+   "round": "Quarter-final",
+   "fixture": "TBD",
+   "ko": "8:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "The stadium sits in the Truman Sports Complex off I-70, about 8-10 miles east of downtown Kansas City, ringed by huge surface parking lots. There's nothing walkable nearby, so plan your ride in advance.",
+ "transit": [
+  "ConnectKC26: the official tournament shuttle network linking the airport, stadium, and Fan Festival, the best bet if you don't have a car",
+  "Rideshare drop-off is at the Missouri Welcome Center between Gates 1 and 2; budget $40-60 each way from downtown with game-day surge",
+  "RideKC 47-Broadway bus reaches Blue Ridge Cutoff near the gates, the cheap option but slow at 55-70 minutes total",
+  "Driving: lots open about 3.5 hours before kickoff, advance general parking runs $40-60"
+ ],
+ "matchday": "Get to the lots three-plus hours early to soak in the tailgate scene, then clear airport-style security and be inside 60-90 minutes before kickoff. Most KC matches are evening kickoffs, so it cools down but stays muggy.",
+ "food": [
+  "Joe's Kansas City: the legendary Z-Man sandwich and pulled pork",
+  "Arthur Bryant's: historic brisket institution",
+  "Gates Bar-B-Q: famous burnt ends",
+  "Q39 and Jack Stack: modern BBQ plus that must-try cheesy corn"
+ ],
+ "around": {
   "food": [
-    "Joe's Kansas City: the legendary Z-Man sandwich and pulled pork",
-    "Arthur Bryant's: historic brisket institution",
-    "Gates Bar-B-Q: famous burnt ends",
-    "Q39 and Jack Stack: modern BBQ plus that must-try cheesy corn"
+   {
+    "name": "BBQ Alley",
+    "where": "Hall of Honor, sec 118-122",
+    "note": "local KC pitmasters; chase the burnt ends",
+    "why": [
+     "Real KC pitmasters, not stadium chains",
+     "Burnt ends straight from the smoker"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Smoke Brewing Co.",
+    "where": "Section 122",
+    "note": "deep-fried burnt ends and crispy pork belly",
+    "why": [
+     "Deep-fried burnt ends you won't find elsewhere",
+     "Crispy pork belly with local craft beer"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Mac Shack",
+    "where": "Sec 104, 117, 301, 326",
+    "note": "BBQ burnt-end mac and cheese loaded",
+    "why": [
+     "Burnt ends piled on mac and cheese",
+     "Four locations, no long bowl walk"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Little Pig BBQ",
+    "where": "Hall of Honor BBQ Alley",
+    "note": "burnt-end sandwich plus the wild BBQ sundae",
+    "why": [
+     "Burnt-end sandwich done KC-style",
+     "The BBQ sundae is a must-try"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
   ],
-  "tips": [
-    "Bring your own shade and water, the open bowl has zero roof or cover in June-July heat",
-    "Go cashless, the stadium and Fan Festival are card-only",
-    "Follow the FIFA clear-bag rule: one 12x6x12 inch clear bag plus a small clutch, no backpacks and no bag storage on site",
-    "Hit the FIFA Fan Festival at the National WWI Museum or the KC Live! Block in Power & Light for watch parties",
-    "Pack a poncho, not an umbrella (often restricted), and watch the radar for afternoon thunderstorms",
-    "Lower-bowl sideline seats give the best atmosphere; the upper deck has great views but a long, steep climb"
+  "pre": [
+   {
+    "name": "FIFA Fan Festival",
+    "where": "National WWI Museum south lawn, 2 Memorial Dr; ~8-10 mi from stadium via KC Streetcar/Union Station or ConnectKC26 shuttle",
+    "why": [
+     "Free fan zone, 45-foot screen, 25k capacity",
+     "Headliners and watch parties near downtown"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "5.9 mi",
+    "distMi": 5.9
+   },
+   {
+    "name": "Tailgate lots",
+    "where": "Truman Complex, at gates",
+    "note": "smoked-meat acres, the best in American sport",
+    "why": [
+     "Best tailgate scene in American sport",
+     "Smoked-meat aromas right at the gates"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Johnny's Tavern",
+    "where": "1310 Grand Blvd, Power & Light",
+    "note": "heart of P&L, packed gameday fan crowd",
+    "why": [
+     "Heart of the Power & Light crowd",
+     "Packed gameday energy before kickoff"
+    ],
+    "rating": 4.1,
+    "dist": "6.4 mi",
+    "distMi": 6.4
+   },
+   {
+    "name": "KC Live! Block",
+    "where": "1343 Wyandotte St, Power & Light",
+    "note": "giant open-air watch party, thousands roaring",
+    "why": [
+     "Giant open-air watch party downtown",
+     "Thousands roaring at every goal"
+    ],
+    "rating": null,
+    "dist": "6.5 mi",
+    "distMi": 6.5
+   },
+   {
+    "name": "Kelly's Westport Inn",
+    "where": "500 Westport Rd, Westport",
+    "note": "classic dive, cheap beer before kickoff",
+    "why": [
+     "KC's oldest building, true dive cred",
+     "Cheap beer before you head out"
+    ],
+    "rating": 4.4,
+    "dist": "5.7 mi",
+    "distMi": 5.7
+   }
   ],
-  "weather": "Hot and humid with highs around 86F in June and 91F in July plus pop-up thunderstorms, so pack sunscreen, a hat, water, and a rain poncho.",
-  "lore": [
-    "Twice broke the Guinness loudest-stadium record in 2013-2014, settling at 142.2 decibels vs the Patriots",
-    "Home of the Patrick Mahomes Chiefs dynasty and multiple recent Super Bowl titles",
-    "Open-air bowl that has hosted the Chiefs since 1972, the oldest stadium in the AFC",
-    "Slated for demolition after 2031, making the World Cup one of Arrowhead's final marquee chapters"
+  "post": [
+   {
+    "name": "No Other Pub",
+    "where": "1370 Grand Blvd, Power & Light",
+    "note": "bowling, shuffleboard, ping pong, late drinks",
+    "why": [
+     "Bowling, shuffleboard and ping pong",
+     "Late drinks steps from KC Live!"
+    ],
+    "rating": 4.3,
+    "dist": "6.3 mi",
+    "distMi": 6.3
+   },
+   {
+    "name": "Tin Roof",
+    "where": "424 Westport Rd, Westport",
+    "note": "live bands, open-air, loud and lively",
+    "why": [
+     "Live bands every night, open-air",
+     "Loud and lively post-match scene"
+    ],
+    "rating": 3.8,
+    "dist": "5.7 mi",
+    "distMi": 5.7
+   },
+   {
+    "name": "Char Bar",
+    "where": "4050 Pennsylvania Ave, Westport",
+    "note": "piled-high brisket and burnt-end sandwiches",
+    "why": [
+     "Late-night brisket and burnt-end sandwiches",
+     "Westport patio to refuel after the match"
+    ],
+    "rating": 4.5,
+    "dist": "5.8 mi",
+    "distMi": 5.8
+   },
+   {
+    "name": "Mosaic",
+    "where": "1331 Walnut St, Power & Light",
+    "note": "moody nightclub, DJ, LED wall, VIP",
+    "why": [
+     "Moody nightclub with DJ and LED wall",
+     "VIP bottle service for a big night"
+    ],
+    "rating": 3.1,
+    "dist": "6.5 mi",
+    "distMi": 6.5
+   }
+  ],
+  "merch": [
+   {
+    "name": "Chiefs Pro Shop",
+    "where": "North side of GEHA Field at Arrowhead, behind Founders Plaza (1 Arrowhead Dr)",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "FIFA Official Store (online for KC Host City)",
+    "where": "store.fifa.com / on-site FIFA merch points at the stadium on match days",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
   ]
+ },
+ "tips": [
+  "Bring your own shade and water, the open bowl has zero roof or cover in June-July heat",
+  "Go cashless, the stadium and Fan Festival are card-only",
+  "Follow the FIFA clear-bag rule: one 12x6x12 inch clear bag plus a small clutch, no backpacks and no bag storage on site",
+  "Hit the FIFA Fan Festival at the National WWI Museum or the KC Live! Block in Power & Light for watch parties",
+  "Pack a poncho, not an umbrella (often restricted), and watch the radar for afternoon thunderstorms",
+  "Lower-bowl sideline seats give the best atmosphere; the upper deck has great views but a long, steep climb"
+ ],
+ "weather": "Hot and humid with highs around 86F in June and 91F in July plus pop-up thunderstorms, so pack sunscreen, a hat, water, and a rain poncho.",
+ "lore": [
+  "Twice broke the Guinness loudest-stadium record in 2013-2014, settling at 142.2 decibels vs the Patriots",
+  "Home of the Patrick Mahomes Chiefs dynasty and multiple recent Super Bowl titles",
+  "Open-air bowl that has hosted the Chiefs since 1972, the oldest stadium in the AFC",
+  "Slated for demolition after 2031, making the World Cup one of Arrowhead's final marquee chapters"
+ ],
+ "transport": {
+  "summary": "Arrowhead is famously car-and-tailgate-centric with seas of parking and almost no transit, and the free downtown streetcar does NOT reach it. For the World Cup the smart workaround is the official ConnectKC26 Stadium Direct bus, $15 round-trip from the Fan Festival or four park-and-ride lots.",
+  "rail": [],
+  "bus": [
+   {
+    "name": "ConnectKC26 Stadium Direct",
+    "from": "FIFA Fan Festival + 4 park-and-ride lots",
+    "detail": "Official express motorcoach straight to the stadium; runs from 3 hours before kickoff until 2 hours after the final whistle. Requires a ConnectKC26 pass plus a match ticket; reserve online and add to your phone wallet.",
+    "points": [
+     {
+      "b": "Direct to gates",
+      "t": "express motorcoach, no transfers"
+     },
+     {
+      "b": "Runs 3 hrs pre",
+      "t": "until 2 hrs after final whistle"
+     },
+     {
+      "b": "Needs pass + ticket",
+      "t": "reserve online, save to wallet"
+     }
+    ],
+    "deal": "$15 per rider round-trip, per match"
+   },
+   {
+    "name": "ConnectKC26 Region Direct",
+    "from": "15+ metro hubs feeding the Fan Festival",
+    "detail": "Connector network linking the Fan Festival to hubs across the metro and Lawrence (buses every ~20 min, 30 min to Lawrence); transfer to Stadium Direct for the final leg to Arrowhead.",
+    "points": [
+     {
+      "b": "Feeds Fan Festival",
+      "t": "from 15+ metro and Lawrence hubs"
+     },
+     {
+      "b": "Every ~20 min",
+      "t": "about 30 min to Lawrence"
+     },
+     {
+      "b": "Transfer required",
+      "t": "switch to Stadium Direct for Arrowhead"
+     }
+    ],
+    "deal": "$5 day / $25 week / $50 full tournament unlimited"
+   },
+   {
+    "name": "RideKC 47-Broadway (regular service)",
+    "from": "Downtown to Blue Ridge Cutoff",
+    "detail": "Standard city bus reaching Blue Ridge Cutoff within a walk of the gates; the cheap fallback but slow at roughly 55-70 minutes total from downtown. ConnectKC26 is far simpler on match day.",
+    "points": [
+     {
+      "b": "Stops at Blue Ridge",
+      "t": "Cutoff, then a walk to gates"
+     },
+     {
+      "b": "Slow ride",
+      "t": "roughly 55-70 min from downtown"
+     },
+     {
+      "b": "Cheap fallback",
+      "t": "ConnectKC26 simpler on match day"
+     }
+    ],
+    "deal": "Standard RideKC fare"
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "Mobility carts at the stadium",
+    "detail": "Fans arriving via general lots, rideshare, or park-and-ride can be picked up by complimentary mobility carts and carried to the stadium entrance.",
+    "points": [
+     {
+      "b": "Complimentary carts",
+      "t": "free pickup to stadium entrance"
+     },
+     {
+      "b": "For any arrival",
+      "t": "general lots, rideshare or park-and-ride"
+     }
+    ]
+   }
+  ],
+  "fromAirport": "Kansas City International (MCI), the rebuilt single terminal, is about 27-28 miles northwest; rideshare runs roughly 35-40 min and $45-70. There is no direct transit; use rideshare or connect via ConnectKC26 from a downtown/park-and-ride hub.",
+  "rideshare": "Designated game-day rideshare drop-off and pickup is at the stadium (reported as Lot O for the World Cup; the long-standing NFL zone is the Missouri Welcome Center between Gates 1 and 2 on Blue Ridge Cutoff). From downtown budget about $40-60 each way with match-day surge. Confirm the exact Lot on match day.",
+  "bike": "ConnectKC26 park-and-ride locations have bike racks on a first-come, first-served basis; there is no bike infrastructure to the isolated stadium complex itself.",
+  "tips": [
+   "The free RideKC Streetcar (River Market to Country Club Plaza) does NOT go to the stadium, so do not plan to take it the whole way.",
+   "Pre-book a ConnectKC26 Stadium Direct pass (kc2026.com/transportation) before match day; passes are first-come and add straight to your phone wallet.",
+   "If you rideshare back, walk a few lots away from the designated zone before requesting a pickup to skip the post-match crush.",
+   "ConnectKC26 runs June 11 through July 13, 2026, covering every KC match day."
+  ]
+ },
+ "parking": {
+  "summary": "The Truman Sports Complex is ringed by vast surface lots, but for the World Cup nearly all stadium-side parking is PREPAID ONLY and linked to your match ticket, with prices climbing sharply for the knockout rounds. Buy ahead or take the shuttle.",
+  "lots": [
+   {
+    "name": "Gold / Red Lots (closest)",
+    "price": "Higher end of $125-$900 range",
+    "detail": "Premium stadium-side lots, roughly a 5-8 minute walk to the gates; sell out first.",
+    "points": [
+     {
+      "b": "Closest to gates",
+      "t": "premium stadium-side parking"
+     },
+     {
+      "b": "Short walk",
+      "t": "roughly 5-8 minutes to gates"
+     },
+     {
+      "b": "Sell out first",
+      "t": "limited premium inventory"
+     }
+    ]
+   },
+   {
+    "name": "Outer / general lots (incl. Lots D & E)",
+    "price": "From ~$125 group stage, up to ~$225+ quarterfinal",
+    "detail": "A 10-20 minute walk through the tailgate crowds; Lots D & E offer an easier NW-route exit post-match.",
+    "points": [
+     {
+      "b": "Longer walk",
+      "t": "10-20 min through tailgate crowds"
+     },
+     {
+      "b": "Lots D & E",
+      "t": "easier NW-route exit post-match"
+     }
+    ]
+   },
+   {
+    "name": "Private off-site lots",
+    "price": "Often 30-50% less than official",
+    "detail": "Independent lots near the complex (book via DIBS/ParkMobile/JustPark); cheaper but verify distance and tailgate rules.",
+    "points": [
+     {
+      "b": "Off-site lots",
+      "t": "independent spots near the complex"
+     },
+     {
+      "b": "Book via apps",
+      "t": "DIBS, ParkMobile or JustPark"
+     },
+     {
+      "b": "Verify first",
+      "t": "check distance and tailgate rules"
+     }
+    ]
+   }
+  ],
+  "prepaid": "Yes, and effectively mandatory: official World Cup parking passes must be bought in advance, are only sold to match ticket holders, and must use the same email as your ticket purchase. Reported prices run $125-$900 by date and lot type ($125-150 group stage, up to ~$225 the quarterfinal). Lots open about 4.5 hours before kickoff.",
+  "accessible": "Accessible parking is available to guests with a valid ADA permit on a first-come, first-served basis. Fans parking in general lots, using rideshare, or arriving by park-and-ride can also be picked up by mobility carts and taken to the stadium entrance. Note the steep bowl limits ADA seating in the highest sections, so request lower-level seats.",
+  "tailgating": "Among the best tailgating in American sport. NFL rules permit charcoal and L.P. gas grills (no wood/fire pits), with your total setup limited to 8 feet behind your parking space; no commercial setups or selling, keep emergency lanes (two yellow lines) clear, and tailgating must stop once the match begins. FIFA may impose tighter match-day rules than NFL games, so confirm the official World Cup policy closer to match day.",
+  "tips": [
+   "Buy your parking pass the moment you have match tickets, using the same email; inventory fills fast and drive-up is not the World Cup norm.",
+   "Lots open ~4.5 hours pre-kickoff; arrive early for the legendary BBQ tailgate scene.",
+   "Bring your own shade and water, the lots are open asphalt with zero cover in June-July heat.",
+   "Consider a park-and-ride + $15 shuttle instead of paying $125-$900 to park on site."
+  ]
+ }
 }

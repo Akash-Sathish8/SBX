@@ -49,7 +49,7 @@ export default function VideoStrip({ itinerary, onMatchClick }: Props) {
                     'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.9) 100%)',
                 }}
               />
-              <div className="absolute top-1.5 left-1.5 flex h-5 w-5 items-center justify-center bg-snap-yellow text-snap-black opacity-90 group-hover:opacity-100">
+              <div className="absolute top-1.5 left-1.5 flex h-5 w-5 items-center justify-center bg-snap-yellow text-snap-chalk opacity-90 group-hover:opacity-100">
                 <svg viewBox="0 0 10 10" className="h-2.5 w-2.5 fill-current">
                   <path d="M2 1 L9 5 L2 9 Z" />
                 </svg>

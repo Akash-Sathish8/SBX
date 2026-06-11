@@ -1,0 +1,13 @@
+{
+ "id": "bcplace-jun18", "venue": "bcplace", "venueName": "BC Place", "city": "Vancouver",
+ "date": "Jun 18", "ko": "3:00 PM", "round": "Group B", "home": "Canada", "away": "Qatar",
+ "preview": {
+  "summary": "Co-hosts Canada take on Qatar in a Group B clash at a buzzing BC Place. Jesse Marsch's most talented Canadian squad ever look to convert home advantage, while Qatar, qualifying on merit for the first time, lean on Asian Cup-winning experience to spring a surprise.",
+  "homeForm": "Canada arrive as co-hosts with what Marsch calls their strongest-ever squad, though captain Alphonso Davies is racing back from a hamstring injury.",
+  "awayForm": "Qatar qualified directly through the AFC third round with 14 points, their first qualification on merit after hosting in 2022.",
+  "homeKey": "Jonathan David, the talismanic striker leading the line for Les Rouges.",
+  "awayKey": "Akram Afif, two-time Asian Cup winner who makes Qatar tick.",
+  "storylines": ["Canada chase a statement win on home soil", "Davies' fitness is a live question for the hosts", "Afif and Almoez Ali test a Canadian back line under pressure"],
+  "h2h": "Their only prior meeting was a friendly Canada won 2-0."
+ }
+}

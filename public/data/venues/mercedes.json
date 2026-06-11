@@ -57,50 +57,58 @@
     {
       "date": "Jun 15",
       "round": "Group H",
-      "fixture": "Spain v Cabo Verde",
-      "ko": "12:00"
+      "fixture": "Spain vs Cabo Verde",
+      "ko": "12:00 PM",
+      "group": "H"
     },
     {
       "date": "Jun 18",
       "round": "Group A",
-      "fixture": "South Africa v TBD",
-      "ko": "12:00"
+      "fixture": "Czechia vs South Africa",
+      "ko": "12:00 PM",
+      "group": "A"
     },
     {
       "date": "Jun 21",
       "round": "Group H",
-      "fixture": "Spain v Saudi Arabia",
-      "ko": "12:00"
+      "fixture": "Spain vs Saudi Arabia",
+      "ko": "12:00 PM",
+      "group": "H"
     },
     {
       "date": "Jun 24",
       "round": "Group C",
-      "fixture": "Morocco v Haiti",
-      "ko": "18:00"
+      "fixture": "Morocco vs Haiti",
+      "ko": "6:00 PM",
+      "group": "C"
     },
     {
       "date": "Jun 27",
       "round": "Group K",
-      "fixture": "Uzbekistan v TBD",
-      "ko": "19:30"
+      "fixture": "DR Congo vs Uzbekistan",
+      "ko": "7:30 PM",
+      "group": "K"
     },
     {
       "date": "Jul 1",
       "round": "Round of 32",
       "fixture": "TBD",
-      "ko": "12:00"
+      "ko": "12:00 PM",
+      "group": null
     },
     {
       "date": "Jul 7",
       "round": "Round of 16",
       "fixture": "TBD",
-      "ko": "12:00"
+      "ko": "12:00 PM",
+      "group": null
     },
     {
       "date": "Jul 15",
-      "round": "Semifinal",
+      "round": "Semi-final",
       "fixture": "TBD",
-      "ko": "15:00"
+      "ko": "3:00 PM",
+      "group": null
     }
   ],
   "gettingThere": "The stadium sits right in downtown Atlanta, a mile from Centennial Olympic Park. Skip the car — MARTA rail drops you at the doorstep.",
@@ -131,5 +139,346 @@
     "Built for ~$1.6 billion and opened in 2017, it was the first LEED Platinum pro sports stadium in the U.S.",
     "Hosted Super Bowl LIII, two College Football Playoff title games, and the 2024 Copa América opener",
     "Atlanta United won the 2018 MLS Cup here in front of 73,019 — a championship roar this city won't forget"
-  ]
+  ],
+  "around": {
+    "food": [
+      {
+        "name": "Fox Bros. Bar-B-Q",
+        "where": "main concourse stand",
+        "note": "Big Tex brisket sandwich and loaded Totchos",
+        "why": [
+          "Atlanta's legendary BBQ joint, in-stadium",
+          "Famous Totchos are a must-try"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "Gamechanger (Kevin Gillespie)",
+        "where": "100-level concourse",
+        "note": "'Closed on Sunday' spicy-sweet chicken sandwich",
+        "why": [
+          "Top Chef star's stadium kitchen",
+          "Chick-fil-A spoof done gourmet"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "Fan First stands",
+        "where": "throughout, 670+ POS",
+        "note": "$2 refill sodas, $5 beers, whole-dollar pricing",
+        "why": [
+          "Cheapest concessions in U.S. sports",
+          "Whole-dollar pricing, no surprise tax"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "Sublime Doughnuts",
+        "where": "concourse dessert stand",
+        "note": "fan-favorite handcrafted doughnuts for the sweet tooth",
+        "why": [
+          "Beloved Atlanta doughnut shop inside",
+          "Handcrafted sweet to fuel the match"
+        ],
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      }
+    ],
+    "pre": [
+      {
+        "name": "FIFA Fan Festival",
+        "where": "Centennial Olympic Park, ~10-min walk or one MARTA stop from the stadium",
+        "why": [
+          "Free official fan zone, 18 days",
+          "Live music, big screens, concerts"
+        ],
+        "fifa": true,
+        "rating": null,
+        "dist": "0.6 mi",
+        "distMi": 0.6
+      },
+      {
+        "name": "No Mas! Cantina",
+        "where": "180 Walker St SW, Castleberry Hill",
+        "note": "Mexican fare, 50-ft travertine bar, big patio",
+        "why": [
+          "Walkable Mexican feast near the gates",
+          "Massive patio for pre-match crowds"
+        ],
+        "rating": 4.4,
+        "dist": "0.4 mi",
+        "distMi": 0.4
+      },
+      {
+        "name": "Atlantucky Brewing",
+        "where": "170 Northside Dr SW, Castleberry Hill",
+        "note": "Nappy Roots' Black-owned brewery, art gallery, patio",
+        "why": [
+          "Owned by hip-hop's Nappy Roots",
+          "Black-owned brewery with art-gallery vibe"
+        ],
+        "rating": 4.6,
+        "dist": "0.3 mi",
+        "distMi": 0.3
+      },
+      {
+        "name": "Der Biergarten",
+        "where": "300 Marietta St NW, Luckie-Marietta District",
+        "note": "authentic German beer hall, steins and brats",
+        "why": [
+          "Steins and brats for soccer fans",
+          "Beer-hall energy primes the crowd"
+        ],
+        "rating": 4.4,
+        "dist": "0.7 mi",
+        "distMi": 0.7
+      },
+      {
+        "name": "Hudson Grille",
+        "where": "120 Marietta St NW, downtown near Centennial Park",
+        "note": "huge draft list, every game on screens",
+        "why": [
+          "Every match on the screens",
+          "Huge draft list, downtown convenience"
+        ],
+        "rating": 3.7,
+        "dist": "0.9 mi",
+        "distMi": 0.9
+      }
+    ],
+    "post": [
+      {
+        "name": "Wild Leap",
+        "where": "125 Ted Turner Dr SW, downtown two-level taproom",
+        "note": "slushie flights, chill multi-level patio post-game",
+        "why": [
+          "Boozy slushie flights to unwind",
+          "Multi-level patio for post-match crowds"
+        ],
+        "rating": 4.6,
+        "dist": "0.4 mi",
+        "distMi": 0.4
+      },
+      {
+        "name": "Park Bar",
+        "where": "150 Walton St NW, across from Centennial Park",
+        "note": "dim tavern, beer, burgers, Bruce Hornsby",
+        "why": [
+          "Steps from the Fan Festival",
+          "Dim tavern, cold beer, burgers"
+        ],
+        "rating": 4.3,
+        "dist": "0.9 mi",
+        "distMi": 0.9
+      },
+      {
+        "name": "Nest on Four",
+        "where": "159 Northside Dr NW, Signia by Hilton, level 4",
+        "note": "floor-to-ceiling stadium views, rooftop cocktails",
+        "why": [
+          "Floor-to-ceiling views of the Benz",
+          "Rooftop cocktails over downtown"
+        ],
+        "rating": 4.3,
+        "dist": "0.2 mi",
+        "distMi": 0.2
+      },
+      {
+        "name": "STATS Brewpub",
+        "where": "300 Marietta St NW, downtown Luckie-Marietta District",
+        "note": "70+ HD screens, house beer poured from the tables",
+        "why": [
+          "Premier downtown sports bar near the gates",
+          "House-brewed beer and 70-plus screens"
+        ],
+        "rating": 4.0,
+        "dist": "0.7 mi",
+        "distMi": 0.7
+      }
+    ],
+    "merch": [
+      {
+        "name": "Mercedes-Benz Stadium Official Team Store",
+        "where": "behind Gate 1, section 102; 8,000 sq ft two-level flagship (event days only, ticket required)",
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "In-stadium retail kiosks (Fanatics-run)",
+        "where": "15 retail points throughout the concourses, incl. stands near Gates 2-3",
+        "rating": null,
+        "dist": "At stadium",
+        "distMi": 0
+      },
+      {
+        "name": "Official Team Store at Atlantic Station (Falcons/United, Fanatics-run)",
+        "where": "260 18th St NW, Suite 10100, Atlantic Station; relocated flagship store (also carries WC26-related gear)",
+        "rating": null,
+        "dist": "3.5 mi",
+        "distMi": 3.5
+      }
+    ]
+  },
+  "transport": {
+    "summary": "The stadium sits in downtown Atlanta with two MARTA rail stations at its doorstep, and the venue heavily pushes MARTA over driving. On match days MARTA boosts trains to five-minute headways and rideshare drop-offs are pushed to two designated zones away from the gates.",
+    "rail": [
+      {
+        "name": "MARTA Blue/Green Line",
+        "station": "Vine City",
+        "detail": "One stop west of SEC District; a covered pedestrian bridge leads straight to the stadium gates (~10-min walk), and it dodges the heaviest crowds. Widely cited as the best traffic-avoidance choice.",
+        "points": [
+          {
+            "b": "Covered bridge",
+            "t": "leads straight to the gates"
+          },
+          {
+            "b": "~10-min walk",
+            "t": "from the platform"
+          },
+          {
+            "b": "Dodges crowds",
+            "t": "best traffic-avoidance pick"
+          }
+        ],
+        "deal": "$2.50 each way; tap-to-pay with credit/debit or mobile wallet at the gates"
+      },
+      {
+        "name": "MARTA Blue/Green Line",
+        "station": "SEC District (formerly GWCC/CNN Center / Dome)",
+        "detail": "Renamed the Sports, Entertainment and Convention (SEC) District Station; essentially at the stadium doorstep and the venue's officially preferred stop.",
+        "points": [
+          {
+            "b": "At the doorstep",
+            "t": "steps from the stadium"
+          },
+          {
+            "b": "Officially preferred",
+            "t": "the venue's recommended stop"
+          },
+          {
+            "b": "Formerly GWCC",
+            "t": "now SEC District Station"
+          }
+        ],
+        "deal": "$2.50 each way; reusable Breeze card is $2 plus fare; limited World Cup Breeze cards issued"
+      },
+      {
+        "name": "MARTA Red/Gold Line (airport link)",
+        "station": "Five Points (transfer)",
+        "detail": "From Hartsfield-Jackson (ATL), board Red or Gold northbound (~15 min to Five Points), then transfer to a westbound Blue/Green train ~2 stops to Vine City (~5 min).",
+        "points": [
+          {
+            "b": "From ATL airport",
+            "t": "Red/Gold north to Five Points"
+          },
+          {
+            "b": "~15 min",
+            "t": "to the Five Points transfer"
+          },
+          {
+            "b": "Transfer west",
+            "t": "Blue/Green ~2 stops, ~5 min"
+          }
+        ],
+        "deal": "$2.50 flat fare covers the whole airport-to-stadium trip incl. transfer"
+      }
+    ],
+    "bus": [],
+    "shuttle": [
+      {
+        "name": "Fetii Gameday Shuttle",
+        "detail": "Park at Atlantic Station and ride a ~15-20 min shuttle from 2 hours pre-game to 90 min post-game. Note: this runs for Falcons games — verify availability for World Cup matches; not wheelchair accessible.",
+        "points": [
+          {
+            "b": "From Atlantic Station",
+            "t": "~15-20 min ride each way"
+          },
+          {
+            "b": "Runs 2 hrs pre",
+            "t": "to 90 min post-game"
+          },
+          {
+            "b": "Falcons service",
+            "t": "verify for WC; not accessible"
+          }
+        ]
+      }
+    ],
+    "fromAirport": "Hartsfield-Jackson (ATL) is ~10 miles south and connects directly by MARTA rail: take the Red or Gold line from inside the terminal to Five Points (~15 min), transfer to a westbound Blue/Green train to Vine City or SEC District (~5 min). Total fare is a flat $2.50. Late-night riders should confirm the train sign reads 'Airport.'",
+    "rideshare": "Direct drop-offs at the stadium, GWCC, and Centennial Olympic Park are prohibited on match days. Use Zone 1 (Northside Dr at GWCC Bus Lane C, best for Gate 1, ~10-min walk) or Zone 2 (Broad St between Trinity & Mitchell, best for Gates 2-4 with quicker airport/I-20/I-75-85 access). Expect heavy post-match surge waits — MARTA usually clears out faster.",
+    "bike": "Free bike valet for stadium events, located between Gates 3 and 4. Verify operation for World Cup matchdays.",
+    "tips": [
+      "MARTA is the move and is voted #1 by fans — five-minute train headways run until 10:30 p.m. on match days",
+      "Tap-and-pay at the fare gates with any credit/debit card or mobile wallet to skip Breeze kiosk lines",
+      "Expect rolling downtown road closures and VIP motorcade stoppages — build in extra time and avoid driving through the core",
+      "Vine City's covered pedestrian bridge keeps you out of the sun/rain on the walk to the gates"
+    ]
+  },
+  "parking": {
+    "summary": "Parking is fully cashless and must be reserved and paid in advance — there is no drive-up or cash parking on match days, and cars without a prepaid digital pass are turned away from stadium-adjacent lots. The venue strongly steers fans to MARTA instead.",
+    "lots": [
+      {
+        "name": "GWCC Red Deck",
+        "price": "~$50+ on high-demand days; expect $50-$100+ for World Cup",
+        "detail": "Covered Georgia World Congress Center deck close to the stadium; reserve via the official portal.",
+        "points": [
+          {
+            "b": "Covered GWCC deck",
+            "t": "close to the stadium"
+          },
+          {
+            "b": "Reserve ahead",
+            "t": "via the official portal only"
+          }
+        ]
+      },
+      {
+        "name": "GWCC Silver Deck",
+        "price": "~$50+ on high-demand days; World Cup pricing higher",
+        "detail": "Covered GWCC deck near the stadium; subject to availability around concurrent GWCC events.",
+        "points": [
+          {
+            "b": "Covered GWCC deck",
+            "t": "near the stadium"
+          },
+          {
+            "b": "Limited availability",
+            "t": "around concurrent GWCC events"
+          }
+        ]
+      },
+      {
+        "name": "Surface lots (e.g. Yellow/Orange)",
+        "price": "From ~$15; premium spaces $50-$65+",
+        "detail": "Surface and overflow lots around the GWCCA campus; closest/premium spots command the top prices on big match days.",
+        "points": [
+          {
+            "b": "Around GWCCA campus",
+            "t": "surface and overflow lots"
+          },
+          {
+            "b": "Closest spots",
+            "t": "command the top prices"
+          }
+        ]
+      }
+    ],
+    "prepaid": "All parking is pre-purchase only through the official ParkHub-powered system at parking.mercedesbenzstadium.com (also gwccparking.com). Buy early — World Cup demand pushes official lots to $50-$100+. Use caution with secondary/resale parking passes.",
+    "accessible": "ADA parking is first-come within the decks and lots (no separate reservation tier widely advertised). An ADA shuttle drops near Vine City MARTA by Gate 1, and Mobility Ambassadors provide entry-to-seat escort. Note the pedestrian bridge has drawn criticism for steep ramps, so MARTA plus a Mobility Ambassador escort may be easier for wheelchair users.",
+    "tailgating": "The Home Depot Backyard, an 11-acre green space on the former Georgia Dome site just west of the stadium, is the tailgate hub. Confirm World Cup-specific access and any lot/closure changes closer to matches.",
+    "tips": [
+      "No walk-up or cash parking on match days — buy a digital pass in advance or you'll be turned away",
+      "Official lots will run $50-$100+ for World Cup matches, so MARTA at $2.50 is far cheaper and faster out",
+      "GWCC deck availability can be squeezed by other Georgia World Congress Center events — reserve as early as possible",
+      "Avoid secondary-market parking passes; buy only through the official portal"
+    ]
+  }
 }

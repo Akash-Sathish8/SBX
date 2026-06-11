@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
+import { PageCssGuard } from '../components/PageCssGuard'
 import css from '../pages/index.css?url'
 
 export const Route = createFileRoute('/')({
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css }],
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'home' }],
     meta: [{ title: 'Snapback Experiences' }],
   }),
   component: Home,
@@ -63,7 +64,13 @@ const MARQUEE: Card[] = [
 
 function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
   return (
-    <div className="card venue interactive" aria-hidden={hidden ? 'true' : undefined}>
+    <Link
+      to="/venue"
+      search={{ id: c.img }}
+      className="card venue interactive"
+      aria-hidden={hidden ? 'true' : undefined}
+      tabIndex={hidden ? -1 : undefined}
+    >
       <div className="photo" style={{ backgroundImage: `url('/img/stadiums/${c.img}.jpg')` }}><span className="tag">{c.tag}</span></div>
       <div className="body">
         <h4>{c.name}</h4>
@@ -73,7 +80,72 @@ function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
           <div className="score fan"><div className="v">{c.fan}</div><div className="k">Fans</div></div>
         </div>
       </div>
-    </div>
+    </Link>
+  )
+}
+
+// Matchday agenda mockups, dealt like a hand of playing cards. Each card carries a
+// playing-card rank (A/K/Q/J/10 + ball suit); every card opens the agenda builder.
+type AgendaRow = [string, string, string] // [glyph, section label, sample plan]
+type AgendaMock = { game: string; rank: string; match: string; venue: string; when: string; rows: AgendaRow[] }
+const AGENDAS: AgendaMock[] = [
+  { game: 'azteca-jun11', rank: 'K', match: 'MEX v RSA', venue: 'Estadio Azteca · Mexico City', when: 'Jun 11 · 1:00 PM', rows: [
+    ['🚆', 'Getting there', 'Tren Ligero, Azteca stop'],
+    ['🍺', 'Before the match', 'Tacos in Coyoacán'],
+    ['🍔', 'Eat inside', 'Churros + michelada'],
+    ['🧢', 'Merch', 'El Tri home jersey'],
+    ['🏁', 'After the whistle', 'Mariachi in Garibaldi'],
+  ] },
+  { game: 'metlife-jun13', rank: 'Q', match: 'BRA v MAR', venue: 'MetLife Stadium · New York', when: 'Jun 13 · 6:00 PM', rows: [
+    ['🚆', 'Getting there', 'NJ Transit from Penn'],
+    ['🍺', 'Before the match', 'Samba in the lots'],
+    ['🍔', 'Eat inside', 'Pretzel + cold lager'],
+    ['🧢', 'Merch', "Seleção '26 kit"],
+    ['🏁', 'After the whistle', 'Train back to Manhattan'],
+  ] },
+  { game: 'sofi-jun12', rank: 'A', match: 'USA v PAR', venue: 'SoFi Stadium · Los Angeles', when: 'Jun 12 · 6:00 PM', rows: [
+    ['🚆', 'Getting there', 'Metro K + SoFi shuttle'],
+    ['🍺', 'Before the match', 'Tailgate on Lot K'],
+    ['🍔', 'Eat inside', 'Food court, section 130'],
+    ['🧢', 'Merch', 'USA scarf, south shop'],
+    ['🏁', 'After the whistle', 'Lake Park fan fest'],
+  ] },
+  { game: 'arrowhead-jun16', rank: 'J', match: 'ARG v ALG', venue: 'Arrowhead Stadium · Kansas City', when: 'Jun 16 · 8:00 PM', rows: [
+    ['🚆', 'Getting there', 'Drive in, Lot G by 9am'],
+    ['🍺', 'Before the match', 'BBQ tailgate till kickoff'],
+    ['🍔', 'Eat inside', 'Burnt ends, section 132'],
+    ['🧢', 'Merch', 'Albiceleste flag'],
+    ['🏁', 'After the whistle', 'Power & Light party'],
+  ] },
+  { game: 'bcplace-jun18', rank: '10', match: 'CAN v QAT', venue: 'BC Place · Vancouver', when: 'Jun 18 · 3:00 PM', rows: [
+    ['🚆', 'Getting there', 'SkyTrain to Chinatown'],
+    ['🍺', 'Before the match', 'Seawall walk to the gates'],
+    ['🍔', 'Eat inside', 'Japadog on the concourse'],
+    ['🧢', 'Merch', 'Maple leaf scarf'],
+    ['🏁', 'After the whistle', 'Gastown patios'],
+  ] },
+]
+
+function AgendaCard({ a }: { a: AgendaMock }) {
+  return (
+    <Link to="/agenda" search={{ game: '' }} className="acard">
+      <span className="acorner tl" aria-hidden="true"><b>{a.rank}</b><i>⚽</i></span>
+      <span className="acorner br" aria-hidden="true"><b>{a.rank}</b><i>⚽</i></span>
+      <span className="acard-hd">
+        <span className="acard-match">{a.match}</span>
+        <span className="acard-meta">{a.venue}</span>
+        <span className="acard-meta">{a.when}</span>
+      </span>
+      <span className="acard-rows">
+        {a.rows.map(([ic, label, val], i) => (
+          <span className="acard-row" key={i}>
+            <span className="ai"><i>{ic}</i></span>
+            <span className="at"><b>{label}</b><span>{val}</span></span>
+          </span>
+        ))}
+      </span>
+      <span className="acard-ft">Snapback · Matchday Agenda</span>
+    </Link>
   )
 }
 
@@ -99,6 +171,7 @@ function Home() {
 
   return (
     <>
+      <PageCssGuard id="home" />
       <SiteNav />
 
       {/* HERO (concept A: split / share + compare) */}
@@ -108,11 +181,18 @@ function Home() {
             <span className="eyebrow">World Cup 2026 · 16 venues</span>
             <h1><span className="ln">Build your</span> <span className="hl">matchday</span></h1>
           </div>
-          <div className="reveal" style={{ animationDelay: '.2s', marginTop: 'auto' }}>
+          <div className="reveal" style={{ animationDelay: '.12s' }}>
+            <div className="a-quick">
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🚆</span></span><span className="a-quick-lb">Getting there</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🍺</span></span><span className="a-quick-lb">Before the match</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🍔</span></span><span className="a-quick-lb">Where to eat</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🏁</span></span><span className="a-quick-lb">After the whistle</span></Link>
+            </div>
+          </div>
+          <div className="reveal" style={{ animationDelay: '.2s' }}>
             <div className="a-cta">
               <Link to="/guide" className="btn btn-brand btn-xl">Build your match guide</Link>
-              <a href="#experiences" className="btn btn-brand btn-xl">See what Casey did</a>
-              <a href="#ranking" className="btn btn-dark btn-lg">Rank your experience</a>
+              <Link to="/casey" className="btn btn-dark btn-xl">See what Casey did</Link>
             </div>
           </div>
         </div>
@@ -154,55 +234,20 @@ function Home() {
         </div>
       </section>
 
-      {/* KNOW BEFORE YOU GO */}
-      <section id="rankings" className="sec-light-2 grid-bg">
+      {/* GET YOUR MATCHDAY AGENDA */}
+      <section id="agendas" className="sec-light grid-bg">
         <div className="container">
           <div className="sec-head">
-            <span className="eyebrow">The guide</span>
-            <h2>Know before you go</h2>
-            <p>Fan zones, how to get there, supporter marches and the details that matter — for all 16 World Cup venues.</p>
+            <span className="eyebrow">Plan it · Share it</span>
+            <h2>Get your matchday agenda</h2>
+            <p>Your whole day on one card — how you're getting there, where you're drinking, what you're eating, where it ends. Pick a match and deal yourself in.</p>
           </div>
-          <div className="kbyg-grid">
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">★</div><div className="kt">Fan zones</div><div className="kd">Where to gather and watch in every host city.</div></a>
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">▦</div><div className="kt">Getting there</div><div className="kd">Transit, parking and the last mile to each stadium.</div></a>
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">⚑</div><div className="kt">Supporter marches</div><div className="kd">When and where each nation walks in together.</div></a>
-            <a href="/wc26-fan-intel.html" className="kbyg-card"><div className="ki">✓</div><div className="kt">Stadium tips</div><div className="kd">Bag rules, food, altitude and heat — what to expect.</div></a>
+          <div className="agenda-fan">
+            {AGENDAS.map((a) => <AgendaCard key={a.game} a={a} />)}
           </div>
-          <a href="/wc26-fan-intel.html" className="kbyg-more">Open the full guide <span className="kb-arrow">→</span></a>
-        </div>
-      </section>
-
-      {/* MAKE YOUR OWN RANKING */}
-      <section id="ranking" className="sec-light grid-bg">
-        <div className="container">
-          <div className="sec-head">
-            <span className="eyebrow">Your call</span>
-            <h2>Make your own ranking</h2>
-            <p>Stack the stadiums your way — atmosphere, food, the whole trip. Build your top five and settle it with your crew.</p>
+          <div className="agenda-cta">
+            <Link to="/agenda" search={{ game: '' }} className="btn btn-brand btn-lg">Build your agenda</Link>
           </div>
-          <div className="rank-builder">
-            <div className="rrow"><span className="rnum">1</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/sofi.jpg')" }}></div><div className="rname">SoFi Stadium<span>Los Angeles · USA</span></div><span className="rhandle">⋮⋮</span></div>
-            <div className="rrow"><span className="rnum">2</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/azteca.jpg')" }}></div><div className="rname">Estadio Azteca<span>Mexico City · MEX</span></div><span className="rhandle">⋮⋮</span></div>
-            <div className="rrow"><span className="rnum">3</span><div className="rthumb" style={{ backgroundImage: "url('/img/stadiums/arrowhead.jpg')" }}></div><div className="rname">Arrowhead Stadium<span>Kansas City · USA</span></div><span className="rhandle">⋮⋮</span></div>
-            <div className="rrow empty"><span className="rnum">4</span><div className="rname">+ Add a venue</div></div>
-            <div className="rrow empty"><span className="rnum">5</span><div className="rname">+ Add a venue</div></div>
-          </div>
-          <a href="#" className="btn btn-brand btn-lg">Build your ranking</a>
-        </div>
-      </section>
-
-      {/* JOIN / NEWSLETTER */}
-      <section id="join" className="sec-dark grid-bg">
-        <div className="container">
-          <div className="sec-head" style={{ marginBottom: '8px' }}>
-            <span className="eyebrow">Join the crowd</span>
-            <h2>Your take counts.</h2>
-            <p>Rate venues, settle debates, and climb the fan board. Free, and very loud.</p>
-          </div>
-          <form className="news" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="you@email.com" aria-label="Email" />
-            <button className="btn btn-brand btn-lg" type="submit">Sign up</button>
-          </form>
         </div>
       </section>
 
@@ -211,8 +256,7 @@ function Home() {
           <div className="logo"><img className="logo-img" src="/img/logo.png" alt="Snapback Sports" />SNAPBACK<span className="wc">WC 2026</span></div>
           <div className="fnav">
             <a href="#experiences">Experiences</a>
-            <a href="#rankings">Guide</a>
-            <a href="#join">Join</a>
+            <Link to="/guide">Guide</Link>
           </div>
           <div className="fine">Snapback Experiences — arcade concept build. Tetris design system, reskinned to the Snapback color theme (yellow #F7DF02 / black #111111 / white).</div>
         </div>

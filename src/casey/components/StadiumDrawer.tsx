@@ -52,7 +52,7 @@ function statusStyle(status: MatchStatus): { border: string; text: string; label
 
 function stageChipClass(stage: string): string {
   const s = stage.toUpperCase();
-  if (s === 'FINAL') return 'bg-snap-yellow text-snap-black';
+  if (s === 'FINAL') return 'bg-snap-yellow text-snap-chalk';
   if (s.includes('SEMI')) return 'bg-snap-yellow/30 text-snap-yellow';
   if (s.includes('QUARTER')) return 'bg-snap-yellow/20 text-snap-yellow';
   if (s.includes('ROUND OF 16')) return 'bg-snap-yellow/15 text-snap-yellow';

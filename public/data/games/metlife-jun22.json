@@ -1,0 +1,13 @@
+{
+ "id": "metlife-jun22", "venue": "metlife", "venueName": "MetLife Stadium", "city": "New York / NJ",
+ "date": "Jun 22", "ko": "8:00 PM", "round": "Group I", "home": "Norway", "away": "Senegal",
+ "preview": {
+  "summary": "Norway, back at a World Cup after 28 years, face Senegal in a Group I meeting likely to shape the knockout race. Haaland's firepower against Senegal's physical, big-game know-how makes this a contest of contrasting strengths.",
+  "homeForm": "Norway, ranked 31st, won all eight qualifiers and scored 37 goals to reach their first World Cup since 1998.",
+  "awayForm": "Senegal, ranked 14th, finished qualifying unbeaten as the top-ranked African nation in the field.",
+  "homeKey": "Erling Haaland: 16 qualifying goals and Norway's all-time top scorer.",
+  "awayKey": "Nicolas Jackson: pace and finishing leading Senegal's attack.",
+  "storylines": ["Haaland and Odegaard headline Norway's long-awaited return", "Senegal aim to build on a strong opener in the group", "Two unbeaten qualifying campaigns collide"],
+  "h2h": "The nations have met just once, a 2-1 Senegal friendly win in 2006, and never at a World Cup."
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "id": "bcplace-jun24", "venue": "bcplace", "venueName": "BC Place", "city": "Vancouver",
+ "date": "Jun 24", "ko": "12:00 PM", "round": "Group B", "home": "Switzerland", "away": "Canada",
+ "preview": {
+  "summary": "Group B's heavyweight fixture sees Switzerland, the section's top seed, face co-hosts Canada in front of a partisan Vancouver crowd. Xhaka's measured midfield control meets the pace and ambition of Marsch's Canadians, with qualification stakes likely on the line.",
+  "homeForm": "Switzerland are the highest-ranked side in the group at 19th, with Granit Xhaka captaining at his fourth straight World Cup.",
+  "awayForm": "Canada compete as co-hosts with their strongest-ever squad, sweating on Alphonso Davies' hamstring recovery.",
+  "homeKey": "Granit Xhaka, record-capped captain who dictates Swiss tempo.",
+  "awayKey": "Alphonso Davies, Bayern flyer and Canada's talismanic captain.",
+  "storylines": ["A likely group-deciding clash between the section's strongest sides", "Akanji and the Swiss back line against Canada's pace", "Vancouver roars for the co-hosts against the seeded favourites"],
+  "h2h": "Switzerland beat Canada 1-0 at the 2022 World Cup; Canada won a 2002 friendly 3-1."
+ }
+}

@@ -49,7 +49,6 @@ h4{font-size:clamp(24px,2.4vw,32px);letter-spacing:1px}
 p{line-height:1.65;max-width:65ch}
 .lead{font-size:20px;line-height:1.65}
 .eyebrow{font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sb-gray);display:inline-flex;align-items:center;gap:8px}
-.eyebrow::before{content:"";width:12px;height:12px;background:var(--sb-yellow);display:inline-block;clip-path:polygon(0 0,100% 0,100% 70%,70% 100%,0 100%)}
 a{color:inherit}
 
 /* ---- layout ---- */
@@ -97,7 +96,7 @@ section{padding:96px 0;position:relative;overflow:hidden}
 .btn:hover{filter:drop-shadow(6px 6px 0 var(--gradient-shadow)) brightness(1.05)}
 .btn:active{transform:translate(3px,3px);filter:drop-shadow(3px 3px 0 var(--gradient-shadow))}
 .btn:focus-visible{outline:4px solid var(--sb-yellow-deep);outline-offset:2px}
-.btn-brand{background:linear-gradient(135deg,var(--gradient-from) 0%,var(--gradient-to) 100%);color:var(--sb-black)}
+.btn-brand{background:var(--sb-yellow);color:var(--sb-black)}
 .btn-dark{background:var(--sb-black);color:#fff;filter:drop-shadow(6px 6px 0 var(--sb-yellow))}
 .btn-dark:hover{filter:drop-shadow(6px 6px 0 var(--sb-yellow)) brightness(1.1)}
 .btn-dark:active{filter:drop-shadow(3px 3px 0 var(--sb-yellow))}
@@ -105,6 +104,11 @@ section{padding:96px 0;position:relative;overflow:hidden}
 .btn-navcta{padding:9px 20px;font-size:13px;box-shadow:inset 0 0 0 2px var(--sb-yellow)}
 .btn-lg{font-size:22px;padding:17px 34px}
 .btn-xl{font-size:29px;padding:22px 46px;letter-spacing:1.2px}
+/* Mobile: the hero CTAs read smaller so they don't dominate the landing screen.
+   Web keeps the full billboard-size buttons. */
+@media(max-width:860px){
+  .a-cta .btn-xl{font-size:19px;padding:14px 28px;letter-spacing:.6px}
+}
 .btn-ghost{background:transparent;box-shadow:none;color:inherit;filter:none}
 .btn-ghost:hover{filter:none}
 .btn-ghost:hover{background:rgba(255,255,255,.08)}
@@ -156,6 +160,36 @@ body{overflow-x:hidden}
 .proof .txt b{color:var(--sb-ink)}
 .a-sub{font-size:19px;max-width:46ch;color:var(--sb-body);margin-bottom:34px;line-height:1.6}
 .a-cta{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+
+/* Quick guide links that live in the hero's open space (replaces the old
+   "Know before you go" section). White emoji glyphs on black tiles, stacked
+   vertically so they fill the space. */
+.a-quick{display:flex;flex-direction:column}
+.a-quick-item{display:flex;align-items:center;text-decoration:none;color:var(--sb-ink)}
+.a-quick-ic{display:flex;align-items:center;justify-content:center;background:#111;border:2px solid #111;border-radius:12px;flex:0 0 auto}
+/* brightness(0) flattens the colour emoji to black, invert(1) flips it to a
+   clean white silhouette — white icon on the black tile. */
+.a-quick-gl{filter:brightness(0) invert(1);line-height:1}
+.a-quick-lb{font-family:'Anton';letter-spacing:.5px;line-height:1.05}
+/* Web: large, roomy stack with even spacing above + below (matches the gap to
+   the CTAs). */
+@media(min-width:861px){
+  .a-left{justify-content:center;gap:48px}
+  .a-hero h1{margin-bottom:0}
+  .a-quick{gap:18px;max-width:560px}
+  .a-quick-item{gap:18px}
+  .a-quick-ic{width:68px;height:68px;font-size:32px}
+  .a-quick-lb{font-size:30px}
+  .a-quick-item:hover .a-quick-ic{box-shadow:4px 4px 0 0 var(--sb-yellow)}
+  .a-quick-item:hover .a-quick-lb{color:var(--sb-yellow-deep)}
+}
+/* Mobile: same vertical stack, sized up from the old icon row. */
+@media(max-width:860px){
+  .a-quick{gap:12px}
+  .a-quick-item{gap:13px}
+  .a-quick-ic{width:48px;height:48px;font-size:23px;border-radius:10px}
+  .a-quick-lb{font-size:19px}
+}
 .a-right{position:relative;background:#000;overflow:hidden;min-height:420px}
 .a-right .img{position:absolute;inset:0;background:url('/img/stadiums/sofi.jpg') center/cover}
 .a-right .img::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(17,17,17,.55),rgba(17,17,17,.05) 45%,rgba(17,17,17,.45))}
@@ -166,7 +200,35 @@ body{overflow-x:hidden}
 .a-venue .cv{font-family:'Anton';font-size:30px;color:#fff;letter-spacing:1px;margin-bottom:12px}
 .a-venue .scorechip{margin-bottom:14px}
 .a-venue .scorechip .s{background:#1b1b1b}.a-venue .scorechip .s .v{color:#fff}.a-venue .scorechip .s.fan .v{color:var(--sb-yellow)}
-@media(max-width:860px){.a-hero{grid-template-columns:1fr}.a-right{min-height:440px}}
+@media(max-width:860px){
+  .a-hero{grid-template-columns:1fr}
+  /* Landing = the title + CTAs, filling the first screen. The stadium panel and
+     everything below it sit past the fold, so you scroll to reach them.
+     dvh (not vh) so it's exact under the mobile browser's address bar. */
+  .a-left{min-height:calc(100dvh - 72px);justify-content:space-between}
+  .a-right{min-height:440px}
+}
+/* Phones: the fan post + venue cards become small corner blurbs so they frame
+   the stadium photo instead of covering it. Drop the long quote and the rating
+   bars — a blurb only needs who / score / venue. */
+@media(max-width:640px){
+  .a-right{min-height:360px}
+  .a-post{top:12px;right:12px;max-width:47%;padding:9px 11px;border-width:3px;box-shadow:5px 5px 0 0 #111}
+  .a-post .hd{gap:7px;margin-bottom:5px}
+  .a-post .avatar{width:30px;height:30px;font-size:15px;border-width:2px}
+  .a-post .nm{font-size:12px}
+  .a-post .mt{font-size:10px}
+  .a-post .stars{font-size:12px}
+  .a-post .q,.a-post .wasthere{display:none}
+  .a-venue{left:12px;bottom:12px;width:auto;max-width:50%;padding:10px 12px;border-width:4px;box-shadow:6px 6px 0 0 rgba(0,0,0,.45)}
+  .a-venue .cc{font-size:10px}
+  .a-venue .cv{font-size:17px;line-height:1;margin-bottom:8px}
+  .a-venue .scorechip{gap:7px;margin-bottom:0}
+  .a-venue .scorechip .s{min-width:0;padding:5px 9px}
+  .a-venue .scorechip .s .v{font-size:22px}
+  .a-venue .scorechip .s .k{font-size:8px}
+  .a-venue .detrow{display:none}
+}
 
 /* atoms: scorechip, fan post, stars, detail rows */
 .scorechip{display:flex;gap:10px}
@@ -222,6 +284,7 @@ body{overflow-x:hidden}
   background:var(--sb-white);border:8px solid var(--sb-black);border-radius:4px;
   box-shadow:8px 8px 0 0 var(--sb-black);padding:28px;position:relative;
   transition:transform 100ms ease-out,border-color 150ms,box-shadow 150ms;
+  color:inherit;text-decoration:none;display:block;
 }
 .card.interactive{cursor:pointer}
 .card.interactive:hover{border-color:var(--sb-yellow);box-shadow:10px 10px 0 0 var(--sb-black)}
@@ -311,18 +374,44 @@ footer a:hover{color:var(--sb-yellow)}
 .kbyg-more{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:var(--sb-black);color:#fff;font-family:'Barlow';font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:15px;padding:14px 26px;clip-path:var(--notch);text-decoration:none;filter:drop-shadow(6px 6px 0 var(--sb-yellow));transition:filter 120ms}
 .kbyg-more .kb-arrow{color:#fff;font-size:18px;transition:transform .15s ease-out}
 .kbyg-more:hover .kb-arrow{transform:translateX(5px)}
-/* make your own ranking */
-.rank-builder{max-width:660px;display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
-.rrow{display:flex;align-items:center;gap:16px;background:#fff;border:4px solid var(--sb-black);border-radius:6px;box-shadow:6px 6px 0 0 var(--sb-black);padding:12px 16px;transition:transform .12s,box-shadow .15s}
-.rrow:hover{transform:translate(-1px,-1px);box-shadow:8px 8px 0 0 var(--sb-black)}
-.rnum{flex:0 0 auto;width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-family:'Anton';font-size:24px;background:var(--sb-yellow);color:#111;border:2px solid #111;border-radius:6px}
-.rthumb{flex:0 0 auto;width:70px;height:46px;border:2px solid #111;border-radius:4px;background:#333 center/cover no-repeat}
-.rname{flex:1;font-weight:700;font-size:16px;color:var(--sb-ink)}
-.rname span{display:block;font-size:12px;color:var(--sb-gray);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
-.rhandle{color:#c4c4c4;font-size:20px;letter-spacing:-3px;cursor:grab}
-.rrow.empty{background:transparent;border-style:dashed;box-shadow:none;color:var(--sb-gray);font-weight:600;font-size:14px}
-.rrow.empty:hover{transform:none;box-shadow:none;border-color:var(--sb-yellow-deep)}
-.rrow.empty .rnum{background:transparent;color:var(--sb-gray);border-style:dashed}
+/* get your matchday agenda — mockup agendas dealt like a hand of playing cards.
+   Web: overlapping fan with rotation arc, hover lifts a card out of the hand.
+   Phones: the hand becomes a swipeable scroll-snap rail with a light alternating tilt. */
+.agenda-fan{display:flex;justify-content:center;align-items:flex-start;padding:26px 0 52px}
+.acard{position:relative;flex:0 0 252px;aspect-ratio:5/7;background:#fff;border:5px solid var(--sb-black);border-radius:14px;box-shadow:8px 8px 0 0 var(--sb-black);padding:36px 18px 14px;display:flex;flex-direction:column;text-decoration:none;color:inherit;overflow:hidden;transition:transform .16s ease-out,box-shadow .15s,border-color .15s}
+.acard+.acard{margin-left:-38px}
+.acard:nth-child(1){transform:rotate(-8deg) translateY(30px)}
+.acard:nth-child(2){transform:rotate(-4deg) translateY(9px)}
+.acard:nth-child(3){transform:rotate(0)}
+.acard:nth-child(4){transform:rotate(4deg) translateY(9px)}
+.acard:nth-child(5){transform:rotate(8deg) translateY(30px)}
+.acard:hover{transform:rotate(0) translateY(-16px) scale(1.04);z-index:10;border-color:var(--sb-yellow);box-shadow:12px 12px 0 0 var(--sb-black)}
+.acard:focus-visible{outline:4px solid var(--sb-yellow-deep);outline-offset:2px;z-index:10}
+/* playing-card corner index: rank + ball suit, mirrored bottom-right */
+.acorner{position:absolute;display:flex;flex-direction:column;align-items:center;line-height:1}
+.acorner b{font-family:'Anton';font-weight:400;font-size:17px;color:var(--sb-ink);letter-spacing:0}
+.acorner i{font-style:normal;font-size:9px;filter:brightness(0);margin-top:2px}
+.acorner.tl{top:10px;left:12px}
+.acorner.br{bottom:10px;right:12px;transform:rotate(180deg)}
+.acard-hd{display:block;text-align:center;margin-bottom:12px}
+.acard-match{display:block;font-family:'Anton';font-size:23px;letter-spacing:1px;color:var(--sb-ink);line-height:1.05}
+.acard-meta{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--sb-gray);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acard-rows{display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;flex:1;min-height:0}
+.acard-row{display:flex;align-items:center;gap:9px;min-width:0}
+.acard-row .ai{flex:0 0 auto;width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:var(--sb-yellow);border:2px solid #111;border-radius:7px}
+.acard-row .ai i{font-style:normal;font-size:13px;line-height:1;filter:brightness(0)}
+.acard-row .at{display:flex;flex-direction:column;min-width:0}
+.acard-row .at b{font-size:8.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--sb-gray)}
+.acard-row .at span{font-size:12px;font-weight:600;color:var(--sb-ink);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acard-ft{display:block;margin-top:10px;text-align:center;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b5b5b5;border-top:2px solid #eee;padding-top:7px}
+.agenda-cta{display:flex;justify-content:center}
+@media(max-width:760px){
+  .agenda-fan{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:16px 24px 36px;margin:0 -24px;-webkit-overflow-scrolling:touch}
+  .acard{flex:0 0 240px;scroll-snap-align:center}
+  .acard+.acard{margin-left:0}
+  .acard:nth-child(odd){transform:rotate(-1.6deg)}
+  .acard:nth-child(even){transform:rotate(1.6deg)}
+}
 /* rotating photo extras: superlative tag + rotation dots */
 .a-tag{position:absolute;top:26px;left:30px;z-index:4;background:var(--sb-yellow);color:#111;font-family:'Anton';font-size:18px;letter-spacing:.5px;padding:7px 15px;border:2px solid #111;box-shadow:4px 4px 0 0 #111;transform:rotate(-2deg);transition:opacity .45s ease}
 .a-dots{position:absolute;bottom:30px;right:34px;z-index:4;display:flex;gap:9px}

@@ -1,0 +1,24 @@
+{
+ "id": "bcplace-jun13",
+ "venue": "bcplace",
+ "venueName": "BC Place",
+ "city": "Vancouver",
+ "date": "Jun 13",
+ "ko": "9:00 PM",
+ "round": "Group D",
+ "home": "Australia",
+ "away": "Türkiye",
+ "preview": {
+  "summary": "A Group D opener pitting Australia's disciplined, defensively organized Socceroos against a Turkey side returning to the World Cup after 24 years with one of its strongest modern squads. Expect Turkey to control possession through their creative midfield while Australia look to stay compact and counter.",
+  "homeForm": "Australia qualified for a sixth straight World Cup, finishing second behind Japan, and sit 27th in the FIFA rankings under Tony Popovic.",
+  "awayForm": "Turkey return after a 24-year absence ranked 22nd, carrying momentum from a cohesive Euro 2024 core under Vincenzo Montella.",
+  "homeKey": "Mathew Ryan, veteran captain goalkeeper at his fourth World Cup.",
+  "awayKey": "Arda Güler, Real Madrid playmaker and Turkey's chief creator.",
+  "storylines": [
+   "Turkey's golden generation announces itself on the big stage",
+   "Popovic's rebuilt, star-light Socceroos test their structure",
+   "Güler and Yıldız against a back three of Circati, Souttar and Burgess"
+  ],
+  "h2h": "The sides have met three times, with Turkey winning two and one drawn."
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "id": "mercedes-jun24", "venue": "mercedes", "venueName": "Mercedes-Benz Stadium", "city": "Atlanta",
+ "date": "Jun 24", "ko": "6:00 PM", "round": "Group C", "home": "Morocco", "away": "Haiti",
+ "preview": {
+  "summary": "Reigning AFCON champions Morocco, a top-10 side and 2022 semi-finalists, face Haiti in their first World Cup since 1974. Morocco's pace and quality on the flanks will test a spirited Haitian side savouring a rare return to the global stage.",
+  "homeForm": "Morocco are ranked eighth in the world, their best-ever position, and won the 2025 Africa Cup of Nations on home soil.",
+  "awayForm": "Haiti, ranked around 83rd, topped their CONCACAF group with three wins and two draws to reach a second World Cup.",
+  "homeKey": "Achraf Hakimi, captain and arguably the world's best right-back.",
+  "awayKey": "Duckens Nazon, Haiti's all-time leading goalscorer.",
+  "storylines": ["Haiti's first World Cup appearance in 52 years", "Morocco aim to back up their 2022 semi-final run as genuine contenders", "Brahim Diaz, AFCON's standout performer, looks to create for the Atlas Lions"],
+  "h2h": "The sides have met three times, most recently a 2-1 Morocco friendly win in 2023."
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "mercedes-jun18",
+ "venue": "mercedes",
+ "venueName": "Mercedes-Benz Stadium",
+ "city": "Atlanta",
+ "date": "Jun 18",
+ "ko": "12:00 PM",
+ "round": "Group A",
+ "home": "Czechia",
+ "away": "South Africa",
+ "preview": {
+  "summary": "Czech Republic, back at a World Cup for the first time since 2006, meet a settled South Africa side in a Group A clash both will see as winnable. Expect Czech directness through their target man against Bafana Bafana's disciplined, possession-recycling approach under Hugo Broos.",
+  "homeForm": "Czech Republic, ranked around 41st, qualified via the UEFA playoffs with dramatic shootout wins and have won three of their last five.",
+  "awayForm": "South Africa, ranked around 60th, topped a tight CAF group ahead of Nigeria with 18 points to reach their first World Cup since 2010.",
+  "homeKey": "Patrik Schick, Bayer Leverkusen striker and prolific national-team scorer.",
+  "awayKey": "Lyle Foster, Burnley forward and the squad's biggest name.",
+  "storylines": [
+   "Czech Republic's first World Cup appearance in 20 years",
+   "Hugo Broos chases a knockout berth with a settled Bafana squad",
+   "Captain Ronwen Williams' penalty-saving reputation could prove decisive"
+  ],
+  "h2h": "The two nations have rarely met, with no significant competitive history between them."
+ }
+}

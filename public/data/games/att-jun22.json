@@ -1,0 +1,13 @@
+{
+ "id": "att-jun22", "venue": "att", "venueName": "AT&T Stadium", "city": "Dallas",
+ "date": "Jun 22", "ko": "12:00 PM", "round": "Group J", "home": "Argentina", "away": "Austria",
+ "preview": {
+  "summary": "Defending champions Argentina face a disciplined, Red Bull-schooled Austria in Group J. Lionel Scaloni's side blend Qatar-winning experience with fresh legs, while Ralf Rangnick's pressing Austrians aim to upset a favorite. A contrast of star quality against structured collective.",
+  "homeForm": "Ranked 3rd, Argentina topped CONMEBOL qualifying comfortably as reigning world champions.",
+  "awayForm": "Ranked 24th, Austria topped their group with six wins to reach a first World Cup since 1998.",
+  "homeKey": "Lautaro Martinez, in clinical form as Scaloni's number nine.",
+  "awayKey": "Marko Arnautovic, record scorer who netted eight qualifying goals.",
+  "storylines": ["Argentina chase back-to-back titles, last done by Brazil in 1962", "Messi leads at a record sixth World Cup", "Rangnick's Austria back on the big stage after 28 years"],
+  "h2h": "The sides have met only a handful of times, with Argentina holding the historical edge in past friendlies."
+ }
+}

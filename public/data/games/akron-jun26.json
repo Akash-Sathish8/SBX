@@ -1,0 +1,13 @@
+{
+ "id": "akron-jun26", "venue": "akron", "venueName": "Estadio Akron", "city": "Guadalajara",
+ "date": "Jun 26", "ko": "6:00 PM", "round": "Group H", "home": "Uruguay", "away": "Spain",
+ "preview": {
+  "summary": "A heavyweight Group H finale that could decide the standings, with Euro 2024 champions Spain meeting a battle-hardened Uruguay under Marcelo Bielsa. Spain's technical dominance is matched against one of the tournament's most resolute defenses.",
+  "homeForm": "Uruguay are rated the team most likely to join Spain in advancing from Group H, anchored by an elite defense.",
+  "awayForm": "Spain arrive as Euro 2024 champions and the world's No. 2 ranked side, regarded as the tournament's most complete team.",
+  "homeKey": "Ronald Araujo, half of Uruguay's elite centre-back pairing.",
+  "awayKey": "Lamine Yamal, Spain's most dangerous technical edge on the right.",
+  "storylines": ["The only Group H match played in Mexico, possibly deciding qualification", "Bielsa's Uruguay defense versus Spain's possession machine", "Spain have never lost to Uruguay in ten previous meetings"],
+  "h2h": "Spain are unbeaten against Uruguay across ten previous encounters."
+ }
+}

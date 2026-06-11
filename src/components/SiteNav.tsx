@@ -19,7 +19,6 @@ export function SiteNav({ active }: { active?: 'guide' | 'games' | 'venues' | 'c
           <Link to="/games" className={active === 'games' ? 'active' : undefined}>Games</Link>
           <Link to="/venues" className={active === 'venues' ? 'active' : undefined}>Venues</Link>
           <Link to="/casey" className={active === 'casey' ? 'active' : undefined}>Casey</Link>
-          <Link to="/" hash="join" className="btn btn-dark btn-navcta navcta">Join Now</Link>
         </nav>
         <button
           className={'hamburger' + (open ? ' open' : '')}

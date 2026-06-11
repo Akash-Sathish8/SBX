@@ -1,117 +1,445 @@
 {
-  "id": "azteca",
-  "name": "Estadio Azteca",
-  "fifaName": "Estadio Ciudad de México",
-  "nickname": "El Coloso de Santa Úrsula",
-  "city": "Mexico City",
-  "country": "Mexico",
-  "cc": "MEX",
-  "role": "Opening Match",
-  "tagline": "The only stadium on earth to host three World Cups, and the first ever to host three opening matches.",
-  "hero": "img/stadiums/azteca.jpg",
-  "stats": [
-    {
-      "label": "Capacity",
-      "value": "~87,500"
-    },
-    {
-      "label": "WC2026 matchday",
-      "value": "~72,766"
-    },
-    {
-      "label": "Opened",
-      "value": "1966"
-    },
-    {
-      "label": "WC2026 matches",
-      "value": "5 matches"
-    },
-    {
-      "label": "Altitude",
-      "value": "7,200 ft"
-    },
-    {
-      "label": "Surface",
-      "value": "GrassMaster hybrid"
-    }
-  ],
-  "why": [
-    {
-      "title": "Cathedral of Football",
-      "text": "The pitch where both Pelé (1970) and Maradona (1986) lifted the World Cup. No other stadium can say that."
-    },
-    {
-      "title": "Three-Cup Record",
-      "text": "1970, 1986, and now 2026. The Azteca is the only venue ever to host matches at three different World Cups."
-    },
-    {
-      "title": "The Altitude Weapon",
-      "text": "At 7,200 feet the air is thin, the ball flies farther, and unacclimatized opponents fade. El Tri is built for it."
-    },
-    {
-      "title": "A Wall of Noise",
-      "text": "Steep two-tier stands sunk into volcanic rock keep even upper-deck fans close and trap a deafening roar."
-    }
-  ],
-  "matches": [
-    {
-      "date": "Jun 11",
-      "round": "Group A · Opening Match",
-      "fixture": "Mexico vs South Africa",
-      "ko": "~1:00 PM"
-    },
-    {
-      "date": "Jun 17",
-      "round": "Group K",
-      "fixture": "Uzbekistan vs Colombia",
-      "ko": "~8:00 PM"
-    },
-    {
-      "date": "Jun 24",
-      "round": "Group A",
-      "fixture": "Czech Republic vs Mexico",
-      "ko": "~7:00 PM"
-    },
-    {
-      "date": "Jun 30",
-      "round": "Round of 32",
-      "fixture": "TBD",
-      "ko": "~7:00 PM"
-    },
-    {
-      "date": "Jul 5",
-      "round": "Round of 16",
-      "fixture": "TBD",
-      "ko": "~6:00 PM"
-    }
-  ],
-  "gettingThere": "Do not drive or rideshare to the doors — the roads collapse on matchdays. Ride transit and walk the last stretch in.",
-  "transit": [
-    "Tren Ligero (Xochimilco Light Rail) to the 'Estadio Azteca' stop is the closest, smartest arrival — it feeds straight into the concourses.",
-    "Transfer from Metro Line 2 (blue) at Tasqueña onto the light rail; General Anaya is an alternate walk-in point.",
-    "Seven signed pedestrian corridors open at 7:00 AM, each a 10–30 minute walk to the stands.",
-    "Load a Tarjeta MI (Integrated Mobility Card, ~MXN $15 + balance) at any Metro booth to ride everything."
-  ],
-  "matchday": "The official FIFA Fan Festival takes over the Zócalo (June 11–July 19) — free entry, giant screens, and live artists, expected to be one of the tournament's busiest. Around the ground, the football-mad Santa Úrsula barrio and its street market pile right up to the gates.",
+ "id": "azteca",
+ "name": "Estadio Azteca",
+ "fifaName": "Estadio Ciudad de México",
+ "nickname": "El Coloso de Santa Úrsula",
+ "city": "Mexico City",
+ "country": "Mexico",
+ "cc": "MEX",
+ "role": "Opening Match",
+ "tagline": "The only stadium on earth to host three World Cups, and the first ever to host three opening matches.",
+ "hero": "img/stadiums/azteca.jpg",
+ "stats": [
+  {
+   "label": "Capacity",
+   "value": "~87,500"
+  },
+  {
+   "label": "WC2026 matchday",
+   "value": "~72,766"
+  },
+  {
+   "label": "Opened",
+   "value": "1966"
+  },
+  {
+   "label": "WC2026 matches",
+   "value": "5 matches"
+  },
+  {
+   "label": "Altitude",
+   "value": "7,200 ft"
+  },
+  {
+   "label": "Surface",
+   "value": "GrassMaster hybrid"
+  }
+ ],
+ "why": [
+  {
+   "title": "Cathedral of Football",
+   "text": "The pitch where both Pelé (1970) and Maradona (1986) lifted the World Cup. No other stadium can say that."
+  },
+  {
+   "title": "Three-Cup Record",
+   "text": "1970, 1986, and now 2026. The Azteca is the only venue ever to host matches at three different World Cups."
+  },
+  {
+   "title": "The Altitude Weapon",
+   "text": "At 7,200 feet the air is thin, the ball flies farther, and unacclimatized opponents fade. El Tri is built for it."
+  },
+  {
+   "title": "A Wall of Noise",
+   "text": "Steep two-tier stands sunk into volcanic rock keep even upper-deck fans close and trap a deafening roar."
+  }
+ ],
+ "matches": [
+  {
+   "date": "Jun 11",
+   "round": "Group A",
+   "fixture": "Mexico vs South Africa",
+   "ko": "1:00 PM",
+   "group": "A"
+  },
+  {
+   "date": "Jun 17",
+   "round": "Group K",
+   "fixture": "Uzbekistan vs Colombia",
+   "ko": "8:00 PM",
+   "group": "K"
+  },
+  {
+   "date": "Jun 24",
+   "round": "Group A",
+   "fixture": "Czechia vs Mexico",
+   "ko": "7:00 PM",
+   "group": "A"
+  },
+  {
+   "date": "Jun 30",
+   "round": "Round of 32",
+   "fixture": "TBD",
+   "ko": "7:00 PM",
+   "group": null
+  },
+  {
+   "date": "Jul 5",
+   "round": "Round of 16",
+   "fixture": "TBD",
+   "ko": "6:00 PM",
+   "group": null
+  }
+ ],
+ "gettingThere": "Do not drive or rideshare to the doors — the roads collapse on matchdays. Ride transit and walk the last stretch in.",
+ "transit": [
+  "Tren Ligero (Xochimilco Light Rail) to the 'Estadio Azteca' stop is the closest, smartest arrival — it feeds straight into the concourses.",
+  "Transfer from Metro Line 2 (blue) at Tasqueña onto the light rail; General Anaya is an alternate walk-in point.",
+  "Seven signed pedestrian corridors open at 7:00 AM, each a 10–30 minute walk to the stands.",
+  "Load a Tarjeta MI (Integrated Mobility Card, ~MXN $15 + balance) at any Metro booth to ride everything."
+ ],
+ "matchday": "The official FIFA Fan Festival takes over the Zócalo (June 11–July 19) — free entry, giant screens, and live artists, expected to be one of the tournament's busiest. Around the ground, the football-mad Santa Úrsula barrio and its street market pile right up to the gates.",
+ "food": [
+  "Santa Úrsula tianguis (San Benjamín St near Gate 3) — taco vendors, garnachas, and birria packed around the stadium.",
+  "Steamed tacos sold from baskets on bicycles outside the gates — cheaper and better than concourse food.",
+  "Carnitas Gudiño (Calle San Alejandro #36) — a local institution for slow-cooked pork.",
+  "Michoacaníssimo — beloved birria spot serving since 1988."
+ ],
+ "around": {
   "food": [
-    "Santa Úrsula tianguis (San Benjamín St near Gate 3) — taco vendors, garnachas, and birria packed around the stadium.",
-    "Steamed tacos sold from baskets on bicycles outside the gates — cheaper and better than concourse food.",
-    "Carnitas Gudiño (Calle San Alejandro #36) — a local institution for slow-cooked pork.",
-    "Michoacaníssimo — beloved birria spot serving since 1988."
+   {
+    "name": "Birria El Michoacaníssimo",
+    "where": "San Valentín 866, Pedregal de Santa Úrsula",
+    "note": "Crowded weekend birria institution; consomé and quesabirria",
+    "why": [
+     "Quesabirria and consomé worth the line",
+     "Local since 1988, steps from gates"
+    ],
+    "rating": 4.5,
+    "dist": "0.7 mi",
+    "distMi": 0.7
+   },
+   {
+    "name": "Carnitas Gudiño",
+    "where": "San Alejandro 36, Pedregal de Santa Úrsula",
+    "note": "Don Beto's costilla tacos, 34 years strong",
+    "why": [
+     "Slow-cooked costilla tacos are the move",
+     "34-year neighborhood institution"
+    ],
+    "rating": null,
+    "dist": "0.6 mi",
+    "distMi": 0.6
+   },
+   {
+    "name": "Las Muñecas",
+    "where": "Calle Toltecas, Pedregal de Santo Domingo, Coyoacán",
+    "note": "24-hour suadero tacos, red or green salsa",
+    "why": [
+     "Open 24 hours, perfect post-match",
+     "Cheap suadero tacos, pick your salsa"
+    ],
+    "rating": 4.3,
+    "dist": "1.5 mi",
+    "distMi": 1.5
+   },
+   {
+    "name": "Santa Úrsula tianguis (basket-bike tacos)",
+    "where": "San Benjamín St near Gate 3",
+    "note": "Steamed canasta tacos from bikes; beat concourse food",
+    "why": [
+     "Cheaper and better than concourse food",
+     "Right at Gate 3, no walk"
+    ],
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
   ],
-  "tips": [
-    "Take the Tren Ligero, not a car — the light rail stop is the single smartest way in and out.",
-    "Arrive absurdly early for the Opener: the city says be in the stadium zone by 9:00 AM for the ~1 PM kickoff.",
-    "Land 1–2 days early and hydrate hard — 7,350 feet hits harder than the mild weather suggests.",
-    "Pack a packable rain shell; predictable storms roll in after 1 PM.",
-    "Eat outside the gates — the Santa Úrsula tacos, birria, and carnitas beat anything inside on price and flavor.",
-    "Bring a clear bag only, small cash, and your FIFA FAN ID ready; leave the backpack and DSLR at the hotel."
+  "pre": [
+   {
+    "name": "FIFA Fan Festival CDMX",
+    "where": "Zócalo (Plaza de la Constitución), Historic Center; Metro Zócalo (Line 2)",
+    "why": [
+     "Free entry, official FIFA fan zone",
+     "30-meter giant screen, live music"
+    ],
+    "fifa": true,
+    "rating": null,
+    "dist": "9 mi",
+    "distMi": 9
+   },
+   {
+    "name": "El Hijo del Cuervo",
+    "where": "Jardín Centenario 17, Villa Coyoacán (Coyoacán center)",
+    "note": "Iconic Coyoacán bar on the plaza, barrel beer, live music",
+    "why": [
+     "Bohemian Coyoacán institution on Jardín Centenario",
+     "Cerveza de barril and live music before kickoff"
+    ],
+    "rating": 4.3,
+    "dist": "4 mi",
+    "distMi": 4
+   },
+   {
+    "name": "Sport and Chips Coyoacán",
+    "where": "Av. Miguel Ángel de Quevedo, San Andrés 1144, Coyoacán",
+    "note": "Big-screen sports bar, beers flowing, rowdy",
+    "why": [
+     "Big screens and a rowdy crowd",
+     "Beers flowing, classic sports-bar energy"
+    ],
+    "rating": 4.3,
+    "dist": "3 mi",
+    "distMi": 3
+   },
+   {
+    "name": "La Coyoacana",
+    "where": "Higuera 14, La Concepción (Coyoacán center)",
+    "note": "Friendly cantina, roving musicians, weekend buzz",
+    "why": [
+     "Roving musicians and weekend buzz",
+     "Friendly cantina close to stadium"
+    ],
+    "rating": 4.3,
+    "dist": "4 mi",
+    "distMi": 4
+   },
+   {
+    "name": "Salón Ríos",
+    "where": "Río Nilo 71, Colonia Cuauhtémoc, fan-gathering district",
+    "note": "Screens everywhere, El Tri faithful, arrive early",
+    "why": [
+     "Screens everywhere, packed El Tri crowd",
+     "Heart of the Condesa fan district"
+    ],
+    "rating": 4.3,
+    "dist": "8 mi",
+    "distMi": 8
+   }
   ],
-  "weather": "Mild not hot (highs ~24–26°C) but it's rainy season — pack a light rain shell for the near-daily afternoon storms.",
-  "lore": [
-    "1970 World Cup Final: Brazil 4–1 Italy, the coronation of Pelé and arguably the greatest team ever assembled.",
-    "1986 vs England: Maradona scored the 'Hand of God' and the 'Goal of the Century' within four minutes — then lifted the trophy here.",
-    "The only stadium on earth where both Pelé and Maradona won a World Cup.",
-    "A concert legend too — Michael Jackson played five shows in 1993, alongside U2, McCartney, Bad Bunny, and Karol G."
+  "post": [
+   {
+    "name": "Salón Covadonga",
+    "where": "Puebla 121, Roma Norte",
+    "note": "1940 Asturian cantina, huge room, late nights",
+    "why": [
+     "Cavernous 1940 Asturian cantina",
+     "Domino slap and late-night energy"
+    ],
+    "rating": 4.3,
+    "dist": "7 mi",
+    "distMi": 7
+   },
+   {
+    "name": "Cantina El Centenario",
+    "where": "Av. Vicente Suárez 42, Colonia Condesa",
+    "note": "1948 favorite, free botanas, weekend live music",
+    "why": [
+     "1948 classic with free botanas",
+     "Weekend live music keeps it buzzing"
+    ],
+    "rating": 4.2,
+    "dist": "7 mi",
+    "distMi": 7
+   },
+   {
+    "name": "La Bipolar",
+    "where": "Malintzin 155, Del Carmen, Coyoacán",
+    "note": "DJs, live bands, karaoke, no cover",
+    "why": [
+     "DJs, live bands, karaoke, no cover",
+     "Close-in Coyoacán party spot"
+    ],
+    "rating": 4.2,
+    "dist": "3.5 mi",
+    "distMi": 3.5
+   },
+   {
+    "name": "Cervecería de Barrio",
+    "where": "Av. Vicente Suárez 38, Colonia Condesa",
+    "note": "Beers and mariscos, packed when Mexico plays",
+    "why": [
+     "Cold beers and big mariscos plates",
+     "Packed whenever Mexico plays"
+    ],
+    "rating": 4.1,
+    "dist": "7 mi",
+    "distMi": 7
+   }
+  ],
+  "merch": [
+   {
+    "name": "AmeShop (Tienda Oficial Club América)",
+    "where": "Inside Estadio Azteca / Banorte, Santa Úrsula Coapa",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   },
+   {
+    "name": "Nike Store Estadio Azteca",
+    "where": "Calzada de Tlalpan 3465, Estadio Azteca, Santa Úrsula Coapa",
+    "rating": null,
+    "dist": "At stadium",
+    "distMi": 0
+   }
   ]
+ },
+ "tips": [
+  "Take the Tren Ligero, not a car — the light rail stop is the single smartest way in and out.",
+  "Arrive absurdly early for the Opener: the city says be in the stadium zone by 9:00 AM for the ~1 PM kickoff.",
+  "Land 1–2 days early and hydrate hard — 7,350 feet hits harder than the mild weather suggests.",
+  "Pack a packable rain shell; predictable storms roll in after 1 PM.",
+  "Eat outside the gates — the Santa Úrsula tacos, birria, and carnitas beat anything inside on price and flavor.",
+  "Bring a clear bag only, small cash, and your FIFA FAN ID ready; leave the backpack and DSLR at the hotel."
+ ],
+ "weather": "Mild not hot (highs ~24–26°C) but it's rainy season — pack a light rain shell for the near-daily afternoon storms.",
+ "lore": [
+  "1970 World Cup Final: Brazil 4–1 Italy, the coronation of Pelé and arguably the greatest team ever assembled.",
+  "1986 vs England: Maradona scored the 'Hand of God' and the 'Goal of the Century' within four minutes — then lifted the trophy here.",
+  "The only stadium on earth where both Pelé and Maradona won a World Cup.",
+  "A concert legend too — Michael Jackson played five shows in 1993, alongside U2, McCartney, Bad Bunny, and Karol G."
+ ],
+ "transport": {
+  "summary": "CDMX's official matchday plan is transit-and-walk only: the 'Última Milla' perimeter around the stadium is closed to general traffic, so the smart move is the Tren Ligero light rail to the 'Estadio Azteca' stop, then a short signed walk in.",
+  "rail": [
+   {
+    "name": "Tren Ligero (Xochimilco Light Rail)",
+    "station": "Estadio Azteca",
+    "detail": "The closest, fastest, safest arrival — the stop feeds straight into the concourses. On matchdays a direct Tasqueña→Estadio Azteca service runs with no intermediate stops, open to ticketholders only.",
+    "points": [
+     {
+      "b": "Closest stop",
+      "t": "feeds straight into the concourses"
+     },
+     {
+      "b": "Matchday express",
+      "t": "direct Tasqueña→Azteca, no stops"
+     },
+     {
+      "b": "Ticketholders only",
+      "t": "match ticket required to board"
+     }
+    ],
+    "deal": "~MXN $3 (≈US$0.18) per ride on a Tarjeta MI"
+   },
+   {
+    "name": "Metro Line 2 (blue)",
+    "station": "Tasqueña",
+    "detail": "Ride Line 2 southbound to its Tasqueña terminus, then transfer to the Tren Ligero. General Anaya (Line 2) is an alternate walk-in point.",
+    "points": [
+     {
+      "b": "Ride south",
+      "t": "Line 2 to Tasqueña terminus"
+     },
+     {
+      "b": "Transfer to",
+      "t": "Tren Ligero for final leg"
+     },
+     {
+      "b": "Alternate entry",
+      "t": "General Anaya is a walk-in point"
+     }
+    ],
+    "deal": "~MXN $5 (≈US$0.30) per ride — full Metro + light-rail trip is about MXN $8"
+   }
+  ],
+  "bus": [
+   {
+    "name": "Metrobús Line 1 + Perisur shuttle",
+    "from": "Roma/Condesa/Insurgentes corridor",
+    "detail": "Ride Metrobús Line 1 south to Perisur, then a special Perisur–Estadio Azteca–Cañaverales matchday route with free transfer.",
+    "points": [
+     {
+      "b": "Ride south",
+      "t": "Metrobús Line 1 down to Perisur"
+     },
+     {
+      "b": "Connect to",
+      "t": "matchday Perisur–Azteca shuttle route"
+     },
+     {
+      "b": "Free transfer",
+      "t": "on the stadium leg"
+     }
+    ],
+    "deal": "Tarjeta MI fare; complimentary transfer on the stadium leg"
+   },
+   {
+    "name": "Trolebús (electric)",
+    "from": "Tasqueña / Universidad",
+    "detail": "Electric trolleybus connections feed the southern transit hubs near the stadium.",
+    "points": [
+     {
+      "b": "Electric trolleybus",
+      "t": "from Tasqueña and Universidad"
+     },
+     {
+      "b": "Feeds into",
+      "t": "southern transit hubs near the stadium"
+     }
+    ],
+    "deal": "~MXN $7–22.50 by route, paid with Tarjeta MI"
+   }
+  ],
+  "shuttle": [
+   {
+    "name": "Ride (official matchday shuttle)",
+    "detail": "Direct buses from 7 city points — Bellas Artes, CETRAM Chapultepec, Ángel de la Independencia, Palacio de los Deportes, Parque México, Estadio Olímpico Universitario, San Jerónimo — for MXN $350/person, departing every 15 min from 7:00 AM until ~2 hrs after the final whistle. Tarjeta MI.",
+    "points": [
+     {
+      "b": "Direct from",
+      "t": "7 city pickup points across CDMX"
+     },
+     {
+      "b": "Every 15 min",
+      "t": "from 7:00 AM to ~2 hrs post-match"
+     },
+     {
+      "b": "Tarjeta MI only",
+      "t": "load card to ride"
+     }
+    ]
+   }
+  ],
+  "fromAirport": "AICM/MEX: Metrobús Line 4 → San Lázaro → Metro Line 1 → Pino Suárez → Line 2 → Tasqueña → Tren Ligero. AIFA/NLU (far north): Suburban Train → Buenavista → Metro Line B → Garibaldi → Line 8 → Bellas Artes → Line 2 → Tasqueña → Tren Ligero — budget extra time, AIFA is distant.",
+  "rideshare": "Strongly discouraged to the doors — the Última Milla perimeter is closed to general traffic and Calzada de Tlalpan gridlocks on matchdays. Authorized taxi zones sit at 5 designated points outside the perimeter; after the match, walk several blocks out or ride the light rail north before summoning a car.",
+  "bike": "About 2,000 shared bikes and 2,000 scooters are deployed ~3 hours pre-match along the Calzada de Tlalpan cycle path for the final approach.",
+  "tips": [
+   "Buy a Tarjeta MI (Integrated Mobility Card, ~MXN $15 card fee + balance) at any Metro/Tren Ligero booth or vending machine — it pays for everything; reload via the CDMX app.",
+   "The matchday Tren Ligero direct service and the perimeter only admit fans with a match ticket, so have it ready.",
+   "Allow 45–65 min from the central tourist neighborhoods, and arrive in the stadium zone by ~9:00 AM for the ~1 PM Opening Match."
+  ]
+ },
+ "parking": {
+  "summary": "There is effectively no fan parking at the stadium. Public parking has been eliminated inside the 'Última Milla' perimeter, which is closed to general vehicles on matchdays — the official guidance is to not drive in at all. If you must drive, use a remote Park & Ride lot and shuttle in.",
+  "lots": [
+   {
+    "name": "Park & Ride remote lots",
+    "price": "~MXN $500 per vehicle round trip (parking + shuttle)",
+    "detail": "Five remote sites — Campo Marte, Plaza Carso, Centro Comercial Santa Fe, Six Flags México, and Parque Ecológico de Xochimilco — with shuttles every 15 min from 7:00 AM. Pay only with Tarjeta MI.",
+    "points": [
+     {
+      "b": "Five remote lots",
+      "t": "ringing the city, by route"
+     },
+     {
+      "b": "Shuttles every 15 min",
+      "t": "running from 7:00 AM"
+     },
+     {
+      "b": "Tarjeta MI only",
+      "t": "no cash at the gate"
+     }
+    ]
+   }
+  ],
+  "prepaid": "Park & Ride is reserved/paid via the Tarjeta MI (cash or the CDMX app to load); no general on-site stadium parking is sold.",
+  "accessible": "Accessible arrivals are best via the Tren Ligero 'Estadio Azteca' station, which connects directly into the concourses and ramps; for wheelchair/mobility needs confirm with FIFA via the FIFA app. (Stadium-specific accessible-parking figures not published — confirm with FIFA.)",
+  "tailgating": "No tailgating — the immediate stadium zone is a pedestrian-only perimeter, not a parking-lot scene. The Santa Úrsula tianguis (street market) and taco vendors around the gates are the matchday gathering ground instead.",
+  "tips": [
+   "Don't drive to the doors — the roads collapse and the perimeter is sealed; take the Tren Ligero instead.",
+   "If driving from afar, pick the Park & Ride lot nearest your route (e.g. Santa Fe from the west, Xochimilco from the south) and budget for the 15-min shuttle frequency.",
+   "Remote-lot and shuttle payment is Tarjeta MI only — load it before matchday."
+  ]
+ }
 }

@@ -1,0 +1,13 @@
+{
+ "id": "linc-jun19", "venue": "linc", "venueName": "Lincoln Financial Field", "city": "Philadelphia",
+ "date": "Jun 19", "ko": "9:00 PM", "round": "Group C", "home": "Brazil", "away": "Haiti",
+ "preview": {
+  "summary": "Five-time champions Brazil face debutant-era Haiti, back at the World Cup for the first time in 52 years. Carlo Ancelotti's star-laden Seleção are heavy favorites against a resilient, diaspora-built Grenadiers side seeking their first-ever World Cup point.",
+  "homeForm": "Ranked 6th by FIFA and chasing a sixth title under Ancelotti, with Neymar restored to the squad.",
+  "awayForm": "Topped their CONCACAF qualifying group despite playing every match abroad; ranked 83rd, bottom of Group C.",
+  "homeKey": "Vinícius Júnior, Real Madrid's attacking reference and talisman.",
+  "awayKey": "Duckens Nazon, all-time top scorer who fired Haiti through qualifying.",
+  "storylines": ["Haiti's first World Cup since 1974, still chasing a maiden point", "Ancelotti's blend of Vinícius, Raphinha and a returning Neymar", "Premier League additions Isidor and Bellegarde bolster the underdogs"],
+  "h2h": "Brazil overwhelmed Haiti 7-1 in their best-known meeting at the 2016 Copa América Centenario."
+ }
+}

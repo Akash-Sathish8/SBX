@@ -185,11 +185,11 @@ export default function WhereIsCaseyBadge({ location, stats, itinerary, stadiums
 
 function StatePill({ state }: { state: CaseyLocation['state'] }) {
   const map: Record<CaseyLocation['state'], { label: string; cls: string }> = {
-    'at-stadium': { label: '● LIVE · INSIDE THE STADIUM', cls: 'bg-live text-snap-black' },
-    'in-transit': { label: '✈ IN TRANSIT', cls: 'bg-snap-yellow text-snap-black' },
-    'at-hotel': { label: '☕ OFF DAY · AT HOTEL', cls: 'bg-snap-yellow text-snap-black' },
-    'pre-trip': { label: '◷ PRE-TRIP', cls: 'bg-snap-fog text-snap-black' },
-    'post-trip': { label: '🎬 WRAPPED', cls: 'bg-snap-fog text-snap-black' },
+    'at-stadium': { label: '● LIVE · INSIDE THE STADIUM', cls: 'bg-live text-snap-chalk' },
+    'in-transit': { label: '✈ IN TRANSIT', cls: 'bg-snap-yellow text-snap-chalk' },
+    'at-hotel': { label: '☕ OFF DAY · AT HOTEL', cls: 'bg-snap-yellow text-snap-chalk' },
+    'pre-trip': { label: '◷ PRE-TRIP', cls: 'bg-snap-fog text-snap-chalk' },
+    'post-trip': { label: '🎬 WRAPPED', cls: 'bg-snap-fog text-snap-chalk' },
   };
   const s = map[state];
   return (

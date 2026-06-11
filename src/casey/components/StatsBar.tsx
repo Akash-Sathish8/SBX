@@ -203,12 +203,12 @@ export default function StatsBar({
               pips={{ total: stats.stadiumsTotal, completed: stats.stadiumsVisited }}
               className="hidden sm:block"
             />
-            <div className="pointer-events-auto bg-gradient-to-br from-snap-yellow/10 to-snap-black/70 border border-snap-yellow/40 px-2 py-1.5">
+            <div className="pointer-events-auto bg-snap-chalk border border-snap-chalk px-2 py-1.5">
               <div className="font-mono text-[9px] tracking-[0.15em] text-snap-yellow">NEXT KO</div>
               <div className="stat-number text-snap-yellow text-[18px] sm:text-[22px] mt-0.5 tabular-nums">
                 {formatCountdown(countdownMs)}
               </div>
-              <div className="mt-1 h-[3px] w-full bg-snap-ash/50 overflow-hidden">
+              <div className="mt-1 h-[3px] w-full bg-snap-yellow/25 overflow-hidden">
                 <div className="h-full bg-snap-yellow animate-pulse-live" style={{ width: '30%' }} />
               </div>
             </div>
@@ -225,11 +225,7 @@ export default function StatsBar({
           <button
             type="button"
             onClick={toggleCollapse}
-            className={`flex items-center gap-1.5 flex-1 min-h-0 border px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] transition-colors ${
-              collapsed
-                ? 'border-snap-yellow bg-snap-yellow/10 text-snap-yellow'
-                : 'border-snap-ash bg-snap-black/70 text-snap-mist hover:text-snap-yellow hover:border-snap-yellow'
-            }`}
+            className="flex items-center gap-1.5 flex-1 min-h-0 border border-snap-chalk bg-snap-yellow px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] text-snap-chalk hover:bg-snap-yellowDim transition-colors"
             aria-pressed={collapsed}
             aria-label={collapsed ? 'Show stats' : 'Hide stats'}
             title={collapsed ? 'Show stats' : 'Hide stats'}
@@ -240,18 +236,14 @@ export default function StatsBar({
           <button
             type="button"
             onClick={onOpenToday}
-            className={`flex items-center gap-1.5 flex-1 min-h-0 border px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] transition-colors ${
-              todayCount && todayCount > 0
-                ? 'border-snap-yellow bg-snap-yellow/10 text-snap-yellow'
-                : 'border-snap-ash bg-snap-black/70 text-snap-mist hover:text-snap-yellow hover:border-snap-yellow'
-            }`}
+            className="flex items-center gap-1.5 flex-1 min-h-0 border border-snap-chalk bg-snap-yellow px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] text-snap-chalk hover:bg-snap-yellowDim transition-colors"
             aria-label="Today's updates"
             title="Today's vlogs + live World Cup results"
           >
             <span
               aria-hidden="true"
               className={`inline-block h-1.5 w-1.5 rounded-full ${
-                todayCount && todayCount > 0 ? 'bg-snap-yellow animate-pulse-live' : 'bg-snap-fog'
+                todayCount && todayCount > 0 ? 'bg-snap-chalk animate-pulse-live' : 'bg-snap-chalk/30'
               }`}
             />
             TODAY{todayCount && todayCount > 0 ? ` · ${todayCount}` : ''}
@@ -259,11 +251,7 @@ export default function StatsBar({
           <button
             type="button"
             onClick={onOpenFollowing}
-            className={`flex items-center gap-1.5 flex-1 min-h-0 border px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] transition-colors ${
-              followingCount > 0
-                ? 'border-snap-yellow bg-snap-yellow/10 text-snap-yellow'
-                : 'border-snap-ash bg-snap-black/70 text-snap-mist hover:text-snap-yellow hover:border-snap-yellow'
-            }`}
+            className="flex items-center gap-1.5 flex-1 min-h-0 border border-snap-chalk bg-snap-yellow px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] text-snap-chalk hover:bg-snap-yellowDim transition-colors"
             aria-label="My followed teams"
             title="Manage followed teams"
           >
@@ -273,7 +261,7 @@ export default function StatsBar({
           <button
             type="button"
             onClick={onOpenSchedule}
-            className="flex flex-1 min-h-0 items-center gap-1.5 border border-snap-ash bg-snap-black/70 px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] text-snap-mist hover:text-snap-yellow hover:border-snap-yellow transition-colors"
+            className="flex flex-1 min-h-0 items-center gap-1.5 border border-snap-chalk bg-snap-yellow px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] text-snap-chalk hover:bg-snap-yellowDim transition-colors"
           >
             <svg viewBox="0 0 12 12" className="h-3 w-3 fill-current flex-shrink-0" aria-hidden="true">
               <rect x="1" y="2" width="10" height="9" stroke="currentColor" strokeWidth="1" fill="none" />
