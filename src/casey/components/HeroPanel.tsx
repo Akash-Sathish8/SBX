@@ -41,7 +41,7 @@ function buildHero(
         tagText: '◷ TOURNAMENT LOADING',
         bigText: countdown.toUpperCase(),
         scriptText: 'till mexico vs south africa',
-        metaLeft: 'JUN 11 · 3PM CDT',
+        metaLeft: 'JUN 11 · 3PM ET',
         metaRight: 'ESTADIO AZTECA',
         cta: nextMatch ? { label: 'OPENER', matchNumber: nextMatch.matchNumber } : undefined,
       };

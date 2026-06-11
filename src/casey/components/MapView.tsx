@@ -698,17 +698,38 @@ export default function MapView({
   useEffect(() => {
     targetPosRef.current = { lat: location.lat, lng: location.lng };
 
-    if (
-      location.state === 'in-transit' &&
-      location.fromStadiumId &&
-      location.toStadiumId &&
-      stadiums[location.fromStadiumId] &&
-      stadiums[location.toStadiumId]
-    ) {
-      const o = stadiums[location.fromStadiumId];
-      const d = stadiums[location.toStadiumId];
-      const origin = { lat: o.lat, lng: o.lng };
-      const dest = { lat: d.lat, lng: d.lng };
+    // Prefer the leg's actual endpoints (a leg can start at a sleep city and a
+    // redeye can end at a non-stadium city). Fall back to the stadium lookup for
+    // any older payload that only carries from/toStadiumId.
+    const legEndpoints = (():
+      | { origin: { lat: number; lng: number }; dest: { lat: number; lng: number } }
+      | null => {
+      if (
+        location.fromLat != null &&
+        location.fromLng != null &&
+        location.toLat != null &&
+        location.toLng != null
+      ) {
+        return {
+          origin: { lat: location.fromLat, lng: location.fromLng },
+          dest: { lat: location.toLat, lng: location.toLng },
+        };
+      }
+      if (
+        location.fromStadiumId &&
+        location.toStadiumId &&
+        stadiums[location.fromStadiumId] &&
+        stadiums[location.toStadiumId]
+      ) {
+        const o = stadiums[location.fromStadiumId];
+        const d = stadiums[location.toStadiumId];
+        return { origin: { lat: o.lat, lng: o.lng }, dest: { lat: d.lat, lng: d.lng } };
+      }
+      return null;
+    })();
+
+    if (location.state === 'in-transit' && legEndpoints) {
+      const { origin, dest } = legEndpoints;
       activeArcRef.current = {
         origin,
         dest,
