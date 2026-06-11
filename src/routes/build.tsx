@@ -94,7 +94,7 @@ function BuildPage() {
   return (
     <>
       <PageCssGuard id="build" />
-      <SiteNav active="games" />
+      <SiteNav active="guide" />
       <main id="app">
         {/* Intro hero only while choosing a match; once a match is picked the
             guide wizard takes over the full page. */}
