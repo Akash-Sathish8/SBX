@@ -8,7 +8,7 @@
     "homeTeam": "Mexico",
     "awayTeam": "South Africa",
     "stadiumId": "estadio_azteca",
-    "kickoffLocal": "2026-06-11T14:00:00",
+    "kickoffLocal": "2026-06-11T13:00:00",
     "kickoffTZ": "America/Mexico_City",
     "sleepCity": "Mexico City",
     "sleepLat": 19.4326,
@@ -22,7 +22,9 @@
     "lodging": {
       "name": "Hotel Catedral",
       "type": "hotel"
-    }
+    },
+    "betSlipImage": "/casey/bets/sample.jpg",
+    "agenda": "9am — land in Mexico City\nbreakfast at the hotel\n10:30am — explore the Zocalo and grab tacos\n12pm — head into Estadio Azteca early\n1pm — Mexico vs South Africa kickoff\npost-match vlog from the hotel"
   },
   {
     "matchNumber": 2,
@@ -158,7 +160,7 @@
     "homeTeam": "England",
     "awayTeam": "Croatia",
     "stadiumId": "att_stadium",
-    "kickoffLocal": "2026-06-17T14:00:00",
+    "kickoffLocal": "2026-06-17T15:00:00",
     "kickoffTZ": "America/Chicago",
     "sleepCity": "Arlington",
     "sleepLat": 32.7357,
@@ -183,7 +185,7 @@
     "homeTeam": "Canada",
     "awayTeam": "Qatar",
     "stadiumId": "bc_place",
-    "kickoffLocal": "2026-06-18T14:00:00",
+    "kickoffLocal": "2026-06-18T15:00:00",
     "kickoffTZ": "America/Vancouver",
     "sleepCity": "Seattle",
     "sleepLat": 47.6062,
@@ -333,7 +335,7 @@
     "homeTeam": "Morocco",
     "awayTeam": "Haiti",
     "stadiumId": "mercedes_benz_stadium",
-    "kickoffLocal": "2026-06-24T15:00:00",
+    "kickoffLocal": "2026-06-24T18:00:00",
     "kickoffTZ": "America/New_York",
     "sleepCity": "Atlanta",
     "sleepLat": 33.749,
