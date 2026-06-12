@@ -28,7 +28,7 @@ export const SIM_PRESETS = [
   {
     id: 'departure',
     label: 'DEPARTURE',
-    iso: '2026-06-10T20:30:00Z',
+    iso: '2026-06-11T04:00:00Z',
     blurb: 'jfk→mex airborne',
   },
   {
@@ -52,7 +52,7 @@ export const SIM_PRESETS = [
   {
     id: 'midgroup',
     label: 'MID GROUP STAGE',
-    iso: '2026-06-24T19:30:00Z',
+    iso: '2026-06-24T22:30:00Z',
     blurb: 'matchday 14 · atlanta',
   },
   {

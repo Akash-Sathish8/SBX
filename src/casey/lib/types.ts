@@ -76,8 +76,18 @@ export interface CaseyLocation {
   description: string;
   currentMatchNumber: number | null;
   nextMatchNumber: number | null;
+  // In-transit only. fromStadiumId/toStadiumId stay for the map's arc context;
+  // the from/to lat-lng are the ACTUAL leg endpoints (a leg can start at a sleep
+  // city and a redeye can end at a non-stadium city), so they — not the stadium
+  // lookup — drive the moving trail. from/toLabel are the city names for the UI.
   fromStadiumId?: string;
   toStadiumId?: string;
+  fromLat?: number;
+  fromLng?: number;
+  toLat?: number;
+  toLng?: number;
+  fromLabel?: string;
+  toLabel?: string;
   progressPercent?: number;
   computedAt: string;
 }

@@ -137,8 +137,8 @@ export default function WhereIsCaseyBadge({ location, stats, itinerary, stadiums
 
               {location.state === 'in-transit' && (
                 <InTransitDetail
-                  fromStadium={fromStadium}
-                  toStadium={toStadium}
+                  fromLabel={location.fromLabel ?? fromStadium?.city ?? 'New York City'}
+                  toLabel={location.toLabel ?? toStadium?.city ?? '—'}
                   progressPercent={location.progressPercent ?? 0}
                   nextMatch={nextMatch}
                   countdownMs={countdownMs}
@@ -225,14 +225,14 @@ function AtStadiumDetail({ match, stadium }: { match: ItineraryMatch; stadium: S
 }
 
 function InTransitDetail({
-  fromStadium,
-  toStadium,
+  fromLabel,
+  toLabel,
   progressPercent,
   nextMatch,
   countdownMs,
 }: {
-  fromStadium: Stadium | null;
-  toStadium: Stadium | null;
+  fromLabel: string;
+  toLabel: string;
   progressPercent: number;
   nextMatch: ItineraryMatch | null;
   countdownMs: number | null;
@@ -243,12 +243,12 @@ function InTransitDetail({
       <div className="flex items-center justify-between gap-2 font-mono text-[11px] uppercase">
         <div className="flex-1 min-w-0">
           <div className="text-snap-fog text-[9px] tracking-[0.18em]">FROM</div>
-          <div className="text-snap-chalk truncate">{fromStadium?.city ?? 'New York City'}</div>
+          <div className="text-snap-chalk truncate">{fromLabel}</div>
         </div>
         <div className="text-snap-yellow text-[18px]">→</div>
         <div className="flex-1 min-w-0 text-right">
           <div className="text-snap-fog text-[9px] tracking-[0.18em]">TO</div>
-          <div className="text-snap-chalk truncate">{toStadium?.city ?? '—'}</div>
+          <div className="text-snap-chalk truncate">{toLabel}</div>
         </div>
       </div>
       <div>
