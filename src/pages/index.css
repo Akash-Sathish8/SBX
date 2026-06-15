@@ -167,9 +167,9 @@ body{overflow-x:hidden}
 .a-quick{display:flex;flex-direction:column}
 .a-quick-item{display:flex;align-items:center;text-decoration:none;color:var(--sb-ink)}
 .a-quick-ic{display:flex;align-items:center;justify-content:center;background:#111;border:2px solid #111;border-radius:12px;flex:0 0 auto}
-/* brightness(0) flattens the colour emoji to black, invert(1) flips it to a
-   clean white silhouette — white icon on the black tile. */
-.a-quick-gl{filter:brightness(0) invert(1);line-height:1}
+/* Lucide stroke icon (white) on the black tile. Stroke weight stays at the icon's
+   default 2 for visual consistency with the other line icons in the app. */
+.a-quick-gl{color:#fff;width:54%;height:54%}
 .a-quick-lb{font-family:'Anton';letter-spacing:.5px;line-height:1.05}
 /* Web: large, roomy stack with even spacing above + below (matches the gap to
    the CTAs). */
@@ -194,6 +194,11 @@ body{overflow-x:hidden}
 .a-right .img{position:absolute;inset:0;background:url('/img/stadiums/sofi.jpg') center/cover}
 .a-right .img::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(17,17,17,.55),rgba(17,17,17,.05) 45%,rgba(17,17,17,.45))}
 .a-right::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--sb-yellow);z-index:3}
+/* Hero carousel: 5 stadium slides stacked + crossfaded on desktop, turned into a
+   native horizontal swipe rail on mobile (see the max-width:860px block). */
+.a-scroll{position:absolute;inset:0;z-index:1}
+.a-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease}
+.a-slide.active{opacity:1}
 .a-post{position:absolute;top:30px;right:30px;z-index:4;max-width:280px}
 .a-venue{position:absolute;left:34px;bottom:38px;z-index:4;background:var(--sb-black);color:#fff;border:6px solid var(--sb-yellow);border-radius:6px;padding:18px 20px;box-shadow:12px 12px 0 0 rgba(0,0,0,.45);width:330px;max-width:calc(100% - 68px)}
 .a-venue .cc{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--sb-yellow);margin-bottom:2px}
@@ -204,9 +209,16 @@ body{overflow-x:hidden}
   .a-hero{grid-template-columns:1fr}
   /* Landing = the title + CTAs, filling the first screen. The stadium panel and
      everything below it sit past the fold, so you scroll to reach them.
-     dvh (not vh) so it's exact under the mobile browser's address bar. */
-  .a-left{min-height:calc(100dvh - 72px);justify-content:space-between}
+     svh (the small/stable viewport) NOT dvh: dvh grows as the iOS address bar
+     collapses on scroll, which visibly reflowed the hero (taller, buttons shift).
+     svh is fixed to the address-bar-shown height, so the hero is static. */
+  .a-left{min-height:calc(100svh - 72px);justify-content:space-between}
   .a-right{min-height:440px}
+  /* stadium panel becomes a swipeable scroll-snap rail (matches the agenda rail);
+     each stadium is a full-width slide and the dots track position */
+  .a-scroll{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-snap-stop:always;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .a-scroll::-webkit-scrollbar{display:none}
+  .a-slide{position:relative;inset:auto;flex:0 0 100%;width:100%;height:100%;opacity:1;transition:none;scroll-snap-align:start}
 }
 /* Phones: the fan post + venue cards become small corner blurbs so they frame
    the stadium photo instead of covering it. Drop the long quote and the rating
@@ -277,6 +289,15 @@ body{overflow-x:hidden}
 @media(max-width:520px){.marquee .card{flex:0 0 76vw}}
 @keyframes venue-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.marquee-track{animation:none}.marquee{overflow-x:auto}}
+/* Phones: stop the auto-marquee and let the venue rail be swiped by hand, like the
+   agenda rail. Hide the duplicate (aria-hidden) set so it doesn't repeat. */
+@media(max-width:760px){
+  .marquee{overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;-webkit-mask-image:none;mask-image:none}
+  .marquee::-webkit-scrollbar{display:none}
+  .marquee-track{animation:none;width:max-content;padding:0 24px}
+  .marquee-track>[aria-hidden="true"]{display:none}
+  .marquee .card{scroll-snap-align:center}
+}
 .rail-hint{display:flex;align-items:center;gap:8px;font-weight:700;text-transform:uppercase;
   font-size:12px;letter-spacing:.5px;color:var(--sb-gray);margin-bottom:4px}
 .rail-count{background:var(--sb-yellow);color:#111;padding:1px 8px;border-radius:3px}
@@ -379,7 +400,9 @@ footer a:hover{color:var(--sb-yellow)}
    Phones: the hand becomes a swipeable scroll-snap rail with a light alternating tilt. */
 .agenda-fan{display:flex;justify-content:center;align-items:flex-start;padding:26px 0 52px}
 .acard{position:relative;flex:0 0 252px;aspect-ratio:5/7;background:#fff;border:5px solid var(--sb-black);border-radius:14px;box-shadow:8px 8px 0 0 var(--sb-black);padding:36px 18px 14px;display:flex;flex-direction:column;text-decoration:none;color:inherit;overflow:hidden;transition:transform .16s ease-out,box-shadow .15s,border-color .15s}
-.acard+.acard{margin-left:-38px}
+/* symmetric overlap (half each side) so card 1 participates too and the rotated
+   hand self-centers in the container — was -38px on cards 2-5 only, off-center */
+.acard{margin-inline:-19px}
 .acard:nth-child(1){transform:rotate(-8deg) translateY(30px)}
 .acard:nth-child(2){transform:rotate(-4deg) translateY(9px)}
 .acard:nth-child(3){transform:rotate(0)}
@@ -399,24 +422,26 @@ footer a:hover{color:var(--sb-yellow)}
 .acard-rows{display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;flex:1;min-height:0}
 .acard-row{display:flex;align-items:center;gap:9px;min-width:0}
 .acard-row .ai{flex:0 0 auto;width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:var(--sb-yellow);border:2px solid #111;border-radius:7px}
-.acard-row .ai i{font-style:normal;font-size:13px;line-height:1;filter:brightness(0)}
+.acard-row .ai .ai-gl{width:15px;height:15px;color:#111;stroke-width:2}
 .acard-row .at{display:flex;flex-direction:column;min-width:0}
 .acard-row .at b{font-size:8.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--sb-gray)}
 .acard-row .at span{font-size:12px;font-weight:600;color:var(--sb-ink);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acard-ft{display:block;margin-top:10px;text-align:center;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b5b5b5;border-top:2px solid #eee;padding-top:7px}
 .agenda-cta{display:flex;justify-content:center}
+/* desktop: bump the CTA so it reads at the scale of the 252px billboard cards */
+@media(min-width:761px){#agendas .agenda-cta .btn{font-size:26px;padding:18px 40px}}
 @media(max-width:760px){
   .agenda-fan{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:16px 24px 36px;margin:0 -24px;-webkit-overflow-scrolling:touch}
-  .acard{flex:0 0 240px;scroll-snap-align:center}
-  .acard+.acard{margin-left:0}
+  .acard{flex:0 0 240px;scroll-snap-align:center;margin-inline:0}
   .acard:nth-child(odd){transform:rotate(-1.6deg)}
   .acard:nth-child(even){transform:rotate(1.6deg)}
 }
 /* rotating photo extras: superlative tag + rotation dots */
 .a-tag{position:absolute;top:26px;left:30px;z-index:4;background:var(--sb-yellow);color:#111;font-family:'Anton';font-size:18px;letter-spacing:.5px;padding:7px 15px;border:2px solid #111;box-shadow:4px 4px 0 0 #111;transform:rotate(-2deg);transition:opacity .45s ease}
 .a-dots{position:absolute;bottom:30px;right:34px;z-index:4;display:flex;gap:9px}
-.a-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.3);transition:background .3s,transform .3s}
-.a-dots span.on{background:var(--sb-yellow);transform:scale(1.3)}
+.a-dots button{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.3);transition:background .3s,transform .3s;cursor:pointer;-webkit-appearance:none;appearance:none}
+.a-dots button.on{background:var(--sb-yellow);transform:scale(1.3)}
+@media(max-width:860px){.a-dots button{width:12px;height:12px}}
 
 /* responsive images: ensure media scales fluidly and never overflows */
 img{max-width:100%;height:auto}

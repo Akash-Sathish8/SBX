@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { toPng } from 'html-to-image'
+import { SearchIcon, FlagIcon, MapPinIcon, ShareIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { ShareCard, type Plan } from '../components/ShareCard'
-import { getShareFontEmbedCss } from '../lib/shareFonts'
+import { renderShareCardBlob } from '../lib/renderShareCard'
 import { byDistance, isInside } from '../lib/dist'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
+import { useMatchScores } from '../lib/useMatchScores'
 import gameCss from '../pages/game.css?url'
 import shareCss from '../pages/share.css?url'
 
@@ -119,14 +120,18 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
   const [q, setQ] = useState('')
   const [venue, setVenue] = useState('')
   const real = useMemo(() => index.filter((x) => !x.tbd), [index])
+  // Real final scores (ESPN, once/day). Played matches show the score and sort last.
+  const scoreInputs = useMemo(() => real.map((x) => ({ key: x.id, dateISO: x.dateISO, home: x.home, away: x.away })), [real])
+  const scores = useMatchScores(scoreInputs)
+  const byPlayed = (a: any, b: any) => (scores[a.id] ? 1 : 0) - (scores[b.id] ? 1 : 0)
   const venues = useMemo(() => {
     const seen: Record<string, any> = {}
     real.forEach((x) => { if (!seen[x.venue]) seen[x.venue] = { id: x.venue, name: x.venueName, city: x.city, n: 0 }; seen[x.venue].n++ })
     return Object.values(seen).sort((a: any, b: any) => a.name.localeCompare(b.name))
   }, [real])
   const ql = q.trim().toLowerCase()
-  const matchupList = real.filter((x) => !ql || (x.home + ' ' + x.away + ' ' + teamName(x.home) + ' ' + teamName(x.away) + ' ' + x.venueName + ' ' + x.city).toLowerCase().includes(ql))
-  const venueList = venue ? real.filter((x) => x.venue === venue) : []
+  const matchupList = real.filter((x) => !ql || (x.home + ' ' + x.away + ' ' + teamName(x.home) + ' ' + teamName(x.away) + ' ' + x.venueName + ' ' + x.city).toLowerCase().includes(ql)).sort(byPlayed)
+  const venueList = venue ? real.filter((x) => x.venue === venue).sort(byPlayed) : []
 
   return (
     <section className="block"><div className="container">
@@ -136,7 +141,7 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
         <button className={'bld-tab' + (mode === 'matchup' ? ' on' : '')} onClick={() => setMode('matchup')}>By matchup</button>
         <button className={'bld-tab' + (mode === 'venue' ? ' on' : '')} onClick={() => { setMode('venue'); setVenue('') }}>By venue</button>
         {mode === 'matchup' ? (
-          <div className="search bld-search"><span className="si">🔍</span><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
+          <div className="search bld-search"><SearchIcon className="si" /><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
         ) : null}
       </div>
 
@@ -146,7 +151,7 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
             {matchupList.map((x) => (
               <button key={x.id} className="bld-mrow" onClick={() => onPick(x.id)}>
                 <span className="bld-date">{x.date}</span>
-                <span className="bld-teams">{teamFlag(x.home)} {teamName(x.home)} <span className="bld-vs">v</span> {teamName(x.away)} {teamFlag(x.away)}</span>
+                <span className="bld-teams">{teamFlag(x.home)} {teamName(x.home)} {scores[x.id] ? <span className="bld-score">{scores[x.id].hs}–{scores[x.id].as}</span> : <span className="bld-vs">v</span>} {teamName(x.away)} {teamFlag(x.away)}</span>
                 <span className="bld-meta">{x.round} · {x.venueName}</span>
                 <span className="bld-go">Choose →</span>
               </button>
@@ -172,7 +177,7 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
                 {venueList.map((x) => (
                   <button key={x.id} className="bld-mrow" onClick={() => onPick(x.id)}>
                     <span className="bld-date">{x.date}</span>
-                    <span className="bld-teams">{teamFlag(x.home)} {teamName(x.home)} <span className="bld-vs">v</span> {teamName(x.away)} {teamFlag(x.away)}</span>
+                    <span className="bld-teams">{teamFlag(x.home)} {teamName(x.home)} {scores[x.id] ? <span className="bld-score">{scores[x.id].hs}–{scores[x.id].as}</span> : <span className="bld-vs">v</span>} {teamName(x.away)} {teamFlag(x.away)}</span>
                     <span className="bld-meta">{x.round} · {x.ko}</span>
                     <span className="bld-go">Choose →</span>
                   </button>
@@ -294,22 +299,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   async function renderBlob(): Promise<Blob | null> {
     const node = storyRef.current
     if (!node) return null
-    // Ensure the live node is laid out with the real fonts before capture.
-    try { await (document as any).fonts?.ready } catch { /* ignore */ }
-    await new Promise((r) => setTimeout(r, 60))
-    // Inline the brand fonts so the isolated export SVG renders Anton/Barlow
-    // (not a wide fallback that wraps headings and breaks the layout). Falls
-    // back to skipFonts only if the font fetch fails (offline).
-    let fontEmbedCSS: string | undefined
-    try { fontEmbedCSS = await getShareFontEmbedCss() } catch { fontEmbedCSS = undefined }
-    const url = await toPng(node, {
-      pixelRatio: 1,
-      cacheBust: true,
-      width: 1080,
-      height: 1920,
-      ...(fontEmbedCSS ? { fontEmbedCSS } : { skipFonts: true }),
-    })
-    return await (await fetch(url)).blob()
+    return renderShareCardBlob(node)
   }
 
   // Share opens the OS share sheet with the rendered image (Save Image,
@@ -380,7 +370,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
         <div className="wz-cmeta-row">
           <span className="wz-cmeta">{g.venueName}</span>
           {weather && !cur.share ? <span className="wz-cmeta wz-cwx">{weather.temp} · {weather.label}</span> : null}
-          {attendingWalk && cur.key !== 'walk' ? <span className="wz-cmeta wz-cwalk">🚩 {fanwalk.name}</span> : null}
+          {attendingWalk && cur.key !== 'walk' ? <span className="wz-cmeta wz-cwalk"><FlagIcon className="wz-cgl" /> {fanwalk.name}</span> : null}
         </div>
       </div>
 
@@ -398,11 +388,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
                 {busy === 'share' ? 'Preparing…' : (
                   <>
                     Share Agenda
-                    <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M8 10V1.8" />
-                      <path d="M5 4.6 8 1.6l3 3" />
-                      <path d="M5 7H3v7.5h10V7h-2" />
-                    </svg>
+                    <ShareIcon size={15} aria-hidden="true" />
                   </>
                 )}
               </button>
@@ -424,7 +410,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
                   {o.rating || o.dist ? (
                     <div className="wz-cardmeta">
                       {o.rating ? <span className="wz-cardrating">★ {o.rating}</span> : null}
-                      {o.dist ? <span className="wz-carddist">📍 {o.dist}</span> : null}
+                      {o.dist ? <span className="wz-carddist"><MapPinIcon className="wz-distgl" /> {o.dist}</span> : null}
                     </div>
                   ) : null}
                   <ul className="wz-cardbul">
