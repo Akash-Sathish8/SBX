@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import {
+  MapPinIcon, SunIcon, CloudSunIcon, CloudIcon, CloudFogIcon, CloudRainIcon, CloudSnowIcon, CloudLightningIcon,
+  BusIcon, TruckIcon, SquareParkingIcon, TrainFrontIcon,
+} from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { displayFixture } from '../lib/teams'
 import { byDistance, isInside } from '../lib/dist'
+import { useMatchScores } from '../lib/useMatchScores'
+import { getJSON, warmImage } from '../lib/dataCache'
 import css from '../pages/venue.css?url'
 
 export const Route = createFileRoute('/venue')({
@@ -26,8 +32,10 @@ function VenuePage() {
     if (!id) return
     let alive = true
     setState({ status: 'loading' })
-    fetch('/data/venues/' + id + '.json')
-      .then((r) => { if (!r.ok) throw new Error('not found'); return r.json() })
+    // The stadium hero filename is the id for every venue, so start the photo
+    // download in parallel with the JSON instead of a second round-trip behind it.
+    warmImage('/img/stadiums/' + id + '.jpg')
+    getJSON('/data/venues/' + id + '.json')
       .then((v) => { if (alive) { setState({ status: 'ok', v }); document.title = 'Snapback — ' + v.name } })
       .catch(() => { if (alive) setState({ status: 'error' }) })
     return () => { alive = false }
@@ -89,56 +97,17 @@ function fmtCard(iso: string) {
   const d = new Date(iso + 'T00:00:00Z')
   return { wd: WD3[d.getUTCDay()], md: MONABBR[d.getUTCMonth()] + ' ' + d.getUTCDate() }
 }
-// Clean line-icon weather glyphs: Snapback yellow for sun/bolt, plain black outline for the rest.
+// Weather glyphs from the Lucide line-icon family (stroke-2), matching the rest of the site.
 function WxIcon({ code }: { code: number }) {
-  const K = '#111', Y = '#F7DF02'
-  const common = { width: 34, height: 34, viewBox: '0 0 24 24' }
-  const Cloud = ({ fill = 'none' }: { fill?: string }) => (
-    <path d="M7 17.5h9.3a3.3 3.3 0 0 0 .2-6.6 4.8 4.8 0 0 0-9.1-1.05A3.4 3.4 0 0 0 7 17.5Z" fill={fill} stroke={K} strokeWidth="1.7" strokeLinejoin="round" />
-  )
-  let kind = 'cloud'
-  if (code === 0) kind = 'sun'
-  else if (code === 1 || code === 2) kind = 'suncloud'
-  else if (code === 3) kind = 'cloud'
-  else if (code === 45 || code === 48) kind = 'fog'
-  else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) kind = 'rain'
-  else if ((code >= 71 && code <= 77) || code === 85 || code === 86) kind = 'snow'
-  else if (code >= 95) kind = 'thunder'
-
-  if (kind === 'sun') return (
-    <svg {...common}>
-      <circle cx="12" cy="12" r="4.6" fill={Y} />
-      <g stroke={Y} strokeWidth="2" strokeLinecap="round">
-        <line x1="12" y1="1.5" x2="12" y2="4" /><line x1="12" y1="20" x2="12" y2="22.5" />
-        <line x1="1.5" y1="12" x2="4" y2="12" /><line x1="20" y1="12" x2="22.5" y2="12" />
-        <line x1="4.4" y1="4.4" x2="6.2" y2="6.2" /><line x1="17.8" y1="17.8" x2="19.6" y2="19.6" />
-        <line x1="4.4" y1="19.6" x2="6.2" y2="17.8" /><line x1="17.8" y1="6.2" x2="19.6" y2="4.4" />
-      </g>
-    </svg>
-  )
-  if (kind === 'suncloud') return (
-    <svg {...common}>
-      <g stroke={Y} strokeWidth="1.7" strokeLinecap="round">
-        <circle cx="8.5" cy="8" r="3.1" fill={Y} stroke={Y} />
-        <line x1="8.5" y1="2.2" x2="8.5" y2="3.5" /><line x1="3" y1="8" x2="4.3" y2="8" />
-        <line x1="4.6" y1="4.1" x2="5.5" y2="5" /><line x1="12.4" y1="4.1" x2="11.5" y2="5" />
-      </g>
-      <path d="M7.5 18.5h8.8a3.1 3.1 0 0 0 .2-6.2 4.5 4.5 0 0 0-8.6-1A3.2 3.2 0 0 0 7.5 18.5Z" fill="#fff" stroke={K} strokeWidth="1.7" strokeLinejoin="round" />
-    </svg>
-  )
-  if (kind === 'fog') return (
-    <svg {...common}><Cloud /><g stroke={K} strokeWidth="1.7" strokeLinecap="round"><line x1="6" y1="20" x2="15" y2="20" /><line x1="9" y1="22.5" x2="18" y2="22.5" /></g></svg>
-  )
-  if (kind === 'rain') return (
-    <svg {...common}><Cloud /><g stroke={K} strokeWidth="1.7" strokeLinecap="round"><line x1="9" y1="19.5" x2="8" y2="22.5" /><line x1="13" y1="19.5" x2="12" y2="22.5" /><line x1="17" y1="19.5" x2="16" y2="22.5" /></g></svg>
-  )
-  if (kind === 'snow') return (
-    <svg {...common}><Cloud /><g fill={K}><circle cx="9" cy="21" r="1" /><circle cx="13" cy="22" r="1" /><circle cx="16.5" cy="21" r="1" /></g></svg>
-  )
-  if (kind === 'thunder') return (
-    <svg {...common}><Cloud /><path d="M12.6 18l-2.4 3.3h2L11.4 24l3.3-3.8h-2l1-2.2z" fill={Y} stroke={K} strokeWidth="1.1" strokeLinejoin="round" /></svg>
-  )
-  return <svg {...common}><Cloud /></svg>
+  const p = { size: 34, 'aria-hidden': true as const }
+  if (code === 0) return <SunIcon {...p} />
+  if (code === 1 || code === 2) return <CloudSunIcon {...p} />
+  if (code === 3) return <CloudIcon {...p} />
+  if (code === 45 || code === 48) return <CloudFogIcon {...p} />
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return <CloudRainIcon {...p} />
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return <CloudSnowIcon {...p} />
+  if (code >= 95) return <CloudLightningIcon {...p} />
+  return <CloudIcon {...p} />
 }
 
 function isoAddDays(iso: string, n: number) { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10) }
@@ -198,6 +167,17 @@ function WeatherSection({ v }: { v: any }) {
     return () => { alive = false }
   }, [v.id])
 
+  // Real final scores (ESPN, once/day). A played match shows its score instead of a
+  // (pointless) weather forecast and sorts to the bottom of the strip. Home/away come
+  // from splitting the fixture string ("Mexico vs South Africa").
+  const scoreInputs = matchInfo.map((m) => {
+    const p = m.fixture.split(/\s+vs?\s+/i)
+    return { key: m.iso + '|' + m.fixture, dateISO: m.iso, home: p[0]?.trim(), away: p[1]?.trim() }
+  })
+  const scores = useMatchScores(scoreInputs)
+  const sortedMatches = [...matchInfo].sort((a, b) =>
+    (scores[a.iso + '|' + a.fixture] ? 1 : 0) - (scores[b.iso + '|' + b.fixture] ? 1 : 0))
+
   if (!coords || !matchInfo.length) {
     return v.weather ? (
       <section className="block"><div className="container">
@@ -217,15 +197,21 @@ function WeatherSection({ v }: { v: any }) {
       {!err && days === null ? <div className="wx-msg">Loading live weather…</div> : null}
       {!err && days ? (
         <div className="wx-strip">
-          {matchInfo.map((m) => {
+          {sortedMatches.map((m) => {
             const c = fmtCard(m.iso)
             const w = byDate[m.iso]
+            const score = scores[m.iso + '|' + m.fixture]
             return (
-              <div key={m.iso + m.fixture} className="wx-day">
+              <div key={m.iso + m.fixture} className={'wx-day' + (score ? ' played' : '')}>
                 <div className="wx-wd">{c.wd}</div>
                 <div className="wx-dt">{c.md}</div>
                 <div className="wx-match">{m.fixture ? displayFixture(m.fixture) : 'TBD'}</div>
-                {w ? (
+                {score ? (
+                  <>
+                    <div className="wx-score">{score.hs}–{score.as}</div>
+                    <div className="wx-ft">Full time</div>
+                  </>
+                ) : w ? (
                   <>
                     <div className="wx-ic"><WxIcon code={w.code} /></div>
                     <div className="wx-temp">{w.tmax}°<span className="lo"> / {w.tmin}°</span> <span className="wxu">F</span></div>
@@ -242,13 +228,13 @@ function WeatherSection({ v }: { v: any }) {
   )
 }
 
-// transit mode line-icons (black outline)
+// transit mode line-icons from the Lucide family (stroke-2)
 function ModeIcon({ m }: { m: string }) {
-  const c = { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: '#111', strokeWidth: 1.7, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
-  if (m === 'bus') return (<svg {...c}><rect x="3.5" y="5" width="17" height="11" rx="2.4" /><line x1="3.5" y1="11" x2="20.5" y2="11" /><circle cx="7.5" cy="18.2" r="1.5" /><circle cx="16.5" cy="18.2" r="1.5" /></svg>)
-  if (m === 'shuttle') return (<svg {...c}><path d="M2.5 12.5l2-5.5h8.5l4 4h4.5v5.5h-3" /><path d="M9 16.5H6.5" /><circle cx="7.5" cy="16.7" r="1.6" /><circle cx="16.8" cy="16.7" r="1.6" /></svg>)
-  if (m === 'park') return (<svg {...c}><rect x="4" y="4" width="16" height="16" rx="3" /><path d="M9.5 16.5V7.5h3.3a2.5 2.5 0 0 1 0 5H9.5" /></svg>)
-  return (<svg {...c}><rect x="6" y="3" width="12" height="13.5" rx="3" /><line x1="6" y1="11" x2="18" y2="11" /><circle cx="9.2" cy="14" r="1" fill="#111" stroke="none" /><circle cx="14.8" cy="14" r="1" fill="#111" stroke="none" /><path d="M8.5 16.5l-2 4M15.5 16.5l2 4" /></svg>)
+  const p = { size: 24, 'aria-hidden': true as const }
+  if (m === 'bus') return <BusIcon {...p} />
+  if (m === 'shuttle') return <TruckIcon {...p} />
+  if (m === 'park') return <SquareParkingIcon {...p} />
+  return <TrainFrontIcon {...p} />
 }
 
 const splitSentences = (t: any) => String(t || '').split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean)
@@ -307,7 +293,7 @@ function AgendaCol({ title, items, hscroll }: { title: string; items?: any[]; hs
             {s.rating || s.dist ? (
               <div className="agmeta">
                 {s.rating ? <span className="agrating">★ {s.rating}</span> : null}
-                {s.dist ? <span className="agdist">📍 {s.dist}</span> : null}
+                {s.dist ? <span className="agdist"><MapPinIcon className="agdist-gl" /> {s.dist}</span> : null}
               </div>
             ) : null}
             {s.where ? <div className="agwhere">{s.where}</div> : null}
@@ -349,6 +335,9 @@ function VenueContent({ v }: { v: any }) {
         <section className="block"><div className="container">
           <div className="eyebrow">Matchday access</div>
           <h2 className="shead">Getting there</h2><div className="ssub">Transit, parking &amp; rideshare</div>
+          {/* "Get directions" button shelved for now (kept ready to improve). To restore, render
+              <DirectionsButton lat={VENUE_COORDS[v.id][0]} lng={VENUE_COORDS[v.id][1]} label={v.name} />
+              here — component: components/DirectionsButton.tsx, helper: lib/maps.ts, style: .dir-btn in venue.css */}
 
           {v.transport && ((v.transport.rail && v.transport.rail.length) || (v.transport.bus && v.transport.bus.length) || (v.transport.shuttle && v.transport.shuttle.length)) ? (
             <div className="epanel">

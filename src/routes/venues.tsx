@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
+import { warmVenue, intentWarm } from '../lib/dataCache'
 import css from '../pages/venues.css?url'
 
 export const Route = createFileRoute('/venues')({
@@ -60,7 +61,7 @@ function Venues() {
         <div className="container">
           <div className="grid" id="grid">
             {list.map((v) => (
-              <Link key={v.img} className="vcard" to="/venue" search={{ id: v.img }}>
+              <Link key={v.img} className="vcard" to="/venue" search={{ id: v.img }} {...intentWarm(() => warmVenue(v.img))}>
                 <div className="photo">
                   <img className="photo-img" src={`/img/stadiums/${v.img}.jpg`} alt="" loading="lazy" decoding="async" />
                   <span className="citytag"><span className="flag">{FL[v.cc]}</span>{v.city}</span>

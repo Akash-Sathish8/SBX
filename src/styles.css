@@ -37,12 +37,31 @@ header.nav { position: sticky; top: 0; z-index: 50; background: #111; border-bot
 .nav-links a { color: #cfcfcf; text-decoration: none; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
 .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: transparent; border: 0; cursor: pointer; padding: 0; }
 .hamburger span { display: block; width: 26px; height: 3px; background: #fff; border-radius: 2px; }
+/* Right-align the bars inside the 44px tap-button so the icon's right edge is the
+   same distance from the screen edge as the logo's left edge (symmetric nav
+   margins). `header.nav` raises specificity above the per-page `.hamburger`. */
+header.nav .hamburger { align-items: flex-end; }
 @media (max-width: 760px) {
   .hamburger { display: flex; }
   .nav-links { position: absolute; top: 68px; left: 0; right: 0; background: #111; flex-direction: column; align-items: stretch; gap: 0; padding: 6px 0 14px; border-bottom: 4px solid #F7DF02; display: none; }
   .nav-links.open { display: flex; }
   .nav-links a { padding: 13px 28px; font-size: 15px; }
 }
+
+/* ---- Global content fallback ----
+   Same idea as the nav fallback above: if a page's per-route stylesheet hasn't
+   applied yet (or failed to load over a flaky tunnel / cellular link), these keep
+   the page READABLE instead of broken. Without them, a missing page CSS means
+   full-size images blow the layout wider than the viewport (Safari then zooms the
+   whole page out and the nav looks tiny), and links fall back to default
+   blue-underline. Page CSS loads later in the document and overrides freely. */
+img { max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+/* Never let any element force a horizontal scroll / zoom-out on phones. Use
+   `clip` (not `hidden`): hidden would force overflow-y to `auto` and break the
+   sticky nav + Casey's fixed shell; clip contains the overflow without creating a
+   scroll container. Safari <16 ignores it (harmless no-op). */
+html, body { max-width: 100%; overflow-x: clip; }
 
 @supports (padding: max(0px)) {
   /* Sticky top bar: keep nav contents clear of the landscape notch / rounded

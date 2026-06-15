@@ -1,11 +1,23 @@
 const ESPN_BASE = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world';
 const ESPN_STANDINGS = 'https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings';
 
+// Keyed by the team names used in our fixture data (FIFA spelling); candidates are
+// the variants ESPN may return. Matching is lenient substring (both directions),
+// so a short distinctive token (e.g. 'Bosnia') is enough to bridge naming gaps.
 const TEAM_ALIASES: Record<string, string[]> = {
-  USA: ['United States', 'USA'],
+  USA: ['USA', 'United States'],
   Mexico: ['Mexico', 'México'],
+  'Korea Republic': ['Korea Republic', 'South Korea', 'Korea'],
+  Czechia: ['Czechia', 'Czech Republic'],
+  'Bosnia and Herzegovina': ['Bosnia and Herzegovina', 'Bosnia-Herzegovina', 'Bosnia & Herzegovina', 'Bosnia'],
+  'Türkiye': ['Türkiye', 'Turkey', 'Turkiye'],
+  'IR Iran': ['IR Iran', 'Iran'],
+  "Côte d'Ivoire": ["Côte d'Ivoire", 'Ivory Coast', "Cote d'Ivoire"],
   'Ivory Coast': ['Ivory Coast', "Côte d'Ivoire", 'Cote dIvoire'],
+  'Cabo Verde': ['Cabo Verde', 'Cape Verde'],
+  'DR Congo': ['DR Congo', 'Congo DR', 'Democratic Republic of the Congo'],
   'South Africa': ['South Africa'],
+  'Curaçao': ['Curaçao', 'Curacao'],
   Curacao: ['Curacao', 'Curaçao'],
 };
 
@@ -25,14 +37,21 @@ export interface MatchScore {
   completed: boolean;
 }
 
+// In-memory response cache (per worker isolate) keyed by URL with a TTL, so
+// repeated calls for the same scoreboard (e.g. several matches sharing a date)
+// don't each re-hit ESPN — which both cuts load and avoids burst rate-limiting.
+const _jsonCache = new Map<string, { t: number; data: any }>();
+
 async function fetchJson(url: string, revalidateSec: number): Promise<any | null> {
+  const now = Date.now();
+  const hit = _jsonCache.get(url);
+  if (hit && now - hit.t < revalidateSec * 1000) return hit.data;
   try {
-    // `next` is a Next.js fetch extension; in TanStack Start we just fetch with no cache hint.
-    // revalidateSec is retained as a parameter for API-route callers that document the TTL.
-    void revalidateSec;
     const res = await fetch(url);
     if (!res.ok) return null;
-    return await res.json();
+    const data = await res.json();
+    _jsonCache.set(url, { t: now, data });
+    return data;
   } catch {
     return null;
   }

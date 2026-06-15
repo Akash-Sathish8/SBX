@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { MapIcon, BeerIcon, HamburgerIcon, FlagIcon, ShoppingBagIcon, type LucideIcon } from 'lucide-react'
+import { warmVenue, intentWarm } from '../lib/dataCache'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import css from '../pages/index.css?url'
@@ -70,6 +72,7 @@ function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
       className="card venue interactive"
       aria-hidden={hidden ? 'true' : undefined}
       tabIndex={hidden ? -1 : undefined}
+      {...intentWarm(() => warmVenue(c.img))}
     >
       <div className="photo" style={{ backgroundImage: `url('/img/stadiums/${c.img}.jpg')` }}><span className="tag">{c.tag}</span></div>
       <div className="body">
@@ -86,43 +89,43 @@ function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
 
 // Matchday agenda mockups, dealt like a hand of playing cards. Each card carries a
 // playing-card rank (A/K/Q/J/10 + ball suit); every card opens the match-guide builder.
-type AgendaRow = [string, string, string] // [glyph, section label, sample plan]
+type AgendaRow = [LucideIcon, string, string] // [icon, section label, sample plan]
 type AgendaMock = { game: string; rank: string; match: string; venue: string; when: string; rows: AgendaRow[] }
 const AGENDAS: AgendaMock[] = [
   { game: 'azteca-jun11', rank: 'K', match: 'MEX v RSA', venue: 'Estadio Azteca · Mexico City', when: 'Jun 11 · 1:00 PM', rows: [
-    ['🚆', 'Getting there', 'Tren Ligero, Azteca stop'],
-    ['🍺', 'Before the match', 'Tacos in Coyoacán'],
-    ['🍔', 'Eat inside', 'Churros + michelada'],
-    ['🧢', 'Merch', 'El Tri home jersey'],
-    ['🏁', 'After the whistle', 'Mariachi in Garibaldi'],
+    [MapIcon,'Getting there', 'Tren Ligero, Azteca stop'],
+    [BeerIcon,'Before the match', 'Tacos in Coyoacán'],
+    [HamburgerIcon,'Eat inside', 'Churros + michelada'],
+    [ShoppingBagIcon,'Merch', 'El Tri home jersey'],
+    [FlagIcon,'After the whistle', 'Mariachi in Garibaldi'],
   ] },
   { game: 'metlife-jun13', rank: 'Q', match: 'BRA v MAR', venue: 'MetLife Stadium · New York', when: 'Jun 13 · 6:00 PM', rows: [
-    ['🚆', 'Getting there', 'NJ Transit from Penn'],
-    ['🍺', 'Before the match', 'Samba in the lots'],
-    ['🍔', 'Eat inside', 'Pretzel + cold lager'],
-    ['🧢', 'Merch', "Seleção '26 kit"],
-    ['🏁', 'After the whistle', 'Train back to Manhattan'],
+    [MapIcon,'Getting there', 'NJ Transit from Penn'],
+    [BeerIcon,'Before the match', 'Samba in the lots'],
+    [HamburgerIcon,'Eat inside', 'Pretzel + cold lager'],
+    [ShoppingBagIcon,'Merch', "Seleção '26 kit"],
+    [FlagIcon,'After the whistle', 'Train back to Manhattan'],
   ] },
   { game: 'sofi-jun12', rank: 'A', match: 'USA v PAR', venue: 'SoFi Stadium · Los Angeles', when: 'Jun 12 · 6:00 PM', rows: [
-    ['🚆', 'Getting there', 'Metro K + SoFi shuttle'],
-    ['🍺', 'Before the match', 'Tailgate on Lot K'],
-    ['🍔', 'Eat inside', 'Food court, section 130'],
-    ['🧢', 'Merch', 'USA scarf, south shop'],
-    ['🏁', 'After the whistle', 'Lake Park fan fest'],
+    [MapIcon,'Getting there', 'Metro K + SoFi shuttle'],
+    [BeerIcon,'Before the match', 'Tailgate on Lot K'],
+    [HamburgerIcon,'Eat inside', 'Food court, section 130'],
+    [ShoppingBagIcon,'Merch', 'USA scarf, south shop'],
+    [FlagIcon,'After the whistle', 'Lake Park fan fest'],
   ] },
   { game: 'arrowhead-jun16', rank: 'J', match: 'ARG v ALG', venue: 'Arrowhead Stadium · Kansas City', when: 'Jun 16 · 8:00 PM', rows: [
-    ['🚆', 'Getting there', 'Drive in, Lot G by 9am'],
-    ['🍺', 'Before the match', 'BBQ tailgate till kickoff'],
-    ['🍔', 'Eat inside', 'Burnt ends, section 132'],
-    ['🧢', 'Merch', 'Albiceleste flag'],
-    ['🏁', 'After the whistle', 'Power & Light party'],
+    [MapIcon,'Getting there', 'Drive in, Lot G by 9am'],
+    [BeerIcon,'Before the match', 'BBQ tailgate till kickoff'],
+    [HamburgerIcon,'Eat inside', 'Burnt ends, section 132'],
+    [ShoppingBagIcon,'Merch', 'Albiceleste flag'],
+    [FlagIcon,'After the whistle', 'Power & Light party'],
   ] },
   { game: 'bcplace-jun18', rank: '10', match: 'CAN v QAT', venue: 'BC Place · Vancouver', when: 'Jun 18 · 3:00 PM', rows: [
-    ['🚆', 'Getting there', 'SkyTrain to Chinatown'],
-    ['🍺', 'Before the match', 'Seawall walk to the gates'],
-    ['🍔', 'Eat inside', 'Japadog on the concourse'],
-    ['🧢', 'Merch', 'Maple leaf scarf'],
-    ['🏁', 'After the whistle', 'Gastown patios'],
+    [MapIcon,'Getting there', 'SkyTrain to Chinatown'],
+    [BeerIcon,'Before the match', 'Seawall walk to the gates'],
+    [HamburgerIcon,'Eat inside', 'Japadog on the concourse'],
+    [ShoppingBagIcon,'Merch', 'Maple leaf scarf'],
+    [FlagIcon,'After the whistle', 'Gastown patios'],
   ] },
 ]
 
@@ -137,9 +140,9 @@ function AgendaCard({ a }: { a: AgendaMock }) {
         <span className="acard-meta">{a.when}</span>
       </span>
       <span className="acard-rows">
-        {a.rows.map(([ic, label, val], i) => (
+        {a.rows.map(([Ic, label, val], i) => (
           <span className="acard-row" key={i}>
-            <span className="ai"><i>{ic}</i></span>
+            <span className="ai"><Ic className="ai-gl" /></span>
             <span className="at"><b>{label}</b><span>{val}</span></span>
           </span>
         ))}
@@ -150,30 +153,59 @@ function AgendaCard({ a }: { a: AgendaMock }) {
 }
 
 function Home() {
-  const [dotI, setDotI] = useState(0)
-  const [contentI, setContentI] = useState(0)
-  const [vis, setVis] = useState(1)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
 
+  // Hero stadium carousel. Desktop crossfades between stacked slides; mobile is a
+  // native horizontal scroll-snap rail you swipe by hand. Scrollability is CSS-only
+  // (works without JS) — this effect only auto-advances every 4s and keeps the
+  // active dot in sync, and on mobile it yields the moment you drag.
   useEffect(() => {
-    let fadeT: ReturnType<typeof setTimeout> | undefined
-    const id = setInterval(() => {
-      setDotI((prev) => {
-        const next = (prev + 1) % slides.length
-        setVis(0)
-        fadeT = setTimeout(() => { setContentI(next); setVis(1) }, 470)
-        return next
-      })
-    }, 4000)
-    return () => { clearInterval(id); if (fadeT) clearTimeout(fadeT) }
+    const mqMobile = window.matchMedia('(max-width: 860px)')
+    let teardown = () => {}
+    const setup = () => {
+      teardown()
+      const el = scrollRef.current
+      if (mqMobile.matches && el) {
+        let userDriven = false
+        let raf = 0
+        const sync = () => { raf = 0; setActive(Math.round(el.scrollLeft / el.clientWidth)) }
+        const onScroll = () => { if (!raf) raf = requestAnimationFrame(sync) }
+        const onTouch = () => { userDriven = true }
+        el.addEventListener('scroll', onScroll, { passive: true })
+        el.addEventListener('touchstart', onTouch, { passive: true })
+        const id = setInterval(() => {
+          if (userDriven || !el.clientWidth) return
+          const next = (Math.round(el.scrollLeft / el.clientWidth) + 1) % slides.length
+          el.scrollTo({ left: next * el.clientWidth, behavior: 'smooth' })
+        }, 4000)
+        teardown = () => {
+          el.removeEventListener('scroll', onScroll)
+          el.removeEventListener('touchstart', onTouch)
+          if (raf) cancelAnimationFrame(raf)
+          clearInterval(id)
+        }
+      } else {
+        const id = setInterval(() => setActive((p) => (p + 1) % slides.length), 4000)
+        teardown = () => clearInterval(id)
+      }
+    }
+    setup()
+    const onChange = () => { setActive(0); setup() }
+    mqMobile.addEventListener('change', onChange)
+    return () => { teardown(); mqMobile.removeEventListener('change', onChange) }
   }, [])
 
-  const cur = slides[contentI]
-  const fadeStyle = { transition: 'opacity .45s ease', opacity: vis } as const
+  const goTo = (k: number) => {
+    setActive(k)
+    const el = scrollRef.current
+    if (el && el.clientWidth) el.scrollTo({ left: k * el.clientWidth, behavior: 'smooth' })
+  }
 
   return (
     <>
       <PageCssGuard id="home" />
-      <SiteNav />
+      <SiteNav active="home" />
 
       {/* HERO (concept A: split / share + compare) */}
       <section className="a-hero">
@@ -184,10 +216,10 @@ function Home() {
           </div>
           <div className="reveal" style={{ animationDelay: '.12s' }}>
             <div className="a-quick">
-              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🚆</span></span><span className="a-quick-lb">Getting there</span></Link>
-              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🍺</span></span><span className="a-quick-lb">Before the match</span></Link>
-              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🍔</span></span><span className="a-quick-lb">Where to eat</span></Link>
-              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><span className="a-quick-gl">🏁</span></span><span className="a-quick-lb">After the whistle</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><MapIcon className="a-quick-gl" /></span><span className="a-quick-lb">Getting there</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><BeerIcon className="a-quick-gl" /></span><span className="a-quick-lb">Before the match</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><HamburgerIcon className="a-quick-gl" /></span><span className="a-quick-lb">Where to eat</span></Link>
+              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><FlagIcon className="a-quick-gl" /></span><span className="a-quick-lb">After the whistle</span></Link>
             </div>
           </div>
           <div className="reveal" style={{ animationDelay: '.2s' }}>
@@ -198,25 +230,33 @@ function Home() {
           </div>
         </div>
         <div className="a-right">
-          <div className="img" style={{ backgroundImage: `url('${cur.img}')`, ...fadeStyle }}></div>
+          <div className="a-scroll" ref={scrollRef}>
+            {slides.map((s, i) => (
+              <div className={i === active ? 'a-slide active' : 'a-slide'} key={i}>
+                <div className="img" style={{ backgroundImage: `url('${s.img}')` }}></div>
+                <div className="a-post fanpost">
+                  <div className="hd"><div className="avatar">{s.av}</div><div><div className="nm">{s.nm}</div><div className="mt">{s.mt}</div></div></div>
+                  <div className="stars">{[0, 1, 2, 3, 4].map((k) => <span key={k} className={k < s.stars ? undefined : 'e'}>★</span>)}</div>
+                  <div className="q" style={{ marginTop: '6px' }}>{s.q}</div>
+                  <span className="wasthere">✓ Was there</span>
+                </div>
+                <div className="a-venue on-dark">
+                  <div className="cc">{s.cc}</div>
+                  <div className="cv">{s.cv}</div>
+                  <div className="scorechip">
+                    <div className="s crit"><div className="v">{s.crit}</div><div className="k">Critics</div></div>
+                    <div className="s fan"><div className="v">{s.fan}</div><div className="k">Fans</div></div>
+                  </div>
+                  {s.det.map(([label, , w], k) => (
+                    <div key={k} className="detrow"><span className="dl">{label}</span><span className="db"><i style={{ width: w + '%' }}></i></span><span className="dv">{s.det[k][1]}</span></div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
           <div className="a-dots">
-            {[0, 1, 2, 3, 4].map((k) => <span key={k} className={k === dotI ? 'on' : undefined}></span>)}
-          </div>
-          <div className="a-post fanpost" style={fadeStyle}>
-            <div className="hd"><div className="avatar">{cur.av}</div><div><div className="nm">{cur.nm}</div><div className="mt">{cur.mt}</div></div></div>
-            <div className="stars">{[0, 1, 2, 3, 4].map((k) => <span key={k} className={k < cur.stars ? undefined : 'e'}>★</span>)}</div>
-            <div className="q" style={{ marginTop: '6px' }}>{cur.q}</div>
-            <span className="wasthere">✓ Was there</span>
-          </div>
-          <div className="a-venue on-dark" style={fadeStyle}>
-            <div className="cc">{cur.cc}</div>
-            <div className="cv">{cur.cv}</div>
-            <div className="scorechip">
-              <div className="s crit"><div className="v">{cur.crit}</div><div className="k">Critics</div></div>
-              <div className="s fan"><div className="v">{cur.fan}</div><div className="k">Fans</div></div>
-            </div>
-            {cur.det.map(([label, , w], k) => (
-              <div key={k} className="detrow"><span className="dl">{label}</span><span className="db"><i style={{ width: w + '%' }}></i></span><span className="dv">{cur.det[k][1]}</span></div>
+            {slides.map((_, k) => (
+              <button key={k} type="button" aria-label={`Show stadium ${k + 1}`} className={k === active ? 'on' : undefined} onClick={() => goTo(k)}></button>
             ))}
           </div>
         </div>

@@ -4,9 +4,10 @@
 // per section, live-preview the share card, download/share. Auto-saves per match.
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { toPng } from 'html-to-image'
+import { SearchIcon } from 'lucide-react'
+import { getJSON } from '../lib/dataCache'
 import { ShareCard, type Plan } from '../components/ShareCard'
-import { getShareFontEmbedCss } from '../lib/shareFonts'
+import { renderShareCardBlob } from '../lib/renderShareCard'
 import { teamName, teamFlag } from '../lib/teams'
 import { PageCssGuard } from '../components/PageCssGuard'
 import shareCss from '../pages/share.css?url'
@@ -43,7 +44,7 @@ function AgendaPage() {
   const [index, setIndex] = useState<any[] | null>(null)
 
   useEffect(() => {
-    fetch('/data/games/index.json').then((r) => r.json()).then(setIndex).catch(() => setIndex([]))
+    getJSON('/data/games/index.json').then(setIndex).catch(() => setIndex([]))
   }, [])
 
   const g = index ? index.find((x) => x.id === game) : null
@@ -73,7 +74,7 @@ function Picker({ index, onPick }: { index: any[]; onPick: (id: string) => void 
     <div className="ag-pick">
       <h1 className="ag-h1">Build a matchday agenda</h1>
       <div className="ag-sub">Pick your match, then type your plan. It saves automatically.</div>
-      <div className="search ag-search"><span className="si">🔍</span><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
+      <div className="search ag-search"><SearchIcon className="si" /><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
       <div className="bld-list">
         {list.map((x) => (
           <button key={x.id} className="bld-mrow" onClick={() => onPick(x.id)}>
@@ -119,12 +120,7 @@ function Editor({ g }: { g: any }) {
 
   async function renderBlob(): Promise<Blob | null> {
     const node = storyRef.current; if (!node) return null
-    try { await (document as any).fonts?.ready } catch { /* ignore */ }
-    await new Promise((r) => setTimeout(r, 60))
-    let fontEmbedCSS: string | undefined
-    try { fontEmbedCSS = await getShareFontEmbedCss() } catch { fontEmbedCSS = undefined }
-    const url = await toPng(node, { pixelRatio: 1, cacheBust: true, width: 1080, height: 1920, ...(fontEmbedCSS ? { fontEmbedCSS } : { skipFonts: true }) })
-    return await (await fetch(url)).blob()
+    return renderShareCardBlob(node)
   }
   async function download() {
     setBusy('download')

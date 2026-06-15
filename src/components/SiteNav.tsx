@@ -5,7 +5,7 @@ import { Link } from '@tanstack/react-router'
 // its own CSS (per-route <link>), so the nav renders with that page's exact styling.
 // The Join CTA carries BOTH `btn-navcta` (home page CSS) and `navcta` (subpage CSS);
 // only the class defined by the active page's stylesheet has any effect.
-export function SiteNav({ active }: { active?: 'guide' | 'games' | 'venues' | 'casey' }) {
+export function SiteNav({ active }: { active?: 'home' | 'guide' | 'games' | 'venues' | 'casey' }) {
   const [open, setOpen] = useState(false)
   return (
     <header className="nav">
@@ -17,10 +17,11 @@ export function SiteNav({ active }: { active?: 'guide' | 'games' | 'venues' | 'c
           SNAPBACK<span className="wc">WC 2026</span>
         </Link>
         <nav className={'nav-links' + (open ? ' open' : '')} id="navLinks">
+          <Link to="/" className={active === 'home' ? 'active' : undefined}>Home</Link>
           <Link to="/guide" className={active === 'guide' ? 'active' : undefined}>Guide</Link>
           <Link to="/games" className={active === 'games' ? 'active' : undefined}>Games</Link>
           <Link to="/venues" className={active === 'venues' ? 'active' : undefined}>Venues</Link>
-          <Link to="/casey" className={active === 'casey' ? 'active' : undefined}>Casey</Link>
+          <Link to="/casey" className={active === 'casey' ? 'active' : undefined}>Casey Tracker</Link>
         </nav>
         <button
           className={'hamburger' + (open ? ' open' : '')}

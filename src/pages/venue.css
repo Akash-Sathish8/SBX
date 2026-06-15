@@ -19,6 +19,13 @@ header.nav{position:sticky;top:0;z-index:50;background:var(--k);border-bottom:4p
   background:var(--light);clip-path:var(--notch);filter:drop-shadow(5px 5px 0 var(--k));transition:transform 80ms,filter 120ms}
 .btn-dark{background:var(--k);color:#fff;filter:drop-shadow(5px 5px 0 var(--y))}
 .navcta{box-shadow:inset 0 0 0 2px var(--y);padding:9px 18px;font-size:13px}
+/* "Get directions" button in the Getting-there section (opens Apple/Google Maps) */
+.dir-btn{display:inline-flex;align-items:center;gap:8px;margin:2px 0 18px;font-family:'Anton','Barlow',sans-serif;
+  text-transform:uppercase;letter-spacing:.5px;font-size:15px;color:#111;background:var(--y);
+  border-radius:8px;padding:12px 20px;box-shadow:0 6px 18px rgba(0,0,0,.1);transition:filter 120ms,transform 80ms}
+.dir-btn:hover{filter:brightness(.96)}
+.dir-btn:active{transform:translateY(1px)}
+.dir-btn:focus-visible{outline:3px solid var(--k);outline-offset:2px}
 .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:transparent;border:0;cursor:pointer;padding:0;z-index:60}
 .hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
 .hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
@@ -131,6 +138,10 @@ section.block.alt .acc-note{color:#d8d8d8}
 .wx-tempc .lo{color:#aaa}
 .wxu{font-size:10px;font-weight:800;color:#9a9a9a}
 .wx-rain{font-size:11px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-top:4px}
+/* played match in the strip: final score in place of the weather forecast */
+.wx-day.played{border-color:var(--y);background:#fffdf0}
+.wx-score{font-family:'Anton','Barlow',sans-serif;font-size:28px;color:var(--ink);line-height:1;margin-top:8px;letter-spacing:1px}
+.wx-ft{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#111;background:var(--y);border-radius:5px;padding:2px 8px;display:inline-block;margin-top:7px}
 .wx-typical{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#a07c00;margin-top:4px}
 .wx-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--y);color:#111;font-weight:800;font-size:9px;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px;box-shadow:2px 2px 0 var(--k);white-space:nowrap}
 .wx-msg{color:var(--gray);font-weight:600;font-size:14.5px;padding:10px 0}
@@ -249,7 +260,8 @@ section.block.alt h2,section.block.alt h3,section.block.alt .ssub{color:inherit}
 .agname{font-weight:800;font-size:15px;color:#111;letter-spacing:.2px}
 .agmeta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 11px;margin-top:5px}
 .agrating{font-size:12px;font-weight:800;letter-spacing:.2px;color:#b8860b}
-.agdist{font-size:12px;font-weight:700;color:#888}
+.agdist{font-size:12px;font-weight:700;color:#888;display:inline-flex;align-items:center;gap:3px}
+.agdist-gl{width:12px;height:12px;flex:none}
 .agwhere{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9a9a9a;margin-top:3px}
 .agnote{font-size:13px;color:#555;line-height:1.5;margin-top:6px}
 .agwhy{list-style:none;margin:8px 0 0;padding:0}
