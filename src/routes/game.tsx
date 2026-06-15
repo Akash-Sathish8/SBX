@@ -3,6 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
+import { getJSON } from '../lib/dataCache'
 import css from '../pages/game.css?url'
 
 export const Route = createFileRoute('/game')({
@@ -47,8 +48,8 @@ function GamePage() {
     let alive = true
     setState({ status: 'loading' })
     Promise.all([
-      fetch('/data/games/index.json').then((r) => r.json()),
-      fetch('/data/fanintel.json').then((r) => r.json()),
+      getJSON('/data/games/index.json'),
+      getJSON('/data/fanintel.json'),
     ])
       .then(async ([index, fi]) => {
         const g = (index as any[]).find((x) => x.id === id)
@@ -57,7 +58,7 @@ function GamePage() {
         const marches = fi.marches ? fi.marches.filter((m: any) => marchRelevant(m, g)) : []
         let detail: any = null
         if (g.hasDetail) {
-          try { detail = await fetch('/data/games/' + id + '.json').then((r) => (r.ok ? r.json() : null)) } catch { detail = null }
+          try { detail = await getJSON('/data/games/' + id + '.json') } catch { detail = null }
         }
         if (alive) {
           setState({ status: 'ok', data: { g, intel, marches, detail } })

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { MapIcon, BeerIcon, HamburgerIcon, FlagIcon, ShoppingBagIcon, type LucideIcon } from 'lucide-react'
+import { warmVenue, intentWarm } from '../lib/dataCache'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import css from '../pages/index.css?url'
@@ -71,6 +72,7 @@ function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
       className="card venue interactive"
       aria-hidden={hidden ? 'true' : undefined}
       tabIndex={hidden ? -1 : undefined}
+      {...intentWarm(() => warmVenue(c.img))}
     >
       <div className="photo" style={{ backgroundImage: `url('/img/stadiums/${c.img}.jpg')` }}><span className="tag">{c.tag}</span></div>
       <div className="body">

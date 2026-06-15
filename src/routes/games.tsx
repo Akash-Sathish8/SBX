@@ -5,6 +5,7 @@ import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { teamName, teamFlag } from '../lib/teams'
 import { useMatchScores, type Score } from '../lib/useMatchScores'
+import { getJSON, warmGame, intentWarm } from '../lib/dataCache'
 import css from '../pages/games.css?url'
 
 export const Route = createFileRoute('/games')({
@@ -46,7 +47,9 @@ function GameRow({ m, score }: { m: any; score?: Score }) {
     </>
   )
   if (m.tbd) return <div className="grow dim">{inner}</div>
-  return <Link to="/game" search={{ id: m.id }} className="grow">{inner}</Link>
+  // Warm the game page's data on hover/press so the recap is ready on click.
+  const warm = () => { getJSON('/data/fanintel.json').catch(() => {}); warmGame(m.id, m.hasDetail) }
+  return <Link to="/game" search={{ id: m.id }} className="grow" {...intentWarm(warm)}>{inner}</Link>
 }
 
 function Games() {
@@ -57,8 +60,7 @@ function Games() {
 
   useEffect(() => {
     let alive = true
-    fetch('/data/games/index.json')
-      .then((r) => { if (!r.ok) throw new Error('not found'); return r.json() })
+    getJSON('/data/games/index.json')
       .then((d: any) => { if (alive) setAll(d) })
       .catch(() => { if (alive) setErrMsg('Couldn\'t load the fixture list.') })
     return () => { alive = false }

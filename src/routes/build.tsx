@@ -8,6 +8,7 @@ import { renderShareCardBlob } from '../lib/renderShareCard'
 import { byDistance, isInside } from '../lib/dist'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
 import { useMatchScores } from '../lib/useMatchScores'
+import { getJSON, warmVenue, intentWarm } from '../lib/dataCache'
 import gameCss from '../pages/game.css?url'
 import shareCss from '../pages/share.css?url'
 
@@ -84,8 +85,8 @@ function BuildPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/data/games/index.json').then((r) => r.json()),
-      fetch('/data/fanintel.json').then((r) => r.json()),
+      getJSON('/data/games/index.json'),
+      getJSON('/data/fanintel.json'),
     ]).then(([idx, f]) => { setIndex(idx); setFi(f) }).catch(() => setFailed(true))
   }, [])
 
@@ -163,7 +164,7 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
           {!venue ? (
             <div className="bld-venues">
               {venues.map((v: any) => (
-                <button key={v.id} className="bld-venue" onClick={() => setVenue(v.id)}>
+                <button key={v.id} className="bld-venue" onClick={() => setVenue(v.id)} {...intentWarm(() => warmVenue(v.id))}>
                   <img className="bld-vthumb" src={'/img/stadiums/' + v.id + '.jpg'} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} />
                   <span className="bld-vn">{v.name}</span>
                   <span className="bld-vc">{v.city} · {v.n} matches</span>
@@ -215,7 +216,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   useEffect(() => {
     let alive = true
     setVenue(null); setWeather(null); setStep(0); setWalkI(0); setGetI(0); setParkI(0); setPreSel([]); setEatSel([]); setPostSel([]); setMerchSel([]); setCustom(blankCustom)
-    fetch('/data/venues/' + g.venue + '.json').then((r) => r.json()).then((v) => { if (alive) setVenue(v) }).catch(() => {})
+    getJSON('/data/venues/' + g.venue + '.json').then((v) => { if (alive) setVenue(v) }).catch(() => {})
     fetchMatchWeather(g.venue, g.dateISO).then((w) => { if (alive) setWeather(w) })
     return () => { alive = false }
   }, [g.venue, g.dateISO, g.id])

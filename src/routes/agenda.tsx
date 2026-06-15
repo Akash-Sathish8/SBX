@@ -5,6 +5,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
+import { getJSON } from '../lib/dataCache'
 import { ShareCard, type Plan } from '../components/ShareCard'
 import { renderShareCardBlob } from '../lib/renderShareCard'
 import { teamName, teamFlag } from '../lib/teams'
@@ -43,7 +44,7 @@ function AgendaPage() {
   const [index, setIndex] = useState<any[] | null>(null)
 
   useEffect(() => {
-    fetch('/data/games/index.json').then((r) => r.json()).then(setIndex).catch(() => setIndex([]))
+    getJSON('/data/games/index.json').then(setIndex).catch(() => setIndex([]))
   }, [])
 
   const g = index ? index.find((x) => x.id === game) : null

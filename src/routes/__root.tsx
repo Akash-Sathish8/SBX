@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { prewarmShared } from '../lib/dataCache'
 
 import appCss from '../styles.css?url'
 // Eagerly preload every page's stylesheet at startup so client-side navigation
@@ -63,6 +65,9 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  // Warm the JSON every interior route shares (games index, fan intel) + the
+  // logo right after first paint, so the first navigation already has its data.
+  useEffect(() => { prewarmShared() }, [])
   return (
     <html lang="en">
       <head>

@@ -9,6 +9,7 @@ import { PageCssGuard } from '../components/PageCssGuard'
 import { displayFixture } from '../lib/teams'
 import { byDistance, isInside } from '../lib/dist'
 import { useMatchScores } from '../lib/useMatchScores'
+import { getJSON, warmImage } from '../lib/dataCache'
 import css from '../pages/venue.css?url'
 
 export const Route = createFileRoute('/venue')({
@@ -31,8 +32,10 @@ function VenuePage() {
     if (!id) return
     let alive = true
     setState({ status: 'loading' })
-    fetch('/data/venues/' + id + '.json')
-      .then((r) => { if (!r.ok) throw new Error('not found'); return r.json() })
+    // The stadium hero filename is the id for every venue, so start the photo
+    // download in parallel with the JSON instead of a second round-trip behind it.
+    warmImage('/img/stadiums/' + id + '.jpg')
+    getJSON('/data/venues/' + id + '.json')
       .then((v) => { if (alive) { setState({ status: 'ok', v }); document.title = 'Snapback — ' + v.name } })
       .catch(() => { if (alive) setState({ status: 'error' }) })
     return () => { alive = false }
