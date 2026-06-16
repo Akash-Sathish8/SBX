@@ -8,9 +8,6 @@ import { fileURLToPath } from 'node:url'
 // original CSS verbatim (per-route) for pixel-exact parity with the static site,
 // and devtools UI must not appear in screenshots.
 const config = defineConfig({
-  server: {
-    allowedHosts: ["curler-thrive-crested.ngrok-free.dev"],
-  },
   resolve: {
     tsconfigPaths: true,
     alias: {

@@ -10,6 +10,7 @@ import { getPositionOverride, getAllResults } from '@/lib/kv';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
 import { STADIUMS, ITINERARY } from '@/lib/itinerary';
+import { withEdgeCache } from '#/lib/edgeCache';
 
 const W = 1200;
 const H = 630;
@@ -63,7 +64,11 @@ function tagFor(state: string): { color: string; label: string } {
 export const Route = createFileRoute('/api/og')({
   server: {
     handlers: {
-      GET: async ({ request }) => {
+      GET: async ({ request }) =>
+        withEdgeCache(
+          request,
+          { edgeTtlSeconds: 300, browserMaxAge: 120, swrSeconds: 600 },
+          async () => {
         const url = new URL(request.url);
         const matchParam = url.searchParams.get('match');
         const targetMatchNumber = matchParam ? Number(matchParam) : null;
@@ -209,12 +214,10 @@ export const Route = createFileRoute('/api/og')({
         ) as ArrayBuffer;
 
         return new Response(png, {
-          headers: {
-            'Content-Type': 'image/png',
-            'Cache-Control': 'public, max-age=120, s-maxage=120',
-          },
+          headers: { 'Content-Type': 'image/png' },
         });
-      },
+          },
+        ),
     },
   },
 });

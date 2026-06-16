@@ -10,7 +10,7 @@
     "lng": -99.1505,
     "timezone": "America/Mexico_City",
     "capacity": 87000,
-    "heroImage": "/stadiums/estadio_azteca.jpg"
+    "heroImage": "/img/stadiums/azteca.jpg"
   },
   "sofi_stadium": {
     "id": "sofi_stadium",
@@ -23,7 +23,7 @@
     "lng": -118.3392,
     "timezone": "America/Los_Angeles",
     "capacity": 70240,
-    "heroImage": "/stadiums/sofi_stadium.jpg"
+    "heroImage": "/img/stadiums/sofi.jpg"
   },
   "metlife_stadium": {
     "id": "metlife_stadium",
@@ -36,7 +36,7 @@
     "lng": -74.0745,
     "timezone": "America/New_York",
     "capacity": 82500,
-    "heroImage": "/stadiums/metlife_stadium.jpg"
+    "heroImage": "/img/stadiums/metlife.jpg"
   },
   "lincoln_financial_field": {
     "id": "lincoln_financial_field",
@@ -49,7 +49,7 @@
     "lng": -75.1675,
     "timezone": "America/New_York",
     "capacity": 69796,
-    "heroImage": "/stadiums/lincoln_financial_field.jpg"
+    "heroImage": "/img/stadiums/linc.jpg"
   },
   "hard_rock_stadium": {
     "id": "hard_rock_stadium",
@@ -62,7 +62,7 @@
     "lng": -80.2389,
     "timezone": "America/New_York",
     "capacity": 65326,
-    "heroImage": "/stadiums/hard_rock_stadium.jpg"
+    "heroImage": "/img/stadiums/hardrock.jpg"
   },
   "att_stadium": {
     "id": "att_stadium",
@@ -75,7 +75,7 @@
     "lng": -97.0945,
     "timezone": "America/Chicago",
     "capacity": 80000,
-    "heroImage": "/stadiums/att_stadium.jpg"
+    "heroImage": "/img/stadiums/att.jpg"
   },
   "bc_place": {
     "id": "bc_place",
@@ -88,7 +88,7 @@
     "lng": -123.1119,
     "timezone": "America/Vancouver",
     "capacity": 54500,
-    "heroImage": "/stadiums/bc_place.jpg"
+    "heroImage": "/img/stadiums/bcplace.jpg"
   },
   "lumen_field": {
     "id": "lumen_field",
@@ -101,7 +101,7 @@
     "lng": -122.3316,
     "timezone": "America/Los_Angeles",
     "capacity": 68740,
-    "heroImage": "/stadiums/lumen_field.jpg"
+    "heroImage": "/img/stadiums/lumen.jpg"
   },
   "nrg_stadium": {
     "id": "nrg_stadium",
@@ -114,7 +114,7 @@
     "lng": -95.4107,
     "timezone": "America/Chicago",
     "capacity": 72220,
-    "heroImage": "/stadiums/nrg_stadium.jpg"
+    "heroImage": "/img/stadiums/nrg.jpg"
   },
   "gillette_stadium": {
     "id": "gillette_stadium",
@@ -127,7 +127,7 @@
     "lng": -71.2643,
     "timezone": "America/New_York",
     "capacity": 65878,
-    "heroImage": "/stadiums/gillette_stadium.jpg"
+    "heroImage": "/img/stadiums/gillette.jpg"
   },
   "mercedes_benz_stadium": {
     "id": "mercedes_benz_stadium",
@@ -140,7 +140,7 @@
     "lng": -84.4006,
     "timezone": "America/New_York",
     "capacity": 71000,
-    "heroImage": "/stadiums/mercedes_benz_stadium.jpg"
+    "heroImage": "/img/stadiums/mercedes.jpg"
   },
   "geha_field": {
     "id": "geha_field",
@@ -153,7 +153,7 @@
     "lng": -94.484,
     "timezone": "America/Chicago",
     "capacity": 76416,
-    "heroImage": "/stadiums/geha_field.jpg"
+    "heroImage": "/img/stadiums/arrowhead.jpg"
   },
   "bmo_field": {
     "id": "bmo_field",
@@ -166,6 +166,6 @@
     "lng": -79.4185,
     "timezone": "America/Toronto",
     "capacity": 45736,
-    "heroImage": "/stadiums/bmo_field.jpg"
+    "heroImage": "/img/stadiums/bmo.jpg"
   }
 }

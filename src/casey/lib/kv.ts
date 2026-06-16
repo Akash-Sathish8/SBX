@@ -1,4 +1,3 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { DEFAULT_SPEND } from './itinerary';
 import type {
   MatchResult,
@@ -9,96 +8,95 @@ import type {
 } from './types';
 import type { HealthRecord } from './health';
 
-const KV_TABLE = 'kv';
+// Minimal slice of the Workers KV API we use (avoids a hard dependency on
+// @cloudflare/workers-types).
+interface KVNamespace {
+  get(key: string, type: 'json'): Promise<unknown | null>;
+  put(key: string, value: string): Promise<void>;
+  delete(key: string): Promise<void>;
+  list(opts?: { prefix?: string; cursor?: string; limit?: number }): Promise<{
+    keys: { name: string }[];
+    list_complete: boolean;
+    cursor?: string;
+  }>;
+}
 
-let cachedClient: SupabaseClient | null = null;
+let _kv: KVNamespace | null | undefined; // undefined = not yet resolved
 let warned = false;
 const memoryStore = new Map<string, unknown>();
 
-function getClient(): SupabaseClient | null {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    if (!warned) {
-      console.warn(
-        '[kv] SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY missing — using in-memory store. Persistence disabled.',
-      );
-      warned = true;
-    }
-    return null;
+// Resolve the `KV` binding from the Cloudflare runtime. Done via a guarded
+// dynamic import so this module also loads cleanly in plain Node (vitest, any
+// non-Workers context), where it falls back to the in-memory store. The binding
+// reference is stable across requests, so we resolve it once.
+async function getKV(): Promise<KVNamespace | null> {
+  if (_kv !== undefined) return _kv;
+  try {
+    const mod: { env?: Record<string, unknown> } = await import('cloudflare:workers');
+    _kv = (mod.env?.KV as KVNamespace | undefined) ?? null;
+  } catch {
+    _kv = null;
   }
-  if (!cachedClient) {
-    cachedClient = createClient(url, key, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
+  if (!_kv && !warned) {
+    console.warn('[kv] Cloudflare KV binding "KV" not found — using in-memory store. Persistence disabled.');
+    warned = true;
   }
-  return cachedClient;
+  return _kv;
 }
 
 async function kvGet<T>(key: string): Promise<T | null> {
-  const client = getClient();
-  if (!client) {
-    return (memoryStore.get(key) as T) ?? null;
-  }
-  const { data, error } = await client
-    .from(KV_TABLE)
-    .select('value')
-    .eq('key', key)
-    .maybeSingle();
-  if (error) {
-    console.error('[kv] get failed', key, error.message);
+  const kv = await getKV();
+  if (!kv) return (memoryStore.get(key) as T) ?? null;
+  try {
+    return ((await kv.get(key, 'json')) as T) ?? null;
+  } catch (err) {
+    console.error('[kv] get failed', key, (err as Error).message);
     return null;
   }
-  return (data?.value as T) ?? null;
 }
 
 async function kvSet<T>(key: string, value: T): Promise<void> {
-  const client = getClient();
-  if (!client) {
+  const kv = await getKV();
+  if (!kv) {
     memoryStore.set(key, value);
     return;
   }
-  const { error } = await client.from(KV_TABLE).upsert({ key, value });
-  if (error) {
-    console.error('[kv] set failed', key, error.message);
-    throw new Error(error.message);
-  }
+  await kv.put(key, JSON.stringify(value));
 }
 
 async function kvDel(key: string): Promise<void> {
-  const client = getClient();
-  if (!client) {
+  const kv = await getKV();
+  if (!kv) {
     memoryStore.delete(key);
     return;
   }
-  const { error } = await client.from(KV_TABLE).delete().eq('key', key);
-  if (error) {
-    console.error('[kv] del failed', key, error.message);
-    throw new Error(error.message);
-  }
+  await kv.delete(key);
 }
 
 async function kvGetByPrefix<T>(prefix: string): Promise<Record<string, T>> {
-  const client = getClient();
-  if (!client) {
+  const kv = await getKV();
+  if (!kv) {
     const out: Record<string, T> = {};
     for (const [k, v] of memoryStore.entries()) {
       if (k.startsWith(prefix)) out[k] = v as T;
     }
     return out;
   }
-  const { data, error } = await client
-    .from(KV_TABLE)
-    .select('key, value')
-    .like('key', `${prefix}%`);
-  if (error) {
-    console.error('[kv] prefix get failed', prefix, error.message);
-    return {};
-  }
+  // List the (small) key set under this prefix, then fetch values in parallel.
+  const names: string[] = [];
+  let cursor: string | undefined;
+  do {
+    const res = await kv.list({ prefix, cursor });
+    for (const k of res.keys) names.push(k.name);
+    cursor = res.list_complete ? undefined : res.cursor;
+  } while (cursor);
   const out: Record<string, T> = {};
-  for (const row of data ?? []) {
-    out[row.key as string] = row.value as T;
-  }
+  await Promise.all(
+    names.map(async (name) => {
+      const v = (await kv.get(name, 'json')) as T | null;
+      if (v != null) out[name] = v;
+    }),
+  );
   return out;
 }
 

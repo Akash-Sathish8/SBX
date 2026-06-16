@@ -9,17 +9,37 @@ import { SignJWT, jwtVerify } from 'jose';
 const COOKIE_NAME = 'casey_admin';
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
 
+const DEV_FALLBACK_SECRET = 'dev-insecure-secret-please-set-ADMIN_JWT_SECRET';
+const DEV_FALLBACK_PASSWORD = 'snapback2026';
+
+function isProduction(): boolean {
+  return process.env.NODE_ENV === 'production';
+}
+
+// Fail closed: in production we never fall back to a known dev secret/password.
+// If the secret is unset there, throw — verifyAdminFromRequest() catches it and
+// returns false (rejecting every admin request) rather than accepting tokens
+// forged against a publicly-known default. Local dev still works without config.
 function getSecret(): Uint8Array {
-  const raw =
-    process.env.ADMIN_JWT_SECRET ?? 'dev-insecure-secret-please-set-ADMIN_JWT_SECRET';
-  if (raw.startsWith('dev-insecure') && process.env.NODE_ENV === 'production') {
-    console.warn('[auth] ADMIN_JWT_SECRET not set in production');
+  const raw = process.env.ADMIN_JWT_SECRET;
+  if (!raw) {
+    if (isProduction()) {
+      throw new Error('ADMIN_JWT_SECRET is not set — refusing to issue/verify admin tokens');
+    }
+    return new TextEncoder().encode(DEV_FALLBACK_SECRET);
   }
   return new TextEncoder().encode(raw);
 }
 
 export function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD ?? 'snapback2026';
+  const pw = process.env.ADMIN_PASSWORD;
+  if (!pw) {
+    if (isProduction()) {
+      throw new Error('ADMIN_PASSWORD is not set — admin login is disabled');
+    }
+    return DEV_FALLBACK_PASSWORD;
+  }
+  return pw;
 }
 
 export function getAdminCookieName(): string {
