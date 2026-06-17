@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import type { Map as MlMap, LngLatBoundsLike, Marker } from 'maplibre-gl';
 import { Protocol } from 'pmtiles';
-import themeLayers from 'protomaps-themes-base';
+import { noLabels } from 'protomaps-themes-base';
 import { sampleArc, haversineMiles, initialBearing, interpolateGreatCircle } from '@/lib/geo';
 import type {
   CaseyLocation,
@@ -12,7 +12,8 @@ import type {
   TripStats,
 } from '@/lib/types';
 
-// Owned Protomaps vector basemap (light "Positron-like" theme), served from R2 by
+// Owned Protomaps vector basemap (grayscale, label-free — matches the old CARTO
+// Positron look), served from R2 by
 // /api/basemap on the SAME origin the app runs on — so it works in dev, preview
 // and prod with no host config. maplibre's pmtiles protocol reads tiles via
 // byte-range requests. Each environment's R2 bucket must hold basemap.pmtiles;
@@ -37,7 +38,9 @@ function buildMapStyle(): maplibregl.StyleSpecification {
         attribution: '© OpenStreetMap contributors',
       },
     },
-    layers: themeLayers('protomaps', 'light', 'en'),
+    // grayscale theme, label layers stripped (noLabels) — gray land/water, no city
+    // or country text, so Casey's markers + travel arcs are the only things to read.
+    layers: noLabels('protomaps', 'grayscale'),
   } as maplibregl.StyleSpecification;
 }
 
