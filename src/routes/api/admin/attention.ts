@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { withAdmin } from '@/lib/auth';
+import { withAdmin } from '@/lib/server/auth';
 import { computeAttention } from '@/lib/attention';
 import { getMergedItinerary } from '@/lib/merged-itinerary';
-import { getAllResults, getPositionOverride, getVisibilityFlags } from '@/lib/kv';
+import { getAllResults, getPositionOverride, getVisibilityFlags } from '@/lib/server/kv';
 
 export const Route = createFileRoute('/api/admin/attention')({
   server: {

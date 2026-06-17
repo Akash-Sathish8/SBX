@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { getPublicSnapshot } from '@/lib/snapshot';
+import { getPublicSnapshot } from '@/lib/server/snapshot';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
 import { parseSimTime, resolveNow } from '@/lib/now';

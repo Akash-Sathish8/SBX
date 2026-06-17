@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
-import { withAdmin } from '@/lib/auth';
+import { withAdmin } from '@/lib/server/auth';
 import {
   setMatchResult,
   setMatchOverride,
@@ -12,7 +12,7 @@ import {
   setVisibilityFlags,
   setUnderdogReferral,
   bumpDataVersion,
-} from '@/lib/kv';
+} from '@/lib/server/kv';
 
 // ── Reusable field validators ────────────────────────────────────────────
 // These fields are rendered back into the public page (image src, anchor href,

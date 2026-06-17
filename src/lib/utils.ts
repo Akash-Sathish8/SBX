@@ -1,3 +1,36 @@
+// Generic, pure, isomorphic helpers shared across the app — no I/O, no React, no
+// Worker APIs, so they're safe to import anywhere (client or server). Domain and
+// infra modules (teams, weather, queries, edgeCache, site, …) stay separate so a
+// page importing a one-liner from here never pulls server/heavy deps into its bundle.
+
+// ── text ────────────────────────────────────────────────────────────────────
+
+// Uppercase the first letter when it's lowercase (leave already-capped / emoji alone).
+export const cap = (s = '') => (/^[a-z]/.test(s) ? s[0].toUpperCase() + s.slice(1) : s)
+
+// Split prose into sentences (kept as bullet candidates). Tolerant of non-strings.
+export const splitSentences = (t: unknown): string[] =>
+  String(t ?? '')
+    .split(/(?<=[.!?])\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+
+// First sentence only, with any trailing period trimmed.
+export const firstSentence = (t?: string): string =>
+  t ? (splitSentences(t)[0] ?? '').replace(/\.$/, '') : ''
+
+// ISO date → compact { weekday, "Mon D" } chip for match cards.
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+export function dateChip(iso: string): { wd: string; md: string } {
+  if (!iso) return { wd: '', md: '' }
+  const p = iso.split('-').map(Number)
+  const d = new Date(Date.UTC(p[0], p[1] - 1, p[2]))
+  return { wd: WEEKDAYS[d.getUTCDay()], md: MONTHS[p[1] - 1] + ' ' + p[2] }
+}
+
+// ── distance (sort venue spots nearest-first) ───────────────────────────────
+
 // Parse a free-form "distance from the stadium" string into approximate miles,
 // so spot lists can be sorted nearest-first. Handles miles, km, walking minutes
 // (~0.05 mi/min at 3 mph), and driving/transit minutes (~0.4 mi/min). Anything

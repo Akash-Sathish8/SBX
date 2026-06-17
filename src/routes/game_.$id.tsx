@@ -5,7 +5,7 @@ import { SiteNav } from '../components/SiteNav'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
 import { gameDetailQueryOptions, sanitizeId } from '../lib/queries'
 import { absUrl, socialMeta } from '../lib/site'
-import { cap, splitSentences } from '../lib/text'
+import { cap, splitSentences } from '../lib/utils'
 // Build-time-static shared data — bundled so the page server-renders (SEO).
 import { GAMES as GAMES_INDEX, FAN_INTEL } from '../data'
 import type { Game } from '../lib/data-types'

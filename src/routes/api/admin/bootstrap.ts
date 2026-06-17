@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { verifyAdminFromRequest } from '@/lib/auth';
+import { verifyAdminFromRequest } from '@/lib/server/auth';
 import { getMergedItinerary, getMergedStadiums } from '@/lib/merged-itinerary';
-import { getPositionOverride, getSpend, getUnderdogReferral } from '@/lib/kv';
+import { getPositionOverride, getSpend, getUnderdogReferral } from '@/lib/server/kv';
 
 // Admin page data + auth gate in one call. The /admin route component fetches
 // this on mount: { authed:false } → show a "not authorized" notice; otherwise the

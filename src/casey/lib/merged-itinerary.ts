@@ -4,7 +4,7 @@ import {
   getAllResults,
   getAllStadiumOverrides,
   getAllYouTubeIds,
-} from './kv';
+} from './server/kv';
 import type { ItineraryMatch, Stadium } from './types';
 
 export async function getMergedItinerary(): Promise<ItineraryMatch[]> {

@@ -12,11 +12,11 @@ import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
 // Barlow is the site's own body font (replaces the old CDN-only Inter).
 import bebasWoff from '@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff?inline';
 import barlowWoff from '@fontsource/barlow/files/barlow-latin-700-normal.woff?inline';
-import { getPositionOverride, getAllResults } from '@/lib/kv';
+import { getPositionOverride, getAllResults } from '@/lib/server/kv';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
 import { STADIUMS, ITINERARY } from '@/lib/itinerary';
-import { withEdgeCache } from '#/lib/edgeCache';
+import { withEdgeCache } from '#/lib/server/edgeCache';
 
 const W = 1200;
 const H = 630;
