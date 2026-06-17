@@ -246,7 +246,8 @@ export async function getDataVersion(): Promise<string> {
 }
 
 export async function bumpDataVersion(): Promise<void> {
-  // Any new unique value invalidates the cached snapshot; a timestamp is enough
-  // at admin-write cadence (no atomic increment needed).
-  await kvSet(KEY_DATA_VERSION, `${Date.now()}`);
+  // Any new UNIQUE value invalidates the cached snapshot. Date.now() alone can
+  // repeat if two writes land in the same millisecond, so append a random token
+  // to guarantee uniqueness (the value is opaque — only its change matters).
+  await kvSet(KEY_DATA_VERSION, `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`);
 }

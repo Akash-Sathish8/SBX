@@ -5,7 +5,6 @@ import type { Map as MlMap, LngLatBoundsLike, Marker } from 'maplibre-gl';
 import { Protocol } from 'pmtiles';
 import themeLayers from 'protomaps-themes-base';
 import { sampleArc, haversineMiles, initialBearing, interpolateGreatCircle } from '@/lib/geo';
-import { SITE_URL } from '#/lib/site';
 import type {
   CaseyLocation,
   ItineraryMatch,
@@ -13,29 +12,20 @@ import type {
   TripStats,
 } from '@/lib/types';
 
-// CARTO's `basemaps.cartocdn.com` demo tiles are NOT licensed/rate-safe for
-// promoted production traffic. Set VITE_MAP_STYLE_URL at build time to an owned
-// or licensed style (e.g. Protomaps via R2, MapTiler, or a CARTO account) to
-// move off the demo endpoint without a code change. Unset → demo default (dev).
-const MAP_STYLE_URL =
-  (import.meta.env.VITE_MAP_STYLE_URL as string | undefined) ||
-  'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
-
-// Production renders an OWNED Protomaps vector basemap (light "Positron-like"
-// theme) served from R2 by /api/basemap; maplibre's pmtiles protocol reads tiles
-// via byte-range requests. Local `npm run dev` uses CARTO (the prod /api/basemap
-// URL isn't reachable there). `import.meta.env.DEV` is a compile-time constant, so
-// production builds always get Protomaps. Override the URL with VITE_MAP_PMTILES_URL.
+// Owned Protomaps vector basemap (light "Positron-like" theme), served from R2 by
+// /api/basemap on the SAME origin the app runs on — so it works in dev, preview
+// and prod with no host config. maplibre's pmtiles protocol reads tiles via
+// byte-range requests. Each environment's R2 bucket must hold basemap.pmtiles;
+// override the URL with VITE_MAP_PMTILES_URL if ever needed.
 const PMTILES_URL =
   (import.meta.env.VITE_MAP_PMTILES_URL as string | undefined) ||
-  (import.meta.env.DEV ? '' : `${SITE_URL}/api/basemap`);
+  (typeof window !== 'undefined' ? `${window.location.origin}/api/basemap` : '');
 
 if (PMTILES_URL && typeof window !== 'undefined') {
   maplibregl.addProtocol('pmtiles', new Protocol().tile);
 }
 
-function buildMapStyle(): string | maplibregl.StyleSpecification {
-  if (!PMTILES_URL) return MAP_STYLE_URL;
+function buildMapStyle(): maplibregl.StyleSpecification {
   return {
     version: 8,
     glyphs: 'https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',

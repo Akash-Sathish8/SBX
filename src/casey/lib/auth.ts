@@ -45,7 +45,11 @@ export async function verifyAdminFromRequest(request: Request): Promise<boolean>
     readCookie(request.headers.get('cookie'), 'CF_Authorization');
   if (!token) return false;
   try {
-    await jwtVerify(token, JWKS, { issuer: ACCESS_ISSUER, audience: ACCESS_AUD });
+    await jwtVerify(token, JWKS, {
+      issuer: ACCESS_ISSUER,
+      audience: ACCESS_AUD,
+      algorithms: ['RS256'], // Cloudflare Access signs with RS256; pin it (no alg confusion).
+    });
     return true;
   } catch {
     return false;

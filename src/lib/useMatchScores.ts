@@ -64,19 +64,19 @@ async function fetchScore(m: { dateISO: string; home: string; away: string }): P
   const k = uk(m)
   const cached = readCache(k)
   if (cached !== undefined) return cached // includes a cached `null` (checked today, not done)
-  let score: Score | null = null
-  try {
-    const r = await fetch(
-      `/api/match-score?date=${m.dateISO}&home=${encodeURIComponent(m.home)}&away=${encodeURIComponent(m.away)}`,
-    )
-    const j = await r.json()
-    const d = j?.data
-    if (d?.completed && typeof d.home?.score === 'number' && typeof d.away?.score === 'number') {
-      score = { hs: d.home.score as number, as: d.away.score as number }
-    }
-  } catch {
-    /* treated as not-yet-done */
-  }
+  // Throw on a failed request so TanStack Query retries it, and persist ONLY a
+  // successful response. Otherwise a transient blip on an already-finished match
+  // would cache `null` for the whole day and hide a real final score.
+  const r = await fetch(
+    `/api/match-score?date=${m.dateISO}&home=${encodeURIComponent(m.home)}&away=${encodeURIComponent(m.away)}`,
+  )
+  if (!r.ok) throw new Error(`match-score ${r.status}`)
+  const j = await r.json()
+  const d = j?.data
+  const score: Score | null =
+    d?.completed && typeof d.home?.score === 'number' && typeof d.away?.score === 'number'
+      ? { hs: d.home.score as number, as: d.away.score as number }
+      : null
   writeCache(k, score)
   return score
 }

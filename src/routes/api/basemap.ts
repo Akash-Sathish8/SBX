@@ -4,8 +4,9 @@ import type { R2Bucket, R2Range } from '@cloudflare/workers-types';
 // Serves the Protomaps basemap (a single .pmtiles extract) from R2 with HTTP
 // Range support, so maplibre's pmtiles protocol can read the directory header
 // and individual tiles via byte-range requests. Returns 404 until the extract is
-// uploaded (`wrangler r2 object put sbx-tiles/basemap.pmtiles --file=…`); MapView
-// falls back to the CARTO style while VITE_MAP_PMTILES_URL is unset.
+// uploaded (`wrangler r2 object put sbx-tiles/basemap.pmtiles --file=…`). The map
+// points here (same origin) in dev, preview and prod — it's the only basemap
+// source — so keep basemap.pmtiles present in each environment's R2 bucket.
 const KEY = 'basemap.pmtiles';
 
 async function getBucket(): Promise<R2Bucket | null> {
