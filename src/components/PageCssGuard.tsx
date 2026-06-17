@@ -67,6 +67,9 @@ export function PageCssGuard({ id }: { id: string }) {
       clearInterval(iv)
       pending.forEach((l) => { l.removeEventListener('load', maybeFinish); l.removeEventListener('error', onError) })
     }
-  })
+    // Keyed on the active route id: re-run on navigation, not on every render.
+    // (Without a dep array this re-queried the head and respawned the 250ms
+    // poll on every parent re-render.)
+  }, [id])
   return null
 }

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
+import type { QueryClient } from '@tanstack/react-query'
 import { prewarmShared } from '../lib/dataCache'
 
 import appCss from '../styles.css?url'
@@ -19,14 +20,15 @@ import venueCss from '../pages/venue.css?url'
 import venuesCss from '../pages/venues.css?url'
 import shareCss from '../pages/share.css?url'
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
       {
         name: 'viewport',
-        // Lock zoom on mobile (no pinch / double-tap zoom) per product decision.
-        content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover',
+        // Allow pinch-zoom (accessibility — WCAG 1.4.4). maplibre handles its own
+        // gesture zoom on the map, so page-level zoom doesn't fight the tracker.
+        content: 'width=device-width, initial-scale=1.0, viewport-fit=cover',
       },
       // Mobile browser chrome matches the brand black instead of flashing white.
       { name: 'theme-color', content: '#0a0a0a' },

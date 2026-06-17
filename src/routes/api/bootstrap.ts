@@ -1,58 +1,43 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { getMergedItinerary, getMergedStadiums } from '@/lib/merged-itinerary';
-import {
-  getPositionOverride,
-  getSpend,
-  getAllResults,
-  getVisibilityFlags,
-  getUnderdogReferral,
-} from '@/lib/kv';
+import { getPublicSnapshot } from '@/lib/snapshot';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
 import { parseSimTime, resolveNow } from '@/lib/now';
 
-// Single payload that boots the public tracker. Mirrors what app/page.tsx
-// computed server-side in the Next app (location/stats/spend + the
-// visibility-stripped itinerary). The client TrackerApp fetches this once
-// on mount, then ClientShell takes over with its own /api/live polling.
+// Single payload that boots the public tracker. The admin-driven state comes
+// from the edge-cached snapshot (see snapshot.ts); only the time-dependent
+// location/stats are computed per request. The client TrackerApp fetches this
+// once on mount, then ClientShell takes over with its own /api/live polling.
 export const Route = createFileRoute('/api/bootstrap')({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const [itinerary, stadiums, override, spend, results, visibility, underdogReferral] = await Promise.all([
-          getMergedItinerary(),
-          getMergedStadiums(),
-          getPositionOverride(),
-          getSpend(),
-          getAllResults(),
-          getVisibilityFlags(),
-          getUnderdogReferral(),
-        ]);
+        const snap = await getPublicSnapshot();
 
-        const allowDetails = visibility.showLodging || visibility.showTransport;
-        const publicItinerary = itinerary.map((m) => ({
+        const allowDetails = snap.visibility.showLodging || snap.visibility.showTransport;
+        const publicItinerary = snap.itinerary.map((m) => ({
           ...m,
-          lodging: visibility.showLodging ? m.lodging : null,
-          transportMode: visibility.showTransport ? m.transportMode : null,
+          lodging: snap.visibility.showLodging ? m.lodging : null,
+          transportMode: snap.visibility.showTransport ? m.transportMode : null,
           notes: allowDetails ? m.notes : null,
         }));
 
         const simTime = parseSimTime(new URL(request.url).searchParams.get('simTime'));
         const now = resolveNow(simTime);
-        const location = computeCaseyLocation(now, override);
-        const stats = computeTripStats(now, location, results);
+        const location = computeCaseyLocation(now, snap.positionOverride);
+        const stats = computeTripStats(now, location, snap.results);
 
         return Response.json(
           {
             ok: true,
             location,
             stats,
-            spend,
-            results,
+            spend: snap.spend,
+            results: snap.results,
             itinerary: publicItinerary,
-            stadiums,
-            visibility,
-            underdogReferral,
+            stadiums: snap.stadiums,
+            visibility: snap.visibility,
+            underdogReferral: snap.underdogReferral,
             simTime: simTime ? simTime.toISOString() : null,
           },
           { headers: { 'Cache-Control': 'no-store, max-age=0' } },

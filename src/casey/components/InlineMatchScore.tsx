@@ -1,5 +1,6 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import Flag from './Flag';
 import { liveScoreSearch } from '@/lib/external-links';
 
@@ -19,41 +20,27 @@ interface Score {
 
 export default function InlineMatchScore({ date, homeTeam, awayTeam }: Props) {
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<Score | null>(null);
-  const [failed, setFailed] = useState(false);
 
-  async function load() {
-    setLoading(true);
-    setFailed(false);
-    try {
+  const q = useQuery<Score | null>({
+    queryKey: ['match-score', date, homeTeam, awayTeam],
+    queryFn: async () => {
       const res = await fetch(
         `/api/match-score?date=${encodeURIComponent(date)}&home=${encodeURIComponent(homeTeam)}&away=${encodeURIComponent(awayTeam)}`,
         { cache: 'no-store' },
       );
       const json = await res.json();
-      if (json?.ok && json.data) {
-        setData(json.data);
-      } else {
-        setFailed(true);
-      }
-    } catch {
-      setFailed(true);
-    }
-    setLoading(false);
-  }
+      if (!json?.ok) throw new Error('score unavailable');
+      return (json.data ?? null) as Score | null;
+    },
+    enabled: open,
+    // Poll only while the match is in progress, and pause when the tab is hidden.
+    refetchInterval: (query) => (query.state.data?.status === 'in' ? 45_000 : false),
+    refetchIntervalInBackground: false,
+    staleTime: 0,
+  });
 
-  useEffect(() => {
-    if (open && !data && !loading) load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
-
-  useEffect(() => {
-    if (open && data && data.status === 'in') {
-      const id = setInterval(load, 45_000);
-      return () => clearInterval(id);
-    }
-  }, [open, data?.status]); // eslint-disable-line react-hooks/exhaustive-deps
+  const data = q.data ?? null;
+  const failed = open && !q.isLoading && !data;
 
   if (!open) {
     return (
@@ -81,7 +68,7 @@ export default function InlineMatchScore({ date, homeTeam, awayTeam }: Props) {
           ✕ HIDE
         </button>
       </div>
-      {loading && !data && (
+      {q.isLoading && !data && (
         <div className="mt-2 font-mono text-[10px] text-snap-mist">pulling the score…</div>
       )}
       {failed && (

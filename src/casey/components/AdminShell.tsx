@@ -67,9 +67,9 @@ export default function AdminShell({ itinerary, spend, override, stadiums, under
     }
   }
 
-  async function logout() {
-    await fetch('/api/admin/login', { method: 'DELETE' });
-    onRefresh();
+  function logout() {
+    // Auth is Cloudflare Access now (no app cookie) — log out of the Access session.
+    window.location.href = '/cdn-cgi/access/logout';
   }
 
   return (
@@ -1358,7 +1358,6 @@ function AttentionTab({ onJumpToMatch }: { onJumpToMatch: (n: number) => void })
   const high = items?.filter((i) => i.severity === 'high') ?? [];
   const med = items?.filter((i) => i.severity === 'medium') ?? [];
   const low = items?.filter((i) => i.severity === 'low') ?? [];
-  const total = items?.length ?? 0;
 
   return (
     <div className="space-y-4 max-w-3xl">

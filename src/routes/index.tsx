@@ -1,16 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { MapIcon, BeerIcon, HamburgerIcon, FlagIcon, ShoppingBagIcon, type LucideIcon } from 'lucide-react'
-import { warmVenue, intentWarm } from '../lib/dataCache'
+import { warmImage, intentWarm } from '../lib/dataCache'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
+import { absUrl, socialMeta } from '../lib/site'
 import css from '../pages/index.css?url'
 
 export const Route = createFileRoute('/')({
-  head: () => ({
-    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'home' }],
-    meta: [{ title: 'Snapback Experiences' }],
-  }),
+  head: () => {
+    const title = 'Snapback — World Cup 2026 Matchday Guides, Venues & Tickets'
+    const description =
+      'Plan your FIFA World Cup 2026 matchday across all 16 venues in the USA, Canada and Mexico — how to get there, where to eat and drink, fan intel, and a shareable matchday agenda for every game.'
+    const image = absUrl('/img/stadiums/sofi.jpg')
+    return {
+      links: [
+        { rel: 'stylesheet', href: css, 'data-page-css': 'home' },
+        { rel: 'canonical', href: absUrl('/') },
+      ],
+      meta: socialMeta({ title, description, image }),
+    }
+  },
   component: Home,
 })
 
@@ -64,19 +74,54 @@ const MARQUEE: Card[] = [
   { img: 'bbva', tag: 'Monterrey · MEX', name: 'Estadio BBVA', sub: 'El Gigante de Acero', crit: 89, fan: 84 },
 ]
 
+// One shared IntersectionObserver for the whole marquee (the rail renders 32
+// cards) instead of one per card. Each card registers a callback fired once when
+// it scrolls within 300px of the viewport; CSS background-image can't use
+// loading="lazy", hence the observer.
+const lazyBgCallbacks = new WeakMap<Element, () => void>()
+const lazyBgObserver =
+  typeof IntersectionObserver !== 'undefined'
+    ? new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue
+            lazyBgCallbacks.get(e.target)?.()
+            lazyBgObserver!.unobserve(e.target)
+            lazyBgCallbacks.delete(e.target)
+          }
+        },
+        { rootMargin: '300px' },
+      )
+    : null
+
 function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
+  const photoRef = useRef<HTMLDivElement>(null)
+  // Lazy-load the stadium photo: the marquee is below the fold, so defer the
+  // background image until the card scrolls near view (saves first-visit bytes).
+  const [shown, setShown] = useState(false)
+  useEffect(() => {
+    const el = photoRef.current
+    if (!el || shown) return
+    if (!lazyBgObserver) { setShown(true); return }
+    lazyBgCallbacks.set(el, () => setShown(true))
+    lazyBgObserver.observe(el)
+    return () => {
+      lazyBgObserver.unobserve(el)
+      lazyBgCallbacks.delete(el)
+    }
+  }, [shown])
   return (
     <Link
-      to="/venue"
-      search={{ id: c.img }}
+      to="/venue/$id"
+      params={{ id: c.img }}
       className="card venue interactive"
       aria-hidden={hidden ? 'true' : undefined}
       tabIndex={hidden ? -1 : undefined}
-      {...intentWarm(() => warmVenue(c.img))}
+      {...intentWarm(() => warmImage(`/img/stadiums/${c.img}.jpg`))}
     >
-      <div className="photo" style={{ backgroundImage: `url('/img/stadiums/${c.img}.jpg')` }}><span className="tag">{c.tag}</span></div>
+      <div ref={photoRef} className="photo" style={{ backgroundImage: shown ? `url('/img/stadiums/${c.img}.jpg')` : undefined }}><span className="tag">{c.tag}</span></div>
       <div className="body">
-        <h4>{c.name}</h4>
+        <h3>{c.name}</h3>
         <div className="city">{c.sub}</div>
         <div className="scores">
           <div className="score crit"><div className="v">{c.crit}</div><div className="k">Critics</div></div>
@@ -207,6 +252,7 @@ function Home() {
       <PageCssGuard id="home" />
       <SiteNav active="home" />
 
+      <main>
       {/* HERO (concept A: split / share + compare) */}
       <section className="a-hero">
         <div className="a-left grid-bg">
@@ -265,6 +311,7 @@ function Home() {
       {/* BROWSE VENUES (scrollable marquee on the black band) */}
       <section id="experiences" className="browse-band">
         <div className="container">
+          <h2 className="sr-only">Browse World Cup 2026 venues</h2>
           <div className="rail-hint"><span className="rail-count">Browse venues</span></div>
         </div>
         <div className="marquee">
@@ -291,6 +338,7 @@ function Home() {
           </div>
         </div>
       </section>
+      </main>
 
       <footer>
         <div className="container">

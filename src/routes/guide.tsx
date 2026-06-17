@@ -43,8 +43,8 @@ function Guide() {
             </Link>
             <Link className="choice game" to="/build" search={{ game: '', mode: 'matchup' }}>
               <div className="top collage" id="gtop">
-                <div className="ctile" style={{ backgroundImage: "url('/img/celebration.jpg')", backgroundPosition: 'center 42%' }}></div>
-                <div className="ctile" style={{ backgroundImage: "url('/img/celebration2.jpg')", backgroundPosition: 'center 35%' }}></div>
+                <div className="ctile c1"></div>
+                <div className="ctile c2"></div>
                 <span className="num">02</span><span className="lbl">Every match</span>
               </div>
               <div className="body">

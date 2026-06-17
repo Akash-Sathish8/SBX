@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
-import { warmVenue, intentWarm } from '../lib/dataCache'
+import { warmImage, intentWarm } from '../lib/dataCache'
+import { VENUES } from '../lib/venues-meta'
 import css from '../pages/venues.css?url'
 
 export const Route = createFileRoute('/venues')({
@@ -14,26 +15,6 @@ export const Route = createFileRoute('/venues')({
 })
 
 const FL: Record<string, string> = { USA: '🇺🇸', CAN: '🇨🇦', MEX: '🇲🇽' }
-
-type Venue = { img: string; name: string; city: string; cc: string; role: string }
-const VENUES: Venue[] = [
-  { img: 'azteca', name: 'Estadio Azteca', city: 'Mexico City', cc: 'MEX', role: 'Opening Match' },
-  { img: 'metlife', name: 'MetLife Stadium', city: 'New York / NJ', cc: 'USA', role: 'Final' },
-  { img: 'att', name: 'AT&T Stadium', city: 'Dallas', cc: 'USA', role: 'Semifinal' },
-  { img: 'mercedes', name: 'Mercedes-Benz Stadium', city: 'Atlanta', cc: 'USA', role: 'Semifinal' },
-  { img: 'hardrock', name: 'Hard Rock Stadium', city: 'Miami', cc: 'USA', role: 'Third place' },
-  { img: 'sofi', name: 'SoFi Stadium', city: 'Los Angeles', cc: 'USA', role: '' },
-  { img: 'nrg', name: 'NRG Stadium', city: 'Houston', cc: 'USA', role: '' },
-  { img: 'arrowhead', name: 'Arrowhead Stadium', city: 'Kansas City', cc: 'USA', role: '' },
-  { img: 'linc', name: 'Lincoln Financial Field', city: 'Philadelphia', cc: 'USA', role: '' },
-  { img: 'levis', name: "Levi's Stadium", city: 'San Francisco Bay', cc: 'USA', role: '' },
-  { img: 'lumen', name: 'Lumen Field', city: 'Seattle', cc: 'USA', role: '' },
-  { img: 'gillette', name: 'Gillette Stadium', city: 'Boston', cc: 'USA', role: '' },
-  { img: 'bcplace', name: 'BC Place', city: 'Vancouver', cc: 'CAN', role: '' },
-  { img: 'bmo', name: 'BMO Field', city: 'Toronto', cc: 'CAN', role: '' },
-  { img: 'akron', name: 'Estadio Akron', city: 'Guadalajara', cc: 'MEX', role: '' },
-  { img: 'bbva', name: 'Estadio BBVA', city: 'Monterrey', cc: 'MEX', role: '' },
-]
 
 function Venues() {
   const [filter, setFilter] = useState('all')
@@ -61,7 +42,7 @@ function Venues() {
         <div className="container">
           <div className="grid" id="grid">
             {list.map((v) => (
-              <Link key={v.img} className="vcard" to="/venue" search={{ id: v.img }} {...intentWarm(() => warmVenue(v.img))}>
+              <Link key={v.img} className="vcard" to="/venue/$id" params={{ id: v.img }} {...intentWarm(() => warmImage(`/img/stadiums/${v.img}.jpg`))}>
                 <div className="photo">
                   <img className="photo-img" src={`/img/stadiums/${v.img}.jpg`} alt="" loading="lazy" decoding="async" />
                   <span className="citytag"><span className="flag">{FL[v.cc]}</span>{v.city}</span>

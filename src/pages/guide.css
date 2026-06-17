@@ -59,6 +59,10 @@ section.block{padding:52px 0}
 .collage{display:grid;grid-template-columns:1fr 1fr}
 .collage .ctile{background-size:cover;position:relative}
 .collage .ctile+.ctile{border-left:3px solid var(--k)}
+/* WebP with a JPG fallback: the first background-image is the fallback for
+   browsers without image-set(); the second overrides it where image-set works. */
+.collage .ctile.c1{background-image:url('/img/celebration.jpg');background-image:image-set(url('/img/celebration.webp') type('image/webp'),url('/img/celebration.jpg') type('image/jpeg'));background-position:center 42%}
+.collage .ctile.c2{background-image:url('/img/celebration2.jpg');background-position:center 35%}
 .choice .body{padding:22px 24px 26px}
 .choice .t{font-family:'Anton';font-size:28px;color:var(--ink);letter-spacing:.6px}
 .choice .x{font-size:15.5px;line-height:1.55;color:var(--body);margin-top:9px}

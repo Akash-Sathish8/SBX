@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { useMemo, useRef, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { SearchIcon, FlagIcon, MapPinIcon, ShareIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
@@ -8,7 +9,12 @@ import { renderShareCardBlob } from '../lib/renderShareCard'
 import { byDistance, isInside } from '../lib/dist'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
 import { useMatchScores } from '../lib/useMatchScores'
-import { getJSON, warmVenue, intentWarm } from '../lib/dataCache'
+import { venueQueryOptions } from '../lib/queries'
+import { warmVenue, intentWarm } from '../lib/dataCache'
+// Build-time-static data — bundled so the chooser SSRs instantly instead of
+// fetching index.json + fanintel.json on mount.
+import GAMES_INDEX from '../../public/data/games/index.json'
+import FAN_INTEL from '../../public/data/fanintel.json'
 import gameCss from '../pages/game.css?url'
 import shareCss from '../pages/share.css?url'
 
@@ -79,19 +85,11 @@ function buildFanwalk(m: any): { name: string; note?: string; where?: string } {
 function BuildPage() {
   const { game, mode } = Route.useSearch()
   const navigate = useNavigate()
-  const [index, setIndex] = useState<any[] | null>(null)
-  const [fi, setFi] = useState<any>(null)
-  const [failed, setFailed] = useState(false)
-
-  useEffect(() => {
-    Promise.all([
-      getJSON('/data/games/index.json'),
-      getJSON('/data/fanintel.json'),
-    ]).then(([idx, f]) => { setIndex(idx); setFi(f) }).catch(() => setFailed(true))
-  }, [])
+  const index = GAMES_INDEX as any[]
+  const fi = FAN_INTEL as any
 
   const setGame = (id: string) => navigate({ to: '/build', search: { game: id, mode } })
-  const g = index ? index.find((x) => x.id === game) : null
+  const g = index.find((x) => x.id === game) ?? null
 
   return (
     <>
@@ -107,10 +105,9 @@ function BuildPage() {
             <div className="gmeta">Pick a match, choose your spots, share a plan.</div>
           </div></section>
         )}
-        {failed ? <div className="loadwrap">Couldn't load match data. <Link to="/" style={{ color: '#222', textDecoration: 'underline' }}>← Home</Link></div>
-          : !index ? <div className="loadwrap">Loading…</div>
-            : g ? <Builder g={g} fi={fi} onBack={() => setGame('')} />
-              : <Chooser index={index} onPick={setGame} initialMode={mode} />}
+        {g
+          ? <Builder key={g.id} g={g} fi={fi} onBack={() => setGame('')} />
+          : <Chooser index={index} onPick={setGame} initialMode={mode} />}
       </main>
     </>
   )
@@ -193,8 +190,16 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
 }
 
 function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
-  const [venue, setVenue] = useState<any>(null)
-  const [weather, setWeather] = useState<{ temp: string; label: string } | null>(null)
+  // <Builder> is keyed by g.id in BuildPage, so switching matches remounts it —
+  // every wizard useState below resets to its initial value for free, and these
+  // two queries re-key to the new match (no manual reset effect needed).
+  const venue = useQuery(venueQueryOptions(g.venue)).data ?? null
+  const weather =
+    useQuery({
+      queryKey: ['build-weather', g.venue, g.dateISO],
+      queryFn: () => fetchMatchWeather(g.venue, g.dateISO),
+      staleTime: 60 * 60_000,
+    }).data ?? null
   const [getI, setGetI] = useState(0)
   const [parkI, setParkI] = useState(0)
   // pre / eat / merch / post are multi-select: arrays of chosen option indices.
@@ -212,14 +217,6 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const [custom, setCustom] = useState<Record<string, string>>(blankCustom)
   const customLine = (k: string) => (custom[k] || '').trim()
   const storyRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    let alive = true
-    setVenue(null); setWeather(null); setStep(0); setWalkI(0); setGetI(0); setParkI(0); setPreSel([]); setEatSel([]); setPostSel([]); setMerchSel([]); setCustom(blankCustom)
-    getJSON('/data/venues/' + g.venue + '.json').then((v) => { if (alive) setVenue(v) }).catch(() => {})
-    fetchMatchWeather(g.venue, g.dateISO).then((w) => { if (alive) setWeather(w) })
-    return () => { alive = false }
-  }, [g.venue, g.dateISO, g.id])
 
   const marches = fi?.marches ? fi.marches.filter((m: any) => marchRelevant(m, g)) : []
   const around = (venue && venue.around) || {}

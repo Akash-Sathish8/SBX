@@ -22,22 +22,30 @@ interface EdgeCacheOpts {
   browserMaxAge?: number;
   /** stale-while-revalidate window. */
   swrSeconds?: number;
+  /**
+   * Override the cache key (defaults to the request itself). Pass a normalized
+   * URL/Request to collapse away cache-busting junk query params — otherwise an
+   * attacker can append `?x=1`, `?x=2`, … to multiply cache entries and force
+   * the (expensive) producer to re-run per unique URL. Always GET.
+   */
+  cacheKey?: Request | string;
 }
-
-type CacheLike = {
-  match(request: Request): Promise<Response | undefined>;
-  put(request: Request, response: Response): Promise<void>;
-};
 
 export async function withEdgeCache(
   request: Request,
   opts: EdgeCacheOpts,
   produce: () => Promise<Response>,
 ): Promise<Response> {
-  const cache = (globalThis as { caches?: { default?: CacheLike } }).caches?.default;
+  const cache = typeof caches !== 'undefined' ? caches.default : undefined;
   if (!cache || request.method !== 'GET') return produce();
 
-  const hit = await cache.match(request);
+  const key = opts.cacheKey
+    ? typeof opts.cacheKey === 'string'
+      ? new Request(opts.cacheKey)
+      : opts.cacheKey
+    : request;
+
+  const hit = await cache.match(key);
   if (hit) return hit;
 
   const res = await produce();
@@ -54,6 +62,6 @@ export async function withEdgeCache(
 
   const toCache = new Response(res.body, { status: res.status, headers });
   const toReturn = toCache.clone();
-  await cache.put(request, toCache);
+  await cache.put(key, toCache);
   return toReturn;
 }

@@ -1,11 +1,13 @@
-import { Fragment, useEffect, useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { teamName, teamFlag } from '../lib/teams'
 import { useMatchScores, type Score } from '../lib/useMatchScores'
-import { getJSON, warmGame, intentWarm } from '../lib/dataCache'
+// Build-time-static fixture list — imported (bundled) rather than fetched at
+// runtime, so the page server-renders the full list (SEO + instant first paint).
+import GAMES_INDEX from '../../public/data/games/index.json'
 import css from '../pages/games.css?url'
 
 export const Route = createFileRoute('/games')({
@@ -47,36 +49,26 @@ function GameRow({ m, score }: { m: any; score?: Score }) {
     </>
   )
   if (m.tbd) return <div className="grow dim">{inner}</div>
-  // Warm the game page's data on hover/press so the recap is ready on click.
-  const warm = () => { getJSON('/data/fanintel.json').catch(() => {}); warmGame(m.id, m.hasDetail) }
-  return <Link to="/game" search={{ id: m.id }} className="grow" {...intentWarm(warm)}>{inner}</Link>
+  // defaultPreload:'intent' (router.tsx) preloads the /game/$id route on hover.
+  return <Link to="/game/$id" params={{ id: m.id }} className="grow">{inner}</Link>
 }
 
 function Games() {
-  const [all, setAll] = useState<any[] | null>(null)
-  const [errMsg, setErrMsg] = useState<string | null>(null)
+  const all = GAMES_INDEX as any[]
   const [filter, setFilter] = useState('all')
   const [query, setQuery] = useState('')
-
-  useEffect(() => {
-    let alive = true
-    getJSON('/data/games/index.json')
-      .then((d: any) => { if (alive) setAll(d) })
-      .catch(() => { if (alive) setErrMsg('Couldn\'t load the fixture list.') })
-    return () => { alive = false }
-  }, [])
 
   // Real final scores (ESPN), refreshed at most once per day. Completed matches
   // sort to the bottom of the list.
   const scoreInputs = useMemo(
-    () => (all ? all.map((m) => ({ key: m.id, dateISO: m.dateISO, home: m.home, away: m.away })) : null),
+    () => all.map((m) => ({ key: m.id, dateISO: m.dateISO, home: m.home, away: m.away })),
     [all],
   )
   const scores = useMatchScores(scoreInputs)
 
-  const cities = useMemo(() => all ? ['all'].concat([...new Set(all.map((m) => m.city).filter(Boolean))].sort()) : [], [all])
+  const cities = useMemo(() => ['all'].concat([...new Set(all.map((m) => m.city).filter(Boolean))].sort()), [all])
   const q = query.trim().toLowerCase()
-  const list = all ? all.filter((m) => (filter === 'all' || m.city === filter) && (!q || matchText(m).indexOf(q) > -1)) : []
+  const list = all.filter((m) => (filter === 'all' || m.city === filter) && (!q || matchText(m).indexOf(q) > -1))
   // completed matches drop to the bottom (stable sort keeps date order within each group)
   const sortedList = [...list].sort((a, b) => (scores[a.id] ? 1 : 0) - (scores[b.id] ? 1 : 0))
 
@@ -107,13 +99,9 @@ function Games() {
             ))}
           </div>
           <div id="matches">
-            {all === null && !errMsg ? <div className="loading">Loading fixtures…</div> : null}
-            {errMsg ? <div className="empty">{errMsg}</div> : null}
-            {all !== null && !errMsg ? (
-              list.length
-                ? sortedList.map((m) => <GameRow key={m.id} m={m} score={scores[m.id]} />)
-                : <div className="empty">No matches{q ? ' for “' + query.trim() + '”' : ' for that city'}.</div>
-            ) : null}
+            {list.length
+              ? sortedList.map((m) => <GameRow key={m.id} m={m} score={scores[m.id]} />)
+              : <div className="empty">No matches{q ? ' for “' + query.trim() + '”' : ' for that city'}.</div>}
           </div>
         </div>
       </section>

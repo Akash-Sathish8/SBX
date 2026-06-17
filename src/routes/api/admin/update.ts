@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
-import { verifyAdminFromRequest } from '@/lib/auth';
+import { withAdmin } from '@/lib/auth';
 import {
   setMatchResult,
   setMatchOverride,
@@ -11,6 +11,7 @@ import {
   setStadiumOverride,
   setVisibilityFlags,
   setUnderdogReferral,
+  bumpDataVersion,
 } from '@/lib/kv';
 
 // ── Reusable field validators ────────────────────────────────────────────
@@ -115,10 +116,7 @@ type Action = keyof typeof actionSchemas;
 export const Route = createFileRoute('/api/admin/update')({
   server: {
     handlers: {
-      POST: async ({ request }) => {
-        if (!(await verifyAdminFromRequest(request))) {
-          return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
-        }
+      POST: withAdmin(async ({ request }) => {
         try {
           const body = (await request.json()) as { action?: string; payload?: unknown };
           const action = body?.action as Action | undefined;
@@ -191,11 +189,13 @@ export const Route = createFileRoute('/api/admin/update')({
               break;
             }
           }
+          // Invalidate the public edge-cached snapshot so reads pick up the change.
+          await bumpDataVersion();
           return Response.json({ ok: true });
         } catch (err) {
           return Response.json({ ok: false, error: (err as Error).message }, { status: 500 });
         }
-      },
+      }),
     },
   },
 });

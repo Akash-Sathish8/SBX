@@ -5,7 +5,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
-import { getJSON } from '../lib/dataCache'
+// Build-time-static fixture list — imported (bundled) so the picker SSRs and
+// paints instantly, instead of fetching /data/games/index.json on mount.
+import GAMES_INDEX from '../../public/data/games/index.json'
 import { ShareCard, type Plan } from '../components/ShareCard'
 import { renderShareCardBlob } from '../lib/renderShareCard'
 import { teamName, teamFlag } from '../lib/teams'
@@ -41,13 +43,8 @@ const saveKey = (id: string) => 'sbx-agenda:' + id
 function AgendaPage() {
   const { game } = Route.useSearch()
   const navigate = useNavigate()
-  const [index, setIndex] = useState<any[] | null>(null)
-
-  useEffect(() => {
-    getJSON('/data/games/index.json').then(setIndex).catch(() => setIndex([]))
-  }, [])
-
-  const g = index ? index.find((x) => x.id === game) : null
+  const index = GAMES_INDEX as any[]
+  const g = index.find((x) => x.id === game) ?? null
 
   return (
     <>
@@ -57,9 +54,8 @@ function AgendaPage() {
           <Link to="/" className="ag-brand" aria-label="Snapback home" style={{ textDecoration: 'none', color: 'inherit' }}><img src="/img/logo.png" alt="" /><span>Snapback<br />Agenda</span></Link>
           {g ? <button className="ag-link" onClick={() => navigate({ to: '/agenda', search: { game: '' } })}>← Change match</button> : null}
         </header>
-        {!index ? <div className="ag-load">Loading…</div>
-          : g ? <Editor key={g.id} g={g} />
-            : <Picker index={index} onPick={(id) => navigate({ to: '/agenda', search: { game: id } })} />}
+        {g ? <Editor key={g.id} g={g} />
+          : <Picker index={index} onPick={(id) => navigate({ to: '/agenda', search: { game: id } })} />}
       </main>
     </>
   )

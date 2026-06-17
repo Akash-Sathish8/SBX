@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import Flag from './Flag';
 
 interface ScoreboardEvent {
@@ -30,50 +30,36 @@ interface Props {
   onMatchClick?: (matchNumber: number) => void;
 }
 
+async function fetchJson(url: string) {
+  const r = await fetch(url, { cache: 'no-store' });
+  if (!r.ok) throw new Error(`status ${r.status}`);
+  return r.json();
+}
+
 export default function LiveTodayTab({ onMatchClick }: Props = {}) {
-  const [events, setEvents] = useState<ScoreboardEvent[] | null>(null);
-  const [vlogs, setVlogs] = useState<VlogItem[] | null>(null);
-  const [date, setDate] = useState<string>('');
-  const [loading, setLoading] = useState(true);
-  const [failed, setFailed] = useState(false);
+  // refetchIntervalInBackground:false pauses polling whenever the tab is hidden,
+  // so a backgrounded tracker stops hitting the Worker/ESPN every 30s.
+  const liveQ = useQuery({
+    queryKey: ['live-today'],
+    queryFn: () => fetchJson('/api/live-today'),
+    refetchInterval: 30_000,
+    refetchIntervalInBackground: false,
+  });
+  const todayQ = useQuery({
+    queryKey: ['today-feed'],
+    queryFn: () => fetchJson('/api/today'),
+    refetchInterval: 30_000,
+    refetchIntervalInBackground: false,
+  });
 
-  async function load() {
-    try {
-      const [liveRes, todayRes] = await Promise.all([
-        fetch('/api/live-today', { cache: 'no-store' }),
-        fetch('/api/today', { cache: 'no-store' }),
-      ]);
-      const liveJson = await liveRes.json();
-      const todayJson = await todayRes.json();
-      if (liveJson?.ok) {
-        setEvents(liveJson.data ?? []);
-        setDate(liveJson.date ?? '');
-        // Clear any error from a previous poll — without this, one transient
-        // failure leaves the error banner up forever next to fresh scores.
-        setFailed(false);
-      } else {
-        setFailed(true);
-      }
-      if (todayJson?.ok) {
-        // Only render vlog items (results are already shown below)
-        const vs = (todayJson.items ?? []).filter(
-          (it: { kind: string }) => it.kind === 'vlog',
-        );
-        setVlogs(vs);
-      }
-    } catch {
-      setFailed(true);
-    }
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    load();
-    const id = setInterval(load, 30_000);
-    return () => clearInterval(id);
-  }, []);
-
-  const hasVlogs = (vlogs?.length ?? 0) > 0;
+  const events: ScoreboardEvent[] = liveQ.data?.ok ? liveQ.data.data ?? [] : [];
+  const date: string = liveQ.data?.ok ? liveQ.data.date ?? '' : '';
+  const vlogs: VlogItem[] = todayQ.data?.ok
+    ? (todayQ.data.items ?? []).filter((it: { kind: string }) => it.kind === 'vlog')
+    : [];
+  const loading = liveQ.isLoading;
+  const failed = liveQ.isError || (liveQ.data && !liveQ.data.ok);
+  const hasVlogs = vlogs.length > 0;
 
   return (
     <div className="p-3 space-y-2">
@@ -81,10 +67,10 @@ export default function LiveTodayTab({ onMatchClick }: Props = {}) {
         <>
           <div className="font-mono text-[10px] tracking-[0.22em] text-snap-yellow mb-2 flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-snap-yellow animate-pulse-live" />
-            CASEY&apos;S LATEST · {vlogs!.length} {vlogs!.length === 1 ? 'VLOG' : 'VLOGS'}
+            CASEY&apos;S LATEST · {vlogs.length} {vlogs.length === 1 ? 'VLOG' : 'VLOGS'}
           </div>
           <div className="flex gap-2 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3">
-            {vlogs!.map((v) => (
+            {vlogs.map((v) => (
               <button
                 key={v.matchNumber}
                 type="button"
@@ -119,7 +105,7 @@ export default function LiveTodayTab({ onMatchClick }: Props = {}) {
         </>
       )}
       <div className="font-mono text-[10px] tracking-[0.22em] text-snap-mist mb-2">
-        TODAY{date ? ` · ${date}` : ''} · {events?.length ?? 0} MATCHES
+        TODAY{date ? ` · ${date}` : ''} · {events.length} MATCHES
       </div>
       {loading && (
         <div className="font-mono text-[11px] text-snap-mist py-8 text-center">
@@ -131,13 +117,13 @@ export default function LiveTodayTab({ onMatchClick }: Props = {}) {
           can&apos;t pull scores rn · try again in a sec
         </div>
       )}
-      {!loading && events && events.length === 0 && (
+      {!loading && !failed && events.length === 0 && (
         <div className="font-mono text-[11px] text-snap-mist py-8 text-center">
           no games today · casey&apos;s catching his breath
         </div>
       )}
       {!loading &&
-        events?.map((ev) => (
+        events.map((ev) => (
           <div key={ev.id} className="card-lift border border-snap-ash bg-gradient-to-br from-snap-coal to-snap-coal/70 p-3">
             <div className="flex items-center justify-between gap-2">
               <span

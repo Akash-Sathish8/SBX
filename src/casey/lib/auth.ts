@@ -1,62 +1,27 @@
-// TanStack-compatible admin auth. The parent app's lib/auth.ts uses
-// next/headers cookies() which doesn't exist here, so this standalone
-// version reads/writes cookies via the web-standard Request/Response.
-// JWT signing logic is identical (jose, HS256, same cookie name/secret),
-// so tokens issued by either app validate in both.
+// Admin auth via Cloudflare Access (Zero Trust).
+//
+// `/casey/admin*` and `/api/admin/*` sit behind a Cloudflare Access self-hosted
+// application, so every request that reaches the Worker through the gated hostname
+// carries a signed Access JWT (the `Cf-Access-Jwt-Assertion` header / `CF_Authorization`
+// cookie). We verify that assertion against Cloudflare's public keys — this is the
+// ONLY admin auth now: no app password, no app-signed cookie, no Worker secrets.
+//
+// Verifying server-side (rather than blindly trusting "Access is in front") also
+// closes the `*.workers.dev` bypass: a request that didn't pass Access has no valid
+// assertion, so it's rejected no matter how it reached the Worker.
 
-import { SignJWT, jwtVerify } from 'jose';
+import { jwtVerify, createRemoteJWKSet } from 'jose';
 
-const COOKIE_NAME = 'casey_admin';
-const MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
+// Public identifiers for the Access application — NOT secrets (security comes from
+// verifying the JWT signature against Cloudflare's keys). If the Access app is
+// recreated, update these: Zero Trust → Access → app → Application Audience (AUD) Tag.
+const TEAM_DOMAIN = 'morning-sunset-52b4.cloudflareaccess.com';
+const ACCESS_AUD = '1bad8fa54f0e7d0bc434022f3b96c556d078fcf23ca430ad37710542d6f775d2';
+const ACCESS_ISSUER = `https://${TEAM_DOMAIN}`;
 
-const DEV_FALLBACK_SECRET = 'dev-insecure-secret-please-set-ADMIN_JWT_SECRET';
-const DEV_FALLBACK_PASSWORD = 'snapback2026';
-
-function isProduction(): boolean {
-  return process.env.NODE_ENV === 'production';
-}
-
-// Fail closed: in production we never fall back to a known dev secret/password.
-// If the secret is unset there, throw — verifyAdminFromRequest() catches it and
-// returns false (rejecting every admin request) rather than accepting tokens
-// forged against a publicly-known default. Local dev still works without config.
-function getSecret(): Uint8Array {
-  const raw = process.env.ADMIN_JWT_SECRET;
-  if (!raw) {
-    if (isProduction()) {
-      throw new Error('ADMIN_JWT_SECRET is not set — refusing to issue/verify admin tokens');
-    }
-    return new TextEncoder().encode(DEV_FALLBACK_SECRET);
-  }
-  return new TextEncoder().encode(raw);
-}
-
-export function getAdminPassword(): string {
-  const pw = process.env.ADMIN_PASSWORD;
-  if (!pw) {
-    if (isProduction()) {
-      throw new Error('ADMIN_PASSWORD is not set — admin login is disabled');
-    }
-    return DEV_FALLBACK_PASSWORD;
-  }
-  return pw;
-}
-
-export function getAdminCookieName(): string {
-  return COOKIE_NAME;
-}
-
-export function getAdminCookieMaxAge(): number {
-  return MAX_AGE_SECONDS;
-}
-
-export async function issueAdminToken(): Promise<string> {
-  return new SignJWT({ role: 'admin' })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setIssuedAt()
-    .setExpirationTime('7d')
-    .sign(getSecret());
-}
+// Cloudflare publishes the Access signing keys here; createRemoteJWKSet fetches and
+// caches them (and refreshes on rotation).
+const JWKS = createRemoteJWKSet(new URL(`${ACCESS_ISSUER}/cdn-cgi/access/certs`));
 
 function readCookie(header: string | null, name: string): string | null {
   if (!header) return null;
@@ -70,18 +35,33 @@ function readCookie(header: string | null, name: string): string | null {
 }
 
 export async function verifyAdminFromRequest(request: Request): Promise<boolean> {
+  // Local `npm run dev` has no Access in front. `import.meta.env.DEV` is a
+  // COMPILE-TIME constant (false in production builds), so this can never open
+  // admin on the deployed Worker — it fails closed regardless of runtime env.
+  if (import.meta.env.DEV) return true;
+
+  const token =
+    request.headers.get('cf-access-jwt-assertion') ??
+    readCookie(request.headers.get('cookie'), 'CF_Authorization');
+  if (!token) return false;
   try {
-    const token = readCookie(request.headers.get('cookie'), COOKIE_NAME);
-    if (!token) return false;
-    const { payload } = await jwtVerify(token, getSecret());
-    return payload.role === 'admin';
+    await jwtVerify(token, JWKS, { issuer: ACCESS_ISSUER, audience: ACCESS_AUD });
+    return true;
   } catch {
     return false;
   }
 }
 
-// Build a Set-Cookie header value for the admin token (or to clear it).
-export function buildAdminCookie(token: string, maxAge: number): string {
-  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
-  return `${COOKIE_NAME}=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${maxAge}${secure}`;
+// Wrap a server-route handler so it 401s (clean JSON) unless the request carries a
+// valid Access assertion. The admin *bootstrap* route stays bespoke (it returns 200
+// {authed:false} to drive the page) — everything that mutates uses this.
+export function withAdmin<C extends { request: Request }>(
+  handler: (ctx: C) => Promise<Response>,
+): (ctx: C) => Promise<Response> {
+  return async (ctx) => {
+    if (!(await verifyAdminFromRequest(ctx.request))) {
+      return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
+    }
+    return handler(ctx);
+  };
 }

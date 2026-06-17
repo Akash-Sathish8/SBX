@@ -47,10 +47,6 @@ export interface MatchScore {
 //        ESPN-egress collapse under load. (`cf` isn't in lib.dom's RequestInit.)
 const _jsonCache = new Map<string, { t: number; data: any }>();
 
-type CfRequestInit = RequestInit & {
-  cf?: { cacheEverything?: boolean; cacheTtl?: number };
-};
-
 async function fetchJson(url: string, revalidateSec: number): Promise<any | null> {
   const now = Date.now();
   const hit = _jsonCache.get(url);
@@ -58,7 +54,7 @@ async function fetchJson(url: string, revalidateSec: number): Promise<any | null
   try {
     const res = await fetch(url, {
       cf: { cacheEverything: true, cacheTtl: revalidateSec },
-    } as CfRequestInit);
+    });
     if (!res.ok) return null;
     const data = await res.json();
     _jsonCache.set(url, { t: now, data });

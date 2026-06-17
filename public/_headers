@@ -3,6 +3,13 @@
 # 304-revalidate them. Asset bytes here are content-stable; if one is replaced
 # in place, bump its path/filename to bust the cache.
 
+# Vite emits content-hashed bundle filenames (e.g. index-D00BcOP9.js), so they're
+# safe to cache forever — a content change yields a new filename. Without this,
+# Workers Assets serves them `max-age=0, must-revalidate` and every repeat visit
+# re-validates each JS/CSS chunk (confirmed via the prod `vite preview` trace).
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /img/*
   Cache-Control: public, max-age=31536000, immutable
 

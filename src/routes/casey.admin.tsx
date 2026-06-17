@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useCallback, useEffect, useState } from 'react';
-import AdminLogin from '../casey/components/AdminLogin';
 import AdminShell from '../casey/components/AdminShell';
 import { SiteNav } from '../components/SiteNav';
 import type {
@@ -73,11 +72,21 @@ function AdminRoute() {
   }
 
   if (!state.authed) {
+    // Behind Cloudflare Access this shouldn't happen (a request that reaches here
+    // already passed Access). Shown only if the Access assertion is missing/invalid.
     return (
       <>
         <SiteNav active="casey" />
         <div className="casey-shell" style={{ overflowY: 'auto' }}>
-          <AdminLogin onAuthed={load} />
+          <main className="absolute inset-0 flex items-center justify-center bg-snap-black p-6">
+            <div className="max-w-sm text-center">
+              <div className="font-display text-[40px] leading-none text-snap-yellow">NOT AUTHORIZED</div>
+              <div className="mt-3 font-mono text-[11px] leading-relaxed tracking-[0.18em] text-snap-mist">
+                This panel is protected by Cloudflare Access. Sign in with an approved
+                Snapback account to continue.
+              </div>
+            </div>
+          </main>
         </div>
       </>
     );

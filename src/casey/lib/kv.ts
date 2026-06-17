@@ -7,19 +7,7 @@ import type {
   StadiumOverride,
 } from './types';
 import type { HealthRecord } from './health';
-
-// Minimal slice of the Workers KV API we use (avoids a hard dependency on
-// @cloudflare/workers-types).
-interface KVNamespace {
-  get(key: string, type: 'json'): Promise<unknown | null>;
-  put(key: string, value: string): Promise<void>;
-  delete(key: string): Promise<void>;
-  list(opts?: { prefix?: string; cursor?: string; limit?: number }): Promise<{
-    keys: { name: string }[];
-    list_complete: boolean;
-    cursor?: string;
-  }>;
-}
+import type { KVNamespace } from '@cloudflare/workers-types';
 
 let _kv: KVNamespace | null | undefined; // undefined = not yet resolved
 let warned = false;
@@ -32,8 +20,8 @@ const memoryStore = new Map<string, unknown>();
 async function getKV(): Promise<KVNamespace | null> {
   if (_kv !== undefined) return _kv;
   try {
-    const mod: { env?: Record<string, unknown> } = await import('cloudflare:workers');
-    _kv = (mod.env?.KV as KVNamespace | undefined) ?? null;
+    const mod = await import('cloudflare:workers');
+    _kv = mod.env?.KV ?? null;
   } catch {
     _kv = null;
   }
@@ -243,4 +231,22 @@ export async function getUnderdogReferral(): Promise<string> {
 
 export async function setUnderdogReferral(url: string): Promise<void> {
   await kvSet(KEY_UNDERDOG_REFERRAL, url);
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Data version — a single token bumped on every admin write. Public read
+// paths key their edge-cached snapshot on it (see snapshot.ts), so they can
+// skip the KV fan-out until something actually changes.
+// ──────────────────────────────────────────────────────────────────
+
+const KEY_DATA_VERSION = 'data:version';
+
+export async function getDataVersion(): Promise<string> {
+  return (await kvGet<string>(KEY_DATA_VERSION)) ?? '0';
+}
+
+export async function bumpDataVersion(): Promise<void> {
+  // Any new unique value invalidates the cached snapshot; a timestamp is enough
+  // at admin-write cadence (no atomic increment needed).
+  await kvSet(KEY_DATA_VERSION, `${Date.now()}`);
 }

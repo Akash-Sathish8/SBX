@@ -1,7 +1,4 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { SiteNav } from '../components/SiteNav';
-import { PageCssGuard } from '../components/PageCssGuard';
-import TrackerApp from '../casey/components/TrackerApp';
 // navCss = SBX's shared page/nav styles (so SiteNav renders correctly);
 // trackerCss = the tracker's compiled Tailwind, scoped to .casey-shell.
 import navCss from '../pages/casey.css?url';
@@ -28,15 +25,3 @@ export const Route = createFileRoute('/casey')({
     ],
   }),
 });
-
-// function Casey() {
-//   return (
-//     <>
-//       <PageCssGuard id="casey" />
-//       <SiteNav active="casey" />
-//       <div className="casey-shell">
-//         <TrackerApp />
-//       </div>
-//     </>
-//   );
-// }
