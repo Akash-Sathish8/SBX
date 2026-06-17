@@ -37,6 +37,10 @@ export const Route = createFileRoute('/build')({
   component: BuildPage,
 })
 
+// A bullet in the venue-detail JSON is either { b, t } (bold lead + tail) or a
+// bare { t }. Render it as one line — shared by every section that lists points.
+const pointText = (p: any): string => (p ? (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t) : '')
+
 function marchRelevant(m: any, g: any) {
   if (m.venue !== g.venue) return false
   const hay = ((m.title || '') + ' ' + (m.note || '') + ' ' + (m.when || '')).toLowerCase()
@@ -218,7 +222,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     const t = (venue && venue.transport) || {}
     const sentences = splitSentences
     const bulletsOf = (item: any) => (item.points && item.points.length)
-      ? item.points.map((p: any) => (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t))
+      ? item.points.map(pointText)
       : sentences(item.detail).slice(0, 3)
     const o: any[] = []
     ;(t.rail || []).forEach((r: any) => o.push({ name: r.name, tag: 'Train', bullets: bulletsOf(r), deal: r.deal }))
@@ -233,7 +237,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     return o
   }, [venue])
 
-  const point = (p: any) => p ? (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t) : ''
+  const point = pointText
   const spot = (o: any) => o ? {
     name: o.name,
     note: o.note || (o.why && o.why[0]) || '',
@@ -325,7 +329,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const cur = flow[stepIdx]
 
   const cardLines = (key: string, o: any): string[] => {
-    if (key === 'park') return (o.points && o.points.length ? o.points.map((p: any) => (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t)) : [firstSentence(o.detail)]).filter(Boolean)
+    if (key === 'park') return (o.points && o.points.length ? o.points.map(pointText) : [firstSentence(o.detail)]).filter(Boolean)
     if (key === 'get') { const l = [...(o.bullets || [])]; if (o.deal) l.push('Fare · ' + o.deal); if (o.driving) l.push('Next: choose your parking lot →'); return l }
     return o.note ? [o.note] : []
   }

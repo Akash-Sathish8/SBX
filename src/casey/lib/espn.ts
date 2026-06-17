@@ -13,7 +13,7 @@ const TEAM_ALIASES: Record<string, string[]> = {
   'Türkiye': ['Türkiye', 'Turkey', 'Turkiye'],
   'IR Iran': ['IR Iran', 'Iran'],
   "Côte d'Ivoire": ["Côte d'Ivoire", 'Ivory Coast', "Cote d'Ivoire"],
-  'Ivory Coast': ['Ivory Coast', "Côte d'Ivoire", 'Cote dIvoire'],
+  'Ivory Coast': ['Ivory Coast', "Côte d'Ivoire", "Cote d'Ivoire"],
   'Cabo Verde': ['Cabo Verde', 'Cape Verde'],
   'DR Congo': ['DR Congo', 'Congo DR', 'Democratic Republic of the Congo'],
   'South Africa': ['South Africa'],

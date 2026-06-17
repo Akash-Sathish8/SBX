@@ -1,37 +1,17 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Flag from './Flag';
+import { useQuery } from '@tanstack/react-query';
 import { groupStandingsSearch } from '@/lib/external-links';
+import { standingsGroupQueryOptions } from '@/lib/queries';
+import type { GroupStandings } from '@/lib/espn';
 
 interface Props {
   group: string;
   onClose: () => void;
 }
 
-interface Row {
-  team: string;
-  abbr?: string;
-  gp: number;
-  w: number;
-  d: number;
-  l: number;
-  gf: number;
-  ga: number;
-  gd: number;
-  pts: number;
-}
-
-interface Data {
-  name: string;
-  letter: string;
-  rows: Row[];
-}
-
 export default function StandingsModal({ group, onClose }: Props) {
-  const [data, setData] = useState<Data | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [failed, setFailed] = useState(false);
-
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -40,29 +20,11 @@ export default function StandingsModal({ group, onClose }: Props) {
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch(`/api/standings?group=${encodeURIComponent(group)}`, {
-          cache: 'no-store',
-        });
-        const json = await res.json();
-        if (cancelled) return;
-        if (json?.ok && json.data?.rows?.length) {
-          setData(json.data);
-        } else {
-          setFailed(true);
-        }
-      } catch {
-        if (!cancelled) setFailed(true);
-      }
-      if (!cancelled) setLoading(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [group]);
+  const q = useQuery(standingsGroupQueryOptions(group));
+  const data: GroupStandings | null =
+    q.data?.ok && q.data.data?.rows?.length ? q.data.data : null;
+  const loading = q.isLoading;
+  const failed = !loading && (q.isError || !data);
 
   return (
     <div className="fixed inset-0 z-[1100] flex items-center justify-center bg-black/70 p-4">

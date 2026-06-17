@@ -89,7 +89,6 @@ export default function SnapbackLogo({
       : { width: size, height: size };
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src="/snapback-logo.jpeg"
       alt="Snapback Sports"

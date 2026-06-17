@@ -322,11 +322,46 @@ helpers had drifted between routes. Fixed in three stages, all verified green:
   Africa" + flags; a TBD fixture (`sofi-jun28`) renders "To be confirmed" with the
   flag background, Build-CTA and team helpers all correctly suppressed. No console errors.
 
+## Casey-subtree cleanup (second code-smell pass) — DONE
+Audited `src/casey/` (the live admin/tracker product, ported from a Next.js app by
+the intern). Found + fixed, in two batches, all verified green + browser-smoke-tested:
+
+**Batch 1 — isolated fixes (low-risk):**
+- ✅ **`pointText()` helper** in `build.tsx` — the `{b,t}` bullet adapter was inlined 3×.
+- ✅ **`espn.ts` alias typo** — `'Cote dIvoire'` (no apostrophe, an unmatchable dead
+  alias) → `"Cote d'Ivoire"`.
+- ✅ **`ScoreboardEvent` deduped** — was declared 3× (`espn.ts` + 2 drifting client
+  copies that dropped `stage`); clients now `import type` the canonical one.
+- ✅ **4 dead `@next/next/no-img-element` eslint directives removed** (not a Next app).
+
+**Batch 2 — structural:**
+- ✅ **Finished the abandoned TanStack Query migration.** `GroupsTab`, `BracketTab`,
+  `StandingsModal` + the admin `Visibility`/`Attention`/`Health` tabs + the
+  `casey.admin` route bootstrap all hand-rolled `useEffect` + `fetch({cache:'no-store'})`
+  + `loading/failed/cancelled` state right next to already-migrated siblings. All moved
+  to `useQuery`, backed by a new shared `casey/lib/queries.ts` (`liveJson` + queryOptions
+  factories). ~8 duplicated fetch sites collapsed; mutations write through via
+  `qc.setQueryData`. Verified on `vite dev`: Groups renders all 12 live ESPN tables,
+  Bracket renders R32→Final, admin tabs all load.
+- ✅ **Fixed the broken "OPEN #N" Attention button** (`void n` discarded the match
+  number → did nothing). Now lifts `jumpMatch` in AdminShell → `MatchesTab initialOpenId`.
+  Browser-verified: clicking OPEN #1 switches to Matches **and** opens match #1's editor.
+- ✅ **Fixed network-failure → "NOT AUTHORIZED" misattribution** in `casey.admin`: a
+  bootstrap blip now shows a retry ("CAN'T LOAD"), not a false auth denial; the
+  Attention/Health tabs surface load errors instead of a permanent "loading…".
+- ✅ **Split the 1663-line `AdminShell.tsx` god-component** → a slim 128-line shell +
+  `components/admin/{ui,MatchesTab,StadiumsTab,PositionTab,SpendTab,VisibilityTab,
+  AttentionTab,HealthTab}.tsx`. Done by exact byte-slicing (no transcription risk);
+  tsc + build + 23 tests + a full browser pass of every admin tab all green, 0 console errors.
+
 ## Verification status
 - `npm run build` ✅ · `npm test` ✅ (23/23) · `npx tsc --noEmit` ✅ (**fully clean**,
   including previously-failing files) · SSR smoke-tested on `vite dev` (prior session):
   homepage, `/casey`, `/games`, `/game/$id`, `/venue/$id`, legacy redirects,
   `/api/bootstrap`, `/api/live`. Data-layer cleanup re-verified on the prod preview
   (`vite preview`): normal + TBD game pages render correctly, zero runtime errors.
+  Casey-subtree cleanup re-verified on `vite dev`: `/casey/admin` (all 7 tabs + OPEN #N
+  flow) and `/casey` Tournament Hub (Groups + Bracket with live ESPN data) — **0 console
+  errors**.
 - **Not committed** — working tree on branch `alex/dev`, no commits made this session.
 </content>

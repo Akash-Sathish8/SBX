@@ -1,20 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import Flag from './Flag';
-
-interface ScoreboardEvent {
-  id: string;
-  date: string;
-  name: string;
-  shortName: string;
-  venue?: string;
-  city?: string;
-  home: { name: string; abbr?: string; score: number | null };
-  away: { name: string; abbr?: string; score: number | null };
-  status: 'pre' | 'in' | 'post' | 'unknown';
-  detail: string;
-  completed: boolean;
-}
+import type { ScoreboardEvent } from '@/lib/espn';
 
 interface VlogItem {
   matchNumber: number;
@@ -78,7 +65,6 @@ export default function LiveTodayTab({ onMatchClick }: Props = {}) {
                 className="flex-shrink-0 snap-start w-[160px] bg-snap-coal border border-snap-yellow/40 hover:border-snap-yellow transition-colors text-left overflow-hidden"
               >
                 <div className="relative aspect-video bg-snap-black overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={v.thumbnail}
                     alt=""

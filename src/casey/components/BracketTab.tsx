@@ -1,21 +1,9 @@
 
-import { useEffect, useState } from 'react';
 import Flag from './Flag';
 import { useFollows } from '@/lib/follows';
-
-interface ScoreboardEvent {
-  id: string;
-  date: string;
-  name: string;
-  shortName: string;
-  venue?: string;
-  city?: string;
-  home: { name: string; abbr?: string; score: number | null };
-  away: { name: string; abbr?: string; score: number | null };
-  status: 'pre' | 'in' | 'post' | 'unknown';
-  detail: string;
-  completed: boolean;
-}
+import { useQuery } from '@tanstack/react-query';
+import type { ScoreboardEvent } from '@/lib/espn';
+import { bracketQueryOptions } from '@/lib/queries';
 
 type Stages = Record<string, ScoreboardEvent[]>;
 
@@ -28,36 +16,11 @@ const COLUMNS = [
 ] as const;
 
 export default function BracketTab() {
-  const [stages, setStages] = useState<Stages | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch('/api/bracket', { cache: 'no-store' });
-        const json = await res.json();
-        if (cancelled) return;
-        if (json?.ok && json.data) {
-          setStages(json.data);
-          const total = Object.values(json.data as Stages).reduce(
-            (sum, arr) => sum + arr.length,
-            0,
-          );
-          if (total === 0) setFailed(true);
-        } else {
-          setFailed(true);
-        }
-      } catch {
-        if (!cancelled) setFailed(true);
-      }
-      if (!cancelled) setLoading(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const q = useQuery(bracketQueryOptions());
+  const stages: Stages | null = q.data?.ok && q.data.data ? q.data.data : null;
+  const loading = q.isLoading;
+  const total = stages ? Object.values(stages).reduce((sum, arr) => sum + arr.length, 0) : 0;
+  const failed = !loading && (q.isError || !stages || total === 0);
 
   return (
     <div className="p-3">
