@@ -210,24 +210,22 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   // Getting there: real, researched options pulled from the venue's transport + parking data.
   const getThereOpts: any[] = useMemo(() => {
     const t = (venue && venue.transport) || {}
-    const sentences = splitSentences
     const bulletsOf = (item: any) => (item.points && item.points.length)
       ? item.points.map(pointText)
-      : sentences(item.detail).slice(0, 3)
+      : splitSentences(item.detail).slice(0, 3)
     const o: any[] = []
     ;(t.rail || []).forEach((r: any) => o.push({ name: r.name, tag: 'Train', bullets: bulletsOf(r), deal: r.deal }))
     ;(t.bus || []).forEach((b: any) => o.push({ name: b.name, tag: 'Bus', bullets: bulletsOf(b), deal: b.deal }))
     ;(t.shuttle || []).forEach((s: any) => o.push({ name: s.name, tag: 'Shuttle', bullets: bulletsOf(s), deal: s.deal }))
-    if (t.rideshare) o.push({ name: 'Rideshare & taxi', tag: 'Rideshare', bullets: sentences(t.rideshare).slice(0, 2) })
-    if (t.bike) o.push({ name: 'Bike & scooter', tag: 'Active', bullets: sentences(t.bike).slice(0, 2) })
+    if (t.rideshare) o.push({ name: 'Rideshare & taxi', tag: 'Rideshare', bullets: splitSentences(t.rideshare).slice(0, 2) })
+    if (t.bike) o.push({ name: 'Bike & scooter', tag: 'Active', bullets: splitSentences(t.bike).slice(0, 2) })
     if (venue && venue.parking) {
       const lots: any[] = venue.parking.lots || []
-      o.push({ name: 'Drive & park', tag: 'Driving', driving: true, bullets: sentences(venue.parking.summary).slice(0, 2), lots })
+      o.push({ name: 'Drive & park', tag: 'Driving', driving: true, bullets: splitSentences(venue.parking.summary).slice(0, 2), lots })
     }
     return o
   }, [venue])
 
-  const point = pointText
   const spot = (o: any) => o ? {
     name: o.name,
     note: o.note || (o.why && o.why[0]) || '',
@@ -244,8 +242,8 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const selLot = parkLots[parkI] || null
   const parking = selLot ? {
     name: selLot.name,
-    note: [selLot.price, point(selLot.points && selLot.points[0])].filter(Boolean).join(' · '),
-    where: point(selLot.points && selLot.points[1]),
+    note: [selLot.price, pointText(selLot.points && selLot.points[0])].filter(Boolean).join(' · '),
+    where: pointText(selLot.points && selLot.points[1]),
   } : (parkI === -1 && customLine('park') ? { name: customLine('park') } : null)
 
   // Special event (fan walk / supporter march). When one exists it becomes the

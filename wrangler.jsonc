@@ -4,6 +4,19 @@
   "compatibility_date": "2026-06-10",
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
+  // Serve the worker at sbx.snapbacksports.com. custom_domain lets Cloudflare
+  // create the proxied DNS record + SSL cert and bind the route on deploy.
+  // The snapbacksports.com zone is managed in this same Cloudflare account.
+  "routes": [
+    {
+      "pattern": "sbx.snapbacksports.com",
+      "custom_domain": true
+    }
+  ],
+  // Keep the workers.dev URL and per-version preview URLs alive alongside the
+  // custom domain (adding `routes` would otherwise disable both by default).
+  "workers_dev": true,
+  "preview_urls": true,
   "observability": {
     "enabled": true,
     // Full logging for launch visibility; lower (e.g. 0.1) to cap log cost

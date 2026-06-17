@@ -89,7 +89,7 @@ export default function WhereIsCaseyBadge({ location, stats, itinerary, stadiums
 
       {open && (
         <div
-          className="fixed inset-0 z-[1100] flex items-end sm:items-center justify-center bg-snap-black/85 backdrop-blur-sm p-3 sm:p-6 animate-detail-reveal"
+          className="fixed inset-0 z-1100 flex items-end sm:items-center justify-center bg-snap-black/85 backdrop-blur-sm p-3 sm:p-6 animate-detail-reveal"
           onClick={() => setOpen(false)}
         >
           <div
@@ -112,7 +112,7 @@ export default function WhereIsCaseyBadge({ location, stats, itinerary, stadiums
 
             <div className="overflow-y-auto px-4 py-4 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="relative flex-shrink-0">
+                <div className="relative shrink-0">
                   <img
                     src="/casey-avatar.jpeg"
                     alt="Casey"

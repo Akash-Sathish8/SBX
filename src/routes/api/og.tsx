@@ -6,6 +6,12 @@ import { Resvg, initWasm } from '@resvg/resvg-wasm';
 // WebAssembly.Module in the worker environment; initWasm() must run once
 // before any Resvg use.
 import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
+// Satori fonts, BUNDLED (not fetched) so OG generation has no runtime network
+// dependency. `?inline` makes Vite embed the woff as a base64 data URI at build
+// time. Satori supports ttf/otf/woff (not woff2). Bebas Neue is the display face;
+// Barlow is the site's own body font (replaces the old CDN-only Inter).
+import bebasWoff from '@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff?inline';
+import barlowWoff from '@fontsource/barlow/files/barlow-latin-700-normal.woff?inline';
 import { getPositionOverride, getAllResults } from '@/lib/kv';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
@@ -15,28 +21,18 @@ import { withEdgeCache } from '#/lib/edgeCache';
 const W = 1200;
 const H = 630;
 
-// Satori needs explicit font ArrayBuffers (no system fonts). We fetch
-// woff files (satori supports ttf/otf/woff, not woff2) from a CDN once
-// and cache them for the life of the server process.
-let fontCache: { name: string; data: ArrayBuffer; weight: 400 | 700; style: 'normal' }[] | null =
-  null;
-
-async function loadFonts() {
-  if (fontCache) return fontCache;
-  const [bebas, inter] = await Promise.all([
-    fetch('https://cdn.jsdelivr.net/npm/@fontsource/bebas-neue@5.0.0/files/bebas-neue-latin-400-normal.woff').then(
-      (r) => r.arrayBuffer(),
-    ),
-    fetch('https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/files/inter-latin-700-normal.woff').then(
-      (r) => r.arrayBuffer(),
-    ),
-  ]);
-  fontCache = [
-    { name: 'Bebas Neue', data: bebas, weight: 400, style: 'normal' },
-    { name: 'Inter', data: inter, weight: 700, style: 'normal' },
-  ];
-  return fontCache;
+// Decode a base64 data URI ("data:font/woff;base64,…") to the ArrayBuffer Satori
+// wants. Runs once at module load — no fetch, no per-request work.
+function dataUriToArrayBuffer(uri: string): ArrayBuffer {
+  const binary = atob(uri.slice(uri.indexOf(',') + 1));
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes.buffer;
 }
+const FONTS = [
+  { name: 'Bebas Neue', data: dataUriToArrayBuffer(bebasWoff), weight: 400 as const, style: 'normal' as const },
+  { name: 'Barlow', data: dataUriToArrayBuffer(barlowWoff), weight: 700 as const, style: 'normal' as const },
+];
 
 // initWasm throws if called more than once, so share a single init promise
 // across requests for the life of the worker.
@@ -79,8 +75,7 @@ export const Route = createFileRoute('/api/og')({
           request,
           { edgeTtlSeconds: 300, browserMaxAge: 120, swrSeconds: 600, cacheKey },
           async () => {
-        const url = new URL(request.url);
-        const matchParam = url.searchParams.get('match');
+        const matchParam = reqUrl.searchParams.get('match');
         const targetMatchNumber = matchParam ? Number(matchParam) : null;
 
         const [override, results] = await Promise.all([
@@ -105,7 +100,8 @@ export const Route = createFileRoute('/api/og')({
           ? `${focusStadium?.name ?? 'TBD'}${focusStadium?.city ? ' · ' + focusStadium.city : ''}`
           : 'One Game. Every Day. · World Cup 2026';
 
-        const [fonts] = await Promise.all([loadFonts(), ensureResvg()]);
+        await ensureResvg();
+        const fonts = FONTS;
 
         const element = {
           type: 'div',
@@ -118,7 +114,7 @@ export const Route = createFileRoute('/api/og')({
               justifyContent: 'space-between',
               background: 'linear-gradient(135deg, #141414 0%, #0a0a0a 55%, #1f1f1f 100%)',
               padding: 64,
-              fontFamily: 'Inter',
+              fontFamily: 'Barlow',
             },
             children: [
               // top row: brand + tag
@@ -134,7 +130,7 @@ export const Route = createFileRoute('/api/og')({
                           fontSize: 22,
                           letterSpacing: 4,
                           color: '#FFD400',
-                          fontFamily: 'Inter',
+                          fontFamily: 'Barlow',
                         },
                         children: 'SNAPBACK SPORTS · WORLD CUP 2026',
                       },
@@ -149,7 +145,7 @@ export const Route = createFileRoute('/api/og')({
                           color: tag.color,
                           border: `2px solid ${tag.color}`,
                           padding: '8px 16px',
-                          fontFamily: 'Inter',
+                          fontFamily: 'Barlow',
                         },
                         children: tag.label,
                       },
@@ -182,7 +178,7 @@ export const Route = createFileRoute('/api/og')({
                           fontSize: 28,
                           color: '#8A8A8A',
                           marginTop: 16,
-                          fontFamily: 'Inter',
+                          fontFamily: 'Barlow',
                         },
                         children: sub,
                       },
@@ -242,7 +238,7 @@ function statBlock(label: string, value: string) {
         {
           type: 'div',
           props: {
-            style: { fontSize: 18, letterSpacing: 3, color: '#8A8A8A', fontFamily: 'Inter' },
+            style: { fontSize: 18, letterSpacing: 3, color: '#8A8A8A', fontFamily: 'Barlow' },
             children: label,
           },
         },

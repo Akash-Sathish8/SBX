@@ -10,8 +10,8 @@ import { displayFixture } from '../lib/teams'
 import { byDistance, isInside } from '../lib/dist'
 import { useMatchScores } from '../lib/useMatchScores'
 import { venueQueryOptions, sanitizeId } from '../lib/queries'
-import { venueMeta, VENUE_COORDS } from '../lib/venues-meta'
-import { cap, splitSentences } from '../lib/text'
+import { venueMeta, VENUE_COORDS, NATION_FLAG } from '../lib/venues-meta'
+import { cap, splitSentences, dateChip } from '../lib/text'
 import type { Venue } from '../lib/data-types'
 import { fetchVenueWeather } from '../lib/weather'
 import { absUrl, socialMeta } from '../lib/site'
@@ -38,8 +38,6 @@ export const Route = createFileRoute('/venue_/$id')({
   },
   component: VenuePage,
 })
-
-const FL: Record<string, string> = { USA: '🇺🇸', CAN: '🇨🇦', MEX: '🇲🇽' }
 
 function VenuePage() {
   const { id: rawId } = Route.useParams()
@@ -78,8 +76,6 @@ function VenuePage() {
 }
 
 const MON3: Record<string, number> = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 }
-const MONABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const WD3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 function matchISO(d: string): string | null {
   if (!d) return null
@@ -93,10 +89,6 @@ function matchISO(d: string): string | null {
     }
   }
   return null
-}
-function fmtCard(iso: string) {
-  const d = new Date(iso + 'T00:00:00Z')
-  return { wd: WD3[d.getUTCDay()], md: MONABBR[d.getUTCMonth()] + ' ' + d.getUTCDate() }
 }
 // Weather glyphs from the Lucide line-icon family (stroke-2), matching the rest of the site.
 function WxIcon({ code }: { code: number }) {
@@ -170,7 +162,7 @@ function WeatherSection({ v }: { v: Venue }) {
       {!err && days ? (
         <div className="flex gap-[12px] overflow-x-auto pt-[14px] px-[2px] pb-[16px] [scroll-snap-type:x_proximity] [&::-webkit-scrollbar]:h-[10px] [&::-webkit-scrollbar-thumb]:bg-[#222] [&::-webkit-scrollbar-thumb]:rounded-[5px]">
           {sortedMatches.map((m) => {
-            const c = fmtCard(m.iso)
+            const c = dateChip(m.iso)
             const w = byDate[m.iso]
             const score = scores[m.iso + '|' + m.fixture]
             return (
@@ -287,7 +279,7 @@ function VenueContent({ v }: { v: Venue }) {
         <div className="container max-w-[1180px] mx-auto px-[28px] relative z-[2] w-full pt-[34px] pb-[30px]">
           <div className="heyebrow inline-flex flex-wrap items-center gap-[10px] mb-[14px]">
             {v.role ? <span className="pillrole bg-brand-yellow text-ink font-extrabold text-[12px] tracking-[0.6px] uppercase px-[11px] py-[5px] rounded-[3px] shadow-[3px_3px_0_#000]">{v.role}</span> : null}
-            <span className="pillcity bg-[rgba(255,255,255,0.12)] text-white font-bold text-[12px] tracking-[0.6px] uppercase px-[11px] py-[5px] rounded-[3px] inline-flex gap-[7px] items-center">{(FL[v.cc] || '')} {v.city}, {v.country}</span>
+            <span className="pillcity bg-[rgba(255,255,255,0.12)] text-white font-bold text-[12px] tracking-[0.6px] uppercase px-[11px] py-[5px] rounded-[3px] inline-flex gap-[7px] items-center">{(NATION_FLAG[v.cc] || '')} {v.city}, {v.country}</span>
           </div>
           <h1 className="text-white text-[clamp(40px,7vw,86px)] max-w-[16ch] leading-[0.95]">{v.name}</h1>
           {(v.fifaName || v.nickname) ? (

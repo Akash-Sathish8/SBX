@@ -169,7 +169,7 @@ export default function StadiumDrawer({
         onClick={onClose}
       />
       <aside
-        className="absolute right-0 top-0 h-full w-full overflow-y-auto no-scrollbar flex flex-col bg-snap-coal border-l border-snap-ash sm:max-w-[420px]"
+        className="absolute right-0 top-0 h-full w-full overflow-y-auto no-scrollbar flex flex-col bg-snap-coal border-l border-snap-ash sm:max-w-[480px]"
         style={{ animation: 'drawer-slide 280ms cubic-bezier(0.2,0.8,0.2,1)' }}
       >
         <div

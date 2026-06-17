@@ -33,7 +33,6 @@ export const Route = createFileRoute('/game_/$id')({
   component: GamePage,
 })
 
-const toBullets = splitSentences
 // A march belongs on THIS match's page if it names one of the two teams,
 // or if it's a general "every match day" item for the venue.
 function marchRelevant(m: any, g: any) {
@@ -53,9 +52,7 @@ const Badge = ({ k }: { k?: string }) =>
   k && BADGE_LABEL[k] ? (
     <span
       className={
-        'bd ' +
-        k +
-        ' inline-block text-[10px] font-extrabold uppercase tracking-[0.4px] px-[7px] py-[2px] rounded-[4px] align-middle whitespace-nowrap ' +
+        'inline-block text-[10px] font-extrabold uppercase tracking-[0.4px] px-[7px] py-[2px] rounded-[4px] align-middle whitespace-nowrap ' +
         (BADGE_VARIANT[k] || '')
       }
     >
@@ -142,7 +139,7 @@ function GameContent({ g, intel, marches, detail }: { g: Game; intel: any; march
         <section className="block tint py-[clamp(34px,5vw,52px)] bg-[#f7f6f2]"><div className="container max-w-[1180px] mx-auto px-[28px]">
           <div className="eyebrow inline-flex items-center gap-[9px] font-extrabold text-[12.5px] tracking-[1.2px] uppercase text-black mb-[11px]">The matchup</div>
           <h2 className="shead font-display text-[clamp(28px,3.6vw,40px)] text-[#222] tracking-[0.5px] mb-[20px] [&:has(+.ssub)]:mb-[7px]">Match preview</h2>
-          {pre.summary ? <ul className="fi-points lg list-none m-0 p-0 diamond-bullets">{toBullets(pre.summary).map((p, i) => <li key={i} className="relative pl-[18px] text-[15.5px] leading-[1.5] text-[#2c2c2c] mt-[9px]">{cap(p)}</li>)}</ul> : null}
+          {pre.summary ? <ul className="fi-points lg list-none m-0 p-0 diamond-bullets">{splitSentences(pre.summary).map((p, i) => <li key={i} className="relative pl-[18px] text-[15.5px] leading-[1.5] text-[#2c2c2c] mt-[9px]">{cap(p)}</li>)}</ul> : null}
           <div className="teamcards grid grid-cols-2 gap-[16px] mt-[20px] max-[760px]:grid-cols-[1fr]">
             <div className="teamcard bg-white border border-[#ececec] rounded-[14px] px-[20px] py-[18px] shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
               <div className="tchead flex items-center gap-[11px] font-display uppercase text-[20px] text-ink tracking-[0.4px] mb-[12px]"><span className="gflag sm text-[26px] filter-none">{teamFlag(g.home)}</span>{teamName(g.home)}</div>

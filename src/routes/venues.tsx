@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { warmImage, intentWarm } from '../lib/dataCache'
-import { VENUES, venueNationCounts } from '../lib/venues-meta'
+import { VENUES, venueNationCounts, NATION_FLAG, NATION_NAME } from '../lib/venues-meta'
 
 export const Route = createFileRoute('/venues')({
   head: () => ({
@@ -10,9 +10,6 @@ export const Route = createFileRoute('/venues')({
   }),
   component: Venues,
 })
-
-const FL: Record<string, string> = { USA: '🇺🇸', CAN: '🇨🇦', MEX: '🇲🇽' }
-const NATION: Record<string, string> = { USA: 'USA', CAN: 'Canada', MEX: 'Mexico' }
 
 function Venues() {
   const [filter, setFilter] = useState('all')
@@ -30,7 +27,7 @@ function Venues() {
           <div className="tally flex gap-[14px] flex-wrap mt-[22px]" id="tally">
             <button className={pill('all') + ' inline-flex items-center gap-[6px] border-[3px] border-[#222222] rounded-[6px] shadow-[4px_4px_0_#222222] px-[14px] py-[8px] font-body font-bold text-[13px] text-[#222222] uppercase tracking-[0.4px] cursor-pointer [transition:transform_.1s,box-shadow_.1s,background_.12s] hover:-translate-x-px hover:-translate-y-px hover:shadow-[5px_5px_0_#222222] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_#222222]'} onClick={() => setFilter('all')}><b className="font-display text-[18px] mr-[5px]">{VENUES.length}</b> Stadiums</button>
             {venueNationCounts().map(({ cc, n }) => (
-              <button key={cc} className={pill(cc) + ' inline-flex items-center gap-[6px] border-[3px] border-[#222222] rounded-[6px] shadow-[4px_4px_0_#222222] px-[14px] py-[8px] font-body font-bold text-[13px] text-[#222222] uppercase tracking-[0.4px] cursor-pointer [transition:transform_.1s,box-shadow_.1s,background_.12s] hover:-translate-x-px hover:-translate-y-px hover:shadow-[5px_5px_0_#222222] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_#222222]'} onClick={() => setFilter(cc)}><b className="font-display text-[18px] mr-[5px]">{n}</b> {FL[cc]} {NATION[cc]}</button>
+              <button key={cc} className={pill(cc) + ' inline-flex items-center gap-[6px] border-[3px] border-[#222222] rounded-[6px] shadow-[4px_4px_0_#222222] px-[14px] py-[8px] font-body font-bold text-[13px] text-[#222222] uppercase tracking-[0.4px] cursor-pointer [transition:transform_.1s,box-shadow_.1s,background_.12s] hover:-translate-x-px hover:-translate-y-px hover:shadow-[5px_5px_0_#222222] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_#222222]'} onClick={() => setFilter(cc)}><b className="font-display text-[18px] mr-[5px]">{n}</b> {NATION_FLAG[cc]} {NATION_NAME[cc]}</button>
             ))}
           </div>
         </div>
@@ -43,7 +40,7 @@ function Venues() {
               <Link key={v.img} className="vcard group block bg-white border-[4px] border-[#222222] rounded-[8px] overflow-hidden text-inherit [filter:drop-shadow(8px_8px_0_#222)] [transition:transform_.12s_ease-out,filter_.15s] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:[filter:drop-shadow(11px_11px_0_#222)] [content-visibility:auto] [contain-intrinsic-size:auto_262px]" to="/venue/$id" params={{ id: v.img }} {...intentWarm(() => warmImage(`/img/stadiums/${v.img}.jpg`))}>
                 <div className="photo h-[178px] bg-[#0d0d0d] relative after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35))]">
                   <img className="photo-img absolute inset-0 w-full h-full object-cover object-center block" src={`/img/stadiums/${v.img}.jpg`} alt="" loading="lazy" decoding="async" />
-                  <span className="citytag absolute left-[12px] top-[12px] z-[2] bg-[#222222] text-white font-bold text-[11px] tracking-[0.5px] uppercase px-[10px] py-[5px] rounded-[3px] inline-flex items-center gap-[6px]"><span className="flag text-[14px] leading-none">{FL[v.cc]}</span>{v.city}</span>
+                  <span className="citytag absolute left-[12px] top-[12px] z-[2] bg-[#222222] text-white font-bold text-[11px] tracking-[0.5px] uppercase px-[10px] py-[5px] rounded-[3px] inline-flex items-center gap-[6px]"><span className="flag text-[14px] leading-none">{NATION_FLAG[v.cc]}</span>{v.city}</span>
                   {v.role ? <span className="role absolute right-[12px] top-[12px] z-[2] bg-brand-yellow text-ink font-extrabold text-[10px] tracking-[0.6px] uppercase px-[9px] py-[5px] rounded-[3px] shadow-[3px_3px_0_#000]">{v.role}</span> : null}
                 </div>
                 <div className="body pt-[15px] px-[18px] pb-[17px]">

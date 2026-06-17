@@ -12,9 +12,9 @@ function kickoffMs(matchNumber: number): number {
 }
 
 describe('schedule kickoff times match the official schedule', () => {
-  // The four matches whose local kickoff had drifted from public/data
-  // _official_schedule.json. Expected values are the official local kickoff
-  // converted to UTC for that venue's timezone.
+  // The four matches whose local kickoff had drifted from the official FIFA
+  // schedule. Expected values are the official local kickoff converted to UTC
+  // for that venue's timezone.
   it('opener (Azteca, Jun 11) is 1PM Mexico City = 3PM ET = 19:00 UTC', () => {
     expect(new Date(kickoffMs(1)).toISOString()).toBe('2026-06-11T19:00:00.000Z');
   });

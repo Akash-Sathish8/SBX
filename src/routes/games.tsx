@@ -3,6 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
 import { teamName, teamFlag } from '../lib/teams'
+import { dateChip } from '../lib/text'
 import { useMatchScores, type Score } from '../lib/useMatchScores'
 // Build-time-static fixture list — imported (bundled) rather than fetched at
 // runtime, so the page server-renders the full list (SEO + instant first paint).
@@ -16,15 +17,6 @@ export const Route = createFileRoute('/games')({
   component: Games,
 })
 
-const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-function dateChip(iso: string) {
-  if (!iso) return { wd: '', md: '' }
-  const p = iso.split('-').map(Number)
-  const d = new Date(Date.UTC(p[0], p[1] - 1, p[2]))
-  return { wd: WD[d.getUTCDay()], md: MON[p[1] - 1] + ' ' + p[2] }
-}
 const matchText = (m: any) => ((m.home || '') + ' ' + (m.away || '') + ' ' + teamName(m.home || '') + ' ' + teamName(m.away || '') + ' ' + (m.venueName || '') + ' ' + (m.city || '') + ' ' + (m.round || '') + ' ' + (m.fixture || '')).toLowerCase()
 
 function GameRow({ m, score }: { m: Game; score?: Score }) {

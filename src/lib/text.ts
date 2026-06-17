@@ -14,3 +14,14 @@ export const splitSentences = (t: unknown): string[] =>
 // First sentence only, with any trailing period trimmed.
 export const firstSentence = (t?: string): string =>
   t ? (splitSentences(t)[0] ?? '').replace(/\.$/, '') : ''
+
+// ISO date → compact { weekday, "Mon D" } chip for match cards (was duplicated in
+// /games and /venue/$id with their own month/weekday tables).
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+export function dateChip(iso: string): { wd: string; md: string } {
+  if (!iso) return { wd: '', md: '' }
+  const p = iso.split('-').map(Number)
+  const d = new Date(Date.UTC(p[0], p[1] - 1, p[2]))
+  return { wd: WEEKDAYS[d.getUTCDay()], md: MONTHS[p[1] - 1] + ' ' + p[2] }
+}
