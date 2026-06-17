@@ -1,4 +1,3 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { DEFAULT_SPEND } from './itinerary';
 import type {
   MatchResult,
@@ -8,97 +7,76 @@ import type {
   StadiumOverride,
 } from './types';
 import type { HealthRecord } from './health';
+import { env } from 'cloudflare:workers';
+import type { KVNamespace } from '@cloudflare/workers-types';
 
-const KV_TABLE = 'kv';
-
-let cachedClient: SupabaseClient | null = null;
-let warned = false;
+// All admin-driven state lives in the `KV` binding. In production it MUST be
+// bound — if it isn't, fail LOUD rather than silently writing to an ephemeral
+// per-isolate map and losing data. Only local dev/preview falls back to an
+// in-memory store so the app runs without a configured namespace.
 const memoryStore = new Map<string, unknown>();
 
-function getClient(): SupabaseClient | null {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    if (!warned) {
-      console.warn(
-        '[kv] SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY missing — using in-memory store. Persistence disabled.',
-      );
-      warned = true;
-    }
-    return null;
+function getKV(): KVNamespace | null {
+  if (env.KV) return env.KV;
+  if (!import.meta.env.DEV) {
+    throw new Error('KV binding "KV" is not bound — admin state storage is unavailable');
   }
-  if (!cachedClient) {
-    cachedClient = createClient(url, key, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
-  }
-  return cachedClient;
+  return null; // dev only: in-memory fallback
 }
 
 async function kvGet<T>(key: string): Promise<T | null> {
-  const client = getClient();
-  if (!client) {
-    return (memoryStore.get(key) as T) ?? null;
-  }
-  const { data, error } = await client
-    .from(KV_TABLE)
-    .select('value')
-    .eq('key', key)
-    .maybeSingle();
-  if (error) {
-    console.error('[kv] get failed', key, error.message);
+  const kv = getKV();
+  if (!kv) return (memoryStore.get(key) as T) ?? null;
+  try {
+    return ((await kv.get(key, 'json')) as T) ?? null;
+  } catch (err) {
+    console.error('[kv] get failed', key, (err as Error).message);
     return null;
   }
-  return (data?.value as T) ?? null;
 }
 
 async function kvSet<T>(key: string, value: T): Promise<void> {
-  const client = getClient();
-  if (!client) {
+  const kv = getKV();
+  if (!kv) {
     memoryStore.set(key, value);
     return;
   }
-  const { error } = await client.from(KV_TABLE).upsert({ key, value });
-  if (error) {
-    console.error('[kv] set failed', key, error.message);
-    throw new Error(error.message);
-  }
+  await kv.put(key, JSON.stringify(value));
 }
 
 async function kvDel(key: string): Promise<void> {
-  const client = getClient();
-  if (!client) {
+  const kv = getKV();
+  if (!kv) {
     memoryStore.delete(key);
     return;
   }
-  const { error } = await client.from(KV_TABLE).delete().eq('key', key);
-  if (error) {
-    console.error('[kv] del failed', key, error.message);
-    throw new Error(error.message);
-  }
+  await kv.delete(key);
 }
 
 async function kvGetByPrefix<T>(prefix: string): Promise<Record<string, T>> {
-  const client = getClient();
-  if (!client) {
+  const kv = getKV();
+  if (!kv) {
     const out: Record<string, T> = {};
     for (const [k, v] of memoryStore.entries()) {
       if (k.startsWith(prefix)) out[k] = v as T;
     }
     return out;
   }
-  const { data, error } = await client
-    .from(KV_TABLE)
-    .select('key, value')
-    .like('key', `${prefix}%`);
-  if (error) {
-    console.error('[kv] prefix get failed', prefix, error.message);
-    return {};
-  }
+  // List the (small) key set under this prefix, then fetch values in parallel.
+  const names: string[] = [];
+  let cursor: string | undefined;
+  do {
+    const res = await kv.list({ prefix, cursor });
+    for (const k of res.keys) names.push(k.name);
+    cursor = res.list_complete ? undefined : res.cursor;
+  } while (cursor);
   const out: Record<string, T> = {};
-  for (const row of data ?? []) {
-    out[row.key as string] = row.value as T;
-  }
+  await Promise.all(
+    names.map(async (name) => {
+      const v = (await kv.get(name, 'json')) as T | null;
+      if (v != null) out[name] = v;
+    }),
+  );
   return out;
 }
 
@@ -245,4 +223,23 @@ export async function getUnderdogReferral(): Promise<string> {
 
 export async function setUnderdogReferral(url: string): Promise<void> {
   await kvSet(KEY_UNDERDOG_REFERRAL, url);
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Data version — a single token bumped on every admin write. Public read
+// paths key their edge-cached snapshot on it (see snapshot.ts), so they can
+// skip the KV fan-out until something actually changes.
+// ──────────────────────────────────────────────────────────────────
+
+const KEY_DATA_VERSION = 'data:version';
+
+export async function getDataVersion(): Promise<string> {
+  return (await kvGet<string>(KEY_DATA_VERSION)) ?? '0';
+}
+
+export async function bumpDataVersion(): Promise<void> {
+  // Any new UNIQUE value invalidates the cached snapshot. Date.now() alone can
+  // repeat if two writes land in the same millisecond, so append a random token
+  // to guarantee uniqueness (the value is opaque — only its change matters).
+  await kvSet(KEY_DATA_VERSION, `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`);
 }

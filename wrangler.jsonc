@@ -5,6 +5,28 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+    // Full logging for launch visibility; lower (e.g. 0.1) to cap log cost
+    // once traffic is steady.
+    "head_sampling_rate": 1
+  },
+  // Admin override store (match results, Casey's position, spend, visibility,
+  // YouTube ids, stadium/match overrides, ESPN health, underdog referral).
+  // Namespaces created in the Snapback Sports Cloudflare account via
+  // `wrangler kv namespace create sbx-kv` (+ `--preview`).
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "2748f19e5a204da08549fbc3c513bd02",
+      "preview_id": "97dc09137084488fa9fcc4dd6c8580f7"
+    }
+  ],
+  // Protomaps basemap: one .pmtiles extract served by /api/basemap (byte-range
+  // reads). Bucket created via `wrangler r2 bucket create sbx-tiles`.
+  "r2_buckets": [
+    {
+      "binding": "TILES",
+      "bucket_name": "sbx-tiles"
+    }
+  ]
 }

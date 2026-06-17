@@ -10,6 +10,7 @@ import { getPositionOverride, getAllResults } from '@/lib/kv';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
 import { STADIUMS, ITINERARY } from '@/lib/itinerary';
+import { withEdgeCache } from '#/lib/edgeCache';
 
 const W = 1200;
 const H = 630;
@@ -64,6 +65,20 @@ export const Route = createFileRoute('/api/og')({
   server: {
     handlers: {
       GET: async ({ request }) => {
+        const reqUrl = new URL(request.url);
+        // Normalize the cache key to ONLY the meaningful param (an integer
+        // `match`). Junk/cache-busting params (?match=5&utm=…, ?match=5&x=2)
+        // would otherwise each become a distinct cache entry and force a fresh
+        // satori + resvg render — a CPU/cost amplification vector on the one
+        // expensive, publicly-reachable, edge-cached endpoint.
+        const matchInt = reqUrl.searchParams.get('match');
+        const normalizedMatch = matchInt && /^\d+$/.test(matchInt) ? matchInt : '';
+        const cacheKey =
+          `${reqUrl.origin}${reqUrl.pathname}` + (normalizedMatch ? `?match=${normalizedMatch}` : '');
+        return withEdgeCache(
+          request,
+          { edgeTtlSeconds: 300, browserMaxAge: 120, swrSeconds: 600, cacheKey },
+          async () => {
         const url = new URL(request.url);
         const matchParam = url.searchParams.get('match');
         const targetMatchNumber = matchParam ? Number(matchParam) : null;
@@ -209,11 +224,10 @@ export const Route = createFileRoute('/api/og')({
         ) as ArrayBuffer;
 
         return new Response(png, {
-          headers: {
-            'Content-Type': 'image/png',
-            'Cache-Control': 'public, max-age=120, s-maxage=120',
-          },
+          headers: { 'Content-Type': 'image/png' },
         });
+          },
+        );
       },
     },
   },

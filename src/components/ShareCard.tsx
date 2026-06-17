@@ -16,13 +16,23 @@ export type Plan = {
   post?: Spot[] | null
 }
 
-function Step({ label, name, note, where, walk }: { label: string; name: string; note?: string; where?: string; walk?: boolean }) {
+function Step({ label, name, note, where, walk, square }: { label: string; name: string; note?: string; where?: string; walk?: boolean; square?: boolean }) {
   return (
-    <div className={'sc-step' + (walk ? ' walk' : '')}>
-      <div className="sc-slab">{label}</div>
-      <div className="sc-sname">{name}</div>
-      {note ? <div className="sc-snote">{note}</div> : null}
-      {where ? <div className="sc-swhere">{where}</div> : null}
+    <div
+      className={
+        'sc-step relative ' +
+        (square
+          ? 'mb-0 pl-[24px] border-l-[6px] ' + (walk ? 'border-[#111]' : 'border-brand-yellow')
+          // story: timeline dot via ::before (sits on the rail at left:-63px)
+          : "before:content-[''] before:absolute before:left-[-63px] before:top-[6px] before:w-[34px] before:h-[34px] before:rounded-full before:border-[6px] before:border-[#f7f6f2] " + (walk ? 'before:bg-[#111] before:[box-shadow:0_0_0_4px_#111]' : 'before:bg-brand-yellow before:[box-shadow:0_0_0_4px_#F7DF02]')) +
+        (walk ? ' walk' : '')
+      }
+    >
+      {/* story type scales with --scf (set by the fill effect); square uses fixed sizes */}
+      <div className={'sc-slab font-display tracking-[1.5px] uppercase ' + (square ? 'text-[25px]' : '[font-size:calc(25px*var(--scf,1))]') + ' ' + (walk ? 'text-[#111]' : 'text-[#9a7e00]')}>{label}</div>
+      <div className={'sc-sname font-display tracking-[0.5px] text-[#111] leading-[1.02] mt-[6px] ' + (square ? 'text-[34px]' : '[font-size:calc(44px*var(--scf,1))]')}>{name}</div>
+      {note ? <div className={'sc-snote font-body text-[#555] leading-[1.34] mt-[8px] ' + (square ? 'text-[23px]' : '[font-size:calc(27px*var(--scf,1))]')}>{note}</div> : null}
+      {where ? <div className={'sc-swhere font-body text-[#8a8a8a] leading-[1.3] mt-[7px] ' + (square ? 'text-[23px]' : '[font-size:calc(23px*var(--scf,1))]')}>{where}</div> : null}
     </div>
   )
 }
@@ -78,24 +88,37 @@ export const ShareCard = forwardRef<HTMLDivElement, { plan: Plan; format: 'story
       tl.style.justifyContent = steps.length <= 2 ? 'space-around' : 'space-between'
     }, [sig])
     return (
-      <div ref={setRefs} className={'sc ' + (format === 'story' ? 'sc-story' : 'sc-square')}>
-        <div className="sc-tex" />
-        <div className="sc-pad">
-          <div className="sc-brand">
-            <div className="sc-logo"><img className="sc-cap" src="/img/logo.png" alt="Snapback Sports" width={92} height={92} /><span className="sc-wm">SNAPBACK<br />SPORTS</span></div>
-            <div className="sc-planlab">Matchday plan</div>
+      <div
+        ref={setRefs}
+        className={
+          'sc relative w-[1080px] bg-[#f7f6f2] text-[#161616] font-body overflow-hidden ' +
+          (format === 'story' ? 'sc-story h-[1920px]' : 'sc-square h-[1080px]')
+        }
+      >
+        <div className="sc-tex absolute inset-0 pointer-events-none [background-image:linear-gradient(rgba(0,0,0,.035)_2px,transparent_2px),linear-gradient(90deg,rgba(0,0,0,.035)_2px,transparent_2px)] [background-size:90px_90px]" />
+        <div className="sc-pad relative z-[2] h-full flex flex-col pt-[70px] pr-[72px] pb-[100px] pl-[72px]">
+          <div className="sc-brand flex items-center justify-between mb-[38px]">
+            <div className="sc-logo flex items-center gap-[18px]"><img className="sc-cap w-[92px] h-[92px] rounded-[16px] shadow-[5px_5px_0_#111] flex-none object-contain bg-[#111]" src="/img/logo.png" alt="Snapback Sports" width={92} height={92} /><span className="sc-wm font-display text-[46px] leading-[.9] tracking-[1px] uppercase text-[#111]">SNAPBACK<br />SPORTS</span></div>
+            <div className="sc-planlab font-display text-[24px] tracking-[2px] uppercase text-[#111] bg-brand-yellow px-[18px] py-[10px] rounded-[8px]">Matchday plan</div>
           </div>
-          <div className="sc-match">
-            <div className="sc-tm"><span className="sc-fl">{plan.homeFlag}</span><span className="sc-nm">{plan.home}</span></div>
-            <div className="sc-mid"><span className="sc-vs">VS</span></div>
-            <div className="sc-tm"><span className="sc-fl">{plan.awayFlag}</span><span className="sc-nm">{plan.away}</span></div>
+          <div className="sc-match flex items-center gap-[30px] mb-[26px]">
+            <div className="sc-tm flex-1 flex flex-col items-center gap-[16px]"><span className={'sc-fl leading-[1] ' + (format === 'square' ? 'text-[84px]' : 'text-[118px]')}>{plan.homeFlag}</span><span className={'sc-nm font-display tracking-[1px] uppercase text-center leading-[.95] text-[#111] ' + (format === 'square' ? 'text-[46px]' : 'text-[58px]')}>{plan.home}</span></div>
+            <div className="sc-mid flex flex-col items-center justify-center flex-none"><span className="sc-vs font-display text-[46px] text-[#111] leading-[1] self-center">VS</span></div>
+            <div className="sc-tm flex-1 flex flex-col items-center gap-[16px]"><span className={'sc-fl leading-[1] ' + (format === 'square' ? 'text-[84px]' : 'text-[118px]')}>{plan.awayFlag}</span><span className={'sc-nm font-display tracking-[1px] uppercase text-center leading-[.95] text-[#111] ' + (format === 'square' ? 'text-[46px]' : 'text-[58px]')}>{plan.away}</span></div>
           </div>
-          <div className="sc-when">
-            <span className="sc-chip y">{plan.date} · {plan.ko}</span>
+          <div className="sc-when flex items-center justify-center gap-[32px] flex-wrap mb-[22px]">
+            <span className="sc-chip y inline-flex items-center gap-[10px] text-[30px] font-extrabold bg-brand-yellow text-[#111] px-[24px] py-[14px] rounded-[50px] whitespace-nowrap">{plan.date} · {plan.ko}</span>
           </div>
-          <div className="sc-venue"><span>{plan.venueName} · {plan.city}</span>{plan.round ? <span className="sc-rnd">{plan.round}</span> : null}</div>
-          <div className={'sc-tl' + (format === 'square' ? ' grid' : '')}>
-            {steps.map((s, i) => <Step key={i} label={s.label} name={s.name} note={s.note} where={s.where} walk={s.walk} />)}
+          <div className="sc-venue flex flex-wrap justify-center items-center gap-[16px] text-[30px] text-[#666] font-semibold text-center mb-[44px]"><span>{plan.venueName} · {plan.city}</span>{plan.round ? <span className="sc-rnd inline-flex items-center font-display text-[25px] tracking-[1px] uppercase text-[#111] bg-brand-yellow px-[16px] py-[6px] rounded-[8px] leading-[1]">{plan.round}</span> : null}</div>
+          <div
+            className={
+              format === 'square'
+                ? 'sc-tl grid relative grid-cols-[1fr_1fr] gap-x-[40px] gap-y-[26px] pl-0 flex-1 content-start'
+                // story: vertical rail via ::before + --scf-scaled gap
+                : "sc-tl relative flex-[1_1_auto] pl-[58px] flex flex-col justify-between [gap:calc(30px*var(--scf,1))] before:content-[''] before:absolute before:left-[16px] before:top-[14px] before:bottom-[14px] before:w-[4px] before:bg-[#e3d98f]"
+            }
+          >
+            {steps.map((s, i) => <Step key={i} label={s.label} name={s.name} note={s.note} where={s.where} walk={s.walk} square={format === 'square'} />)}
           </div>
         </div>
       </div>

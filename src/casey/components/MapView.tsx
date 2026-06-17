@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import type { Map as MlMap, LngLatBoundsLike, Marker } from 'maplibre-gl';
+import { Protocol } from 'pmtiles';
+import { noLabels } from 'protomaps-themes-base';
 import { sampleArc, haversineMiles, initialBearing, interpolateGreatCircle } from '@/lib/geo';
 import type {
   CaseyLocation,
@@ -10,7 +12,37 @@ import type {
   TripStats,
 } from '@/lib/types';
 
-const MAP_STYLE_URL = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+// Owned Protomaps vector basemap (grayscale, label-free — matches the old CARTO
+// Positron look), served from R2 by
+// /api/basemap on the SAME origin the app runs on — so it works in dev, preview
+// and prod with no host config. maplibre's pmtiles protocol reads tiles via
+// byte-range requests. Each environment's R2 bucket must hold basemap.pmtiles;
+// override the URL with VITE_MAP_PMTILES_URL if ever needed.
+const PMTILES_URL =
+  (import.meta.env.VITE_MAP_PMTILES_URL as string | undefined) ||
+  (typeof window !== 'undefined' ? `${window.location.origin}/api/basemap` : '');
+
+if (PMTILES_URL && typeof window !== 'undefined') {
+  maplibregl.addProtocol('pmtiles', new Protocol().tile);
+}
+
+function buildMapStyle(): maplibregl.StyleSpecification {
+  return {
+    version: 8,
+    glyphs: 'https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',
+    sprite: 'https://protomaps.github.io/basemaps-assets/sprites/v4/light',
+    sources: {
+      protomaps: {
+        type: 'vector',
+        url: `pmtiles://${PMTILES_URL}`,
+        attribution: '© OpenStreetMap contributors',
+      },
+    },
+    // grayscale theme, label layers stripped (noLabels) — gray land/water, no city
+    // or country text, so Casey's markers + travel arcs are the only things to read.
+    layers: noLabels('protomaps', 'grayscale'),
+  } as maplibregl.StyleSpecification;
+}
 
 // Computed from the actual 13 stadiums (Mexico City southernmost, Vancouver
 // northwest, Foxborough easternmost, Miami southeast) with a small margin so
@@ -126,7 +158,7 @@ export default function MapView({
     try {
       map = new maplibregl.Map({
         container: containerRef.current,
-        style: MAP_STYLE_URL,
+        style: buildMapStyle(),
         bounds,
         fitBoundsOptions: { padding },
         attributionControl: false,

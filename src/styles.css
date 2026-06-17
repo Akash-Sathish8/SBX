@@ -1,78 +1,164 @@
-/* Near-empty by design: each route injects its original page CSS verbatim via a
-   per-route <link> (see src/pages/*.css), so base/reset/:root rules swap per page.
+/* ===========================================================================
+   Tailwind v4 entry for the WHOLE app — compiled by @tailwindcss/vite.
+   This file is the single source of Tailwind config (the @theme below); other
+   files just use the generated utilities.
 
-   The only global rules that live here are ones that must apply on EVERY page and
-   survive the per-page Tailwind recompile: mobile safe-area insets. They are all
-   ADDITIVE via max(existing, env(inset)) and @supports-gated, so on devices /
-   browsers without notches (where insets report 0) they are exact no-ops. */
+   The whole app is on Tailwind utilities now, so this is the full layered import
+   (theme + preflight + utilities). Preflight is the single global reset. The few
+   irreducible primitives (a couple of @utility for repeated pseudo patterns, the
+   marketing @keyframes, and the --notch clip var) live here too — there are no
+   per-page salvage stylesheets anymore. (casey-tracker.css stays separate: it's
+   linked only on the casey routes and carries casey-only fonts + JS-injected map
+   marker CSS that shouldn't ship on the marketing pages.)
+   =========================================================================== */
 
-/* Native-app mobile feel, applied everywhere:
-   - text-size-adjust: stop iOS inflating body text when rotating to landscape.
-   - tap-highlight: kill the grey flash box iOS draws over tapped links/buttons. */
+/* Self-hosted global fonts (Anton: display/headlines; Barlow: body, 400–800).
+   Bundled + fingerprinted by Vite with font-display:swap — no Google Fonts CDN
+   request, preconnect, or render-blocking external stylesheet. */
+@import '@fontsource/anton/400.css';
+@import '@fontsource/barlow/400.css';
+@import '@fontsource/barlow/500.css';
+@import '@fontsource/barlow/600.css';
+@import '@fontsource/barlow/700.css';
+@import '@fontsource/barlow/800.css';
+
+@import 'tailwindcss';
+
+@theme {
+  /* Brand / marketing palette. */
+  --color-ink: #111111; /* primary dark surface + text on light */
+  --color-paper: #ffffff;
+  --color-brand-yellow: #f7df02;
+  --color-brand-yellow-dim: #e0c400;
+
+  /* Casey tracker — SBX light re-skin (moved here from casey-tracker.css).
+     Names keep their semantic roles; values are the light-flipped surfaces. */
+  --color-snap-yellow: #f7df02;
+  --color-snap-yellowDim: #e0c400;
+  --color-snap-black: #ffffff;
+  --color-snap-coal: #fafaf8;
+  --color-snap-carbon: #f2f2ee;
+  --color-snap-smoke: #ecece6;
+  --color-snap-ash: #e2e2da;
+  --color-snap-fog: #7a7a7a;
+  --color-snap-mist: #6a6a6a;
+  --color-snap-chalk: #141414;
+  --color-live: #e5202b;
+  --color-flight: #b89500;
+  --color-upcoming: #c9c9c0;
+  --color-done: #e2e2da;
+
+  /* Type system. */
+  --font-display: 'Anton', 'Oswald', Impact, sans-serif;
+  --font-body: 'Barlow', system-ui, sans-serif;
+  --font-mono: 'Barlow', system-ui, sans-serif;
+
+  /* Animations (keyframes live in casey-tracker.css). Registering them here makes
+     `animate-pulse-live`, `animate-hero-swap`, … real generated utilities — the v4
+     idiomatic form, so casey JSX uses them like any other utility (no hand-written
+     `.animate-*` class needed). */
+  --animate-pulse-live: pulse-live 1.5s ease-in-out infinite;
+  --animate-pulse-flight: pulse-flight 2s ease-in-out infinite;
+  --animate-hero-swap: hero-swap 480ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  --animate-detail-reveal: detail-reveal 200ms ease-out;
+  /* marketing-page animations (keyframes defined below) */
+  --animate-drop: drop 0.55s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+  --animate-marquee: venue-scroll 70s linear infinite;
+}
+
+/* ===========================================================================
+   Irreducible primitives — the handful of things that genuinely can't be plain
+   utilities: @keyframes (marketing), a couple of @utility for pseudo patterns
+   repeated across pages, and the --notch clip-path var. Everything else lives as
+   utilities in the JSX.
+   =========================================================================== */
+
+/* marketing keyframes (the casey ones live in casey-tracker.css). */
+@keyframes drop { to { opacity: 1; transform: none; } }
+@keyframes venue-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* notched clip-path (corner-cut buttons) — used via `[clip-path:var(--notch)]`. */
+:root {
+  --notch: polygon(calc(100% - 10px) 0px, 100% 10px, 100% 100%, 10px 100%, 0px calc(100% - 10px), 0px 0px);
+}
+
+/* 32px grid-line texture overlay (dark header band, browse band, agenda grid-bg).
+   Drives an ::after; tune the line colour/size per use with the [--grid-*] vars. */
+@utility grid-overlay {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--grid-line, rgba(255, 255, 255, 0.05)) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line, rgba(255, 255, 255, 0.05)) 1px, transparent 1px);
+    background-size: var(--grid-size, 32px) var(--grid-size, 32px);
+  }
+}
+
+/* rotated-square yellow list bullets. Each <li> carries its own `relative` +
+   left padding (a utility); this draws the marker. Size/offset/border tune via
+   the [--db-*] vars so one utility covers every list's slightly different spec. */
+@utility diamond-bullets {
+  & li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: var(--db-top, 6px);
+    width: var(--db-size, 7px);
+    height: var(--db-size, 7px);
+    background: #f7df02;
+    border: var(--db-border, 1.5px solid #111);
+    transform: rotate(45deg);
+  }
+}
+
+/* Build wizard, phones only: lock each step to one viewport-tall screen (no page
+   scroll; cards swipe sideways; nav + flag footer pinned). The section's own props
+   are max-[760px]: utilities in build.tsx; this holds the compound descendant layout,
+   where `.wz-screen .x` (0,2,0) reliably outranks the inline single-class utilities. */
+@utility wz-screen {
+  @media (max-width: 760px) {
+    & > .container { flex: 1; display: flex; flex-direction: column; min-height: 0; width: 100%; max-width: 100%; min-width: 0; }
+    & .wz-top { margin-bottom: 4px; }
+    & .wz-context { gap: 4px; margin-bottom: 8px; }
+    & .wz-cmatch { font-size: 12px; padding: 5px 11px; }
+    & .shead { font-size: 24px; line-height: 1.05; }
+    & .shead:has(+ .ssub) { margin-bottom: 3px; }
+    & .ssub { font-size: 12px; margin: 0; }
+    & .sb-wrap { flex: 1; display: flex; flex-direction: column; }
+    & .wz-scroll { flex: 1; min-height: 0; padding: 8px 2px; align-items: flex-start; overflow-y: auto; }
+    & .wz-card { max-height: none; }
+    & .wz-nav { position: static; max-width: none; margin: 0; padding: 8px 0 0; background: none; flex: none; align-items: stretch; }
+    & .wz-nav > .sb-btn { flex: 0 0 auto; min-height: 44px; }
+    & .wz-nav-stack { flex: 1; flex-direction: row; gap: 10px; align-items: stretch; }
+    & .wz-nav-stack > .sb-btn { flex: 1; min-height: 44px; }
+    & + .matchbar-spacer { display: none; }
+  }
+}
+
+/* ===========================================================================
+   Global rules that must apply on EVERY page (kept verbatim from before; the
+   per-route nav fallback is removed as the nav itself is converted to utilities).
+   - text-size-adjust: stop iOS inflating body text on rotate.
+   - tap-highlight: kill the grey flash iOS draws over tapped links/buttons.
+   - mobile safe-area insets (additive, @supports-gated → no-ops without notches).
+   =========================================================================== */
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
-a, button, [role='button'], input, select, textarea, label, .chip, .pill {
+a, button, [role='button'], input, select, textarea, label {
   -webkit-tap-highlight-color: transparent;
 }
-
-/* The "WC 2026" nav badge must never wrap to two lines (no page CSS sets
-   white-space on it, so this global rule wins cleanly on every page). */
-.logo .wc { white-space: nowrap; }
-
-/* ---- Global nav fallback ----
-   The shared SiteNav renders on every page, but its real styling comes from the
-   per-route stylesheet. These base rules guarantee the nav (especially the
-   900x900 logo.png) NEVER paints unstyled during the per-route CSS swap — they
-   use the SAME selectors as the page CSS, which loads later in the document and
-   therefore overrides them freely. */
-body { margin: 0; }
-header.nav { position: sticky; top: 0; z-index: 50; background: #111; border-bottom: 4px solid #F7DF02; }
-.nav-in { display: flex; align-items: center; justify-content: space-between; height: 68px; padding: 0 28px; box-sizing: border-box; }
-.logo { font-family: 'Anton', sans-serif; color: #fff; font-size: 28px; letter-spacing: 2px; display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.logo-img { height: 42px; width: 42px; display: block; border-radius: 8px; }
-.logo .wc { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1px; color: #111; background: #F7DF02; padding: 2px 7px; border-radius: 3px; }
-.nav-links { display: flex; gap: 28px; align-items: center; }
-.nav-links a { color: #cfcfcf; text-decoration: none; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
-.hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: transparent; border: 0; cursor: pointer; padding: 0; }
-.hamburger span { display: block; width: 26px; height: 3px; background: #fff; border-radius: 2px; }
-/* Right-align the bars inside the 44px tap-button so the icon's right edge is the
-   same distance from the screen edge as the logo's left edge (symmetric nav
-   margins). `header.nav` raises specificity above the per-page `.hamburger`. */
-header.nav .hamburger { align-items: flex-end; }
-@media (max-width: 760px) {
-  .hamburger { display: flex; }
-  .nav-links { position: absolute; top: 68px; left: 0; right: 0; background: #111; flex-direction: column; align-items: stretch; gap: 0; padding: 6px 0 14px; border-bottom: 4px solid #F7DF02; display: none; }
-  .nav-links.open { display: flex; }
-  .nav-links a { padding: 13px 28px; font-size: 15px; }
-}
-
-/* ---- Global content fallback ----
-   Same idea as the nav fallback above: if a page's per-route stylesheet hasn't
-   applied yet (or failed to load over a flaky tunnel / cellular link), these keep
-   the page READABLE instead of broken. Without them, a missing page CSS means
-   full-size images blow the layout wider than the viewport (Safari then zooms the
-   whole page out and the nav looks tiny), and links fall back to default
-   blue-underline. Page CSS loads later in the document and overrides freely. */
-img { max-width: 100%; height: auto; }
-a { color: inherit; text-decoration: none; }
-/* Never let any element force a horizontal scroll / zoom-out on phones. Use
-   `clip` (not `hidden`): hidden would force overflow-y to `auto` and break the
-   sticky nav + Casey's fixed shell; clip contains the overflow without creating a
-   scroll container. Safari <16 ignores it (harmless no-op). */
+/* Links default to no underline app-wide (preflight gives `text-decoration: inherit`). */
+a { text-decoration: none; }
+/* Never let any element force a horizontal scroll / zoom-out on phones. */
 html, body { max-width: 100%; overflow-x: clip; }
 
 @supports (padding: max(0px)) {
-  /* Sticky top bar: keep nav contents clear of the landscape notch / rounded
-     corners. Higher specificity than the per-page `.nav-in` so it wins. */
-  header.nav .nav-in {
-    padding-left: max(28px, env(safe-area-inset-left));
-    padding-right: max(28px, env(safe-area-inset-right));
-  }
-
-  /* Casey tracker: the bottom video strip / control overlay must clear the
-     home indicator so its tap targets aren't cut off. */
   .casey-shell [data-map-overlay='bottom'] {
     padding-bottom: env(safe-area-inset-bottom);
   }

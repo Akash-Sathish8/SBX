@@ -2,15 +2,16 @@ import { defineConfig } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { cloudflare } from '@cloudflare/vite-plugin'
 import viteReact from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'node:url'
 
-// Tailwind + devtools intentionally removed: this app injects each page's
-// original CSS verbatim (per-route) for pixel-exact parity with the static site,
-// and devtools UI must not appear in screenshots.
+// The marketing/consumer pages inject each route's original CSS verbatim for
+// pixel-exact parity with the static site — they do NOT use Tailwind. Tailwind
+// (v4) is scoped to the Casey tracker only: src/pages/casey-tracker.css opts in
+// via `@import 'tailwindcss/...'` (theme + utilities, no preflight) and the
+// plugin compiles it. CSS files without those directives pass through untouched,
+// so the verbatim-CSS pages are unaffected.
 const config = defineConfig({
-  server: {
-    allowedHosts: ["curler-thrive-crested.ngrok-free.dev"],
-  },
   resolve: {
     tsconfigPaths: true,
     alias: {
@@ -22,6 +23,7 @@ const config = defineConfig({
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tanstackStart(),
     viteReact(),
+    tailwindcss(),
   ],
 })
 

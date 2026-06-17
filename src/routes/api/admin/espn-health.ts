@@ -1,15 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { verifyAdminFromRequest } from '@/lib/auth';
+import { withAdmin } from '@/lib/auth';
 import { pingAll, mergeHealthRecord, ENDPOINTS } from '@/lib/health';
 import { getHealthRecord, setHealthRecord } from '@/lib/kv';
 
 export const Route = createFileRoute('/api/admin/espn-health')({
   server: {
     handlers: {
-      GET: async ({ request }) => {
-        if (!(await verifyAdminFromRequest(request))) {
-          return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
-        }
+      GET: withAdmin(async () => {
         const record = await getHealthRecord();
         return Response.json(
           {
@@ -23,11 +20,8 @@ export const Route = createFileRoute('/api/admin/espn-health')({
           },
           { headers: { 'Cache-Control': 'no-store, max-age=0' } },
         );
-      },
-      POST: async ({ request }) => {
-        if (!(await verifyAdminFromRequest(request))) {
-          return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
-        }
+      }),
+      POST: withAdmin(async () => {
         const results = await pingAll();
         const prev = await getHealthRecord();
         const next = mergeHealthRecord(prev, results);
@@ -45,7 +39,7 @@ export const Route = createFileRoute('/api/admin/espn-health')({
           },
           { headers: { 'Cache-Control': 'no-store, max-age=0' } },
         );
-      },
+      }),
     },
   },
 });

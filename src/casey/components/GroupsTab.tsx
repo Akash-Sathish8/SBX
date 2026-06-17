@@ -1,54 +1,17 @@
 
-import { useEffect, useState } from 'react';
 import Flag from './Flag';
 import FollowStar from './FollowStar';
 import { useFollows } from '@/lib/follows';
-
-interface Row {
-  team: string;
-  abbr?: string;
-  gp: number;
-  w: number;
-  d: number;
-  l: number;
-  gd: number;
-  pts: number;
-}
-
-interface Group {
-  letter: string;
-  name: string;
-  rows: Row[];
-}
+import { useQuery } from '@tanstack/react-query';
+import { standingsAllQueryOptions } from '@/lib/queries';
 
 export default function GroupsTab() {
-  const [groups, setGroups] = useState<Group[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [failed, setFailed] = useState(false);
   const { isFollowing } = useFollows();
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch('/api/standings/all', { cache: 'no-store' });
-        const json = await res.json();
-        if (cancelled) return;
-        if (json?.ok && Array.isArray(json.data)) {
-          setGroups(json.data);
-          if (json.data.length === 0) setFailed(true);
-        } else {
-          setFailed(true);
-        }
-      } catch {
-        if (!cancelled) setFailed(true);
-      }
-      if (!cancelled) setLoading(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const q = useQuery(standingsAllQueryOptions());
+  // ok:true + [] means "no standings yet" — treat empty like the old failed state.
+  const groups = q.data?.ok && Array.isArray(q.data.data) ? q.data.data : null;
+  const loading = q.isLoading;
+  const failed = !loading && (q.isError || !groups || groups.length === 0);
 
   return (
     <div className="p-3">

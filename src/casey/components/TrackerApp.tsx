@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import type {
   CaseyLocation,
   ItineraryMatch,
@@ -9,8 +10,9 @@ import type {
 } from '@/lib/types';
 
 // ClientShell pulls in MapView -> maplibre-gl, which touches `window` at
-// import time. Lazy-loading it (and only rendering after mount) guarantees
-// maplibre never loads during SSR.
+// import time. Lazy-loading it (and only rendering once bootstrap data has
+// resolved — which never happens during SSR) guarantees maplibre never loads
+// on the server.
 const ClientShell = lazy(() => import('./ClientShell'));
 
 interface BootstrapData {
@@ -39,36 +41,32 @@ function Splash({ failed = false }: { failed?: boolean }) {
 }
 
 export default function TrackerApp({ initialMatchNumber }: { initialMatchNumber?: number }) {
-  const [mounted, setMounted] = useState(false);
-  const [data, setData] = useState<BootstrapData | null>(null);
-  const [failed, setFailed] = useState(false);
+  // simTime is a dev/sim clock override read from the URL (client-only). It only
+  // changes via navigation, so it's stable within a mount and safe in the key.
+  const sim =
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window.location.search).get('simTime')
+      : null;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Bootstrap is per-request, time-dependent live data (location/stats), so it
+  // stays a client fetch — useQuery just replaces the hand-rolled mounted/data/
+  // failed state machine and shares the result through the app QueryClient.
+  const bootstrap = useQuery({
+    queryKey: ['bootstrap', sim],
+    queryFn: async (): Promise<BootstrapData> => {
+      const url = sim ? `/api/bootstrap?simTime=${encodeURIComponent(sim)}` : '/api/bootstrap';
+      const r = await fetch(url, { cache: 'no-store' });
+      const d = await r.json();
+      if (!d?.ok) throw new Error('bootstrap unavailable');
+      return d as BootstrapData;
+    },
+    staleTime: 0,
+    refetchOnWindowFocus: false,
+  });
 
-  useEffect(() => {
-    if (!mounted) return;
-    const sim = new URLSearchParams(window.location.search).get('simTime');
-    const url = sim ? `/api/bootstrap?simTime=${encodeURIComponent(sim)}` : '/api/bootstrap';
-    let cancelled = false;
-    fetch(url, { cache: 'no-store' })
-      .then((r) => r.json())
-      .then((d) => {
-        if (cancelled) return;
-        if (d?.ok) setData(d as BootstrapData);
-        else setFailed(true);
-      })
-      .catch(() => {
-        if (!cancelled) setFailed(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [mounted]);
-
-  if (!mounted || !data) {
-    return <Splash failed={failed} />;
+  const data = bootstrap.data;
+  if (!data) {
+    return <Splash failed={bootstrap.isError} />;
   }
 
   return (

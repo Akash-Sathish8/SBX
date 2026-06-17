@@ -1,3 +1,6 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /casey/admin
+Disallow: /api/
+# ...but let crawlers fetch the social share image referenced in OG tags.
+Allow: /api/og

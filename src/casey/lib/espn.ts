@@ -13,7 +13,7 @@ const TEAM_ALIASES: Record<string, string[]> = {
   'Türkiye': ['Türkiye', 'Turkey', 'Turkiye'],
   'IR Iran': ['IR Iran', 'Iran'],
   "Côte d'Ivoire": ["Côte d'Ivoire", 'Ivory Coast', "Cote d'Ivoire"],
-  'Ivory Coast': ['Ivory Coast', "Côte d'Ivoire", 'Cote dIvoire'],
+  'Ivory Coast': ['Ivory Coast', "Côte d'Ivoire", "Cote d'Ivoire"],
   'Cabo Verde': ['Cabo Verde', 'Cape Verde'],
   'DR Congo': ['DR Congo', 'Congo DR', 'Democratic Republic of the Congo'],
   'South Africa': ['South Africa'],
@@ -37,9 +37,14 @@ export interface MatchScore {
   completed: boolean;
 }
 
-// In-memory response cache (per worker isolate) keyed by URL with a TTL, so
-// repeated calls for the same scoreboard (e.g. several matches sharing a date)
-// don't each re-hit ESPN — which both cuts load and avoids burst rate-limiting.
+// Two-layer cache for ESPN GETs:
+//   L1 — in-memory map (per worker isolate), so several matches sharing a date
+//        don't each re-hit even the edge cache within one isolate.
+//   L2 — Cloudflare's edge cache via `cf.cacheTtl`, keyed by the ESPN URL and
+//        shared across every route + every isolate in a colo. Since /today,
+//        /live-today and /match-score all request the same `scoreboard?dates=`
+//        URL, they dedupe against one cached ESPN response — this is the real
+//        ESPN-egress collapse under load. (`cf` isn't in lib.dom's RequestInit.)
 const _jsonCache = new Map<string, { t: number; data: any }>();
 
 async function fetchJson(url: string, revalidateSec: number): Promise<any | null> {
@@ -47,7 +52,9 @@ async function fetchJson(url: string, revalidateSec: number): Promise<any | null
   const hit = _jsonCache.get(url);
   if (hit && now - hit.t < revalidateSec * 1000) return hit.data;
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      cf: { cacheEverything: true, cacheTtl: revalidateSec },
+    });
     if (!res.ok) return null;
     const data = await res.json();
     _jsonCache.set(url, { t: now, data });

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { getPositionOverride, getAllResults, getSpend } from '@/lib/kv';
+import { getPublicSnapshot } from '@/lib/snapshot';
 import { computeCaseyLocation } from '@/lib/location';
 import { computeTripStats } from '@/lib/stats';
 import { parseSimTime, resolveNow } from '@/lib/now';
@@ -9,16 +9,12 @@ export const Route = createFileRoute('/api/live')({
     handlers: {
       GET: async ({ request }) => {
         const simTime = parseSimTime(new URL(request.url).searchParams.get('simTime'));
-        const [override, results, spend] = await Promise.all([
-          getPositionOverride(),
-          getAllResults(),
-          getSpend(),
-        ]);
+        const snap = await getPublicSnapshot();
         const now = resolveNow(simTime);
-        const location = computeCaseyLocation(now, override);
-        const stats = computeTripStats(now, location, results);
+        const location = computeCaseyLocation(now, snap.positionOverride);
+        const stats = computeTripStats(now, location, snap.results);
         return Response.json(
-          { location, stats, spend, simTime: simTime ? simTime.toISOString() : null },
+          { location, stats, spend: snap.spend, simTime: simTime ? simTime.toISOString() : null },
           { headers: { 'Cache-Control': 'no-store, max-age=0' } },
         );
       },

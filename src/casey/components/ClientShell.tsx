@@ -125,6 +125,13 @@ export default function ClientShell({
     };
 
     const tick = async () => {
+      // Pause polling while the tab is hidden — a backgrounded tracker shouldn't
+      // keep hitting the Worker every 60s. The visibilitychange listener below
+      // fires an immediate refresh when the tab returns to the foreground.
+      if (typeof document !== 'undefined' && document.hidden) {
+        schedule(60_000);
+        return;
+      }
       try {
         const res = await fetch('/api/live', { cache: 'no-store' });
         if (!res.ok) throw new Error(`status ${res.status}`);
@@ -146,10 +153,23 @@ export default function ClientShell({
       }
     };
 
+    const onVisibility = () => {
+      if (typeof document !== 'undefined' && !document.hidden) {
+        if (timer) clearTimeout(timer);
+        tick();
+      }
+    };
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', onVisibility);
+    }
+
     timer = setTimeout(tick, 60_000);
     return () => {
       cancelled = true;
       if (timer) clearTimeout(timer);
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('visibilitychange', onVisibility);
+      }
     };
   }, [simModeActive]);
 

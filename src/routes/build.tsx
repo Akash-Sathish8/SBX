@@ -1,16 +1,21 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { useMemo, useRef, useState } from 'react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { SearchIcon, FlagIcon, MapPinIcon, ShareIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
-import { PageCssGuard } from '../components/PageCssGuard'
 import { ShareCard, type Plan } from '../components/ShareCard'
 import { renderShareCardBlob } from '../lib/renderShareCard'
 import { byDistance, isInside } from '../lib/dist'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
 import { useMatchScores } from '../lib/useMatchScores'
-import { getJSON, warmVenue, intentWarm } from '../lib/dataCache'
-import gameCss from '../pages/game.css?url'
-import shareCss from '../pages/share.css?url'
+import { venueQueryOptions } from '../lib/queries'
+import { VENUE_COORDS } from '../lib/venues-meta'
+import { firstSentence, splitSentences } from '../lib/text'
+import { fetchMatchWeather } from '../lib/weather'
+import { warmImage, intentWarm } from '../lib/dataCache'
+// Build-time-static data — bundled so the chooser SSRs instantly instead of
+// fetching index.json + fanintel.json on mount.
+import { GAMES as GAMES_INDEX, FAN_INTEL } from '../data'
 
 export const Route = createFileRoute('/build')({
   validateSearch: (s: Record<string, unknown>) => ({
@@ -18,36 +23,15 @@ export const Route = createFileRoute('/build')({
     mode: (s.mode === 'venue' ? 'venue' : 'matchup') as 'venue' | 'matchup',
   }),
   head: () => ({
-    links: [
-      { rel: 'stylesheet', href: gameCss, 'data-page-css': 'game build' },
-      // 'build agenda': TanStack dedupes head links by href, so the surviving
-      // link must carry every route id that uses this stylesheet.
-      { rel: 'stylesheet', href: shareCss, 'data-page-css': 'build agenda' },
-    ],
     meta: [{ title: 'Snapback — Build Match Guide' }],
   }),
   component: BuildPage,
 })
 
-const VENUE_COORDS: Record<string, [number, number]> = {
-  metlife: [40.8135, -74.0745], sofi: [33.9535, -118.3392], azteca: [19.3029, -99.1505], att: [32.7473, -97.0945],
-  arrowhead: [39.0489, -94.4839], nrg: [29.6847, -95.4107], mercedes: [33.7553, -84.4006], gillette: [42.0909, -71.2643],
-  linc: [39.9008, -75.1675], lumen: [47.5952, -122.3316], hardrock: [25.958, -80.2389], levis: [37.403, -121.9697],
-  bmo: [43.6332, -79.4185], bcplace: [49.2768, -123.1119], akron: [20.6819, -103.4628], bbva: [25.6694, -100.2444],
-}
-const WX: Record<number, string> = { 0: 'Clear', 1: 'Mostly clear', 2: 'Partly cloudy', 3: 'Overcast', 45: 'Fog', 48: 'Fog', 51: 'Drizzle', 53: 'Drizzle', 55: 'Drizzle', 61: 'Light rain', 63: 'Rain', 65: 'Heavy rain', 80: 'Showers', 81: 'Showers', 82: 'Showers', 95: 'Thunderstorm', 96: 'Thunderstorm', 99: 'Thunderstorm' }
-async function fetchMatchWeather(venue: string, dateISO: string): Promise<{ temp: string; label: string } | null> {
-  const c = VENUE_COORDS[venue]; if (!c || !dateISO) return null
-  try {
-    const cf = (c2: number) => Math.round(c2) + '°C / ' + Math.round(c2 * 9 / 5 + 32) + '°F'
-    const fc = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c[0]}&longitude=${c[1]}&daily=weathercode,temperature_2m_max&temperature_unit=celsius&timezone=auto&start_date=${dateISO}&end_date=${dateISO}`).then((r) => r.json())
-    if (fc?.daily?.time?.length && fc.daily.temperature_2m_max[0] != null) return { temp: cf(fc.daily.temperature_2m_max[0]), label: WX[fc.daily.weathercode[0]] || 'Mild' }
-    const last = '2025' + dateISO.slice(4)
-    const ar = await fetch(`https://archive-api.open-meteo.com/v1/archive?latitude=${c[0]}&longitude=${c[1]}&daily=weathercode,temperature_2m_max&temperature_unit=celsius&timezone=auto&start_date=${last}&end_date=${last}`).then((r) => r.json())
-    if (ar?.daily?.temperature_2m_max?.[0] != null) return { temp: cf(ar.daily.temperature_2m_max[0]), label: (WX[ar.daily.weathercode[0]] || 'Mild') + ' (typical)' }
-  } catch { /* ignore */ }
-  return null
-}
+// A bullet in the venue-detail JSON is either { b, t } (bold lead + tail) or a
+// bare { t }. Render it as one line — shared by every section that lists points.
+const pointText = (p: any): string => (p ? (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t) : '')
+
 function marchRelevant(m: any, g: any) {
   if (m.venue !== g.venue) return false
   const hay = ((m.title || '') + ' ' + (m.note || '') + ' ' + (m.when || '')).toLowerCase()
@@ -60,7 +44,6 @@ function marchRelevant(m: any, g: any) {
   const teams = [g.home, g.away, teamName(g.home), teamName(g.away)].filter(Boolean).map((s: string) => s.toLowerCase())
   return teams.some((t: string) => t && hay.indexOf(t) > -1)
 }
-const firstSentence = (t?: string) => (t ? String(t).split(/(?<=[.!?])\s+/)[0].replace(/\.$/, '') : '')
 
 // A supporter march walks you to the gates, so it IS the "getting there" leg.
 // Pull the meet point (start of the route) and the gather/depart times out of
@@ -79,44 +62,35 @@ function buildFanwalk(m: any): { name: string; note?: string; where?: string } {
 function BuildPage() {
   const { game, mode } = Route.useSearch()
   const navigate = useNavigate()
-  const [index, setIndex] = useState<any[] | null>(null)
-  const [fi, setFi] = useState<any>(null)
-  const [failed, setFailed] = useState(false)
-
-  useEffect(() => {
-    Promise.all([
-      getJSON('/data/games/index.json'),
-      getJSON('/data/fanintel.json'),
-    ]).then(([idx, f]) => { setIndex(idx); setFi(f) }).catch(() => setFailed(true))
-  }, [])
+  const index = GAMES_INDEX
+  const fi = FAN_INTEL
 
   const setGame = (id: string) => navigate({ to: '/build', search: { game: id, mode } })
-  const g = index ? index.find((x) => x.id === game) : null
+  const g = index.find((x) => x.id === game) ?? null
 
   return (
     <>
-      <PageCssGuard id="build" />
       <SiteNav active="guide" />
       <main id="app">
         {/* Intro hero only while choosing a match; once a match is picked the
             guide wizard takes over the full page. */}
         {!g && (
-          <section className="ghero"><div className="container">
-            <div className="ground">Snapback · World Cup 2026</div>
-            <h1 className="bld-h1">Build your match guide</h1>
-            <div className="gmeta">Pick a match, choose your spots, share a plan.</div>
+          <section className="ghero relative overflow-hidden bg-[#222] text-white pt-[clamp(30px,5vw,52px)] pb-[clamp(30px,5vw,46px)] px-0"><div className="container relative z-[2] text-center max-w-[1180px] mx-auto px-[28px]">
+            <div className="ground inline-block font-extrabold text-[12px] tracking-[1.4px] uppercase text-ink bg-brand-yellow px-[13px] py-[6px] rounded-[5px] mb-[clamp(16px,3vw,24px)]">Snapback · World Cup 2026</div>
+            <h1 className="bld-h1 font-display text-white text-[clamp(34px,5vw,56px)] tracking-[0.5px] leading-none mt-[4px] mr-0 mb-0 ml-0">Build your match guide</h1>
+            <div className="gmeta mt-[clamp(16px,3vw,22px)] text-[#dcdcdc] font-semibold text-[15px] tracking-[0.3px]">Pick a match, choose your spots, share a plan.</div>
           </div></section>
         )}
-        {failed ? <div className="loadwrap">Couldn't load match data. <Link to="/" style={{ color: '#222', textDecoration: 'underline' }}>← Home</Link></div>
-          : !index ? <div className="loadwrap">Loading…</div>
-            : g ? <Builder g={g} fi={fi} onBack={() => setGame('')} />
-              : <Chooser index={index} onPick={setGame} initialMode={mode} />}
+        {g
+          ? <Builder key={g.id} g={g} fi={fi} onBack={() => setGame('')} />
+          : <Chooser index={index} onPick={setGame} initialMode={mode} />}
       </main>
     </>
   )
 }
 
 function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: string) => void; initialMode?: 'matchup' | 'venue' }) {
+  const qc = useQueryClient()
   const [mode, setMode] = useState<'matchup' | 'venue'>(initialMode || 'matchup')
   const [q, setQ] = useState('')
   const [venue, setVenue] = useState('')
@@ -135,26 +109,26 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
   const venueList = venue ? real.filter((x) => x.venue === venue).sort(byPlayed) : []
 
   return (
-    <section className="block"><div className="container">
-      <div className="eyebrow">Step 1</div>
-      <h2 className="shead">Choose your match</h2>
-      <div className="bld-tabs">
-        <button className={'bld-tab' + (mode === 'matchup' ? ' on' : '')} onClick={() => setMode('matchup')}>By matchup</button>
-        <button className={'bld-tab' + (mode === 'venue' ? ' on' : '')} onClick={() => { setMode('venue'); setVenue('') }}>By venue</button>
+    <section className="block bg-white pt-[22px] pb-[clamp(34px,5vw,52px)] px-0"><div className="container max-w-[1180px] mx-auto px-[28px]">
+      <div className="eyebrow inline-flex items-center gap-[9px] font-extrabold text-[12.5px] tracking-[1.2px] uppercase text-black mb-[11px]">Step 1</div>
+      <h2 className="shead font-display text-[clamp(28px,3.6vw,40px)] text-[#222] tracking-[0.5px] mb-[20px]">Choose your match</h2>
+      <div className="bld-tabs flex gap-[10px] mb-[20px] items-center flex-wrap">
+        <button className={'bld-tab font-display uppercase tracking-[0.5px] text-[14px] text-ink border-2 border-ink rounded-[8px] px-[18px] py-[10px] cursor-pointer' + (mode === 'matchup' ? ' on bg-brand-yellow' : ' bg-white')} onClick={() => setMode('matchup')}>By matchup</button>
+        <button className={'bld-tab font-display uppercase tracking-[0.5px] text-[14px] text-ink border-2 border-ink rounded-[8px] px-[18px] py-[10px] cursor-pointer' + (mode === 'venue' ? ' on bg-brand-yellow' : ' bg-white')} onClick={() => { setMode('venue'); setVenue('') }}>By venue</button>
         {mode === 'matchup' ? (
-          <div className="search bld-search"><SearchIcon className="si" /><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
+          <div className="search bld-search flex items-center gap-[9px] bg-white border-2 border-ink rounded-[8px] shadow-[4px_4px_0_0_#111] px-[14px] py-[9px] m-0 ml-auto max-w-[420px] flex-[1_1_240px] max-[600px]:mt-[6px] max-[600px]:mr-0 max-[600px]:mb-0 max-[600px]:ml-0 max-[600px]:basis-full max-[600px]:max-w-none"><SearchIcon className="si w-[16px] h-[16px] flex-none opacity-70 text-ink" /><input className="border-0 outline-0 bg-transparent font-body text-[16px] font-semibold text-ink w-full placeholder:text-[#9a9a9a] placeholder:font-medium" type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
         ) : null}
       </div>
 
       {mode === 'matchup' ? (
         <>
-          <div className="bld-list">
+          <div className="bld-list grid gap-[10px]">
             {matchupList.map((x) => (
-              <button key={x.id} className="bld-mrow" onClick={() => onPick(x.id)}>
-                <span className="bld-date">{x.date}</span>
-                <span className="bld-teams">{teamFlag(x.home)} {teamName(x.home)} {scores[x.id] ? <span className="bld-score">{scores[x.id].hs}–{scores[x.id].as}</span> : <span className="bld-vs">v</span>} {teamName(x.away)} {teamFlag(x.away)}</span>
-                <span className="bld-meta">{x.round} · {x.venueName}</span>
-                <span className="bld-go">Choose →</span>
+              <button key={x.id} className="bld-mrow grid grid-cols-[64px_1fr_auto_auto] gap-[16px] items-center text-left bg-white border border-[#ececec] rounded-[12px] shadow-[0_8px_22px_rgba(0,0,0,0.05)] px-[16px] py-[13px] cursor-pointer transition-[transform,box-shadow,border-color] duration-[120ms] font-[inherit] max-[600px]:grid-cols-[56px_1fr] max-[600px]:gap-[10px]" onClick={() => onPick(x.id)}>
+                <span className="bld-date font-display text-[16px] text-ink bg-[#f5f3ea] rounded-[7px] px-[6px] py-[8px] text-center">{x.date}</span>
+                <span className="bld-teams font-extrabold text-[16px] text-ink">{teamFlag(x.home)} {teamName(x.home)} {scores[x.id] ? <span className="bld-score font-extrabold text-[16px] text-ink mx-[4px] whitespace-nowrap">{scores[x.id].hs}–{scores[x.id].as}</span> : <span className="bld-vs text-[#bbb] font-bold text-[12px] mx-[2px]">v</span>} {teamName(x.away)} {teamFlag(x.away)}</span>
+                <span className="bld-meta text-[12px] text-[#888] font-semibold uppercase tracking-[0.3px]">{x.round} · {x.venueName}</span>
+                <span className="bld-go text-[12px] font-extrabold uppercase tracking-[0.5px] text-ink whitespace-nowrap">Choose →</span>
               </button>
             ))}
           </div>
@@ -162,25 +136,25 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
       ) : (
         <>
           {!venue ? (
-            <div className="bld-venues">
+            <div className="bld-venues grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-[12px]">
               {venues.map((v: any) => (
-                <button key={v.id} className="bld-venue" onClick={() => setVenue(v.id)} {...intentWarm(() => warmVenue(v.id))}>
-                  <img className="bld-vthumb" src={'/img/stadiums/' + v.id + '.jpg'} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} />
-                  <span className="bld-vn">{v.name}</span>
-                  <span className="bld-vc">{v.city} · {v.n} matches</span>
+                <button key={v.id} className="bld-venue text-left bg-white border border-[#ececec] rounded-[12px] shadow-[0_8px_22px_rgba(0,0,0,0.05)] p-0 overflow-hidden cursor-pointer transition-[transform,box-shadow,border-color] duration-[120ms] flex flex-col" onClick={() => setVenue(v.id)} {...intentWarm(() => { void qc.prefetchQuery(venueQueryOptions(v.id)); warmImage('/img/stadiums/' + v.id + '.jpg') })}>
+                  <img className="bld-vthumb w-full h-[110px] object-cover block bg-[#e9e9e6]" src={'/img/stadiums/' + v.id + '.jpg'} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+                  <span className="bld-vn font-display text-[19px] text-ink tracking-[0.3px] mt-[13px] mx-[16px] mb-0">{v.name}</span>
+                  <span className="bld-vc text-[12px] text-[#888] font-semibold uppercase tracking-[0.4px] mt-[4px] mx-[16px] mb-[15px]">{v.city} · {v.n} matches</span>
                 </button>
               ))}
             </div>
           ) : (
             <>
-              <button className="bld-backlink" onClick={() => setVenue('')}>← All venues</button>
-              <div className="bld-list">
+              <button className="bld-backlink inline-block bg-none border-0 text-ink font-extrabold text-[13px] uppercase tracking-[0.5px] cursor-pointer mb-[16px] p-0" onClick={() => setVenue('')}>← All venues</button>
+              <div className="bld-list grid gap-[10px]">
                 {venueList.map((x) => (
-                  <button key={x.id} className="bld-mrow" onClick={() => onPick(x.id)}>
-                    <span className="bld-date">{x.date}</span>
-                    <span className="bld-teams">{teamFlag(x.home)} {teamName(x.home)} {scores[x.id] ? <span className="bld-score">{scores[x.id].hs}–{scores[x.id].as}</span> : <span className="bld-vs">v</span>} {teamName(x.away)} {teamFlag(x.away)}</span>
-                    <span className="bld-meta">{x.round} · {x.ko}</span>
-                    <span className="bld-go">Choose →</span>
+                  <button key={x.id} className="bld-mrow grid grid-cols-[64px_1fr_auto_auto] gap-[16px] items-center text-left bg-white border border-[#ececec] rounded-[12px] shadow-[0_8px_22px_rgba(0,0,0,0.05)] px-[16px] py-[13px] cursor-pointer transition-[transform,box-shadow,border-color] duration-[120ms] font-[inherit] max-[600px]:grid-cols-[56px_1fr] max-[600px]:gap-[10px]" onClick={() => onPick(x.id)}>
+                    <span className="bld-date font-display text-[16px] text-ink bg-[#f5f3ea] rounded-[7px] px-[6px] py-[8px] text-center">{x.date}</span>
+                    <span className="bld-teams font-extrabold text-[16px] text-ink">{teamFlag(x.home)} {teamName(x.home)} {scores[x.id] ? <span className="bld-score font-extrabold text-[16px] text-ink mx-[4px] whitespace-nowrap">{scores[x.id].hs}–{scores[x.id].as}</span> : <span className="bld-vs text-[#bbb] font-bold text-[12px] mx-[2px]">v</span>} {teamName(x.away)} {teamFlag(x.away)}</span>
+                    <span className="bld-meta text-[12px] text-[#888] font-semibold uppercase tracking-[0.3px]">{x.round} · {x.ko}</span>
+                    <span className="bld-go text-[12px] font-extrabold uppercase tracking-[0.5px] text-ink whitespace-nowrap">Choose →</span>
                   </button>
                 ))}
               </div>
@@ -193,8 +167,16 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
 }
 
 function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
-  const [venue, setVenue] = useState<any>(null)
-  const [weather, setWeather] = useState<{ temp: string; label: string } | null>(null)
+  // <Builder> is keyed by g.id in BuildPage, so switching matches remounts it —
+  // every wizard useState below resets to its initial value for free, and these
+  // two queries re-key to the new match (no manual reset effect needed).
+  const venue = useQuery(venueQueryOptions(g.venue)).data ?? null
+  const weather =
+    useQuery({
+      queryKey: ['build-weather', g.venue, g.dateISO],
+      queryFn: () => fetchMatchWeather(VENUE_COORDS[g.venue], g.dateISO),
+      staleTime: 60 * 60_000,
+    }).data ?? null
   const [getI, setGetI] = useState(0)
   const [parkI, setParkI] = useState(0)
   // pre / eat / merch / post are multi-select: arrays of chosen option indices.
@@ -213,14 +195,6 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const customLine = (k: string) => (custom[k] || '').trim()
   const storyRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    let alive = true
-    setVenue(null); setWeather(null); setStep(0); setWalkI(0); setGetI(0); setParkI(0); setPreSel([]); setEatSel([]); setPostSel([]); setMerchSel([]); setCustom(blankCustom)
-    getJSON('/data/venues/' + g.venue + '.json').then((v) => { if (alive) setVenue(v) }).catch(() => {})
-    fetchMatchWeather(g.venue, g.dateISO).then((w) => { if (alive) setWeather(w) })
-    return () => { alive = false }
-  }, [g.venue, g.dateISO, g.id])
-
   const marches = fi?.marches ? fi.marches.filter((m: any) => marchRelevant(m, g)) : []
   const around = (venue && venue.around) || {}
   // "Eat inside" is only the truly in-stadium food; nearby food spots become
@@ -236,9 +210,9 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   // Getting there: real, researched options pulled from the venue's transport + parking data.
   const getThereOpts: any[] = useMemo(() => {
     const t = (venue && venue.transport) || {}
-    const sentences = (s: any) => String(s || '').split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter(Boolean)
+    const sentences = splitSentences
     const bulletsOf = (item: any) => (item.points && item.points.length)
-      ? item.points.map((p: any) => (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t))
+      ? item.points.map(pointText)
       : sentences(item.detail).slice(0, 3)
     const o: any[] = []
     ;(t.rail || []).forEach((r: any) => o.push({ name: r.name, tag: 'Train', bullets: bulletsOf(r), deal: r.deal }))
@@ -253,7 +227,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     return o
   }, [venue])
 
-  const point = (p: any) => p ? (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t) : ''
+  const point = pointText
   const spot = (o: any) => o ? {
     name: o.name,
     note: o.note || (o.why && o.why[0]) || '',
@@ -345,7 +319,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const cur = flow[stepIdx]
 
   const cardLines = (key: string, o: any): string[] => {
-    if (key === 'park') return (o.points && o.points.length ? o.points.map((p: any) => (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t)) : [firstSentence(o.detail)]).filter(Boolean)
+    if (key === 'park') return (o.points && o.points.length ? o.points.map(pointText) : [firstSentence(o.detail)]).filter(Boolean)
     if (key === 'get') { const l = [...(o.bullets || [])]; if (o.deal) l.push('Fare · ' + o.deal); if (o.driving) l.push('Next: choose your parking lot →'); return l }
     return o.note ? [o.note] : []
   }
@@ -357,35 +331,35 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
     {/* wz-screen (phones): lock the step to one viewport-high screen — no page
         scroll, cards swipe sideways, nav + flag footer stay put. The share step
         keeps natural page flow (its preview is taller than a screen). */}
-    <section className={'block' + (cur.share ? '' : ' wz-screen')}><div className="container">
-      <div className="wz-top">
-        <button className="bld-backlink" onClick={onBack}>← Choose another match</button>
-        <div className="wz-prog">
-          {flow.map((s, i) => <span key={s.key} className={'wz-dot' + (i === stepIdx ? ' on' : '') + (i < stepIdx ? ' done' : '')} />)}
-          <span className="wz-progtxt">{stepIdx + 1} / {flow.length}</span>
+    <section className={'block bg-white pt-[22px] pb-[clamp(34px,5vw,52px)] px-0' + (cur.share ? '' : ' wz-screen max-[760px]:h-[calc(100dvh-72px)] max-[760px]:flex max-[760px]:flex-col max-[760px]:overflow-hidden max-[760px]:pt-[10px] max-[760px]:pb-[calc(48px+env(safe-area-inset-bottom))]')}><div className="container max-w-[1180px] mx-auto px-[28px]">
+      <div className="wz-top flex items-center justify-between gap-x-[16px] gap-y-[10px] flex-wrap mb-[14px]">
+        <button className="bld-backlink inline-block bg-none border-0 text-ink font-extrabold text-[13px] uppercase tracking-[0.5px] cursor-pointer mb-0 p-0" onClick={onBack}>← Choose another match</button>
+        <div className="wz-prog flex items-center gap-[7px] m-0">
+          {flow.map((s, i) => <span key={s.key} className={'wz-dot w-[9px] h-[9px] rounded-full transition-[background,transform] duration-150' + (i === stepIdx ? ' on bg-brand-yellow shadow-[0_0_0_2px_#111] scale-110' : '') + (i < stepIdx ? ' done bg-[#caa600]' : (i === stepIdx ? '' : ' bg-[#dcdcd6]'))} />)}
+          <span className="wz-progtxt ml-[8px] text-[11.5px] font-extrabold uppercase tracking-[0.6px] text-[#999]">{stepIdx + 1} / {flow.length}</span>
         </div>
       </div>
 
-      <div className="wz-context">
-        <span className="wz-cmatch">{teamName(g.home)} v {teamName(g.away)}</span>
-        <div className="wz-cmeta-row">
-          <span className="wz-cmeta">{g.venueName}</span>
-          {weather && !cur.share ? <span className="wz-cmeta wz-cwx">{weather.temp} · {weather.label}</span> : null}
-          {attendingWalk && cur.key !== 'walk' ? <span className="wz-cmeta wz-cwalk"><FlagIcon className="wz-cgl" /> {fanwalk.name}</span> : null}
+      <div className="wz-context flex flex-col items-start gap-[11px] mb-[22px]">
+        <span className="wz-cmatch font-display text-[14px] tracking-[0.4px] uppercase text-ink bg-brand-yellow px-[13px] py-[6px] rounded-[6px] shadow-[3px_3px_0_#111]">{teamName(g.home)} v {teamName(g.away)}</span>
+        <div className="wz-cmeta-row flex flex-wrap items-center gap-[9px]">
+          <span className="wz-cmeta text-[12.5px] font-bold tracking-[0.3px] text-[#666] uppercase inline-flex items-center">{g.venueName}</span>
+          {weather && !cur.share ? <span className="wz-cmeta wz-cwx text-[12.5px] font-bold tracking-[0.3px] text-[#666] uppercase inline-flex items-center before:content-[''] before:w-[4px] before:h-[4px] before:rounded-full before:bg-[#cfcfcf] before:mr-[9px] before:flex-none">{weather.temp} · {weather.label}</span> : null}
+          {attendingWalk && cur.key !== 'walk' ? <span className="wz-cmeta wz-cwalk text-[12.5px] font-bold tracking-[0.3px] normal-case text-[#9a7e00] inline-flex items-center before:content-[''] before:w-[4px] before:h-[4px] before:rounded-full before:bg-[#cfcfcf] before:mr-[9px] before:flex-none"><FlagIcon className="wz-cgl w-[13px] h-[13px] flex-none mr-[4px]" /> {fanwalk.name}</span> : null}
         </div>
       </div>
 
-      <h2 className="shead">{cur.title}</h2>
-      <div className="ssub">{cur.sub}</div>
+      <h2 className="shead font-display text-[clamp(28px,3.6vw,40px)] text-[#222] tracking-[0.5px] mb-[7px]">{cur.title}</h2>
+      <div className="ssub text-[#6b6b6b] font-semibold text-[14px] uppercase tracking-[0.5px] mt-0 mx-0 mb-[22px]">{cur.sub}</div>
 
-      <div className="sb-wrap">
+      <div className="sb-wrap mt-[6px]">
         {cur.share ? (
-          <div className="wz-share">
-            <div className="sb-preview">
-              <div className="sb-pvbox"><div className="sb-pvcap">Story · 9:16</div><div className="sb-scale-story"><ShareCard plan={plan} format="story" /></div></div>
+          <div className="wz-share flex flex-col items-center">
+            <div className="sb-preview mt-[22px] flex gap-[26px] flex-wrap items-start max-[600px]:gap-[16px] max-[600px]:justify-center">
+              <div className="sb-pvbox bg-[#e9e7e0] rounded-[14px] p-[16px] shadow-[inset_0_2px_8px_rgba(0,0,0,0.06)] max-[600px]:p-[10px]"><div className="sb-pvcap text-[11px] font-extrabold uppercase tracking-[0.6px] text-[#888] mb-[8px] text-center">Story · 9:16</div><div className="sb-scale-story w-[283px] h-[503px] overflow-hidden min-[601px]:w-[360px] min-[601px]:h-[640px] [&_.sc]:scale-[.262] [&_.sc]:origin-top-left min-[601px]:[&_.sc]:scale-[.33333]"><ShareCard plan={plan} format="story" /></div></div>
             </div>
-            <div className="sb-actions">
-              <button className="sb-btn" disabled={!!busy} onClick={share}>
+            <div className="sb-actions flex flex-wrap gap-[12px] items-center [&_.sb-btn]:flex [&_.sb-btn]:items-center [&_.sb-btn]:justify-center [&_.sb-btn]:gap-[9px] [&_.sb-btn]:w-full">
+              <button className="sb-btn font-display uppercase tracking-[0.6px] text-[15px] text-ink bg-brand-yellow border-0 rounded-[8px] px-[22px] py-[13px] cursor-pointer shadow-[0_8px_22px_rgba(0,0,0,0.1)] disabled:opacity-50 disabled:cursor-wait" disabled={!!busy} onClick={share}>
                 {busy === 'share' ? 'Preparing…' : (
                   <>
                     Share Agenda
@@ -393,42 +367,42 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
                   </>
                 )}
               </button>
-              <button className="sb-btn ghost" onClick={() => setStep((s) => s - 1)}>← Back</button>
+              <button className="sb-btn ghost font-display uppercase tracking-[0.6px] text-[15px] text-ink bg-white border-2 border-ink rounded-[8px] px-[22px] py-[13px] cursor-pointer shadow-none disabled:opacity-50 disabled:cursor-wait" onClick={() => setStep((s) => s - 1)}>← Back</button>
             </div>
           </div>
         ) : (
           <>
-            <div className="wz-scroll" key={cur.key}>
+            <div className="wz-scroll flex gap-[14px] overflow-x-auto pt-[18px] px-[2px] pb-[20px] [scroll-snap-type:x_mandatory] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:h-[9px] [&::-webkit-scrollbar-thumb]:bg-[#d2d2cc] [&::-webkit-scrollbar-thumb]:rounded-[20px]" key={cur.key}>
               {cur.opts.length ? cur.opts.map((o: any, i: number) => {
                 const on = cur.multi ? (cur.sel as number[]).includes(i) : cur.sel === i
                 return (
-                <button key={i} className={'wz-card' + (on ? ' on' : '')} onClick={() => pick(i)}>
-                  <div className="wz-cardtop">
-                    <span className="wz-cardname">{o.name}</span>
-                    {cur.key === 'get' && o.tag ? <span className="wz-cardtag">{o.tag}</span> : null}
+                <button key={i} className={'wz-card flex-[0_0_290px] [scroll-snap-align:start] text-left border rounded-[14px] p-[18px] cursor-pointer flex flex-col gap-[11px] transition-[transform,box-shadow,border-color] duration-[120ms]' + (on ? ' on border-ink bg-[#fffdf3] shadow-[0_14px_30px_rgba(0,0,0,0.12)]' : ' border-[#ececec] bg-white shadow-[0_8px_22px_rgba(0,0,0,0.05)]')} onClick={() => pick(i)}>
+                  <div className="wz-cardtop flex items-start gap-[10px]">
+                    <span className="wz-cardname font-display text-[18px] text-ink tracking-[0.2px] leading-[1.15]">{o.name}</span>
+                    {cur.key === 'get' && o.tag ? <span className="wz-cardtag ml-auto flex-none max-w-[50%] whitespace-nowrap overflow-hidden text-ellipsis text-[10.5px] font-extrabold uppercase tracking-[0.5px] text-[#7a6700] bg-[#fff3b0] border border-[#ecd96b] rounded-[20px] px-[9px] py-[3px]">{o.tag}</span> : null}
                   </div>
-                  {cur.key === 'park' && o.price ? <div className="wz-cardprice">{o.price}</div> : null}
+                  {cur.key === 'park' && o.price ? <div className="wz-cardprice text-[12.5px] font-bold text-[#7a6700] leading-[1.35] [overflow-wrap:anywhere]">{o.price}</div> : null}
                   {o.rating || o.dist ? (
-                    <div className="wz-cardmeta">
-                      {o.rating ? <span className="wz-cardrating">★ {o.rating}</span> : null}
-                      {o.dist ? <span className="wz-carddist"><MapPinIcon className="wz-distgl" /> {o.dist}</span> : null}
+                    <div className="wz-cardmeta flex flex-wrap items-center gap-x-[12px] gap-y-[5px] mt-[-3px] mx-0 mb-[1px]">
+                      {o.rating ? <span className="wz-cardrating text-[12px] font-extrabold tracking-[0.2px] text-[#b8860b]">★ {o.rating}</span> : null}
+                      {o.dist ? <span className="wz-carddist text-[12px] font-bold text-[#777] inline-flex items-center gap-[3px]"><MapPinIcon className="wz-distgl w-[12px] h-[12px] flex-none" /> {o.dist}</span> : null}
                     </div>
                   ) : null}
-                  <ul className="wz-cardbul">
-                    {cardLines(cur.key, o).map((l: string, j: number) => <li key={j}>{l}</li>)}
+                  <ul className="wz-cardbul list-none m-0 p-0 grid gap-[7px] flex-1">
+                    {cardLines(cur.key, o).map((l: string, j: number) => <li key={j} className="relative pl-[15px] text-[13px] text-[#444] leading-[1.42] [text-wrap:pretty] [overflow-wrap:anywhere] before:content-[''] before:absolute before:left-0 before:top-[7px] before:w-[5px] before:h-[5px] before:rounded-full before:bg-brand-yellow before:[box-shadow:0_0_0_1px_#caa600]">{l}</li>)}
                   </ul>
-                  <span className="wz-pick">{on ? (cur.multi ? 'Added ✓ · tap to remove' : 'Selected ✓ · tap to continue') : (cur.multi ? 'Add +' : 'Choose →')}</span>
+                  <span className={'wz-pick mt-[2px] text-[11.5px] font-extrabold uppercase tracking-[0.5px] ' + (on ? 'text-[#7a6700]' : 'text-ink')}>{on ? (cur.multi ? 'Added ✓ · tap to remove' : 'Selected ✓ · tap to continue') : (cur.multi ? 'Add +' : 'Choose →')}</span>
                 </button>
                 )
-              }) : (cur.custom ? null : <div className="wz-empty">{cur.empty}</div>)}
+              }) : (cur.custom ? null : <div className="wz-empty py-[30px] px-[4px] text-[#999] font-semibold">{cur.empty}</div>)}
               {cur.custom ? (() => {
                 const txt = customLine(cur.key)
                 const on = cur.multi ? !!txt : cur.sel === -1 && !!txt
                 return (
-                  <div className={'wz-card wz-custom' + (on ? ' on' : '')}>
-                    <div className="wz-cardtop"><span className="wz-cardname">Add Custom Option</span></div>
+                  <div className={'wz-card wz-custom flex-[0_0_290px] [scroll-snap-align:start] text-left rounded-[14px] p-[18px] flex flex-col gap-[11px] transition-[transform,box-shadow,border-color] duration-[120ms] border cursor-default' + (on ? ' on border-solid border-ink bg-[#fffdf3] shadow-[0_14px_30px_rgba(0,0,0,0.12)]' : ' border-dashed border-[#cfcfc6] bg-white shadow-[0_8px_22px_rgba(0,0,0,0.05)]')}>
+                    <div className="wz-cardtop flex items-start gap-[10px]"><span className="wz-cardname font-display text-[18px] text-ink tracking-[0.2px] leading-[1.15]">Add Custom Option</span></div>
                     <textarea
-                      className="wz-custom-input"
+                      className="wz-custom-input w-full flex-1 min-h-[96px] resize-none border-2 border-[#ececec] rounded-[8px] bg-[#fafaf6] px-[12px] py-[10px] font-body text-[16px] font-semibold text-ink leading-[1.4] outline-none placeholder:text-[#9a9a9a] placeholder:font-medium"
                       rows={3}
                       placeholder="Type what you're doing…"
                       value={custom[cur.key] || ''}
@@ -440,9 +414,9 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
                       }}
                     />
                     {cur.multi ? (
-                      <span className="wz-pick">{on ? "Added ✓ · it's on your card" : 'Type to add +'}</span>
+                      <span className="wz-pick mt-[2px] text-[11.5px] font-extrabold uppercase tracking-[0.5px] text-ink">{on ? "Added ✓ · it's on your card" : 'Type to add +'}</span>
                     ) : (
-                      <button className="wz-custom-use" disabled={!txt} onClick={() => { cur.set(-1); setStep((s) => s + 1) }}>
+                      <button className="wz-custom-use self-start font-[inherit] text-[11.5px] font-extrabold uppercase tracking-[0.5px] text-ink bg-brand-yellow border-0 rounded-[6px] px-[15px] py-[9px] cursor-pointer disabled:opacity-45 disabled:cursor-default" disabled={!txt} onClick={() => { cur.set(-1); setStep((s) => s + 1) }}>
                         {on ? 'Selected ✓ · continue →' : 'Use this →'}
                       </button>
                     )}
@@ -450,30 +424,30 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
                 )
               })() : null}
             </div>
-            <div className="wz-nav">
-              <button className="sb-btn ghost" onClick={() => (stepIdx > 0 ? setStep((s) => s - 1) : onBack())}>← Back</button>
-              <div className="wz-nav-stack">
-                <button className="sb-btn ghost wz-skip" onClick={() => setStep((s) => s + 1)}>Skip</button>
-                <button className="sb-btn dark" onClick={() => setStep((s) => s + 1)} disabled={!cur.opts.length && !cur.custom}>Next →</button>
+            <div className="wz-nav fixed left-0 right-0 bottom-[calc(44px+env(safe-area-inset-bottom))] z-[44] flex justify-between items-end gap-[14px] max-w-[1180px] mx-auto my-0 pt-[14px] px-[28px] pb-[10px] bg-[linear-gradient(to_top,#f7f6f2_78%,rgba(247,246,242,0))] pointer-events-none">
+              <button className="sb-btn ghost font-display uppercase tracking-[0.6px] text-[15px] text-ink bg-white border-2 border-ink rounded-[8px] px-[22px] py-[13px] cursor-pointer shadow-none pointer-events-auto disabled:opacity-50 disabled:cursor-wait" onClick={() => (stepIdx > 0 ? setStep((s) => s - 1) : onBack())}>← Back</button>
+              <div className="wz-nav-stack flex flex-col gap-[8px] items-stretch flex-none pointer-events-auto">
+                <button className="sb-btn ghost wz-skip font-display uppercase tracking-[0.6px] text-[15px] text-ink bg-white border-2 border-ink rounded-[8px] px-[22px] py-[13px] cursor-pointer shadow-none disabled:opacity-50 disabled:cursor-wait" onClick={() => setStep((s) => s + 1)}>Skip</button>
+                <button className="sb-btn dark font-display uppercase tracking-[0.6px] text-[15px] text-white bg-ink border-0 rounded-[8px] px-[22px] py-[13px] cursor-pointer shadow-[0_8px_22px_rgba(0,0,0,0.1)] disabled:opacity-50 disabled:cursor-wait" onClick={() => setStep((s) => s + 1)} disabled={!cur.opts.length && !cur.custom}>Next →</button>
               </div>
             </div>
           </>
         )}
       </div>
-      <div className="sb-stage" aria-hidden>
+      <div className="sb-stage fixed left-[-99999px] top-0 z-[-1] pointer-events-none" aria-hidden>
         <ShareCard ref={storyRef} plan={plan} format="story" />
       </div>
     </div></section>
     {!cur.share && teamCode(g.home) && teamCode(g.away) ? (
       <>
-        <div className="matchbar-spacer" aria-hidden />
-        <div className="matchbar" aria-hidden>
-          <div className="matchbar-side" style={{ backgroundImage: `url(https://flagcdn.com/${teamCode(g.home)}.svg)` }}>
-            <span className="matchbar-team">{teamName(g.home)}</span>
+        <div className="matchbar-spacer h-[calc(180px+env(safe-area-inset-bottom))]" aria-hidden />
+        <div className="matchbar fixed left-0 right-0 bottom-0 z-[45] flex items-stretch min-h-[44px] bg-ink border-t-[3px] border-solid border-brand-yellow pb-[env(safe-area-inset-bottom)]" aria-hidden>
+          <div className="matchbar-side flex-1 flex items-center justify-center relative overflow-hidden bg-cover bg-center px-[16px] max-[600px]:px-[10px] before:content-[''] before:absolute before:inset-0 before:bg-[rgba(17,17,17,.72)]" style={{ backgroundImage: `url(https://flagcdn.com/${teamCode(g.home)}.svg)` }}>
+            <span className="matchbar-team relative z-[1] font-display text-[clamp(13px,3.6vw,17px)] text-white uppercase tracking-[0.5px] whitespace-nowrap overflow-hidden text-ellipsis [text-shadow:0_1px_4px_rgba(0,0,0,0.55)]">{teamName(g.home)}</span>
           </div>
-          <span className="matchbar-vs">VS</span>
-          <div className="matchbar-side matchbar-away" style={{ backgroundImage: `url(https://flagcdn.com/${teamCode(g.away)}.svg)` }}>
-            <span className="matchbar-team">{teamName(g.away)}</span>
+          <span className="matchbar-vs flex-none self-center relative z-[2] font-display text-[clamp(11px,3vw,13px)] text-brand-yellow tracking-[1px] px-[8px]">VS</span>
+          <div className="matchbar-side matchbar-away flex-1 flex items-center justify-center relative overflow-hidden bg-cover bg-center px-[16px] max-[600px]:px-[10px] before:content-[''] before:absolute before:inset-0 before:bg-[rgba(17,17,17,.72)]" style={{ backgroundImage: `url(https://flagcdn.com/${teamCode(g.away)}.svg)` }}>
+            <span className="matchbar-team relative z-[1] font-display text-[clamp(13px,3.6vw,17px)] text-white uppercase tracking-[0.5px] whitespace-nowrap overflow-hidden text-ellipsis [text-shadow:0_1px_4px_rgba(0,0,0,0.55)]">{teamName(g.away)}</span>
           </div>
         </div>
       </>

@@ -23,19 +23,6 @@ interface Props {
   initialTab?: Tab;
 }
 
-function countryColor(code: string): string {
-  switch (code) {
-    case 'US':
-      return '#3b82f6';
-    case 'MX':
-      return '#16a34a';
-    case 'CA':
-      return '#dc2626';
-    default:
-      return '#6e6e6e';
-  }
-}
-
 export default function ScheduleDrawer({
   open,
   onClose,
@@ -312,7 +299,6 @@ function matchStamp(m: ItineraryMatch): { label: string; rotate: 'l' | 'r' } | n
 
 function MatchRow({
   m,
-  index,
   stadium,
   isAttended,
   isNext,

@@ -52,7 +52,6 @@ export default function Flag({
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={flagUrl(code)}
       alt={label}
