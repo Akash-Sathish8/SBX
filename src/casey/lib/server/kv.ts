@@ -1,12 +1,12 @@
-import { DEFAULT_SPEND } from './itinerary';
+import { DEFAULT_SPEND } from '../itinerary';
 import type {
   MatchResult,
   PositionOverride,
   SpendTracker,
   MatchFieldOverride,
   StadiumOverride,
-} from './types';
-import type { HealthRecord } from './health';
+} from '../types';
+import type { HealthRecord } from '../health';
 import { env } from 'cloudflare:workers';
 import type { KVNamespace } from '@cloudflare/workers-types';
 

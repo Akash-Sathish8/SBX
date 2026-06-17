@@ -14,8 +14,8 @@ import type {
   MatchResult,
   SpendTracker,
   PositionOverride,
-} from './types';
-import { getMergedItinerary, getMergedStadiums } from './merged-itinerary';
+} from '../types';
+import { getMergedItinerary, getMergedStadiums } from '../merged-itinerary';
 import {
   getPositionOverride,
   getSpend,

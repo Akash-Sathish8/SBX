@@ -26,17 +26,16 @@ async function fetchJson(url: string) {
 export default function LiveTodayTab({ onMatchClick }: Props = {}) {
   // refetchIntervalInBackground:false pauses polling whenever the tab is hidden,
   // so a backgrounded tracker stops hitting the Worker/ESPN every 30s.
+  const poll = { refetchInterval: 30_000, refetchIntervalInBackground: false };
   const liveQ = useQuery({
     queryKey: ['live-today'],
     queryFn: () => fetchJson('/api/live-today'),
-    refetchInterval: 30_000,
-    refetchIntervalInBackground: false,
+    ...poll,
   });
   const todayQ = useQuery({
     queryKey: ['today-feed'],
     queryFn: () => fetchJson('/api/today'),
-    refetchInterval: 30_000,
-    refetchIntervalInBackground: false,
+    ...poll,
   });
 
   const events: ScoreboardEvent[] = liveQ.data?.ok ? liveQ.data.data ?? [] : [];

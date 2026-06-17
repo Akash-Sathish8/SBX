@@ -56,6 +56,5 @@ src/
 └── server/games.ts    # Ticketmaster proxy as a server function
 public/
 ├── img/…              # logo, celebration*, stadiums/* (copied from the static site)
-├── data/venues/*.json # 16 venue datasets
-└── wc26-fan-intel.html# standalone page linked from the home "Know before you go" cards
+└── data/venues/*.json # 16 venue datasets
 ```

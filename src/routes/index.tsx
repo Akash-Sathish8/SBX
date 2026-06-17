@@ -171,12 +171,13 @@ const AGENDAS: AgendaMock[] = [
   ] },
 ]
 
+// Per-position fan transforms for the 5 agenda cards (was a `.acard:nth-child` block).
+// Driving it off the map index keeps the base transform a non-variant utility, so
+// `hover:` reliably overrides it (Tailwind sorts hover variants after the base).
+const FAN_TRANSFORMS = ['[transform:rotate(-8deg)_translateY(30px)]', '[transform:rotate(-4deg)_translateY(9px)]', '[transform:rotate(0deg)]', '[transform:rotate(4deg)_translateY(9px)]', '[transform:rotate(8deg)_translateY(30px)]']
+
 function AgendaCard({ a, i }: { a: AgendaMock; i: number }) {
-  // The five cards fan out via per-position transforms (was a `.acard:nth-child`
-  // block). Driving it off the map index keeps the base transform a non-variant
-  // utility, so `hover:` reliably overrides it — Tailwind resolves same-property
-  // utilities by source order, and hover variants sort after the base.
-  const fan = ['[transform:rotate(-8deg)_translateY(30px)]', '[transform:rotate(-4deg)_translateY(9px)]', '[transform:rotate(0deg)]', '[transform:rotate(4deg)_translateY(9px)]', '[transform:rotate(8deg)_translateY(30px)]'][i] ?? '[transform:rotate(0deg)]'
+  const fan = FAN_TRANSFORMS[i] ?? '[transform:rotate(0deg)]'
   const mobile = i % 2 ? 'max-[760px]:[transform:rotate(1.6deg)]' : 'max-[760px]:[transform:rotate(-1.6deg)]'
   return (
     <Link to="/guide" className={`relative flex-[0_0_252px] aspect-[5/7] flex flex-col overflow-hidden no-underline text-inherit bg-white border-[5px] border-[#222] rounded-[14px] shadow-[8px_8px_0_0_#222] pt-[36px] px-[18px] pb-[14px] mx-[-19px] [transition:transform_.16s_ease-out,box-shadow_.15s,border-color_.15s] ${fan} ${mobile} hover:[transform:rotate(0deg)_translateY(-16px)_scale(1.04)] hover:z-10 hover:border-brand-yellow hover:shadow-[12px_12px_0_0_#222] focus-visible:outline-4 focus-visible:outline-brand-yellow-dim focus-visible:outline-offset-2 max-[760px]:flex-[0_0_240px] max-[760px]:mx-0`}>

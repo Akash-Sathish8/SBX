@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { withAdmin } from '@/lib/auth';
+import { withAdmin } from '@/lib/server/auth';
 import { pingAll, mergeHealthRecord, ENDPOINTS } from '@/lib/health';
-import { getHealthRecord, setHealthRecord } from '@/lib/kv';
+import { getHealthRecord, setHealthRecord } from '@/lib/server/kv';
 
 export const Route = createFileRoute('/api/admin/espn-health')({
   server: {

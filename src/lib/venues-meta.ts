@@ -38,6 +38,11 @@ export const VENUE_COORDS: Record<string, [number, number]> = {
   bbva: [25.6692, -100.2444],
 }
 
+// Host-nation flag emoji + display name by country code (was duplicated in
+// /venues and /venue/$id — it's venue metadata, so it lives here).
+export const NATION_FLAG: Record<string, string> = { USA: '🇺🇸', CAN: '🇨🇦', MEX: '🇲🇽' }
+export const NATION_NAME: Record<string, string> = { USA: 'USA', CAN: 'Canada', MEX: 'Mexico' }
+
 // Country tallies derived from VENUES so the /venues headline can't drift from the list.
 export const venueNationCounts = (): { cc: string; n: number }[] => {
   const order = ['USA', 'MEX', 'CAN']

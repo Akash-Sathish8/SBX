@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { getVisibilityFlags } from '@/lib/kv';
+import { getVisibilityFlags } from '@/lib/server/kv';
 
 export const Route = createFileRoute('/api/visibility')({
   server: {
