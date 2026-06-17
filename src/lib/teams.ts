@@ -71,16 +71,18 @@ const ALIASES: Record<string, string> = {
   'Bosnia & Herzegovina': 'Bosnia and Herzegovina',
 }
 
-function resolve(n: string): Team | undefined {
+function resolve(n?: string | null): Team | undefined {
   if (!n) return undefined
   if (TEAMS[n]) return TEAMS[n]
   const a = ALIASES[n]
   return a ? TEAMS[a] : undefined
 }
 
-export const teamName = (n: string) => resolve(n)?.display || n
-export const teamFlag = (n: string) => resolve(n)?.flag || '⚽'
-export const teamCode = (n: string) => resolve(n)?.code || ''
+// All accept nullish (TBD fixtures carry home/away: null) and always return a
+// string, so callers can pass g.home/g.away without narrowing on g.tbd first.
+export const teamName = (n?: string | null) => resolve(n)?.display || n || ''
+export const teamFlag = (n?: string | null) => resolve(n)?.flag || '⚽'
+export const teamCode = (n?: string | null) => resolve(n)?.code || ''
 
 // "A vs B" → casual "A vs B" (leaves unknown strings, e.g. "TBD", untouched).
 export function displayFixture(s: string): string {

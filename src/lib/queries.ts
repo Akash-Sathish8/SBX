@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+import type { Venue } from './data-types'
 
 // Central TanStack Query option factories for the per-item static JSON (venue +
 // game detail). These files are build-time-static and served with a long cache
@@ -22,7 +23,7 @@ export function venueQueryOptions(id: string) {
   const clean = sanitizeId(id)
   return queryOptions({
     queryKey: ['venue', clean],
-    queryFn: () => fetchJSON<any>(`/data/venues/${clean}.json`),
+    queryFn: () => fetchJSON<Venue>(`/data/venues/${clean}.json`),
     enabled: clean.length > 0,
     staleTime: STATIC_STALE,
   })

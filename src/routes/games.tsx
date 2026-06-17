@@ -7,7 +7,8 @@ import { teamName, teamFlag } from '../lib/teams'
 import { useMatchScores, type Score } from '../lib/useMatchScores'
 // Build-time-static fixture list — imported (bundled) rather than fetched at
 // runtime, so the page server-renders the full list (SEO + instant first paint).
-import GAMES_INDEX from '../../public/data/games/index.json'
+import { GAMES as GAMES_INDEX } from '../data'
+import type { Game } from '../lib/data-types'
 import css from '../pages/games.css?url'
 
 export const Route = createFileRoute('/games')({
@@ -29,7 +30,7 @@ function dateChip(iso: string) {
 }
 const matchText = (m: any) => ((m.home || '') + ' ' + (m.away || '') + ' ' + teamName(m.home || '') + ' ' + teamName(m.away || '') + ' ' + (m.venueName || '') + ' ' + (m.city || '') + ' ' + (m.round || '') + ' ' + (m.fixture || '')).toLowerCase()
 
-function GameRow({ m, score }: { m: any; score?: Score }) {
+function GameRow({ m, score }: { m: Game; score?: Score }) {
   const c = dateChip(m.dateISO)
   const played = !m.tbd && !!score
   const inner = (
@@ -54,7 +55,7 @@ function GameRow({ m, score }: { m: any; score?: Score }) {
 }
 
 function Games() {
-  const all = GAMES_INDEX as any[]
+  const all = GAMES_INDEX
   const [filter, setFilter] = useState('all')
   const [query, setQuery] = useState('')
 

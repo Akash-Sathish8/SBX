@@ -13,9 +13,11 @@ import { useQueries } from '@tanstack/react-query'
 // cached too so an unfinished match isn't re-polled again today.
 
 export type Score = { hs: number; as: number }
-export type ScoreInput = { key: string; dateISO: string | null; home?: string; away?: string }
+// home/away are nullable: TBD knockout fixtures carry null until teams are set.
+// The played() filter drops those (needs both teams) before any score lookup.
+export type ScoreInput = { key: string; dateISO: string | null; home?: string | null; away?: string | null }
 
-const uk = (m: { dateISO: string | null; home?: string; away?: string }) =>
+const uk = (m: { dateISO: string | null; home?: string | null; away?: string | null }) =>
   `${m.dateISO}|${m.home}|${m.away}`
 
 const CACHE_PREFIX = 'sbx:scores:v3:'

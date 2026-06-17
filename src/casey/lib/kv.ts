@@ -7,33 +7,25 @@ import type {
   StadiumOverride,
 } from './types';
 import type { HealthRecord } from './health';
+import { env } from 'cloudflare:workers';
 import type { KVNamespace } from '@cloudflare/workers-types';
 
-let _kv: KVNamespace | null | undefined; // undefined = not yet resolved
-let warned = false;
+// All admin-driven state lives in the `KV` binding. In production it MUST be
+// bound — if it isn't, fail LOUD rather than silently writing to an ephemeral
+// per-isolate map and losing data. Only local dev/preview falls back to an
+// in-memory store so the app runs without a configured namespace.
 const memoryStore = new Map<string, unknown>();
 
-// Resolve the `KV` binding from the Cloudflare runtime. Done via a guarded
-// dynamic import so this module also loads cleanly in plain Node (vitest, any
-// non-Workers context), where it falls back to the in-memory store. The binding
-// reference is stable across requests, so we resolve it once.
-async function getKV(): Promise<KVNamespace | null> {
-  if (_kv !== undefined) return _kv;
-  try {
-    const mod = await import('cloudflare:workers');
-    _kv = mod.env?.KV ?? null;
-  } catch {
-    _kv = null;
+function getKV(): KVNamespace | null {
+  if (env.KV) return env.KV;
+  if (!import.meta.env.DEV) {
+    throw new Error('KV binding "KV" is not bound — admin state storage is unavailable');
   }
-  if (!_kv && !warned) {
-    console.warn('[kv] Cloudflare KV binding "KV" not found — using in-memory store. Persistence disabled.');
-    warned = true;
-  }
-  return _kv;
+  return null; // dev only: in-memory fallback
 }
 
 async function kvGet<T>(key: string): Promise<T | null> {
-  const kv = await getKV();
+  const kv = getKV();
   if (!kv) return (memoryStore.get(key) as T) ?? null;
   try {
     return ((await kv.get(key, 'json')) as T) ?? null;
@@ -44,7 +36,7 @@ async function kvGet<T>(key: string): Promise<T | null> {
 }
 
 async function kvSet<T>(key: string, value: T): Promise<void> {
-  const kv = await getKV();
+  const kv = getKV();
   if (!kv) {
     memoryStore.set(key, value);
     return;
@@ -53,7 +45,7 @@ async function kvSet<T>(key: string, value: T): Promise<void> {
 }
 
 async function kvDel(key: string): Promise<void> {
-  const kv = await getKV();
+  const kv = getKV();
   if (!kv) {
     memoryStore.delete(key);
     return;
@@ -62,7 +54,7 @@ async function kvDel(key: string): Promise<void> {
 }
 
 async function kvGetByPrefix<T>(prefix: string): Promise<Record<string, T>> {
-  const kv = await getKV();
+  const kv = getKV();
   if (!kv) {
     const out: Record<string, T> = {};
     for (const [k, v] of memoryStore.entries()) {

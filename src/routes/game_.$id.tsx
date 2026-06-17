@@ -6,15 +6,16 @@ import { PageCssGuard } from '../components/PageCssGuard'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
 import { gameDetailQueryOptions, sanitizeId } from '../lib/queries'
 import { absUrl, socialMeta } from '../lib/site'
+import { cap, splitSentences } from '../lib/text'
 // Build-time-static shared data — bundled so the page server-renders (SEO).
-import GAMES_INDEX from '../../public/data/games/index.json'
-import FAN_INTEL from '../../public/data/fanintel.json'
+import { GAMES as GAMES_INDEX, FAN_INTEL } from '../data'
+import type { Game } from '../lib/data-types'
 import css from '../pages/game.css?url'
 
 export const Route = createFileRoute('/game_/$id')({
   // Per-match SEO metadata, rendered server-side from the bundled fixture index.
   head: ({ params }) => {
-    const g = (GAMES_INDEX as any[]).find((x) => x.id === params.id)
+    const g = GAMES_INDEX.find((x) => x.id === params.id)
     const matchup = g && !g.tbd ? `${teamName(g.home)} vs ${teamName(g.away)}` : g?.round ?? 'Match'
     const where = g ? `${g.venueName}${g.city ? ', ' + g.city : ''}` : ''
     const title = g
@@ -35,8 +36,7 @@ export const Route = createFileRoute('/game_/$id')({
   component: GamePage,
 })
 
-const toBullets = (t = '') => t.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean)
-const cap = (s = '') => (/^[a-z]/.test(s) ? s[0].toUpperCase() + s.slice(1) : s)
+const toBullets = splitSentences
 // A march belongs on THIS match's page if it names one of the two teams,
 // or if it's a general "every match day" item for the venue.
 function marchRelevant(m: any, g: any) {
@@ -62,8 +62,8 @@ function GamePage() {
   const { id: rawId } = Route.useParams()
   const id = sanitizeId(rawId)
   // Fixture + fan-intel come from the bundled static data (synchronous → SSR).
-  const g = (GAMES_INDEX as any[]).find((x) => x.id === id) || null
-  const fi = FAN_INTEL as any
+  const g = GAMES_INDEX.find((x) => x.id === id) || null
+  const fi = FAN_INTEL
   const intel = g && fi.venues ? fi.venues[g.venue] ?? null : null
   const marches = g && fi.marches ? fi.marches.filter((m: any) => marchRelevant(m, g)) : []
   // Optional per-game preview JSON loads client-side (supplementary content).
@@ -92,7 +92,7 @@ function GamePage() {
   }
 }
 
-function GameContent({ g, intel, marches, detail }: { g: any; intel: any; marches: any[]; detail: any }) {
+function GameContent({ g, intel, marches, detail }: { g: Game; intel: any; marches: any[]; detail: any }) {
   const pre = (detail && detail.preview) || null
   return (
     <>

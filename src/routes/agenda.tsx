@@ -7,7 +7,7 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 // Build-time-static fixture list — imported (bundled) so the picker SSRs and
 // paints instantly, instead of fetching /data/games/index.json on mount.
-import GAMES_INDEX from '../../public/data/games/index.json'
+import { GAMES as GAMES_INDEX } from '../data'
 import { ShareCard, type Plan } from '../components/ShareCard'
 import { renderShareCardBlob } from '../lib/renderShareCard'
 import { teamName, teamFlag } from '../lib/teams'
@@ -43,7 +43,7 @@ const saveKey = (id: string) => 'sbx-agenda:' + id
 function AgendaPage() {
   const { game } = Route.useSearch()
   const navigate = useNavigate()
-  const index = GAMES_INDEX as any[]
+  const index = GAMES_INDEX
   const g = index.find((x) => x.id === game) ?? null
 
   return (

@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { SearchIcon, FlagIcon, MapPinIcon, ShareIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
@@ -10,11 +10,13 @@ import { byDistance, isInside } from '../lib/dist'
 import { teamName, teamFlag, teamCode } from '../lib/teams'
 import { useMatchScores } from '../lib/useMatchScores'
 import { venueQueryOptions } from '../lib/queries'
-import { warmVenue, intentWarm } from '../lib/dataCache'
+import { VENUE_COORDS } from '../lib/venues-meta'
+import { firstSentence, splitSentences } from '../lib/text'
+import { fetchMatchWeather } from '../lib/weather'
+import { warmImage, intentWarm } from '../lib/dataCache'
 // Build-time-static data — bundled so the chooser SSRs instantly instead of
 // fetching index.json + fanintel.json on mount.
-import GAMES_INDEX from '../../public/data/games/index.json'
-import FAN_INTEL from '../../public/data/fanintel.json'
+import { GAMES as GAMES_INDEX, FAN_INTEL } from '../data'
 import gameCss from '../pages/game.css?url'
 import shareCss from '../pages/share.css?url'
 
@@ -35,25 +37,6 @@ export const Route = createFileRoute('/build')({
   component: BuildPage,
 })
 
-const VENUE_COORDS: Record<string, [number, number]> = {
-  metlife: [40.8135, -74.0745], sofi: [33.9535, -118.3392], azteca: [19.3029, -99.1505], att: [32.7473, -97.0945],
-  arrowhead: [39.0489, -94.4839], nrg: [29.6847, -95.4107], mercedes: [33.7553, -84.4006], gillette: [42.0909, -71.2643],
-  linc: [39.9008, -75.1675], lumen: [47.5952, -122.3316], hardrock: [25.958, -80.2389], levis: [37.403, -121.9697],
-  bmo: [43.6332, -79.4185], bcplace: [49.2768, -123.1119], akron: [20.6819, -103.4628], bbva: [25.6694, -100.2444],
-}
-const WX: Record<number, string> = { 0: 'Clear', 1: 'Mostly clear', 2: 'Partly cloudy', 3: 'Overcast', 45: 'Fog', 48: 'Fog', 51: 'Drizzle', 53: 'Drizzle', 55: 'Drizzle', 61: 'Light rain', 63: 'Rain', 65: 'Heavy rain', 80: 'Showers', 81: 'Showers', 82: 'Showers', 95: 'Thunderstorm', 96: 'Thunderstorm', 99: 'Thunderstorm' }
-async function fetchMatchWeather(venue: string, dateISO: string): Promise<{ temp: string; label: string } | null> {
-  const c = VENUE_COORDS[venue]; if (!c || !dateISO) return null
-  try {
-    const cf = (c2: number) => Math.round(c2) + '°C / ' + Math.round(c2 * 9 / 5 + 32) + '°F'
-    const fc = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c[0]}&longitude=${c[1]}&daily=weathercode,temperature_2m_max&temperature_unit=celsius&timezone=auto&start_date=${dateISO}&end_date=${dateISO}`).then((r) => r.json())
-    if (fc?.daily?.time?.length && fc.daily.temperature_2m_max[0] != null) return { temp: cf(fc.daily.temperature_2m_max[0]), label: WX[fc.daily.weathercode[0]] || 'Mild' }
-    const last = '2025' + dateISO.slice(4)
-    const ar = await fetch(`https://archive-api.open-meteo.com/v1/archive?latitude=${c[0]}&longitude=${c[1]}&daily=weathercode,temperature_2m_max&temperature_unit=celsius&timezone=auto&start_date=${last}&end_date=${last}`).then((r) => r.json())
-    if (ar?.daily?.temperature_2m_max?.[0] != null) return { temp: cf(ar.daily.temperature_2m_max[0]), label: (WX[ar.daily.weathercode[0]] || 'Mild') + ' (typical)' }
-  } catch { /* ignore */ }
-  return null
-}
 function marchRelevant(m: any, g: any) {
   if (m.venue !== g.venue) return false
   const hay = ((m.title || '') + ' ' + (m.note || '') + ' ' + (m.when || '')).toLowerCase()
@@ -66,7 +49,6 @@ function marchRelevant(m: any, g: any) {
   const teams = [g.home, g.away, teamName(g.home), teamName(g.away)].filter(Boolean).map((s: string) => s.toLowerCase())
   return teams.some((t: string) => t && hay.indexOf(t) > -1)
 }
-const firstSentence = (t?: string) => (t ? String(t).split(/(?<=[.!?])\s+/)[0].replace(/\.$/, '') : '')
 
 // A supporter march walks you to the gates, so it IS the "getting there" leg.
 // Pull the meet point (start of the route) and the gather/depart times out of
@@ -85,8 +67,8 @@ function buildFanwalk(m: any): { name: string; note?: string; where?: string } {
 function BuildPage() {
   const { game, mode } = Route.useSearch()
   const navigate = useNavigate()
-  const index = GAMES_INDEX as any[]
-  const fi = FAN_INTEL as any
+  const index = GAMES_INDEX
+  const fi = FAN_INTEL
 
   const setGame = (id: string) => navigate({ to: '/build', search: { game: id, mode } })
   const g = index.find((x) => x.id === game) ?? null
@@ -114,6 +96,7 @@ function BuildPage() {
 }
 
 function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: string) => void; initialMode?: 'matchup' | 'venue' }) {
+  const qc = useQueryClient()
   const [mode, setMode] = useState<'matchup' | 'venue'>(initialMode || 'matchup')
   const [q, setQ] = useState('')
   const [venue, setVenue] = useState('')
@@ -161,7 +144,7 @@ function Chooser({ index, onPick, initialMode }: { index: any[]; onPick: (id: st
           {!venue ? (
             <div className="bld-venues">
               {venues.map((v: any) => (
-                <button key={v.id} className="bld-venue" onClick={() => setVenue(v.id)} {...intentWarm(() => warmVenue(v.id))}>
+                <button key={v.id} className="bld-venue" onClick={() => setVenue(v.id)} {...intentWarm(() => { void qc.prefetchQuery(venueQueryOptions(v.id)); warmImage('/img/stadiums/' + v.id + '.jpg') })}>
                   <img className="bld-vthumb" src={'/img/stadiums/' + v.id + '.jpg'} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} />
                   <span className="bld-vn">{v.name}</span>
                   <span className="bld-vc">{v.city} · {v.n} matches</span>
@@ -197,7 +180,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   const weather =
     useQuery({
       queryKey: ['build-weather', g.venue, g.dateISO],
-      queryFn: () => fetchMatchWeather(g.venue, g.dateISO),
+      queryFn: () => fetchMatchWeather(VENUE_COORDS[g.venue], g.dateISO),
       staleTime: 60 * 60_000,
     }).data ?? null
   const [getI, setGetI] = useState(0)
@@ -233,7 +216,7 @@ function Builder({ g, fi, onBack }: { g: any; fi: any; onBack: () => void }) {
   // Getting there: real, researched options pulled from the venue's transport + parking data.
   const getThereOpts: any[] = useMemo(() => {
     const t = (venue && venue.transport) || {}
-    const sentences = (s: any) => String(s || '').split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter(Boolean)
+    const sentences = splitSentences
     const bulletsOf = (item: any) => (item.points && item.points.length)
       ? item.points.map((p: any) => (p.b ? p.b + (p.t ? ': ' + p.t : '') : p.t))
       : sentences(item.detail).slice(0, 3)

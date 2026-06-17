@@ -3,7 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { warmImage, intentWarm } from '../lib/dataCache'
-import { VENUES } from '../lib/venues-meta'
+import { VENUES, venueNationCounts } from '../lib/venues-meta'
 import css from '../pages/venues.css?url'
 
 export const Route = createFileRoute('/venues')({
@@ -15,6 +15,7 @@ export const Route = createFileRoute('/venues')({
 })
 
 const FL: Record<string, string> = { USA: '🇺🇸', CAN: '🇨🇦', MEX: '🇲🇽' }
+const NATION: Record<string, string> = { USA: 'USA', CAN: 'Canada', MEX: 'Mexico' }
 
 function Venues() {
   const [filter, setFilter] = useState('all')
@@ -26,14 +27,14 @@ function Venues() {
       <SiteNav active="venues" />
       <section className="head">
         <div className="container">
-          <div className="eyebrow">16 stadiums · 3 nations · 1 tournament</div>
+          <div className="eyebrow">{VENUES.length} stadiums · {venueNationCounts().length} nations · 1 tournament</div>
           <h1>Every World Cup <span className="hl">venue</span></h1>
           <p className="sub">All 16 host stadiums for FIFA World Cup 2026 across the USA, Canada and Mexico.</p>
           <div className="tally" id="tally">
-            <button className={pill('all')} onClick={() => setFilter('all')}><b>16</b> Stadiums</button>
-            <button className={pill('USA')} onClick={() => setFilter('USA')}><b>11</b> 🇺🇸 USA</button>
-            <button className={pill('MEX')} onClick={() => setFilter('MEX')}><b>3</b> 🇲🇽 Mexico</button>
-            <button className={pill('CAN')} onClick={() => setFilter('CAN')}><b>2</b> 🇨🇦 Canada</button>
+            <button className={pill('all')} onClick={() => setFilter('all')}><b>{VENUES.length}</b> Stadiums</button>
+            {venueNationCounts().map(({ cc, n }) => (
+              <button key={cc} className={pill(cc)} onClick={() => setFilter(cc)}><b>{n}</b> {FL[cc]} {NATION[cc]}</button>
+            ))}
           </div>
         </div>
       </section>

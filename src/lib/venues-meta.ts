@@ -26,3 +26,22 @@ export const VENUES: VenueMeta[] = [
 export function venueMeta(id: string): VenueMeta | null {
   return VENUES.find((v) => v.img === id) ?? null
 }
+
+// Single source of truth for stadium coordinates (was hand-copied — and drifted —
+// in both /venue/$id and /build). Used for the per-venue weather lookups.
+export const VENUE_COORDS: Record<string, [number, number]> = {
+  metlife: [40.8135, -74.0745], sofi: [33.9535, -118.3392], azteca: [19.3029, -99.1505],
+  att: [32.7473, -97.0945], mercedes: [33.7554, -84.4009], hardrock: [25.958, -80.2389],
+  nrg: [29.6847, -95.4107], arrowhead: [39.0489, -94.4839], linc: [39.9008, -75.1675],
+  levis: [37.403, -121.97], lumen: [47.5952, -122.3316], gillette: [42.0909, -71.2643],
+  bcplace: [49.2767, -123.1119], bmo: [43.6332, -79.4185], akron: [20.6819, -103.4626],
+  bbva: [25.6692, -100.2444],
+}
+
+// Country tallies derived from VENUES so the /venues headline can't drift from the list.
+export const venueNationCounts = (): { cc: string; n: number }[] => {
+  const order = ['USA', 'MEX', 'CAN']
+  const counts = new Map<string, number>()
+  for (const v of VENUES) counts.set(v.cc, (counts.get(v.cc) ?? 0) + 1)
+  return order.filter((cc) => counts.has(cc)).map((cc) => ({ cc, n: counts.get(cc)! }))
+}

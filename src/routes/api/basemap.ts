@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { env } from 'cloudflare:workers';
 import type { R2Bucket, R2Range } from '@cloudflare/workers-types';
 
 // Serves the Protomaps basemap (a single .pmtiles extract) from R2 with HTTP
@@ -9,20 +10,15 @@ import type { R2Bucket, R2Range } from '@cloudflare/workers-types';
 // source — so keep basemap.pmtiles present in each environment's R2 bucket.
 const KEY = 'basemap.pmtiles';
 
-async function getBucket(): Promise<R2Bucket | null> {
-  try {
-    const mod = await import('cloudflare:workers');
-    return (mod.env?.TILES as R2Bucket | undefined) ?? null;
-  } catch {
-    return null;
-  }
+function getBucket(): R2Bucket | null {
+  return (env.TILES as R2Bucket | undefined) ?? null;
 }
 
 export const Route = createFileRoute('/api/basemap')({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const bucket = await getBucket();
+        const bucket = getBucket();
         if (!bucket) return new Response('tiles bucket not bound', { status: 503 });
 
         const rangeHeader = request.headers.get('range');

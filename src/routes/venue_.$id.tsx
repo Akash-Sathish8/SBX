@@ -11,7 +11,10 @@ import { displayFixture } from '../lib/teams'
 import { byDistance, isInside } from '../lib/dist'
 import { useMatchScores } from '../lib/useMatchScores'
 import { venueQueryOptions, sanitizeId } from '../lib/queries'
-import { venueMeta } from '../lib/venues-meta'
+import { venueMeta, VENUE_COORDS } from '../lib/venues-meta'
+import { cap, splitSentences } from '../lib/text'
+import type { Venue } from '../lib/data-types'
+import { fetchVenueWeather } from '../lib/weather'
 import { absUrl, socialMeta } from '../lib/site'
 import { warmImage } from '../lib/dataCache'
 import css from '../pages/venue.css?url'
@@ -78,14 +81,6 @@ function VenuePage() {
   }
 }
 
-const VENUE_COORDS: Record<string, [number, number]> = {
-  metlife: [40.8135, -74.0745], sofi: [33.9535, -118.3392], azteca: [19.3029, -99.1505],
-  att: [32.7473, -97.0945], mercedes: [33.7554, -84.4009], hardrock: [25.958, -80.2389],
-  nrg: [29.6847, -95.4107], arrowhead: [39.0489, -94.4839], linc: [39.9008, -75.1675],
-  levis: [37.403, -121.97], lumen: [47.5952, -122.3316], gillette: [42.0909, -71.2643],
-  bcplace: [49.2767, -123.1119], bmo: [43.6332, -79.4185], akron: [20.6819, -103.4626],
-  bbva: [25.6692, -100.2444],
-}
 const MON3: Record<string, number> = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 }
 const MONABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const WD3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -120,43 +115,7 @@ function WxIcon({ code }: { code: number }) {
   return <CloudIcon {...p} />
 }
 
-function isoAddDays(iso: string, n: number) { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10) }
-function shiftYear(iso: string, y: number) { return String(Number(iso.slice(0, 4)) + y) + iso.slice(4) }
-
-// Live per-venue daily weather via Open-Meteo (free, no key, CORS-enabled → fetched client-side).
-// Real forecast for ~16 days; dates beyond that use last year's actuals (labelled "typical").
-async function fetchWeather(lat: number, lon: number, last: string): Promise<any[]> {
-  const today = new Date().toISOString().slice(0, 10)
-  if (!lat || !lon || !last || last < today) return []
-  const fcEndCap = isoAddDays(today, 15)
-  const fcEnd = last < fcEndCap ? last : fcEndCap
-  const days: any[] = []
-  try {
-    const u = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=fahrenheit&timezone=auto&forecast_days=16`
-    const j: any = await (await fetch(u)).json()
-    const t: string[] = (j.daily && j.daily.time) || []
-    for (let i = 0; i < t.length; i++) {
-      if (t[i] >= today && t[i] <= fcEnd) {
-        days.push({ date: t[i], tmax: Math.round(j.daily.temperature_2m_max[i]), tmin: Math.round(j.daily.temperature_2m_min[i]), code: j.daily.weather_code[i], pop: j.daily.precipitation_probability_max[i], src: 'forecast' })
-      }
-    }
-  } catch (e) {}
-  if (last > fcEnd) {
-    const nStart = isoAddDays(fcEnd, 1), aStart = shiftYear(nStart, -1), aEnd = shiftYear(last, -1)
-    try {
-      const u = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${aStart}&end_date=${aEnd}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto`
-      const j: any = await (await fetch(u)).json()
-      const t: string[] = (j.daily && j.daily.time) || []
-      for (let i = 0; i < t.length; i++) {
-        days.push({ date: shiftYear(t[i], 1), tmax: Math.round(j.daily.temperature_2m_max[i]), tmin: Math.round(j.daily.temperature_2m_min[i]), code: j.daily.weather_code[i], pop: null, src: 'normal' })
-      }
-    } catch (e) {}
-  }
-  days.sort((a, b) => (a.date < b.date ? -1 : 1))
-  return days
-}
-
-function WeatherSection({ v }: { v: any }) {
+function WeatherSection({ v }: { v: Venue }) {
   const coords = VENUE_COORDS[v.id]
   // one card per match at this venue, in date order
   const matchInfo = useMemo(
@@ -173,7 +132,7 @@ function WeatherSection({ v }: { v: any }) {
   // resolves to [] on failure (never throws), so the query never errors.
   const weatherQ = useQuery({
     queryKey: ['venue-weather', v.id],
-    queryFn: () => fetchWeather(coords![0], coords![1], last),
+    queryFn: () => fetchVenueWeather(coords![0], coords![1], last),
     enabled: Boolean(coords && last),
     staleTime: 30 * 60_000,
   })
@@ -254,8 +213,6 @@ function ModeIcon({ m }: { m: string }) {
   return <TrainFrontIcon {...p} />
 }
 
-const splitSentences = (t: any) => String(t || '').split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean)
-const cap = (s = '') => (/^[a-z]/.test(s) ? s[0].toUpperCase() + s.slice(1) : s)
 function Blurb({ text, className }: { text: any; className?: string }) {
   if (typeof text !== 'string') return <div className={className}>{text}</div>
   const parts = splitSentences(text)
@@ -324,7 +281,7 @@ function AgendaCol({ title, items, hscroll }: { title: string; items?: any[]; hs
   )
 }
 
-function VenueContent({ v }: { v: any }) {
+function VenueContent({ v }: { v: Venue }) {
   const heroUrl = String(v.hero || '').startsWith('/') ? v.hero : '/' + v.hero
   return (
     <>
@@ -352,11 +309,7 @@ function VenueContent({ v }: { v: any }) {
         <section className="block"><div className="container">
           <div className="eyebrow">Matchday access</div>
           <h2 className="shead">Getting there</h2><div className="ssub">Transit, parking &amp; rideshare</div>
-          {/* "Get directions" button shelved for now (kept ready to improve). To restore, render
-              <DirectionsButton lat={VENUE_COORDS[v.id][0]} lng={VENUE_COORDS[v.id][1]} label={v.name} />
-              here — component: components/DirectionsButton.tsx, helper: lib/maps.ts, style: .dir-btn in venue.css */}
-
-          {v.transport && ((v.transport.rail && v.transport.rail.length) || (v.transport.bus && v.transport.bus.length) || (v.transport.shuttle && v.transport.shuttle.length)) ? (
+          {v.transport &&((v.transport.rail && v.transport.rail.length) || (v.transport.bus && v.transport.bus.length) || (v.transport.shuttle && v.transport.shuttle.length)) ? (
             <div className="epanel">
               {(v.transport.rail || []).map((r: any, i: number) => <AccRow key={'r' + i} m="rail" title={r.name} sub={r.station} detail={r.detail} points={r.points} deal={r.deal} />)}
               {(v.transport.bus || []).map((b: any, i: number) => <AccRow key={'b' + i} m="bus" title={b.name} sub={b.from ? 'From ' + b.from : undefined} detail={b.detail} points={b.points} deal={b.deal} />)}

@@ -296,10 +296,37 @@ only on `/casey`; routes are split.
 - 🟡 CLS: marketing heroes are `background-image` (no intrinsic size); some `<img>`
   (venues list, agenda logo) lack `width`/`height`.
 
+## Data-layer cleanup (code-smell pass) — DONE
+The 5+ routes read the bundled static datasets as `any`, so a JSON field rename
+compiled clean and silently rendered blank. Plus duplicated copy/coord/weather
+helpers had drifted between routes. Fixed in three stages, all verified green:
+- ✅ **Stage 1 — dedup + dead code.** `VENUE_COORDS` was copy-pasted in 2 routes and
+  had **drifted (5 of 16 venues differed)**; consolidated to one canonical
+  `venues-meta.ts` export (venue-page values) + a `venueNationCounts()` helper.
+  Extracted shared text helpers to `lib/text.ts` (`cap`/`splitSentences`/`firstSentence`,
+  was 4 copies). Deleted dead `DirectionsButton.tsx`, `lib/maps.ts`,
+  `api/admin/login.ts`, `AdminLogin.tsx`, `server/games.ts`.
+- ✅ **Stage 2 — weather.** Consolidated two near-identical fetchers into `lib/weather.ts`
+  (`fetchVenueWeather` / `fetchMatchWeather`, shared `getJson` with an 8 s AbortController
+  timeout — the old copies could hang). Preserved the Open-Meteo param difference
+  (venue uses `weather_code`, build uses `weathercode`).
+- ✅ **Stage 3 — typed data boundary.** Added `lib/data-types.ts` (`Game` / `FanIntel` /
+  `Venue` / `March` / `VenueIntel`) and `src/data/index.ts` typed accessors that validate
+  the JSON against the interfaces at the import. Repointed all 5 routes to
+  `import { GAMES, FAN_INTEL } from '../data'` and dropped the `as any` casts.
+  **The boundary immediately caught real drift:** 32 TBD knockout fixtures carry
+  `home: null, away: null`, so `Game.home/away` are `string | null` — widened the
+  `teams.ts` helpers (`teamName`/`teamFlag`/`teamCode`) and `ScoreInput` to accept
+  nullish (they already gate on `g.tbd`/`m.home && m.away` at runtime). Verified both
+  paths on the prod preview: a normal game (`azteca-jun11`) renders "Mexico vs South
+  Africa" + flags; a TBD fixture (`sofi-jun28`) renders "To be confirmed" with the
+  flag background, Build-CTA and team helpers all correctly suppressed. No console errors.
+
 ## Verification status
 - `npm run build` ✅ · `npm test` ✅ (23/23) · `npx tsc --noEmit` ✅ (**fully clean**,
   including previously-failing files) · SSR smoke-tested on `vite dev` (prior session):
   homepage, `/casey`, `/games`, `/game/$id`, `/venue/$id`, legacy redirects,
-  `/api/bootstrap`, `/api/live`.
+  `/api/bootstrap`, `/api/live`. Data-layer cleanup re-verified on the prod preview
+  (`vite preview`): normal + TBD game pages render correctly, zero runtime errors.
 - **Not committed** — working tree on branch `alex/dev`, no commits made this session.
 </content>
