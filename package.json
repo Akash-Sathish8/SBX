@@ -6,16 +6,17 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "predev": "npm run casey:css",
     "dev": "vite dev --port 3000",
-    "prebuild": "npm run casey:css",
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy",
-    "test": "vitest run",
-    "casey:css": "npx -y tailwindcss@3.4.16 -c casey-build/tailwind.config.cjs -i casey-build/casey.src.css -o src/pages/casey-tracker.css --minify"
+    "test": "vitest run"
   },
   "dependencies": {
+    "@fontsource/anton": "^5.2.7",
+    "@fontsource/barlow": "^5.2.8",
+    "@fontsource/bebas-neue": "^5.2.7",
+    "@fontsource/jetbrains-mono": "^5.2.8",
     "@resvg/resvg-wasm": "^2.6.2",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",

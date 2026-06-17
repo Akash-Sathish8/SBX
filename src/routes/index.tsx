@@ -3,9 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { MapIcon, BeerIcon, HamburgerIcon, FlagIcon, ShoppingBagIcon, type LucideIcon } from 'lucide-react'
 import { warmImage, intentWarm } from '../lib/dataCache'
 import { SiteNav } from '../components/SiteNav'
-import { PageCssGuard } from '../components/PageCssGuard'
 import { absUrl, socialMeta } from '../lib/site'
-import css from '../pages/index.css?url'
 
 export const Route = createFileRoute('/')({
   head: () => {
@@ -15,7 +13,6 @@ export const Route = createFileRoute('/')({
     const image = absUrl('/img/stadiums/sofi.jpg')
     return {
       links: [
-        { rel: 'stylesheet', href: css, 'data-page-css': 'home' },
         { rel: 'canonical', href: absUrl('/') },
       ],
       meta: socialMeta({ title, description, image }),
@@ -114,18 +111,18 @@ function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
     <Link
       to="/venue/$id"
       params={{ id: c.img }}
-      className="card venue interactive"
+      className="card venue interactive relative block flex-[0_0_280px] overflow-hidden border-8 border-[#222] rounded-none p-0 text-inherit no-underline [clip-path:var(--notch)] [filter:drop-shadow(8px_8px_0_#222)] [transition:transform_100ms_ease-out,border-color_150ms,filter_150ms] cursor-pointer hover:border-brand-yellow hover:[filter:drop-shadow(10px_10px_0_#222)] active:translate-x-1 active:translate-y-1 max-[520px]:flex-[0_0_76vw]"
       aria-hidden={hidden ? 'true' : undefined}
       tabIndex={hidden ? -1 : undefined}
       {...intentWarm(() => warmImage(`/img/stadiums/${c.img}.jpg`))}
     >
-      <div ref={photoRef} className="photo" style={{ backgroundImage: shown ? `url('/img/stadiums/${c.img}.jpg')` : undefined }}><span className="tag">{c.tag}</span></div>
-      <div className="body">
-        <h3>{c.name}</h3>
-        <div className="city">{c.sub}</div>
-        <div className="scores">
-          <div className="score crit"><div className="v">{c.crit}</div><div className="k">Critics</div></div>
-          <div className="score fan"><div className="v">{c.fan}</div><div className="k">Fans</div></div>
+      <div ref={photoRef} className="photo relative flex items-end h-[148px] p-[14px] bg-[#1b1b1b] bg-no-repeat [background-position:center] [background-size:cover] after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(to_top,rgba(0,0,0,.7)_0%,rgba(0,0,0,.15)_55%,rgba(0,0,0,.35)_100%)]" style={{ backgroundImage: shown ? `url('/img/stadiums/${c.img}.jpg')` : undefined }}><span className="tag relative z-[1] font-bold text-[12px] uppercase tracking-[0.5px] text-[#111] bg-brand-yellow py-[4px] px-[10px] [clip-path:polygon(0_0,100%_0,100%_70%,90%_100%,0_100%)]">{c.tag}</span></div>
+      <div className="body p-[20px]">
+        <h3 className="font-display font-normal uppercase text-[#222] tracking-[1px] leading-[1.02] text-[clamp(28px,3vw,44px)] mb-[10px]">{c.name}</h3>
+        <div className="city text-[13px] text-[#6b6b6b] font-bold uppercase tracking-[0.5px] mb-[16px]">{c.sub}</div>
+        <div className="scores hidden gap-[14px]">
+          <div className="score crit flex-1 border-[3px] border-[#222] rounded-[4px] p-[10px] text-center"><div className="v font-display text-[36px] leading-none text-[#222]">{c.crit}</div><div className="k text-[11px] font-bold uppercase tracking-[0.5px] text-[#6b6b6b] mt-[4px]">Critics</div></div>
+          <div className="score fan flex-1 border-[3px] border-brand-yellow-dim rounded-[4px] p-[10px] text-center"><div className="v font-display text-[36px] leading-none text-[#b89e00]">{c.fan}</div><div className="k text-[11px] font-bold uppercase tracking-[0.5px] text-[#6b6b6b] mt-[4px]">Fans</div></div>
         </div>
       </div>
     </Link>
@@ -174,25 +171,31 @@ const AGENDAS: AgendaMock[] = [
   ] },
 ]
 
-function AgendaCard({ a }: { a: AgendaMock }) {
+function AgendaCard({ a, i }: { a: AgendaMock; i: number }) {
+  // The five cards fan out via per-position transforms (was a `.acard:nth-child`
+  // block). Driving it off the map index keeps the base transform a non-variant
+  // utility, so `hover:` reliably overrides it — Tailwind resolves same-property
+  // utilities by source order, and hover variants sort after the base.
+  const fan = ['[transform:rotate(-8deg)_translateY(30px)]', '[transform:rotate(-4deg)_translateY(9px)]', '[transform:rotate(0deg)]', '[transform:rotate(4deg)_translateY(9px)]', '[transform:rotate(8deg)_translateY(30px)]'][i] ?? '[transform:rotate(0deg)]'
+  const mobile = i % 2 ? 'max-[760px]:[transform:rotate(1.6deg)]' : 'max-[760px]:[transform:rotate(-1.6deg)]'
   return (
-    <Link to="/guide" className="acard">
-      <span className="acorner tl" aria-hidden="true"><b>{a.rank}</b><i>⚽</i></span>
-      <span className="acorner br" aria-hidden="true"><b>{a.rank}</b><i>⚽</i></span>
-      <span className="acard-hd">
-        <span className="acard-match">{a.match}</span>
-        <span className="acard-meta">{a.venue}</span>
-        <span className="acard-meta">{a.when}</span>
+    <Link to="/guide" className={`relative flex-[0_0_252px] aspect-[5/7] flex flex-col overflow-hidden no-underline text-inherit bg-white border-[5px] border-[#222] rounded-[14px] shadow-[8px_8px_0_0_#222] pt-[36px] px-[18px] pb-[14px] mx-[-19px] [transition:transform_.16s_ease-out,box-shadow_.15s,border-color_.15s] ${fan} ${mobile} hover:[transform:rotate(0deg)_translateY(-16px)_scale(1.04)] hover:z-10 hover:border-brand-yellow hover:shadow-[12px_12px_0_0_#222] focus-visible:outline-4 focus-visible:outline-brand-yellow-dim focus-visible:outline-offset-2 max-[760px]:flex-[0_0_240px] max-[760px]:mx-0`}>
+      <span className="acorner tl absolute flex flex-col items-center leading-none top-[10px] left-[12px]" aria-hidden="true"><b className="font-display font-normal text-[17px] text-[#222] tracking-[0]">{a.rank}</b><i className="not-italic text-[9px] [filter:brightness(0)] mt-[2px]">⚽</i></span>
+      <span className="acorner br absolute flex flex-col items-center leading-none bottom-[10px] right-[12px] rotate-180" aria-hidden="true"><b className="font-display font-normal text-[17px] text-[#222] tracking-[0]">{a.rank}</b><i className="not-italic text-[9px] [filter:brightness(0)] mt-[2px]">⚽</i></span>
+      <span className="acard-hd block text-center mb-[12px]">
+        <span className="acard-match block font-display text-[23px] tracking-[1px] text-[#222] leading-[1.05]">{a.match}</span>
+        <span className="acard-meta block text-[10px] font-bold uppercase tracking-[0.4px] text-[#6b6b6b] mt-[4px] whitespace-nowrap overflow-hidden text-ellipsis">{a.venue}</span>
+        <span className="acard-meta block text-[10px] font-bold uppercase tracking-[0.4px] text-[#6b6b6b] mt-[4px] whitespace-nowrap overflow-hidden text-ellipsis">{a.when}</span>
       </span>
-      <span className="acard-rows">
+      <span className="acard-rows flex flex-col justify-evenly gap-[8px] flex-1 min-h-0">
         {a.rows.map(([Ic, label, val], i) => (
-          <span className="acard-row" key={i}>
-            <span className="ai"><Ic className="ai-gl" /></span>
-            <span className="at"><b>{label}</b><span>{val}</span></span>
+          <span className="acard-row flex items-center gap-[9px] min-w-0" key={i}>
+            <span className="ai flex-[0_0_auto] w-[26px] h-[26px] flex items-center justify-center bg-brand-yellow border-2 border-[#111] rounded-[7px]"><Ic className="ai-gl w-[15px] h-[15px] text-[#111] [stroke-width:2]" /></span>
+            <span className="at flex flex-col min-w-0"><b className="text-[8.5px] font-bold tracking-[0.6px] uppercase text-[#6b6b6b]">{label}</b><span className="text-[12px] font-semibold text-[#222] leading-[1.25] whitespace-nowrap overflow-hidden text-ellipsis">{val}</span></span>
           </span>
         ))}
       </span>
-      <span className="acard-ft">Snapback · Matchday Agenda</span>
+      <span className="acard-ft block mt-[10px] text-center text-[8px] font-bold tracking-[1.2px] uppercase text-[#b5b5b5] border-t-2 border-[#eee] pt-[7px]">Snapback · Matchday Agenda</span>
     </Link>
   )
 }
@@ -249,73 +252,72 @@ function Home() {
 
   return (
     <>
-      <PageCssGuard id="home" />
       <SiteNav active="home" />
 
       <main>
       {/* HERO (concept A: split / share + compare) */}
-      <section className="a-hero">
-        <div className="a-left grid-bg">
-          <div className="reveal" style={{ animationDelay: '.05s' }}>
-            <span className="eyebrow">World Cup 2026 · 16 venues</span>
-            <h1><span className="ln">Build your</span> <span className="hl">matchday</span></h1>
+      <section className="a-hero grid w-full p-0 grid-cols-[46%_54%] min-h-[calc(100vh-72px)] max-[860px]:grid-cols-[1fr]">
+        <div className="a-left grid-overlay [--grid-line:rgba(17,17,17,.06)] relative z-[1] flex flex-col min-w-0 [container-type:inline-size] pt-[36px] px-[clamp(24px,5vw,72px)] pb-[32px] gap-[24px] justify-start min-[861px]:justify-center min-[861px]:gap-[48px] max-[860px]:min-h-[calc(100svh-72px)] max-[860px]:justify-between">
+          <div className="reveal opacity-0 -translate-y-[18px] [animation:drop_.55s_cubic-bezier(.5,0,.75,0)_forwards]" style={{ animationDelay: '.05s' }}>
+            <span className="eyebrow inline-flex items-center gap-[8px] font-bold text-[13px] tracking-[1.5px] uppercase text-[#6b6b6b] mb-[18px]">World Cup 2026 · 16 venues</span>
+            <h1 className="font-display font-normal uppercase text-[#222] [font-family:'Monument_Extended','Anton',sans-serif] text-[clamp(58px,22cqw,176px)] max-w-full mt-[16px] mb-[24px] min-[861px]:mb-0 leading-[.92] tracking-[1px] [overflow-wrap:break-word]"><span className="ln block">Build your</span> <span className="hl inline-block max-w-full text-[#222] bg-brand-yellow px-[10px] shadow-[6px_6px_0_0_#222] -rotate-[1.5deg] mt-[.22em]">matchday</span></h1>
           </div>
-          <div className="reveal" style={{ animationDelay: '.12s' }}>
-            <div className="a-quick">
-              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><MapIcon className="a-quick-gl" /></span><span className="a-quick-lb">Getting there</span></Link>
-              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><BeerIcon className="a-quick-gl" /></span><span className="a-quick-lb">Before the match</span></Link>
-              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><HamburgerIcon className="a-quick-gl" /></span><span className="a-quick-lb">Where to eat</span></Link>
-              <Link to="/guide" className="a-quick-item"><span className="a-quick-ic"><FlagIcon className="a-quick-gl" /></span><span className="a-quick-lb">After the whistle</span></Link>
+          <div className="reveal opacity-0 -translate-y-[18px] [animation:drop_.55s_cubic-bezier(.5,0,.75,0)_forwards]" style={{ animationDelay: '.12s' }}>
+            <div className="a-quick flex flex-col gap-[12px] min-[861px]:gap-[18px] min-[861px]:max-w-[560px]">
+              <Link to="/guide" className="a-quick-item group flex items-center no-underline text-[#222] gap-[13px] min-[861px]:gap-[18px]"><span className="a-quick-ic flex items-center justify-center bg-[#111] border-2 border-[#111] flex-[0_0_auto] w-[48px] h-[48px] text-[23px] rounded-[10px] min-[861px]:w-[68px] min-[861px]:h-[68px] min-[861px]:text-[32px] min-[861px]:rounded-[12px] min-[861px]:group-hover:shadow-[4px_4px_0_0_var(--sb-yellow)]"><MapIcon className="a-quick-gl text-white w-[54%] h-[54%]" /></span><span className="a-quick-lb font-display tracking-[0.5px] leading-[1.05] text-[19px] min-[861px]:text-[30px] min-[861px]:group-hover:text-brand-yellow-dim">Getting there</span></Link>
+              <Link to="/guide" className="a-quick-item group flex items-center no-underline text-[#222] gap-[13px] min-[861px]:gap-[18px]"><span className="a-quick-ic flex items-center justify-center bg-[#111] border-2 border-[#111] flex-[0_0_auto] w-[48px] h-[48px] text-[23px] rounded-[10px] min-[861px]:w-[68px] min-[861px]:h-[68px] min-[861px]:text-[32px] min-[861px]:rounded-[12px] min-[861px]:group-hover:shadow-[4px_4px_0_0_var(--sb-yellow)]"><BeerIcon className="a-quick-gl text-white w-[54%] h-[54%]" /></span><span className="a-quick-lb font-display tracking-[0.5px] leading-[1.05] text-[19px] min-[861px]:text-[30px] min-[861px]:group-hover:text-brand-yellow-dim">Before the match</span></Link>
+              <Link to="/guide" className="a-quick-item group flex items-center no-underline text-[#222] gap-[13px] min-[861px]:gap-[18px]"><span className="a-quick-ic flex items-center justify-center bg-[#111] border-2 border-[#111] flex-[0_0_auto] w-[48px] h-[48px] text-[23px] rounded-[10px] min-[861px]:w-[68px] min-[861px]:h-[68px] min-[861px]:text-[32px] min-[861px]:rounded-[12px] min-[861px]:group-hover:shadow-[4px_4px_0_0_var(--sb-yellow)]"><HamburgerIcon className="a-quick-gl text-white w-[54%] h-[54%]" /></span><span className="a-quick-lb font-display tracking-[0.5px] leading-[1.05] text-[19px] min-[861px]:text-[30px] min-[861px]:group-hover:text-brand-yellow-dim">Where to eat</span></Link>
+              <Link to="/guide" className="a-quick-item group flex items-center no-underline text-[#222] gap-[13px] min-[861px]:gap-[18px]"><span className="a-quick-ic flex items-center justify-center bg-[#111] border-2 border-[#111] flex-[0_0_auto] w-[48px] h-[48px] text-[23px] rounded-[10px] min-[861px]:w-[68px] min-[861px]:h-[68px] min-[861px]:text-[32px] min-[861px]:rounded-[12px] min-[861px]:group-hover:shadow-[4px_4px_0_0_var(--sb-yellow)]"><FlagIcon className="a-quick-gl text-white w-[54%] h-[54%]" /></span><span className="a-quick-lb font-display tracking-[0.5px] leading-[1.05] text-[19px] min-[861px]:text-[30px] min-[861px]:group-hover:text-brand-yellow-dim">After the whistle</span></Link>
             </div>
           </div>
-          <div className="reveal" style={{ animationDelay: '.2s' }}>
-            <div className="a-cta">
-              <Link to="/guide" className="btn btn-brand btn-xl">Build your match guide</Link>
-              <Link to="/casey" className="btn btn-dark btn-xl">See what Casey did</Link>
+          <div className="reveal opacity-0 -translate-y-[18px] [animation:drop_.55s_cubic-bezier(.5,0,.75,0)_forwards]" style={{ animationDelay: '.2s' }}>
+            <div className="a-cta flex flex-col items-start gap-[18px]">
+              <Link to="/guide" className="btn btn-brand btn-xl relative inline-flex items-center gap-[10px] font-body font-bold uppercase border-0 rounded-none cursor-pointer no-underline [clip-path:var(--notch)] shadow-[inset_var(--color-1-400)_0_6px_0_-5px] [transition:transform_80ms_ease-out,filter_120ms] bg-brand-yellow text-[#222] [filter:drop-shadow(6px_6px_0_var(--gradient-shadow))] hover:[filter:drop-shadow(6px_6px_0_var(--gradient-shadow))_brightness(1.05)] active:translate-x-[3px] active:translate-y-[3px] active:[filter:drop-shadow(3px_3px_0_var(--gradient-shadow))] focus-visible:outline-4 focus-visible:outline-brand-yellow-dim focus-visible:outline-offset-2 text-[29px] py-[22px] px-[46px] tracking-[1.2px] max-[860px]:text-[19px] max-[860px]:py-[14px] max-[860px]:px-[28px] max-[860px]:tracking-[.6px]">Build your match guide</Link>
+              <Link to="/casey" className="btn btn-dark btn-xl relative inline-flex items-center gap-[10px] font-body font-bold uppercase border-0 rounded-none cursor-pointer no-underline [clip-path:var(--notch)] shadow-[inset_var(--color-1-400)_0_6px_0_-5px] [transition:transform_80ms_ease-out,filter_120ms] bg-[#222] text-white [filter:drop-shadow(6px_6px_0_var(--sb-yellow))] hover:[filter:drop-shadow(6px_6px_0_var(--sb-yellow))_brightness(1.1)] active:translate-x-[3px] active:translate-y-[3px] active:[filter:drop-shadow(3px_3px_0_var(--sb-yellow))] focus-visible:outline-4 focus-visible:outline-brand-yellow-dim focus-visible:outline-offset-2 text-[29px] py-[22px] px-[46px] tracking-[1.2px] max-[860px]:text-[19px] max-[860px]:py-[14px] max-[860px]:px-[28px] max-[860px]:tracking-[.6px]">See what Casey did</Link>
             </div>
           </div>
         </div>
-        <div className="a-right">
-          <div className="a-scroll" ref={scrollRef}>
+        <div className="a-right relative bg-black overflow-hidden min-h-[420px] max-[860px]:min-h-[440px] max-[640px]:min-h-[360px] before:content-[''] before:absolute before:left-0 before:inset-y-0 before:w-[8px] before:bg-brand-yellow before:z-[3]">
+          <div className="a-scroll absolute inset-0 z-[1] max-[860px]:flex max-[860px]:overflow-x-auto max-[860px]:overflow-y-hidden max-[860px]:[scroll-snap-type:x_mandatory] max-[860px]:[scroll-snap-stop:always] max-[860px]:[-webkit-overflow-scrolling:touch] max-[860px]:overscroll-x-contain max-[860px]:[&::-webkit-scrollbar]:hidden" ref={scrollRef}>
             {slides.map((s, i) => (
-              <div className={i === active ? 'a-slide active' : 'a-slide'} key={i}>
-                <div className="img" style={{ backgroundImage: `url('${s.img}')` }}></div>
-                <div className="a-post fanpost">
-                  <div className="hd"><div className="avatar">{s.av}</div><div><div className="nm">{s.nm}</div><div className="mt">{s.mt}</div></div></div>
-                  <div className="stars">{[0, 1, 2, 3, 4].map((k) => <span key={k} className={k < s.stars ? undefined : 'e'}>★</span>)}</div>
-                  <div className="q" style={{ marginTop: '6px' }}>{s.q}</div>
-                  <span className="wasthere">✓ Was there</span>
+              <div className={'a-slide absolute inset-0 [transition:opacity_.6s_ease] max-[860px]:relative max-[860px]:inset-auto max-[860px]:flex-[0_0_100%] max-[860px]:w-full max-[860px]:h-full max-[860px]:opacity-100 max-[860px]:[transition:none] max-[860px]:[scroll-snap-align:start] ' + (i === active ? 'active opacity-100' : 'opacity-0')} key={i}>
+                <div className="img absolute inset-0 [background-position:center] [background-size:cover] after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(115deg,rgba(17,17,17,.55),rgba(17,17,17,.05)_45%,rgba(17,17,17,.45))]" style={{ backgroundImage: `url('${s.img}')` }}></div>
+                <div className="a-post fanpost absolute z-[4] bg-white border-4 border-[#111] rounded-[6px] shadow-[8px_8px_0_0_#111] py-[14px] px-[16px] top-[30px] right-[30px] max-w-[280px] max-[640px]:top-[12px] max-[640px]:right-[12px] max-[640px]:max-w-[47%] max-[640px]:py-[9px] max-[640px]:px-[11px] max-[640px]:border-[3px] max-[640px]:shadow-[5px_5px_0_0_#111]">
+                  <div className="hd flex items-center gap-[10px] mb-[9px] max-[640px]:gap-[7px] max-[640px]:mb-[5px]"><div className="avatar flex items-center justify-center flex-[0_0_auto] rounded-full bg-brand-yellow text-[#111] font-display border-2 border-[#111] w-[42px] h-[42px] text-[21px] max-[640px]:w-[30px] max-[640px]:h-[30px] max-[640px]:text-[15px] max-[640px]:border-2">{s.av}</div><div><div className="nm font-bold text-[14px] text-[#111] leading-[1.1] max-[640px]:text-[12px]">{s.nm}</div><div className="mt text-[11px] text-[#6b6b6b] font-semibold max-[640px]:text-[10px]">{s.mt}</div></div></div>
+                  <div className="stars text-brand-yellow-dim text-[14px] tracking-[2px] leading-none max-[640px]:text-[12px]">{[0, 1, 2, 3, 4].map((k) => <span key={k} className={k < s.stars ? undefined : 'e text-[#cfcfcf]'}>★</span>)}</div>
+                  <div className="q text-[14px] text-[#222] leading-[1.45] max-[640px]:hidden" style={{ marginTop: '6px' }}>{s.q}</div>
+                  <span className="wasthere inline-flex items-center gap-[6px] text-[10px] font-bold uppercase tracking-[0.5px] text-[#111] bg-brand-yellow py-[3px] px-[8px] rounded-[3px] mt-[10px] max-[640px]:hidden">✓ Was there</span>
                 </div>
-                <div className="a-venue on-dark">
-                  <div className="cc">{s.cc}</div>
-                  <div className="cv">{s.cv}</div>
-                  <div className="scorechip">
-                    <div className="s crit"><div className="v">{s.crit}</div><div className="k">Critics</div></div>
-                    <div className="s fan"><div className="v">{s.fan}</div><div className="k">Fans</div></div>
+                <div className="a-venue on-dark absolute z-[4] bg-[#222] text-white border-[6px] border-brand-yellow rounded-[6px] py-[18px] px-[20px] shadow-[12px_12px_0_0_rgba(0,0,0,.45)] left-[34px] bottom-[38px] w-[330px] max-w-[calc(100%-68px)] max-[640px]:left-[12px] max-[640px]:bottom-[12px] max-[640px]:w-auto max-[640px]:max-w-[50%] max-[640px]:py-[10px] max-[640px]:px-[12px] max-[640px]:border-4 max-[640px]:shadow-[6px_6px_0_0_rgba(0,0,0,.45)]">
+                  <div className="cc text-[12px] font-bold uppercase tracking-[0.5px] text-brand-yellow mb-[2px] max-[640px]:text-[10px]">{s.cc}</div>
+                  <div className="cv font-display text-[30px] text-white tracking-[1px] mb-[12px] max-[640px]:text-[17px] max-[640px]:leading-none max-[640px]:mb-[8px]">{s.cv}</div>
+                  <div className="scorechip flex gap-[10px] mb-[14px] max-[640px]:gap-[7px] max-[640px]:mb-0">
+                    <div className="s crit border-[3px] border-[#222] rounded-[4px] py-[8px] px-[14px] text-center bg-[#1b1b1b] min-w-[78px] max-[640px]:min-w-0 max-[640px]:py-[5px] max-[640px]:px-[9px]"><div className="v font-display text-[32px] leading-none text-white max-[640px]:text-[22px]">{s.crit}</div><div className="k text-[10px] font-bold uppercase tracking-[0.5px] text-[#6b6b6b] mt-[2px] max-[640px]:text-[8px]">Critics</div></div>
+                    <div className="s fan border-[3px] border-brand-yellow-dim rounded-[4px] py-[8px] px-[14px] text-center bg-[#1b1b1b] min-w-[78px] max-[640px]:min-w-0 max-[640px]:py-[5px] max-[640px]:px-[9px]"><div className="v font-display text-[32px] leading-none text-brand-yellow max-[640px]:text-[22px]">{s.fan}</div><div className="k text-[10px] font-bold uppercase tracking-[0.5px] text-[#6b6b6b] mt-[2px] max-[640px]:text-[8px]">Fans</div></div>
                   </div>
                   {s.det.map(([label, , w], k) => (
-                    <div key={k} className="detrow"><span className="dl">{label}</span><span className="db"><i style={{ width: w + '%' }}></i></span><span className="dv">{s.det[k][1]}</span></div>
+                    <div key={k} className="detrow flex items-center gap-[10px] my-[8px] max-[640px]:hidden"><span className="dl text-[11px] font-bold uppercase tracking-[0.4px] w-[92px] text-[#b8b8b8]">{label}</span><span className="db flex flex-1 h-[10px] bg-[#2b2b2b] border-2 border-black"><i style={{ width: w + '%' }} className="block bg-brand-yellow"></i></span><span className="dv font-display text-[17px] w-[24px] text-right text-white">{s.det[k][1]}</span></div>
                   ))}
                 </div>
               </div>
             ))}
           </div>
-          <div className="a-dots">
+          <div className="a-dots absolute z-[4] flex bottom-[23px] right-[27px] gap-[2px]">
             {slides.map((_, k) => (
-              <button key={k} type="button" aria-label={`Show stadium ${k + 1}`} className={k === active ? 'on' : undefined} onClick={() => goTo(k)}></button>
+              <button key={k} type="button" aria-label={`Show stadium ${k + 1}`} className={`relative w-[24px] h-[24px] p-0 border-0 bg-transparent cursor-pointer appearance-none before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:w-[10px] before:h-[10px] before:rounded-full before:[box-shadow:0_0_0_1px_rgba(0,0,0,.3)] before:[transition:background_.3s,transform_.3s] max-[860px]:before:w-[12px] max-[860px]:before:h-[12px] ${k === active ? 'on before:bg-brand-yellow before:[transform:translate(-50%,-50%)_scale(1.3)]' : 'before:bg-[rgba(255,255,255,.55)] before:[transform:translate(-50%,-50%)]'}`} onClick={() => goTo(k)}></button>
             ))}
           </div>
         </div>
       </section>
 
       {/* BROWSE VENUES (scrollable marquee on the black band) */}
-      <section id="experiences" className="browse-band">
-        <div className="container">
-          <h2 className="sr-only">Browse World Cup 2026 venues</h2>
-          <div className="rail-hint"><span className="rail-count">Browse venues</span></div>
+      <section id="experiences" className="browse-band grid-overlay relative overflow-hidden bg-[#222] pt-[34px] pb-[30px]">
+        <div className="container relative z-[1] max-w-full m-0 px-[28px]">
+          <h2 className="sr-only absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0 [clip:rect(0,0,0,0)]">Browse World Cup 2026 venues</h2>
+          <div className="rail-hint flex items-center gap-[8px] font-bold uppercase text-[12px] tracking-[0.5px] text-[#6b6b6b] mb-0"><span className="rail-count bg-white text-[#111] py-[1px] px-[8px] rounded-[3px] text-[12px]">Browse venues</span></div>
         </div>
-        <div className="marquee">
-          <div className="marquee-track">
+        <div className="marquee group relative overflow-hidden pt-[14px] pb-[24px] [-webkit-mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)] [mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)] max-[760px]:overflow-x-auto max-[760px]:[scroll-snap-type:x_proximity] max-[760px]:overscroll-x-contain max-[760px]:[-webkit-mask-image:none] max-[760px]:[mask-image:none] max-[760px]:[&::-webkit-scrollbar]:hidden motion-reduce:overflow-x-auto">
+          <div className="marquee-track flex gap-[24px] w-max [animation:venue-scroll_70s_linear_infinite] group-hover:[animation-play-state:paused] [will-change:transform] max-[760px]:[animation:none] max-[760px]:px-[24px] motion-reduce:[animation:none] max-[760px]:[&>[aria-hidden=true]]:hidden">
             {MARQUEE.map((c, i) => <MarqueeCard key={'a' + i} c={c} />)}
             {MARQUEE.map((c, i) => <MarqueeCard key={'b' + i} c={c} hidden />)}
           </div>
@@ -323,29 +325,29 @@ function Home() {
       </section>
 
       {/* GET YOUR MATCHDAY AGENDA */}
-      <section id="agendas" className="sec-light grid-bg">
-        <div className="container">
-          <div className="sec-head">
-            <span className="eyebrow">Plan it · Share it</span>
-            <h2>Get your matchday agenda</h2>
-            <p>Your whole day on one card — how you're getting there, where you're drinking, what you're eating, where it ends. Pick a match and deal yourself in.</p>
+      <section id="agendas" className="sec-light grid-overlay [--grid-line:rgba(17,17,17,.06)] relative overflow-hidden py-[96px] bg-[#F4F4F4]">
+        <div className="container relative z-[1] max-w-[1200px] mx-auto px-[24px]">
+          <div className="sec-head mb-[48px] max-w-[760px]">
+            <span className="eyebrow inline-flex items-center gap-[8px] font-bold text-[13px] tracking-[1.5px] uppercase text-[#6b6b6b]">Plan it · Share it</span>
+            <h2 className="font-display font-normal uppercase text-[#222] leading-[1.02] text-[clamp(36px,5.5vw,64px)] tracking-[1.5px]">Get your matchday agenda</h2>
+            <p className="leading-[1.65] max-w-[65ch] text-inherit opacity-85 mt-[16px]">Your whole day on one card — how you're getting there, where you're drinking, what you're eating, where it ends. Pick a match and deal yourself in.</p>
           </div>
-          <div className="agenda-fan">
-            {AGENDAS.map((a) => <AgendaCard key={a.game} a={a} />)}
+          <div className="agenda-fan flex justify-center items-start pt-[26px] pb-[52px] max-[760px]:justify-start max-[760px]:overflow-x-auto max-[760px]:[scroll-snap-type:x_mandatory] max-[760px]:gap-[16px] max-[760px]:pt-[16px] max-[760px]:px-[24px] max-[760px]:pb-[36px] max-[760px]:-mx-[24px] max-[760px]:my-0">
+            {AGENDAS.map((a, i) => <AgendaCard key={a.game} a={a} i={i} />)}
           </div>
-          <div className="agenda-cta">
-            <Link to="/guide" className="btn btn-brand btn-lg">Build your agenda</Link>
+          <div className="agenda-cta flex justify-center">
+            <Link to="/guide" className="btn btn-brand btn-lg relative inline-flex items-center gap-[10px] font-body font-bold uppercase border-0 rounded-none cursor-pointer no-underline [clip-path:var(--notch)] shadow-[inset_var(--color-1-400)_0_6px_0_-5px] [transition:transform_80ms_ease-out,filter_120ms] bg-brand-yellow text-[#222] [filter:drop-shadow(6px_6px_0_var(--gradient-shadow))] hover:[filter:drop-shadow(6px_6px_0_var(--gradient-shadow))_brightness(1.05)] active:translate-x-[3px] active:translate-y-[3px] active:[filter:drop-shadow(3px_3px_0_var(--gradient-shadow))] focus-visible:outline-4 focus-visible:outline-brand-yellow-dim focus-visible:outline-offset-2 text-[22px] py-[17px] px-[34px] tracking-[1px] min-[761px]:text-[26px] min-[761px]:py-[18px] min-[761px]:px-[40px]">Build your agenda</Link>
           </div>
         </div>
       </section>
       </main>
 
-      <footer>
-        <div className="container">
-          <div className="logo"><img className="logo-img" src="/img/logo.png" alt="Snapback Sports" width={42} height={42} />SNAPBACK<span className="wc">WC 2026</span></div>
-          <div className="fnav">
-            <a href="#experiences">Experiences</a>
-            <Link to="/guide">Guide</Link>
+      <footer className="bg-black text-[#9a9a9a] pt-[56px] pb-[40px]">
+        <div className="container relative z-[1] max-w-[1200px] mx-auto px-[24px]">
+          <div className="logo font-display text-white text-[28px] tracking-[2px] flex items-center gap-[12px] no-underline cursor-pointer mb-[18px]"><img className="logo-img h-[42px] w-[42px] block rounded-[8px] shadow-[3px_3px_0_0_#000]" src="/img/logo.png" alt="Snapback Sports" width={42} height={42} />SNAPBACK<span className="wc font-body font-bold text-[10px] tracking-[1px] text-[#111] bg-brand-yellow py-[2px] px-[7px] rounded-[3px] ml-[2px] self-center whitespace-nowrap">WC 2026</span></div>
+          <div className="fnav flex gap-[28px] flex-wrap mb-[24px]">
+            <a href="#experiences" className="no-underline font-bold uppercase text-[13px] tracking-[0.5px] text-[#bdbdbd] hover:text-brand-yellow">Experiences</a>
+            <Link to="/guide" className="no-underline font-bold uppercase text-[13px] tracking-[0.5px] text-[#bdbdbd] hover:text-brand-yellow">Guide</Link>
           </div>
         </div>
       </footer>

@@ -10,20 +10,12 @@ import type {
   SpendTracker,
   Stadium,
 } from '@/lib/types';
-import navCss from '../pages/casey.css?url';
-import trackerCss from '../pages/casey-tracker.css?url';
+import trackerCss from '../styles/casey-tracker.css?url';
 
 export const Route = createFileRoute('/casey/admin')({
   head: () => ({
     meta: [{ title: 'Admin · Casey Tracker' }],
-    links: [
-      { rel: 'stylesheet', href: navCss },
-      { rel: 'stylesheet', href: trackerCss },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap',
-      },
-    ],
+    links: [{ rel: 'stylesheet', href: trackerCss }],
   }),
   component: AdminRoute,
 });

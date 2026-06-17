@@ -354,6 +354,180 @@ the intern). Found + fixed, in two batches, all verified green + browser-smoke-t
   AttentionTab,HealthTab}.tsx`. Done by exact byte-slicing (no transcription risk);
   tsc + build + 23 tests + a full browser pass of every admin tab all green, 0 console errors.
 
+## Out-of-framework cleanup: standalone agenda + Tailwind v4 — DONE
+Three dirs sat outside `src/` and the TanStack framework. Investigated each (they
+were NOT the same thing), then per the user's calls:
+- ✅ **Deleted the redundant standalone agenda.** `agenda-standalone/` (a plain-React
+  SPA built by `vite.agenda.config.ts`) + `snapback-agenda/` (a *committed build
+  bundle* — hashed assets in git) duplicated the already-integrated `/agenda` route
+  (`src/routes/agenda.tsx` — same saveKey/fields/ShareCard). Nothing deployed the
+  standalone (no vercel/wrangler ref). Removed both dirs + `vite.agenda.config.ts` +
+  the dead `dist-agenda` .gitignore entry.
+- ✅ **Migrated the Casey tracker to Tailwind v4, properly integrated.** Was: a
+  `casey:css` predev/prebuild hook shelling out to `npx tailwindcss@3.4.16` with a v3
+  `casey-build/tailwind.config.cjs` → a committed, minified `casey-tracker.css`, while
+  the repo's installed **Tailwind v4** (`@tailwindcss/vite`) sat unused. Now: added
+  `@tailwindcss/vite` to `vite.config.ts`; `src/pages/casey-tracker.css` is a real v4
+  **source** (theme + utilities imported, `@theme` tokens ported from the old config,
+  custom CSS kept verbatim) compiled by Vite. Deleted `casey-build/`, the `casey:css`
+  script, and the predev/prebuild hooks.
+  - **Scoped, not global:** only `casey-tracker.css` opts into Tailwind (via
+    `@import 'tailwindcss/...'` + `@source ../casey`); CSS without those directives
+    passes through untouched, so the verbatim-CSS marketing pages are unaffected
+    (verified `/games` pixel-unchanged). **Preflight intentionally NOT imported**
+    (matches the old `preflight:false`) so it never resets other routes.
+  - **Cascade gotcha fixed:** v4 puts utilities in `@layer utilities`, and the SBX
+    global `* { margin:0; padding:0 }` is *unlayered* → it beat every utility (padding
+    collapsed). Fixed by importing utilities **unlayered**, restoring the v3 cascade
+    (utilities win by specificity). Verified pixel-identical to the v3 baseline.
+  - Verified on `vite dev` + prod build: `/casey/admin` and `/casey` render identically
+    to the v3 baseline (screenshot diff), built CSS asset contains the compiled
+    utilities + custom CSS, 0 console errors.
+
+## App-wide Tailwind v4 migration — DONE
+Converted the ENTIRE app off its per-route verbatim-CSS system onto Tailwind v4
+utilities, and removed the bespoke CSS-isolation machinery.
+- ✅ **`src/styles.css` is the single Tailwind entry**: full layered `@import "tailwindcss"`
+  (theme + **preflight** as the global reset + utilities) + the `@theme` config (brand +
+  casey tokens, fonts, animations). One global stylesheet for the whole app.
+- ✅ **Deleted the standalone agenda** (`agenda-standalone/`, `snapback-agenda/`,
+  `vite.agenda.config.ts`) — already integrated at `/agenda`.
+- ✅ **SiteNav + all 8 page stylesheets converted to utilities** (games, guide, venues,
+  venue, game, build, index, agenda + the shared ShareCard). Each page's genuinely
+  un-convertible CSS (pseudo-element overlays, `@keyframes`, the agenda-card `:nth-child`
+  fan, flag masks, scrollbar pseudo, the ShareCard timeline + `--scf` runtime scaling)
+  lives in a tiny `src/pages/salvage/*.css` imported (unlayered) by styles.css. Done via
+  parallel subagents + central wiring; **every page browser-verified pixel-faithful**.
+- ✅ **Deleted 8 marketing stylesheets + `casey.css`** (casey.css was a full page sheet
+  whose only live rule — the admin `<main>` dark grid — was salvaged to a scoped
+  `.casey-admin-grid` in casey-tracker.css). `casey-tracker.css` remains as the legit
+  custom layer (markers/keyframes/MapLibre); its generic `.font-*` classes were scoped
+  under `.casey-shell` so they don't leak now that everything's global.
+- ✅ **Removed `PageCssGuard`** (component + all 10 usages) and the `__root` CSS-preload
+  block — no per-route stylesheets left to isolate.
+- **Result:** CSS footprint ~2,400 lines / 11 sheets → ~1,050 (mostly casey-tracker.css
+  + small salvage files). `/games`, `/game`, `/casey/admin`, `/casey` all verified
+  pixel-faithful under preflight; 0 console errors.
+- ✅ **Renamed `src/pages/` → `src/styles/`** (holds casey-tracker.css + salvage/),
+  alongside the `src/styles.css` entry; all imports updated.
+- ✅ **CSS audited to only used + un-convertible rules:** removed dead casey rules
+  (`.bg-grid`/`.bg-noise`, `.drawer-*` transition classes, `.brand-mark-wiggle` +
+  `@keyframes cap-wiggle`, `.fill-snap-yellow` + its reskin), dropped the unused
+  `.sec-dark.grid-bg::after` variant, de-duplicated shared rules (`.head::after` 3×→1,
+  `.subhead::before` 2×→1), and converted the cleanly-convertible `.tally .pill.on`
+  to a `bg-brand-yellow` ternary in venues.tsx. Verified the dead classes were truly
+  unreferenced (incl. JS-built `country-${cc}` marker classes, which were KEPT).
+
+## Self-hosted fonts + deeper Tailwind-feature conversion — DONE
+Adopted modern self-hosted font loading (the `next/font` equivalent for a Vite/TanStack
+app is **@fontsource**, not `next/font` itself) and corrected the earlier, over-conservative
+"un-convertible" labelling by moving more salvage CSS onto modern Tailwind v4 variants.
+- ✅ **Fonts self-hosted via `@fontsource`**: Anton 400 + Barlow 400–800 imported in
+  `styles.css`; Bebas Neue + JetBrains Mono 400/500/700 in `casey-tracker.css`. The
+  per-weight woff2 are **bundled + fingerprinted by Vite with `font-display:swap`** — no
+  render-blocking Google Fonts CDN `<link>`, no preconnect. Removed the Google Fonts
+  `<link>`/preconnect tags from `__root` and every casey route. (Inter was dropped from
+  the client entirely — it's only used server-side by Satori in `og.tsx`.)
+- ✅ **More CSS → Tailwind v4 variants** (the "pseudo-elements & nth-child" point):
+  - `<details>` chevrons: `group` + base `rotate-[-45deg]` + `group-open:rotate-45`
+    (compiles to the `[open]` attribute selector — cross-browser), with `list-none` +
+    `[&::-webkit-details-marker]:hidden` for the marker (venue notes/tips dropdowns).
+  - agenda-card **`:nth-child` fan** → index-driven `[transform:rotate(..)translateY(..)]`
+    utilities (the map index is passed to `AgendaCard`) + hover/responsive overrides.
+  - accent **bars** → `before:content-[''] before:absolute …`: games match-row 8px bar,
+    venue `.whyc` 5px bar, the `.subhead` 18×3 tick (venue + game).
+  - styled **scrollbars** → `[&::-webkit-scrollbar]:h-[…] [&::-webkit-scrollbar-thumb]:…
+    [&::-webkit-scrollbar-track]:…` (venue weather strip + agenda hscroll) and
+    `[&::-webkit-scrollbar]:hidden` (games filter rail); plus `placeholder:` utilities,
+    `[&::-webkit-search-cancel-button]:cursor-pointer`, a descendant
+    `[&_.agspot]:flex-[0_0_clamp(…)] [&_.agspot]:snap-start`, and bare-`<b>` → `text-white`.
+  - 🐞 **Latent bug fixed in passing:** the match-row yellow hover-shadow referenced an
+    **undefined `var(--y)`** (its defining `:root` rule was dropped in the v4 migration),
+    so the signature hover effect was silently a no-op — now a literal `#f7df02`.
+  - **Kept as CSS (honest comments, not "impossible"):** multi-stop/radial gradient
+    overlays, feathered flag masks, `image-set()` fallbacks, `@keyframes`, the repeated
+    diamond list-bullet markers (one rule beats a 9-utility `before:` on every `<ul>`),
+    the fixed-dimension PNG-export ShareCard (`.sc-*` + `--scf`), and compound state
+    selectors (`.wx-day.played`, `.agspot.fifa`) whose `(0,2,0)` specificity reliably
+    beats the base utility (conditional utilities would fight v4's source-order tiebreak).
+  - **Salvage CSS now 6 files / 244 lines.** Every converted interaction browser-verified:
+    chevron rotates −45°→+45° on open, accent bars/scrollbars compile to real pseudo
+    rules, the hscroll cards size to `0 0 268px` + `snap-start`.
+- ✅ **`casey-tracker.css` audited too** (3 more conversions): `.animate-hero-swap` +
+  `.animate-detail-reveal` moved to `@theme` `--animate-*` tokens (now first-class
+  generated utilities, matching the existing `pulse-live`/`pulse-flight` pattern — JSX
+  unchanged); the `.a-right` 8px yellow hero rail → a `before:` utility in `index.tsx`;
+  and the `@layer base` button reset trimmed of its `-webkit-appearance` line (v4 preflight
+  already applies `appearance:button`, but — unlike v3 — does **not** strip the UA button
+  background, so that part stays). Verified: both `animate-*` utilities resolve to running
+  keyframes, the rail renders 8px/z-3, bare buttons stay `transparent`, and the file now
+  has **0 IDE diagnostics**.
+  - **Deliberately kept as CSS** (Tailwind genuinely can't/shouldn't own these): the
+    MapLibre library overrides (`.maplibregl-*`) and **JS-injected map markers**
+    (`.stadium-pin`, `.casey-marker`, `.casey-avatar`, `.stadium-label`, `.country-accent`,
+    `.casey-direction-arrow`) — built via `document.createElement` + `new maplibregl.Marker`
+    in `MapView.tsx`, so there's no JSX element to carry a utility; `@keyframes`; the
+    SVG-data-uri noise/grain textures + radial vignettes; and the heavily-reused component
+    classes (`stat-number` ×11 files, `no-scrollbar` ×8, `card-lift` ×4, `stamp`,
+    `ticker-*`, `day-watermark`) — Tailwind's own docs endorse extracting repeated patterns
+    into a class, and inlining them would be a maintainability regression.
+- ✅ **Removed all `.casey-shell` scoped CSS from `casey-tracker.css`.** Key realisation:
+  this sheet is linked as a `rel="stylesheet"` **only on the casey routes** (in `__root`
+  it's merely `rel="preload"`, which downloads but never applies), so the `.casey-shell`
+  prefixes were redundant defensive scoping — the route-only loading already isolates it.
+  - Folded the entire **"LIGHT RE-SKIN OVERRIDES"** section into the base rules: the app
+    is always the light SBX skin, so the dark base values were dead (every element renders
+    inside `.casey-shell`, which always won). `stadium-label`, `ticker-strip`, `stamp`,
+    `day-watermark`, `map-fx-grid/-vignette`, `maplibregl-ctrl-attrib`, and the 4 `arc-popup`
+    rules now carry their final light values directly; the scoped override block is gone.
+  - Unscoped the casey font tweak (`.font-display`/`.font-mono` keep only `letter-spacing`;
+    the global utilities already supply the family; `.font-body` was identical → dropped),
+    `text-snap-yellow → gold` (the one standalone utility override), and the
+    `prefers-reduced-motion` block. Rewrote the map-fill fix `.casey-shell .maplibregl-map`
+    → `.maplibregl-map.maplibregl-map` (a doubled-class keeps the 0,2,0 specificity needed
+    to beat maplibre's later-loaded `position:relative`, without scoping). Dropped the
+    `.casey-shell *{box-sizing}` reset (preflight covers it) and the dead `map-fx-scanline`
+    sweep + `@keyframes scanline-sweep` (the re-skin always `display:none`'d it).
+  - **Verified pixel-identical:** injected probe elements for all 17 reskinned styles and
+    diffed computed values before/after — every one byte-matched (incl. the arc-popup
+    `--snap-carbon` bg that actually comes from the `!important` generic rule). Map renders
+    full-height (doubled-class works), `/casey` screenshot unchanged, and **no leak onto
+    marketing pages** (`/games`: casey sheet not applied, `font-display` = `normal`,
+    `text-snap-yellow` = brand yellow). `casey-tracker.css` 678 → 627 lines, 0 diagnostics.
+
+## Eliminated ALL per-page salvage stylesheets → minimal styles.css — DONE
+Drove to the stated goal "only minimal styles.css": deleted all six `src/styles/salvage/*.css`
+files (guide, venues, game, venue, index, share) by converting every rule to Tailwind.
+- ✅ **`styles.css` is now the single global config (165 lines)** — Tailwind entry + `@theme`
+  + global element rules + the handful of irreducible primitives: three `@utility` blocks
+  (`grid-overlay` with `[--grid-line]`/`[--grid-size]` vars for the header/browse/agenda grids;
+  `diamond-bullets` with `[--db-size]`/`[--db-top]`/`[--db-border]` for every yellow list
+  marker; `wz-screen` for the build wizard's phone one-screen layout), the marketing
+  `@keyframes` (`drop`, `venue-scroll`) registered as `--animate-*` tokens, and the `--notch`
+  clip-path var. No salvage `@import`s remain.
+- ✅ **One-off pseudos/gradients/masks → inline arbitrary utilities**: every `::after`/`::before`
+  overlay became `after:[background:linear-gradient(…)]` / `before:…`; the flag feathered masks
+  `[mask-image:…]`+`[-webkit-mask-image:…]`; the collage `image-set()` `[background-image:image-set(…)]`;
+  the ShareCard timeline rail/dots `before:…` (story only) and its `--scf` runtime type-scaling
+  `[font-size:calc(25px*var(--scf,1))]`; the crossfade carousel + marquee hover-pause/mobile
+  rules via `group`/`group-hover:`/`motion-reduce:`/`max-[Npx]:[&::-webkit-scrollbar]:` variants.
+- ✅ **State combos → ternaries** (`wx-day.played`, `agspot.fifa`, `wz-card.on .wz-pick`): the
+  competing border/bg/shadow/colour live in a `cond ? A : B` so the two values never collide on
+  one element (Tailwind breaks same-property ties by source order, not class order).
+- 🐞 **Fixed three latent salvage-extraction bugs found en route**: the venue diamond lists had
+  lost their `<li>` `position:relative`+padding (restored from git per list: 22/24/17/15/17px);
+  the match-row yellow **hover-shadow referenced an undefined `var(--y)`** (now `#f7df02`); and the
+  build wizard's `.sb-scale-story` preview box had lost its `width/height/overflow` (restored
+  283×503, 360×640 ≥601px).
+- ✅ **ShareCard PNG export verified safe** — the export-critical card converts to utilities with
+  identical computed styles; triggered the export on `/agenda` *and* the wizard share step:
+  renders without error, offscreen card intact at 1080×1920, `--scf` type-scaling works (slab
+  = `calc(25px×1.3)` = 32.5px). Every page browser-verified pixel-faithful (incl. the wizard's
+  phone one-screen layout at 390px: `100dvh-72px`, sideways card swipe, pinned nav row).
+- **`casey-tracker.css` kept** as the route-loaded map stylesheet — it carries casey-only fonts
+  (Bebas Neue, JetBrains Mono) + JS-injected marker CSS that would bloat/leak if globalized.
+  **Result: `src/styles/` holds one file; `styles.css` is 165 lines.**
+
 ## Verification status
 - `npm run build` ✅ · `npm test` ✅ (23/23) · `npx tsc --noEmit` ✅ (**fully clean**,
   including previously-failing files) · SSR smoke-tested on `vite dev` (prior session):
@@ -362,6 +536,22 @@ the intern). Found + fixed, in two batches, all verified green + browser-smoke-t
   (`vite preview`): normal + TBD game pages render correctly, zero runtime errors.
   Casey-subtree cleanup re-verified on `vite dev`: `/casey/admin` (all 7 tabs + OPEN #N
   flow) and `/casey` Tournament Hub (Groups + Bracket with live ESPN data) — **0 console
-  errors**.
+  errors**. Tailwind v4 migration verified on `vite dev` + prod build: `/casey/admin` and
+  `/casey` pixel-match the v3 baseline, `/games` (verbatim CSS) unaffected, built CSS
+  asset carries the compiled utilities + custom CSS, 0 console errors. App-wide Tailwind
+  migration re-verified end-to-end on `vite dev` + prod build (preflight enabled,
+  PageCssGuard removed): all 8 marketing pages + casey admin + casey tracker render
+  pixel-faithful, **0 console errors**, tsc clean.
+- Self-hosted fonts + Tailwind-feature conversion verified on `vite dev` + prod build:
+  fonts load self-hosted (no Google Fonts request), `/games` rows show their yellow accent
+  bar + working hover-shadow, `/venue` chevrons rotate on open and the weather/hscroll
+  scrollbars + accent bars render from compiled pseudo rules — all browser-checked,
+  tsc clean, build green, 23/23 tests.
+- Salvage-elimination verified end-to-end on `vite dev` + prod build (tsc clean, build green,
+  23/23 tests): all six salvage files deleted, `styles.css` = 165 lines; `/`, `/games`, `/guide`,
+  `/venues`, `/venue/$id`, `/game/$id`, `/agenda`, `/build` (desktop **and** 390px one-screen),
+  `/casey` all render pixel-faithful; the `grid-overlay`/`diamond-bullets`/`wz-screen` `@utility`
+  blocks + `drop`/`venue-scroll` keyframes resolve; ShareCard PNG export renders without error
+  on both `/agenda` and the wizard share step.
 - **Not committed** — working tree on branch `alex/dev`, no commits made this session.
 </content>

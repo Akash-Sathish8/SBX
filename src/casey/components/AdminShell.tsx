@@ -97,7 +97,7 @@ export default function AdminShell({ itinerary, spend, override, stadiums, under
         </div>
       </header>
 
-      <main className="px-4 py-5 sm:px-6 sm:py-6 max-w-5xl mx-auto">
+      <main className="px-4 py-5 sm:px-6 sm:py-6 max-w-5xl mx-auto casey-admin-grid">
         {tab === 'matches' && (
           <MatchesTab itinerary={itinerary} stadiums={stadiums} post={post} initialOpenId={jumpMatch} />
         )}
