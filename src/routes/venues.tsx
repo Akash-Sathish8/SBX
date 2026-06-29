@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
-import { warmImage, intentWarm } from '../lib/dataCache'
+import { VenueCard } from '../components/VenueCard'
 import { VENUES, venueNationCounts, NATION_FLAG, NATION_NAME } from '../lib/venues-meta'
 
 export const Route = createFileRoute('/venues')({
@@ -37,17 +37,11 @@ function Venues() {
         <div className="container max-w-[1180px] mx-auto px-[28px]">
           <div className="grid grid-cols-3 gap-[26px] max-[900px]:grid-cols-2 max-[600px]:grid-cols-1" id="grid">
             {list.map((v) => (
-              <Link key={v.img} className="vcard group block bg-white border-[4px] border-[#222222] rounded-[8px] overflow-hidden text-inherit [filter:drop-shadow(8px_8px_0_#222)] [transition:transform_.12s_ease-out,filter_.15s] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:[filter:drop-shadow(11px_11px_0_#222)] [content-visibility:auto] [contain-intrinsic-size:auto_262px]" to="/venue/$id" params={{ id: v.img }} {...intentWarm(() => warmImage(`/img/stadiums/${v.img}.jpg`))}>
-                <div className="photo h-[178px] bg-[#0d0d0d] relative after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35))]">
-                  <img className="photo-img absolute inset-0 w-full h-full object-cover object-center block" src={`/img/stadiums/${v.img}.jpg`} alt="" loading="lazy" decoding="async" />
-                  <span className="citytag absolute left-[12px] top-[12px] z-[2] bg-[#222222] text-white font-bold text-[11px] tracking-[0.5px] uppercase px-[10px] py-[5px] rounded-[3px] inline-flex items-center gap-[6px]"><span className="flag text-[14px] leading-none">{NATION_FLAG[v.cc]}</span>{v.city}</span>
-                  {v.role ? <span className="role absolute right-[12px] top-[12px] z-[2] bg-brand-yellow text-ink font-extrabold text-[10px] tracking-[0.6px] uppercase px-[9px] py-[5px] rounded-[3px] shadow-[3px_3px_0_#000]">{v.role}</span> : null}
-                </div>
-                <div className="body pt-[15px] px-[18px] pb-[17px]">
-                  <div className="name font-display text-[23px] text-[#222222] tracking-[0.6px] leading-[1.05]">{v.name}</div>
-                  <div className="meta text-[13px] text-[#6b6b6b] font-semibold mt-[6px] uppercase tracking-[0.4px]">{v.city} · {v.cc}</div>
-                </div>
-              </Link>
+              <VenueCard
+                key={v.img}
+                v={v}
+                className="[content-visibility:auto] [contain-intrinsic-size:auto_262px]"
+              />
             ))}
           </div>
         </div>

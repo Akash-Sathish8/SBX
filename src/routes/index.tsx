@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { MapIcon, BeerIcon, HamburgerIcon, FlagIcon, ShoppingBagIcon, type LucideIcon } from 'lucide-react'
-import { warmImage, intentWarm } from '../lib/dataCache'
 import { SiteNav } from '../components/SiteNav'
+import { VenueCard } from '../components/VenueCard'
+import { venueMeta, type VenueMeta } from '../lib/venues-meta'
 import { absUrl, socialMeta } from '../lib/site'
 
 export const Route = createFileRoute('/')({
@@ -51,81 +52,22 @@ const slides: Slide[] = [
     det: [['Atmosphere', 8, 80], ['Food', 7, 70], ['Getting in', 8, 80]] },
 ]
 
-type Card = { img: string; tag: string; name: string; sub: string; crit: number; fan: number }
-const MARQUEE: Card[] = [
-  { img: 'sofi', tag: 'Los Angeles · USA', name: 'SoFi Stadium', sub: 'The spaceship', crit: 84, fan: 90 },
-  { img: 'arrowhead', tag: 'Kansas City · USA', name: 'Arrowhead Stadium', sub: 'Loudest in the world', crit: 92, fan: 88 },
-  { img: 'azteca', tag: 'Mexico City · MEX', name: 'Estadio Azteca', sub: 'History at altitude', crit: 95, fan: 71 },
-  { img: 'mercedes', tag: 'Atlanta · USA', name: 'Mercedes-Benz Stadium', sub: 'The halo roof', crit: 90, fan: 79 },
-  { img: 'metlife', tag: 'New York · USA', name: 'MetLife Stadium', sub: 'Hosts the final', crit: 79, fan: 74 },
-  { img: 'bcplace', tag: 'Vancouver · CAN', name: 'BC Place', sub: 'Roof on the water', crit: 82, fan: 80 },
-  { img: 'att', tag: 'Dallas · USA', name: 'AT&T Stadium', sub: 'Jerry World', crit: 88, fan: 85 },
-  { img: 'nrg', tag: 'Houston · USA', name: 'NRG Stadium', sub: 'Retractable in Texas', crit: 80, fan: 76 },
-  { img: 'hardrock', tag: 'Miami · USA', name: 'Hard Rock Stadium', sub: 'Miami nights', crit: 83, fan: 81 },
-  { img: 'linc', tag: 'Philadelphia · USA', name: 'Lincoln Financial Field', sub: 'The Linc', crit: 85, fan: 87 },
-  { img: 'levis', tag: 'San Francisco · USA', name: "Levi's Stadium", sub: 'Silicon Valley bowl', crit: 78, fan: 72 },
-  { img: 'lumen', tag: 'Seattle · USA', name: 'Lumen Field', sub: 'Wall of sound', crit: 88, fan: 85 },
-  { img: 'gillette', tag: 'Boston · USA', name: 'Gillette Stadium', sub: 'New England fortress', crit: 81, fan: 77 },
-  { img: 'bmo', tag: 'Toronto · CAN', name: 'BMO Field', sub: "Toronto's lakeside", crit: 80, fan: 83 },
-  { img: 'akron', tag: 'Guadalajara · MEX', name: 'Estadio Akron', sub: "Guadalajara's jewel", crit: 86, fan: 82 },
-  { img: 'bbva', tag: 'Monterrey · MEX', name: 'Estadio BBVA', sub: 'El Gigante de Acero', crit: 89, fan: 84 },
-]
+// Curated scroll order for the home marquee; metadata comes from venues-meta.
+const MARQUEE_IDS = [
+  'sofi', 'arrowhead', 'azteca', 'mercedes', 'metlife', 'bcplace', 'att', 'nrg',
+  'hardrock', 'linc', 'levis', 'lumen', 'gillette', 'bmo', 'akron', 'bbva',
+] as const
+const MARQUEE = MARQUEE_IDS.map((id) => venueMeta(id)).filter((v): v is VenueMeta => v !== null)
 
-// One shared IntersectionObserver for the whole marquee (the rail renders 32
-// cards) instead of one per card. Each card registers a callback fired once when
-// it scrolls within 300px of the viewport; CSS background-image can't use
-// loading="lazy", hence the observer.
-const lazyBgCallbacks = new WeakMap<Element, () => void>()
-const lazyBgObserver =
-  typeof IntersectionObserver !== 'undefined'
-    ? new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (!e.isIntersecting) continue
-            lazyBgCallbacks.get(e.target)?.()
-            lazyBgObserver!.unobserve(e.target)
-            lazyBgCallbacks.delete(e.target)
-          }
-        },
-        { rootMargin: '300px' },
-      )
-    : null
-
-function MarqueeCard({ c, hidden }: { c: Card; hidden?: boolean }) {
-  const photoRef = useRef<HTMLDivElement>(null)
-  // Lazy-load the stadium photo: the marquee is below the fold, so defer the
-  // background image until the card scrolls near view (saves first-visit bytes).
-  const [shown, setShown] = useState(false)
-  useEffect(() => {
-    const el = photoRef.current
-    if (!el || shown) return
-    if (!lazyBgObserver) { setShown(true); return }
-    lazyBgCallbacks.set(el, () => setShown(true))
-    lazyBgObserver.observe(el)
-    return () => {
-      lazyBgObserver.unobserve(el)
-      lazyBgCallbacks.delete(el)
-    }
-  }, [shown])
+function MarqueeCard({ v, hidden }: { v: VenueMeta; hidden?: boolean }) {
   return (
-    <Link
-      to="/venue/$id"
-      params={{ id: c.img }}
-      className="card venue interactive relative block flex-[0_0_280px] overflow-hidden border-8 border-[#222] rounded-none p-0 text-inherit no-underline [clip-path:var(--notch)] [filter:drop-shadow(8px_8px_0_#222)] [transition:transform_100ms_ease-out,border-color_150ms,filter_150ms] cursor-pointer hover:border-brand-yellow hover:[filter:drop-shadow(10px_10px_0_#222)] active:translate-x-1 active:translate-y-1 max-[520px]:flex-[0_0_76vw]"
-      aria-hidden={hidden ? 'true' : undefined}
-      tabIndex={hidden ? -1 : undefined}
-      {...intentWarm(() => warmImage(`/img/stadiums/${c.img}.jpg`))}
-    >
-      <div ref={photoRef} className="photo relative flex items-end h-[148px] p-[14px] bg-[#1b1b1b] bg-no-repeat [background-position:center] [background-size:cover] after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(to_top,rgba(0,0,0,.7)_0%,rgba(0,0,0,.15)_55%,rgba(0,0,0,.35)_100%)]" style={{ backgroundImage: shown ? `url('/img/stadiums/${c.img}.jpg')` : undefined }}><span className="tag relative z-[1] font-bold text-[12px] uppercase tracking-[0.5px] text-[#111] bg-brand-yellow py-[4px] px-[10px] [clip-path:polygon(0_0,100%_0,100%_70%,90%_100%,0_100%)]">{c.tag}</span></div>
-      <div className="body p-[20px]">
-        <h3 className="font-display font-normal uppercase text-[#222] tracking-[1px] leading-[1.02] text-[clamp(28px,3vw,44px)] mb-[10px]">{c.name}</h3>
-        <div className="city text-[13px] text-[#6b6b6b] font-bold uppercase tracking-[0.5px] mb-[16px]">{c.sub}</div>
-        <div className="scores hidden gap-[14px]">
-          <div className="score crit flex-1 border-[3px] border-[#222] rounded-[4px] p-[10px] text-center"><div className="v font-display text-[36px] leading-none text-[#222]">{c.crit}</div><div className="k text-[11px] font-bold uppercase tracking-[0.5px] text-[#6b6b6b] mt-[4px]">Critics</div></div>
-          <div className="score fan flex-1 border-[3px] border-brand-yellow-dim rounded-[4px] p-[10px] text-center"><div className="v font-display text-[36px] leading-none text-[#b89e00]">{c.fan}</div><div className="k text-[11px] font-bold uppercase tracking-[0.5px] text-[#6b6b6b] mt-[4px]">Fans</div></div>
-        </div>
-      </div>
-    </Link>
+    <VenueCard
+      v={v}
+      hidden={hidden}
+      tone="dark"
+      photoClassName="h-[148px]"
+      className="relative z-[1] opacity-100 flex-[0_0_280px] max-[520px]:flex-[0_0_76vw]"
+    />
   )
 }
 
@@ -317,10 +259,10 @@ function Home() {
           <h2 className="sr-only absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0 [clip:rect(0,0,0,0)]">Browse World Cup 2026 venues</h2>
           <div className="rail-hint flex items-center gap-[8px] font-bold uppercase text-[12px] tracking-[0.5px] text-[#6b6b6b] mb-0"><span className="rail-count bg-white text-[#111] py-[1px] px-[8px] rounded-[3px] text-[12px]">Browse venues</span></div>
         </div>
-        <div className="marquee group relative overflow-hidden pt-[14px] pb-[24px] [-webkit-mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)] [mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)] max-[760px]:overflow-x-auto max-[760px]:[scroll-snap-type:x_proximity] max-[760px]:overscroll-x-contain max-[760px]:[-webkit-mask-image:none] max-[760px]:[mask-image:none] max-[760px]:[&::-webkit-scrollbar]:hidden motion-reduce:overflow-x-auto">
-          <div className="marquee-track flex gap-[24px] w-max [animation:venue-scroll_70s_linear_infinite] group-hover:[animation-play-state:paused] [will-change:transform] max-[760px]:[animation:none] max-[760px]:px-[24px] motion-reduce:[animation:none] max-[760px]:[&>[aria-hidden=true]]:hidden">
-            {MARQUEE.map((c, i) => <MarqueeCard key={'a' + i} c={c} />)}
-            {MARQUEE.map((c, i) => <MarqueeCard key={'b' + i} c={c} hidden />)}
+        <div className="marquee group relative z-[1] overflow-x-hidden overflow-y-visible pt-[14px] pb-[32px] pr-[12px] max-[760px]:overflow-x-auto max-[760px]:[scroll-snap-type:x_proximity] max-[760px]:overscroll-x-contain max-[760px]:[&::-webkit-scrollbar]:hidden motion-reduce:overflow-x-auto">
+          <div className="marquee-track flex gap-[24px] w-max pb-[12px] [animation:venue-scroll_70s_linear_infinite] group-hover:[animation-play-state:paused] [will-change:transform] max-[760px]:[animation:none] max-[760px]:px-[24px] motion-reduce:[animation:none] max-[760px]:[&>[aria-hidden=true]]:hidden">
+            {MARQUEE.map((v, i) => <MarqueeCard key={'a' + i} v={v} />)}
+            {MARQUEE.map((v, i) => <MarqueeCard key={'b' + i} v={v} hidden />)}
           </div>
         </div>
       </section>
