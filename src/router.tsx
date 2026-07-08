@@ -1,6 +1,4 @@
 import { createRouter as createTanStackRouter, Link } from '@tanstack/react-router'
-import { QueryClient } from '@tanstack/react-query'
-import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import { routeTree } from './routeTree.gen'
 
 // Inline-styled so it renders correctly with no per-route stylesheet mounted
@@ -19,30 +17,13 @@ function NotFound() {
 }
 
 export function getRouter() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        // Static JSON (games/venues/fan-intel) changes rarely; live queries set
-        // their own shorter staleTime/refetchInterval per-call.
-        staleTime: 5 * 60_000,
-        refetchOnWindowFocus: false,
-      },
-    },
-  })
-
   const router = createTanStackRouter({
     routeTree,
-    context: { queryClient },
     scrollRestoration: true,
     defaultPreload: 'intent',
-    // Always run loaders on intent and let Query's cache decide freshness/dedupe.
     defaultPreloadStaleTime: 0,
     defaultNotFoundComponent: NotFound,
   })
-
-  // Wires SSR dehydration/hydration of the QueryClient and wraps the app in a
-  // QueryClientProvider so route loaders and client useQuery share one cache.
-  setupRouterSsrQueryIntegration({ router, queryClient, wrapQueryClient: true })
 
   return router
 }

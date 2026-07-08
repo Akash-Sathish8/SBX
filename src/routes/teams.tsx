@@ -1,152 +1,125 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { SearchIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
-import TEAMS_DATA from '../../data/teams.json'
-import type { Teams, Team, League } from '../lib/data-types'
+import { PageCssGuard } from '../components/PageCssGuard'
+import { getJSON, intentWarm, warmImage } from '../lib/dataCache'
+import { SPORTS, LEAGUES, COLLEGE_LEAGUES, HERO_LEAGUE, isCollegeLeague, isLeague, type League } from '../lib/sports'
+import type { TeamInfo } from '../lib/espn'
+import css from '../pages/teams.css?url'
 
-const TEAMS = TEAMS_DATA as Teams
+// The sport/team browser — axis 1 of the explore loop. Pro leagues render a flat
+// logo grid (/api/teams); college leagues render conference-grouped grids
+// (/api/conferences). Every card lands on /team. `?league=` deep-links a sport
+// (the home page's Pick-your-sport chips).
 
 export const Route = createFileRoute('/teams')({
   validateSearch: (s: Record<string, unknown>) => ({
-    league: (s.league as string) ?? 'NFL',
+    league: isLeague(s.league as string) ? (s.league as League) : undefined,
   }),
   head: () => ({
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'teams' }],
     meta: [{ title: 'Snapback — Teams' }],
   }),
-  component: TeamsPage,
+  component: Teams,
 })
 
-const PRO_LEAGUES: League[] = ['NFL', 'MLB', 'NBA', 'NHL']
-const COLLEGE_LEAGUES: League[] = ['CFB', 'CBB']
+interface ConfTeam { id: string; abbr: string; displayName: string; location: string; logo?: string }
+interface Conf { id: string; name: string; shortName?: string; teams: ConfTeam[] }
 
-function TeamCard({ team }: { team: Team }) {
+function TeamCard({ league, t }: { league: League; t: { id: string; abbr: string; displayName: string; location?: string; logo?: string } }) {
+  const warm = () => { if (t.logo) warmImage(t.logo) }
   return (
-    <Link
-      to="/team/$id"
-      params={{ id: team.id }}
-      className="no-underline group"
-    >
-      <div
-        className="flex flex-col items-center gap-2 p-4 bg-white border-[3px] border-[#222] shadow-[4px_4px_0_#222] rounded-[6px] [transition:transform_.1s,box-shadow_.1s] hover:-translate-x-px hover:-translate-y-px hover:shadow-[6px_6px_0_#222]"
-        style={{ borderTopColor: team.primary_color }}
-      >
-        <img
-          src={team.logo_url}
-          alt={team.name}
-          width={64}
-          height={64}
-          className="w-16 h-16 object-contain"
-          loading="lazy"
-        />
-        <div className="text-center">
-          <div className="font-display text-[13px] tracking-[0.5px] uppercase text-ink leading-tight">{team.abbr}</div>
-          <div className="font-body text-[11px] text-[#555] leading-tight mt-0.5">{team.city}</div>
-        </div>
-      </div>
+    <Link to="/team" search={{ league, id: t.id }} className="tcard" {...intentWarm(warm)}>
+      {t.logo ? <img src={t.logo} alt="" width={44} height={44} loading="lazy" /> : <span className="tcard-ph">{t.abbr.slice(0, 3)}</span>}
+      <span className="tcard-nm">{t.displayName}</span>
+      <span className="tcard-go">→</span>
     </Link>
   )
 }
 
-function groupByConference(teams: Team[]): Record<string, Team[]> {
-  return teams.reduce<Record<string, Team[]>>((acc, t) => {
-    const key = t.conference || 'Independent'
-    ;(acc[key] ??= []).push(t)
-    return acc
-  }, {})
-}
+function Teams() {
+  const { league: leagueParam } = Route.useSearch()
+  const [league, setLeague] = useState<League>(leagueParam ?? HERO_LEAGUE)
+  // Deep link (?league=) wins when it changes under a mounted component.
+  useEffect(() => { if (leagueParam) setLeague(leagueParam) }, [leagueParam])
+  const [teams, setTeams] = useState<TeamInfo[] | null>(null)
+  const [confs, setConfs] = useState<Conf[] | null>(null)
+  const [errMsg, setErrMsg] = useState<string | null>(null)
+  const [query, setQuery] = useState('')
 
-function TeamsPage() {
-  const { league } = Route.useSearch()
-  const [search, setSearch] = useState('')
+  useEffect(() => {
+    let alive = true
+    setTeams(null); setConfs(null); setErrMsg(null)
+    if (isCollegeLeague(league)) {
+      getJSON('/api/conferences?league=' + league)
+        .then((r: any) => { if (alive) setConfs(Array.isArray(r?.data) ? r.data : []) })
+        .catch(() => { if (alive) setErrMsg("Couldn't load conferences.") })
+    } else {
+      getJSON('/api/teams?league=' + league)
+        .then((r: any) => { if (alive) setTeams(Array.isArray(r?.data) ? r.data : []) })
+        .catch(() => { if (alive) setErrMsg("Couldn't load teams.") })
+    }
+    return () => { alive = false }
+  }, [league])
 
-  const isCollege = COLLEGE_LEAGUES.includes(league as League)
-  const allTeams: Team[] = (TEAMS[league as keyof Teams] ?? [])
-  const filtered = useMemo(() =>
-    search.trim()
-      ? allTeams.filter(t =>
-          t.name.toLowerCase().includes(search.toLowerCase()) ||
-          t.city.toLowerCase().includes(search.toLowerCase()) ||
-          t.abbr.toLowerCase().includes(search.toLowerCase())
-        )
-      : allTeams,
-    [allTeams, search]
+  const q = query.trim().toLowerCase()
+  const match = (t: { displayName: string; location?: string; abbr: string }) =>
+    !q || `${t.displayName} ${t.location ?? ''} ${t.abbr}`.toLowerCase().includes(q)
+
+  const proList = useMemo(() => (teams ? teams.filter(match) : []), [teams, q])
+  const confList = useMemo(
+    () => (confs ? confs.map((c) => ({ ...c, teams: c.teams.filter(match) })).filter((c) => c.teams.length) : []),
+    [confs, q],
   )
-
-  const grouped = useMemo(() =>
-    isCollege ? groupByConference(filtered) : null,
-    [isCollege, filtered]
-  )
+  const loading = teams === null && confs === null && !errMsg
 
   return (
     <>
+      <PageCssGuard id="teams" />
       <SiteNav active="teams" />
-
-      <section className="grid-overlay bg-[#222] text-white pt-[44px] pb-[38px] relative overflow-hidden">
-        <div className="container relative z-[1] max-w-[1180px] mx-auto px-[28px]">
-          <div className="eyebrow inline-flex items-center gap-[9px] font-bold text-[13px] tracking-[1.4px] uppercase text-ink bg-brand-yellow px-[13px] py-[6px] rounded-[3px] shadow-[4px_4px_0_#000] mb-[14px]">
-            Field Guide · Teams
-          </div>
-          <h1 className="font-display uppercase text-white tracking-[1px] leading-none text-[clamp(44px,6.4vw,84px)]">
-            <span className="hl bg-brand-yellow text-ink px-[10px] shadow-[5px_5px_0_#000] inline-block">Teams</span>
-          </h1>
-
-          {/* League selector */}
-          <div className="flex gap-3 flex-wrap mt-6">
-            {[...PRO_LEAGUES, ...COLLEGE_LEAGUES].map(l => (
-              <Link
-                key={l}
-                to="/teams"
-                search={{ league: l }}
-                className={`inline-flex items-center border-[3px] border-[#222] rounded-[6px] shadow-[4px_4px_0_#222] px-[14px] py-[8px] font-body font-bold text-[13px] uppercase tracking-[0.4px] no-underline [transition:transform_.1s,box-shadow_.1s,background_.12s] hover:-translate-x-px hover:-translate-y-px hover:shadow-[5px_5px_0_#222] ${l === league ? 'bg-brand-yellow text-ink' : 'bg-white text-ink'}`}
-              >
-                {l}
-              </Link>
-            ))}
-          </div>
+      <section className="head">
+        <div className="container">
+          <Link to="/" className="ghback">← Back</Link>
+          <h1>Pick your <span className="hl">team</span></h1>
+          <p className="sub">Every team leads to its home venue, upcoming games and ranked experiences.</p>
         </div>
       </section>
 
-      <section className="py-[46px] bg-[#f4f4f4]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
-          {/* Search */}
-          <div className="mb-6">
-            <input
-              type="search"
-              placeholder={`Search ${league} teams...`}
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full max-w-[400px] border-[3px] border-[#222] rounded-[6px] shadow-[4px_4px_0_#222] px-4 py-3 font-body text-[15px] bg-white outline-none focus:shadow-[6px_6px_0_#222] [transition:box-shadow_.1s]"
-            />
+      <section className="block">
+        <div className="container">
+          <div className="block-head">
+            <div className="filters">
+              {[...LEAGUES, ...COLLEGE_LEAGUES].map((l) => (
+                <button key={l} className={'chip' + (l === league ? ' on' : '')} onClick={() => setLeague(l)}>{SPORTS[l].label}</button>
+              ))}
+            </div>
+            <div className="search"><SearchIcon className="si" /><input type="search" placeholder="Search teams…" autoComplete="off" value={query} onChange={(e) => setQuery(e.target.value)} /></div>
           </div>
 
-          {/* Pro: flat grid */}
-          {!isCollege && (
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-4">
-              {filtered.map(t => <TeamCard key={t.id} team={t} />)}
-            </div>
-          )}
+          {loading ? <div className="loading">Loading teams…</div> : null}
+          {errMsg ? <div className="empty">{errMsg}</div> : null}
 
-          {/* College: conference-grouped grids */}
-          {isCollege && grouped && Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)).map(([conf, teams]) => (
-            <div key={conf} className="mb-10">
-              <h2 className="font-display text-[20px] uppercase tracking-[1px] mb-4 pb-2 border-b-[3px] border-brand-yellow inline-block">{conf}</h2>
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-4">
-                {teams.map(t => <TeamCard key={t.id} team={t} />)}
-              </div>
-            </div>
-          ))}
+          {teams !== null ? (
+            proList.length
+              ? <div className="tgrid">{proList.map((t) => <TeamCard key={t.id} league={league} t={t} />)}</div>
+              : <div className="empty">No {SPORTS[league].label} teams{q ? ` for “${query.trim()}”` : ''}.</div>
+          ) : null}
 
-          {filtered.length === 0 && (
-            <p className="text-[#666] font-body text-[16px]">No teams match "{search}"</p>
-          )}
+          {confs !== null ? (
+            confList.length ? (
+              confList.map((c) => (
+                <section key={c.id} className="confsec">
+                  <div className="confhd"><h2>{c.name}</h2><span className="cnt">{c.teams.length} {c.teams.length === 1 ? 'school' : 'schools'}</span></div>
+                  <div className="tgrid">{c.teams.map((t) => <TeamCard key={t.id} league={league} t={t} />)}</div>
+                </section>
+              ))
+            ) : <div className="empty">No {SPORTS[league].label} schools{q ? ` for “${query.trim()}”` : ''}.</div>
+          ) : null}
         </div>
       </section>
 
-      <footer className="bg-black text-[#888] py-[40px] text-[13px]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
-          © 2025 Snapback Sports — Field Guide. <Link to="/" className="text-brand-yellow font-bold">← Home</Link>
-        </div>
-      </footer>
+      <footer><div className="container">© 2026 Snapback Sports. <Link to="/">← Explore</Link></div></footer>
     </>
   )
 }

@@ -5,8 +5,7 @@
     "jsx": "react-jsx",
     "module": "ESNext",
     "paths": {
-      "@/lib/*": ["./src/casey/lib/*"],
-      "@/data/*": ["./src/casey/data/*"],
+      "@/lib/*": ["./src/lib/*"],
       "#/*": ["./src/*"],
       "@/*": ["./src/*"]
     },
@@ -27,5 +26,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "resolveJsonModule": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   }
 }

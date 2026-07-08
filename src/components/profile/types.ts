@@ -1,5 +1,7 @@
 import type { MyRank } from '../../lib/myRankings'
 
+// One review as shown on a profile (self or public). Mirrors the /api/reviews
+// public shape; target resolution to a venue/game name happens in the UI.
 export interface ProfileReview {
   id: string
   scope: string // 'venue' | 'event'
@@ -12,6 +14,8 @@ export interface ProfileReview {
   mine?: boolean
 }
 
+// The normalized data both the self profile (/profile) and the public profile
+// (/u/$username) render through <ProfileView>. Social counts are optional (P3).
 export interface ProfileData {
   username: string | null
   displayName?: string | null
@@ -28,6 +32,7 @@ export interface ProfileData {
 
 const MON3 = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
+// Compact diary date: "JUN 14 · 2026" (year always shown — fans log games across seasons).
 export function diaryDate(iso: string): { day: string; year: string } {
   const d = new Date(iso)
   if (isNaN(d.getTime())) return { day: '', year: '' }
@@ -39,6 +44,8 @@ export function initialsFor(name: string | null | undefined): string {
   return s ? s[0]!.toUpperCase() : '?'
 }
 
+// 8 preset avatar colors (key 'preset:N'). Brand-leaning palette; index 0 is the
+// default (also used when avatar is null).
 export const AVATAR_PRESETS = ['#F7DF02', '#1f9d4d', '#e0533d', '#3d7be0', '#9b59b6', '#e08f3d', '#16a3a3', '#d4488f']
 
 export function presetColor(key: string | null | undefined): string {

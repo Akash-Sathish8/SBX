@@ -1,161 +1,57 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { env } from 'cloudflare:workers'
-import type { Experience, SportsVenue } from '#/lib/data-types'
-import { parseBody } from '#/lib/server/middleware'
-import EXPERIENCES_RAW from '../../../data/experiences.json'
-import VENUES_RAW from '../../../data/venues.json'
+import { getUserFromRequest } from '../../server/auth'
+import { dbAssistantRateBump } from '../../server/db'
+import { runAssistant, type AssistantTurn } from '../../server/assistant'
 
-const EXPERIENCES = EXPERIENCES_RAW as Experience[]
-const VENUES = VENUES_RAW as SportsVenue[]
+// POST /api/assistant — grounded chat about one venue or game. Auth-gated (the
+// model costs money) and per-user rate-limited. The client sends the running
+// conversation; we validate it (the trust boundary) before handing it to Claude.
+const noStore = { 'Cache-Control': 'no-store' }
+const SCOPES = new Set(['venue', 'event', 'general'])
+const isTarget = (s: any) => typeof s === 'string' && /^[a-z0-9:_-]{1,40}$/i.test(s)
+const HOURLY_LIMIT = 30
 
-const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
-const MODEL = 'claude-sonnet-4-6'
-const MAX_TOKENS = 512
-
-// ---------------------------------------------------------------------------
-// Build system prompt based on context
-// ---------------------------------------------------------------------------
-
-function buildSystemPrompt(
-  context: string,
-  entityId?: string | null,
-): string {
-  if (context === 'venue') {
-    const venue = entityId ? VENUES.find(v => v.id === entityId || v.slug === entityId) : null
-    const experience = entityId
-      ? EXPERIENCES.find(e => e.venue_id === (venue?.id ?? entityId))
-      : null
-
-    const venueName = venue?.name ?? 'this stadium'
-    const city = venue ? `${venue.city}, ${venue.state}` : ''
-    const review = experience?.review_body ?? ''
-    const tips = experience?.tips ?? []
-    const tipsText = tips
-      .map(([label, text]: [string, string]) => `- ${label}: ${text}`)
-      .join('\n')
-
-    return [
-      `You are a knowledgeable gameday guide for ${venueName}${city ? ` in ${city}` : ''}.`,
-      `You help fans plan their gameday experience with insider tips and practical advice.`,
-      review ? `\nExpert review:\n${review}` : '',
-      tipsText ? `\nKey tips:\n${tipsText}` : '',
-      `\nKeep responses concise and actionable. Focus on practical gameday advice.`,
-    ]
-      .filter(Boolean)
-      .join('\n')
+// Must be a non-empty, alternating user/assistant transcript that starts AND ends
+// with a user turn — otherwise the Messages API 400s. Cap length + size.
+function validMessages(raw: any): AssistantTurn[] | null {
+  if (!Array.isArray(raw) || raw.length < 1 || raw.length > 20) return null
+  const out: AssistantTurn[] = []
+  for (let i = 0; i < raw.length; i++) {
+    const role = raw[i]?.role
+    const content = typeof raw[i]?.content === 'string' ? raw[i].content.trim() : ''
+    if (role !== (i % 2 === 0 ? 'user' : 'assistant')) return null
+    if (!content || content.length > 2000) return null
+    out.push({ role, content })
   }
-
-  if (context === 'game') {
-    // Try to look up the venue for this game entity
-    const venue = entityId ? VENUES.find(v => v.id === entityId || v.slug === entityId) : null
-    const venueName = venue?.name ?? 'the stadium'
-    return [
-      `You are helping a fan plan for a game at ${venueName}.`,
-      `Provide practical advice about attending the game: parking, arrival time, what to bring, seating tips, and nearby food/bars.`,
-      `Keep responses concise and friendly.`,
-    ].join('\n')
-  }
-
-  // general
-  return [
-    `You are Snapback's Field Guide assistant — an expert on the gameday experience at sports venues across the US.`,
-    `You help fans find the best seats, food, parking, and gameday traditions at stadiums and arenas.`,
-    `Keep responses concise, friendly, and focused on actionable advice.`,
-  ].join('\n')
+  if (out[out.length - 1].role !== 'user') return null
+  return out
 }
-
-// ---------------------------------------------------------------------------
-// Route
-// ---------------------------------------------------------------------------
 
 export const Route = createFileRoute('/api/assistant')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        try {
-          const body = await parseBody<{
-            context?: string
-            entity_id?: string
-            message: string
-          }>(request)
+        const user = await getUserFromRequest(request)
+        if (!user) return Response.json({ ok: false, error: 'Sign in to use the assistant.' }, { status: 401, headers: noStore })
 
-          if (!body) {
-            return new Response(JSON.stringify({ error: 'Invalid JSON body' }), {
-              status: 400,
-              headers: { 'Content-Type': 'application/json' },
-            })
-          }
+        let body: any
+        try { body = await request.json() } catch { return Response.json({ ok: false, error: 'Invalid request.' }, { status: 400, headers: noStore }) }
 
-          const { context = 'general', entity_id, message } = body
+        const scope = String(body?.scope ?? '')
+        const targetId = body?.targetId != null ? String(body.targetId) : ''
+        if (!SCOPES.has(scope)) return Response.json({ ok: false, error: 'Bad request.' }, { status: 400, headers: noStore })
+        if (scope !== 'general' && !isTarget(targetId)) return Response.json({ ok: false, error: 'Bad request.' }, { status: 400, headers: noStore })
+        const messages = validMessages(body?.messages)
+        if (!messages) return Response.json({ ok: false, error: 'Bad request.' }, { status: 400, headers: noStore })
 
-          if (!message || typeof message !== 'string' || message.trim().length === 0) {
-            return new Response(JSON.stringify({ error: 'message is required' }), {
-              status: 400,
-              headers: { 'Content-Type': 'application/json' },
-            })
-          }
+        // Per-user hourly rate limit (counts attempts, including failures).
+        const bucket = new Date().toISOString().slice(0, 13) // 'YYYY-MM-DDTHH'
+        const count = await dbAssistantRateBump(user.id, bucket)
+        if (count > HOURLY_LIMIT) return Response.json({ ok: false, error: "You've hit the hourly limit for the assistant — try again later." }, { status: 429, headers: noStore })
 
-          if (message.length > 1000) {
-            return new Response(JSON.stringify({ error: 'message must be 1000 characters or fewer' }), {
-              status: 400,
-              headers: { 'Content-Type': 'application/json' },
-            })
-          }
-
-          const apiKey = (env as any).ANTHROPIC_API_KEY
-          if (!apiKey) {
-            return new Response(
-              JSON.stringify({ error: 'Assistant service unavailable' }),
-              { status: 503, headers: { 'Content-Type': 'application/json' } },
-            )
-          }
-
-          const systemPrompt = buildSystemPrompt(context, entity_id)
-
-          // Forward as an SSE stream directly to the client
-          const anthropicResponse = await fetch(ANTHROPIC_API_URL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-api-key': apiKey,
-              'anthropic-version': '2023-06-01',
-            },
-            body: JSON.stringify({
-              model: MODEL,
-              max_tokens: MAX_TOKENS,
-              stream: true,
-              system: systemPrompt,
-              messages: [
-                { role: 'user', content: message.trim() },
-              ],
-            }),
-          })
-
-          if (!anthropicResponse.ok) {
-            const errBody = await anthropicResponse.text()
-            console.error('[assistant] Anthropic error', anthropicResponse.status, errBody)
-            return new Response(
-              JSON.stringify({ error: 'Assistant request failed' }),
-              { status: 502, headers: { 'Content-Type': 'application/json' } },
-            )
-          }
-
-          // Forward the SSE stream directly to the client
-          return new Response(anthropicResponse.body, {
-            status: 200,
-            headers: {
-              'Content-Type': 'text/event-stream',
-              'Cache-Control': 'no-cache',
-              'X-Accel-Buffering': 'no',
-            },
-          })
-        } catch (err) {
-          console.error('[assistant] error', err)
-          return new Response(
-            JSON.stringify({ error: 'Assistant failed' }),
-            { status: 500, headers: { 'Content-Type': 'application/json' } },
-          )
-        }
+        const result = await runAssistant(scope as 'venue' | 'event' | 'general', scope === 'general' ? undefined : targetId, messages)
+        if (!result.ok) return Response.json({ ok: false, error: result.error }, { status: result.status, headers: noStore })
+        return Response.json({ ok: true, reply: result.reply }, { headers: noStore })
       },
     },
   },

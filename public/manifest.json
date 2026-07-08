@@ -1,6 +1,6 @@
 {
-  "short_name": "Snapback",
-  "name": "Snapback — Casey's World Cup 2026 Tracker",
+  "short_name": "TanStack App",
+  "name": "Create TanStack App Sample",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#141414",
-  "background_color": "#141414"
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }

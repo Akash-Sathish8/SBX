@@ -1,154 +1,190 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
-import VENUES_DATA from '../../data/venues.json'
-import type { SportsVenue } from '../lib/data-types'
-
-const ALL_VENUES = VENUES_DATA as SportsVenue[]
-
-const PAGE_SIZE = 24
+import { PageCssGuard } from '../components/PageCssGuard'
+import { SearchBox } from '../components/SearchBox'
+import { getJSON, intentWarm, warmImage } from '../lib/dataCache'
+import { SPORTS, LEAGUES, COLLEGE_LEAGUES, type League } from '../lib/sports'
+import { cardImg } from '../lib/img'
+import type { Venue } from '../lib/espn'
+import css from '../pages/venues.css?url'
+import searchCss from '../pages/searchbox.css?url'
 
 export const Route = createFileRoute('/venues')({
-  head: () => ({ meta: [{ title: 'Snapback Field Guide — Venues' }] }),
-  component: VenuesPage,
+  head: () => ({
+    links: [
+      { rel: 'stylesheet', href: css, 'data-page-css': 'venues' },
+      { rel: 'stylesheet', href: searchCss, 'data-page-css': 'home venues' },
+    ],
+    meta: [{ title: 'Snapback — Venues' }],
+  }),
+  component: Venues,
 })
 
-const LEAGUES = ['All', 'NFL', 'MLB', 'NBA', 'NHL', 'CFB', 'CBB'] as const
+const hasLeague = (v: Venue, l: League) => v.teams.some((t) => t.league === l)
+const leagueTags = (v: Venue) => [...new Set(v.teams.map((t) => SPORTS[t.league].label))].join(' · ')
+// Dedupe tenants by team id for DISPLAY — a school that plays two sports at one
+// building (e.g. Syracuse football + basketball at the Carrier Dome) is listed
+// once per league in the data (for filtering) but should show once on the card.
+const uniqTeams = (v: Venue) => [...new Map(v.teams.map((t) => [t.id, t])).values()]
 
-function VenueCard({ v }: { v: SportsVenue }) {
-  return (
-    <Link to="/venue/$id" params={{ id: v.id }} className="no-underline group block">
-      <div className="bg-white border-[3px] border-[#222] shadow-[4px_4px_0_#222] rounded-[8px] overflow-hidden [transition:transform_.12s,box-shadow_.12s] group-hover:-translate-x-px group-hover:-translate-y-px group-hover:shadow-[6px_6px_0_#f7df02]">
-        {v.hero_url ? (
-          <img src={v.hero_url} alt={v.name} className="w-full h-[148px] object-cover" loading="lazy" />
-        ) : (
-          <div className="w-full h-[148px] bg-[#222] flex items-center justify-center">
-            <span className="font-display text-[40px] text-[#444]">{v.name[0]}</span>
-          </div>
-        )}
-        <div className="p-4">
-          <div className="font-display text-[16px] uppercase tracking-[0.5px] text-ink leading-tight">{v.name}</div>
-          <div className="font-body text-[12px] text-[#666] mt-1">{v.city}, {v.state}</div>
-          <div className="flex items-center gap-2 mt-2 flex-wrap">
-            {v.leagues?.slice(0, 3).map(l => (
-              <span key={l} className="text-[10px] font-bold uppercase tracking-[0.5px] text-ink bg-brand-yellow px-1.5 py-0.5 rounded">{l}</span>
-            ))}
-          </div>
-          {v.capacity > 0 && (
-            <div className="font-body text-[11px] text-[#999] mt-2">Cap. {v.capacity.toLocaleString()}</div>
-          )}
-          {v.snapback_score > 0 && (
-            <div className="flex items-center gap-2 mt-2">
-              <span className="font-body text-[11px] text-[#666]">Snapback</span>
-              <span className="font-display text-[18px] text-ink">{v.snapback_score.toFixed(1)}</span>
-            </div>
-          )}
-        </div>
-      </div>
-    </Link>
+function Venues() {
+  const [all, setAll] = useState<Venue[] | null>(null)
+  const [err, setErr] = useState<string | null>(null)
+  const [filter, setFilter] = useState<'all' | League>('all')
+  const [conf, setConf] = useState<string | null>(null)
+  // Explore-first: the grid renders only after a sport choice or an explicit
+  // "browse all" — never the raw 601-card list on first paint.
+  const [browseAll, setBrowseAll] = useState(false)
+  // Progressive reveal — 601 cards (each a background-image fetch) is too heavy
+  // to mount at once, especially on mobile.
+  const PAGE = 24
+  const [shown, setShown] = useState(PAGE)
+
+  useEffect(() => {
+    let alive = true
+    getJSON('/api/venues')
+      .then((r: any) => { if (alive) setAll(Array.isArray(r?.data) ? r.data : []) })
+      .catch(() => { if (alive) setErr("Couldn't load venues.") })
+    return () => { alive = false }
+  }, [])
+
+
+  const isCollege = filter === 'college-football' || filter === 'college-basketball'
+  const browsing = filter !== 'all' || browseAll
+  const list = useMemo(
+    () => (all
+      ? all.filter((v) =>
+        (filter === 'all' || hasLeague(v, filter)) &&
+        (!conf || v.teams.some((t) => t.league === filter && t.conference === conf)))
+      : []),
+    [all, filter, conf],
   )
-}
+  const count = (l: League) => (all ? all.filter((v) => hasLeague(v, l)).length : 0)
+  // Conferences present for the active college sport (short name + venue count).
+  const confList = useMemo(() => {
+    if (!all || !isCollege) return []
+    const m = new Map<string, { short: string; n: number }>()
+    for (const v of all) {
+      const t = v.teams.find((x) => x.league === filter && x.conference)
+      if (!t?.conference) continue
+      const e = m.get(t.conference) || { short: t.conferenceShort || t.conference, n: 0 }
+      e.n++; m.set(t.conference, e)
+    }
+    return [...m.entries()].map(([name, x]) => ({ name, short: x.short, n: x.n })).sort((a, b) => a.short.localeCompare(b.short))
+  }, [all, filter, isCollege])
+  const pill = (k: string) => 'pill' + (filter === k ? ' on' : '')
+  const pickFilter = (f: 'all' | League) => { setFilter(f); setConf(null); setShown(PAGE); if (f !== 'all') setBrowseAll(false) }
 
-function VenuesPage() {
-  const [activeLeague, setActiveLeague] = useState<typeof LEAGUES[number]>('All')
-  const [query, setQuery] = useState('')
-  const [visible, setVisible] = useState(PAGE_SIZE)
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    return ALL_VENUES.filter(v => {
-      const matchLeague = activeLeague === 'All' || v.leagues?.includes(activeLeague)
-      const matchQuery = !q ||
-        v.name.toLowerCase().includes(q) ||
-        v.city.toLowerCase().includes(q) ||
-        v.state.toLowerCase().includes(q) ||
-        v.teams?.some(t => t.toLowerCase().includes(q))
-      return matchLeague && matchQuery
-    })
-  }, [activeLeague, query])
-
-  const shown = filtered.slice(0, visible)
+  const visible = browsing ? list.slice(0, shown) : []
+  // Warm the photos for the visible slice so cards paint instantly.
+  useEffect(() => {
+    for (const v of visible) { const s = cardImg(v.image); if (s) warmImage(s) }
+  }, [visible])
 
   return (
     <>
+      <PageCssGuard id="venues" />
       <SiteNav active="venues" />
-
-      <section className="grid-overlay bg-[#222] text-white pt-[44px] pb-[38px] relative overflow-hidden">
-        <div className="container relative z-[1] max-w-[1180px] mx-auto px-[28px]">
-          <div className="eyebrow inline-flex items-center gap-[9px] font-bold text-[12px] tracking-[1.4px] uppercase text-ink bg-brand-yellow px-[13px] py-[6px] rounded-[3px] shadow-[4px_4px_0_#000] mb-[14px]">
-            {ALL_VENUES.length} venues · 6 sports · all of America
-          </div>
-          <h1 className="font-display uppercase text-white tracking-[1px] leading-none text-[clamp(40px,6vw,80px)]">
-            American <span className="bg-brand-yellow text-ink px-[10px] shadow-[5px_5px_0_#000] inline-block">venues</span>
-          </h1>
-          <p className="text-[#d6d6d6] text-[16px] mt-4 max-w-[560px]">
-            Every major sports venue in North America — NFL, MLB, NBA, NHL, CFB, and CBB. Ranked and reviewed by fans.
-          </p>
+      <section className="head">
+        <div className="container">
+          <div className="eyebrow">NFL · NBA · MLB · NHL · every home ground</div>
+          <h1>Every <span className="hl">venue</span></h1>
+          <SearchBox placeholder="Search a venue, team, or city…" />
+          {browsing ? (
+            <>
+              <div className="tally" id="tally">
+                <button className={'pill' + (browseAll && filter === 'all' ? ' on' : '')} onClick={() => { pickFilter('all'); setBrowseAll(true) }}>All venues</button>
+                {[...LEAGUES, ...COLLEGE_LEAGUES].map((l) => (
+                  <button key={l} className={pill(l)} onClick={() => pickFilter(l)}><b>{all ? count(l) : '—'}</b> {SPORTS[l].label}</button>
+                ))}
+              </div>
+              {isCollege && confList.length ? (
+                <div className="confrow">
+                  <button className={'cchip' + (conf === null ? ' on' : '')} onClick={() => { setConf(null); setShown(PAGE) }}>All conferences</button>
+                  {confList.map((c) => (
+                    <button key={c.name} className={'cchip' + (conf === c.name ? ' on' : '')} onClick={() => { setConf(c.name); setShown(PAGE) }}><b>{c.n}</b> {c.short}</button>
+                  ))}
+                </div>
+              ) : null}
+            </>
+          ) : null}
         </div>
       </section>
 
-      <section className="py-[46px] bg-[#f4f4f4]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
+      {!browsing ? (
+        <section className="block">
+          <div className="container">
+            <div className="entry-hd"><h2>Explore by sport</h2><span className="entry-sub">Pick a league to browse its buildings</span></div>
+            {all === null && !err ? <div className="loading">Loading venues…</div> : null}
+            {err ? <div className="empty">{err}</div> : null}
+            {all !== null && !err ? (
+              <>
+                <div className="sptiles">
+                  {[...LEAGUES, ...COLLEGE_LEAGUES].map((l) => (
+                    <button key={l} className="sptile" style={{ ['--acc' as any]: SPORTS[l].accent }} onClick={() => pickFilter(l)}>
+                      <span className="sp-lg">{SPORTS[l].label}</span>
+                      <span className="sp-n"><b>{count(l)}</b> venues</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="browseall-row">
+                  <button className="pill loadmore" onClick={() => { setBrowseAll(true); setShown(PAGE) }}>Browse all {all.length} venues A–Z →</button>
+                </div>
+              </>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
-          {/* Controls */}
-          <div className="flex flex-col gap-4 mb-8 md:flex-row md:items-center">
-            <div className="flex gap-2 flex-wrap">
-              {LEAGUES.map(l => (
-                <button
-                  key={l}
-                  onClick={() => { setActiveLeague(l); setVisible(PAGE_SIZE) }}
-                  className={`px-[14px] py-[7px] border-[2px] font-body font-bold text-[12px] uppercase tracking-[0.5px] cursor-pointer rounded-full [transition:background_.1s,color_.1s,border-color_.1s] ${l === activeLeague ? 'bg-ink text-white border-ink' : 'bg-white text-ink border-[#222] hover:border-ink'}`}
-                >
-                  {l}
-                </button>
+      {browsing ? (
+      <section className="block">
+        <div className="container">
+          <button className="backexplore" onClick={() => { setBrowseAll(false); pickFilter('all') }}>← Explore by sport</button>
+          {all === null && !err ? <div className="loading">Loading venues…</div> : null}
+          {err ? <div className="empty">{err}</div> : null}
+          {all !== null && !err && list.length === 0 ? (
+            <div className="empty">No venues here.</div>
+          ) : null}
+          {all !== null && !err && list.length > 0 ? (
+            <div className="grid" id="grid">
+              {visible.map((v) => (
+                <Link key={v.id} className="vcard" to="/venue" search={{ id: v.id }} {...intentWarm(() => { if (v.image) warmImage(v.image); const lg = v.teams[0]?.logo; if (lg) warmImage(lg) })}>
+                  <div className={'photo' + (v.image ? ' has-img' : ' vphoto')} style={v.image ? { backgroundImage: `url('${cardImg(v.image)}')` } : undefined}>
+                    {!v.image ? (
+                      <div className="vlogos">
+                        {uniqTeams(v).slice(0, 4).map((t) => (t.logo ? <img key={t.id} className="vlogo" src={t.logo} alt={t.displayName} loading="lazy" decoding="async" /> : null))}
+                      </div>
+                    ) : null}
+                    <span className="role">{leagueTags(v)}</span>
+                    {v.city ? <span className="citytag">{v.city}</span> : null}
+                    {v.image ? (
+                      <span className="vlogo-badge">
+                        {uniqTeams(v).slice(0, 3).map((t) => (t.logo ? <img key={t.id} src={t.logo} alt={t.displayName} loading="lazy" /> : null))}
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="body">
+                    <div className="name">{v.name}</div>
+                    <div className="meta">{uniqTeams(v).map((t) => t.displayName).join(' · ')}</div>
+                  </div>
+                </Link>
               ))}
             </div>
-            <input
-              type="search"
-              placeholder="Search venues, cities..."
-              value={query}
-              onChange={e => { setQuery(e.target.value); setVisible(PAGE_SIZE) }}
-              className="flex-1 border-[2px] border-[#222] rounded-[6px] shadow-[3px_3px_0_#222] px-4 py-2.5 font-body text-[14px] bg-white outline-none focus:shadow-[5px_5px_0_#222] [transition:box-shadow_.1s] md:max-w-[320px]"
-            />
-          </div>
-
-          {/* Count */}
-          <div className="text-[11px] font-bold uppercase tracking-[1px] text-[#999] mb-6">
-            {filtered.length} venue{filtered.length !== 1 ? 's' : ''}
-            {activeLeague !== 'All' && ` · ${activeLeague}`}
-          </div>
-
-          {/* Grid */}
-          {ALL_VENUES.length === 0 ? (
-            <div className="py-12 text-center text-[#999] font-body text-[15px]">
-              Venue database loading... check back soon.
+          ) : null}
+          {all !== null && !err && list.length > shown ? (
+            <div className="loadmore-row">
+              <button className="pill loadmore" onClick={() => setShown((n) => n + PAGE * 2)}>
+                Show more · {list.length - shown} left
+              </button>
             </div>
-          ) : shown.length === 0 ? (
-            <div className="py-12 text-center text-[#999] font-body text-[14px]">
-              No venues found{query ? ` for "${query}"` : ''}.
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-3 gap-[22px] max-[900px]:grid-cols-2 max-[580px]:grid-cols-1">
-                {shown.map(v => <VenueCard key={v.id} v={v} />)}
-              </div>
-              {visible < filtered.length && (
-                <button
-                  onClick={() => setVisible(v => v + PAGE_SIZE)}
-                  className="w-full mt-8 py-3 border-[3px] border-[#222] bg-white font-body font-bold text-[14px] uppercase tracking-[0.5px] shadow-[4px_4px_0_#222] cursor-pointer hover:-translate-y-px hover:shadow-[6px_6px_0_#222] [transition:transform_.1s,box-shadow_.1s]"
-                >
-                  Show {Math.min(PAGE_SIZE, filtered.length - visible)} more
-                </button>
-              )}
-            </>
-          )}
+          ) : null}
         </div>
       </section>
+      ) : null}
 
-      <footer className="bg-black text-[#888] py-[40px] text-[13px]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
-          © 2025 Snapback Sports — Field Guide. <Link to="/" className="text-brand-yellow font-bold">← Home</Link>
-        </div>
+      <footer>
+        <div className="container">© 2026 Snapback Sports — Venues. <Link to="/">← Experiences</Link></div>
       </footer>
     </>
   )

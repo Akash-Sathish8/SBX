@@ -1,0 +1,87 @@
+/* Global auth styles — imported UNTAGGED in __root.tsx so PageCssGuard never
+   disables them (the modal must work on every page). All selectors are scoped
+   under .sbx-auth / .sbx-saveprompt with a self-contained --y fallback so they
+   don't depend on (or leak into) any per-route stylesheet. */
+
+.sbx-auth { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: flex-end; justify-content: center; }
+@media (min-width: 560px) { .sbx-auth { align-items: center; } }
+.sbx-auth-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, .62); backdrop-filter: blur(2px); }
+.sbx-auth-sheet {
+  position: relative; width: 100%; max-width: 480px; background: #1d1d1f; color: #fff;
+  border-radius: 22px 22px 0 0; padding: 30px 26px calc(30px + env(safe-area-inset-bottom));
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, .5); animation: sbx-auth-up .22s ease;
+  /* never run off-screen on a short viewport — cap to it and scroll inside the sheet */
+  max-height: 94vh; max-height: 94dvh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+}
+@media (min-width: 560px) {
+  .sbx-auth-sheet { border-radius: 22px; margin: 20px; max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); animation: sbx-auth-pop .18s ease; }
+}
+@keyframes sbx-auth-up { from { transform: translateY(26px); opacity: .5; } to { transform: none; opacity: 1; } }
+@keyframes sbx-auth-pop { from { transform: scale(.96); opacity: .5; } to { transform: none; opacity: 1; } }
+
+.sbx-auth-x {
+  position: absolute; top: 14px; right: 16px; width: 34px; height: 34px; border: 0; background: transparent;
+  color: #9a9a9a; font-size: 26px; line-height: 1; cursor: pointer; border-radius: 8px;
+}
+.sbx-auth-x:hover { color: #fff; background: #2c2c2e; }
+.sbx-auth-head { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 2px 0 22px; }
+.sbx-auth-logo { width: 34px; height: 34px; border-radius: 8px; box-shadow: 3px 3px 0 0 #000; flex: 0 0 auto; }
+.sbx-auth .sbx-auth-h {
+  font-family: 'Anton', 'Barlow', sans-serif; text-transform: uppercase; letter-spacing: 1px;
+  text-align: center; font-size: 30px; margin: 0; color: #fff;
+}
+.sbx-auth-form { display: flex; flex-direction: column; gap: 14px; }
+.sbx-auth-input {
+  width: 100%; background: #2a2a2c; border: 1.5px solid #3a3a3c; border-radius: 14px; padding: 16px 18px;
+  font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 600; color: #fff; outline: none;
+}
+.sbx-auth-input::placeholder { color: #8a8a8e; font-weight: 500; }
+.sbx-auth-input:focus { border-color: #F7DF02; }
+.sbx-auth-submit {
+  margin-top: 6px; width: 100%; background: #F7DF02; color: #111; border: 0; border-radius: 14px; padding: 17px;
+  font-family: 'Barlow', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: .6px;
+  font-size: 16px; cursor: pointer;
+}
+.sbx-auth-submit:disabled { opacity: .6; cursor: default; }
+.sbx-auth-submit:not(:disabled):hover { filter: brightness(1.04); }
+.sbx-auth-err {
+  background: #3a1d1d; border: 1px solid #7a2a2a; color: #ffb4b4; border-radius: 10px; padding: 10px 12px;
+  font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 600; text-align: center;
+}
+.sbx-auth-note { color: #d8d29a; font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 600; text-align: center; }
+.sbx-auth-link {
+  display: block; width: 100%; background: transparent; border: 0; color: #F7DF02;
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; padding: 12px 0 2px; text-align: center;
+}
+.sbx-auth-link:hover { text-decoration: underline; }
+.sbx-auth-or {
+  display: flex; align-items: center; gap: 12px; color: #8a8a8e; font-weight: 800; font-size: 12px;
+  letter-spacing: 1px; margin: 12px 0;
+}
+.sbx-auth-or::before, .sbx-auth-or::after { content: ""; flex: 1; height: 1px; background: #3a3a3c; }
+.sbx-auth-google {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; background: #fff; color: #1f1f1f;
+  border: 1px solid #dadce0; border-radius: 14px; padding: 16px; font-family: 'Barlow', sans-serif; font-weight: 700;
+  font-size: 16px; cursor: pointer; margin-bottom: 10px;
+}
+.sbx-auth-google:hover { background: #f7f8f8; }
+.sbx-auth-google:disabled { opacity: .6; cursor: default; }
+.sbx-auth-google svg { width: 18px; height: 18px; }
+
+/* Save-rankings nudge — inline card on /rank */
+.sbx-saveprompt {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  background: #1d1d1f; color: #fff; border: 3px solid #111; border-radius: 12px; box-shadow: 6px 6px 0 0 #F7DF02;
+  padding: 16px 20px; margin-bottom: 22px;
+}
+.sbx-sp-copy { display: flex; flex-direction: column; gap: 3px; min-width: 200px; flex: 1; }
+.sbx-sp-copy strong { font-family: 'Anton', 'Barlow', sans-serif; text-transform: uppercase; letter-spacing: .6px; font-size: 18px; }
+.sbx-sp-copy span { color: #c9c9cc; font-family: 'Barlow', sans-serif; font-size: 13.5px; font-weight: 500; }
+.sbx-sp-actions { display: flex; align-items: center; gap: 10px; }
+.sbx-sp-go {
+  background: #F7DF02; color: #111; border: 0; border-radius: 9px; padding: 11px 18px; font-family: 'Barlow', sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: .5px; font-size: 13px; cursor: pointer; white-space: nowrap;
+}
+.sbx-sp-later { background: transparent; border: 0; color: #a9a9ad; font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; padding: 8px; }
+.sbx-sp-later:hover { color: #fff; }
+@media (max-width: 520px) { .sbx-saveprompt { flex-direction: column; align-items: stretch; } .sbx-sp-actions { justify-content: space-between; } }

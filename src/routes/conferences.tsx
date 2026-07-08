@@ -1,126 +1,115 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
-import CONFERENCES_DATA from '../../data/conferences.json'
-import type { Conference } from '../lib/data-types'
+import { PageCssGuard } from '../components/PageCssGuard'
+import { getJSON } from '../lib/dataCache'
+import css from '../pages/conferences.css?url'
 
-const CONFERENCES = CONFERENCES_DATA as Conference[]
+// Every NCAA D1 conference + its schools, by sport. Football = FBS (incl. Notre
+// Dame under "FBS Independents"); Basketball = all D1 men's. Data is sourced from
+// ESPN via the ingest — nothing is hand-typed.
+type CollegeLeague = 'college-football' | 'college-basketball'
+interface ConfTeam { id: string; abbr: string; displayName: string; location: string; logo?: string }
+interface Conference { id: string; name: string; shortName?: string; teams: ConfTeam[] }
 
 export const Route = createFileRoute('/conferences')({
-  validateSearch: (s: Record<string, unknown>) => ({
-    sport: (s.sport as string) ?? 'CFB',
+  head: () => ({
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'conferences' }],
+    meta: [{ title: 'Snapback — College Conferences' }],
   }),
-  head: () => ({ meta: [{ title: 'Snapback — Conferences' }] }),
   component: ConferencesPage,
 })
 
+const TABS: { key: CollegeLeague; label: string }[] = [
+  { key: 'college-football', label: 'Football · FBS' },
+  { key: 'college-basketball', label: 'Basketball' },
+]
+
 function ConferencesPage() {
-  const { sport } = Route.useSearch()
-  const [search, setSearch] = useState('')
+  const [league, setLeague] = useState<CollegeLeague>('college-football')
+  const [data, setData] = useState<Conference[] | null>(null)
+  const [err, setErr] = useState<string | null>(null)
+  const [q, setQ] = useState('')
 
-  const filtered = useMemo(() => {
-    const term = search.trim().toLowerCase()
-    return CONFERENCES
-      .filter(c => c.sport === sport)
-      .filter(c =>
-        !term ||
-        c.name.toLowerCase().includes(term) ||
-        c.members.some(m => m.name.toLowerCase().includes(term))
-      )
-  }, [sport, search])
+  useEffect(() => {
+    let alive = true
+    setData(null); setErr(null)
+    getJSON<{ ok: boolean; data: Conference[] }>('/api/conferences?league=' + league)
+      .then((r) => { if (alive) setData(Array.isArray(r?.data) ? r.data : []) })
+      .catch(() => { if (alive) setErr("Couldn't load conferences.") })
+    return () => { alive = false }
+  }, [league])
 
-  const totalSchools = useMemo(() =>
-    filtered.reduce((n, c) => n + c.members.length, 0),
-    [filtered]
-  )
+  // Filter: a conference matches by its name (keep all its schools) or by any
+  // school name (keep just the matches).
+  const list = useMemo(() => {
+    if (!data) return []
+    const needle = q.trim().toLowerCase()
+    if (!needle) return data
+    return data
+      .map((c) => {
+        if ((c.name + ' ' + (c.shortName || '')).toLowerCase().includes(needle)) return c
+        return { ...c, teams: c.teams.filter((t) => (t.displayName + ' ' + t.location + ' ' + t.abbr).toLowerCase().includes(needle)) }
+      })
+      .filter((c) => c.teams.length)
+  }, [data, q])
+
+  const totalSchools = useMemo(() => (data ? data.reduce((s, c) => s + c.teams.length, 0) : 0), [data])
 
   return (
     <>
-      <SiteNav active="conferences" />
-
-      <section className="grid-overlay bg-[#222] text-white pt-[44px] pb-[38px] relative overflow-hidden">
-        <div className="container relative z-[1] max-w-[1180px] mx-auto px-[28px]">
-          <div className="eyebrow inline-flex items-center gap-[9px] font-bold text-[13px] tracking-[1.4px] uppercase text-ink bg-brand-yellow px-[13px] py-[6px] rounded-[3px] shadow-[4px_4px_0_#000] mb-[14px]">
-            {totalSchools} schools · {filtered.length} conferences
-          </div>
-          <h1 className="font-display uppercase text-white tracking-[1px] leading-none text-[clamp(44px,6.4vw,84px)]">
-            <span className="hl bg-brand-yellow text-ink px-[10px] shadow-[5px_5px_0_#000] inline-block">Conferences</span>
-          </h1>
-
-          <div className="flex gap-3 mt-6">
-            {(['CFB', 'CBB'] as const).map(s => (
-              <Link
-                key={s}
-                to="/conferences"
-                search={{ sport: s }}
-                className={`inline-flex items-center border-[3px] border-[#222] rounded-[6px] shadow-[4px_4px_0_#222] px-[14px] py-[8px] font-body font-bold text-[13px] uppercase tracking-[0.4px] no-underline [transition:transform_.1s,box-shadow_.1s,background_.12s] hover:-translate-x-px hover:-translate-y-px ${s === sport ? 'bg-brand-yellow text-ink' : 'bg-white text-ink'}`}
-              >
-                {s === 'CFB' ? 'Football' : 'Basketball'}
-              </Link>
+      <PageCssGuard id="conferences" />
+      <SiteNav />
+      <section className="chead">
+        <div className="container">
+          <div className="eyebrow">NCAA Division I</div>
+          <h1>Every <span className="hl">conference</span></h1>
+          <p className="csub">
+            Every D1 {league === 'college-football' ? 'FBS football' : "men's basketball"} conference and the
+            schools in it{data ? ` · ${data.length} conferences · ${totalSchools} schools` : ''}.
+          </p>
+          <div className="ctabs">
+            {TABS.map((t) => (
+              <button key={t.key} className={'ctab' + (t.key === league ? ' on' : '')} onClick={() => { setLeague(t.key); setQ('') }}>{t.label}</button>
             ))}
           </div>
+          <label className="csearch">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search a school or conference…" aria-label="Search schools or conferences" />
+          </label>
         </div>
       </section>
 
-      <section className="py-[46px] bg-[#f4f4f4]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
-          <div className="mb-6">
-            <input
-              type="search"
-              placeholder="Search conferences or schools..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full max-w-[400px] border-[3px] border-[#222] rounded-[6px] shadow-[4px_4px_0_#222] px-4 py-3 font-body text-[15px] bg-white outline-none focus:shadow-[6px_6px_0_#222] [transition:box-shadow_.1s]"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map(conf => (
-              <div
-                key={conf.id}
-                className="bg-white border-[3px] border-[#222] shadow-[4px_4px_0_#222] rounded-[8px] overflow-hidden"
-              >
-                <div className="bg-ink text-white px-5 py-4 flex items-center justify-between">
-                  <div>
-                    <div className="font-display text-[16px] uppercase tracking-[1px]">{conf.name}</div>
-                    <div className="font-body text-[11px] text-[#999] mt-0.5">{conf.members.length} schools</div>
+      <section className="cblock">
+        <div className="container">
+          {data === null && !err ? <div className="cloading">Loading conferences…</div> : null}
+          {err ? <div className="cempty">{err}</div> : null}
+          {data !== null && !err ? (
+            list.length ? (
+              list.map((c) => (
+                <div key={c.id} className="conf">
+                  <div className="conf-h">
+                    <h2>{c.name}</h2>
+                    <span className="conf-n">{c.teams.length}</span>
                   </div>
-                  <span className="font-body font-bold text-[11px] text-ink bg-brand-yellow px-[8px] py-[4px] rounded-[3px]">
-                    {conf.abbr}
-                  </span>
-                </div>
-                <div className="p-4">
-                  <div className="grid grid-cols-2 gap-1">
-                    {conf.members
-                      .filter(m => !search.trim() || m.name.toLowerCase().includes(search.toLowerCase()))
-                      .map(m => (
-                        <Link
-                          key={m.id}
-                          to="/team/$id"
-                          params={{ id: m.id }}
-                          className="font-body text-[12px] text-[#444] hover:text-ink no-underline hover:underline truncate py-0.5"
-                        >
-                          {m.name}
-                        </Link>
-                      ))
-                    }
+                  <div className="schools">
+                    {c.teams.map((t) => (
+                      <div key={t.id} className="school">
+                        {t.logo ? <img className="school-logo" src={t.logo} alt="" width={34} height={34} loading="lazy" /> : <span className="school-logo ph" aria-hidden="true" />}
+                        <span className="school-name">{t.displayName}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <p className="text-[#666] font-body text-[16px]">No conferences match "{search}"</p>
-          )}
+              ))
+            ) : (
+              <div className="cempty">No matches for “{q.trim()}”.</div>
+            )
+          ) : null}
         </div>
       </section>
 
-      <footer className="bg-black text-[#888] py-[40px] text-[13px]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
-          © 2025 Snapback Sports — Field Guide. <Link to="/" className="text-brand-yellow font-bold">← Home</Link>
-        </div>
-      </footer>
+      <footer><div className="container">© 2026 Snapback Sports — College conferences. <Link to="/">← Home</Link></div></footer>
     </>
   )
 }

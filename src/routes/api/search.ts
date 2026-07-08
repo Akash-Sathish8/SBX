@@ -1,106 +1,110 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { Experience, SportsVenue, Team } from '#/lib/data-types'
+import { dbSearchTeams, dbSearchVenues, dbSearchGames } from '../../server/db'
+import { tokenize, scoreMatch, gameBoost } from '@/lib/searchScore'
+import { LEAGUES, COLLEGE_LEAGUES } from '@/lib/sports'
+import experiencesData from '../../../public/data/experiences.json'
 
-// Build-time imports — bundled at compile time
-import EXPERIENCES_RAW from '../../../data/experiences.json'
-import VENUES_RAW from '../../../data/venues.json'
-import TEAMS_RAW from '../../../data/teams.json'
+// Free-text search across the four explorable entity types: teams, venues,
+// games (D1) and ranked experiences (experiences.json, statically bundled —
+// same idiom as assistantContext). No live-score overlay here: suggestion rows
+// show no scores and D1 `state` is at most ~2 min stale via cron.
+//   GET /api/search?q=<text>&limit=<1..20>&types=teams,venues,games,experiences
 
-const EXPERIENCES = EXPERIENCES_RAW as Experience[]
-const VENUES = VENUES_RAW as SportsVenue[]
-const TEAMS_ALL = TEAMS_RAW as Record<string, Team[]>
-
-// ---------------------------------------------------------------------------
-// Scoring helpers
-// ---------------------------------------------------------------------------
-
-function score(query: string, target: string): number {
-  const q = query.toLowerCase().trim()
-  const t = target.toLowerCase()
-  if (!q) return 0
-  if (t === q) return 10
-  if (t.startsWith(q)) return 7
-  const words = t.split(/\s+/)
-  if (words.some(w => w.startsWith(q))) return 5
-  if (t.includes(q)) return 2
-  return 0
+interface Exp {
+  rank: number
+  name: string
+  location: string
+  sport: string
+  final: number
+  image?: string | null
 }
 
-function scoreItem(query: string, fields: string[]): number {
-  return fields.reduce((best, f) => Math.max(best, score(query, f)), 0)
-}
+const ALL_TYPES = ['teams', 'venues', 'games', 'experiences'] as const
+type SearchType = (typeof ALL_TYPES)[number]
 
-// ---------------------------------------------------------------------------
-// Route
-// ---------------------------------------------------------------------------
+// Pro leagues in display order first, college after — mirrors the app's rails.
+const LEAGUE_ORDER: string[] = [...LEAGUES, ...COLLEGE_LEAGUES]
+const leagueRank = (l: string) => {
+  const i = LEAGUE_ORDER.indexOf(l)
+  return i === -1 ? LEAGUE_ORDER.length : i
+}
 
 export const Route = createFileRoute('/api/search')({
   server: {
     handlers: {
       GET: async ({ request }) => {
+        const url = new URL(request.url)
+        const q = (url.searchParams.get('q') ?? '').trim()
+        if (q.length < 2) {
+          return Response.json({ ok: false, error: 'q must be at least 2 characters' }, { status: 400 })
+        }
+        const tokens = tokenize(q)
+        const limit = Math.min(Math.max(Number(url.searchParams.get('limit')) || 5, 1), 20)
+        const typesParam = url.searchParams.get('types')
+        const types = new Set<SearchType>(
+          typesParam
+            ? (typesParam.split(',').map((t) => t.trim()).filter((t): t is SearchType => (ALL_TYPES as readonly string[]).includes(t)))
+            : ALL_TYPES,
+        )
+        if (!types.size) {
+          return Response.json({ ok: false, error: `types must be a subset of ${ALL_TYPES.join(',')}` }, { status: 400 })
+        }
+
+        const now = new Date()
+        const todayIso = now.toISOString().slice(0, 10)
+        const nowIso = now.toISOString()
+
         try {
-          const url = new URL(request.url)
-          const q = (url.searchParams.get('q') ?? '').trim()
-          const typeFilter = url.searchParams.get('type') ?? ''
-          const limitParam = parseInt(url.searchParams.get('limit') ?? '20', 10)
-          const limit = Number.isNaN(limitParam) ? 20 : Math.min(limitParam, 100)
-          const perGroup = Math.ceil(limit / 3)
+          const [teamRows, venueRows, gameRows] = await Promise.all([
+            types.has('teams') ? dbSearchTeams(tokens) : Promise.resolve([]),
+            types.has('venues') ? dbSearchVenues(tokens) : Promise.resolve([]),
+            types.has('games') ? dbSearchGames(tokens, todayIso) : Promise.resolve([]),
+          ])
 
-          if (!q) {
-            return Response.json({ results: { experiences: [], venues: [], teams: [], total: 0 } })
-          }
+          const teams = teamRows
+            .map((t) => ({ t, s: scoreMatch(`${t.displayName} ${t.location}`, tokens, { abbr: t.abbr }) }))
+            .filter((x) => x.s > 0)
+            .sort((a, b) => b.s - a.s || leagueRank(a.t.league) - leagueRank(b.t.league) || a.t.displayName.localeCompare(b.t.displayName))
+            .slice(0, limit)
+            .map((x) => x.t)
 
-          // Score experiences
-          const scoredExperiences = EXPERIENCES.map(exp => ({
-            item: exp,
-            score: scoreItem(q, [exp.venue_name, exp.exp_name, exp.team ?? '', exp.league]),
-          }))
-            .filter(x => x.score > 0)
-            .sort((a, b) => b.score - a.score)
+          const venues = venueRows
+            .map((v) => {
+              const hay = `${v.name} ${v.city ?? ''} ${v.state ?? ''} ${v.teams.map((t) => t.displayName).join(' ')}`
+              return { v, s: scoreMatch(hay, tokens) + (v.image ? 5 : 0) }
+            })
+            .filter((x) => x.s > 0)
+            .sort((a, b) => b.s - a.s || a.v.name.localeCompare(b.v.name))
+            .slice(0, limit)
+            .map((x) => x.v)
 
-          // Score venues
-          const scoredVenues = VENUES.map(v => ({
-            item: v,
-            score: scoreItem(q, [v.name, v.city, v.state, ...v.leagues, ...v.teams]),
-          }))
-            .filter(x => x.score > 0)
-            .sort((a, b) => b.score - a.score)
+          const games = gameRows
+            .map((g) => {
+              const hay = `${g.name} ${g.shortName} ${g.venueName ?? ''} ${g.venueCity ?? ''}`
+              return { g, s: scoreMatch(hay, tokens) + gameBoost(g.state, g.date, nowIso) }
+            })
+            .filter((x) => x.s > 0)
+            .sort((a, b) => b.s - a.s || (a.g.date < b.g.date ? -1 : 1))
+            .slice(0, limit)
+            .map((x) => x.g)
 
-          // Score teams (flatten all leagues)
-          const allTeams: Team[] = Object.values(TEAMS_ALL).flat()
-          const scoredTeams = allTeams
-            .map(t => ({
-              item: t,
-              score: scoreItem(q, [t.name, t.city, t.abbr, t.conference, t.division ?? '']),
-            }))
-            .filter(x => x.score > 0)
-            .sort((a, b) => b.score - a.score)
-
-          let experiences: Experience[] = []
-          let venues: SportsVenue[] = []
-          let teams: Team[] = []
-
-          if (typeFilter === 'experiences') {
-            experiences = scoredExperiences.slice(0, limit).map(x => x.item)
-          } else if (typeFilter === 'venues') {
-            venues = scoredVenues.slice(0, limit).map(x => x.item)
-          } else if (typeFilter === 'teams') {
-            teams = scoredTeams.slice(0, limit).map(x => x.item)
-          } else {
-            experiences = scoredExperiences.slice(0, perGroup).map(x => x.item)
-            venues = scoredVenues.slice(0, perGroup).map(x => x.item)
-            teams = scoredTeams.slice(0, perGroup).map(x => x.item)
-          }
-
-          const total = experiences.length + venues.length + teams.length
+          const experiences = !types.has('experiences')
+            ? []
+            : ((experiencesData as any).experiences as Exp[])
+                .map((e) => ({ e, s: scoreMatch(`${e.name} ${e.location} ${e.sport}`, tokens) }))
+                .filter((x) => x.s > 0)
+                .sort((a, b) => b.s - a.s || a.e.rank - b.e.rank)
+                .slice(0, limit)
+                .map(({ e }) => ({ rank: e.rank, name: e.name, location: e.location, sport: e.sport, final: e.final, image: e.image ?? undefined }))
 
           return Response.json(
-            { results: { experiences, venues, teams, total } },
-            { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120' } },
+            { ok: true, q, data: { teams, venues, games, experiences } },
+            // All four sources are slow-moving (cron touches only volatile game
+            // fields) — cache aggressively at the edge.
+            { headers: { 'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600' } },
           )
-        } catch (err) {
-          console.error('[search] error', err)
-          return Response.json({ error: 'Search failed' }, { status: 500 })
+        } catch (e: any) {
+          return Response.json({ ok: false, error: String(e?.message || e) }, { status: 500 })
         }
       },
     },

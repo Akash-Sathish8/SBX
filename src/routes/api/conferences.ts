@@ -1,30 +1,26 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { Conference } from '#/lib/data-types'
-import CONFERENCES_RAW from '../../../data/conferences.json'
+import { dbConferences } from '../../server/db'
+import { isCollegeLeague } from '@/lib/sports'
 
-const CONFERENCES = CONFERENCES_RAW as Conference[]
-
+// GET /api/conferences?league=college-football|college-basketball — every D1
+// conference for that sport with its member schools. Public, long-cached (the
+// conference roster is static for a season).
 export const Route = createFileRoute('/api/conferences')({
   server: {
     handlers: {
       GET: async ({ request }) => {
+        const league = new URL(request.url).searchParams.get('league')
+        if (!isCollegeLeague(league)) {
+          return Response.json({ ok: false, error: 'league must be college-football or college-basketball', data: [] }, { status: 400 })
+        }
         try {
-          const url = new URL(request.url)
-          const sport = url.searchParams.get('sport')
-
-          let result: Conference[] = CONFERENCES
-
-          if (sport) {
-            const sportUpper = sport.toUpperCase() as 'CFB' | 'CBB'
-            result = CONFERENCES.filter(c => c.sport === sportUpper)
-          }
-
-          return Response.json(result, {
-            headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
-          })
-        } catch (err) {
-          console.error('[conferences] error', err)
-          return Response.json({ error: 'Failed to fetch conferences' }, { status: 500 })
+          const data = await dbConferences(league)
+          return Response.json(
+            { ok: true, data },
+            { headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800' } },
+          )
+        } catch (e: any) {
+          return Response.json({ ok: false, error: String(e?.message || e), data: [] }, { status: 500 })
         }
       },
     },

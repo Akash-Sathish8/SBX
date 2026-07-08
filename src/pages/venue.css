@@ -1,0 +1,328 @@
+:root{--y:#F7DF02;--k:#222222;--white:#fff;--light:#f4f4f4;--ink:#222;--body:#33352f;--gray:#6b6b6b;--blue:#233160;
+  --notch:polygon(calc(100% - 10px) 0px,100% 10px,100% 100%,10px 100%,0px calc(100% - 10px),0px 0px);}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',system-ui,sans-serif;color:var(--body);background:var(--light)}
+h1,h2,h3{font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;color:var(--ink);letter-spacing:1px;line-height:1}
+a{color:inherit;text-decoration:none}
+.container{max-width:1180px;margin:0 auto;padding:0 28px}
+header.nav{position:sticky;top:0;z-index:50;background:var(--k);border-bottom:4px solid var(--y)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 28px}
+.logo{font-family:'Anton';color:#fff;font-size:28px;letter-spacing:2px;display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
+.logo-img{height:42px;width:42px;border-radius:8px;box-shadow:3px 3px 0 0 #000}
+.logo .wc{font-family:'Barlow';font-weight:700;font-size:10px;letter-spacing:1px;color:#111;background:var(--y);padding:2px 7px;border-radius:3px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:#cfcfcf;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.5px}
+.nav-links a:hover,.nav-links a.active{color:var(--y)}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Barlow';font-weight:700;
+  text-transform:uppercase;letter-spacing:.8px;font-size:14px;padding:11px 22px;border:0;cursor:pointer;color:var(--ink);
+  background:var(--light);clip-path:var(--notch);filter:drop-shadow(5px 5px 0 var(--k));transition:transform 80ms,filter 120ms}
+.btn-dark{background:var(--k);color:#fff;filter:drop-shadow(5px 5px 0 var(--y))}
+.navcta{box-shadow:inset 0 0 0 2px var(--y);padding:9px 18px;font-size:13px}
+/* "Get directions" button in the Getting-there section (opens Apple/Google Maps) */
+.dir-btn{display:inline-flex;align-items:center;gap:8px;margin:2px 0 18px;font-family:'Anton','Barlow',sans-serif;
+  text-transform:uppercase;letter-spacing:.5px;font-size:15px;color:#111;background:var(--y);
+  border-radius:8px;padding:12px 20px;box-shadow:0 6px 18px rgba(0,0,0,.1);transition:filter 120ms,transform 80ms}
+.dir-btn:hover{filter:brightness(.96)}
+.dir-btn:active{transform:translateY(1px)}
+.dir-btn:focus-visible{outline:3px solid var(--k);outline-offset:2px}
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:transparent;border:0;cursor:pointer;padding:0;z-index:60}
+.hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
+.hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* HERO */
+.hero{position:relative;background:var(--k);color:#fff;overflow:hidden;min-height:420px;display:flex;align-items:flex-end}
+.hero .bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,.35) 0%,rgba(20,20,20,.72) 55%,rgba(20,20,20,.95) 100%)}
+.hero .container{position:relative;z-index:2;width:100%;padding-top:34px;padding-bottom:30px}
+.back{position:absolute;top:0;left:0;z-index:5;display:inline-flex;align-items:center;gap:7px;color:#fff;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.6px;padding:14px 18px;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+.back:hover{color:var(--y)}
+.heyebrow{display:inline-flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:14px}
+.pillrole{background:var(--y);color:#111;font-weight:800;font-size:12px;letter-spacing:.6px;text-transform:uppercase;padding:5px 11px;border-radius:3px;box-shadow:3px 3px 0 #000}
+.pillcity{background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:12px;letter-spacing:.6px;text-transform:uppercase;padding:5px 11px;border-radius:3px;display:inline-flex;gap:7px;align-items:center}
+.hero h1{color:#fff;font-size:clamp(40px,7vw,86px);max-width:16ch;line-height:.95}
+.altname{color:#bdbdbd;font-weight:600;font-size:15px;margin-top:10px;letter-spacing:.3px}
+.altname b{color:#fff}
+/* Snapback + Fan score cards sit to the RIGHT of the venue title (badge styling) */
+.vhero-row{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.vhero-title{min-width:0}
+.vscores{display:flex;gap:12px;flex-wrap:wrap}
+.vscore{background:#fff;border:1px solid #e6e6e0;border-radius:13px;padding:12px 18px;min-width:124px;box-shadow:0 8px 22px rgba(0,0,0,.32)}
+.vscore .lab{display:flex;align-items:center;gap:6px;font-family:'Barlow',system-ui,sans-serif;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#8a8a82}
+.vscore .cap{width:18px;height:18px;border-radius:4px;flex:0 0 auto}
+.vscore .val{font-family:'Anton','Barlow',sans-serif;font-size:34px;line-height:1;letter-spacing:.5px;color:#16160f;margin-top:6px}
+.vscore .sub{font-size:11px;font-weight:600;color:#9a9a92;margin-top:5px;letter-spacing:.2px;text-transform:none}
+.vscore.snap{border:2px solid var(--y);box-shadow:0 8px 22px rgba(247,223,2,.34)}
+.vscore.snap .lab{color:#16160f}
+.tag{color:#f3f3f3;font-size:clamp(17px,2.1vw,22px);font-weight:500;max-width:48ch;margin-top:16px;line-height:1.45}
+
+/* STAT STRIP */
+.statstrip{background:var(--y);border-top:4px solid var(--k);border-bottom:4px solid var(--k)}
+.statrow{display:flex;flex-wrap:wrap}
+.stat{flex:1 1 0;min-width:130px;padding:16px 18px;border-right:2px solid rgba(0,0,0,.18)}
+.stat:last-child{border-right:0}
+.stat .v{font-family:'Anton';font-size:clamp(22px,2.6vw,30px);color:#111;letter-spacing:.5px;line-height:1}
+.stat .l{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#3a3a1e;margin-top:5px}
+
+section.block{padding:48px 0}
+section.block.alt{background:var(--k);color:#e8e8e8}
+section.block.alt h2,section.block.alt h3{color:#fff}
+.shead{font-size:clamp(26px,3.4vw,38px);margin-bottom:6px}
+.ssub{color:var(--gray);font-weight:600;font-size:15px;margin-bottom:26px;text-transform:uppercase;letter-spacing:.5px}
+section.block.alt .ssub{color:#9a9a9a}
+
+/* WHY cards */
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.whyc{background:#fff;border:4px solid var(--k);border-radius:8px;padding:22px 22px 24px;filter:drop-shadow(7px 7px 0 var(--y))}
+.whyc .t{font-family:'Anton';font-size:21px;letter-spacing:.5px;color:var(--ink);margin-bottom:9px}
+.whyc .x{font-size:15px;line-height:1.5;color:var(--body)}
+
+/* MATCHES */
+.mlist{display:flex;flex-direction:column;gap:12px}
+.mrow{display:flex;align-items:center;gap:18px;background:#1c1c1c;border:3px solid #000;border-left:7px solid var(--y);border-radius:7px;padding:14px 18px}
+.mdate{font-family:'Anton';font-size:20px;color:var(--y);min-width:74px;letter-spacing:.5px}
+.mmid{flex:1;min-width:0}
+.mfix{font-weight:800;font-size:17px;color:#fff;letter-spacing:.3px}
+.mround{font-size:12px;color:#9a9a9a;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+.mko{font-weight:700;font-size:14px;color:#d8d8d8;white-space:nowrap}
+
+/* PLAN columns */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.panel{background:#fff;border:4px solid var(--k);border-radius:8px;padding:24px;filter:drop-shadow(7px 7px 0 var(--k))}
+.panel h3{font-size:20px;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.panel .lead{font-size:15px;line-height:1.55;color:var(--body);margin-bottom:14px}
+.ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.ul li{position:relative;padding-left:22px;font-size:14.5px;line-height:1.5;color:var(--body)}
+.ul li::before{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;background:var(--y);border:2px solid var(--k);transform:rotate(45deg)}
+
+/* TIPS */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tip{background:#262626;border:3px solid #000;border-radius:7px;padding:15px 17px;font-size:14.5px;line-height:1.5;color:#e8e8e8;display:flex;gap:11px}
+.tip .n{font-family:'Anton';color:var(--y);font-size:18px;line-height:1;flex:none}
+
+/* KNOW / weather */
+.kbox{background:var(--blue);color:#fff;border:4px solid var(--k);border-radius:8px;padding:20px 24px;filter:drop-shadow(7px 7px 0 var(--y));display:flex;gap:14px;align-items:flex-start}
+.kbox .ic{font-size:26px;flex:none;line-height:1}
+.kbox .kt{font-family:'Anton';font-size:16px;letter-spacing:.6px;margin-bottom:5px}
+.kbox .kx{font-size:14.5px;line-height:1.5;color:#dfe4f2}
+
+/* LORE */
+.lore{display:flex;flex-direction:column;gap:0}
+.lore .li{padding:16px 0;border-bottom:2px solid rgba(255,255,255,.13);display:flex;gap:16px;align-items:flex-start}
+.lore .li:last-child{border-bottom:0}
+.lore .dot{width:12px;height:12px;background:var(--y);transform:rotate(45deg);margin-top:5px;flex:none}
+.lore .lx{font-size:16px;line-height:1.55;color:#e6e6e6}
+
+/* GETTING THERE / PARKING (matchday access) */
+.acc-lead{font-size:16px;line-height:1.55;color:var(--body);margin-bottom:18px;max-width:72ch}
+section.block.alt .acc-lead{color:#cfcfcf}
+.access{display:flex;flex-direction:column;gap:12px}
+.acc-row{display:flex;gap:14px;align-items:flex-start;background:#fff;border:3px solid var(--k);border-radius:8px;padding:14px 16px;filter:drop-shadow(5px 5px 0 var(--k))}
+.acc-ic{font-size:22px;flex:none;line-height:1.15;margin-top:1px}
+.acc-main{flex:1;min-width:0}
+.acc-t{font-weight:800;font-size:16px;color:var(--ink);letter-spacing:.2px}
+.acc-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--gray);margin-top:2px}
+.acc-d{font-size:14px;color:var(--body);line-height:1.5;margin-top:5px}
+.acc-deal{flex:none;align-self:center;background:var(--y);color:#111;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.4px;padding:7px 11px;border-radius:5px;box-shadow:2px 2px 0 var(--k);white-space:nowrap;text-align:center}
+.acc-notes{display:flex;flex-direction:column;gap:11px;margin-top:18px}
+.acc-note{font-size:14.5px;line-height:1.5;color:var(--body);display:flex;gap:11px;align-items:flex-start}
+section.block.alt .acc-note{color:#d8d8d8}
+.acc-note .nl{font-weight:800;text-transform:uppercase;font-size:11px;letter-spacing:.5px;color:#111;background:var(--y);padding:4px 9px;border-radius:4px;flex:none;margin-top:1px;min-width:74px;text-align:center}
+@media(max-width:560px){.acc-row{flex-wrap:wrap}.acc-deal{align-self:flex-start;order:3}}
+
+/* LIVE WEATHER STRIP */
+.wx-strip{display:flex;gap:12px;overflow-x:auto;padding:14px 2px 16px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.wx-strip::-webkit-scrollbar{height:10px}
+.wx-strip::-webkit-scrollbar-thumb{background:var(--k);border-radius:5px}
+.wx-day{flex:0 0 164px;scroll-snap-align:center;background:#fff;border:3px solid var(--k);border-radius:8px;padding:14px 12px 14px;text-align:center;position:relative;filter:drop-shadow(4px 4px 0 var(--k))}
+.wx-day.match{border-color:var(--y);background:#fffdf0;filter:drop-shadow(4px 4px 0 var(--y))}
+.wx-wd{font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--gray)}
+.wx-dt{font-family:'Anton';font-size:20px;color:var(--ink);letter-spacing:.5px;margin-top:1px}
+.wx-match{font-weight:800;font-size:12px;color:var(--ink);line-height:1.25;margin:8px 2px 5px;min-height:30px;display:flex;align-items:center;justify-content:center;text-align:center}
+.wx-ic{margin:9px 0 7px;height:34px;display:flex;align-items:center;justify-content:center}
+.wx-temp{font-weight:800;font-size:15px;color:var(--ink);margin-top:2px}
+.wx-temp .lo{color:var(--gray);font-weight:700}
+.wx-tempc{font-weight:700;font-size:12.5px;color:var(--gray)}
+.wx-tempc .lo{color:#aaa}
+.wxu{font-size:10px;font-weight:800;color:#9a9a9a}
+.wx-rain{font-size:11px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-top:4px}
+/* played match in the strip: final score in place of the weather forecast */
+.wx-day.played{border-color:var(--y);background:#fffdf0}
+.wx-score{font-family:'Anton','Barlow',sans-serif;font-size:28px;color:var(--ink);line-height:1;margin-top:8px;letter-spacing:1px}
+.wx-ft{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#111;background:var(--y);border-radius:5px;padding:2px 8px;display:inline-block;margin-top:7px}
+.wx-typical{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#a07c00;margin-top:4px}
+.wx-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--y);color:#111;font-weight:800;font-size:9px;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px;box-shadow:2px 2px 0 var(--k);white-space:nowrap}
+.wx-msg{color:var(--gray);font-weight:600;font-size:14.5px;padding:10px 0}
+
+footer{background:#000;color:#888;padding:40px 0;font-size:13px}
+footer a{color:var(--y);font-weight:700}
+.loadwrap{padding:80px 0;text-align:center;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.ulink{color:#222;text-decoration:underline}
+/* factual venue attributes (real ESPN data) */
+.vfacts{display:flex;flex-wrap:wrap;gap:10px}
+.vfact{font-weight:800;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:#141414;background:#f1f1ec;border:2px solid #141414;border-radius:6px;padding:7px 12px}
+/* v2 lean venue: colored hero (team accent) instead of a stadium photo */
+.hero.lean .bg{display:none}
+.vlogos-hero{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.vlogos-hero img{object-fit:contain;filter:drop-shadow(0 3px 10px rgba(0,0,0,.55))}
+.vgames{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.vgrow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;background:#fff;border:2px solid var(--k);border-radius:8px;padding:13px 16px;color:inherit;transition:transform .12s,filter .12s}
+.vgrow:hover{transform:translate(-2px,-2px);filter:drop-shadow(7px 7px 0 var(--k))}
+.vg-lg{font-weight:800;font-size:11px;letter-spacing:.6px;background:var(--k);color:#fff;border-radius:4px;padding:4px 8px}
+.vg-match{font-weight:800;font-size:16px;color:var(--ink)}
+.vg-at{color:var(--gray);font-weight:700}
+.vg-when{font-size:12.5px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+@media(max-width:560px){.vgrow{grid-template-columns:auto 1fr}.vg-when{grid-column:2;justify-self:start}}
+@media(max-width:760px){
+  .hamburger{display:flex}
+  .nav-links{position:absolute;top:68px;left:0;right:0;background:var(--k);flex-direction:column;align-items:stretch;gap:0;padding:6px 0 14px;border-bottom:4px solid var(--y);display:none}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px 28px;font-size:15px}
+  .nav-links a.navcta{margin:10px 28px 4px;justify-content:center}
+}
+@media(max-width:680px){.stat{min-width:50%;flex:1 1 50%;border-bottom:2px solid rgba(0,0,0,.18)}}
+
+/* responsive images: ensure media scales fluidly and never overflows */
+img{max-width:100%;height:auto}
+
+/* =========================================================================
+   EDITORIAL REFRESH (Light 3) — overrides the venue content sections.
+   All sections go light (white / faint tint), soft ambient shadows,
+   round icon chips, pill deal-tags, refreshed headers with a yellow tick.
+   ========================================================================= */
+section.block{background:#fff}
+section.block.tint{background:#f7f6f2}
+section.block.alt{background:#fff}
+section.block.alt h2,section.block.alt h3,section.block.alt .ssub{color:inherit}
+
+/* section header */
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:#000;margin-bottom:11px}
+.shead{font-family:'Anton','Barlow',sans-serif;font-size:clamp(28px,3.6vw,40px);color:var(--ink);letter-spacing:.5px;margin-bottom:5px}
+.ssub{color:var(--gray);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:26px}
+.elead{font-size:16px;line-height:1.55;color:var(--body);max-width:74ch;margin-bottom:20px}
+
+/* access panel (transit / parking) */
+.epanel{background:#fff;border:1px solid #ececec;border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.08);overflow:hidden}
+.erow{display:flex;gap:16px;align-items:center;padding:18px 22px;border-bottom:1px solid #f1f1f1}
+.erow:last-child{border-bottom:0}
+.echip{width:46px;height:46px;flex:none;border-radius:50%;background:#f4f4f1;display:flex;align-items:center;justify-content:center}
+.emid{flex:1;min-width:0}
+.etitle{font-weight:800;font-size:16px;color:#111;letter-spacing:.2px}
+.estn{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9a9a9a;margin-top:3px}
+.edet{font-size:13.5px;color:#555;line-height:1.5;margin-top:6px;max-width:64ch}
+.epoints{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:9px}
+.epoints li{position:relative;padding-left:17px;font-size:13.5px;line-height:1.45;color:#555}
+.epoints li::before{content:"";position:absolute;left:0;top:6px;width:7px;height:7px;background:var(--y);border:1.5px solid #111;transform:rotate(45deg)}
+.epoints li b{color:#111;font-weight:800}
+.epill{flex:none;background:#fff8cf;color:#7a6700;border:1px solid #ecd96b;font-weight:800;font-size:11.5px;padding:7px 13px;border-radius:20px;max-width:160px;text-align:center;line-height:1.3}
+@media(max-width:600px){.erow{flex-wrap:wrap}.emid{flex-basis:calc(100% - 62px)}.epill{order:3;flex-basis:100%;max-width:none;align-self:flex-start}}
+
+/* singular notes — collapsible dropdown buttons */
+.enotes{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.notedd{border:1px solid #e6e6e6;border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.notedd summary{display:flex;align-items:center;gap:11px;cursor:pointer;list-style:none;padding:13px 18px}
+.notedd summary::-webkit-details-marker{display:none}
+.notedd .nlabel{font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#111;background:var(--y);padding:5px 12px;border-radius:20px}
+.notedd .chev{width:11px;height:11px;border-right:3px solid #111;border-bottom:3px solid #111;transform:rotate(-45deg);transition:transform .2s;flex:none;margin-left:auto}
+.notedd[open] .chev{transform:rotate(45deg)}
+.notedd .ndbody{border-top:1px solid #efefef;padding:13px 18px;font-size:13.5px;line-height:1.55;color:#555}
+
+/* tips dropdown */
+.tipsdd{border:1px solid #e6e6e6;border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.06);margin-top:16px}
+.tipsdd summary{display:flex;align-items:center;gap:11px;cursor:pointer;list-style:none;padding:14px 18px}
+.tipsdd summary::-webkit-details-marker{display:none}
+.tipchip{font-family:'Anton';font-size:12px;letter-spacing:.6px;color:#111;background:var(--y);border-radius:6px;padding:4px 11px}
+.summlab{font-weight:800;font-size:13.5px;color:#111}
+.tipsdd .chev{width:11px;height:11px;border-right:3px solid #111;border-bottom:3px solid #111;transform:rotate(-45deg);transition:transform .2s;flex:none;margin-left:auto}
+.tipsdd[open] .chev{transform:rotate(45deg)}
+.tbody{border-top:1px solid #efefef}
+.tline{display:flex;gap:11px;align-items:flex-start;padding:13px 18px;border-bottom:1px solid #f4f4f4}
+.tline:last-child{border-bottom:0}
+.tline .dot{flex:none;width:9px;height:9px;background:var(--y);border:2px solid #111;transform:rotate(45deg);margin-top:5px}
+.tline .ttx{font-size:13.5px;line-height:1.5;color:#444}
+
+/* why cards (editorial) */
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.whyc{background:#fff;border:1px solid #ececec;border-radius:14px;box-shadow:0 12px 34px rgba(0,0,0,.07);padding:24px 22px 24px 26px;filter:none;position:relative;overflow:hidden}
+.whyc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--y)}
+.whyc .t{font-family:'Anton';font-size:20px;letter-spacing:.5px;color:var(--ink);margin-bottom:9px}
+.whyc .x{font-size:14.5px;line-height:1.55;color:#555}
+
+/* lists (food) */
+.ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.ul li{position:relative;padding-left:24px;font-size:15px;line-height:1.55;color:var(--body)}
+.ul li::before{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;background:var(--y);border:2px solid var(--k);transform:rotate(45deg)}
+
+/* insider tips (editorial cards) */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.tip{background:#fff;border:1px solid #ececec;border-radius:12px;box-shadow:0 10px 26px rgba(0,0,0,.06);padding:16px 18px;font-size:14.5px;line-height:1.5;color:#444;display:flex;gap:12px}
+.tip .n{font-family:'Anton';color:#111;background:var(--y);width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+
+/* live weather cards (editorial) */
+.wx-day{flex:0 0 164px;background:#fff;border:1px solid #ececec;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.06);filter:none;padding:15px 12px 16px}
+.wx-day.match{border:1px solid #ecd96b;background:#fff;box-shadow:0 12px 30px rgba(247,223,2,.28)}
+.wx-day.match::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--y);border-radius:14px 14px 0 0}
+.wx-rain{color:var(--gray)}
+
+/* history & lore (light) */
+.lore .li{border-bottom:1px solid #ececec}
+.lore .dot{background:var(--y);border:2px solid var(--k)}
+.lore .lx{color:var(--body)}
+
+/* parking sub-heading inside the combined access section */
+.subhead{font-family:'Anton','Barlow',sans-serif;font-size:22px;color:var(--ink);letter-spacing:.5px;margin:30px 0 14px;display:flex;align-items:center;gap:10px}
+.subhead::before{content:"";width:18px;height:3px;background:var(--y)}
+
+/* around the ground — matchday agenda */
+.agenda{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:860px){.agenda{grid-template-columns:1fr}}
+.agtitle{font-family:'Anton','Barlow',sans-serif;font-size:18px;color:var(--ink);letter-spacing:.4px;text-transform:uppercase;padding-bottom:9px;border-bottom:3px solid var(--y);margin-bottom:15px}
+.aglist{display:flex;flex-direction:column;gap:12px}
+.agspot{position:relative;background:#fff;border:1px solid #ececec;border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,.06);padding:14px 16px}
+.agspot.fifa{border-color:#111;box-shadow:0 8px 22px rgba(0,0,0,.1)}
+.agtag{display:inline-block;font-family:'Anton','Barlow',sans-serif;font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:#111;background:var(--y);border-radius:5px;padding:2px 7px;margin-bottom:6px}
+.agname{font-weight:800;font-size:15px;color:#111;letter-spacing:.2px}
+.agmeta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 11px;margin-top:5px}
+.agrating{font-size:12px;font-weight:800;letter-spacing:.2px;color:#b8860b}
+.agdist{font-size:12px;font-weight:700;color:#888;display:inline-flex;align-items:center;gap:3px}
+.agdist-gl{width:12px;height:12px;flex:none}
+.agwhere{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9a9a9a;margin-top:3px}
+.agnote{font-size:13px;color:#555;line-height:1.5;margin-top:6px}
+.agwhy{list-style:none;margin:8px 0 0;padding:0}
+.agwhy li{position:relative;padding-left:15px;font-size:13px;color:#555;line-height:1.45;margin-top:5px}
+.agwhy li::before{content:"";position:absolute;left:0;top:6px;width:7px;height:7px;background:var(--y);border:1.5px solid #111;transform:rotate(45deg)}
+/* "After the whistle" pulled out of the 3-col grid into a full-width horizontal scroller */
+.agcol-hscroll{margin-top:30px}
+.aglist-hscroll{flex-direction:row;overflow-x:auto;gap:16px;padding:2px 2px 14px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#cfccc2 transparent}
+.aglist-hscroll .agspot{flex:0 0 clamp(232px,74vw,268px);scroll-snap-align:start}
+.aglist-hscroll::-webkit-scrollbar{height:8px}
+.aglist-hscroll::-webkit-scrollbar-thumb{background:#cfccc2;border-radius:99px}
+.aglist-hscroll::-webkit-scrollbar-track{background:transparent}
+
+/* blurb -> bullets (long prose readability) */
+.blurb-bullets{list-style:none;margin:0;padding:0}
+.blurb-bullets li{position:relative;padding-left:17px;line-height:1.5;margin-top:6px}
+.blurb-bullets li:first-child{margin-top:0}
+.blurb-bullets li::before{content:"";position:absolute;left:0;top:6px;width:6px;height:6px;background:var(--y);border:1.5px solid #111;transform:rotate(45deg)}
+.ndbody .blurb-bullets li{font-size:13.5px;color:#444}
+.blurb-bullets.edet li{font-size:13px;color:#555}
+.blurb-bullets.x li{font-size:14px;color:#444}
+
+
+/* Snapback expert notes (ExpertNotes.tsx) — editorial gameday knowledge */
+.xnotes{margin:0 0 26px}
+.xnotes-head{display:flex;align-items:center;gap:8px;font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;letter-spacing:.6px;font-size:15px;color:#111;margin:0 0 12px}
+.xnotes-logo{border-radius:4px}
+.xnotes-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.xnotes-card{background:#fff;border:2px solid #222;border-left:6px solid var(--y);border-radius:4px;padding:12px 14px}
+.xnotes-sec{font-weight:800;text-transform:uppercase;letter-spacing:.4px;font-size:12px;color:#555;margin:0 0 6px}
+.xnotes-list{list-style:none;margin:0;padding:0}
+.xnotes-list li{position:relative;padding-left:16px;font-size:14px;line-height:1.5;color:#2c2c2c;margin-top:7px}
+.xnotes-list li:first-child{margin-top:0}
+.xnotes-list li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--y);border:1.5px solid #111;transform:rotate(45deg)}
+.xnotes-src{margin-left:6px;color:#888;font-size:12px;text-decoration:none}
+.xnotes-src:hover{color:#222}
+@media(min-width:620px){.xnotes-grid{grid-template-columns:1fr 1fr}}

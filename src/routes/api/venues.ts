@@ -1,32 +1,28 @@
-import { createFileRoute } from '@tanstack/react-router'
-import type { SportsVenue } from '#/lib/data-types'
-import VENUES_RAW from '../../../data/venues.json'
+import { createFileRoute } from '@tanstack/react-router';
+import { dbVenues } from '../../server/db';
+import { isLeague } from '@/lib/sports';
 
-const VENUES = VENUES_RAW as SportsVenue[]
-
+// Venues from D1. `?league=` narrows to that league's home grounds; omitted =
+// all, with shared buildings carrying every tenant team.
 export const Route = createFileRoute('/api/venues')({
   server: {
     handlers: {
       GET: async ({ request }) => {
+        const url = new URL(request.url);
+        const leagueParam = url.searchParams.get('league');
+        if (leagueParam && !isLeague(leagueParam)) {
+          return Response.json({ ok: false, error: 'league must be nfl|nba|mlb' }, { status: 400 });
+        }
         try {
-          const url = new URL(request.url)
-          const league = url.searchParams.get('league')
-
-          let result: SportsVenue[] = VENUES
-
-          if (league) {
-            const leagueUpper = league.toUpperCase()
-            result = VENUES.filter(v => v.leagues.some(l => l.toUpperCase() === leagueUpper))
-          }
-
-          return Response.json(result, {
-            headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
-          })
-        } catch (err) {
-          console.error('[venues] error', err)
-          return Response.json({ error: 'Failed to fetch venues' }, { status: 500 })
+          const venues = await dbVenues(isLeague(leagueParam) ? leagueParam : undefined);
+          return Response.json(
+            { ok: true, data: venues },
+            { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
+          );
+        } catch (e: any) {
+          return Response.json({ ok: false, error: String(e?.message || e), data: [] }, { status: 500 });
         }
       },
     },
   },
-})
+});

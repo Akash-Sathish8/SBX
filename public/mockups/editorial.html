@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SBX — Editorial homepage (laptop + mobile)</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{--y:#F7DF02}
+  *{box-sizing:border-box}
+  body{margin:0;background:#e7e7e3;font-family:'Barlow',sans-serif;color:#141414}
+  .page{max-width:1820px;margin:0 auto;padding:26px 22px 90px}
+  h1{font-family:'Anton';font-size:28px;letter-spacing:1px;margin:0 0 4px}
+  .lead{color:#555;font-weight:600;margin:0 0 8px;max-width:78ch}
+  .note{display:inline-block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#7a6a00;background:#fff3a8;border:1px solid #e4cf3a;border-radius:6px;padding:5px 10px}
+  .vlabel{display:flex;align-items:center;gap:12px;font-family:'Anton';font-size:18px;letter-spacing:.5px;margin:34px 2px 12px}
+  .vlabel .sz{font-family:'Barlow';font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888}
+  .vlabel a{margin-left:auto;font-family:'Barlow';font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#111;background:var(--y);border-radius:6px;padding:7px 12px;text-decoration:none}
+
+  /* laptop */
+  .browser{width:100%;border:1px solid #2a2a2a;border-radius:13px;overflow:hidden;background:#0a0a0a;box-shadow:0 22px 50px rgba(0,0,0,.22)}
+  .chrome{display:flex;align-items:center;gap:8px;padding:11px 14px;background:#1c1c1c}
+  .chrome i{width:12px;height:12px;border-radius:50%}
+  .chrome i:nth-child(1){background:#ff5f57}.chrome i:nth-child(2){background:#febc2e}.chrome i:nth-child(3){background:#28c840}
+  .chrome .url{margin-left:10px;font-size:13px;color:#8a8a8a;background:#0e0e0e;border-radius:7px;padding:6px 16px;flex:1}
+  .browser iframe{width:100%;height:900px;border:0;display:block;background:#0a0a0a}
+
+  /* mobile — real 393×852 viewport, presented large (scaled 1.45) */
+  .phonebay{display:flex;justify-content:center;padding:8px 0 0}
+  .deviceport{position:relative;width:calc(417px * 1.45);height:calc(876px * 1.45)}
+  .device{position:absolute;top:0;left:0;box-sizing:content-box;width:393px;height:852px;border:12px solid #111;border-radius:52px;overflow:hidden;background:#111;box-shadow:0 26px 60px rgba(0,0,0,.28);transform:scale(1.45);transform-origin:top left}
+  .device .notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:128px;height:26px;background:#111;border-radius:0 0 16px 16px;z-index:2}
+  .device iframe{width:393px;height:852px;border:0;display:block;background:#0a0a0a}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>SBX — Editorial homepage</h1>
+  <p class="lead">The “Editorial” direction — now as <b>separate web and mobile builds</b>, each rendered at its real viewport (live iframes of the actual pages). The web build fills the screen; the mobile build is its own layout. Real ESPN photos and logos; scores &amp; game states are illustrative placeholders.</p>
+  <div class="note">Sample layout · scores &amp; game states are illustrative; ratings are user-generated, never invented</div>
+
+  <div class="vlabel">Web build <span class="sz">· fills the viewport, fluid wide</span><a href="/mockups/editorial-home-web.html" target="_blank">Open full screen ↗</a></div>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><span class="url">snapback.app</span></div>
+    <iframe src="/mockups/editorial-home-web.html" title="Editorial — web"></iframe>
+  </div>
+
+  <div class="vlabel">Mobile build <span class="sz">· iPhone 393×852, shown at 1.45×</span><a href="/mockups/editorial-home.html" target="_blank">Open full screen ↗</a></div>
+  <div class="phonebay">
+    <div class="deviceport">
+      <div class="device">
+        <span class="notch"></span>
+        <iframe src="/mockups/editorial-home.html" title="Editorial — mobile"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

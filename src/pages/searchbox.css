@@ -1,0 +1,24 @@
+/* SearchBox component styles (src/components/SearchBox.tsx). Multi-route sheet:
+   link with the SAME data-page-css string ("home venues") on every route that
+   renders it. Color vars carry fallbacks since each page defines its own :root. */
+.sbx-search{position:relative;max-width:640px}
+.sbx-box{display:flex;align-items:center;gap:10px;background:#fff;border:3px solid var(--k,#222);border-radius:10px;box-shadow:5px 5px 0 0 var(--k,#222);padding:13px 15px}
+.sbx-box.open{border-radius:10px 10px 0 0}
+.sbx-si{width:18px;height:18px;flex:none;opacity:.65;color:var(--ink,#222)}
+.sbx-search input{border:0;outline:0;background:transparent;font-family:'Barlow',sans-serif;font-size:16px;font-weight:600;color:var(--ink,#222);width:100%}
+.sbx-search input::placeholder{color:#9a9a9a;font-weight:500}
+.sbx-search input::-webkit-search-cancel-button{cursor:pointer}
+
+.sbx-sugg{position:absolute;top:100%;left:0;right:0;z-index:60;background:#fff;border:3px solid var(--k,#222);border-top:0;border-radius:0 0 10px 10px;box-shadow:5px 8px 0 0 var(--k,#222);max-height:400px;overflow-y:auto}
+.sbx-glab{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#8a8a00;background:#fbf7dd;padding:6px 15px;border-top:1px solid #eeede6}
+.sbx-row{display:flex;align-items:center;gap:11px;padding:11px 15px;border-top:1px solid #f0efe8;cursor:pointer}
+.sbx-row:hover,.sbx-row.on{background:#fdf6c8}
+.sbx-ic{width:30px;height:30px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#f2f1ea;border-radius:8px;overflow:hidden}
+.sbx-ic img{width:26px;height:26px;object-fit:contain}
+.sbx-ic .lic{width:16px;height:16px;color:#55554c}
+.sbx-ic .abbr{font-family:'Anton','Barlow',sans-serif;font-size:10px;color:#111}
+.sbx-m{min-width:0;display:flex;flex-direction:column}
+.sbx-m .t{font-size:13.5px;font-weight:800;color:var(--ink,#222);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbx-m .d{font-size:11.5px;font-weight:600;color:#76766c;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbx-go{margin-left:auto;font-family:'Anton','Barlow',sans-serif;font-size:15px;color:#111;flex:0 0 auto}
+.sbx-empty{padding:14px 15px;font-size:13.5px;font-weight:600;color:#76766c}

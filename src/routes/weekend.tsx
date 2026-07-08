@@ -1,145 +1,106 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useQuery } from '@tanstack/react-query'
 import { SiteNav } from '../components/SiteNav'
-import type { LiveGame, League } from '../lib/data-types'
+import { PageCssGuard } from '../components/PageCssGuard'
+import { GameRow } from '../components/GameRow'
+import { getJSON } from '../lib/dataCache'
+import { SPORTS, LEAGUES, type League } from '../lib/sports'
+import { weekendWindow, localDayKey } from '../lib/weekend'
+import type { Game } from '../lib/espn'
+import css from '../pages/weekend.css?url'
+import rowCss from '../pages/gamerow.css?url'
 
 export const Route = createFileRoute('/weekend')({
-  head: () => ({ meta: [{ title: 'Snapback — This Weekend' }] }),
-  component: WeekendPage,
+  head: () => ({
+    links: [
+      { rel: 'stylesheet', href: css, 'data-page-css': 'weekend' },
+      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
+    ],
+    meta: [{ title: 'Snapback — This Weekend' }],
+  }),
+  component: Weekend,
 })
 
-const LEAGUES: { value: League | ''; label: string }[] = [
-  { value: '', label: 'All Sports' },
-  { value: 'NFL', label: 'NFL' },
-  { value: 'MLB', label: 'MLB' },
-  { value: 'NBA', label: 'NBA' },
-  { value: 'NHL', label: 'NHL' },
-  { value: 'CFB', label: 'College Football' },
-  { value: 'CBB', label: 'College Basketball' },
-]
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const dayLabel = (d: Date) => `${WD[d.getDay()]} · ${MON[d.getMonth()]} ${d.getDate()}`
+const shortDate = (d: Date) => `${MON[d.getMonth()]} ${d.getDate()}`
 
-function getWeekendDates(): { label: string; date: string }[] {
-  const now = new Date()
-  const day = now.getDay()
-  const daysToFri = (5 - day + 7) % 7 || 7
-  const fri = new Date(now)
-  fri.setDate(now.getDate() + (daysToFri === 7 && day === 5 ? 0 : daysToFri))
-  return [0, 1, 2].map(offset => {
-    const d = new Date(fri)
-    d.setDate(fri.getDate() + offset)
-    return {
-      label: ['Friday', 'Saturday', 'Sunday'][offset],
-      date: d.toISOString().slice(0, 10),
-    }
-  })
-}
+function Weekend() {
+  // The window is computed once per mount — Fri–Sun containing today, or the
+  // next one when it's mid-week (see lib/weekend).
+  const win = useMemo(() => weekendWindow(new Date()), [])
+  const [all, setAll] = useState<Game[] | null>(null)
+  const [errMsg, setErrMsg] = useState<string | null>(null)
+  const [filter, setFilter] = useState<'all' | League>('all')
 
-function GameRow({ game }: { game: LiveGame }) {
-  return (
-    <Link to="/game/$id" params={{ id: game.id }} className="no-underline">
-      <div className="flex items-center gap-4 p-4 bg-white border-[3px] border-[#222] shadow-[4px_4px_0_#222] rounded-[6px] mb-3 [transition:transform_.1s,box-shadow_.1s] hover:-translate-x-px hover:-translate-y-px hover:shadow-[6px_6px_0_#222]">
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className="flex flex-col items-center gap-1 min-w-[80px]">
-            <div className="flex items-center gap-2">
-              {game.away.logo && <img src={game.away.logo} alt={game.away.abbr} width={24} height={24} className="w-6 h-6 object-contain" />}
-              <span className="font-display text-[14px]">{game.away.abbr}</span>
-            </div>
-            <div className="text-[#999] font-body text-[11px]">@</div>
-            <div className="flex items-center gap-2">
-              {game.home.logo && <img src={game.home.logo} alt={game.home.abbr} width={24} height={24} className="w-6 h-6 object-contain" />}
-              <span className="font-display text-[14px]">{game.home.abbr}</span>
-            </div>
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="font-body font-bold text-[14px] text-ink truncate">{game.name}</div>
-            {game.venueName && <div className="font-body text-[12px] text-[#666] truncate">{game.venueName}{game.venueCity ? ` · ${game.venueCity}` : ''}</div>}
-            <div className="font-body text-[12px] text-[#999] mt-0.5">
-              {new Date(game.date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })}
-            </div>
-          </div>
-        </div>
-        {(game.isLive || game.isFinal) && (
-          <div className="text-right shrink-0">
-            {game.isLive && <div className="text-[10px] font-bold text-red-600 uppercase tracking-[1px] mb-0.5">Live</div>}
-            <div className="font-display text-[18px]">{game.away.score}–{game.home.score}</div>
-            {game.isLive && <div className="text-[11px] text-[#666]">{game.statusDesc}</div>}
-          </div>
-        )}
-      </div>
-    </Link>
-  )
-}
+  useEffect(() => {
+    let alive = true
+    getJSON(`/api/games?from=${encodeURIComponent(win.from)}&to=${encodeURIComponent(win.to)}&limit=300`)
+      .then((r: any) => { if (alive) setAll(Array.isArray(r?.data) ? r.data : []) })
+      .catch(() => { if (alive) setErrMsg("Couldn't load the weekend slate.") })
+    return () => { alive = false }
+  }, [win])
 
-function WeekendPage() {
-  const [league, setLeague] = useState<League | ''>('')
-  const days = getWeekendDates()
-
-  const queries = days.map(d =>
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useQuery<LiveGame[]>({
-      queryKey: ['weekend-games', d.date, league],
-      queryFn: () =>
-        fetch(`/api/games?date=${d.date}${league ? `&league=${league}` : ''}`)
-          .then(r => r.json()),
-      staleTime: 5 * 60 * 1000,
-    })
+  const list = useMemo(
+    () => (all ? (filter === 'all' ? all : all.filter((g) => g.league === filter)) : []),
+    [all, filter],
   )
 
   return (
     <>
+      <PageCssGuard id="weekend" />
       <SiteNav active="weekend" />
+      <section className="head">
+        <div className="container">
+          <Link to="/" className="ghback">← Back</Link>
+          <h1>This <span className="hl">weekend</span></h1>
+          <p className="sub">
+            {shortDate(win.days[0])} – {shortDate(win.days[2])} · every game, every league — tap one for its full guide.
+          </p>
+        </div>
+      </section>
 
-      <section className="grid-overlay bg-[#222] text-white pt-[44px] pb-[38px] relative overflow-hidden">
-        <div className="container relative z-[1] max-w-[1180px] mx-auto px-[28px]">
-          <div className="eyebrow inline-flex items-center gap-[9px] font-bold text-[13px] tracking-[1.4px] uppercase text-ink bg-brand-yellow px-[13px] py-[6px] rounded-[3px] shadow-[4px_4px_0_#000] mb-[14px]">
-            {days[0].date} — {days[2].date}
-          </div>
-          <h1 className="font-display uppercase text-white tracking-[1px] leading-none text-[clamp(44px,6.4vw,84px)]">
-            This <span className="hl bg-brand-yellow text-ink px-[10px] shadow-[5px_5px_0_#000] inline-block">Weekend</span>
-          </h1>
-          <div className="flex gap-3 flex-wrap mt-6">
-            {LEAGUES.map(l => (
-              <button
-                key={l.value}
-                onClick={() => setLeague(l.value as League | '')}
-                className={`inline-flex items-center border-[3px] border-[#222] rounded-[6px] shadow-[4px_4px_0_#222] px-[14px] py-[8px] font-body font-bold text-[13px] uppercase tracking-[0.4px] cursor-pointer [transition:transform_.1s,box-shadow_.1s,background_.12s] hover:-translate-x-px hover:-translate-y-px ${l.value === league ? 'bg-brand-yellow text-ink' : 'bg-white text-ink'}`}
-              >
-                {l.label}
-              </button>
+      <section className="block">
+        <div className="container">
+          <div className="filters">
+            <button className={'chip' + (filter === 'all' ? ' on' : '')} onClick={() => setFilter('all')}>All sports</button>
+            {LEAGUES.map((l) => (
+              <button key={l} className={'chip' + (l === filter ? ' on' : '')} onClick={() => setFilter(l)}>{SPORTS[l].label}</button>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="py-[46px] bg-[#f4f4f4]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
-          {days.map((day, i) => {
-            const { data, isLoading } = queries[i]
-            const games = data ?? []
-            return (
-              <div key={day.date} className="mb-12">
-                <h2 className="font-display text-[26px] uppercase tracking-[1px] mb-5 pb-2 border-b-[3px] border-brand-yellow">
-                  {day.label} <span className="font-body font-normal text-[16px] text-[#666] tracking-normal normal-case">{day.date}</span>
-                </h2>
-                {isLoading && (
-                  <div className="text-[#999] font-body text-[14px] py-4">Loading games...</div>
-                )}
-                {!isLoading && games.length === 0 && (
-                  <div className="text-[#999] font-body text-[14px] py-4">No games scheduled{league ? ` for ${league}` : ''}.</div>
-                )}
-                {games.map(g => <GameRow key={g.id} game={g} />)}
+          {all === null && !errMsg ? <div className="loading">Loading the weekend slate…</div> : null}
+          {errMsg ? <div className="empty">{errMsg}</div> : null}
+
+          {all !== null && !errMsg ? (
+            list.length ? (
+              win.days.map((d) => {
+                const key = localDayKey(d)
+                const dayGames = list.filter((g) => localDayKey(new Date(g.date)) === key)
+                if (!dayGames.length) return null
+                return (
+                  <section key={key}>
+                    <div className="dayhd">
+                      <h2>{dayLabel(d)}</h2>
+                      <span className="cnt">{dayGames.length} {dayGames.length === 1 ? 'game' : 'games'}</span>
+                    </div>
+                    {dayGames.map((g) => <GameRow key={g.league + ':' + g.id} g={g} />)}
+                  </section>
+                )
+              })
+            ) : (
+              <div className="empty">
+                {filter === 'all'
+                  ? <>Nothing on the schedule this weekend. <Link to="/games">Browse the full schedule →</Link></>
+                  : <>No {SPORTS[filter].label} games in this window. <Link to="/games">See the {SPORTS[filter].label} schedule →</Link></>}
               </div>
             )
-          })}
+          ) : null}
         </div>
       </section>
 
-      <footer className="bg-black text-[#888] py-[40px] text-[13px]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
-          © 2025 Snapback Sports — Field Guide. <Link to="/" className="text-brand-yellow font-bold">← Home</Link>
-        </div>
-      </footer>
+      <footer><div className="container">© 2026 Snapback Sports. <Link to="/">← Explore</Link></div></footer>
     </>
   )
 }

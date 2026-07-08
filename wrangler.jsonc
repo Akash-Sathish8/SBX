@@ -3,7 +3,9 @@
   "name": "sbx",
   "compatibility_date": "2026-06-10",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry",
+  // Custom entry (src/server.ts) wraps TanStack Start's fetch handler and adds a
+  // `scheduled` handler for the live-score cron below.
+  "main": "src/server.ts",
   // Serve the worker at sbx.snapbacksports.com. custom_domain lets Cloudflare
   // create the proxied DNS record + SSL cert and bind the route on deploy.
   // The snapbacksports.com zone is managed in this same Cloudflare account.
@@ -23,41 +25,18 @@
     // once traffic is steady.
     "head_sampling_rate": 1
   },
-  // Admin override store (match results, Casey's position, spend, visibility,
-  // YouTube ids, stadium/match overrides, ESPN health, underdog referral).
-  // Namespaces created in the Snapback Sports Cloudflare account via
-  // `wrangler kv namespace create sbx-kv` (+ `--preview`).
-  "kv_namespaces": [
-    {
-      "binding": "KV",
-      "id": "2748f19e5a204da08549fbc3c513bd02",
-      "preview_id": "97dc09137084488fa9fcc4dd6c8580f7"
-    }
-  ],
-  // Protomaps basemap: one .pmtiles extract served by /api/basemap (byte-range
-  // reads). Bucket created via `wrangler r2 bucket create sbx-tiles`.
-  "r2_buckets": [
-    {
-      "binding": "TILES",
-      "bucket_name": "sbx-tiles"
-    }
-  ],
-  // User data: reviews, tips, rankings diary, follows, sessions.
-  // Create via `wrangler d1 create sbx-db` (+ `--env preview`).
+  // Refresh today's live game scores in D1 every 2 minutes (src/server/cron.ts).
+  "triggers": {
+    "crons": ["*/2 * * * *"]
+  },
+  // SBX system-of-record. For production, run `wrangler d1 create sbx-db` and
+  // paste the returned database_id below (local dev uses a local SQLite file and
+  // ignores the id). Schema: db/schema.sql. Apply via package.json db:* scripts.
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "sbx-db",
-      "database_id": "REPLACE_WITH_D1_ID",
-      "preview_database_id": "REPLACE_WITH_D1_PREVIEW_ID",
-      "migrations_dir": "migrations"
+      "database_id": "00000000-0000-0000-0000-000000000000"
     }
-  ],
-  "vars": {
-    "GOOGLE_CLIENT_ID": "",
-    "GOOGLE_CLIENT_SECRET": "",
-    "ANTHROPIC_API_KEY": "",
-    "SESSION_SECRET": "",
-    "PUBLIC_URL": "https://sbx.snapbacksports.com"
-  }
+  ]
 }

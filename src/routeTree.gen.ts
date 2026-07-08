@@ -13,18 +13,19 @@ import { Route as WeekendRouteImport } from './routes/weekend'
 import { Route as VenuesRouteImport } from './routes/venues'
 import { Route as VenueRouteImport } from './routes/venue'
 import { Route as TeamsRouteImport } from './routes/teams'
+import { Route as TeamRouteImport } from './routes/team'
 import { Route as RankingsRouteImport } from './routes/rankings'
 import { Route as RankRouteImport } from './routes/rank'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as GuideRouteImport } from './routes/guide'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as GameRouteImport } from './routes/game'
 import { Route as FeedRouteImport } from './routes/feed'
 import { Route as ConferencesRouteImport } from './routes/conferences'
+import { Route as BuildRouteImport } from './routes/build'
+import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as VenueIdRouteImport } from './routes/venue_.$id'
-import { Route as UUsernameRouteImport } from './routes/u_.$username'
-import { Route as TeamIdRouteImport } from './routes/team_.$id'
-import { Route as GameIdRouteImport } from './routes/game_.$id'
+import { Route as UUsernameRouteImport } from './routes/u/$username'
 import { Route as ApiVenuesRouteImport } from './routes/api/venues'
 import { Route as ApiVenueStatsRouteImport } from './routes/api/venue-stats'
 import { Route as ApiTipsRouteImport } from './routes/api/tips'
@@ -33,18 +34,20 @@ import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as ApiReviewsRouteImport } from './routes/api/reviews'
 import { Route as ApiRankingsRouteImport } from './routes/api/rankings'
 import { Route as ApiProfileRouteImport } from './routes/api/profile'
+import { Route as ApiMatchScoreRouteImport } from './routes/api/match-score'
 import { Route as ApiGamesRouteImport } from './routes/api/games'
 import { Route as ApiFollowRouteImport } from './routes/api/follow'
 import { Route as ApiFeedRouteImport } from './routes/api/feed'
 import { Route as ApiExpertNotesRouteImport } from './routes/api/expert-notes'
 import { Route as ApiConferencesRouteImport } from './routes/api/conferences'
 import { Route as ApiAssistantRouteImport } from './routes/api/assistant'
-import { Route as ApiUUsernameRouteImport } from './routes/api/u.$username'
+import { Route as ApiUUsernameRouteImport } from './routes/api/u/$username'
 import { Route as ApiAuthRegisterRouteImport } from './routes/api/auth/register'
 import { Route as ApiAuthMeRouteImport } from './routes/api/auth/me'
 import { Route as ApiAuthLogoutRouteImport } from './routes/api/auth/logout'
 import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
 import { Route as ApiAuthGoogleRouteImport } from './routes/api/auth/google'
+import { Route as ApiAuthConfigRouteImport } from './routes/api/auth/config'
 
 const WeekendRoute = WeekendRouteImport.update({
   id: '/weekend',
@@ -66,6 +69,11 @@ const TeamsRoute = TeamsRouteImport.update({
   path: '/teams',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RankingsRoute = RankingsRouteImport.update({
   id: '/rankings',
   path: '/rankings',
@@ -79,6 +87,11 @@ const RankRoute = RankRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuideRoute = GuideRouteImport.update({
+  id: '/guide',
+  path: '/guide',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -101,29 +114,24 @@ const ConferencesRoute = ConferencesRouteImport.update({
   path: '/conferences',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuildRoute = BuildRouteImport.update({
+  id: '/build',
+  path: '/build',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgendaRoute = AgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VenueIdRoute = VenueIdRouteImport.update({
-  id: '/venue_/$id',
-  path: '/venue/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const UUsernameRoute = UUsernameRouteImport.update({
-  id: '/u_/$username',
+  id: '/u/$username',
   path: '/u/$username',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TeamIdRoute = TeamIdRouteImport.update({
-  id: '/team_/$id',
-  path: '/team/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GameIdRoute = GameIdRouteImport.update({
-  id: '/game_/$id',
-  path: '/game/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiVenuesRoute = ApiVenuesRouteImport.update({
@@ -164,6 +172,11 @@ const ApiRankingsRoute = ApiRankingsRouteImport.update({
 const ApiProfileRoute = ApiProfileRouteImport.update({
   id: '/api/profile',
   path: '/api/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMatchScoreRoute = ApiMatchScoreRouteImport.update({
+  id: '/api/match-score',
+  path: '/api/match-score',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiGamesRoute = ApiGamesRouteImport.update({
@@ -226,16 +239,25 @@ const ApiAuthGoogleRoute = ApiAuthGoogleRouteImport.update({
   path: '/api/auth/google',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthConfigRoute = ApiAuthConfigRouteImport.update({
+  id: '/api/auth/config',
+  path: '/api/auth/config',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/build': typeof BuildRoute
   '/conferences': typeof ConferencesRoute
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
+  '/guide': typeof GuideRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
+  '/team': typeof TeamRoute
   '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
@@ -246,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/api/feed': typeof ApiFeedRoute
   '/api/follow': typeof ApiFollowRoute
   '/api/games': typeof ApiGamesRoute
+  '/api/match-score': typeof ApiMatchScoreRoute
   '/api/profile': typeof ApiProfileRoute
   '/api/rankings': typeof ApiRankingsRoute
   '/api/reviews': typeof ApiReviewsRoute
@@ -254,10 +277,8 @@ export interface FileRoutesByFullPath {
   '/api/tips': typeof ApiTipsRoute
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
-  '/game/$id': typeof GameIdRoute
-  '/team/$id': typeof TeamIdRoute
   '/u/$username': typeof UUsernameRoute
-  '/venue/$id': typeof VenueIdRoute
+  '/api/auth/config': typeof ApiAuthConfigRoute
   '/api/auth/google': typeof ApiAuthGoogleRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
@@ -267,13 +288,17 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/build': typeof BuildRoute
   '/conferences': typeof ConferencesRoute
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
+  '/guide': typeof GuideRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
+  '/team': typeof TeamRoute
   '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
@@ -284,6 +309,7 @@ export interface FileRoutesByTo {
   '/api/feed': typeof ApiFeedRoute
   '/api/follow': typeof ApiFollowRoute
   '/api/games': typeof ApiGamesRoute
+  '/api/match-score': typeof ApiMatchScoreRoute
   '/api/profile': typeof ApiProfileRoute
   '/api/rankings': typeof ApiRankingsRoute
   '/api/reviews': typeof ApiReviewsRoute
@@ -292,10 +318,8 @@ export interface FileRoutesByTo {
   '/api/tips': typeof ApiTipsRoute
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
-  '/game/$id': typeof GameIdRoute
-  '/team/$id': typeof TeamIdRoute
   '/u/$username': typeof UUsernameRoute
-  '/venue/$id': typeof VenueIdRoute
+  '/api/auth/config': typeof ApiAuthConfigRoute
   '/api/auth/google': typeof ApiAuthGoogleRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
@@ -306,13 +330,17 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/build': typeof BuildRoute
   '/conferences': typeof ConferencesRoute
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
+  '/guide': typeof GuideRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
+  '/team': typeof TeamRoute
   '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
@@ -323,6 +351,7 @@ export interface FileRoutesById {
   '/api/feed': typeof ApiFeedRoute
   '/api/follow': typeof ApiFollowRoute
   '/api/games': typeof ApiGamesRoute
+  '/api/match-score': typeof ApiMatchScoreRoute
   '/api/profile': typeof ApiProfileRoute
   '/api/rankings': typeof ApiRankingsRoute
   '/api/reviews': typeof ApiReviewsRoute
@@ -331,10 +360,8 @@ export interface FileRoutesById {
   '/api/tips': typeof ApiTipsRoute
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
-  '/game_/$id': typeof GameIdRoute
-  '/team_/$id': typeof TeamIdRoute
-  '/u_/$username': typeof UUsernameRoute
-  '/venue_/$id': typeof VenueIdRoute
+  '/u/$username': typeof UUsernameRoute
+  '/api/auth/config': typeof ApiAuthConfigRoute
   '/api/auth/google': typeof ApiAuthGoogleRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
@@ -346,13 +373,17 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/agenda'
+    | '/build'
     | '/conferences'
     | '/feed'
     | '/game'
     | '/games'
+    | '/guide'
     | '/profile'
     | '/rank'
     | '/rankings'
+    | '/team'
     | '/teams'
     | '/venue'
     | '/venues'
@@ -363,6 +394,7 @@ export interface FileRouteTypes {
     | '/api/feed'
     | '/api/follow'
     | '/api/games'
+    | '/api/match-score'
     | '/api/profile'
     | '/api/rankings'
     | '/api/reviews'
@@ -371,10 +403,8 @@ export interface FileRouteTypes {
     | '/api/tips'
     | '/api/venue-stats'
     | '/api/venues'
-    | '/game/$id'
-    | '/team/$id'
     | '/u/$username'
-    | '/venue/$id'
+    | '/api/auth/config'
     | '/api/auth/google'
     | '/api/auth/login'
     | '/api/auth/logout'
@@ -384,13 +414,17 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/agenda'
+    | '/build'
     | '/conferences'
     | '/feed'
     | '/game'
     | '/games'
+    | '/guide'
     | '/profile'
     | '/rank'
     | '/rankings'
+    | '/team'
     | '/teams'
     | '/venue'
     | '/venues'
@@ -401,6 +435,7 @@ export interface FileRouteTypes {
     | '/api/feed'
     | '/api/follow'
     | '/api/games'
+    | '/api/match-score'
     | '/api/profile'
     | '/api/rankings'
     | '/api/reviews'
@@ -409,10 +444,8 @@ export interface FileRouteTypes {
     | '/api/tips'
     | '/api/venue-stats'
     | '/api/venues'
-    | '/game/$id'
-    | '/team/$id'
     | '/u/$username'
-    | '/venue/$id'
+    | '/api/auth/config'
     | '/api/auth/google'
     | '/api/auth/login'
     | '/api/auth/logout'
@@ -422,13 +455,17 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/agenda'
+    | '/build'
     | '/conferences'
     | '/feed'
     | '/game'
     | '/games'
+    | '/guide'
     | '/profile'
     | '/rank'
     | '/rankings'
+    | '/team'
     | '/teams'
     | '/venue'
     | '/venues'
@@ -439,6 +476,7 @@ export interface FileRouteTypes {
     | '/api/feed'
     | '/api/follow'
     | '/api/games'
+    | '/api/match-score'
     | '/api/profile'
     | '/api/rankings'
     | '/api/reviews'
@@ -447,10 +485,8 @@ export interface FileRouteTypes {
     | '/api/tips'
     | '/api/venue-stats'
     | '/api/venues'
-    | '/game_/$id'
-    | '/team_/$id'
-    | '/u_/$username'
-    | '/venue_/$id'
+    | '/u/$username'
+    | '/api/auth/config'
     | '/api/auth/google'
     | '/api/auth/login'
     | '/api/auth/logout'
@@ -461,13 +497,17 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgendaRoute: typeof AgendaRoute
+  BuildRoute: typeof BuildRoute
   ConferencesRoute: typeof ConferencesRoute
   FeedRoute: typeof FeedRoute
   GameRoute: typeof GameRoute
   GamesRoute: typeof GamesRoute
+  GuideRoute: typeof GuideRoute
   ProfileRoute: typeof ProfileRoute
   RankRoute: typeof RankRoute
   RankingsRoute: typeof RankingsRoute
+  TeamRoute: typeof TeamRoute
   TeamsRoute: typeof TeamsRoute
   VenueRoute: typeof VenueRoute
   VenuesRoute: typeof VenuesRoute
@@ -478,6 +518,7 @@ export interface RootRouteChildren {
   ApiFeedRoute: typeof ApiFeedRoute
   ApiFollowRoute: typeof ApiFollowRoute
   ApiGamesRoute: typeof ApiGamesRoute
+  ApiMatchScoreRoute: typeof ApiMatchScoreRoute
   ApiProfileRoute: typeof ApiProfileRoute
   ApiRankingsRoute: typeof ApiRankingsRoute
   ApiReviewsRoute: typeof ApiReviewsRoute
@@ -486,10 +527,8 @@ export interface RootRouteChildren {
   ApiTipsRoute: typeof ApiTipsRoute
   ApiVenueStatsRoute: typeof ApiVenueStatsRoute
   ApiVenuesRoute: typeof ApiVenuesRoute
-  GameIdRoute: typeof GameIdRoute
-  TeamIdRoute: typeof TeamIdRoute
   UUsernameRoute: typeof UUsernameRoute
-  VenueIdRoute: typeof VenueIdRoute
+  ApiAuthConfigRoute: typeof ApiAuthConfigRoute
   ApiAuthGoogleRoute: typeof ApiAuthGoogleRoute
   ApiAuthLoginRoute: typeof ApiAuthLoginRoute
   ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
@@ -528,6 +567,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/rankings': {
       id: '/rankings'
       path: '/rankings'
@@ -547,6 +593,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guide': {
+      id: '/guide'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof GuideRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -577,6 +630,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/build': {
+      id: '/build'
+      path: '/build'
+      fullPath: '/build'
+      preLoaderRoute: typeof BuildRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agenda': {
+      id: '/agenda'
+      path: '/agenda'
+      fullPath: '/agenda'
+      preLoaderRoute: typeof AgendaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -584,32 +651,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/venue_/$id': {
-      id: '/venue_/$id'
-      path: '/venue/$id'
-      fullPath: '/venue/$id'
-      preLoaderRoute: typeof VenueIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/u_/$username': {
-      id: '/u_/$username'
+    '/u/$username': {
+      id: '/u/$username'
       path: '/u/$username'
       fullPath: '/u/$username'
       preLoaderRoute: typeof UUsernameRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/team_/$id': {
-      id: '/team_/$id'
-      path: '/team/$id'
-      fullPath: '/team/$id'
-      preLoaderRoute: typeof TeamIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/game_/$id': {
-      id: '/game_/$id'
-      path: '/game/$id'
-      fullPath: '/game/$id'
-      preLoaderRoute: typeof GameIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/venues': {
@@ -666,6 +712,13 @@ declare module '@tanstack/react-router' {
       path: '/api/profile'
       fullPath: '/api/profile'
       preLoaderRoute: typeof ApiProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/match-score': {
+      id: '/api/match-score'
+      path: '/api/match-score'
+      fullPath: '/api/match-score'
+      preLoaderRoute: typeof ApiMatchScoreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/games': {
@@ -752,18 +805,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthGoogleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/config': {
+      id: '/api/auth/config'
+      path: '/api/auth/config'
+      fullPath: '/api/auth/config'
+      preLoaderRoute: typeof ApiAuthConfigRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgendaRoute: AgendaRoute,
+  BuildRoute: BuildRoute,
   ConferencesRoute: ConferencesRoute,
   FeedRoute: FeedRoute,
   GameRoute: GameRoute,
   GamesRoute: GamesRoute,
+  GuideRoute: GuideRoute,
   ProfileRoute: ProfileRoute,
   RankRoute: RankRoute,
   RankingsRoute: RankingsRoute,
+  TeamRoute: TeamRoute,
   TeamsRoute: TeamsRoute,
   VenueRoute: VenueRoute,
   VenuesRoute: VenuesRoute,
@@ -774,6 +838,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiFeedRoute: ApiFeedRoute,
   ApiFollowRoute: ApiFollowRoute,
   ApiGamesRoute: ApiGamesRoute,
+  ApiMatchScoreRoute: ApiMatchScoreRoute,
   ApiProfileRoute: ApiProfileRoute,
   ApiRankingsRoute: ApiRankingsRoute,
   ApiReviewsRoute: ApiReviewsRoute,
@@ -782,10 +847,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTipsRoute: ApiTipsRoute,
   ApiVenueStatsRoute: ApiVenueStatsRoute,
   ApiVenuesRoute: ApiVenuesRoute,
-  GameIdRoute: GameIdRoute,
-  TeamIdRoute: TeamIdRoute,
   UUsernameRoute: UUsernameRoute,
-  VenueIdRoute: VenueIdRoute,
+  ApiAuthConfigRoute: ApiAuthConfigRoute,
   ApiAuthGoogleRoute: ApiAuthGoogleRoute,
   ApiAuthLoginRoute: ApiAuthLoginRoute,
   ApiAuthLogoutRoute: ApiAuthLogoutRoute,

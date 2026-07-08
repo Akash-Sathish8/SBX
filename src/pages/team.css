@@ -1,0 +1,50 @@
+/* /team — one team's explore hub (home venue, score, upcoming games).
+   GameRow styles come from the shared gamerow.css. */
+:root{--y:#F7DF02;--k:#222222;--white:#fff;--light:#f4f4f4;--ink:#222;--body:#33352f;--gray:#6b6b6b}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',system-ui,sans-serif;color:var(--body);background:var(--light)}
+h1,h2,h3{font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;color:var(--ink);letter-spacing:1px;line-height:1}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto}
+.container{max-width:1180px;margin:0 auto;padding:0 28px}
+
+.loadwrap{padding:80px 28px;color:var(--gray);font-weight:600;text-align:center}
+.ulink{font-weight:800;border-bottom:2px solid var(--y)}
+
+/* hero — team-color radial like the game page */
+.thero{position:relative;color:#fff;padding:30px 0 34px;overflow:hidden}
+.thero .back{position:relative;z-index:2;display:inline-flex;margin:0 0 18px 28px;color:#e8e8e8;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+.thero .back:hover{color:var(--y)}
+.thero .container{position:relative;z-index:2}
+.tlogo{width:96px;height:96px;object-fit:contain;filter:drop-shadow(4px 4px 0 rgba(0,0,0,.45));margin-bottom:14px}
+.teyebrow{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.pill{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#111;background:var(--y);border-radius:4px;padding:5px 10px;box-shadow:3px 3px 0 rgba(0,0,0,.4)}
+.pill.loc{background:#fff}
+.thero h1{color:#fff;font-size:clamp(32px,8vw,64px);text-shadow:3px 3px 0 rgba(0,0,0,.35)}
+
+section.block{padding:34px 0 8px}
+section.block:last-of-type{padding-bottom:46px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:#111;background:var(--y);padding:5px 12px;border-radius:3px;box-shadow:4px 4px 0 #000;margin-bottom:16px}
+.shead{font-size:26px;margin-bottom:14px}
+
+/* next-hop cards: home venue + snapback score */
+.hopcards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.hopcards{grid-template-columns:1fr}}
+.hopcard{position:relative;display:flex;align-items:flex-end;min-height:150px;border:3px solid var(--k);border-radius:10px;overflow:hidden;box-shadow:6px 6px 0 0 var(--k);background:var(--k);color:#fff;transition:box-shadow .15s,transform .12s}
+.hopcard:hover{box-shadow:9px 9px 0 0 var(--y);transform:translate(-1px,-1px)}
+.hopcard .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.hopcard.venue::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 30%,rgba(0,0,0,.78))}
+.hopcard .m{position:relative;z-index:2;padding:14px 16px}
+.hopcard .lab{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--y)}
+.hopcard .lab img{border-radius:4px}
+.hopcard .nm{font-family:'Anton','Barlow',sans-serif;font-size:22px;letter-spacing:.5px;margin-top:5px;line-height:1.05}
+.hopcard .val{font-family:'Anton','Barlow',sans-serif;font-size:40px;letter-spacing:.5px;margin-top:4px;color:var(--y)}
+.hopcard .sub{font-size:12.5px;font-weight:600;color:#d9d9d0;margin-top:4px}
+.hopcard.score{background:#111}
+
+.empty{color:var(--gray);font-size:15px;padding:12px 2px 22px}
+.empty a{font-weight:800;border-bottom:2px solid var(--y)}
+.loading{padding:26px 0;color:var(--gray);font-weight:600}
+footer{background:#000;color:#888;padding:40px 0;font-size:13px;margin-top:26px}
+footer a{color:var(--y);font-weight:700}

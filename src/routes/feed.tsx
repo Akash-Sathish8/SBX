@@ -1,162 +1,158 @@
+import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useInfiniteQuery } from '@tanstack/react-query'
 import { SiteNav } from '../components/SiteNav'
-import type { Review, PersonalRanking } from '../lib/data-types'
+import { PageCssGuard } from '../components/PageCssGuard'
+import { useAuth } from '../components/auth/AuthProvider'
+import { Avatar } from '../components/profile/Avatar'
+import { useVenues } from '../components/profile/useVenues'
+import { SPORTS } from '../lib/sports'
+import css from '../pages/profile.css?url'
 
+// The following feed — recent logs + reviews from the fans you follow, newest
+// first. Auth-gated content; keyset-paginated via the nextCursor "Load more".
 export const Route = createFileRoute('/feed')({
-  head: () => ({ meta: [{ title: 'Snapback — Following Feed' }] }),
+  head: () => ({
+    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'profile' }],
+    meta: [{ title: 'Snapback — Following' }],
+  }),
   component: FeedPage,
 })
 
-type FeedItem =
-  | { type: 'review'; data: Review }
-  | { type: 'ranking'; data: PersonalRanking & { experience_name?: string; venue_name?: string } }
-
-interface FeedPage {
-  items: FeedItem[]
-  cursor: string | null
+interface FeedItem {
+  kind: 'ranking' | 'review'
+  userId: string
+  author: string | null
+  authorName: string | null
+  avatar: string | null
+  createdAt: string
+  ranking?: { league: string; away: string; home: string; venue: string; city?: string; score: number }
+  review?: { scope: string; targetId: string; rating?: number; body: string }
 }
 
-function ReviewCard({ item }: { item: Review }) {
-  return (
-    <div className="bg-white border-[3px] border-[#222] shadow-[4px_4px_0_#222] rounded-[8px] p-5">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-9 h-9 rounded-full bg-[#e0e0e0] flex items-center justify-center font-display text-[16px] text-ink">
-          {(item.display_name ?? item.username ?? '?')[0].toUpperCase()}
-        </div>
-        <div>
-          <Link to="/u/$username" params={{ username: item.username ?? item.user_id }} className="font-body font-bold text-[14px] text-ink no-underline hover:underline">
-            {item.display_name ?? item.username ?? 'Anonymous'}
-          </Link>
-          <div className="font-body text-[11px] text-[#999]">
-            {new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-          </div>
-        </div>
-        <div className="ml-auto">
-          <span className="font-display text-[22px] text-ink">{item.rating}</span>
-          <span className="font-body text-[11px] text-[#999]">/10</span>
-        </div>
-      </div>
-      {item.venue_id && (
-        <Link to="/venue/$id" params={{ id: item.venue_id }} className="font-body font-bold text-[12px] text-brand-yellow uppercase tracking-[0.5px] no-underline mb-2 block">
-          Review
-        </Link>
-      )}
-      {item.body && <p className="font-body text-[14px] text-[#333] leading-[1.6]">{item.body}</p>}
-    </div>
-  )
-}
-
-function RankingCard({ item }: { item: PersonalRanking & { experience_name?: string; venue_name?: string; username?: string | null; display_name?: string | null } }) {
-  const final = item.fans_score && item.food_score && item.unique_score && item.stadium_score
-    ? Math.round((item.fans_score * 0.3 + item.food_score * 0.2 + item.unique_score * 0.25 + item.stadium_score * 0.25) * 10) / 10
-    : null
-
-  return (
-    <div className="bg-white border-[3px] border-[#222] shadow-[4px_4px_0_#222] rounded-[8px] p-5">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-9 h-9 rounded-full bg-[#e0e0e0] flex items-center justify-center font-display text-[16px] text-ink">
-          {((item as any).display_name ?? (item as any).username ?? '?')[0].toUpperCase()}
-        </div>
-        <div>
-          <Link to="/u/$username" params={{ username: (item as any).username ?? item.user_id }} className="font-body font-bold text-[14px] text-ink no-underline hover:underline">
-            {(item as any).display_name ?? (item as any).username ?? 'Anonymous'}
-          </Link>
-          <div className="font-body text-[11px] text-[#999]">
-            {new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-          </div>
-        </div>
-        {final !== null && (
-          <div className="ml-auto text-right">
-            <div className="font-display text-[26px] text-brand-yellow">{final.toFixed(1)}</div>
-            <div className="font-body text-[10px] text-[#999] uppercase tracking-[0.5px]">Score</div>
-          </div>
-        )}
-      </div>
-      <div className="font-body font-bold text-[13px] text-ink">{item.experience_name}</div>
-      {item.venue_name && <div className="font-body text-[12px] text-[#666]">{item.venue_name}</div>}
-      {item.notes && <p className="font-body text-[13px] text-[#555] mt-2 leading-[1.5]">{item.notes}</p>}
-    </div>
-  )
+function timeAgo(iso: string): string {
+  const t = new Date(iso).getTime()
+  if (isNaN(t)) return ''
+  const s = Math.max(0, Math.floor((Date.now() - t) / 1000))
+  if (s < 60) return 'just now'
+  const m = Math.floor(s / 60); if (m < 60) return m + 'm ago'
+  const h = Math.floor(m / 60); if (h < 24) return h + 'h ago'
+  const d = Math.floor(h / 24); if (d < 30) return d + 'd ago'
+  const mo = Math.floor(d / 30); if (mo < 12) return mo + 'mo ago'
+  return Math.floor(mo / 12) + 'y ago'
 }
 
 function FeedPage() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useInfiniteQuery<FeedPage>({
-    queryKey: ['feed'],
-    queryFn: ({ pageParam }) =>
-      fetch(`/api/feed${pageParam ? `?cursor=${pageParam}` : ''}`).then(r => {
-        if (r.status === 401) throw new Error('auth')
-        return r.json()
-      }),
-    getNextPageParam: (last) => last.cursor ?? undefined,
-    initialPageParam: undefined,
-  })
+  const { user, openAuth } = useAuth()
+  const venues = useVenues()
+  const [items, setItems] = useState<FeedItem[]>([])
+  const [cursor, setCursor] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [more, setMore] = useState(false)
 
-  const items = data?.pages.flatMap(p => p.items) ?? []
-
-  if (isError) {
-    return (
-      <>
-        <SiteNav />
-        <div className="container max-w-[700px] mx-auto px-[28px] py-20 text-center">
-          <h2 className="font-display text-[28px] uppercase mb-4">Sign in to see your feed</h2>
-          <p className="font-body text-[16px] text-[#666] mb-8">Follow fans to see their ratings and reviews here.</p>
-          <Link to="/profile" className="bg-brand-yellow text-ink font-bold px-8 py-3 border-[3px] border-ink shadow-[4px_4px_0_#000] no-underline font-body uppercase tracking-[0.5px]">
-            Sign In
-          </Link>
-        </div>
-      </>
-    )
+  const load = (before?: string) => {
+    const url = '/api/feed' + (before ? '?before=' + encodeURIComponent(before) : '')
+    return fetch(url)
+      .then((r) => r.json())
+      .then((j) => {
+        if (!j?.ok) return
+        setItems((prev) => (before ? [...prev, ...j.items] : j.items))
+        setCursor(j.nextCursor ?? null)
+      })
+      .catch(() => {})
   }
+
+  useEffect(() => {
+    let alive = true
+    if (!user) { setLoading(false); setItems([]); return }
+    setLoading(true)
+    load().finally(() => { if (alive) setLoading(false) })
+    return () => { alive = false }
+  }, [user])
 
   return (
     <>
+      <PageCssGuard id="profile" />
       <SiteNav />
-
-      <section className="grid-overlay bg-[#222] text-white pt-[44px] pb-[38px] relative overflow-hidden">
-        <div className="container relative z-[1] max-w-[700px] mx-auto px-[28px]">
-          <h1 className="font-display uppercase text-white tracking-[1px] leading-none text-[clamp(40px,5vw,72px)]">
-            <span className="hl bg-brand-yellow text-ink px-[10px] shadow-[5px_5px_0_#000] inline-block">Following</span>
-          </h1>
-          <p className="text-[#d6d6d6] text-[16px] mt-4">Ratings and reviews from fans you follow.</p>
+      <section className="pf-hero">
+        <div className="container">
+          <h1 className="pf-name">Following</h1>
+          <div className="pf-statline" style={{ marginTop: 8 }}><span>Recent activity from fans you follow</span></div>
         </div>
       </section>
 
-      <section className="py-[46px] bg-[#f4f4f4]">
-        <div className="container max-w-[700px] mx-auto px-[28px]">
-          {isLoading && (
-            <div className="text-[#999] font-body text-[14px] text-center py-8">Loading feed...</div>
-          )}
-          {!isLoading && items.length === 0 && (
-            <div className="text-center py-12">
-              <p className="font-body text-[16px] text-[#666] mb-4">Nothing in your feed yet. Find fans to follow on their public profiles.</p>
-              <Link to="/rankings" search={{ league: '', q: '', collection: '' }} className="text-brand-yellow font-bold no-underline font-body">Explore Rankings →</Link>
+      <div className="pf-body">
+        <div className="container">
+          {!user ? (
+            <div className="pf-empty">
+              <button className="pf-save" onClick={() => openAuth('signin')}>Sign in</button>
+              <p style={{ marginTop: 12 }}>Sign in and follow other fans to build your feed.</p>
             </div>
-          )}
-          <div className="flex flex-col gap-4">
-            {items.map((item, i) =>
-              item.type === 'review'
-                ? <ReviewCard key={`r-${i}`} item={item.data} />
-                : <RankingCard key={`k-${i}`} item={item.data as any} />
-            )}
-          </div>
-          {hasNextPage && (
-            <button
-              onClick={() => fetchNextPage()}
-              disabled={isFetchingNextPage}
-              className="w-full mt-8 py-3 border-[3px] border-[#222] bg-white font-body font-bold text-[14px] uppercase tracking-[0.5px] shadow-[4px_4px_0_#222] cursor-pointer hover:-translate-y-px hover:shadow-[6px_6px_0_#222] [transition:transform_.1s,box-shadow_.1s] disabled:opacity-50"
-            >
-              {isFetchingNextPage ? 'Loading...' : 'Load more'}
-            </button>
+          ) : loading ? (
+            <div className="pf-empty">Loading…</div>
+          ) : items.length === 0 ? (
+            <div className="pf-empty">
+              No activity yet. Open a fan’s profile at <b>/u/their-name</b> and tap Follow — their logs and reviews show up here.
+            </div>
+          ) : (
+            <>
+              <div className="pf-feed">
+                {items.map((it, i) => <FeedRow key={it.kind + i + it.createdAt} it={it} venues={venues} />)}
+              </div>
+              {cursor ? (
+                <div style={{ marginTop: 18 }}>
+                  <button className="pf-mini-btn" disabled={more} onClick={() => { setMore(true); load(cursor).finally(() => setMore(false)) }}>
+                    {more ? 'Loading…' : 'Load more'}
+                  </button>
+                </div>
+              ) : null}
+            </>
           )}
         </div>
-      </section>
+      </div>
 
-      <footer className="bg-black text-[#888] py-[40px] text-[13px]">
-        <div className="container max-w-[1180px] mx-auto px-[28px]">
-          © 2025 Snapback Sports — Field Guide. <Link to="/" className="text-brand-yellow font-bold">← Home</Link>
-        </div>
-      </footer>
+      <footer><div className="container">© 2026 Snapback Sports — Following. <Link to="/">← Home</Link></div></footer>
     </>
   )
+}
+
+function FeedRow({ it, venues }: { it: FeedItem; venues: ReturnType<typeof useVenues> }) {
+  const author = it.author || 'Fan'
+  const authorLink = <Link to="/u/$username" params={{ username: author }} className="pf-feed-author">{it.authorName || author}</Link>
+
+  if (it.kind === 'ranking' && it.ranking) {
+    const r = it.ranking
+    const v = venues.byName.get((r.venue ?? '').trim().toLowerCase())
+    return (
+      <div className="pf-feed-item">
+        <Avatar avatar={it.avatar} name={it.authorName || author} size={42} />
+        <div className="pf-feed-main">
+          <div className="pf-feed-line">{authorLink} logged <b>{r.away} @ {r.home}</b></div>
+          <div className="pf-feed-sub">
+            {SPORTS[r.league as keyof typeof SPORTS]?.label ?? r.league} · {v ? <Link to="/venue" search={{ id: v.id }} className="pf-d-venuelink">{r.venue}</Link> : r.venue} · {timeAgo(it.createdAt)}
+          </div>
+        </div>
+        <div className="pf-d-score"><span className="pf-sv">{r.score.toFixed(1)}</span></div>
+      </div>
+    )
+  }
+
+  if (it.kind === 'review' && it.review) {
+    const rv = it.review
+    const v = rv.scope === 'venue' ? venues.byId.get(rv.targetId) : undefined
+    return (
+      <div className="pf-feed-item">
+        <Avatar avatar={it.avatar} name={it.authorName || author} size={42} />
+        <div className="pf-feed-main">
+          <div className="pf-feed-line">
+            {authorLink} reviewed {v ? <Link to="/venue" search={{ id: v.id }} className="pf-d-venuelink">{v.name}</Link> : <b>{rv.scope === 'event' ? 'a game' : 'a venue'}</b>}
+            {typeof rv.rating === 'number' ? <span className="pf-review-score" style={{ marginLeft: 8 }}>{rv.rating}/10</span> : null}
+          </div>
+          <div className="pf-feed-sub">{timeAgo(it.createdAt)}</div>
+          <div className="pf-feed-body">{rv.body}</div>
+        </div>
+      </div>
+    )
+  }
+
+  return null
 }
