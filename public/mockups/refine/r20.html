@@ -1,0 +1,636 @@
+<!doctype html>
+<!--
+  r20 — Broadcast
+  Thesis: borrow the most battle-tested sports UI there is — the broadcast graphic — so section
+  headers become lower-thirds, game cards become score bugs, and every card scans in the same
+  fixed order: league, matchup, time.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>r20 — Broadcast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --y:#F7DF02;
+    --ink:#141410;
+    --bg:#f4f4f4;
+    --card:#ffffff;
+    --body:#33352f;
+    --gray:#6b6b6b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);color:var(--body);
+    font-family:'Barlow',sans-serif;font-size:16px;line-height:1.5;
+    overflow-x:clip;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1180px;margin:0 auto;padding:0 28px}
+  .num{font-variant-numeric:tabular-nums}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,244,244,.96);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    border-bottom:3px solid var(--ink);
+  }
+  .nav-in{display:flex;align-items:center;gap:12px;height:58px}
+  .nav-logo{width:28px;height:28px;border-radius:7px}
+  .nav-word{font-family:'Anton',sans-serif;font-size:19px;letter-spacing:1px;text-transform:uppercase;color:var(--ink)}
+  .nav-links{display:none;gap:22px;margin-left:26px}
+  .nav-links a{font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;color:var(--body)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{
+    margin-left:auto;
+    background:var(--ink);
+    transform:skewX(-4deg);
+    padding:8px 14px;white-space:nowrap;
+  }
+  .nav-cta span{
+    display:block;transform:skewX(4deg);
+    font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:1px;color:#fff;
+  }
+  @media(min-width:900px){.nav-links{display:flex}}
+
+  /* ---------- lower-third primitives ---------- */
+  .lt{display:flex;flex-direction:column;align-items:flex-start}
+  .lt-eyebrow{
+    background:var(--y);
+    border:2px solid var(--ink);
+    transform:skewX(-4deg);transform-origin:bottom left;
+    padding:4px 12px;
+    margin-left:3px;
+    position:relative;z-index:1;
+  }
+  .lt-eyebrow span{
+    display:block;transform:skewX(4deg);
+    font-weight:800;text-transform:uppercase;font-size:10px;letter-spacing:2.5px;color:var(--ink);
+    white-space:nowrap;
+  }
+  .lt-main{
+    display:flex;align-items:stretch;
+    background:var(--ink);
+    transform:skewX(-4deg);transform-origin:top left;
+    box-shadow:4px 4px 0 rgba(20,20,16,.22);
+  }
+  .lt-main i{flex:0 0 10px;background:var(--y);display:block}
+  .lt-main h2,.lt-main .lt-text{
+    transform:skewX(4deg);
+    font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:22px;letter-spacing:1px;line-height:1;color:#fff;
+    padding:9px 16px 8px 12px;white-space:nowrap;
+  }
+  @media(min-width:900px){
+    .lt-main h2,.lt-main .lt-text{font-size:30px}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;min-height:88svh;
+    display:flex;flex-direction:column;
+    isolation:isolate;
+    border-bottom:3px solid var(--ink);
+  }
+  .hero-img{position:absolute;inset:0;z-index:-2;background:url('/img/celebration2.jpg') center 30%/cover no-repeat #ddd}
+  .hero-scrim{
+    position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(180deg,rgba(20,20,16,.38) 0%,rgba(20,20,16,.14) 36%,rgba(20,20,16,.5) 68%,rgba(20,20,16,.85) 100%);
+  }
+  .hero-in{display:flex;flex-direction:column;align-items:flex-start;flex:1;width:100%;padding-top:38px;padding-bottom:28px}
+  .hero-copy{margin-top:auto;width:100%;display:flex;flex-direction:column;align-items:flex-start}
+  .hero-slabs{display:flex;flex-direction:column;align-items:flex-start}
+  .hero-slabs .lt-eyebrow{margin-left:4px}
+  .slab{
+    display:flex;align-items:stretch;
+    background:var(--ink);
+    transform:skewX(-4deg);transform-origin:top left;
+    box-shadow:5px 5px 0 rgba(0,0,0,.35);
+  }
+  .slab + .slab{margin-top:6px;margin-left:14px}
+  .slab i{flex:0 0 12px;background:var(--y);display:block}
+  .slab h1,.slab .slab-text{
+    transform:skewX(4deg);
+    font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:clamp(30px,7.4vw,64px);
+    letter-spacing:1px;line-height:1;color:#fff;
+    padding:12px 18px 10px 14px;white-space:nowrap;
+  }
+  .slab .hl{background:var(--y);color:var(--ink);padding:0 .12em}
+  .hero-search{
+    margin-top:24px;display:flex;width:100%;max-width:560px;
+    background:var(--card);border:3px solid var(--ink);border-radius:10px;overflow:hidden;
+    box-shadow:5px 5px 0 var(--ink);
+  }
+  .hero-search input{
+    flex:1;min-width:0;background:transparent;border:0;outline:none;
+    color:var(--ink);font:600 15px 'Barlow',sans-serif;padding:14px 16px;
+  }
+  .hero-search input::placeholder{color:var(--gray)}
+  .hero-search button{
+    border:0;border-left:3px solid var(--ink);cursor:pointer;
+    background:var(--y);color:var(--ink);
+    font:800 13px 'Barlow',sans-serif;text-transform:uppercase;letter-spacing:1px;
+    padding:0 20px;
+  }
+  .doors{margin-top:22px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .door{
+    display:flex;align-items:stretch;
+    background:rgba(255,255,255,.94);
+    border:2px solid var(--ink);border-radius:8px;overflow:hidden;
+    min-height:74px;
+    box-shadow:3px 3px 0 rgba(20,20,16,.5);
+  }
+  .door i{flex:0 0 8px;background:var(--y);display:block;border-right:2px solid var(--ink)}
+  .door-main{display:flex;flex-direction:column;align-items:flex-start;flex:1;min-width:0;padding:10px 12px}
+  .door-label{font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.5px;color:var(--ink)}
+  .door-count{
+    margin-top:auto;
+    font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);
+    font-variant-numeric:tabular-nums;
+  }
+  @media(min-width:900px){
+    .hero{min-height:92svh}
+    .doors{grid-template-columns:repeat(4,1fr)}
+    .door{min-height:84px}
+  }
+
+  /* ---------- section headers ---------- */
+  section{padding:36px 0 4px}
+  .sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 14px;margin-bottom:20px}
+  .sec-cta{
+    margin-left:auto;
+    background:var(--ink);
+    transform:skewX(-4deg);
+    padding:8px 13px;white-space:nowrap;
+    box-shadow:2px 2px 0 rgba(20,20,16,.25);
+  }
+  .sec-cta span{
+    display:block;transform:skewX(4deg);
+    font-weight:800;text-transform:uppercase;font-size:11px;letter-spacing:1.5px;color:var(--y);
+  }
+
+  /* ---------- rails ---------- */
+  .rail{
+    display:flex;gap:14px;
+    overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:4px 28px 28px;
+    scrollbar-width:none;
+  }
+  .rail::-webkit-scrollbar{display:none}
+  .rail-wrap{max-width:1180px;margin:0 auto}
+  @media(min-width:900px){.rail{gap:18px;scroll-snap-type:none}}
+
+  /* ---------- score-bug game cards ---------- */
+  .bug{
+    scroll-snap-align:start;
+    flex:0 0 264px;
+    display:flex;flex-direction:column;
+    background:var(--card);border:3px solid var(--ink);border-radius:10px;
+    box-shadow:5px 5px 0 var(--ink);
+    overflow:hidden;min-height:158px;
+  }
+  .bug-head{padding:10px 12px 0}
+  .bug-lg{
+    display:inline-block;
+    background:var(--ink);
+    transform:skewX(-4deg);
+    padding:3px 9px;
+  }
+  .bug-lg span{
+    display:block;transform:skewX(4deg);
+    font-weight:800;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#fff;
+  }
+  .bug-mid{display:flex;align-items:stretch;flex:1}
+  .bug-teams{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-start;gap:7px;padding:9px 12px 10px}
+  .bug-team{display:flex;align-items:center;gap:9px}
+  .bug-team img{width:26px;height:26px;object-fit:contain}
+  .bug-team .abbr{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:1px;color:var(--ink)}
+  .bug-team .side{margin-left:auto;font-weight:700;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gray)}
+  .bug-slot{
+    flex:0 0 76px;
+    border-left:3px solid var(--ink);
+    background:var(--y);
+    display:flex;flex-direction:column;align-items:flex-start;
+    padding:10px 10px;
+  }
+  .bug-slot b{font-weight:800;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.1}
+  .bug-slot span{font-weight:800;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink)}
+  .bug-venue{
+    border-top:2px solid var(--ink);
+    padding:7px 12px 8px;
+    font-weight:600;font-size:12px;color:var(--gray);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  @media(min-width:900px){.bug{flex:0 0 292px}}
+
+  /* ---------- ranked ---------- */
+  .rank-card{
+    scroll-snap-align:start;
+    position:relative;
+    flex:0 0 250px;
+    display:flex;flex-direction:column;
+    background:var(--card);border:3px solid var(--ink);border-radius:10px;
+    box-shadow:5px 5px 0 var(--ink);
+    overflow:hidden;min-height:288px;
+  }
+  .rank-photo{height:146px;background:#e3e3e0}
+  .rank-photo img{width:100%;height:100%;object-fit:cover}
+  .rank-tag{
+    position:absolute;top:10px;left:-2px;z-index:2;
+    display:flex;align-items:stretch;
+    background:var(--ink);
+    transform:skewX(-4deg);
+    box-shadow:3px 3px 0 rgba(0,0,0,.3);
+  }
+  .rank-tag i{flex:0 0 7px;background:var(--y);display:block}
+  .rank-tag b{
+    transform:skewX(4deg);
+    font-family:'Anton',sans-serif;font-weight:400;font-size:15px;letter-spacing:1px;color:#fff;
+    padding:5px 10px 4px 8px;font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .rank-body{display:flex;flex-direction:column;align-items:flex-start;flex:1;padding:12px 14px 13px}
+  .rank-name{
+    font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:19px;letter-spacing:.4px;line-height:1.12;color:var(--ink);
+  }
+  .rank-loc{margin-top:5px;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gray)}
+  .rank-score{
+    margin-top:auto;padding-top:10px;
+    display:flex;align-items:center;gap:7px;
+    font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .rank-score::before{content:"";width:8px;height:12px;background:var(--y);border:1px solid var(--ink);transform:skewX(-4deg)}
+  .rank-card.no-img .rank-photo{display:none}
+  .rank-card.no-img .rank-tag{position:static;align-self:flex-start;margin:14px 0 0 12px}
+  .rank-card.no-img .rank-name{font-size:22px}
+  @media(min-width:900px){
+    .rank-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:20px 18px;
+      overflow:visible;padding-left:28px;padding-right:28px;
+    }
+    .rank-grid .rank-card{flex:none;min-height:300px}
+  }
+
+  /* ---------- venues ---------- */
+  .venue{
+    scroll-snap-align:start;
+    flex:0 0 256px;
+    display:flex;flex-direction:column;
+    background:var(--card);border:3px solid var(--ink);border-radius:10px;
+    box-shadow:5px 5px 0 var(--ink);
+    overflow:hidden;
+  }
+  .venue img{width:100%;height:148px;object-fit:cover;border-bottom:3px solid var(--ink)}
+  .venue-body{display:flex;align-items:stretch;gap:10px;padding:11px 14px 12px}
+  .venue-body i{flex:0 0 7px;background:var(--y);border:1px solid var(--ink);transform:skewX(-4deg);display:block}
+  .venue-text{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+  .venue-name{font-weight:800;font-size:15px;color:var(--ink);letter-spacing:.3px}
+  .venue-city{margin-top:2px;font-weight:600;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)}
+  @media(min-width:900px){.venue{flex:0 0 300px}.venue img{height:170px}}
+
+  /* ---------- sport chips ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:14px;padding-bottom:30px}
+  .chip{
+    display:flex;align-items:stretch;
+    background:var(--ink);
+    transform:skewX(-4deg);
+    box-shadow:3px 3px 0 rgba(20,20,16,.25);
+  }
+  .chip i{flex:0 0 8px;display:block}
+  .chip span{
+    display:block;transform:skewX(4deg);
+    padding:10px 16px 9px 12px;
+    font-weight:800;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;color:#fff;
+  }
+  .chip:hover span{color:var(--y)}
+
+  /* ---------- stat bar + footer ---------- */
+  .stats{border-top:3px solid var(--ink);padding:17px 0;background:#ecece9}
+  .stats-in{display:flex;align-items:center;gap:10px}
+  .stats i{flex:0 0 9px;height:16px;background:var(--y);border:1px solid var(--ink);transform:skewX(-4deg);display:block}
+  .stats p{
+    font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  footer{background:#111;padding:26px 0 34px}
+  .foot-in{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+  .foot-links{display:flex;gap:18px}
+  .foot-links a{font-weight:800;font-size:13px;color:var(--y);text-transform:uppercase;letter-spacing:1px}
+  footer small{font-size:13px;color:#9a988c;font-weight:500}
+  @media(min-width:900px){
+    .foot-in{flex-direction:row;align-items:baseline}
+    footer small{margin-left:auto}
+  }
+</style>
+</head>
+<body>
+
+  <!-- nav -->
+  <nav class="nav">
+    <div class="container nav-in">
+      <img class="nav-logo" src="/img/logo.png" alt="Snapback logo">
+      <span class="nav-word">Snapback</span>
+      <div class="nav-links">
+        <a href="#">Games</a><a href="#">Teams</a><a href="#">Venues</a><a href="#">Rankings</a>
+      </div>
+      <a class="nav-cta" href="#"><span>Sign in</span></a>
+    </div>
+  </nav>
+
+  <!-- hero -->
+  <header class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-scrim"></div>
+    <div class="container hero-in">
+      <div class="hero-copy">
+        <div class="hero-slabs">
+          <p class="lt-eyebrow"><span>The fan's field guide</span></p>
+          <h1 style="display:contents">
+            <span class="slab" style="margin-top:6px"><i></i><span class="slab-text">Where does <span class="hl">Gameday</span></span></span>
+            <span class="slab"><i></i><span class="slab-text">take&nbsp;you?</span></span>
+          </h1>
+        </div>
+        <div class="hero-search">
+          <input type="text" placeholder="Search teams, venues, cities…" aria-label="Search">
+          <button type="button">Search</button>
+        </div>
+        <div class="doors">
+          <a class="door" href="#"><i></i><span class="door-main"><span class="door-label">By sport &amp; team</span><span class="door-count">Browse leagues</span></span></a>
+          <a class="door" href="#"><i></i><span class="door-main"><span class="door-label">This weekend</span><span class="door-count">Upcoming slate</span></span></a>
+          <a class="door" href="#"><i></i><span class="door-main"><span class="door-label">By venue</span><span class="door-count num">601 venues</span></span></a>
+          <a class="door" href="#"><i></i><span class="door-main"><span class="door-label">Top ranked</span><span class="door-count num">166 experiences</span></span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- slate -->
+  <section>
+    <div class="container sec-head">
+      <div class="lt">
+        <p class="lt-eyebrow"><span>MLB · Tonight</span></p>
+        <div class="lt-main"><i></i><h2>On the slate</h2></div>
+      </div>
+      <a class="sec-cta" href="#"><span>All games →</span></a>
+    </div>
+    <div class="rail-wrap">
+      <div class="rail">
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/nym.png" alt="NYM"><span class="abbr">NYM</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/atl.png" alt="ATL"><span class="abbr">ATL</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">8:08</b><span>PM</span></div>
+          </div>
+          <p class="bug-venue">Truist Park, Atlanta</p>
+        </article>
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/stl.png" alt="STL"><span class="abbr">STL</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/chc.png" alt="CHC"><span class="abbr">CHC</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">8:08</b><span>PM</span></div>
+          </div>
+          <p class="bug-venue">Wrigley Field, Chicago</p>
+        </article>
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/phi.png" alt="PHI"><span class="abbr">PHI</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/kc.png" alt="KC"><span class="abbr">KC</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">8:10</b><span>PM</span></div>
+          </div>
+          <p class="bug-venue">Kauffman Stadium, Kansas City</p>
+        </article>
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/sf.png" alt="SF"><span class="abbr">SF</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/col.png" alt="COL"><span class="abbr">COL</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">8:10</b><span>PM</span></div>
+          </div>
+          <p class="bug-venue">Coors Field, Denver</p>
+        </article>
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/bos.png" alt="BOS"><span class="abbr">BOS</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/laa.png" alt="LAA"><span class="abbr">LAA</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">9:38</b><span>PM</span></div>
+          </div>
+          <p class="bug-venue">Angel Stadium, Anaheim</p>
+        </article>
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/mia.png" alt="MIA"><span class="abbr">MIA</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/ath.png" alt="ATH"><span class="abbr">ATH</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">9:40</b><span>PM</span></div>
+          </div>
+          <p class="bug-venue">Sutter Health Park, Sacramento</p>
+        </article>
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/mil.png" alt="MIL"><span class="abbr">MIL</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/ari.png" alt="ARI"><span class="abbr">ARI</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">9:40</b><span>PM</span></div>
+          </div>
+          <p class="bug-venue">Chase Field, Phoenix</p>
+        </article>
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/sd.png" alt="SD"><span class="abbr">SD</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/lad.png" alt="LAD"><span class="abbr">LAD</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">10:10</b><span>PM</span></div>
+          </div>
+          <p class="bug-venue">Dodger Stadium, Los Angeles</p>
+        </article>
+        <article class="bug">
+          <div class="bug-head"><span class="bug-lg"><span>MLB</span></span></div>
+          <div class="bug-mid">
+            <div class="bug-teams">
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/pit.png" alt="PIT"><span class="abbr">PIT</span><span class="side">Away</span></div>
+              <div class="bug-team"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/wsh.png" alt="WSH"><span class="abbr">WSH</span><span class="side">Home</span></div>
+            </div>
+            <div class="bug-slot"><b class="num">1:00</b><span>PM Sun</span></div>
+          </div>
+          <p class="bug-venue">Nationals Park, Washington</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ranked -->
+  <section>
+    <div class="container sec-head">
+      <div class="lt">
+        <p class="lt-eyebrow"><span>166 ranked experiences</span></p>
+        <div class="lt-main"><i></i><h2>Top ranked in America</h2></div>
+      </div>
+      <a class="sec-cta" href="#"><span>Full rankings →</span></a>
+    </div>
+    <div class="rail-wrap">
+      <div class="rail rank-grid">
+        <article class="rank-card">
+          <span class="rank-tag"><i></i><b class="num">№ 1</b></span>
+          <div class="rank-photo"><img src="/img/stadiums/hardrock.jpg" alt="Hard Rock Stadium"></div>
+          <div class="rank-body">
+            <h3 class="rank-name">National Championship 2026</h3>
+            <p class="rank-loc">Miami, FL · NCAAF</p>
+            <p class="rank-score num">8.88 expert score</p>
+          </div>
+        </article>
+        <article class="rank-card">
+          <span class="rank-tag"><i></i><b class="num">№ 2</b></span>
+          <div class="rank-photo"><img src="/img/exp/churchill-downs.jpg" alt="Churchill Downs"></div>
+          <div class="rank-body">
+            <h3 class="rank-name">Kentucky Derby</h3>
+            <p class="rank-loc">Louisville, KY · Horse Racing</p>
+            <p class="rank-score num">8.86 expert score</p>
+          </div>
+        </article>
+        <article class="rank-card">
+          <span class="rank-tag"><i></i><b class="num">№ 3</b></span>
+          <div class="rank-photo"><img src="/img/exp/indianapolis-motor-speedway.jpg" alt="Indianapolis Motor Speedway"></div>
+          <div class="rank-body">
+            <h3 class="rank-name">Indy 500</h3>
+            <p class="rank-loc">Indianapolis, IN · Motor Racing</p>
+            <p class="rank-score num">8.78 expert score</p>
+          </div>
+        </article>
+        <article class="rank-card no-img">
+          <span class="rank-tag"><i></i><b class="num">№ 4</b></span>
+          <div class="rank-body">
+            <h3 class="rank-name">Chicago Cubs</h3>
+            <p class="rank-loc">Chicago, IL · MLB</p>
+            <p class="rank-score num">8.36 expert score</p>
+          </div>
+        </article>
+        <article class="rank-card">
+          <span class="rank-tag"><i></i><b class="num">№ 5</b></span>
+          <div class="rank-photo"><img src="/img/exp/lavell-edwards-stadium.jpg" alt="LaVell Edwards Stadium"></div>
+          <div class="rank-body">
+            <h3 class="rank-name">BYU Holy War</h3>
+            <p class="rank-loc">Provo, UT · NCAAF</p>
+            <p class="rank-score num">8.27 expert score</p>
+          </div>
+        </article>
+        <article class="rank-card no-img">
+          <span class="rank-tag"><i></i><b class="num">№ 6</b></span>
+          <div class="rank-body">
+            <h3 class="rank-name">Wisconsin Badgers Football</h3>
+            <p class="rank-loc">Madison, WI · NCAAF</p>
+            <p class="rank-score num">8.26 expert score</p>
+          </div>
+        </article>
+        <article class="rank-card no-img">
+          <span class="rank-tag"><i></i><b class="num">№ 7</b></span>
+          <div class="rank-body">
+            <h3 class="rank-name">Red River Rivalry</h3>
+            <p class="rank-loc">Dallas, TX · NCAAF</p>
+            <p class="rank-score num">8.14 expert score</p>
+          </div>
+        </article>
+        <article class="rank-card no-img">
+          <span class="rank-tag"><i></i><b class="num">№ 8</b></span>
+          <div class="rank-body">
+            <h3 class="rank-name">Tennessee Volunteers Football</h3>
+            <p class="rank-loc">Knoxville, TN · NCAAF</p>
+            <p class="rank-score num">8.12 expert score</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- venues -->
+  <section>
+    <div class="container sec-head">
+      <div class="lt">
+        <p class="lt-eyebrow"><span>601 venues</span></p>
+        <div class="lt-main"><i></i><h2>Iconic buildings</h2></div>
+      </div>
+      <a class="sec-cta" href="#"><span>All venues →</span></a>
+    </div>
+    <div class="rail-wrap">
+      <div class="rail">
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/mlb/day/2.jpg" alt="Fenway Park"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Fenway Park</span><span class="venue-city">Boston, MA</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/mlb/day/16.jpg" alt="Wrigley Field"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Wrigley Field</span><span class="venue-city">Chicago, IL</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/mlb/day/19.jpg" alt="Dodger Stadium"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Dodger Stadium</span><span class="venue-city">Los Angeles, CA</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/mlb/day/208.jpg" alt="Yankee Stadium"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Yankee Stadium</span><span class="venue-city">Bronx, NY</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/mlb/day/43.jpg" alt="Oracle Park"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Oracle Park</span><span class="venue-city">San Francisco, CA</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/mlb/day/27.jpg" alt="Coors Field"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Coors Field</span><span class="venue-city">Denver, CO</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/mlb/day/84.jpg" alt="Citizens Bank Park"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Citizens Bank Park</span><span class="venue-city">Philadelphia, PA</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/nhl/day/1830.jpg" alt="Madison Square Garden"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Madison Square Garden</span><span class="venue-city">New York, NY</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/nfl/day/3798.jpg" alt="Lambeau Field"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">Lambeau Field</span><span class="venue-city">Green Bay, WI</span></span></div></article>
+        <article class="venue"><img src="https://a.espncdn.com/i/venues/nfl/day/7065.jpg" alt="SoFi Stadium"><div class="venue-body"><i></i><span class="venue-text"><span class="venue-name">SoFi Stadium</span><span class="venue-city">Inglewood, CA</span></span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- sport chips -->
+  <section>
+    <div class="container sec-head">
+      <div class="lt">
+        <p class="lt-eyebrow"><span>Browse the leagues</span></p>
+        <div class="lt-main"><i></i><h2>Pick your sport</h2></div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="chips">
+        <a class="chip" href="#"><i style="background:#041e42"></i><span>MLB</span></a>
+        <a class="chip" href="#"><i style="background:#013369"></i><span>NFL</span></a>
+        <a class="chip" href="#"><i style="background:#c8102e"></i><span>NBA</span></a>
+        <a class="chip" href="#"><i style="background:#0033a0"></i><span>NHL</span></a>
+        <a class="chip" href="#"><i style="background:#9e1b32"></i><span>CFB</span></a>
+        <a class="chip" href="#"><i style="background:#f47321"></i><span>CBB</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- stat bar -->
+  <div class="stats">
+    <div class="container stats-in">
+      <i aria-hidden="true"></i>
+      <p>166 ranked experiences · 601 venues · MLB · NFL · NBA · NHL · CFB · CBB</p>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <footer>
+    <div class="container foot-in">
+      <div class="foot-links">
+        <a href="#">Games</a><a href="#">Venues</a><a href="#">Rankings</a>
+      </div>
+      <small>© 2026 Snapback Sports.</small>
+    </div>
+  </footer>
+
+</body>
+</html>

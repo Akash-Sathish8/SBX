@@ -4,12 +4,16 @@ dist
 dist-ssr
 *.local
 .env
+.dev.vars
+.dev.vars.*
 .nitro
 .tanstack
 .wrangler
 .output
+# Regenerable D1 seed (rebuild with `npm run db:ingest`)
+db/seed.generated.sql
 .vinxi
 __unconfig*
 todos.json
 .gstack/
-dist-agenda
+worker-configuration.d.ts

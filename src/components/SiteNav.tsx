@@ -1,29 +1,28 @@
 import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
+import { useAuth } from './auth/AuthProvider'
 
-// Shared nav for every page. The DOM is identical across pages; each page injects
-// its own CSS (per-route <link>), so the nav renders with that page's exact styling.
-// The Join CTA carries BOTH `btn-navcta` (home page CSS) and `navcta` (subpage CSS);
-// only the class defined by the active page's stylesheet has any effect.
-export function SiteNav({ active }: { active?: 'guide' | 'games' | 'venues' | 'casey' }) {
+// Shared nav for every page (the FIELD GUIDE home included). A hamburger menu
+// on all widths, explore-first: Explore (home), This Weekend, Rankings,
+// Following (auth-gated), You, and a sign-in/out control. /venues /games /teams
+// are one tap away via the home tiles; demoted pages (/guide /agenda
+// /conferences /build) stay reachable by URL only. Styled by the global
+// nav.css (.sbxnav*). `active` is accepted for back-compat with existing
+// callers; highlighting is driven by the router.
+export function SiteNav(_props: { active?: string } = {}) {
   const [open, setOpen] = useState(false)
+  const { user, openAuth, logout } = useAuth()
+  const close = () => setOpen(false)
+
   return (
-    <header className="nav">
-      <div className="nav-in">
-        <Link className="logo" to="/" aria-label="Snapback home">
-          {/* Explicit dimensions: logo.png is 900x900, so without these the logo
-              paints full-screen during any gap in the per-route CSS swap. */}
-          <img className="logo-img" src="/img/logo.png" alt="Snapback" width={42} height={42} />
-          SNAPBACK<span className="wc">WC 2026</span>
+    <header className="sbxnav">
+      <div className="sbxnav-in">
+        <Link to="/" className="sbxnav-brand" aria-label="Snapback home">
+          <img className="sbxnav-logo" src="/img/logo.png" alt="" width={42} height={42} />
+          SNAPBACK
         </Link>
-        <nav className={'nav-links' + (open ? ' open' : '')} id="navLinks">
-          <Link to="/guide" className={active === 'guide' ? 'active' : undefined}>Guide</Link>
-          <Link to="/games" className={active === 'games' ? 'active' : undefined}>Games</Link>
-          <Link to="/venues" className={active === 'venues' ? 'active' : undefined}>Venues</Link>
-          <Link to="/casey" className={active === 'casey' ? 'active' : undefined}>Casey</Link>
-        </nav>
         <button
-          className={'hamburger' + (open ? ' open' : '')}
+          className={'sbxnav-burger' + (open ? ' open' : '')}
           aria-label="Menu"
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
@@ -31,6 +30,26 @@ export function SiteNav({ active }: { active?: 'guide' | 'games' | 'venues' | 'c
           <span></span><span></span><span></span>
         </button>
       </div>
+
+      {open ? <button className="sbxnav-scrim" aria-label="Close menu" onClick={close} /> : null}
+
+      <nav className={'sbxnav-menu' + (open ? ' open' : '')}>
+        <Link to="/" activeOptions={{ exact: true }} activeProps={{ className: 'on' }} onClick={close}>Explore</Link>
+        <Link to="/weekend" activeProps={{ className: 'on' }} onClick={close}>This Weekend</Link>
+        <Link to="/rankings" activeProps={{ className: 'on' }} onClick={close}>Rankings</Link>
+        {user ? <Link to="/feed" activeProps={{ className: 'on' }} onClick={close}>Following</Link> : null}
+        <Link to="/profile" activeProps={{ className: 'on' }} onClick={close}>You</Link>
+        <span className="sbxnav-sep" />
+        {user ? (
+          <button className="sbxnav-auth" onClick={() => { logout(); close() }}>
+            Sign out<img className="sbxnav-authlogo" src="/img/logo.png" alt="" width={22} height={22} />
+          </button>
+        ) : (
+          <button className="sbxnav-auth" onClick={() => { openAuth('signin'); close() }}>
+            Sign in<img className="sbxnav-authlogo" src="/img/logo.png" alt="" width={22} height={22} />
+          </button>
+        )}
+      </nav>
     </header>
   )
 }

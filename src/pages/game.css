@@ -49,11 +49,23 @@ section.block.tint{background:#f7f6f2}
 .flagbg .right{right:0;-webkit-mask-image:linear-gradient(to left,#000 42%,transparent 95%);mask-image:linear-gradient(to left,#000 42%,transparent 95%)}
 .ghero::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 120% at 50% 0%,rgba(20,20,16,.34) 0%,rgba(20,20,16,.72) 55%,rgba(20,20,16,.9) 100%)}
 .ghero .container{position:relative;z-index:2;text-align:center}
+/* Keep the hero heading white even if share.css (which owns .bld-h1) hasn't
+   applied — game.css always loads with this hero, and `.ghero h1` (0,1,1) beats
+   both a bled-in dark `h1{}` rule and `.bld-h1`, so the title can't go invisible
+   on the dark hero during a per-route CSS-swap gap. */
+.ghero h1{color:#fff}
 .ground{display:inline-block;font-weight:800;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:#111;background:var(--y);padding:6px 13px;border-radius:5px;margin-bottom:clamp(16px,3vw,24px)}
 .gmatch{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(12px,3.5vw,40px);max-width:880px;margin:0 auto}
 .gteam{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.6vw,14px);min-width:0}
 .gflag{font-size:clamp(46px,8.5vw,84px);line-height:1;filter:drop-shadow(0 5px 12px rgba(0,0,0,.45))}
 .gflag.sm{font-size:26px;filter:none}
+/* v2: ESPN team logos + live score */
+.glogo{width:clamp(56px,11vw,96px);height:clamp(56px,11vw,96px);object-fit:contain;filter:drop-shadow(0 5px 12px rgba(0,0,0,.5))}
+.gsub{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.65)}
+.gscore{flex:none;font-family:'Anton','Barlow',sans-serif;color:#fff;font-size:clamp(34px,7vw,68px);letter-spacing:1px;display:inline-flex;align-items:center;gap:8px}
+.gdash{color:var(--y)}
+.ulink{color:#222;text-decoration:underline}
+.elead{font-size:16px;line-height:1.5;color:var(--ink);max-width:60ch;margin-top:6px}
 .gname{font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;color:#fff;font-size:clamp(23px,4.4vw,50px);letter-spacing:.5px;line-height:1.02;text-wrap:balance}
 .gvs{flex:none;font-family:'Anton','Barlow',sans-serif;color:#111;background:var(--y);width:clamp(40px,6vw,58px);height:clamp(40px,6vw,58px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:clamp(14px,2vw,21px);letter-spacing:.5px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .gmeta{margin-top:clamp(16px,3vw,22px);color:#dcdcdc;font-weight:600;font-size:15px;letter-spacing:.3px}
@@ -153,3 +165,19 @@ footer a{color:var(--y);font-weight:700}
 
 /* placed last so it overrides the base .fi-rows 2-col rule above (equal specificity → source order wins) */
 @media(max-width:760px){.fi-rows{grid-template-columns:1fr}}
+
+
+/* Snapback expert notes (ExpertNotes.tsx) — editorial gameday knowledge */
+.xnotes{margin:0 0 26px}
+.xnotes-head{display:flex;align-items:center;gap:8px;font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;letter-spacing:.6px;font-size:15px;color:#111;margin:0 0 12px}
+.xnotes-logo{border-radius:4px}
+.xnotes-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.xnotes-card{background:#fff;border:2px solid #222;border-left:6px solid var(--y);border-radius:4px;padding:12px 14px}
+.xnotes-sec{font-weight:800;text-transform:uppercase;letter-spacing:.4px;font-size:12px;color:#555;margin:0 0 6px}
+.xnotes-list{list-style:none;margin:0;padding:0}
+.xnotes-list li{position:relative;padding-left:16px;font-size:14px;line-height:1.5;color:#2c2c2c;margin-top:7px}
+.xnotes-list li:first-child{margin-top:0}
+.xnotes-list li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--y);border:1.5px solid #111;transform:rotate(45deg)}
+.xnotes-src{margin-left:6px;color:#888;font-size:12px;text-decoration:none}
+.xnotes-src:hover{color:#222}
+@media(min-width:620px){.xnotes-grid{grid-template-columns:1fr 1fr}}

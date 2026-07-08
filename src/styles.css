@@ -37,12 +37,55 @@ header.nav { position: sticky; top: 0; z-index: 50; background: #111; border-bot
 .nav-links a { color: #cfcfcf; text-decoration: none; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
 .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: transparent; border: 0; cursor: pointer; padding: 0; }
 .hamburger span { display: block; width: 26px; height: 3px; background: #fff; border-radius: 2px; }
+/* Right-align the bars inside the 44px tap-button so the icon's right edge is the
+   same distance from the screen edge as the logo's left edge (symmetric nav
+   margins). `header.nav` raises specificity above the per-page `.hamburger`. */
+header.nav .hamburger { align-items: flex-end; }
 @media (max-width: 760px) {
   .hamburger { display: flex; }
   .nav-links { position: absolute; top: 68px; left: 0; right: 0; background: #111; flex-direction: column; align-items: stretch; gap: 0; padding: 6px 0 14px; border-bottom: 4px solid #F7DF02; display: none; }
   .nav-links.open { display: flex; }
   .nav-links a { padding: 13px 28px; font-size: 15px; }
 }
+/* ---- Nav height parity with the home bar ----
+   The home page uses its OWN nav (.hw nav / .hm nav: 101px web, 85px mobile),
+   while every SiteNav page uses `.nav-in` (per-route CSS pins it to 68px). Without
+   this, the top bar visibly shrinks ~30px when you go home -> Venues/Games/Guide
+   and grows back on return. `header.nav .nav-in` (0,2,0) outranks every per-page
+   `.nav-in` (0,1,0), so this one rule makes all subpages match home. The mobile
+   dropdown's `top` follows the taller bar so it still sits flush beneath it. */
+header.nav .nav-in { height: 81px; }
+header.nav .nav-links { top: 81px; }
+@media (min-width: 760px) { header.nav .nav-in { height: 97px; } }
+
+/* ---- Light nav on every SiteNav page ----
+   The whole app is light now; each route's per-page CSS still defines a dark nav,
+   so these `body header.nav` rules (higher specificity) flip the shared nav to
+   light from one place: white bar, dark logo/links/burger, yellow underline. */
+body header.nav { background: #ffffff; border-bottom-color: #F7DF02; box-shadow: 0 1px 0 rgba(0, 0, 0, .05); }
+body header.nav .logo { color: #16160f; }
+body header.nav .nav-links a { color: #33332c; }
+body header.nav .nav-links a:hover, body header.nav .nav-links a.active { color: #16160f; }
+body header.nav .hamburger span { background: #16160f; }
+@media (max-width: 760px) {
+  body header.nav .nav-links { background: #ffffff; border-bottom-color: #F7DF02; box-shadow: 0 12px 24px rgba(0, 0, 0, .08); }
+  body header.nav .nav-links a { color: #33332c; }
+}
+
+/* ---- Global content fallback ----
+   Same idea as the nav fallback above: if a page's per-route stylesheet hasn't
+   applied yet (or failed to load over a flaky tunnel / cellular link), these keep
+   the page READABLE instead of broken. Without them, a missing page CSS means
+   full-size images blow the layout wider than the viewport (Safari then zooms the
+   whole page out and the nav looks tiny), and links fall back to default
+   blue-underline. Page CSS loads later in the document and overrides freely. */
+img { max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+/* Never let any element force a horizontal scroll / zoom-out on phones. Use
+   `clip` (not `hidden`): hidden would force overflow-y to `auto` and break the
+   sticky nav + Casey's fixed shell; clip contains the overflow without creating a
+   scroll container. Safari <16 ignores it (harmless no-op). */
+html, body { max-width: 100%; overflow-x: clip; }
 
 @supports (padding: max(0px)) {
   /* Sticky top bar: keep nav contents clear of the landscape notch / rounded
@@ -51,10 +94,147 @@ header.nav { position: sticky; top: 0; z-index: 50; background: #111; border-bot
     padding-left: max(28px, env(safe-area-inset-left));
     padding-right: max(28px, env(safe-area-inset-right));
   }
+}
 
-  /* Casey tracker: the bottom video strip / control overlay must clear the
-     home indicator so its tap targets aren't cut off. */
-  .casey-shell [data-map-overlay='bottom'] {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+/* ---- "What to know" crowdsourced sections (global: shared by venue + event
+   pages, and must survive each page's CSS swap). No backend yet, so these show
+   honest empty states — never fabricated tips. Explicit colors (no per-page
+   vars) so they render identically wherever WhatToKnow mounts. */
+.wtk { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 8px; }
+.wtk-card { border: 2px solid #141414; border-radius: 10px; padding: 15px 16px; background: #fff; }
+.wtk-h { font-family: 'Anton', 'Barlow', sans-serif; font-size: 19px; letter-spacing: .4px; color: #141414; text-transform: uppercase; }
+.wtk-hint { font-size: 13px; color: #666; font-weight: 600; margin-top: 5px; line-height: 1.4; }
+.wtk-empty { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #999; font-weight: 700; margin-top: 12px; padding-top: 11px; border-top: 1px dashed #ddd; }
+.wtk-dot { width: 7px; height: 7px; border-radius: 50%; background: #F7DF02; flex: 0 0 auto; }
+/* real fan tips + the auth-gated add form (global, shared by venue + event pages) */
+.wtk-tips { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; padding-top: 11px; border-top: 1px dashed #ddd;
+  max-height: 300px; overflow-y: auto; overflow-x: hidden; padding-right: 5px; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #cdcdcd transparent; }
+.wtk-tips::-webkit-scrollbar { width: 7px; }
+.wtk-tips::-webkit-scrollbar-thumb { background: #cdcdcd; border-radius: 4px; }
+.wtk-tips::-webkit-scrollbar-track { background: transparent; }
+.wtk-tip { position: relative; background: #faf7e8; border: 1.5px solid #e7dca0; border-radius: 8px; padding: 9px 11px; padding-right: 26px; }
+.wtk-tipmeta { display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px; }
+.wtk-tipauthor { font-weight: 800; font-size: 12px; color: #141414; text-transform: uppercase; letter-spacing: .3px; }
+.wtk-tipago { font-size: 11px; color: #9a9a9a; font-weight: 600; }
+.wtk-tipbody { font-size: 13.5px; color: #2a2a2a; font-weight: 500; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; }
+.wtk-tipdel { position: absolute; top: 6px; right: 7px; border: 0; background: transparent; color: #bbb; font-size: 17px; line-height: 1; cursor: pointer; padding: 0 2px; }
+.wtk-tipdel:hover { color: #e2483d; }
+/* Official Snapback tips — white card + yellow accent, logo avatar + verified badge */
+.wtk-tip.official { background: #fff; border-color: #141414; border-left: 4px solid #F7DF02; }
+.wtk-official { display: inline-flex; align-items: center; gap: 6px; }
+.wtk-offlogo { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid #141414; object-fit: cover; display: block; }
+.wtk-offname { font-weight: 800; font-size: 12px; color: #141414; text-transform: uppercase; letter-spacing: .3px; }
+.wtk-offbadge { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #141414; color: #F7DF02; font-size: 9px; font-weight: 900; line-height: 1; }
+.wtk-official .wtk-offlogo { align-self: center; }
+/* One card per author per section: each of their tips is a line, divided when there's more than one. */
+.wtk-tipline { display: flex; align-items: flex-start; gap: 8px; }
+.wtk-tipline > span { flex: 1; min-width: 0; }
+.wtk-tipline + .wtk-tipline { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(20,20,20,.1); }
+.wtk-tipdel.inline { position: static; top: auto; right: auto; flex: 0 0 auto; align-self: flex-start; }
+
+/* BackBuddy assistant (AssistantChat.tsx) — floating cap button + chat panel, GLOBAL on every page */
+.asst-fab{position:fixed;right:18px;bottom:18px;z-index:90;width:62px;height:62px;border-radius:50%;overflow:hidden;background:#111;border:3px solid #111;box-shadow:4px 4px 0 rgba(0,0,0,.28);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:transform 120ms ease,box-shadow 120ms ease}
+.asst-fab:hover{transform:translateY(-2px);box-shadow:6px 6px 0 rgba(0,0,0,.28)}
+.asst-fab:active{transform:translateY(0);box-shadow:2px 2px 0 rgba(0,0,0,.28)}
+.asst-fab.open{background:#111}
+.asst-fab:focus-visible{outline:3px solid #F7DF02;outline-offset:3px}
+.asst-fab-logo{width:100%;height:100%;object-fit:cover;display:block}
+.asst-fab-x{color:#F7DF02;font-size:30px;line-height:1}
+.asst-panel{position:fixed;right:18px;bottom:92px;z-index:91;width:min(384px,calc(100vw - 36px));max-height:min(72vh,560px);display:flex;flex-direction:column;background:#fff;border:2.5px solid #111;border-radius:16px;box-shadow:6px 6px 0 rgba(0,0,0,.2);overflow:hidden;transform-origin:bottom right;animation:asstpop 140ms ease-out}
+@keyframes asstpop{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
+.asst-panel-head{display:flex;align-items:center;gap:10px;background:#F7DF02;border-bottom:2.5px solid #111;padding:13px 15px}
+.asst-spark{color:#111;font-size:16px;line-height:1}
+.asst-panel-title{font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;letter-spacing:.8px;font-size:18px;color:#111;line-height:1}
+.asst-close{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#111;color:#fff;border:0;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.asst-close:hover{background:#333}
+.asst-sub{padding:9px 15px 0;font-size:11.5px;font-weight:700;letter-spacing:.3px;color:#999;text-transform:uppercase}
+.asst-stream{flex:1;padding:14px 15px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;background:#fff;min-height:120px}
+.asst-empty{color:#444;font-size:14px;line-height:1.5}
+.asst-empty p{margin:0 0 12px}
+.asst-chips{display:flex;flex-wrap:wrap;gap:8px}
+.asst-chip{background:#fff;border:2px solid #222;border-radius:999px;padding:7px 13px;font:inherit;font-size:13px;font-weight:600;color:#222;cursor:pointer;transition:background 120ms}
+.asst-chip:hover:not(:disabled){background:#F7DF02}
+.asst-chip:disabled{opacity:.5;cursor:default}
+.asst-msg{max-width:88%;padding:10px 13px;border-radius:13px;font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.asst-msg.user{align-self:flex-end;background:#222;color:#fff;border-bottom-right-radius:3px}
+.asst-msg.assistant{align-self:flex-start;background:#f4f4f4;color:#1a1a1a;border-bottom-left-radius:3px}
+.asst-typing{display:inline-flex;gap:4px;align-items:center}
+.asst-typing span{width:6px;height:6px;border-radius:50%;background:#bbb;animation:asstblink 1s infinite ease-in-out}
+.asst-typing span:nth-child(2){animation-delay:.2s}
+.asst-typing span:nth-child(3){animation-delay:.4s}
+@keyframes asstblink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.asst-err{padding:8px 15px;background:#fce8e6;color:#a61b1b;font-size:13px;border-top:1px solid #f3c9c4}
+.asst-form{display:flex;gap:8px;padding:12px;border-top:2px solid #111;background:#fff}
+.asst-input{flex:1;min-width:0;border:2px solid #cfcfcf;border-radius:9px;padding:10px 12px;font:inherit;font-size:14px;color:#222;background:#fff}
+.asst-input:focus{outline:none;border-color:#111}
+.asst-input:disabled{background:#f3f3f3}
+.asst-send{flex:0 0 auto;background:#111;color:#fff;border:0;border-radius:9px;padding:10px 16px;font:inherit;font-weight:800;text-transform:uppercase;letter-spacing:.5px;font-size:13px;cursor:pointer}
+.asst-send:disabled{opacity:.45;cursor:default}
+@media(max-width:520px){.asst-panel{right:12px;left:12px;width:auto;bottom:86px;max-height:74vh}.asst-fab{right:14px;bottom:14px}}
+.wtk-add { margin-top: 12px; width: 100%; background: #141414; color: #fff; border: 0; border-radius: 8px; padding: 9px 12px; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; }
+.wtk-add:hover { background: #000; }
+.wtk-form { margin-top: 12px; }
+.wtk-textarea { width: 100%; box-sizing: border-box; border: 2px solid #141414; border-radius: 8px; padding: 9px 11px; font-family: 'Barlow', sans-serif; font-size: 13.5px; font-weight: 500; color: #141414; resize: vertical; outline: none; }
+.wtk-textarea:focus { border-color: #caa800; }
+.wtk-err { color: #c0392b; font-size: 12px; font-weight: 700; margin-top: 6px; }
+.wtk-formrow { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+.wtk-cancel { background: transparent; border: 0; color: #888; font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 12.5px; cursor: pointer; padding: 8px 10px; }
+.wtk-cancel:hover { color: #141414; }
+.wtk-post { background: #F7DF02; color: #111; border: 0; border-radius: 8px; padding: 9px 16px; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; }
+.wtk-post:disabled { opacity: .5; cursor: default; }
+
+/* ---- The "forum": 6 tip boxes laid out 3×2, with a tall "Fan Reviews" card
+   beside them spanning both rows. Global (shared by venue/event pages) so it
+   survives each page's CSS swap, with explicit colors (no per-page vars). ---- */
+.wtk-layout { display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, 28%, 380px); gap: 18px; align-items: stretch; margin-top: 8px; }
+.wtk-layout .wtk { grid-template-columns: repeat(3, 1fr); margin-top: 0; }
+
+/* Fan Reviews card — stretches to the height of the 3×2 box grid; the list
+   scrolls inside (flex-basis:0 keeps the reviews from dictating card height). */
+.rvw { display: flex; flex-direction: column; min-height: 0; background: #fff; border: 2px solid #141414; border-radius: 10px; overflow: hidden; }
+.rvw-head { display: flex; align-items: center; gap: 9px; background: #F7DF02; padding: 11px 15px; border-bottom: 2px solid #141414; }
+.rvw-h { font-family: 'Anton', 'Barlow', sans-serif; font-size: 19px; letter-spacing: .4px; text-transform: uppercase; color: #141414; }
+.rvw-count { margin-left: auto; min-width: 22px; height: 22px; padding: 0 7px; display: inline-flex; align-items: center; justify-content: center; background: #141414; color: #fff; border-radius: 11px; font-weight: 800; font-size: 12px; }
+
+.rvw-add { display: block; margin: 13px 15px 0; background: #141414; color: #fff; border: 0; border-radius: 8px; padding: 11px 12px; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; }
+.rvw-add:hover { background: #000; }
+
+.rvw-form { padding: 13px 15px 4px; }
+/* the fan's own venue pillar scores, surfaced while they write */
+.rvw-ratings { margin-bottom: 11px; }
+.rvw-ratlab, .rvw-ratelab { display: block; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #8a8a82; margin-bottom: 6px; }
+.rvw-ratchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.rvw-chip { display: inline-flex; align-items: center; gap: 5px; background: #faf7e8; border: 1.5px solid #e7dca0; border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: #5a5a52; text-transform: uppercase; letter-spacing: .3px; }
+.rvw-chip b { font-family: 'Anton', 'Barlow', sans-serif; font-weight: 400; font-size: 14px; color: #141414; }
+
+.rvw-raterow { margin-bottom: 10px; }
+/* 1-10 on one row (desktop); 5 per row on phones (1-5, 6-10). Buttons stretch to fill. */
+.rvw-rate { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; }
+.rvw-num { min-width: 0; height: 30px; padding: 0; border: 1.5px solid #d9d9cf; background: #fff; border-radius: 6px; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 13px; color: #555; cursor: pointer; }
+.rvw-num:hover { border-color: #141414; }
+.rvw-num.on { background: #F7DF02; border-color: #141414; color: #141414; }
+@media (max-width: 560px) { .rvw-rate { grid-template-columns: repeat(5, 1fr); } }
+/* Review textarea: stretch to the full card width, on-brand (not the browser default). */
+.rvw-textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 124px; border: 1.5px solid #d9d9cf; border-radius: 8px; padding: 10px 12px; font-family: 'Barlow', sans-serif; font-size: 13.5px; line-height: 1.45; color: #2a2a2a; background: #fff; }
+.rvw-textarea:focus { outline: none; border-color: #141414; }
+.rvw-formrow { display: flex; justify-content: flex-end; gap: 8px; margin-top: 9px; }
+
+.rvw-list { flex: 1 1 0; min-height: 0; overflow-y: auto; padding: 12px 15px 14px; display: flex; flex-direction: column; gap: 10px; }
+.rvw-item { position: relative; background: #faf9f5; border: 1.5px solid #ecece4; border-radius: 9px; padding: 10px 12px; padding-right: 26px; }
+.rvw-itemmeta { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+.rvw-author { font-weight: 800; font-size: 12px; color: #141414; text-transform: uppercase; letter-spacing: .3px; }
+.rvw-score { background: #F7DF02; color: #141414; border-radius: 5px; padding: 1px 6px; font-family: 'Anton', 'Barlow', sans-serif; font-size: 12px; letter-spacing: .3px; }
+.rvw-ago { font-size: 11px; color: #9a9a9a; font-weight: 600; margin-left: auto; }
+.rvw-body { font-size: 13.5px; color: #2a2a2a; font-weight: 500; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
+.rvw-del { position: absolute; top: 6px; right: 7px; border: 0; background: transparent; color: #bbb; font-size: 17px; line-height: 1; cursor: pointer; padding: 0 2px; }
+.rvw-del:hover { color: #e2483d; }
+.rvw-empty { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #999; font-weight: 700; padding: 4px 0; }
+
+@media (max-width: 980px) {
+  .wtk-layout { grid-template-columns: 1fr; }
+  .wtk-layout .wtk { grid-template-columns: repeat(2, 1fr); }
+  .rvw-list { flex: 0 1 auto; max-height: 440px; }
+}
+@media (max-width: 560px) {
+  .wtk-layout .wtk { grid-template-columns: 1fr; }
 }

@@ -1,0 +1,27 @@
+/* Next-hop modules on detail pages (src/components/NextHops.tsx). Multi-route
+   sheet: linked by /venue and /game with the SAME data-page-css string
+   ("venue game") — /build shares game.css but must NOT list this file. Section
+   chrome (.block/.eyebrow/.shead) comes from each host page's own CSS. */
+.nh-sub{font-size:13px;font-weight:600;color:#76766c;margin:-4px 0 16px}
+.nh-link{font-weight:800;color:inherit;border-bottom:2px solid var(--y,#F7DF02)}
+.nh-empty{color:#76766c;font-size:14.5px;font-weight:600;padding:6px 0 10px}
+
+/* nearby venue mini-cards */
+.nh-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(min-width:760px){.nh-cards{grid-template-columns:repeat(3,1fr)}}
+.nh-vc{display:flex;flex-direction:column;background:#fff;border:3px solid var(--k,#222);border-radius:10px;overflow:hidden;box-shadow:5px 5px 0 0 var(--k,#222);transition:box-shadow .15s,transform .12s;color:inherit}
+.nh-vc:hover{box-shadow:8px 8px 0 0 var(--y,#F7DF02);transform:translate(-1px,-1px)}
+.nh-vc-im{display:flex;align-items:center;justify-content:center;height:86px;background:#16160f;overflow:hidden}
+.nh-vc-im img{width:100%;height:100%;object-fit:cover}
+.nh-vc-im.logo img.lg{width:52px;height:52px;object-fit:contain}
+.nh-vc-m{display:flex;flex-direction:column;gap:2px;padding:10px 12px}
+.nh-vc-m .t{font-weight:800;font-size:13.5px;color:var(--ink,#222);line-height:1.15}
+.nh-vc-m .d{font-size:11.5px;font-weight:600;color:#76766c}
+
+/* ranked-experience score card (game pages) */
+.nh-exp{display:flex;flex-direction:column;gap:4px;background:#111;color:#fff;border:3px solid var(--k,#222);border-radius:10px;box-shadow:6px 6px 0 0 var(--y,#F7DF02);padding:16px 18px;max-width:520px;transition:box-shadow .15s,transform .12s}
+.nh-exp:hover{box-shadow:9px 9px 0 0 var(--y,#F7DF02);transform:translate(-1px,-1px)}
+.nh-exp-lab{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--y,#F7DF02)}
+.nh-exp-lab img{border-radius:4px}
+.nh-exp-val{font-family:'Anton','Barlow',sans-serif;font-size:38px;letter-spacing:.5px;color:var(--y,#F7DF02)}
+.nh-exp-sub{font-size:12.5px;font-weight:600;color:#d9d9d0}

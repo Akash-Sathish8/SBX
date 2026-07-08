@@ -53,6 +53,19 @@ section.block{padding:46px 0}
 .vcard .photo{height:178px;background:#0d0d0d;position:relative}
 .vcard .photo .photo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .vcard .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35))}
+/* real ESPN venue photo as the card background */
+.vcard .photo.has-img{background-size:cover;background-position:center}
+/* city text on one side, team logo on the OPPOSITE side — both over the dark
+   lower part of the .photo::after gradient so they stay readable */
+.vcard .photo.has-img .citytag{top:auto;bottom:12px}
+.vcard .photo.has-img .role{left:12px;right:auto;top:12px}
+.vcard .vlogo-badge{position:absolute;right:12px;bottom:12px;z-index:2;display:flex;align-items:center;gap:6px}
+.vcard .vlogo-badge img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
+/* fallback (no photo): tenant team logos on a dark field */
+.vcard .vphoto{display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 50% 0%,#1c1c1c,#0a0a0a)}
+.vcard .vphoto::after{display:none}
+.vcard .vlogos{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:14px 18px;z-index:1}
+.vcard .vlogo{width:62px;height:62px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
 .vcard .citytag{position:absolute;left:12px;top:12px;z-index:2;background:var(--k);color:#fff;font-weight:700;font-size:11px;
   letter-spacing:.5px;text-transform:uppercase;padding:5px 10px;border-radius:3px;display:inline-flex;align-items:center;gap:6px}
 .vcard .role{position:absolute;right:12px;top:12px;z-index:2;background:var(--y);color:#111;font-weight:800;font-size:10px;
@@ -62,6 +75,14 @@ section.block{padding:46px 0}
 .vcard .meta{font-size:13px;color:var(--gray);font-weight:600;margin-top:6px;text-transform:uppercase;letter-spacing:.4px}
 .vcard .flag{font-size:14px;line-height:1}
 
+/* venue search box — filters the grid by name / team / city, in the chips' brutalist style */
+.vsearch{display:flex;align-items:center;gap:11px;background:#fff;border:3px solid var(--k);border-radius:8px;box-shadow:4px 4px 0 var(--k);padding:13px 16px;margin-top:24px;max-width:560px}
+.vsearch svg{flex:0 0 auto;color:#76766c}
+.vsearch-in{flex:1;min-width:0;border:0;outline:0;background:transparent;font-family:'Barlow',sans-serif;font-weight:600;font-size:16px;color:var(--ink)}
+.vsearch-in::placeholder{color:#9a9a90}
+.vsearch-in::-webkit-search-cancel-button{cursor:pointer}
+.empty,.loading{padding:46px 4px;color:var(--gray);font-family:'Barlow',sans-serif;font-weight:600;font-size:17px}
+
 .tally{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
 .tally .pill{background:#fff;border:3px solid var(--k);border-radius:6px;box-shadow:4px 4px 0 var(--k);padding:8px 14px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13px;color:var(--ink);text-transform:uppercase;letter-spacing:.4px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:transform .1s,box-shadow .1s,background .12s}
 .tally .pill:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--k)}
@@ -69,8 +90,42 @@ section.block{padding:46px 0}
 .tally .pill.on{background:var(--y)}
 .tally .pill b{font-family:'Anton';font-size:18px;margin-right:5px}
 
+/* Conference sub-filter — appears under the league chips once CFB/CBB is picked.
+   Horizontal scroll rail (CBB has 31 conferences) of smaller secondary chips. */
+.confrow{display:flex;gap:8px;margin-top:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 8px;scrollbar-width:thin}
+.confrow::-webkit-scrollbar{height:6px}
+.confrow::-webkit-scrollbar-thumb{background:#ccc;border-radius:3px}
+.cchip{flex:0 0 auto;white-space:nowrap;background:#fff;border:2px solid var(--k);border-radius:6px;padding:6px 12px;font-family:'Barlow',sans-serif;font-weight:700;font-size:12px;color:var(--ink);text-transform:uppercase;letter-spacing:.3px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .12s}
+.cchip:hover{background:#f4f4f4}
+.cchip.on{background:var(--y)}
+.cchip b{font-family:'Anton';font-size:14px}
+
 footer{background:#000;color:#888;padding:40px 0;font-size:13px}
 footer a{color:var(--y);font-weight:700}
 
 /* responsive images: ensure media scales fluidly and never overflows */
 img{max-width:100%;height:auto}
+
+.loadmore-row{display:flex;justify-content:center;padding:26px 0 8px}
+.loadmore{background:#fff;border:3px solid var(--k);border-radius:6px;box-shadow:4px 4px 0 var(--k);padding:12px 22px;font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;color:var(--ink);text-transform:uppercase;letter-spacing:.4px;cursor:pointer;transition:transform .1s,box-shadow .1s,background .12s}
+.loadmore:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--k);background:var(--y)}
+.loadmore:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--k)}
+
+/* explore-first entry: sport tiles shown before any grid renders */
+.entry-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.entry-hd h2{font-size:24px}
+.entry-sub{font-size:13px;font-weight:600;color:var(--gray,#6b6b6b)}
+.sptiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(min-width:760px){.sptiles{grid-template-columns:repeat(3,1fr)}}
+.sptile{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:4px;height:96px;border:3px solid var(--k,#222);border-radius:12px;background:#fff;box-shadow:5px 5px 0 0 var(--k,#222);padding:12px 14px;cursor:pointer;overflow:hidden;transition:box-shadow .15s,transform .12s;font-family:'Barlow',sans-serif}
+.sptile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:9px;background:var(--acc,#222)}
+.sptile:hover{box-shadow:8px 8px 0 0 var(--y,#F7DF02);transform:translate(-1px,-1px)}
+.sptile .sp-lg{font-family:'Anton','Barlow',sans-serif;font-size:22px;letter-spacing:.6px;color:var(--ink,#222);text-transform:uppercase}
+.sptile .sp-n{font-size:12px;font-weight:700;color:var(--gray,#6b6b6b);text-transform:uppercase;letter-spacing:.4px}
+.sptile .sp-n b{color:#111}
+.browseall-row{display:flex;justify-content:center;padding:24px 0 4px}
+.backexplore{display:inline-flex;align-items:center;gap:6px;background:none;border:0;cursor:pointer;font-family:'Barlow',sans-serif;color:var(--gray,#6b6b6b);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;padding:0}
+.backexplore:hover{color:#111}
+
+/* the header SearchBox needs breathing room above the pills */
+.head .sbx-search{margin:4px 0 16px}

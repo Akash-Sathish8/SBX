@@ -19,6 +19,13 @@ header.nav{position:sticky;top:0;z-index:50;background:var(--k);border-bottom:4p
   background:var(--light);clip-path:var(--notch);filter:drop-shadow(5px 5px 0 var(--k));transition:transform 80ms,filter 120ms}
 .btn-dark{background:var(--k);color:#fff;filter:drop-shadow(5px 5px 0 var(--y))}
 .navcta{box-shadow:inset 0 0 0 2px var(--y);padding:9px 18px;font-size:13px}
+/* "Get directions" button in the Getting-there section (opens Apple/Google Maps) */
+.dir-btn{display:inline-flex;align-items:center;gap:8px;margin:2px 0 18px;font-family:'Anton','Barlow',sans-serif;
+  text-transform:uppercase;letter-spacing:.5px;font-size:15px;color:#111;background:var(--y);
+  border-radius:8px;padding:12px 20px;box-shadow:0 6px 18px rgba(0,0,0,.1);transition:filter 120ms,transform 80ms}
+.dir-btn:hover{filter:brightness(.96)}
+.dir-btn:active{transform:translateY(1px)}
+.dir-btn:focus-visible{outline:3px solid var(--k);outline-offset:2px}
 .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:transparent;border:0;cursor:pointer;padding:0;z-index:60}
 .hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
 .hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
@@ -38,6 +45,17 @@ header.nav{position:sticky;top:0;z-index:50;background:var(--k);border-bottom:4p
 .hero h1{color:#fff;font-size:clamp(40px,7vw,86px);max-width:16ch;line-height:.95}
 .altname{color:#bdbdbd;font-weight:600;font-size:15px;margin-top:10px;letter-spacing:.3px}
 .altname b{color:#fff}
+/* Snapback + Fan score cards sit to the RIGHT of the venue title (badge styling) */
+.vhero-row{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.vhero-title{min-width:0}
+.vscores{display:flex;gap:12px;flex-wrap:wrap}
+.vscore{background:#fff;border:1px solid #e6e6e0;border-radius:13px;padding:12px 18px;min-width:124px;box-shadow:0 8px 22px rgba(0,0,0,.32)}
+.vscore .lab{display:flex;align-items:center;gap:6px;font-family:'Barlow',system-ui,sans-serif;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#8a8a82}
+.vscore .cap{width:18px;height:18px;border-radius:4px;flex:0 0 auto}
+.vscore .val{font-family:'Anton','Barlow',sans-serif;font-size:34px;line-height:1;letter-spacing:.5px;color:#16160f;margin-top:6px}
+.vscore .sub{font-size:11px;font-weight:600;color:#9a9a92;margin-top:5px;letter-spacing:.2px;text-transform:none}
+.vscore.snap{border:2px solid var(--y);box-shadow:0 8px 22px rgba(247,223,2,.34)}
+.vscore.snap .lab{color:#16160f}
 .tag{color:#f3f3f3;font-size:clamp(17px,2.1vw,22px);font-weight:500;max-width:48ch;margin-top:16px;line-height:1.45}
 
 /* STAT STRIP */
@@ -131,6 +149,10 @@ section.block.alt .acc-note{color:#d8d8d8}
 .wx-tempc .lo{color:#aaa}
 .wxu{font-size:10px;font-weight:800;color:#9a9a9a}
 .wx-rain{font-size:11px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-top:4px}
+/* played match in the strip: final score in place of the weather forecast */
+.wx-day.played{border-color:var(--y);background:#fffdf0}
+.wx-score{font-family:'Anton','Barlow',sans-serif;font-size:28px;color:var(--ink);line-height:1;margin-top:8px;letter-spacing:1px}
+.wx-ft{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#111;background:var(--y);border-radius:5px;padding:2px 8px;display:inline-block;margin-top:7px}
 .wx-typical{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#a07c00;margin-top:4px}
 .wx-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--y);color:#111;font-weight:800;font-size:9px;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px;box-shadow:2px 2px 0 var(--k);white-space:nowrap}
 .wx-msg{color:var(--gray);font-weight:600;font-size:14.5px;padding:10px 0}
@@ -138,6 +160,22 @@ section.block.alt .acc-note{color:#d8d8d8}
 footer{background:#000;color:#888;padding:40px 0;font-size:13px}
 footer a{color:var(--y);font-weight:700}
 .loadwrap{padding:80px 0;text-align:center;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.ulink{color:#222;text-decoration:underline}
+/* factual venue attributes (real ESPN data) */
+.vfacts{display:flex;flex-wrap:wrap;gap:10px}
+.vfact{font-weight:800;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:#141414;background:#f1f1ec;border:2px solid #141414;border-radius:6px;padding:7px 12px}
+/* v2 lean venue: colored hero (team accent) instead of a stadium photo */
+.hero.lean .bg{display:none}
+.vlogos-hero{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.vlogos-hero img{object-fit:contain;filter:drop-shadow(0 3px 10px rgba(0,0,0,.55))}
+.vgames{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.vgrow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;background:#fff;border:2px solid var(--k);border-radius:8px;padding:13px 16px;color:inherit;transition:transform .12s,filter .12s}
+.vgrow:hover{transform:translate(-2px,-2px);filter:drop-shadow(7px 7px 0 var(--k))}
+.vg-lg{font-weight:800;font-size:11px;letter-spacing:.6px;background:var(--k);color:#fff;border-radius:4px;padding:4px 8px}
+.vg-match{font-weight:800;font-size:16px;color:var(--ink)}
+.vg-at{color:var(--gray);font-weight:700}
+.vg-when{font-size:12.5px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+@media(max-width:560px){.vgrow{grid-template-columns:auto 1fr}.vg-when{grid-column:2;justify-self:start}}
 @media(max-width:760px){
   .hamburger{display:flex}
   .nav-links{position:absolute;top:68px;left:0;right:0;background:var(--k);flex-direction:column;align-items:stretch;gap:0;padding:6px 0 14px;border-bottom:4px solid var(--y);display:none}
@@ -249,7 +287,8 @@ section.block.alt h2,section.block.alt h3,section.block.alt .ssub{color:inherit}
 .agname{font-weight:800;font-size:15px;color:#111;letter-spacing:.2px}
 .agmeta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 11px;margin-top:5px}
 .agrating{font-size:12px;font-weight:800;letter-spacing:.2px;color:#b8860b}
-.agdist{font-size:12px;font-weight:700;color:#888}
+.agdist{font-size:12px;font-weight:700;color:#888;display:inline-flex;align-items:center;gap:3px}
+.agdist-gl{width:12px;height:12px;flex:none}
 .agwhere{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9a9a9a;margin-top:3px}
 .agnote{font-size:13px;color:#555;line-height:1.5;margin-top:6px}
 .agwhy{list-style:none;margin:8px 0 0;padding:0}
@@ -271,3 +310,19 @@ section.block.alt h2,section.block.alt h3,section.block.alt .ssub{color:inherit}
 .ndbody .blurb-bullets li{font-size:13.5px;color:#444}
 .blurb-bullets.edet li{font-size:13px;color:#555}
 .blurb-bullets.x li{font-size:14px;color:#444}
+
+
+/* Snapback expert notes (ExpertNotes.tsx) — editorial gameday knowledge */
+.xnotes{margin:0 0 26px}
+.xnotes-head{display:flex;align-items:center;gap:8px;font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;letter-spacing:.6px;font-size:15px;color:#111;margin:0 0 12px}
+.xnotes-logo{border-radius:4px}
+.xnotes-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.xnotes-card{background:#fff;border:2px solid #222;border-left:6px solid var(--y);border-radius:4px;padding:12px 14px}
+.xnotes-sec{font-weight:800;text-transform:uppercase;letter-spacing:.4px;font-size:12px;color:#555;margin:0 0 6px}
+.xnotes-list{list-style:none;margin:0;padding:0}
+.xnotes-list li{position:relative;padding-left:16px;font-size:14px;line-height:1.5;color:#2c2c2c;margin-top:7px}
+.xnotes-list li:first-child{margin-top:0}
+.xnotes-list li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--y);border:1.5px solid #111;transform:rotate(45deg)}
+.xnotes-src{margin-left:6px;color:#888;font-size:12px;text-decoration:none}
+.xnotes-src:hover{color:#222}
+@media(min-width:620px){.xnotes-grid{grid-template-columns:1fr 1fr}}

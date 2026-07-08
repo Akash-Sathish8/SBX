@@ -1,0 +1,252 @@
+<!doctype html>
+<!-- r06 — Section Tabs: a sticky tab bar directly under the poster hero mirrors every section on the page, so the whole field guide is one glance — and one tap — away at any scroll depth. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>r06 — Section Tabs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--y:#F7DF02;--ink:#222;--deep:#141410;--gray:#6b6b6b}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:#f4f4f4;color:#33352f;overflow-x:clip}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:1180px;margin:0 auto;padding:0 28px}
+
+/* ===== nav ===== */
+.nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:3px solid var(--y)}
+.nav-in{display:flex;align-items:center;gap:22px;height:58px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:28px;height:28px;border-radius:7px;box-shadow:2.5px 2.5px 0 var(--ink)}
+.brand b{font-family:'Anton',sans-serif;font-weight:400;font-size:19px;letter-spacing:.5px;color:var(--ink);text-transform:uppercase}
+.nav-links{display:none;gap:22px}
+.nav-links a{font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:.6px;color:#33352f}
+.signin{margin-left:auto;background:var(--y);border:2.5px solid var(--ink);border-radius:999px;padding:6px 14px;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.4px;box-shadow:2.5px 2.5px 0 var(--ink);color:var(--ink)}
+@media(min-width:900px){.nav-links{display:flex}}
+
+/* ===== compact poster hero, text docked bottom-left ===== */
+.hero{position:relative;background:var(--deep);overflow:hidden}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,16,.25) 0%,rgba(20,20,16,.82) 100%)}
+.hero-in{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;min-height:330px;padding-top:24px;padding-bottom:26px}
+.hero-txt{margin-top:auto}
+.kicker{font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--y)}
+h1{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:40px;line-height:1.05;letter-spacing:.5px;color:#fff;margin-top:10px}
+.hl{display:inline-block;background:var(--y);color:var(--deep);padding:0 10px;box-shadow:4px 4px 0 rgba(0,0,0,.4)}
+.hero-search{display:flex;width:100%;max-width:440px;margin-top:18px;background:#fff;border:3px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 #000;overflow:hidden}
+.hero-search input{flex:1;min-width:0;height:46px;border:0;outline:0;padding:0 14px;font:600 14px 'Barlow',sans-serif;color:#33352f}
+.hero-search button{border:0;border-left:3px solid var(--ink);background:var(--y);padding:0 18px;font-family:'Anton',sans-serif;font-size:15px;letter-spacing:1px;color:var(--ink);cursor:pointer}
+@media(min-width:900px){.hero-in{min-height:420px}h1{font-size:64px}.hero-search{max-width:520px}}
+
+/* ===== sticky section tabs ===== */
+.tabs{position:sticky;top:61px;z-index:50;background:#fff;border-bottom:3px solid var(--ink)}
+.tabs-in{display:flex;overflow-x:auto;scrollbar-width:none}
+.tabs-in::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:15px 16px 11px;font-weight:800;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gray);border-bottom:4px solid transparent;white-space:nowrap}
+.tab:first-child{padding-left:0}
+.tab.active{color:var(--ink);border-bottom-color:var(--y)}
+.tab:hover{color:var(--ink)}
+
+/* ===== sections ===== */
+.sec{padding:34px 0 6px;scroll-margin-top:130px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
+.sec-kicker{font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--gray)}
+.sec-title{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:26px;letter-spacing:.5px;color:var(--ink);margin-top:6px}
+.sec-cta{flex:none;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--ink);border-bottom:2px solid var(--y);padding-bottom:2px;margin-bottom:4px;white-space:nowrap}
+@media(min-width:900px){.sec-title{font-size:34px}}
+
+/* ===== rails ===== */
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -28px;padding:4px 28px 26px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail>*{flex:0 0 auto;scroll-snap-align:start}
+
+.game,.rank-card,.venue,.chip{transition:box-shadow .15s ease,transform .15s ease}
+@media(hover:hover){.game:hover,.rank-card:hover,.venue:hover,.chip:hover{box-shadow:7px 7px 0 var(--y);transform:translate(-1px,-1px)}}
+
+/* game card */
+.game{position:relative;display:block;width:238px;background:#fff;border:3px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 #000;padding:14px 14px 42px}
+.league{display:inline-block;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;background:#041e42;color:#fff;border-radius:4px;padding:2px 7px}
+.teams{display:flex;align-items:center;gap:9px;margin-top:12px;font-family:'Anton',sans-serif;font-size:18px;letter-spacing:.5px;color:var(--ink)}
+.teams .t{display:flex;align-items:center;gap:6px}
+.teams .t img{width:26px;height:26px}
+.teams .at{font-family:'Barlow',sans-serif;font-weight:700;font-size:13px;color:var(--gray)}
+.game-meta{position:absolute;left:14px;bottom:12px;right:14px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--gray);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ranked card */
+.rank-card{position:relative;display:flex;flex-direction:column;width:250px;height:272px;background:#fff;border:3px solid var(--ink);border-radius:13px;box-shadow:4px 4px 0 #000;overflow:hidden}
+.rank-img{position:relative;height:136px;flex:none;border-bottom:3px solid var(--ink)}
+.rank-img img{width:100%;height:100%;object-fit:cover}
+.rank-no{position:absolute;top:10px;left:10px;font-family:'Anton',sans-serif;font-size:15px;background:var(--y);border:2.5px solid var(--ink);border-radius:8px;padding:3px 9px;box-shadow:2.5px 2.5px 0 var(--ink);color:var(--ink)}
+.rank-body{position:relative;flex:1;padding:12px 14px 46px;display:flex;flex-direction:column;align-items:flex-start}
+.rank-name{font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink)}
+.rank-loc{margin-top:6px;font-size:12px;font-weight:700;color:var(--gray)}
+.rank-score{position:absolute;left:14px;bottom:12px;display:inline-block;background:var(--y);border:2px solid var(--ink);border-radius:6px;padding:3px 8px;font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--ink)}
+.rank-card.ink{background:var(--deep)}
+.rank-card.ink .rank-body{padding-top:14px}
+.rank-no-big{font-family:'Anton',sans-serif;font-size:40px;line-height:1;color:var(--y)}
+.rank-card.ink .rank-name{color:#fff;font-size:20px;margin-top:12px}
+.rank-card.ink .rank-loc{color:#9a9a94}
+
+/* venue card */
+.venue{position:relative;display:block;width:210px;background:#fff;border:3px solid var(--ink);border-radius:13px;box-shadow:4px 4px 0 #000;overflow:hidden}
+.venue img{width:100%;height:120px;object-fit:cover;border-bottom:3px solid var(--ink)}
+.venue-body{position:relative;height:80px;padding:10px 14px}
+.venue-name{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink)}
+.venue-city{position:absolute;left:14px;bottom:10px;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--gray)}
+
+/* sport chips */
+.chips{display:flex;flex-wrap:wrap;gap:12px;padding-bottom:30px}
+.chip{display:inline-flex;align-items:center;gap:9px;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:10px 18px;font-weight:800;font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:var(--ink);box-shadow:4px 4px 0 #000}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--c);border:2px solid var(--ink)}
+
+/* stat bar + footer */
+.statbar{border-top:3px solid var(--ink);background:#efede7;padding:18px 0}
+.statbar .container{font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--gray)}
+footer{background:#000;padding:26px 0 30px}
+.foot-in{display:flex;flex-direction:column;align-items:flex-start;gap:12px;color:#888;font-size:13px}
+.foot-links{display:flex;gap:20px}
+.foot-links a{color:var(--y);font-weight:700}
+@media(min-width:900px){.foot-in{flex-direction:row;align-items:center;justify-content:space-between}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-in">
+    <a class="brand" href="#"><img src="/img/logo.png" alt="Snapback"><b>Snapback</b></a>
+    <div class="nav-links">
+      <a href="#">Games</a><a href="#">Teams</a><a href="#">Venues</a><a href="#">Rankings</a>
+    </div>
+    <a class="signin" href="#">Sign in</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <img src="/img/celebration2.jpg" alt="">
+  <div class="shade"></div>
+  <div class="container hero-in">
+    <div class="hero-txt">
+      <div class="kicker">The fan's field guide</div>
+      <h1>Where does <span class="hl">Gameday</span> take you?</h1>
+      <form class="hero-search" action="#">
+        <input type="text" placeholder="Try &ldquo;Wrigley Field&rdquo; or &ldquo;Cubs&rdquo;">
+        <button type="button">Go</button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="container tabs-in">
+    <a class="tab active" href="#tonight">Tonight</a>
+    <a class="tab" href="#ranked">Top ranked</a>
+    <a class="tab" href="#venues">Venues</a>
+    <a class="tab" href="#sports">Sports</a>
+  </div>
+</div>
+
+<section class="sec" id="tonight">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">Tonight across MLB</div>
+        <h2 class="sec-title">On the slate</h2>
+      </div>
+      <a class="sec-cta" href="#">All games &rarr;</a>
+    </div>
+    <div class="rail">
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/nym.png" alt="">NYM</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/atl.png" alt="">ATL</span></span><span class="game-meta">8:08 PM &middot; Truist Park, Atlanta</span></a>
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/stl.png" alt="">STL</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/chc.png" alt="">CHC</span></span><span class="game-meta">8:08 PM &middot; Wrigley Field, Chicago</span></a>
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/phi.png" alt="">PHI</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/kc.png" alt="">KC</span></span><span class="game-meta">8:10 PM &middot; Kauffman Stadium, Kansas City</span></a>
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/sf.png" alt="">SF</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/col.png" alt="">COL</span></span><span class="game-meta">8:10 PM &middot; Coors Field, Denver</span></a>
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/bos.png" alt="">BOS</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/laa.png" alt="">LAA</span></span><span class="game-meta">9:38 PM &middot; Angel Stadium, Anaheim</span></a>
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/mia.png" alt="">MIA</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/ath.png" alt="">ATH</span></span><span class="game-meta">9:40 PM &middot; Sutter Health Park, Sacramento</span></a>
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/mil.png" alt="">MIL</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/ari.png" alt="">ARI</span></span><span class="game-meta">9:40 PM &middot; Chase Field, Phoenix</span></a>
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/sd.png" alt="">SD</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/lad.png" alt="">LAD</span></span><span class="game-meta">10:10 PM &middot; Dodger Stadium, Los Angeles</span></a>
+      <a class="game" href="#"><span class="league">MLB</span><span class="teams"><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/pit.png" alt="">PIT</span><span class="at">@</span><span class="t"><img src="https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/wsh.png" alt="">WSH</span></span><span class="game-meta">1:00 PM Sun &middot; Nationals Park, Washington</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="ranked">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">Expert rankings</div>
+        <h2 class="sec-title">Top ranked in America</h2>
+      </div>
+      <a class="sec-cta" href="#">All 166 &rarr;</a>
+    </div>
+    <div class="rail">
+      <a class="rank-card" href="#"><span class="rank-img"><img src="/img/stadiums/hardrock.jpg" alt=""><span class="rank-no">1</span></span><span class="rank-body"><span class="rank-name">National Championship 2026</span><span class="rank-loc">Miami, FL &middot; NCAAF</span><span class="rank-score">8.88 expert score</span></span></a>
+      <a class="rank-card" href="#"><span class="rank-img"><img src="/img/exp/churchill-downs.jpg" alt=""><span class="rank-no">2</span></span><span class="rank-body"><span class="rank-name">Kentucky Derby</span><span class="rank-loc">Louisville, KY &middot; Horse Racing</span><span class="rank-score">8.86 expert score</span></span></a>
+      <a class="rank-card" href="#"><span class="rank-img"><img src="/img/exp/indianapolis-motor-speedway.jpg" alt=""><span class="rank-no">3</span></span><span class="rank-body"><span class="rank-name">Indy 500</span><span class="rank-loc">Indianapolis, IN &middot; Motor Racing</span><span class="rank-score">8.78 expert score</span></span></a>
+      <a class="rank-card ink" href="#"><span class="rank-body"><span class="rank-no-big">4</span><span class="rank-name">Chicago Cubs</span><span class="rank-loc">Chicago, IL &middot; MLB</span><span class="rank-score">8.36 expert score</span></span></a>
+      <a class="rank-card" href="#"><span class="rank-img"><img src="/img/exp/lavell-edwards-stadium.jpg" alt=""><span class="rank-no">5</span></span><span class="rank-body"><span class="rank-name">BYU Holy War</span><span class="rank-loc">Provo, UT &middot; NCAAF</span><span class="rank-score">8.27 expert score</span></span></a>
+      <a class="rank-card ink" href="#"><span class="rank-body"><span class="rank-no-big">6</span><span class="rank-name">Wisconsin Badgers Football</span><span class="rank-loc">Madison, WI &middot; NCAAF</span><span class="rank-score">8.26 expert score</span></span></a>
+      <a class="rank-card ink" href="#"><span class="rank-body"><span class="rank-no-big">7</span><span class="rank-name">Red River Rivalry</span><span class="rank-loc">Dallas, TX &middot; NCAAF</span><span class="rank-score">8.14 expert score</span></span></a>
+      <a class="rank-card ink" href="#"><span class="rank-body"><span class="rank-no-big">8</span><span class="rank-name">Tennessee Volunteers Football</span><span class="rank-loc">Knoxville, TN &middot; NCAAF</span><span class="rank-score">8.12 expert score</span></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="venues">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">The buildings</div>
+        <h2 class="sec-title">Iconic buildings</h2>
+      </div>
+      <a class="sec-cta" href="#">All 601 &rarr;</a>
+    </div>
+    <div class="rail">
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/mlb/day/2.jpg" alt=""><span class="venue-body"><span class="venue-name">Fenway Park</span><span class="venue-city">Boston, MA</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/mlb/day/16.jpg" alt=""><span class="venue-body"><span class="venue-name">Wrigley Field</span><span class="venue-city">Chicago, IL</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/mlb/day/19.jpg" alt=""><span class="venue-body"><span class="venue-name">Dodger Stadium</span><span class="venue-city">Los Angeles, CA</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/mlb/day/208.jpg" alt=""><span class="venue-body"><span class="venue-name">Yankee Stadium</span><span class="venue-city">Bronx, NY</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/mlb/day/43.jpg" alt=""><span class="venue-body"><span class="venue-name">Oracle Park</span><span class="venue-city">San Francisco, CA</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/mlb/day/27.jpg" alt=""><span class="venue-body"><span class="venue-name">Coors Field</span><span class="venue-city">Denver, CO</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/mlb/day/84.jpg" alt=""><span class="venue-body"><span class="venue-name">Citizens Bank Park</span><span class="venue-city">Philadelphia, PA</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/nhl/day/1830.jpg" alt=""><span class="venue-body"><span class="venue-name">Madison Square Garden</span><span class="venue-city">New York, NY</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/nfl/day/3798.jpg" alt=""><span class="venue-body"><span class="venue-name">Lambeau Field</span><span class="venue-city">Green Bay, WI</span></span></a>
+      <a class="venue" href="#"><img src="https://a.espncdn.com/i/venues/nfl/day/7065.jpg" alt=""><span class="venue-body"><span class="venue-name">SoFi Stadium</span><span class="venue-city">Inglewood, CA</span></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sports">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">Six leagues covered</div>
+        <h2 class="sec-title">Pick your sport</h2>
+      </div>
+    </div>
+    <div class="chips">
+      <a class="chip" href="#" style="--c:#041e42"><span class="dot"></span>MLB</a>
+      <a class="chip" href="#" style="--c:#013369"><span class="dot"></span>NFL</a>
+      <a class="chip" href="#" style="--c:#c8102e"><span class="dot"></span>NBA</a>
+      <a class="chip" href="#" style="--c:#0033a0"><span class="dot"></span>NHL</a>
+      <a class="chip" href="#" style="--c:#9e1b32"><span class="dot"></span>CFB</a>
+      <a class="chip" href="#" style="--c:#f47321"><span class="dot"></span>CBB</a>
+    </div>
+  </div>
+</section>
+
+<div class="statbar">
+  <div class="container">166 ranked experiences &middot; 601 venues &middot; MLB &middot; NFL &middot; NBA &middot; NHL &middot; CFB &middot; CBB</div>
+</div>
+
+<footer>
+  <div class="container foot-in">
+    <div class="foot-links"><a href="#">Games</a><a href="#">Venues</a><a href="#">Rankings</a></div>
+    <div>&copy; 2026 Snapback Sports.</div>
+  </div>
+</footer>
+
+</body>
+</html>

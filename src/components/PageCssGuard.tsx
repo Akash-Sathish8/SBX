@@ -10,9 +10,9 @@ const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : use
  * This app loads each page's CSS as its own <link>, injected via the route's
  * `head.links`. TanStack does NOT remove a route's links when you navigate away
  * client-side, so the stylesheets ACCUMULATE — every page you visit leaves its
- * CSS applied, and later pages get overridden by earlier ones. The worst offender
- * is Casey's compiled Tailwind (`casey-tracker.css`), whose global preflight reset
- * and `.container` utility wreck the layout of whatever page you open next.
+ * CSS applied, and later pages get overridden by earlier ones — a page whose CSS
+ * carries broad global resets or utility classes can wreck the layout of whatever
+ * page you open next.
  *
  * Each route tags its page-specific CSS links with `data-page-css="<id>"` and
  * renders <PageCssGuard id="<id>" />. On mount / navigation this DISABLES any

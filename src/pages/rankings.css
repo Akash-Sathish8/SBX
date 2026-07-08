@@ -1,0 +1,60 @@
+/* Dedicated Experiences rankings page — LIGHT theme (matches snapbacksports.com:
+   white page, yellow header row, dark text). Self-contained :root vars (per-route
+   CSS swaps the whole :root per page). The SiteNav uses the global dark fallback. */
+:root { --y: #F7DF02; --ink: #16160f; --bg: #ffffff; --line: #e6e6e0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'Barlow', system-ui, sans-serif; }
+
+.container { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 44px); }
+
+/* header */
+.rhead { padding: 46px 0 22px; }
+.rhead .eyebrow { color: #8a7c00; font-family: 'Barlow', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; }
+.rhead h1 { font-family: 'Anton', sans-serif; font-size: clamp(40px, 6vw, 74px); line-height: 1.16; margin: 12px 0 24px; color: var(--ink); letter-spacing: .5px; }
+.rhead h1 .hl { background: var(--y); padding: .02em .12em .08em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.rhead .sub { color: #5a5a52; font-size: 16px; max-width: 64ch; margin: 0 0 22px; line-height: 1.5; }
+.rhead .controls { display: flex; gap: 12px; flex-wrap: wrap; }
+.rhead .search { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 0 16px; flex: 1 1 280px; min-width: 240px; min-height: 50px; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+.rhead .search svg { width: 18px; height: 18px; stroke: #9a9a90; stroke-width: 2.2; fill: none; flex: 0 0 auto; }
+.rhead .search input { background: transparent; border: 0; outline: none; color: var(--ink); font: inherit; font-size: 15px; width: 100%; }
+.rhead .search input::placeholder { color: #9a9a90; }
+.rhead select { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 0 38px 0 16px; min-height: 50px; color: var(--ink); font: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #9a9a90 50%), linear-gradient(135deg, #9a9a90 50%, transparent 50%);
+  background-position: calc(100% - 20px) 22px, calc(100% - 14px) 22px; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; }
+
+/* table */
+.rblock { padding: 0 0 64px; }
+.rcount { color: #8a8a82; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 12px; }
+.rtable-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: #fff; -webkit-overflow-scrolling: touch; box-shadow: 0 2px 10px rgba(0, 0, 0, .04); }
+.rtable { width: 100%; border-collapse: collapse; min-width: 820px; }
+.rtable thead th { background: var(--y); color: #16160f; font-family: 'Barlow', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; font-size: 12px; text-align: right; padding: 15px 14px; white-space: nowrap; }
+.rtable thead th.l { text-align: left; }
+.rtable tbody td { padding: 13px 14px; border-top: 1px solid #f0f0ea; font-size: 14px; color: #2a2a24; text-align: right; white-space: nowrap; }
+.rtable tbody td.l { text-align: left; }
+.rtable tbody tr:nth-child(even) { background: #faf9f5; }
+.rtable tbody tr:hover { background: #fff7c9; }
+.rtable .rnum { font-family: 'Anton', sans-serif; font-size: 18px; color: #b0b0a4; }
+.rtable td.c-name { font-family: 'Anton', sans-serif; font-size: 16px; letter-spacing: .3px; color: var(--ink); white-space: normal; min-width: 220px; }
+.rtable td.c-loc { color: #76766c; }
+.rtable .sporttag { display: inline-block; background: #f2f1ea; border: 1px solid #e2e1d8; border-radius: 6px; padding: 4px 9px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .4px; color: #55554c; }
+.rtable .finalscore { display: inline-block; font-family: 'Anton', sans-serif; font-size: 17px; color: #16160f; background: var(--y); padding: 2px 9px; border-radius: 6px; }
+
+.rblock .loading, .rblock .empty { color: #8a8a82; padding: 34px; text-align: center; font-weight: 600; }
+
+footer { border-top: 1px solid var(--line); padding: 24px 0; margin-top: 10px; }
+footer .container { color: #8a8a82; font-size: 13px; }
+footer a { color: #8a7c00; font-weight: 700; }
+
+@media (max-width: 760px) {
+  .rhead h1 { font-size: 42px; }
+  .rhead .search { flex-basis: 100%; }
+  .rhead select { flex: 1; }
+}
+
+/* collection deep-link chip (?collection=) + the log-a-game CTA */
+.rhead .colchip { display: inline-flex; align-items: center; gap: 8px; font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 13px; color: #16160f; background: #fdf6c8; border: 2px solid #16160f; border-radius: 6px; padding: 6px 12px; margin: 0 0 14px; }
+.rhead .colchip b { font-weight: 800; }
+.rhead .colx { font-weight: 800; padding: 0 3px; border-radius: 4px; }
+.rhead .colx:hover { background: var(--y); }
+.rhead .logcta { font-weight: 800; color: #16160f; border-bottom: 2px solid var(--y); white-space: nowrap; }

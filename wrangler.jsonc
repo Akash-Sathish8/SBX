@@ -3,8 +3,40 @@
   "name": "sbx",
   "compatibility_date": "2026-06-10",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry",
+  // Custom entry (src/server.ts) wraps TanStack Start's fetch handler and adds a
+  // `scheduled` handler for the live-score cron below.
+  "main": "src/server.ts",
+  // Serve the worker at sbx.snapbacksports.com. custom_domain lets Cloudflare
+  // create the proxied DNS record + SSL cert and bind the route on deploy.
+  // The snapbacksports.com zone is managed in this same Cloudflare account.
+  "routes": [
+    {
+      "pattern": "sbx.snapbacksports.com",
+      "custom_domain": true
+    }
+  ],
+  // Keep the workers.dev URL and per-version preview URLs alive alongside the
+  // custom domain (adding `routes` would otherwise disable both by default).
+  "workers_dev": true,
+  "preview_urls": true,
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+    // Full logging for launch visibility; lower (e.g. 0.1) to cap log cost
+    // once traffic is steady.
+    "head_sampling_rate": 1
+  },
+  // Refresh today's live game scores in D1 every 2 minutes (src/server/cron.ts).
+  "triggers": {
+    "crons": ["*/2 * * * *"]
+  },
+  // SBX system-of-record. For production, run `wrangler d1 create sbx-db` and
+  // paste the returned database_id below (local dev uses a local SQLite file and
+  // ignores the id). Schema: db/schema.sql. Apply via package.json db:* scripts.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "sbx-db",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
 }

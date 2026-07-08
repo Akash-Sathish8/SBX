@@ -1,13 +1,15 @@
-// Casey's standalone Matchday Agenda editor.
-// SEPARATE product: this route only ADDS files — it imports ShareCard/teams/fonts
-// read-only and never touches the consumer SBX pages. Pick a match, type a line
-// per section, live-preview the share card, download/share. Auto-saves per match.
+// Standalone Gameday Agenda editor.
+// SEPARATE feature: this route only ADDS files — it imports ShareCard/fonts
+// read-only and never touches the consumer SBX pages. Pick a game, type a line
+// per section, live-preview the share card, download/share. Auto-saves per game.
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { toPng } from 'html-to-image'
+import { SearchIcon } from 'lucide-react'
+import { getJSON } from '../lib/dataCache'
 import { ShareCard, type Plan } from '../components/ShareCard'
-import { getShareFontEmbedCss } from '../lib/shareFonts'
-import { teamName, teamFlag } from '../lib/teams'
+import { renderShareCardBlob } from '../lib/renderShareCard'
+import { SPORTS } from '../lib/sports'
+import type { Game } from '../lib/espn'
 import { PageCssGuard } from '../components/PageCssGuard'
 import shareCss from '../pages/share.css?url'
 import css from '../pages/agenda.css?url'
@@ -21,32 +23,38 @@ export const Route = createFileRoute('/agenda')({
       { rel: 'stylesheet', href: shareCss, 'data-page-css': 'build agenda' },
       { rel: 'stylesheet', href: css, 'data-page-css': 'agenda' },
     ],
-    meta: [{ title: 'Snapback — Matchday Agenda' }],
+    meta: [{ title: 'Snapback — Gameday Agenda' }],
   }),
   component: AgendaPage,
 })
 
 const SECTIONS = [
-  { key: 'get', label: 'Getting there', ph: "How you're getting to the stadium…" },
-  { key: 'pre', label: 'Before the match', ph: "Where you're going before kickoff…" },
-  { key: 'eat', label: 'Eat inside', ph: "What you're grabbing in the ground…" },
+  { key: 'get', label: 'Getting there', ph: "How you're getting to the venue…" },
+  { key: 'pre', label: 'Before the game', ph: "Where you're going before tip / first pitch / kickoff…" },
+  { key: 'eat', label: 'Eat inside', ph: "What you're grabbing in the building…" },
   { key: 'merch', label: 'Merch', ph: "Any shop you're hitting…" },
-  { key: 'post', label: 'After the whistle', ph: "Where you're heading after…" },
+  { key: 'post', label: 'After the final whistle', ph: "Where you're heading after…" },
 ] as const
 type Fields = Record<string, string>
 const blank = (): Fields => ({ get: '', pre: '', eat: '', merch: '', post: '' })
 const saveKey = (id: string) => 'sbx-agenda:' + id
 
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const fmtDate = (iso: string) => { const d = new Date(iso); return isNaN(d.getTime()) ? '' : `${WD[d.getDay()]} ${MON[d.getMonth()]} ${d.getDate()}` }
+const fmtKo = (iso: string) => { const d = new Date(iso); return isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) }
+const teamShort = (g: Game, side: 'home' | 'away') => g[side].location || g[side].displayName
+
 function AgendaPage() {
   const { game } = Route.useSearch()
   const navigate = useNavigate()
-  const [index, setIndex] = useState<any[] | null>(null)
+  const [games, setGames] = useState<Game[] | null>(null)
 
   useEffect(() => {
-    fetch('/data/games/index.json').then((r) => r.json()).then(setIndex).catch(() => setIndex([]))
+    getJSON('/api/games').then((r: any) => setGames(Array.isArray(r?.data) ? r.data : [])).catch(() => setGames([]))
   }, [])
 
-  const g = index ? index.find((x) => x.id === game) : null
+  const g = games ? games.find((x) => x.id === game) : null
 
   return (
     <>
@@ -54,32 +62,36 @@ function AgendaPage() {
       <main className="ag-wrap">
         <header className="ag-top">
           <Link to="/" className="ag-brand" aria-label="Snapback home" style={{ textDecoration: 'none', color: 'inherit' }}><img src="/img/logo.png" alt="" /><span>Snapback<br />Agenda</span></Link>
-          {g ? <button className="ag-link" onClick={() => navigate({ to: '/agenda', search: { game: '' } })}>← Change match</button> : null}
+          {g ? <button className="ag-link" onClick={() => navigate({ to: '/agenda', search: { game: '' } })}>← Change game</button> : null}
         </header>
-        {!index ? <div className="ag-load">Loading…</div>
+        {!games ? <div className="ag-load">Loading…</div>
           : g ? <Editor key={g.id} g={g} />
-            : <Picker index={index} onPick={(id) => navigate({ to: '/agenda', search: { game: id } })} />}
+            : <Picker games={games} onPick={(id) => navigate({ to: '/agenda', search: { game: id } })} />}
       </main>
     </>
   )
 }
 
-function Picker({ index, onPick }: { index: any[]; onPick: (id: string) => void }) {
+function Picker({ games, onPick }: { games: Game[]; onPick: (id: string) => void }) {
   const [q, setQ] = useState('')
-  const real = useMemo(() => index.filter((x) => !x.tbd), [index])
   const ql = q.trim().toLowerCase()
-  const list = real.filter((x) => !ql || (x.home + ' ' + x.away + ' ' + teamName(x.home) + ' ' + teamName(x.away) + ' ' + x.venueName + ' ' + x.city).toLowerCase().includes(ql))
+  const list = useMemo(
+    () => games.filter((x) => !ql || (x.home.displayName + ' ' + x.away.displayName + ' ' + (x.venue.name || '') + ' ' + (x.venue.city || '') + ' ' + SPORTS[x.league].label).toLowerCase().includes(ql)),
+    [games, ql],
+  )
   return (
     <div className="ag-pick">
-      <h1 className="ag-h1">Build a matchday agenda</h1>
-      <div className="ag-sub">Pick your match, then type your plan. It saves automatically.</div>
-      <div className="search ag-search"><span className="si">🔍</span><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
+      <h1 className="ag-h1">Build a gameday agenda</h1>
+      <div className="ag-sub">Pick your game, then type your plan. It saves automatically.</div>
+      <div className="search ag-search"><SearchIcon className="si" /><input type="search" placeholder="Search team, venue or city…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
       <div className="bld-list">
         {list.map((x) => (
           <button key={x.id} className="bld-mrow" onClick={() => onPick(x.id)}>
-            <span className="bld-date">{x.date}</span>
-            <span className="bld-teams">{teamFlag(x.home)} {teamName(x.home)} <span className="bld-vs">v</span> {teamName(x.away)} {teamFlag(x.away)}</span>
-            <span className="bld-meta">{x.round} · {x.venueName}</span>
+            <span className="bld-date">{fmtDate(x.date)}</span>
+            <span className="bld-teams">
+              {x.away.logo ? <img className="bld-logo" src={x.away.logo} alt="" width={22} height={22} /> : null} {teamShort(x, 'away')} <span className="bld-vs">@</span> {teamShort(x, 'home')} {x.home.logo ? <img className="bld-logo" src={x.home.logo} alt="" width={22} height={22} /> : null}
+            </span>
+            <span className="bld-meta">{SPORTS[x.league].label} · {x.venue.name}</span>
             <span className="bld-go">Use →</span>
           </button>
         ))}
@@ -88,11 +100,7 @@ function Picker({ index, onPick }: { index: any[]; onPick: (id: string) => void 
   )
 }
 
-function Editor({ g }: { g: any }) {
-  // Lazily load this match's saved agenda from the initializer (so state starts
-  // at the SAVED value, never blank). The parent keys <Editor> by game id, so
-  // switching matches remounts and re-reads. Starting blank + loading in an
-  // effect races the autosave effect and clobbers the saved value on reload.
+function Editor({ g }: { g: Game }) {
   const loadSaved = (): Fields => {
     try { const s = localStorage.getItem(saveKey(g.id)); return s ? { ...blank(), ...JSON.parse(s) } : blank() } catch { return blank() }
   }
@@ -100,7 +108,6 @@ function Editor({ g }: { g: any }) {
   const [busy, setBusy] = useState('')
   const storyRef = useRef<HTMLDivElement>(null)
 
-  // auto-save on every edit
   useEffect(() => {
     try { localStorage.setItem(saveKey(g.id), JSON.stringify(f)) } catch { /* ignore */ }
   }, [f, g.id])
@@ -109,8 +116,11 @@ function Editor({ g }: { g: any }) {
   const line = (v: string) => (v.trim() ? [{ name: v.trim() }] : null)
 
   const plan: Plan = {
-    home: teamName(g.home), away: teamName(g.away), homeFlag: teamFlag(g.home), awayFlag: teamFlag(g.away),
-    round: g.round, date: g.date, ko: g.ko || '', venueName: g.venueName, city: g.city, weather: null,
+    home: teamShort(g, 'home'), away: teamShort(g, 'away'),
+    homeAbbr: g.home.abbr, awayAbbr: g.away.abbr,
+    homeColor: g.home.color, awayColor: g.away.color,
+    round: SPORTS[g.league].label, date: fmtDate(g.date), ko: fmtKo(g.date),
+    venueName: g.venue.name || '', city: g.venue.city || '', weather: null,
     gettingThere: f.get.trim() ? { name: f.get.trim() } : null,
     parking: null, fanwalk: null,
     pre: line(f.pre), eat: line(f.eat), merch: line(f.merch), post: line(f.post),
@@ -119,12 +129,7 @@ function Editor({ g }: { g: any }) {
 
   async function renderBlob(): Promise<Blob | null> {
     const node = storyRef.current; if (!node) return null
-    try { await (document as any).fonts?.ready } catch { /* ignore */ }
-    await new Promise((r) => setTimeout(r, 60))
-    let fontEmbedCSS: string | undefined
-    try { fontEmbedCSS = await getShareFontEmbedCss() } catch { fontEmbedCSS = undefined }
-    const url = await toPng(node, { pixelRatio: 1, cacheBust: true, width: 1080, height: 1920, ...(fontEmbedCSS ? { fontEmbedCSS } : { skipFonts: true }) })
-    return await (await fetch(url)).blob()
+    return renderShareCardBlob(node)
   }
   async function download() {
     setBusy('download')
@@ -136,9 +141,9 @@ function Editor({ g }: { g: any }) {
       const b = await renderBlob(); if (!b) return
       const file = new File([b], `snapback-agenda-${g.id}.png`, { type: 'image/png' })
       const nav: any = navigator
-      const text = `Matchday plan: ${teamName(g.home)} v ${teamName(g.away)} at ${g.venueName}.`
-      if (nav.canShare && nav.canShare({ files: [file] })) await nav.share({ files: [file], title: 'Snapback matchday agenda', text })
-      else if (nav.share) await nav.share({ title: 'Snapback matchday agenda', text })
+      const text = `Gameday plan: ${teamShort(g, 'away')} @ ${teamShort(g, 'home')} at ${g.venue.name}.`
+      if (nav.canShare && nav.canShare({ files: [file] })) await nav.share({ files: [file], title: 'Snapback gameday agenda', text })
+      else if (nav.share) await nav.share({ title: 'Snapback gameday agenda', text })
       else { const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = file.name; a.click(); URL.revokeObjectURL(u) }
     } catch { /* dismissed */ } finally { setBusy('') }
   }
@@ -146,8 +151,10 @@ function Editor({ g }: { g: any }) {
   return (
     <div className="ag-edit">
       <div className="ag-fields">
-        <div className="ag-match">{teamFlag(g.home)} {teamName(g.home)} <span className="ag-v">v</span> {teamName(g.away)} {teamFlag(g.away)}</div>
-        <div className="ag-meta">{g.round} · {g.date}{g.ko ? ' · ' + g.ko : ''} · {g.venueName}</div>
+        <div className="ag-match">
+          {g.away.logo ? <img className="bld-logo" src={g.away.logo} alt="" width={26} height={26} /> : null} {teamShort(g, 'away')} <span className="ag-v">@</span> {teamShort(g, 'home')} {g.home.logo ? <img className="bld-logo" src={g.home.logo} alt="" width={26} height={26} /> : null}
+        </div>
+        <div className="ag-meta">{SPORTS[g.league].label} · {fmtDate(g.date)}{fmtKo(g.date) ? ' · ' + fmtKo(g.date) : ''} · {g.venue.name}</div>
         {SECTIONS.map((s) => (
           <label key={s.key} className="ag-field">
             <span className="ag-flabel">{s.label}</span>
@@ -165,7 +172,6 @@ function Editor({ g }: { g: any }) {
         </div>
       </div>
 
-      {/* offscreen full-size render target for export */}
       <div className="sb-stage" aria-hidden><ShareCard ref={storyRef} plan={plan} format="story" /></div>
     </div>
   )

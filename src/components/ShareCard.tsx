@@ -4,7 +4,8 @@ import { forwardRef, useLayoutEffect, useRef } from 'react'
 
 type Spot = { name: string; note?: string; where?: string }
 export type Plan = {
-  home: string; away: string; homeFlag: string; awayFlag: string
+  home: string; away: string; homeAbbr: string; awayAbbr: string
+  homeColor?: string; awayColor?: string
   round: string; date: string; ko: string; venueName: string; city: string
   weather?: { temp: string; label: string } | null
   gettingThere?: Spot | null
@@ -82,18 +83,18 @@ export const ShareCard = forwardRef<HTMLDivElement, { plan: Plan; format: 'story
         <div className="sc-tex" />
         <div className="sc-pad">
           <div className="sc-brand">
-            <div className="sc-logo"><img className="sc-cap" src="/img/logo.png" alt="" /><span className="sc-wm">SNAPBACK<br />SPORTS</span></div>
+            <div className="sc-logo"><img className="sc-cap" src="/img/logo.png" alt="Snapback Sports" width={92} height={92} /><span className="sc-wm">SNAPBACK<br />SPORTS</span></div>
             <div className="sc-planlab">Matchday plan</div>
           </div>
           <div className="sc-match">
-            <div className="sc-tm"><span className="sc-fl">{plan.homeFlag}</span><span className="sc-nm">{plan.home}</span></div>
-            <div className="sc-mid"><span className="sc-vs">VS</span>{plan.round ? <span className="sc-rnd">{plan.round}</span> : null}</div>
-            <div className="sc-tm"><span className="sc-fl">{plan.awayFlag}</span><span className="sc-nm">{plan.away}</span></div>
+            <div className="sc-tm"><span className="sc-badge" style={{ background: plan.awayColor || '#1a1a1a' }}>{plan.awayAbbr}</span><span className="sc-nm">{plan.away}</span></div>
+            <div className="sc-mid"><span className="sc-vs">@</span></div>
+            <div className="sc-tm"><span className="sc-badge" style={{ background: plan.homeColor || '#1a1a1a' }}>{plan.homeAbbr}</span><span className="sc-nm">{plan.home}</span></div>
           </div>
           <div className="sc-when">
             <span className="sc-chip y">{plan.date} · {plan.ko}</span>
           </div>
-          <div className="sc-venue">{plan.venueName} · {plan.city}</div>
+          <div className="sc-venue"><span>{plan.venueName} · {plan.city}</span>{plan.round ? <span className="sc-rnd">{plan.round}</span> : null}</div>
           <div className={'sc-tl' + (format === 'square' ? ' grid' : '')}>
             {steps.map((s, i) => <Step key={i} label={s.label} name={s.name} note={s.note} where={s.where} walk={s.walk} />)}
           </div>

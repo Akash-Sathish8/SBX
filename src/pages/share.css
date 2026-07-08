@@ -7,34 +7,41 @@
 
 .sc-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:38px}
 .sc-logo{display:flex;align-items:center;gap:18px}
-.sc-cap{width:92px;height:92px;border-radius:16px;box-shadow:5px 5px 0 #111;flex:none}
+.sc-cap{width:92px;height:92px;border-radius:16px;box-shadow:5px 5px 0 #111;flex:none;object-fit:contain;background:#111}
 .sc-wm{font-family:'Anton','Barlow',sans-serif;font-size:46px;line-height:.9;letter-spacing:1px;text-transform:uppercase;color:#111}
 .sc-planlab{font-family:'Anton','Barlow',sans-serif;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#111;background:#F7DF02;padding:10px 18px;border-radius:8px}
 
-.sc-mid{display:flex;flex-direction:column;align-items:center;gap:12px;flex:none}
-.sc-rnd{font-family:'Anton','Barlow',sans-serif;font-size:19px;letter-spacing:1px;text-transform:uppercase;color:#111;background:#F7DF02;padding:3px 12px;border-radius:6px}
+.sc-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none}
+/* round/group tag now lives on the venue line — bigger so it isn't a tiny aliased pill */
+.sc-rnd{display:inline-flex;align-items:center;font-family:'Anton','Barlow',sans-serif;font-size:25px;letter-spacing:1px;text-transform:uppercase;color:#111;background:#F7DF02;padding:6px 16px;border-radius:8px;line-height:1}
 .sc-match{display:flex;align-items:center;gap:30px;margin-bottom:26px}
 .sc-tm{flex:1;display:flex;flex-direction:column;align-items:center;gap:16px}
 .sc-fl{font-size:118px;line-height:1}
+/* v2: team color + abbreviation badge (export-safe — no remote logo images) */
+.sc-badge{display:inline-flex;align-items:center;justify-content:center;width:128px;height:128px;border-radius:50%;font-family:'Anton','Barlow',sans-serif;font-size:46px;letter-spacing:1px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.35);box-shadow:0 8px 22px rgba(0,0,0,.25)}
+.sc-square .sc-badge{width:92px;height:92px;font-size:34px}
 .sc-nm{font-family:'Anton','Barlow',sans-serif;font-size:58px;letter-spacing:1px;text-transform:uppercase;text-align:center;line-height:.95;color:#111}
-.sc-vs{font-family:'Anton','Barlow',sans-serif;font-size:46px;color:#111}
+.sc-vs{font-family:'Anton','Barlow',sans-serif;font-size:46px;color:#111;line-height:1;align-self:center}
 
 .sc-when{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:22px}
-.sc-chip{display:inline-flex;align-items:center;gap:10px;font-size:30px;font-weight:700;background:#111;color:#fff;padding:14px 24px;border-radius:50px}
+.sc-chip{display:inline-flex;align-items:center;gap:10px;font-size:30px;font-weight:700;background:#111;color:#fff;padding:14px 24px;border-radius:50px;white-space:nowrap}
 .sc-chip.y{background:#F7DF02;color:#111;font-weight:800}
-.sc-venue{font-size:30px;color:#666;font-weight:600;text-align:center;margin-bottom:44px}
+.sc-venue{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;font-size:30px;color:#666;font-weight:600;text-align:center;margin-bottom:44px}
 
 /* story timeline — steps distribute to fill the full card height */
 .sc-tl{position:relative;flex:0 0 auto;padding-left:58px;display:flex;flex-direction:column;justify-content:flex-start;gap:30px}
 .sc-tl::before{content:"";position:absolute;left:16px;top:14px;bottom:14px;width:4px;background:#e3d98f}
 .sc-step{position:relative}
-.sc-step::before{content:"";position:absolute;left:-58px;top:6px;width:34px;height:34px;border-radius:50%;background:#F7DF02;border:6px solid #f7f6f2;box-shadow:0 0 0 4px #F7DF02}
+.sc-step::before{content:"";position:absolute;left:-63px;top:6px;width:34px;height:34px;border-radius:50%;background:#F7DF02;border:6px solid #f7f6f2;box-shadow:0 0 0 4px #F7DF02}
 .sc-step.walk::before{background:#111;box-shadow:0 0 0 4px #111}
-.sc-slab{font-size:25px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#9a7e00}
+/* step eyebrow label: Anton, matching the heading system (was inheriting Barlow,
+   which is what read as "inconsistent fonts" next to the all-Anton names). */
+.sc-slab{font-family:'Anton','Barlow',sans-serif;font-size:25px;letter-spacing:1.5px;text-transform:uppercase;color:#9a7e00}
 .sc-step.walk .sc-slab{color:#111}
 .sc-sname{font-family:'Anton','Barlow',sans-serif;font-size:44px;letter-spacing:.5px;color:#111;line-height:1.02;margin-top:6px}
-.sc-snote{font-size:27px;color:#555;line-height:1.34;margin-top:8px}
-.sc-swhere{font-size:23px;color:#8a8a8a;line-height:1.3;margin-top:7px}
+/* body tier: explicit Barlow so it never silently inherits the wrong family */
+.sc-snote{font-family:'Barlow',system-ui,sans-serif;font-size:27px;color:#555;line-height:1.34;margin-top:8px}
+.sc-swhere{font-family:'Barlow',system-ui,sans-serif;font-size:23px;color:#8a8a8a;line-height:1.3;margin-top:7px}
 
 /* content-aware fill: timeline fills the frame; type auto-scales via --scf (set in JS) so it never overflows or floats */
 .sc-story .sc-tl{flex:1 1 auto;justify-content:space-between;gap:calc(30px * var(--scf,1))}
@@ -91,6 +98,7 @@ section.block{padding-top:22px}
 .wz-cmeta{font-size:12.5px;font-weight:700;letter-spacing:.3px;color:#666;text-transform:uppercase;display:inline-flex;align-items:center}
 .wz-cmeta-row .wz-cmeta:not(:first-child)::before{content:"";width:4px;height:4px;border-radius:50%;background:#cfcfcf;margin-right:9px;flex:none}
 .wz-cwalk{text-transform:none;color:#9a7e00}
+.wz-cgl{width:13px;height:13px;flex:none;margin-right:4px}
 
 /* Per-match bottom bar — both flags + VS. Fills the space the footer left and
    keeps the matchup in view while you build. Spacer reserves in-flow height so
@@ -101,7 +109,10 @@ section.block{padding-top:22px}
 .matchbar-side{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-size:cover;background-position:center;padding:0 16px}
 .matchbar-side::before{content:"";position:absolute;inset:0;background:rgba(17,17,17,.72)}
 .matchbar-team{position:relative;z-index:1;font-family:'Anton','Barlow',sans-serif;font-size:clamp(13px,3.6vw,17px);color:#fff;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.matchbar-logo{position:relative;z-index:1;width:26px;height:26px;object-fit:contain;margin-right:8px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
 .matchbar-vs{flex:none;align-self:center;position:relative;z-index:2;font-family:'Anton','Barlow',sans-serif;font-size:clamp(11px,3vw,13px);color:#F7DF02;letter-spacing:1px;padding:0 8px}
+/* phones: tighter side padding so long team names (e.g. SAUDI ARABIA) get more room before ellipsis */
+@media(max-width:600px){.matchbar-side{padding:0 10px}}
 .wz-prog{display:flex;align-items:center;gap:7px;margin:6px 0 16px}
 .wz-dot{width:9px;height:9px;border-radius:50%;background:#dcdcd6;transition:background .15s,transform .15s}
 .wz-dot.done{background:#caa600}
@@ -120,7 +131,8 @@ section.block{padding-top:22px}
 .wz-cardprice{font-size:12.5px;font-weight:700;color:#7a6700;line-height:1.35;overflow-wrap:anywhere}
 .wz-cardmeta{display:flex;flex-wrap:wrap;align-items:center;gap:5px 12px;margin:-3px 0 1px}
 .wz-cardrating{font-size:12px;font-weight:800;letter-spacing:.2px;color:#b8860b}
-.wz-carddist{font-size:12px;font-weight:700;color:#777}
+.wz-carddist{font-size:12px;font-weight:700;color:#777;display:inline-flex;align-items:center;gap:3px}
+.wz-distgl{width:12px;height:12px;flex:none}
 .wz-cardbul{list-style:none;margin:0;padding:0;display:grid;gap:7px;flex:1}
 .wz-cardbul li{position:relative;padding-left:15px;font-size:13px;color:#444;line-height:1.42;text-wrap:pretty;overflow-wrap:anywhere}
 .wz-cardbul li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#F7DF02;box-shadow:0 0 0 1px #caa600}
@@ -169,13 +181,17 @@ section.block{padding-top:22px}
      clipping. If one ever outgrows the leftover space the rail itself scrolls. */
   .wz-screen .wz-scroll{flex:1;min-height:0;padding:8px 2px;align-items:flex-start;overflow-y:auto}
   .wz-screen .wz-card{max-height:none}
-  .wz-screen .wz-nav{position:static;max-width:none;margin:0;padding:8px 0 0;background:none;flex:none;align-items:center}
-  .wz-screen .wz-nav-stack{flex-direction:row;gap:10px;align-items:center}
+  .wz-screen .wz-nav{position:static;max-width:none;margin:0;padding:8px 0 0;background:none;flex:none;align-items:stretch}
+  /* one even row: Back keeps its natural width, Skip + Next split the rest, all 44px tap targets */
+  .wz-screen .wz-nav>.sb-btn{flex:0 0 auto;min-height:44px}
+  .wz-screen .wz-nav-stack{flex:1;flex-direction:row;gap:10px;align-items:stretch}
+  .wz-screen .wz-nav-stack>.sb-btn{flex:1;min-height:44px}
   .wz-screen+.matchbar-spacer{display:none}
 }
 /* Share step: full-width tabs under the preview — Share Agenda on top, Back
    below, both spanning exactly the preview card's width (283px story + 16px
    pvbox padding each side). */
+.wz-share{display:flex;flex-direction:column;align-items:center}
 .wz-share .sb-actions{margin-top:20px;flex-direction:column;align-items:stretch;width:315px;max-width:100%;gap:10px}
 .wz-share .sb-actions .sb-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%}
 .sb-preview{margin-top:22px;display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
@@ -185,6 +201,20 @@ section.block{padding-top:22px}
 .sb-scale-story .sc{transform:scale(.262);transform-origin:top left}
 .sb-scale-square{width:340px;height:340px;overflow:hidden}
 .sb-scale-square .sc{transform:scale(.3148);transform-origin:top left}
+/* desktop: the build-wizard share step has space to spare — enlarge the story
+   preview (1/3 scale) and widen the buttons to match the bigger card. */
+@media(min-width:601px){
+  .wz-share .sb-scale-story{width:360px;height:640px}
+  .wz-share .sb-scale-story .sc{transform:scale(.33333)}
+  .wz-share .sb-actions{width:392px}
+}
+/* phones: keep the share-step preview + buttons inside the narrow content box
+   (tighter pvbox padding so 283px card + padding fits ~304px on small phones) */
+@media(max-width:600px){
+  .wz-share .sb-actions{width:100%}
+  .sb-preview{gap:16px;justify-content:center}
+  .sb-pvbox{padding:10px}
+}
 /* offscreen full-size render target for export */
 .sb-stage{position:fixed;left:-99999px;top:0;z-index:-1;pointer-events:none}
 
@@ -195,7 +225,7 @@ section.block{padding-top:22px}
 .bld-tab.on{background:#F7DF02}
 .bld-search{margin:0 0 0 auto;max-width:420px;flex:1 1 240px}
 .search{display:flex;align-items:center;gap:9px;background:#fff;border:2px solid #111;border-radius:8px;box-shadow:4px 4px 0 0 #111;padding:9px 14px}
-.search .si{font-size:15px;opacity:.7;line-height:1}
+.search .si{width:16px;height:16px;flex:none;opacity:.7;color:#111}
 .search input{border:0;outline:0;background:transparent;font-family:'Barlow',sans-serif;font-size:16px;font-weight:600;color:#111;width:100%}
 .search input::placeholder{color:#9a9a9a;font-weight:500}
 @media(max-width:600px){.bld-search{margin:6px 0 0;flex-basis:100%;max-width:none}}
@@ -203,8 +233,11 @@ section.block{padding-top:22px}
 .bld-mrow{display:grid;grid-template-columns:64px 1fr auto auto;gap:16px;align-items:center;text-align:left;background:#fff;border:1px solid #ececec;border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,.05);padding:13px 16px;cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s;font-family:inherit}
 .bld-mrow:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.1);border-color:#111}
 .bld-date{font-family:'Anton','Barlow',sans-serif;font-size:16px;color:#111;background:#f5f3ea;border-radius:7px;padding:8px 6px;text-align:center}
-.bld-teams{font-weight:800;font-size:16px;color:#111}
+.bld-teams{font-weight:800;font-size:16px;color:#111;display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
 .bld-vs{color:#bbb;font-weight:700;font-size:12px;margin:0 2px}
+.bld-logo{width:22px;height:22px;object-fit:contain;vertical-align:middle}
+/* final score (played match) — sits where the "v" would be */
+.bld-score{font-weight:800;font-size:16px;color:#111;margin:0 4px;white-space:nowrap}
 .bld-meta{font-size:12px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
 .bld-go{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#111;white-space:nowrap}
 .bld-venues{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}

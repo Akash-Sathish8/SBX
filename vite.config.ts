@@ -14,8 +14,7 @@ const config = defineConfig({
   resolve: {
     tsconfigPaths: true,
     alias: {
-      '@/lib': fileURLToPath(new URL('./src/casey/lib', import.meta.url)),
-      '@/data': fileURLToPath(new URL('./src/casey/data', import.meta.url)),
+      '@/lib': fileURLToPath(new URL('./src/lib', import.meta.url)),
     },
   },
   plugins: [
