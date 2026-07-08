@@ -9,36 +9,48 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WeekendRouteImport } from './routes/weekend'
 import { Route as VenuesRouteImport } from './routes/venues'
 import { Route as VenueRouteImport } from './routes/venue'
-import { Route as GuideRouteImport } from './routes/guide'
+import { Route as TeamsRouteImport } from './routes/teams'
+import { Route as RankingsRouteImport } from './routes/rankings'
+import { Route as RankRouteImport } from './routes/rank'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as GameRouteImport } from './routes/game'
-import { Route as CaseyRouteImport } from './routes/casey'
-import { Route as BuildRouteImport } from './routes/build'
-import { Route as AgendaRouteImport } from './routes/agenda'
+import { Route as FeedRouteImport } from './routes/feed'
+import { Route as ConferencesRouteImport } from './routes/conferences'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CaseyIndexRouteImport } from './routes/casey.index'
 import { Route as VenueIdRouteImport } from './routes/venue_.$id'
+import { Route as UUsernameRouteImport } from './routes/u_.$username'
+import { Route as TeamIdRouteImport } from './routes/team_.$id'
 import { Route as GameIdRouteImport } from './routes/game_.$id'
-import { Route as CaseyAdminRouteImport } from './routes/casey.admin'
-import { Route as ApiVisibilityRouteImport } from './routes/api/visibility'
-import { Route as ApiTodayRouteImport } from './routes/api/today'
-import { Route as ApiStandingsRouteImport } from './routes/api/standings'
-import { Route as ApiOgRouteImport } from './routes/api/og'
-import { Route as ApiMatchScoreRouteImport } from './routes/api/match-score'
-import { Route as ApiLiveTodayRouteImport } from './routes/api/live-today'
-import { Route as ApiLiveRouteImport } from './routes/api/live'
-import { Route as ApiBracketRouteImport } from './routes/api/bracket'
-import { Route as ApiBootstrapRouteImport } from './routes/api/bootstrap'
-import { Route as ApiBasemapRouteImport } from './routes/api/basemap'
-import { Route as CaseyMatchNumberRouteImport } from './routes/casey_.match.$number'
-import { Route as ApiStandingsAllRouteImport } from './routes/api/standings.all'
-import { Route as ApiAdminUpdateRouteImport } from './routes/api/admin/update'
-import { Route as ApiAdminEspnHealthRouteImport } from './routes/api/admin/espn-health'
-import { Route as ApiAdminBootstrapRouteImport } from './routes/api/admin/bootstrap'
-import { Route as ApiAdminAttentionRouteImport } from './routes/api/admin/attention'
+import { Route as ApiVenuesRouteImport } from './routes/api/venues'
+import { Route as ApiVenueStatsRouteImport } from './routes/api/venue-stats'
+import { Route as ApiTipsRouteImport } from './routes/api/tips'
+import { Route as ApiTeamsRouteImport } from './routes/api/teams'
+import { Route as ApiSearchRouteImport } from './routes/api/search'
+import { Route as ApiReviewsRouteImport } from './routes/api/reviews'
+import { Route as ApiRankingsRouteImport } from './routes/api/rankings'
+import { Route as ApiProfileRouteImport } from './routes/api/profile'
+import { Route as ApiGamesRouteImport } from './routes/api/games'
+import { Route as ApiFollowRouteImport } from './routes/api/follow'
+import { Route as ApiFeedRouteImport } from './routes/api/feed'
+import { Route as ApiExpertNotesRouteImport } from './routes/api/expert-notes'
+import { Route as ApiConferencesRouteImport } from './routes/api/conferences'
+import { Route as ApiAssistantRouteImport } from './routes/api/assistant'
+import { Route as ApiUUsernameRouteImport } from './routes/api/u.$username'
+import { Route as ApiAuthRegisterRouteImport } from './routes/api/auth/register'
+import { Route as ApiAuthMeRouteImport } from './routes/api/auth/me'
+import { Route as ApiAuthLogoutRouteImport } from './routes/api/auth/logout'
+import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
+import { Route as ApiAuthGoogleRouteImport } from './routes/api/auth/google'
 
+const WeekendRoute = WeekendRouteImport.update({
+  id: '/weekend',
+  path: '/weekend',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VenuesRoute = VenuesRouteImport.update({
   id: '/venues',
   path: '/venues',
@@ -49,9 +61,24 @@ const VenueRoute = VenueRouteImport.update({
   path: '/venue',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GuideRoute = GuideRouteImport.update({
-  id: '/guide',
-  path: '/guide',
+const TeamsRoute = TeamsRouteImport.update({
+  id: '/teams',
+  path: '/teams',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingsRoute = RankingsRouteImport.update({
+  id: '/rankings',
+  path: '/rankings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankRoute = RankRouteImport.update({
+  id: '/rank',
+  path: '/rank',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -64,19 +91,14 @@ const GameRoute = GameRouteImport.update({
   path: '/game',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseyRoute = CaseyRouteImport.update({
-  id: '/casey',
-  path: '/casey',
+const FeedRoute = FeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BuildRoute = BuildRouteImport.update({
-  id: '/build',
-  path: '/build',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgendaRoute = AgendaRouteImport.update({
-  id: '/agenda',
-  path: '/agenda',
+const ConferencesRoute = ConferencesRouteImport.update({
+  id: '/conferences',
+  path: '/conferences',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -84,14 +106,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseyIndexRoute = CaseyIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CaseyRoute,
-} as any)
 const VenueIdRoute = VenueIdRouteImport.update({
   id: '/venue_/$id',
   path: '/venue/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UUsernameRoute = UUsernameRouteImport.update({
+  id: '/u_/$username',
+  path: '/u/$username',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamIdRoute = TeamIdRouteImport.update({
+  id: '/team_/$id',
+  path: '/team/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GameIdRoute = GameIdRouteImport.update({
@@ -99,311 +126,387 @@ const GameIdRoute = GameIdRouteImport.update({
   path: '/game/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseyAdminRoute = CaseyAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => CaseyRoute,
-} as any)
-const ApiVisibilityRoute = ApiVisibilityRouteImport.update({
-  id: '/api/visibility',
-  path: '/api/visibility',
+const ApiVenuesRoute = ApiVenuesRouteImport.update({
+  id: '/api/venues',
+  path: '/api/venues',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiTodayRoute = ApiTodayRouteImport.update({
-  id: '/api/today',
-  path: '/api/today',
+const ApiVenueStatsRoute = ApiVenueStatsRouteImport.update({
+  id: '/api/venue-stats',
+  path: '/api/venue-stats',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStandingsRoute = ApiStandingsRouteImport.update({
-  id: '/api/standings',
-  path: '/api/standings',
+const ApiTipsRoute = ApiTipsRouteImport.update({
+  id: '/api/tips',
+  path: '/api/tips',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiOgRoute = ApiOgRouteImport.update({
-  id: '/api/og',
-  path: '/api/og',
+const ApiTeamsRoute = ApiTeamsRouteImport.update({
+  id: '/api/teams',
+  path: '/api/teams',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiMatchScoreRoute = ApiMatchScoreRouteImport.update({
-  id: '/api/match-score',
-  path: '/api/match-score',
+const ApiSearchRoute = ApiSearchRouteImport.update({
+  id: '/api/search',
+  path: '/api/search',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiLiveTodayRoute = ApiLiveTodayRouteImport.update({
-  id: '/api/live-today',
-  path: '/api/live-today',
+const ApiReviewsRoute = ApiReviewsRouteImport.update({
+  id: '/api/reviews',
+  path: '/api/reviews',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiLiveRoute = ApiLiveRouteImport.update({
-  id: '/api/live',
-  path: '/api/live',
+const ApiRankingsRoute = ApiRankingsRouteImport.update({
+  id: '/api/rankings',
+  path: '/api/rankings',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiBracketRoute = ApiBracketRouteImport.update({
-  id: '/api/bracket',
-  path: '/api/bracket',
+const ApiProfileRoute = ApiProfileRouteImport.update({
+  id: '/api/profile',
+  path: '/api/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiBootstrapRoute = ApiBootstrapRouteImport.update({
-  id: '/api/bootstrap',
-  path: '/api/bootstrap',
+const ApiGamesRoute = ApiGamesRouteImport.update({
+  id: '/api/games',
+  path: '/api/games',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiBasemapRoute = ApiBasemapRouteImport.update({
-  id: '/api/basemap',
-  path: '/api/basemap',
+const ApiFollowRoute = ApiFollowRouteImport.update({
+  id: '/api/follow',
+  path: '/api/follow',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CaseyMatchNumberRoute = CaseyMatchNumberRouteImport.update({
-  id: '/casey_/match/$number',
-  path: '/casey/match/$number',
+const ApiFeedRoute = ApiFeedRouteImport.update({
+  id: '/api/feed',
+  path: '/api/feed',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStandingsAllRoute = ApiStandingsAllRouteImport.update({
-  id: '/all',
-  path: '/all',
-  getParentRoute: () => ApiStandingsRoute,
-} as any)
-const ApiAdminUpdateRoute = ApiAdminUpdateRouteImport.update({
-  id: '/api/admin/update',
-  path: '/api/admin/update',
+const ApiExpertNotesRoute = ApiExpertNotesRouteImport.update({
+  id: '/api/expert-notes',
+  path: '/api/expert-notes',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAdminEspnHealthRoute = ApiAdminEspnHealthRouteImport.update({
-  id: '/api/admin/espn-health',
-  path: '/api/admin/espn-health',
+const ApiConferencesRoute = ApiConferencesRouteImport.update({
+  id: '/api/conferences',
+  path: '/api/conferences',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAdminBootstrapRoute = ApiAdminBootstrapRouteImport.update({
-  id: '/api/admin/bootstrap',
-  path: '/api/admin/bootstrap',
+const ApiAssistantRoute = ApiAssistantRouteImport.update({
+  id: '/api/assistant',
+  path: '/api/assistant',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAdminAttentionRoute = ApiAdminAttentionRouteImport.update({
-  id: '/api/admin/attention',
-  path: '/api/admin/attention',
+const ApiUUsernameRoute = ApiUUsernameRouteImport.update({
+  id: '/api/u/$username',
+  path: '/api/u/$username',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthRegisterRoute = ApiAuthRegisterRouteImport.update({
+  id: '/api/auth/register',
+  path: '/api/auth/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthMeRoute = ApiAuthMeRouteImport.update({
+  id: '/api/auth/me',
+  path: '/api/auth/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthLogoutRoute = ApiAuthLogoutRouteImport.update({
+  id: '/api/auth/logout',
+  path: '/api/auth/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthLoginRoute = ApiAuthLoginRouteImport.update({
+  id: '/api/auth/login',
+  path: '/api/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthGoogleRoute = ApiAuthGoogleRouteImport.update({
+  id: '/api/auth/google',
+  path: '/api/auth/google',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/agenda': typeof AgendaRoute
-  '/build': typeof BuildRoute
-  '/casey': typeof CaseyRouteWithChildren
+  '/conferences': typeof ConferencesRoute
+  '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
-  '/guide': typeof GuideRoute
+  '/profile': typeof ProfileRoute
+  '/rank': typeof RankRoute
+  '/rankings': typeof RankingsRoute
+  '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
-  '/api/basemap': typeof ApiBasemapRoute
-  '/api/bootstrap': typeof ApiBootstrapRoute
-  '/api/bracket': typeof ApiBracketRoute
-  '/api/live': typeof ApiLiveRoute
-  '/api/live-today': typeof ApiLiveTodayRoute
-  '/api/match-score': typeof ApiMatchScoreRoute
-  '/api/og': typeof ApiOgRoute
-  '/api/standings': typeof ApiStandingsRouteWithChildren
-  '/api/today': typeof ApiTodayRoute
-  '/api/visibility': typeof ApiVisibilityRoute
-  '/casey/admin': typeof CaseyAdminRoute
+  '/weekend': typeof WeekendRoute
+  '/api/assistant': typeof ApiAssistantRoute
+  '/api/conferences': typeof ApiConferencesRoute
+  '/api/expert-notes': typeof ApiExpertNotesRoute
+  '/api/feed': typeof ApiFeedRoute
+  '/api/follow': typeof ApiFollowRoute
+  '/api/games': typeof ApiGamesRoute
+  '/api/profile': typeof ApiProfileRoute
+  '/api/rankings': typeof ApiRankingsRoute
+  '/api/reviews': typeof ApiReviewsRoute
+  '/api/search': typeof ApiSearchRoute
+  '/api/teams': typeof ApiTeamsRoute
+  '/api/tips': typeof ApiTipsRoute
+  '/api/venue-stats': typeof ApiVenueStatsRoute
+  '/api/venues': typeof ApiVenuesRoute
   '/game/$id': typeof GameIdRoute
+  '/team/$id': typeof TeamIdRoute
+  '/u/$username': typeof UUsernameRoute
   '/venue/$id': typeof VenueIdRoute
-  '/casey/': typeof CaseyIndexRoute
-  '/api/admin/attention': typeof ApiAdminAttentionRoute
-  '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
-  '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
-  '/api/admin/update': typeof ApiAdminUpdateRoute
-  '/api/standings/all': typeof ApiStandingsAllRoute
-  '/casey/match/$number': typeof CaseyMatchNumberRoute
+  '/api/auth/google': typeof ApiAuthGoogleRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/auth/me': typeof ApiAuthMeRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
+  '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/agenda': typeof AgendaRoute
-  '/build': typeof BuildRoute
+  '/conferences': typeof ConferencesRoute
+  '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
-  '/guide': typeof GuideRoute
+  '/profile': typeof ProfileRoute
+  '/rank': typeof RankRoute
+  '/rankings': typeof RankingsRoute
+  '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
-  '/api/basemap': typeof ApiBasemapRoute
-  '/api/bootstrap': typeof ApiBootstrapRoute
-  '/api/bracket': typeof ApiBracketRoute
-  '/api/live': typeof ApiLiveRoute
-  '/api/live-today': typeof ApiLiveTodayRoute
-  '/api/match-score': typeof ApiMatchScoreRoute
-  '/api/og': typeof ApiOgRoute
-  '/api/standings': typeof ApiStandingsRouteWithChildren
-  '/api/today': typeof ApiTodayRoute
-  '/api/visibility': typeof ApiVisibilityRoute
-  '/casey/admin': typeof CaseyAdminRoute
+  '/weekend': typeof WeekendRoute
+  '/api/assistant': typeof ApiAssistantRoute
+  '/api/conferences': typeof ApiConferencesRoute
+  '/api/expert-notes': typeof ApiExpertNotesRoute
+  '/api/feed': typeof ApiFeedRoute
+  '/api/follow': typeof ApiFollowRoute
+  '/api/games': typeof ApiGamesRoute
+  '/api/profile': typeof ApiProfileRoute
+  '/api/rankings': typeof ApiRankingsRoute
+  '/api/reviews': typeof ApiReviewsRoute
+  '/api/search': typeof ApiSearchRoute
+  '/api/teams': typeof ApiTeamsRoute
+  '/api/tips': typeof ApiTipsRoute
+  '/api/venue-stats': typeof ApiVenueStatsRoute
+  '/api/venues': typeof ApiVenuesRoute
   '/game/$id': typeof GameIdRoute
+  '/team/$id': typeof TeamIdRoute
+  '/u/$username': typeof UUsernameRoute
   '/venue/$id': typeof VenueIdRoute
-  '/casey': typeof CaseyIndexRoute
-  '/api/admin/attention': typeof ApiAdminAttentionRoute
-  '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
-  '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
-  '/api/admin/update': typeof ApiAdminUpdateRoute
-  '/api/standings/all': typeof ApiStandingsAllRoute
-  '/casey/match/$number': typeof CaseyMatchNumberRoute
+  '/api/auth/google': typeof ApiAuthGoogleRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/auth/me': typeof ApiAuthMeRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
+  '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/agenda': typeof AgendaRoute
-  '/build': typeof BuildRoute
-  '/casey': typeof CaseyRouteWithChildren
+  '/conferences': typeof ConferencesRoute
+  '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
-  '/guide': typeof GuideRoute
+  '/profile': typeof ProfileRoute
+  '/rank': typeof RankRoute
+  '/rankings': typeof RankingsRoute
+  '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
   '/venues': typeof VenuesRoute
-  '/api/basemap': typeof ApiBasemapRoute
-  '/api/bootstrap': typeof ApiBootstrapRoute
-  '/api/bracket': typeof ApiBracketRoute
-  '/api/live': typeof ApiLiveRoute
-  '/api/live-today': typeof ApiLiveTodayRoute
-  '/api/match-score': typeof ApiMatchScoreRoute
-  '/api/og': typeof ApiOgRoute
-  '/api/standings': typeof ApiStandingsRouteWithChildren
-  '/api/today': typeof ApiTodayRoute
-  '/api/visibility': typeof ApiVisibilityRoute
-  '/casey/admin': typeof CaseyAdminRoute
+  '/weekend': typeof WeekendRoute
+  '/api/assistant': typeof ApiAssistantRoute
+  '/api/conferences': typeof ApiConferencesRoute
+  '/api/expert-notes': typeof ApiExpertNotesRoute
+  '/api/feed': typeof ApiFeedRoute
+  '/api/follow': typeof ApiFollowRoute
+  '/api/games': typeof ApiGamesRoute
+  '/api/profile': typeof ApiProfileRoute
+  '/api/rankings': typeof ApiRankingsRoute
+  '/api/reviews': typeof ApiReviewsRoute
+  '/api/search': typeof ApiSearchRoute
+  '/api/teams': typeof ApiTeamsRoute
+  '/api/tips': typeof ApiTipsRoute
+  '/api/venue-stats': typeof ApiVenueStatsRoute
+  '/api/venues': typeof ApiVenuesRoute
   '/game_/$id': typeof GameIdRoute
+  '/team_/$id': typeof TeamIdRoute
+  '/u_/$username': typeof UUsernameRoute
   '/venue_/$id': typeof VenueIdRoute
-  '/casey/': typeof CaseyIndexRoute
-  '/api/admin/attention': typeof ApiAdminAttentionRoute
-  '/api/admin/bootstrap': typeof ApiAdminBootstrapRoute
-  '/api/admin/espn-health': typeof ApiAdminEspnHealthRoute
-  '/api/admin/update': typeof ApiAdminUpdateRoute
-  '/api/standings/all': typeof ApiStandingsAllRoute
-  '/casey_/match/$number': typeof CaseyMatchNumberRoute
+  '/api/auth/google': typeof ApiAuthGoogleRoute
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/auth/me': typeof ApiAuthMeRoute
+  '/api/auth/register': typeof ApiAuthRegisterRoute
+  '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/agenda'
-    | '/build'
-    | '/casey'
+    | '/conferences'
+    | '/feed'
     | '/game'
     | '/games'
-    | '/guide'
+    | '/profile'
+    | '/rank'
+    | '/rankings'
+    | '/teams'
     | '/venue'
     | '/venues'
-    | '/api/basemap'
-    | '/api/bootstrap'
-    | '/api/bracket'
-    | '/api/live'
-    | '/api/live-today'
-    | '/api/match-score'
-    | '/api/og'
-    | '/api/standings'
-    | '/api/today'
-    | '/api/visibility'
-    | '/casey/admin'
+    | '/weekend'
+    | '/api/assistant'
+    | '/api/conferences'
+    | '/api/expert-notes'
+    | '/api/feed'
+    | '/api/follow'
+    | '/api/games'
+    | '/api/profile'
+    | '/api/rankings'
+    | '/api/reviews'
+    | '/api/search'
+    | '/api/teams'
+    | '/api/tips'
+    | '/api/venue-stats'
+    | '/api/venues'
     | '/game/$id'
+    | '/team/$id'
+    | '/u/$username'
     | '/venue/$id'
-    | '/casey/'
-    | '/api/admin/attention'
-    | '/api/admin/bootstrap'
-    | '/api/admin/espn-health'
-    | '/api/admin/update'
-    | '/api/standings/all'
-    | '/casey/match/$number'
+    | '/api/auth/google'
+    | '/api/auth/login'
+    | '/api/auth/logout'
+    | '/api/auth/me'
+    | '/api/auth/register'
+    | '/api/u/$username'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/agenda'
-    | '/build'
+    | '/conferences'
+    | '/feed'
     | '/game'
     | '/games'
-    | '/guide'
+    | '/profile'
+    | '/rank'
+    | '/rankings'
+    | '/teams'
     | '/venue'
     | '/venues'
-    | '/api/basemap'
-    | '/api/bootstrap'
-    | '/api/bracket'
-    | '/api/live'
-    | '/api/live-today'
-    | '/api/match-score'
-    | '/api/og'
-    | '/api/standings'
-    | '/api/today'
-    | '/api/visibility'
-    | '/casey/admin'
+    | '/weekend'
+    | '/api/assistant'
+    | '/api/conferences'
+    | '/api/expert-notes'
+    | '/api/feed'
+    | '/api/follow'
+    | '/api/games'
+    | '/api/profile'
+    | '/api/rankings'
+    | '/api/reviews'
+    | '/api/search'
+    | '/api/teams'
+    | '/api/tips'
+    | '/api/venue-stats'
+    | '/api/venues'
     | '/game/$id'
+    | '/team/$id'
+    | '/u/$username'
     | '/venue/$id'
-    | '/casey'
-    | '/api/admin/attention'
-    | '/api/admin/bootstrap'
-    | '/api/admin/espn-health'
-    | '/api/admin/update'
-    | '/api/standings/all'
-    | '/casey/match/$number'
+    | '/api/auth/google'
+    | '/api/auth/login'
+    | '/api/auth/logout'
+    | '/api/auth/me'
+    | '/api/auth/register'
+    | '/api/u/$username'
   id:
     | '__root__'
     | '/'
-    | '/agenda'
-    | '/build'
-    | '/casey'
+    | '/conferences'
+    | '/feed'
     | '/game'
     | '/games'
-    | '/guide'
+    | '/profile'
+    | '/rank'
+    | '/rankings'
+    | '/teams'
     | '/venue'
     | '/venues'
-    | '/api/basemap'
-    | '/api/bootstrap'
-    | '/api/bracket'
-    | '/api/live'
-    | '/api/live-today'
-    | '/api/match-score'
-    | '/api/og'
-    | '/api/standings'
-    | '/api/today'
-    | '/api/visibility'
-    | '/casey/admin'
+    | '/weekend'
+    | '/api/assistant'
+    | '/api/conferences'
+    | '/api/expert-notes'
+    | '/api/feed'
+    | '/api/follow'
+    | '/api/games'
+    | '/api/profile'
+    | '/api/rankings'
+    | '/api/reviews'
+    | '/api/search'
+    | '/api/teams'
+    | '/api/tips'
+    | '/api/venue-stats'
+    | '/api/venues'
     | '/game_/$id'
+    | '/team_/$id'
+    | '/u_/$username'
     | '/venue_/$id'
-    | '/casey/'
-    | '/api/admin/attention'
-    | '/api/admin/bootstrap'
-    | '/api/admin/espn-health'
-    | '/api/admin/update'
-    | '/api/standings/all'
-    | '/casey_/match/$number'
+    | '/api/auth/google'
+    | '/api/auth/login'
+    | '/api/auth/logout'
+    | '/api/auth/me'
+    | '/api/auth/register'
+    | '/api/u/$username'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AgendaRoute: typeof AgendaRoute
-  BuildRoute: typeof BuildRoute
-  CaseyRoute: typeof CaseyRouteWithChildren
+  ConferencesRoute: typeof ConferencesRoute
+  FeedRoute: typeof FeedRoute
   GameRoute: typeof GameRoute
   GamesRoute: typeof GamesRoute
-  GuideRoute: typeof GuideRoute
+  ProfileRoute: typeof ProfileRoute
+  RankRoute: typeof RankRoute
+  RankingsRoute: typeof RankingsRoute
+  TeamsRoute: typeof TeamsRoute
   VenueRoute: typeof VenueRoute
   VenuesRoute: typeof VenuesRoute
-  ApiBasemapRoute: typeof ApiBasemapRoute
-  ApiBootstrapRoute: typeof ApiBootstrapRoute
-  ApiBracketRoute: typeof ApiBracketRoute
-  ApiLiveRoute: typeof ApiLiveRoute
-  ApiLiveTodayRoute: typeof ApiLiveTodayRoute
-  ApiMatchScoreRoute: typeof ApiMatchScoreRoute
-  ApiOgRoute: typeof ApiOgRoute
-  ApiStandingsRoute: typeof ApiStandingsRouteWithChildren
-  ApiTodayRoute: typeof ApiTodayRoute
-  ApiVisibilityRoute: typeof ApiVisibilityRoute
+  WeekendRoute: typeof WeekendRoute
+  ApiAssistantRoute: typeof ApiAssistantRoute
+  ApiConferencesRoute: typeof ApiConferencesRoute
+  ApiExpertNotesRoute: typeof ApiExpertNotesRoute
+  ApiFeedRoute: typeof ApiFeedRoute
+  ApiFollowRoute: typeof ApiFollowRoute
+  ApiGamesRoute: typeof ApiGamesRoute
+  ApiProfileRoute: typeof ApiProfileRoute
+  ApiRankingsRoute: typeof ApiRankingsRoute
+  ApiReviewsRoute: typeof ApiReviewsRoute
+  ApiSearchRoute: typeof ApiSearchRoute
+  ApiTeamsRoute: typeof ApiTeamsRoute
+  ApiTipsRoute: typeof ApiTipsRoute
+  ApiVenueStatsRoute: typeof ApiVenueStatsRoute
+  ApiVenuesRoute: typeof ApiVenuesRoute
   GameIdRoute: typeof GameIdRoute
+  TeamIdRoute: typeof TeamIdRoute
+  UUsernameRoute: typeof UUsernameRoute
   VenueIdRoute: typeof VenueIdRoute
-  ApiAdminAttentionRoute: typeof ApiAdminAttentionRoute
-  ApiAdminBootstrapRoute: typeof ApiAdminBootstrapRoute
-  ApiAdminEspnHealthRoute: typeof ApiAdminEspnHealthRoute
-  ApiAdminUpdateRoute: typeof ApiAdminUpdateRoute
-  CaseyMatchNumberRoute: typeof CaseyMatchNumberRoute
+  ApiAuthGoogleRoute: typeof ApiAuthGoogleRoute
+  ApiAuthLoginRoute: typeof ApiAuthLoginRoute
+  ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
+  ApiAuthMeRoute: typeof ApiAuthMeRoute
+  ApiAuthRegisterRoute: typeof ApiAuthRegisterRoute
+  ApiUUsernameRoute: typeof ApiUUsernameRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/weekend': {
+      id: '/weekend'
+      path: '/weekend'
+      fullPath: '/weekend'
+      preLoaderRoute: typeof WeekendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/venues': {
       id: '/venues'
       path: '/venues'
@@ -418,11 +521,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VenueRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guide': {
-      id: '/guide'
-      path: '/guide'
-      fullPath: '/guide'
-      preLoaderRoute: typeof GuideRouteImport
+    '/teams': {
+      id: '/teams'
+      path: '/teams'
+      fullPath: '/teams'
+      preLoaderRoute: typeof TeamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rankings': {
+      id: '/rankings'
+      path: '/rankings'
+      fullPath: '/rankings'
+      preLoaderRoute: typeof RankingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rank': {
+      id: '/rank'
+      path: '/rank'
+      fullPath: '/rank'
+      preLoaderRoute: typeof RankRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -439,25 +563,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/casey': {
-      id: '/casey'
-      path: '/casey'
-      fullPath: '/casey'
-      preLoaderRoute: typeof CaseyRouteImport
+    '/feed': {
+      id: '/feed'
+      path: '/feed'
+      fullPath: '/feed'
+      preLoaderRoute: typeof FeedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/build': {
-      id: '/build'
-      path: '/build'
-      fullPath: '/build'
-      preLoaderRoute: typeof BuildRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agenda': {
-      id: '/agenda'
-      path: '/agenda'
-      fullPath: '/agenda'
-      preLoaderRoute: typeof AgendaRouteImport
+    '/conferences': {
+      id: '/conferences'
+      path: '/conferences'
+      fullPath: '/conferences'
+      preLoaderRoute: typeof ConferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -467,18 +584,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/casey/': {
-      id: '/casey/'
-      path: '/'
-      fullPath: '/casey/'
-      preLoaderRoute: typeof CaseyIndexRouteImport
-      parentRoute: typeof CaseyRoute
-    }
     '/venue_/$id': {
       id: '/venue_/$id'
       path: '/venue/$id'
       fullPath: '/venue/$id'
       preLoaderRoute: typeof VenueIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/u_/$username': {
+      id: '/u_/$username'
+      path: '/u/$username'
+      fullPath: '/u/$username'
+      preLoaderRoute: typeof UUsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team_/$id': {
+      id: '/team_/$id'
+      path: '/team/$id'
+      fullPath: '/team/$id'
+      preLoaderRoute: typeof TeamIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/game_/$id': {
@@ -488,179 +612,186 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/casey/admin': {
-      id: '/casey/admin'
-      path: '/admin'
-      fullPath: '/casey/admin'
-      preLoaderRoute: typeof CaseyAdminRouteImport
-      parentRoute: typeof CaseyRoute
-    }
-    '/api/visibility': {
-      id: '/api/visibility'
-      path: '/api/visibility'
-      fullPath: '/api/visibility'
-      preLoaderRoute: typeof ApiVisibilityRouteImport
+    '/api/venues': {
+      id: '/api/venues'
+      path: '/api/venues'
+      fullPath: '/api/venues'
+      preLoaderRoute: typeof ApiVenuesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/today': {
-      id: '/api/today'
-      path: '/api/today'
-      fullPath: '/api/today'
-      preLoaderRoute: typeof ApiTodayRouteImport
+    '/api/venue-stats': {
+      id: '/api/venue-stats'
+      path: '/api/venue-stats'
+      fullPath: '/api/venue-stats'
+      preLoaderRoute: typeof ApiVenueStatsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/standings': {
-      id: '/api/standings'
-      path: '/api/standings'
-      fullPath: '/api/standings'
-      preLoaderRoute: typeof ApiStandingsRouteImport
+    '/api/tips': {
+      id: '/api/tips'
+      path: '/api/tips'
+      fullPath: '/api/tips'
+      preLoaderRoute: typeof ApiTipsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/og': {
-      id: '/api/og'
-      path: '/api/og'
-      fullPath: '/api/og'
-      preLoaderRoute: typeof ApiOgRouteImport
+    '/api/teams': {
+      id: '/api/teams'
+      path: '/api/teams'
+      fullPath: '/api/teams'
+      preLoaderRoute: typeof ApiTeamsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/match-score': {
-      id: '/api/match-score'
-      path: '/api/match-score'
-      fullPath: '/api/match-score'
-      preLoaderRoute: typeof ApiMatchScoreRouteImport
+    '/api/search': {
+      id: '/api/search'
+      path: '/api/search'
+      fullPath: '/api/search'
+      preLoaderRoute: typeof ApiSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/live-today': {
-      id: '/api/live-today'
-      path: '/api/live-today'
-      fullPath: '/api/live-today'
-      preLoaderRoute: typeof ApiLiveTodayRouteImport
+    '/api/reviews': {
+      id: '/api/reviews'
+      path: '/api/reviews'
+      fullPath: '/api/reviews'
+      preLoaderRoute: typeof ApiReviewsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/live': {
-      id: '/api/live'
-      path: '/api/live'
-      fullPath: '/api/live'
-      preLoaderRoute: typeof ApiLiveRouteImport
+    '/api/rankings': {
+      id: '/api/rankings'
+      path: '/api/rankings'
+      fullPath: '/api/rankings'
+      preLoaderRoute: typeof ApiRankingsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/bracket': {
-      id: '/api/bracket'
-      path: '/api/bracket'
-      fullPath: '/api/bracket'
-      preLoaderRoute: typeof ApiBracketRouteImport
+    '/api/profile': {
+      id: '/api/profile'
+      path: '/api/profile'
+      fullPath: '/api/profile'
+      preLoaderRoute: typeof ApiProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/bootstrap': {
-      id: '/api/bootstrap'
-      path: '/api/bootstrap'
-      fullPath: '/api/bootstrap'
-      preLoaderRoute: typeof ApiBootstrapRouteImport
+    '/api/games': {
+      id: '/api/games'
+      path: '/api/games'
+      fullPath: '/api/games'
+      preLoaderRoute: typeof ApiGamesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/basemap': {
-      id: '/api/basemap'
-      path: '/api/basemap'
-      fullPath: '/api/basemap'
-      preLoaderRoute: typeof ApiBasemapRouteImport
+    '/api/follow': {
+      id: '/api/follow'
+      path: '/api/follow'
+      fullPath: '/api/follow'
+      preLoaderRoute: typeof ApiFollowRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/casey_/match/$number': {
-      id: '/casey_/match/$number'
-      path: '/casey/match/$number'
-      fullPath: '/casey/match/$number'
-      preLoaderRoute: typeof CaseyMatchNumberRouteImport
+    '/api/feed': {
+      id: '/api/feed'
+      path: '/api/feed'
+      fullPath: '/api/feed'
+      preLoaderRoute: typeof ApiFeedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/standings/all': {
-      id: '/api/standings/all'
-      path: '/all'
-      fullPath: '/api/standings/all'
-      preLoaderRoute: typeof ApiStandingsAllRouteImport
-      parentRoute: typeof ApiStandingsRoute
-    }
-    '/api/admin/update': {
-      id: '/api/admin/update'
-      path: '/api/admin/update'
-      fullPath: '/api/admin/update'
-      preLoaderRoute: typeof ApiAdminUpdateRouteImport
+    '/api/expert-notes': {
+      id: '/api/expert-notes'
+      path: '/api/expert-notes'
+      fullPath: '/api/expert-notes'
+      preLoaderRoute: typeof ApiExpertNotesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/admin/espn-health': {
-      id: '/api/admin/espn-health'
-      path: '/api/admin/espn-health'
-      fullPath: '/api/admin/espn-health'
-      preLoaderRoute: typeof ApiAdminEspnHealthRouteImport
+    '/api/conferences': {
+      id: '/api/conferences'
+      path: '/api/conferences'
+      fullPath: '/api/conferences'
+      preLoaderRoute: typeof ApiConferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/admin/bootstrap': {
-      id: '/api/admin/bootstrap'
-      path: '/api/admin/bootstrap'
-      fullPath: '/api/admin/bootstrap'
-      preLoaderRoute: typeof ApiAdminBootstrapRouteImport
+    '/api/assistant': {
+      id: '/api/assistant'
+      path: '/api/assistant'
+      fullPath: '/api/assistant'
+      preLoaderRoute: typeof ApiAssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/admin/attention': {
-      id: '/api/admin/attention'
-      path: '/api/admin/attention'
-      fullPath: '/api/admin/attention'
-      preLoaderRoute: typeof ApiAdminAttentionRouteImport
+    '/api/u/$username': {
+      id: '/api/u/$username'
+      path: '/api/u/$username'
+      fullPath: '/api/u/$username'
+      preLoaderRoute: typeof ApiUUsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/register': {
+      id: '/api/auth/register'
+      path: '/api/auth/register'
+      fullPath: '/api/auth/register'
+      preLoaderRoute: typeof ApiAuthRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/me': {
+      id: '/api/auth/me'
+      path: '/api/auth/me'
+      fullPath: '/api/auth/me'
+      preLoaderRoute: typeof ApiAuthMeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/logout': {
+      id: '/api/auth/logout'
+      path: '/api/auth/logout'
+      fullPath: '/api/auth/logout'
+      preLoaderRoute: typeof ApiAuthLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/login': {
+      id: '/api/auth/login'
+      path: '/api/auth/login'
+      fullPath: '/api/auth/login'
+      preLoaderRoute: typeof ApiAuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/google': {
+      id: '/api/auth/google'
+      path: '/api/auth/google'
+      fullPath: '/api/auth/google'
+      preLoaderRoute: typeof ApiAuthGoogleRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface CaseyRouteChildren {
-  CaseyAdminRoute: typeof CaseyAdminRoute
-  CaseyIndexRoute: typeof CaseyIndexRoute
-}
-
-const CaseyRouteChildren: CaseyRouteChildren = {
-  CaseyAdminRoute: CaseyAdminRoute,
-  CaseyIndexRoute: CaseyIndexRoute,
-}
-
-const CaseyRouteWithChildren = CaseyRoute._addFileChildren(CaseyRouteChildren)
-
-interface ApiStandingsRouteChildren {
-  ApiStandingsAllRoute: typeof ApiStandingsAllRoute
-}
-
-const ApiStandingsRouteChildren: ApiStandingsRouteChildren = {
-  ApiStandingsAllRoute: ApiStandingsAllRoute,
-}
-
-const ApiStandingsRouteWithChildren = ApiStandingsRoute._addFileChildren(
-  ApiStandingsRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AgendaRoute: AgendaRoute,
-  BuildRoute: BuildRoute,
-  CaseyRoute: CaseyRouteWithChildren,
+  ConferencesRoute: ConferencesRoute,
+  FeedRoute: FeedRoute,
   GameRoute: GameRoute,
   GamesRoute: GamesRoute,
-  GuideRoute: GuideRoute,
+  ProfileRoute: ProfileRoute,
+  RankRoute: RankRoute,
+  RankingsRoute: RankingsRoute,
+  TeamsRoute: TeamsRoute,
   VenueRoute: VenueRoute,
   VenuesRoute: VenuesRoute,
-  ApiBasemapRoute: ApiBasemapRoute,
-  ApiBootstrapRoute: ApiBootstrapRoute,
-  ApiBracketRoute: ApiBracketRoute,
-  ApiLiveRoute: ApiLiveRoute,
-  ApiLiveTodayRoute: ApiLiveTodayRoute,
-  ApiMatchScoreRoute: ApiMatchScoreRoute,
-  ApiOgRoute: ApiOgRoute,
-  ApiStandingsRoute: ApiStandingsRouteWithChildren,
-  ApiTodayRoute: ApiTodayRoute,
-  ApiVisibilityRoute: ApiVisibilityRoute,
+  WeekendRoute: WeekendRoute,
+  ApiAssistantRoute: ApiAssistantRoute,
+  ApiConferencesRoute: ApiConferencesRoute,
+  ApiExpertNotesRoute: ApiExpertNotesRoute,
+  ApiFeedRoute: ApiFeedRoute,
+  ApiFollowRoute: ApiFollowRoute,
+  ApiGamesRoute: ApiGamesRoute,
+  ApiProfileRoute: ApiProfileRoute,
+  ApiRankingsRoute: ApiRankingsRoute,
+  ApiReviewsRoute: ApiReviewsRoute,
+  ApiSearchRoute: ApiSearchRoute,
+  ApiTeamsRoute: ApiTeamsRoute,
+  ApiTipsRoute: ApiTipsRoute,
+  ApiVenueStatsRoute: ApiVenueStatsRoute,
+  ApiVenuesRoute: ApiVenuesRoute,
   GameIdRoute: GameIdRoute,
+  TeamIdRoute: TeamIdRoute,
+  UUsernameRoute: UUsernameRoute,
   VenueIdRoute: VenueIdRoute,
-  ApiAdminAttentionRoute: ApiAdminAttentionRoute,
-  ApiAdminBootstrapRoute: ApiAdminBootstrapRoute,
-  ApiAdminEspnHealthRoute: ApiAdminEspnHealthRoute,
-  ApiAdminUpdateRoute: ApiAdminUpdateRoute,
-  CaseyMatchNumberRoute: CaseyMatchNumberRoute,
+  ApiAuthGoogleRoute: ApiAuthGoogleRoute,
+  ApiAuthLoginRoute: ApiAuthLoginRoute,
+  ApiAuthLogoutRoute: ApiAuthLogoutRoute,
+  ApiAuthMeRoute: ApiAuthMeRoute,
+  ApiAuthRegisterRoute: ApiAuthRegisterRoute,
+  ApiUUsernameRoute: ApiUUsernameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

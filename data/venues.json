@@ -1,0 +1,1856 @@
+[
+  {
+    "id": "16",
+    "slug": "wrigley-field",
+    "name": "Wrigley Field",
+    "city": "Chicago",
+    "state": "IL",
+    "country": "USA",
+    "leagues": [
+      "MLB"
+    ],
+    "teams": [
+      "Chicago Cubs"
+    ],
+    "capacity": 41649,
+    "opened": 1914,
+    "hero_url": "https://a.espncdn.com/i/venues/mlb/day/16.jpg",
+    "lat": 41.9484,
+    "lng": -87.6553,
+    "snapback_score": 9.55,
+    "description": "Arguably the best stadium in sports. The ivy, the hand-operated scoreboard, the bleacher party culture, and a neighborhood that shuts down for games make Wrigley the gold standard of ballparks. Not a bad seat in the house."
+  },
+  {
+    "id": "47",
+    "slug": "pnc-park",
+    "name": "PNC Park",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "country": "USA",
+    "leagues": [
+      "MLB"
+    ],
+    "teams": [
+      "Pittsburgh Pirates"
+    ],
+    "capacity": 38362,
+    "opened": 2001,
+    "hero_url": "https://a.espncdn.com/i/venues/mlb/day/47.jpg",
+    "lat": 40.4469,
+    "lng": -80.0058,
+    "snapback_score": 8.75,
+    "description": "Widely regarded as the most beautiful ballpark in baseball, with a sweeping view of the Allegheny River and the Pittsburgh skyline behind right field. The pierogies and pot roast are top-five stadium food across all sports."
+  },
+  {
+    "id": "83",
+    "slug": "great-american-ball-park",
+    "name": "Great American Ball Park",
+    "city": "Cincinnati",
+    "state": "OH",
+    "country": "USA",
+    "leagues": [
+      "MLB"
+    ],
+    "teams": [
+      "Cincinnati Reds"
+    ],
+    "capacity": 42319,
+    "opened": 2003,
+    "hero_url": "https://a.espncdn.com/i/venues/mlb/day/83.jpg",
+    "lat": 39.0979,
+    "lng": -84.5083,
+    "snapback_score": 7.25,
+    "description": "A solid ballpark distinguished by a stunning bridge-and-river view behind the outfield and a steamboat-shaped center field building. The Skyline chili coneys are a regional staple worth seeking out."
+  },
+  {
+    "id": "84",
+    "slug": "citizens-bank-park",
+    "name": "Citizens Bank Park",
+    "city": "Philadelphia",
+    "state": "PA",
+    "country": "USA",
+    "leagues": [
+      "MLB"
+    ],
+    "teams": [
+      "Philadelphia Phillies"
+    ],
+    "capacity": 42901,
+    "opened": 2004,
+    "hero_url": "https://a.espncdn.com/i/venues/mlb/day/84.jpg",
+    "lat": 39.9061,
+    "lng": -75.1665,
+    "snapback_score": 8.12,
+    "description": "A modern ballpark backed by the best pregame destination in baseball at Xfinity Live next door, with the Rocky statue a short walk away. Philly fans approach a 10 in the playoffs and the crab fries are an institution."
+  },
+  {
+    "id": "87",
+    "slug": "busch-stadium",
+    "name": "Busch Stadium",
+    "city": "St. Louis",
+    "state": "MO",
+    "country": "USA",
+    "leagues": [
+      "MLB"
+    ],
+    "teams": [
+      "St. Louis Cardinals"
+    ],
+    "capacity": 44383,
+    "opened": 2006,
+    "hero_url": "https://a.espncdn.com/i/venues/mlb/day/87.jpg",
+    "lat": 38.6226,
+    "lng": -90.1928,
+    "snapback_score": 7.37,
+    "description": "A clean, classic ballpark with Ballpark Village right outside offering bars and game viewing without a ticket. The Stinger donut is worth getting and the Cardinals are among the most loyal fanbases in baseball."
+  },
+  {
+    "id": "208",
+    "slug": "yankee-stadium",
+    "name": "Yankee Stadium",
+    "city": "New York",
+    "state": "NY",
+    "country": "USA",
+    "leagues": [
+      "MLB"
+    ],
+    "teams": [
+      "New York Yankees"
+    ],
+    "capacity": 46537,
+    "opened": 2009,
+    "hero_url": "https://a.espncdn.com/i/venues/mlb/day/208.jpg",
+    "lat": 40.8296,
+    "lng": -73.9262,
+    "snapback_score": 8.98,
+    "description": "The House That Ruth Built's successor carries the weight of the most successful franchise in American sports. A World Series game here is a need-to-have experience \u2014 the crowd, the history, and the Lobel's steak sandwich make it worth every dollar."
+  },
+  {
+    "id": "218",
+    "slug": "truist-park",
+    "name": "Truist Park",
+    "city": "Cumberland",
+    "state": "GA",
+    "country": "USA",
+    "leagues": [
+      "MLB"
+    ],
+    "teams": [
+      "Atlanta Braves"
+    ],
+    "capacity": 41084,
+    "opened": 2017,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/218.jpg",
+    "lat": 33.8907,
+    "lng": -84.4677,
+    "snapback_score": 8.28,
+    "description": "The Battery entertainment district immediately surrounding Truist Park has created the best pre-and-post game scene in baseball. A zip line inside the stadium, the Braves Monument Garden, and the Chop House Club seats set it apart from every other MLB venue."
+  },
+  {
+    "id": "347",
+    "slug": "camp-randall-stadium",
+    "name": "Camp Randall Stadium",
+    "city": "Madison",
+    "state": "WI",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Wisconsin Badgers"
+    ],
+    "capacity": 80321,
+    "opened": 1917,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/347.jpg",
+    "lat": 43.0701,
+    "lng": -89.4116,
+    "snapback_score": 8.5,
+    "description": "One of the top college football experiences in the country, driven by Jump Around between the third and fourth quarters and Madison \u2014 arguably the best college town in America. The campus's fall beauty and the engaged Badger faithful complete the picture."
+  },
+  {
+    "id": "516",
+    "slug": "american-airlines-center",
+    "name": "American Airlines Center",
+    "city": "Dallas",
+    "state": "TX",
+    "country": "USA",
+    "leagues": [
+      "NBA",
+      "NHL"
+    ],
+    "teams": [
+      "Dallas Mavericks",
+      "Dallas Stars"
+    ],
+    "capacity": 19200,
+    "opened": 2001,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/516.jpg",
+    "lat": 32.7905,
+    "lng": -96.8103,
+    "snapback_score": 8.87,
+    "description": "A premier multi-sport arena in downtown Dallas with no bad sightlines and a passionate fanbase for both the Mavericks and Stars. Luka Doncic's return here in a Lakers jersey created one of the most emotionally unique sporting events of recent memory."
+  },
+  {
+    "id": "1056",
+    "slug": "rose-bowl",
+    "name": "Rose Bowl Stadium",
+    "city": "Pasadena",
+    "state": "CA",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [],
+    "capacity": 92542,
+    "opened": 1922,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/1056.jpg",
+    "lat": 34.1614,
+    "lng": -118.1678,
+    "snapback_score": 9.2,
+    "description": "A National Historic Landmark and the granddaddy of all bowl games, the Rose Bowl offers golf-course tailgating, a single-bowl design with no bad seat, and a third-quarter sunset behind the San Gabriel Mountains that is unlike anything else in sports."
+  },
+  {
+    "id": "1823",
+    "slug": "capital-one-arena",
+    "name": "Capital One Arena",
+    "city": "Washington",
+    "state": "DC",
+    "country": "USA",
+    "leagues": [
+      "NBA",
+      "NHL"
+    ],
+    "teams": [
+      "Washington Wizards",
+      "Washington Capitals"
+    ],
+    "capacity": 20356,
+    "opened": 1997,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/1823.jpg",
+    "lat": 38.8981,
+    "lng": -77.0209,
+    "snapback_score": 8.05,
+    "description": "A downtown DC arena in the walkable Penn Quarter neighborhood that hosts both the Wizards and the Capitals. NHL games here carry an extra intensity and the surrounding restaurant scene is world-class for a pre or post-game dinner."
+  },
+  {
+    "id": "2024",
+    "slug": "the-pit",
+    "name": "The Pit (WisePies Arena)",
+    "city": "Albuquerque",
+    "state": "NM",
+    "country": "USA",
+    "leagues": [
+      "CBB"
+    ],
+    "teams": [
+      "New Mexico Lobos"
+    ],
+    "capacity": 15411,
+    "opened": 1966,
+    "hero_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Pit_mainentrance.jpg/960px-Pit_mainentrance.jpg",
+    "lat": 35.0844,
+    "lng": -106.6248,
+    "snapback_score": 8.95,
+    "description": "The most acoustically unique arena in American sports \u2014 built 37 feet underground with a flat roof that traps every decibel and bounces it directly back onto the court. A mile above sea level and louder than most college football stadiums."
+  },
+  {
+    "id": "2559",
+    "slug": "paycom-center",
+    "name": "Paycom Center",
+    "city": "Oklahoma City",
+    "state": "OK",
+    "country": "USA",
+    "leagues": [
+      "NBA"
+    ],
+    "teams": [
+      "Oklahoma City Thunder"
+    ],
+    "capacity": 18203,
+    "opened": 2002,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/2559.jpg",
+    "lat": 35.4634,
+    "lng": -97.5151,
+    "snapback_score": 8.47,
+    "description": "Loud City is not a marketing slogan \u2014 it is an accurate description of the most passionate small-market NBA fanbase in the country. The Thunder fans cheer through opposing runs, rally shirts appear on every seat for playoff games, and the concourse is stress-free."
+  },
+  {
+    "id": "3610",
+    "slug": "aloha-stadium",
+    "name": "Aloha Stadium",
+    "city": "Halawa",
+    "state": "HI",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Hawaii Rainbow Warriors"
+    ],
+    "capacity": 50000,
+    "opened": 1975,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3610.jpg",
+    "lat": 21.3706,
+    "lng": -157.9308,
+    "snapback_score": 8.15,
+    "description": "The only major college football venue in paradise. Food trucks encircle the stadium with Hawaiian cuisine that surpasses any other CFB concession program, and the local Aloha spirit makes every visiting fan feel genuinely welcomed."
+  },
+  {
+    "id": "3626",
+    "slug": "autzen-stadium",
+    "name": "Autzen Stadium",
+    "city": "Eugene",
+    "state": "OR",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Oregon Ducks"
+    ],
+    "capacity": 54000,
+    "opened": 1967,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3626.jpg",
+    "lat": 44.0572,
+    "lng": -123.0688,
+    "snapback_score": 8.47,
+    "description": "A compact 54,000-seat stadium that punches far above its size in terms of noise. The famous motorcycle entrance revs the crowd into a frenzy, and every seat delivers a great sightline in a venue Nike-money has built into a jewel."
+  },
+  {
+    "id": "3653",
+    "slug": "albertsons-stadium",
+    "name": "Albertsons Stadium",
+    "city": "Boise",
+    "state": "ID",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Boise State Broncos"
+    ],
+    "capacity": 36387,
+    "opened": 1970,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3653.jpg",
+    "lat": 43.6023,
+    "lng": -116.2013,
+    "snapback_score": 7.83,
+    "description": "Home of the most famous blue artificial turf in sports, Albertsons Stadium is a visually disorienting and uniquely beautiful venue. The Broncos faithful are passionate and Boise is a more enjoyable city than its reputation suggests."
+  },
+  {
+    "id": "3654",
+    "slug": "brooks-stadium",
+    "name": "Brooks Stadium",
+    "city": "Conway",
+    "state": "SC",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Coastal Carolina Chanticleers"
+    ],
+    "capacity": 21000,
+    "opened": 2003,
+    "hero_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/CoastalBrooksStad1.jpg/960px-CoastalBrooksStad1.jpg",
+    "lat": 33.8068,
+    "lng": -79.0295,
+    "snapback_score": 7.55,
+    "description": "The only FBS stadium where every ticket includes all-you-can-eat concessions, near the Myrtle Beach resort area. The teal turf is distinctive and field suites offer premium access at an affordable price point."
+  },
+  {
+    "id": "3657",
+    "slug": "bryant-denny-stadium",
+    "name": "Bryant-Denny Stadium",
+    "city": "Tuscaloosa",
+    "state": "AL",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Alabama Crimson Tide"
+    ],
+    "capacity": 100077,
+    "opened": 1929,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3657.jpg",
+    "lat": 33.2082,
+    "lng": -87.5503,
+    "snapback_score": 8.46,
+    "description": "One of only two 100,000-seat stadiums in the South and the home of college football's most storied dynasty. The light show, Dixieland Delight, the Quad cocktail party tailgate, and the Walk of Champions create an unmatched game-day experience."
+  },
+  {
+    "id": "3696",
+    "slug": "zoeller-field-dix-stadium",
+    "name": "Zoeller Field at Dix Stadium",
+    "city": "Kent",
+    "state": "OH",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Kent State Golden Flashes"
+    ],
+    "capacity": 25319,
+    "opened": 1969,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/3696.jpg",
+    "lat": 41.1468,
+    "lng": -81.3378,
+    "snapback_score": 6.42,
+    "description": "The spiritual home of MACtion Tuesday-night football. Field access, cheap tickets, cheap food, and the pure gritty novelty of watching college football on a cold Ohio weeknight make this a once-in-a-lifetime bucket-list stop."
+  },
+  {
+    "id": "3700",
+    "slug": "doyt-perry-stadium",
+    "name": "Doyt L. Perry Stadium",
+    "city": "Bowling Green",
+    "state": "OH",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Bowling Green Falcons"
+    ],
+    "capacity": 23406,
+    "opened": 1966,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/3700.jpg",
+    "lat": 41.3787,
+    "lng": -83.6484,
+    "snapback_score": 7.42,
+    "description": "A MAContact Wednesday-night classic in central Ohio. Pudge the internet-famous mascot, donuts in the concession stand, and a local Juniper ale on tap give this MAC venue more personality than its ranking suggests."
+  },
+  {
+    "id": "3726",
+    "slug": "folsom-field",
+    "name": "Folsom Field",
+    "city": "Boulder",
+    "state": "CO",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Colorado Buffaloes"
+    ],
+    "capacity": 50183,
+    "opened": 1924,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3726.jpg",
+    "lat": 40.0097,
+    "lng": -105.2669,
+    "snapback_score": 8.07,
+    "description": "One of the most visually striking stadiums in college football, set against the Flatirons and the Boulder Foothills. The Sanders-era Deion buzz elevated the fan base and the pork skewer concession item is legitimately excellent."
+  },
+  {
+    "id": "3739",
+    "slug": "glass-bowl",
+    "name": "Glass Bowl",
+    "city": "Toledo",
+    "state": "OH",
+    "country": "USA",
+    "leagues": [
+      "CFB",
+      "other"
+    ],
+    "teams": [
+      "Toledo Rockets"
+    ],
+    "capacity": 26248,
+    "opened": 1937,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/3739.jpg",
+    "lat": 41.6617,
+    "lng": -83.6116,
+    "snapback_score": 6.98,
+    "description": "An intimate MAC stadium that doubles as the home of the Italian Bowl, one of the most bizarre and charming sporting events in America. Field access is wide open before games and the VIP suite upgrade is almost free."
+  },
+  {
+    "id": "3772",
+    "slug": "jack-trice-stadium",
+    "name": "Jack Trice Stadium",
+    "city": "Ames",
+    "state": "IA",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Iowa State Cyclones"
+    ],
+    "capacity": 61500,
+    "opened": 1975,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/3772.jpg",
+    "lat": 42.0143,
+    "lng": -93.6358,
+    "snapback_score": 7.82,
+    "description": "The only FBS stadium named after a Black athlete, with one of the best tailgate scenes in college football regardless of weather or record. Faithful Cyclone fans stick through rain and cold and the Campanile bell tower tradition nearby is a bonus."
+  },
+  {
+    "id": "3784",
+    "slug": "jones-att-stadium",
+    "name": "Jones AT&T Stadium",
+    "city": "Lubbock",
+    "state": "TX",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Texas Tech Red Raiders"
+    ],
+    "capacity": 60454,
+    "opened": 1947,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3784.jpg",
+    "lat": 33.5908,
+    "lng": -101.8715,
+    "snapback_score": 8.42,
+    "description": "One of the most improved facilities in the Big 12, surrounded by the extraordinary Raiderville multi-day camp-out party tradition. The campus barbecue scene in Lubbock is legitimately the best we have encountered anywhere."
+  },
+  {
+    "id": "3785",
+    "slug": "jordan-hare-stadium",
+    "name": "Jordan-Hare Stadium",
+    "city": "Auburn",
+    "state": "AL",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Auburn Tigers"
+    ],
+    "capacity": 87451,
+    "opened": 1939,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3785.jpg",
+    "lat": 32.6024,
+    "lng": -85.4897,
+    "snapback_score": 8.27,
+    "description": "Home of some of college football's finest traditions: the eagle flight before kickoff, rolling Toomer's Corner oaks after wins, and the ferocious Iron Bowl rivalry with Alabama. Inside the stadium it gets genuinely loud and builds through the game."
+  },
+  {
+    "id": "3787",
+    "slug": "kenan-stadium",
+    "name": "Kenan Memorial Stadium",
+    "city": "Chapel Hill",
+    "state": "NC",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "North Carolina Tar Heels"
+    ],
+    "capacity": 52000,
+    "opened": 1927,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3787.jpg",
+    "lat": 35.9042,
+    "lng": -79.0467,
+    "snapback_score": 7.67,
+    "description": "A historic stadium set in one of the South's most beautiful college towns. Field access during business hours is uniquely available here, and Franklin Street's pregame energy rivals any program in the ACC. The wine-and-cheese atmosphere is the only limitation."
+  },
+  {
+    "id": "3795",
+    "slug": "kyle-field",
+    "name": "Kyle Field",
+    "city": "College Station",
+    "state": "TX",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Texas A&M Aggies"
+    ],
+    "capacity": 102733,
+    "opened": 1927,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3795.jpg",
+    "lat": 30.61,
+    "lng": -96.3403,
+    "snapback_score": 8.37,
+    "description": "One of only two 100,000-seat stadiums in the South and home to the most unique traditions in college football \u2014 yell leaders, midnight yell practice, and the 12th Man. The Lone Star Showdown against Texas brought one of the best rivalry atmospheres we have witnessed."
+  },
+  {
+    "id": "3801",
+    "slug": "lavell-edwards-stadium",
+    "name": "LaVell Edwards Stadium",
+    "city": "Provo",
+    "state": "UT",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "BYU Cougars"
+    ],
+    "capacity": 63470,
+    "opened": 1964,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3801.jpg",
+    "lat": 40.2572,
+    "lng": -111.6538,
+    "snapback_score": 8.75,
+    "description": "Ranked the number-one experience on our entire tour. The mountain backdrop, the consistently loud student section, the Cougar Tail donut, and the Holy War rivalry energy against Utah create a once-in-a-lifetime college football experience."
+  },
+  {
+    "id": "3834",
+    "slug": "memorial-stadium-lincoln",
+    "name": "Memorial Stadium (Lincoln)",
+    "city": "Lincoln",
+    "state": "NE",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Nebraska Cornhuskers"
+    ],
+    "capacity": 85458,
+    "opened": 1923,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3834.jpg",
+    "lat": 40.8203,
+    "lng": -96.7058,
+    "snapback_score": 8.57,
+    "description": "One of the most welcoming fan bases in college football in an 85,000-seat venue that sells out religiously. The Runza, the balloon release, the Railyard bar district in downtown Lincoln, and the warmth of Nebraska fans make this a must-visit."
+  },
+  {
+    "id": "3835",
+    "slug": "memorial-stadium-norman",
+    "name": "Memorial Stadium (Norman)",
+    "city": "Norman",
+    "state": "OK",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Oklahoma Sooners"
+    ],
+    "capacity": 86112,
+    "opened": 1923,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3835.jpg",
+    "lat": 35.206,
+    "lng": -97.4432,
+    "snapback_score": 8.62,
+    "description": "An old-bowl stadium where sound funnels and stays loud, with one of the better entrance ceremonies in the sport. The Sooner Schooner, fireworks from the drum line, and elite state-fair corn dogs inside make a big Norman night unbeatable."
+  },
+  {
+    "id": "3853",
+    "slug": "neyland-stadium",
+    "name": "Neyland Stadium",
+    "city": "Knoxville",
+    "state": "TN",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Tennessee Volunteers"
+    ],
+    "capacity": 101915,
+    "opened": 1921,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3853.jpg",
+    "lat": 35.9548,
+    "lng": -83.9251,
+    "snapback_score": 9.18,
+    "description": "A checkerboard night game at Neyland is the loudest environment we have ever experienced across 200-plus stadiums. Rocky Top, the Vol Navy boats on the Tennessee River, and club-level food that ranks among the best we have had anywhere round out a top-tier experience."
+  },
+  {
+    "id": "3855",
+    "slug": "notre-dame-stadium",
+    "name": "Notre Dame Stadium",
+    "city": "Notre Dame",
+    "state": "IN",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Notre Dame Fighting Irish"
+    ],
+    "capacity": 77622,
+    "opened": 1930,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3855.jpg",
+    "lat": 41.6975,
+    "lng": -86.2336,
+    "snapback_score": 8.82,
+    "description": "The Cathedral of college football, with the golden dome, Touchdown Jesus mural, an elite bookstore, and the most storied tradition in the sport. The first CFP home game here proved it belongs among the sport's very best venues."
+  },
+  {
+    "id": "3861",
+    "slug": "ohio-stadium",
+    "name": "Ohio Stadium (The Shoe)",
+    "city": "Columbus",
+    "state": "OH",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Ohio State Buckeyes"
+    ],
+    "capacity": 102780,
+    "opened": 1922,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3861.jpg",
+    "lat": 40.0017,
+    "lng": -83.0196,
+    "snapback_score": 8.56,
+    "description": "The Horseshoe is one of the most beautiful stadiums in sport, capable of becoming the loudest on earth for the biggest games. The Michigan rivalry and CFP home games here are absolute bucket-list experiences. The Short North bar district is a bonus."
+  },
+  {
+    "id": "3910",
+    "slug": "dkr-texas-memorial",
+    "name": "DKR-Texas Memorial Stadium",
+    "city": "Austin",
+    "state": "TX",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Texas Longhorns"
+    ],
+    "capacity": 100119,
+    "opened": 1924,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3910.jpg",
+    "lat": 30.284,
+    "lng": -97.7322,
+    "snapback_score": 8.24,
+    "description": "One of only two 100,000-seat stadiums in Texas and home to the Eyes of Texas tradition. DKR for a night SEC or Big 12 game is one of the best experiences in college football; playoff games in winter lack the full student-section energy but the facility is always stunning."
+  },
+  {
+    "id": "3947",
+    "slug": "mountain-america-stadium",
+    "name": "Mountain America Stadium",
+    "city": "Tempe",
+    "state": "AZ",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Arizona State Sun Devils"
+    ],
+    "capacity": 53599,
+    "opened": 1958,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3947.jpg",
+    "lat": 33.4265,
+    "lng": -111.9322,
+    "snapback_score": 8.22,
+    "description": "An older stadium with desert character set near the best going-out scene of any CFB city (Tempe and Old Town Scottsdale). The honey chicken tenders and birria tacos are among the most surprising and excellent concession items we have encountered."
+  },
+  {
+    "id": "3948",
+    "slug": "hard-rock-stadium",
+    "name": "Hard Rock Stadium",
+    "city": "Miami Gardens",
+    "state": "FL",
+    "country": "USA",
+    "leagues": [
+      "NFL",
+      "CFB"
+    ],
+    "teams": [
+      "Miami Dolphins",
+      "Miami Hurricanes"
+    ],
+    "capacity": 65326,
+    "opened": 1987,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/3948.jpg",
+    "lat": 25.958,
+    "lng": -80.2389,
+    "snapback_score": 9.07,
+    "description": "A premium modern NFL stadium that doubled as the site of our highest-rated experience \u2014 a CFP National Championship with the best food, the best crowd, and the best gameplay we have ever encountered at a neutral site. Also home to an excellent smash burger on the regular concourse."
+  },
+  {
+    "id": "3970",
+    "slug": "state-farm-stadium",
+    "name": "State Farm Stadium",
+    "city": "Glendale",
+    "state": "AZ",
+    "country": "USA",
+    "leagues": [
+      "NFL",
+      "CFB"
+    ],
+    "teams": [
+      "Arizona Cardinals"
+    ],
+    "capacity": 63400,
+    "opened": 2006,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3970.jpg",
+    "lat": 33.5276,
+    "lng": -112.2626,
+    "snapback_score": 8.37,
+    "description": "The only stadium in the world with a retractable natural grass field that rolls out into the desert sun. Smart two-way traffic flow and a modern facility make it one of the most comfortable neutral-site CFP experiences available."
+  },
+  {
+    "id": "3974",
+    "slug": "vaught-hemingway-stadium",
+    "name": "Vaught-Hemingway Stadium",
+    "city": "Oxford",
+    "state": "MS",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Ole Miss Rebels"
+    ],
+    "capacity": 64038,
+    "opened": 1915,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3974.jpg",
+    "lat": 34.3636,
+    "lng": -89.5289,
+    "snapback_score": 8.24,
+    "description": "The Grove tailgate \u2014 10 acres of southern hospitality and white-tent glamour \u2014 is arguably the finest tailgate tradition in college football. The stadium itself and the in-game concessions are secondary attractions to the pregame experience that Oxford provides."
+  },
+  {
+    "id": "3994",
+    "slug": "williams-brice-stadium",
+    "name": "Williams-Brice Stadium",
+    "city": "Columbia",
+    "state": "SC",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "South Carolina Gamecocks"
+    ],
+    "capacity": 80250,
+    "opened": 1934,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3994.jpg",
+    "lat": 33.9739,
+    "lng": -81.0214,
+    "snapback_score": 7.46,
+    "description": "A stadium transformed by the 2001 Space Odyssey entrance, Sandstorm, and Palmetto Bowl rivalry passion. The five-point bar scene in Columbia is one of the hidden gems of the SEC and big rivalry games here are legitimately electric."
+  },
+  {
+    "id": "4242",
+    "slug": "american-family-field",
+    "name": "American Family Field",
+    "city": "Milwaukee",
+    "state": "WI",
+    "country": "USA",
+    "leagues": [
+      "MLB"
+    ],
+    "teams": [
+      "Milwaukee Brewers"
+    ],
+    "capacity": 41900,
+    "opened": 2001,
+    "hero_url": "https://a.espncdn.com/i/venues/mlb/day/4242.jpg",
+    "lat": 43.028,
+    "lng": -87.9712,
+    "snapback_score": 7.97,
+    "description": "A retractable-roof ballpark with a legitimate fan identity built around the famous sausage race and a Wisconsin hot dog topped with cheese curds that is among the better concession items we have had in baseball."
+  },
+  {
+    "id": "5348",
+    "slug": "mercedes-benz-stadium",
+    "name": "Mercedes-Benz Stadium",
+    "city": "Atlanta",
+    "state": "GA",
+    "country": "USA",
+    "leagues": [
+      "NFL",
+      "CFB"
+    ],
+    "teams": [
+      "Atlanta Falcons",
+      "Atlanta United FC"
+    ],
+    "capacity": 71000,
+    "opened": 2017,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/interior/5348.jpg",
+    "lat": 33.7554,
+    "lng": -84.4009,
+    "snapback_score": 8.77,
+    "description": "One of the most architecturally striking domes in the world, with a retractable oculus roof panel and concession prices that are deliberately set below market rate. A CFP National Championship here delivered some of the best cornbread and Barbecue Box food we have ever encountered at any sporting event."
+  },
+  {
+    "id": "5404",
+    "slug": "little-caesars-arena",
+    "name": "Little Caesars Arena",
+    "city": "Detroit",
+    "state": "MI",
+    "country": "USA",
+    "leagues": [
+      "NBA",
+      "NHL"
+    ],
+    "teams": [
+      "Detroit Pistons",
+      "Detroit Red Wings"
+    ],
+    "capacity": 20332,
+    "opened": 2017,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/5404.jpg",
+    "lat": 42.3411,
+    "lng": -83.0553,
+    "snapback_score": 8.97,
+    "description": "Home to one of the greatest playoff atmospheres we have ever witnessed \u2014 the Pistons' first home playoff game in 15 years against the Knicks. The 313 Grill smash burger is genuinely excellent, and the arena's open-air feel and sightlines are first-rate."
+  },
+  {
+    "id": "7317",
+    "slug": "moody-center",
+    "name": "Moody Center",
+    "city": "Austin",
+    "state": "TX",
+    "country": "USA",
+    "leagues": [
+      "NBA",
+      "CBB"
+    ],
+    "teams": [
+      "UT Longhorns Basketball"
+    ],
+    "capacity": 15000,
+    "opened": 2022,
+    "hero_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Moody_Center_-_UT_Austin_%2854984998424%29.jpg/960px-Moody_Center_-_UT_Austin_%2854984998424%29.jpg",
+    "lat": 30.2839,
+    "lng": -97.7356,
+    "snapback_score": 8.12,
+    "description": "One of the newest arenas in the country, built for the University of Texas and serving as home for the Spurs' I-35 series games. Premium suite food and a brand-new facility in a great city make it a solid NBA experience."
+  },
+  {
+    "id": "10642",
+    "slug": "intuit-dome",
+    "name": "Intuit Dome",
+    "city": "Inglewood",
+    "state": "CA",
+    "country": "USA",
+    "leagues": [
+      "NBA"
+    ],
+    "teams": [
+      "Los Angeles Clippers"
+    ],
+    "capacity": 18000,
+    "opened": 2024,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/10642.jpg",
+    "lat": 33.9534,
+    "lng": -118.3417,
+    "snapback_score": 8.5,
+    "description": "The most technologically advanced arena ever built, with Face ID entry, USB-C charging at every seat, and a 40,000-square-foot Halo board overhead. Steve Ballmer's $2 billion investment is genuinely stunning \u2014 the fan energy is the only thing that lags behind the hardware."
+  },
+  {
+    "id": "lambeau-nfl",
+    "slug": "lambeau-field",
+    "name": "Lambeau Field",
+    "city": "Green Bay",
+    "state": "WI",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Green Bay Packers"
+    ],
+    "capacity": 81441,
+    "opened": 1957,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3798.jpg",
+    "lat": 44.5013,
+    "lng": -88.0622,
+    "snapback_score": 9.22,
+    "description": "The most storied venue in NFL history. Every seat is owned by a fan and the wait list for season tickets spans multiple generations. A frozen tundra game in January at Lambeau is the single most authentic NFL experience available anywhere in America."
+  },
+  {
+    "id": "arrowhead-nfl",
+    "slug": "arrowhead-stadium",
+    "name": "Arrowhead Stadium",
+    "city": "Kansas City",
+    "state": "MO",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Kansas City Chiefs"
+    ],
+    "capacity": 76416,
+    "opened": 1972,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3622.jpg",
+    "lat": 39.0489,
+    "lng": -94.4839,
+    "snapback_score": 9.12,
+    "description": "The Guinness World Record holder for loudest outdoor stadium, Arrowhead earns the title. Chiefs fans force visiting teams into false starts routinely, the lot tailgates are the best in the AFC, and playoff nights here are among the top sporting events in America."
+  },
+  {
+    "id": "mich-stadium-cfb",
+    "slug": "michigan-stadium",
+    "name": "Michigan Stadium (The Big House)",
+    "city": "Ann Arbor",
+    "state": "MI",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Michigan Wolverines"
+    ],
+    "capacity": 107601,
+    "opened": 1927,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3558.jpg",
+    "lat": 42.2659,
+    "lng": -83.7487,
+    "snapback_score": 9.12,
+    "description": "The largest stadium in the Western Hemisphere and consistently one of the loudest by sheer volume. Ann Arbor is a near-perfect college town and the maize-and-blue sea of 107,000+ fans at kickoff is a sight that no other sport can match."
+  },
+  {
+    "id": "pennst-cfb",
+    "slug": "beaver-stadium",
+    "name": "Beaver Stadium",
+    "city": "University Park",
+    "state": "PA",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Penn State Nittany Lions"
+    ],
+    "capacity": 106572,
+    "opened": 1960,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3632.jpg",
+    "lat": 40.8121,
+    "lng": -77.8564,
+    "snapback_score": 8.92,
+    "description": "A Whiteout game at Beaver Stadium is visually and aurally overwhelming \u2014 106,000+ fans in white is one of the most extraordinary sports spectacles in America. State College is a classic college town and the Blue Band is the best in college football."
+  },
+  {
+    "id": "lsu-cfb",
+    "slug": "tiger-stadium-lsu",
+    "name": "Tiger Stadium (LSU)",
+    "city": "Baton Rouge",
+    "state": "LA",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "LSU Tigers"
+    ],
+    "capacity": 102321,
+    "opened": 1924,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3958.jpg",
+    "lat": 30.412,
+    "lng": -91.1837,
+    "snapback_score": 9.0,
+    "description": "Death Valley on a Saturday night is legitimately one of the most feared environments in all of college sports. The Cajun food culture inside the stadium produces boudin balls, crawfish po-boys, and jambalaya that cannot be found in any other CFB venue."
+  },
+  {
+    "id": "clemson-cfb",
+    "slug": "memorial-stadium-clemson",
+    "name": "Memorial Stadium (Clemson)",
+    "city": "Clemson",
+    "state": "SC",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Clemson Tigers"
+    ],
+    "capacity": 82500,
+    "opened": 1942,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3852.jpg",
+    "lat": 34.6784,
+    "lng": -82.8444,
+    "snapback_score": 8.77,
+    "description": "Clemson's Death Valley is best known for Running Down the Hill with Howard's Rock \u2014 perhaps the most electric single pregame moment in all of college football. The entire campus becomes a tailgate and the program's sustained excellence fills the stadium with genuine noise."
+  },
+  {
+    "id": "sanford-cfb",
+    "slug": "sanford-stadium",
+    "name": "Sanford Stadium",
+    "city": "Athens",
+    "state": "GA",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Georgia Bulldogs"
+    ],
+    "capacity": 92746,
+    "opened": 1929,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3917.jpg",
+    "lat": 33.9497,
+    "lng": -83.3733,
+    "snapback_score": 8.82,
+    "description": "Playing Between the Hedges in Athens is a quintessential college football experience. The hedges themselves are stunning and the atmosphere inside is pure SEC fury. Athens is one of the three or four best college towns in America with a bar and music scene that runs all weekend."
+  },
+  {
+    "id": "kinnick-cfb",
+    "slug": "kinnick-stadium",
+    "name": "Kinnick Stadium",
+    "city": "Iowa City",
+    "state": "IA",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Iowa Hawkeyes"
+    ],
+    "capacity": 69250,
+    "opened": 1929,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3793.jpg",
+    "lat": 41.6585,
+    "lng": -91.5506,
+    "snapback_score": 8.5,
+    "description": "Home of the Iowa Wave \u2014 70,000 fans waving to children at the adjacent university hospital at the end of the first quarter \u2014 which may be the most moving single tradition in American sports. A legitimately loud and engaged fanbase in a beautiful old stadium."
+  },
+  {
+    "id": "allen-cbb",
+    "slug": "allen-fieldhouse",
+    "name": "Allen Fieldhouse",
+    "city": "Lawrence",
+    "state": "KS",
+    "country": "USA",
+    "leagues": [
+      "CBB"
+    ],
+    "teams": [
+      "Kansas Jayhawks"
+    ],
+    "capacity": 16300,
+    "opened": 1955,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/2171.jpg",
+    "lat": 38.9543,
+    "lng": -95.2526,
+    "snapback_score": 8.92,
+    "description": "The Phog is the most storied arena in college basketball. The floor vibrates on big games, Rock Chalk Jayhawk is the best chant in college sports, and Massachusetts Street in Lawrence is a top-five college bar district in the country."
+  },
+  {
+    "id": "cameron-cbb",
+    "slug": "cameron-indoor-stadium",
+    "name": "Cameron Indoor Stadium",
+    "city": "Durham",
+    "state": "NC",
+    "country": "USA",
+    "leagues": [
+      "CBB"
+    ],
+    "teams": [
+      "Duke Blue Devils"
+    ],
+    "capacity": 9314,
+    "opened": 1940,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/1914.jpg",
+    "lat": 36.0005,
+    "lng": -78.9409,
+    "snapback_score": 8.97,
+    "description": "The most intense atmosphere per square foot in American sports. The Cameron Crazies conduct detailed pre-game research on opposing players to maximize psychological pressure. Krzyzewskiville tent camping before big games is a cultural phenomenon in its own right."
+  },
+  {
+    "id": "rupp-cbb",
+    "slug": "rupp-arena",
+    "name": "Rupp Arena",
+    "city": "Lexington",
+    "state": "KY",
+    "country": "USA",
+    "leagues": [
+      "CBB"
+    ],
+    "teams": [
+      "Kentucky Wildcats"
+    ],
+    "capacity": 23500,
+    "opened": 1976,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/251.jpg",
+    "lat": 38.049,
+    "lng": -84.4988,
+    "snapback_score": 8.62,
+    "description": "The largest on-campus arena in college basketball, where Big Blue Nation treats the game with the same intensity most programs reserve for football. The bourbon trail nearby and a beautiful horse-country backdrop make Lexington a great sports travel destination."
+  },
+  {
+    "id": "td-garden-nba",
+    "slug": "td-garden",
+    "name": "TD Garden",
+    "city": "Boston",
+    "state": "MA",
+    "country": "USA",
+    "leagues": [
+      "NBA",
+      "NHL"
+    ],
+    "teams": [
+      "Boston Celtics",
+      "Boston Bruins"
+    ],
+    "capacity": 19156,
+    "opened": 1995,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/1824.jpg",
+    "lat": 42.3662,
+    "lng": -71.0621,
+    "snapback_score": 8.89,
+    "description": "The home of the most winning franchise in NBA history and a Bruins team with the most passionate hockey fanbase in the US. Banner-stacked rafters, a parquet floor you can stare at for hours, and the North End Italian dining scene nearby make every visit exceptional."
+  },
+  {
+    "id": "msg-nba",
+    "slug": "madison-square-garden",
+    "name": "Madison Square Garden",
+    "city": "New York",
+    "state": "NY",
+    "country": "USA",
+    "leagues": [
+      "NBA",
+      "NHL"
+    ],
+    "teams": [
+      "New York Knicks",
+      "New York Rangers"
+    ],
+    "capacity": 20789,
+    "opened": 1968,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/1830.jpg",
+    "lat": 40.7505,
+    "lng": -73.9934,
+    "snapback_score": 9.0,
+    "description": "The World's Most Famous Arena earns the title for both basketball and hockey. Knicks playoff basketball and Rangers playoff hockey here are among the top sporting experiences in North America. The building echoes differently for hockey \u2014 you will hear both products clearly."
+  },
+  {
+    "id": "att-nfl",
+    "slug": "att-stadium",
+    "name": "AT&T Stadium (Jerry World)",
+    "city": "Arlington",
+    "state": "TX",
+    "country": "USA",
+    "leagues": [
+      "NFL",
+      "CFB"
+    ],
+    "teams": [
+      "Dallas Cowboys"
+    ],
+    "capacity": 80000,
+    "opened": 2009,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3687.jpg",
+    "lat": 32.7479,
+    "lng": -97.093,
+    "snapback_score": 8.62,
+    "description": "The most technologically impressive sports venue in America, anchored by a 160-yard HD scoreboard that hangs at eye level over the field. Every game here feels enormous regardless of the opponent, and playoffs in Jerry World are among the NFL's signature experiences."
+  },
+  {
+    "id": "sofi-nfl",
+    "slug": "sofi-stadium",
+    "name": "SoFi Stadium",
+    "city": "Inglewood",
+    "state": "CA",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Los Angeles Rams",
+      "Los Angeles Chargers"
+    ],
+    "capacity": 70240,
+    "opened": 2020,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/7065.jpg",
+    "lat": 33.9535,
+    "lng": -118.3392,
+    "snapback_score": 8.72,
+    "description": "The most architecturally striking venue in professional sports, with a sweeping translucent roof and a dual-sided Oculus scoreboard unlike anything in the world. The chef-driven concessions set a new NFL food standard and the Super Bowl atmosphere here is next-level."
+  },
+  {
+    "id": "allegiant-nfl",
+    "slug": "allegiant-stadium",
+    "name": "Allegiant Stadium",
+    "city": "Las Vegas",
+    "state": "NV",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Las Vegas Raiders"
+    ],
+    "capacity": 65000,
+    "opened": 2020,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/6501.jpg",
+    "lat": 36.0909,
+    "lng": -115.1833,
+    "snapback_score": 8.87,
+    "description": "The Death Star of NFL stadiums, a dramatic black-glass cube in the Nevada desert with the Al Davis memorial torch as its centerpiece. Raiders games attract a uniquely eclectic mix of genuine fans and Vegas tourists that creates an atmosphere unlike anywhere else in professional sports."
+  },
+  {
+    "id": "linc-nfl",
+    "slug": "lincoln-financial-field",
+    "name": "Lincoln Financial Field",
+    "city": "Philadelphia",
+    "state": "PA",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Philadelphia Eagles"
+    ],
+    "capacity": 69796,
+    "opened": 2003,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/3806.jpg",
+    "lat": 39.9008,
+    "lng": -75.1675,
+    "snapback_score": 8.67,
+    "description": "Eagles fans are the most passionate and notoriously intense in the NFL. A January playoff game at the Linc is one of the most hostile and electric environments in American professional sports, and Xfinity Live next door is the best pregame destination in the NFC."
+  },
+  {
+    "id": "highmark-nfl",
+    "slug": "highmark-stadium",
+    "name": "Highmark Stadium",
+    "city": "Orchard Park",
+    "state": "NY",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Buffalo Bills"
+    ],
+    "capacity": 71608,
+    "opened": 1973,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3883.jpg",
+    "lat": 42.7738,
+    "lng": -78.7868,
+    "snapback_score": 8.62,
+    "description": "Bills Mafia is the most fanatically devoted fanbase in the AFC and they show up regardless of weather or record. A winter playoff game here is a bucket-list American sports experience, and the pre-game table-jumping tailgate tradition is a cultural institution of its own."
+  },
+  {
+    "id": "acrisure-nfl",
+    "slug": "acrisure-stadium",
+    "name": "Acrisure Stadium",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Pittsburgh Steelers"
+    ],
+    "capacity": 68400,
+    "opened": 2001,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/3752.jpg",
+    "lat": 40.4468,
+    "lng": -80.0158,
+    "snapback_score": 8.9,
+    "description": "The best stadium view in the NFL \u2014 a sweeping panorama of the three Pittsburgh rivers and the city skyline visible from the north stands. The Terrible Towel is the most iconic fan object in professional sports and Primanti Brothers inside is a Pittsburgh ritual."
+  },
+  {
+    "id": "soldier-nfl",
+    "slug": "soldier-field",
+    "name": "Soldier Field",
+    "city": "Chicago",
+    "state": "IL",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Chicago Bears"
+    ],
+    "capacity": 61500,
+    "opened": 1924,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3933.jpg",
+    "lat": 41.8623,
+    "lng": -87.6167,
+    "snapback_score": 8.42,
+    "description": "A National Historic Landmark on the Lake Michigan shoreline with the Chicago skyline as backdrop \u2014 the most scenic location of any NFL stadium. The renovated interior is controversial but the lakefront setting and Bears fans energy are irreplaceable. Go before the team moves to the suburbs."
+  },
+  {
+    "id": "gillette-nfl",
+    "slug": "gillette-stadium",
+    "name": "Gillette Stadium",
+    "city": "Foxborough",
+    "state": "MA",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "New England Patriots"
+    ],
+    "capacity": 65878,
+    "opened": 2002,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3738.jpg",
+    "lat": 42.0909,
+    "lng": -71.2643,
+    "snapback_score": 8.12,
+    "description": "Six Super Bowls in the trophy case and a fanbase that has seen generational excellence. Gillette is a clean, modern facility with a lighthouse that opens and closes for scores. Patriot Place is a premium pregame destination with dining and entertainment."
+  },
+  {
+    "id": "metlife-nfl",
+    "slug": "metlife-stadium",
+    "name": "MetLife Stadium",
+    "city": "East Rutherford",
+    "state": "NJ",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "New York Giants",
+      "New York Jets"
+    ],
+    "capacity": 82500,
+    "opened": 2010,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3839.jpg",
+    "lat": 40.8135,
+    "lng": -74.0745,
+    "snapback_score": 7.97,
+    "description": "A stadium without permanent home team branding, shared by two franchises with completely different fan cultures. The NJ Transit connection makes arriving easy; the dual-use setup produces a slightly sterile atmosphere compared to single-team venues."
+  },
+  {
+    "id": "bofa-nfl",
+    "slug": "bank-of-america-stadium",
+    "name": "Bank of America Stadium",
+    "city": "Charlotte",
+    "state": "NC",
+    "country": "USA",
+    "leagues": [
+      "NFL",
+      "CFB"
+    ],
+    "teams": [
+      "Carolina Panthers"
+    ],
+    "capacity": 74867,
+    "opened": 1996,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3628.jpg",
+    "lat": 35.2258,
+    "lng": -80.853,
+    "snapback_score": 7.91,
+    "description": "A well-designed downtown stadium that walks to excellent Uptown Charlotte restaurants and bars. Carolina Panthers fans bring genuine energy when the team is competitive, and the stadium serves as the ACC Championship neutral site which adds football lore."
+  },
+  {
+    "id": "fedex-nfl",
+    "slug": "northwest-stadium",
+    "name": "Northwest Stadium",
+    "city": "Landover",
+    "state": "MD",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Washington Commanders"
+    ],
+    "capacity": 67617,
+    "opened": 1997,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3719.jpg",
+    "lat": 38.9076,
+    "lng": -76.8645,
+    "snapback_score": 7.37,
+    "description": "A stadium in rapid transition under new Commanders ownership. The DC market passion is real and a new stadium is on the horizon that should dramatically elevate the fan experience. Metro access is the preferred arrival method."
+  },
+  {
+    "id": "empower-nfl",
+    "slug": "empower-field-mile-high",
+    "name": "Empower Field at Mile High",
+    "city": "Denver",
+    "state": "CO",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "Denver Broncos"
+    ],
+    "capacity": 76125,
+    "opened": 2001,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3937.jpg",
+    "lat": 39.7439,
+    "lng": -105.0201,
+    "snapback_score": 8.27,
+    "description": "The altitude at Mile High genuinely impacts visitors and the Rocky Mountain backdrop from the west-facing upper deck is one of the most dramatic in the NFL. Broncos fans stayed loud and loyal through a long rebuilding stretch."
+  },
+  {
+    "id": "levis-nfl",
+    "slug": "levis-stadium",
+    "name": "Levi's Stadium",
+    "city": "Santa Clara",
+    "state": "CA",
+    "country": "USA",
+    "leagues": [
+      "NFL"
+    ],
+    "teams": [
+      "San Francisco 49ers"
+    ],
+    "capacity": 68500,
+    "opened": 2014,
+    "hero_url": "https://a.espncdn.com/i/venues/nfl/day/3958.jpg",
+    "lat": 37.4032,
+    "lng": -121.9698,
+    "snapback_score": 8.5,
+    "description": "Silicon Valley money produced one of the two or three best concession programs in the NFL, with locally-sourced chef-driven food that could stand alone as a restaurant. The 49ers Faithful are loud when the team is good and the California weather is almost always cooperating."
+  },
+  {
+    "id": "united-nhl",
+    "slug": "united-center",
+    "name": "United Center",
+    "city": "Chicago",
+    "state": "IL",
+    "country": "USA",
+    "leagues": [
+      "NBA",
+      "NHL"
+    ],
+    "teams": [
+      "Chicago Bulls",
+      "Chicago Blackhawks"
+    ],
+    "capacity": 20917,
+    "opened": 1994,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/1847.jpg",
+    "lat": 41.8807,
+    "lng": -87.6742,
+    "snapback_score": 8.37,
+    "description": "The Madhouse on Madison lives up to the name for Blackhawks playoff hockey \u2014 the national anthem here is the loudest single moment in Chicago sports. The Jordan statue outside and 23 championship banners inside make every visit to the United Center feel significant."
+  },
+  {
+    "id": "chase-nba",
+    "slug": "chase-center",
+    "name": "Chase Center",
+    "city": "San Francisco",
+    "state": "CA",
+    "country": "USA",
+    "leagues": [
+      "NBA"
+    ],
+    "teams": [
+      "Golden State Warriors"
+    ],
+    "capacity": 18064,
+    "opened": 2019,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/6270.jpg",
+    "lat": 37.768,
+    "lng": -122.3876,
+    "snapback_score": 8.9,
+    "description": "A premium privately-funded arena on the San Francisco waterfront with a pre-game Thrive City outdoor entertainment district and food options that rival restaurant quality. The dynasty-tested Warriors faithful create a home-court advantage that visiting teams routinely cite."
+  },
+  {
+    "id": "crypto-nba",
+    "slug": "crypto-com-arena",
+    "name": "Crypto.com Arena",
+    "city": "Los Angeles",
+    "state": "CA",
+    "country": "USA",
+    "leagues": [
+      "NBA",
+      "NHL"
+    ],
+    "teams": [
+      "Los Angeles Lakers",
+      "Los Angeles Clippers",
+      "Los Angeles Kings"
+    ],
+    "capacity": 19000,
+    "opened": 1999,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/1841.jpg",
+    "lat": 34.043,
+    "lng": -118.2673,
+    "snapback_score": 8.5,
+    "description": "The Staples Center by its famous name, home to more championship banners per square foot than almost anywhere in professional sports. Lakers games here carry a celebrity-court mystique and cultural weight that no other NBA venue can replicate."
+  },
+  {
+    "id": "spectrum-nba",
+    "slug": "spectrum-center",
+    "name": "Spectrum Center",
+    "city": "Charlotte",
+    "state": "NC",
+    "country": "USA",
+    "leagues": [
+      "NBA"
+    ],
+    "teams": [
+      "Charlotte Hornets"
+    ],
+    "capacity": 19077,
+    "opened": 2005,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/1893.jpg",
+    "lat": 35.2251,
+    "lng": -80.8393,
+    "snapback_score": 7.82,
+    "description": "A solid mid-tier NBA arena in an uptown Charlotte location that walks to excellent restaurants and bars. The Hornets have one of the best alternate jersey programs in the league and the arena is easy and accommodating to navigate."
+  },
+  {
+    "id": "bell-nhl",
+    "slug": "bell-centre",
+    "name": "Bell Centre",
+    "city": "Montreal",
+    "state": "QC",
+    "country": "Canada",
+    "leagues": [
+      "NHL"
+    ],
+    "teams": [
+      "Montreal Canadiens"
+    ],
+    "capacity": 21302,
+    "opened": 1996,
+    "hero_url": "https://a.espncdn.com/i/venues/nhl/day/1809.jpg",
+    "lat": 45.4961,
+    "lng": -73.5693,
+    "snapback_score": 9.02,
+    "description": "The most hockey-obsessed market in North America produces the loudest sporting experience most fans will ever encounter. A Canadiens playoff game at the Bell Centre is a bucket-list event even for non-hockey fans \u2014 21,000 fans in French-Canadian full roar is overwhelming in the best way."
+  },
+  {
+    "id": "scotiabank-nhl",
+    "slug": "scotiabank-arena",
+    "name": "Scotiabank Arena",
+    "city": "Toronto",
+    "state": "ON",
+    "country": "Canada",
+    "leagues": [
+      "NBA",
+      "NHL"
+    ],
+    "teams": [
+      "Toronto Maple Leafs",
+      "Toronto Raptors"
+    ],
+    "capacity": 19800,
+    "opened": 1999,
+    "hero_url": "https://a.espncdn.com/i/venues/nba/day/1838.jpg",
+    "lat": 43.6435,
+    "lng": -79.3791,
+    "snapback_score": 8.9,
+    "description": "The most passionate tortured fanbase in the NHL packs Scotiabank Arena with primal energy regardless of standings. Maple Leaf Square outside transforms into one of the best outdoor watch party experiences in sports during playoff time."
+  },
+  {
+    "id": "ppg-nhl",
+    "slug": "ppg-paints-arena",
+    "name": "PPG Paints Arena",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "country": "USA",
+    "leagues": [
+      "NHL"
+    ],
+    "teams": [
+      "Pittsburgh Penguins"
+    ],
+    "capacity": 18387,
+    "opened": 1999,
+    "hero_url": "https://a.espncdn.com/i/venues/nhl/day/1826.jpg",
+    "lat": 40.4395,
+    "lng": -79.9892,
+    "snapback_score": 8.42,
+    "description": "A dynasty-seasoned fanbase from the Lemieux-Jagr-Crosby-Malkin era fills PPG Paints Arena with knowledgeable and expectant energy. Pittsburgh pierogi culture extends into the arena and the arena is a short walk from downtown restaurants."
+  },
+  {
+    "id": "lenovo-nhl",
+    "slug": "lenovo-center",
+    "name": "Lenovo Center",
+    "city": "Raleigh",
+    "state": "NC",
+    "country": "USA",
+    "leagues": [
+      "NHL"
+    ],
+    "teams": [
+      "Carolina Hurricanes"
+    ],
+    "capacity": 18680,
+    "opened": 1999,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/999.jpg",
+    "lat": 35.8034,
+    "lng": -78.722,
+    "snapback_score": 8.62,
+    "description": "The storm surge post-game celebration is the most creative and joyful tradition in professional hockey. The Hurricanes have built proof that hockey works in the South, with one of the fastest-growing and most passionate fanbases in the NHL."
+  },
+  {
+    "id": "dean-dome-cbb",
+    "slug": "dean-smith-center",
+    "name": "Dean E. Smith Center",
+    "city": "Chapel Hill",
+    "state": "NC",
+    "country": "USA",
+    "leagues": [
+      "CBB"
+    ],
+    "teams": [
+      "North Carolina Tar Heels"
+    ],
+    "capacity": 21750,
+    "opened": 1986,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/207.jpg",
+    "lat": 35.9051,
+    "lng": -79.0474,
+    "snapback_score": 8.37,
+    "description": "The Dean Dome for a Carolina-Duke game is among the five best basketball experiences in America. Michael Jordan and Dean Smith's legacy defines every brick, and Franklin Street pregame is world-class. The student section turns genuinely hostile for rivalry games."
+  },
+  {
+    "id": "mackey-cbb",
+    "slug": "mackey-arena",
+    "name": "Mackey Arena",
+    "city": "West Lafayette",
+    "state": "IN",
+    "country": "USA",
+    "leagues": [
+      "CBB"
+    ],
+    "teams": [
+      "Purdue Boilermakers"
+    ],
+    "capacity": 14876,
+    "opened": 1967,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/399.jpg",
+    "lat": 40.4278,
+    "lng": -86.9188,
+    "snapback_score": 8.52,
+    "description": "Consistently rated one of the toughest home-court advantages in the Big Ten, Mackey Arena produces focused and relentless noise that has been a genuine factor in Purdue's consistent tournament success."
+  },
+  {
+    "id": "carrier-cbb",
+    "slug": "jma-wireless-dome",
+    "name": "JMA Wireless Dome",
+    "city": "Syracuse",
+    "state": "NY",
+    "country": "USA",
+    "leagues": [
+      "CBB",
+      "CFB"
+    ],
+    "teams": [
+      "Syracuse Orange"
+    ],
+    "capacity": 35000,
+    "opened": 1980,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/1964.jpg",
+    "lat": 43.0365,
+    "lng": -76.1366,
+    "snapback_score": 8.32,
+    "description": "The largest on-campus basketball arena in America holds nearly 35,000 for big games, producing a wall of sound that is physically different from any other basketball venue. Salt Potatoes are the regional food treasure and the Syracuse zone defense creates a uniquely cerebral game."
+  },
+  {
+    "id": "pmac-cbb",
+    "slug": "pete-maravich-assembly-center",
+    "name": "Pete Maravich Assembly Center",
+    "city": "Baton Rouge",
+    "state": "LA",
+    "country": "USA",
+    "leagues": [
+      "CBB"
+    ],
+    "teams": [
+      "LSU Tigers"
+    ],
+    "capacity": 13215,
+    "opened": 1971,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/557.jpg",
+    "lat": 30.4118,
+    "lng": -91.1817,
+    "snapback_score": 8.37,
+    "description": "The PMAC roars in SEC play and the Cajun food options extend into the concourse with boudin balls and other regional specialties that no other CBB venue can offer. Named for Pistol Pete Maravich, who scored 44 points per game here as a freshman."
+  },
+  {
+    "id": "kohl-cbb",
+    "slug": "kohl-center",
+    "name": "Kohl Center",
+    "city": "Madison",
+    "state": "WI",
+    "country": "USA",
+    "leagues": [
+      "CBB"
+    ],
+    "teams": [
+      "Wisconsin Badgers"
+    ],
+    "capacity": 17230,
+    "opened": 1998,
+    "hero_url": "https://a.espncdn.com/i/venues/mens-college-basketball/day/348.jpg",
+    "lat": 43.0732,
+    "lng": -89.4134,
+    "snapback_score": 8.12,
+    "description": "A Big Ten basketball arena backed by the best college town in America. Wisconsin students take basketball seriously and the Kohl Center on a rivalry game night approaches the atmosphere level of Camp Randall on a fall Saturday."
+  },
+  {
+    "id": "boone-pickens-cfb",
+    "slug": "boone-pickens-stadium",
+    "name": "Boone Pickens Stadium",
+    "city": "Stillwater",
+    "state": "OK",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Oklahoma State Cowboys"
+    ],
+    "capacity": 55509,
+    "opened": 1920,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3646.jpg",
+    "lat": 36.1252,
+    "lng": -97.0671,
+    "snapback_score": 8.0,
+    "description": "A dramatically improved facility backed by T. Boone Pickens money, in a Stillwater that transforms completely on game days. Eskimo Joe's off-campus is one of the most famous bar-restaurants in college football and the Bedlam rivalry produces intense atmosphere."
+  },
+  {
+    "id": "rice-eccles-cfb",
+    "slug": "rice-eccles-stadium",
+    "name": "Rice-Eccles Stadium",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Utah Utes"
+    ],
+    "capacity": 51444,
+    "opened": 1927,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/587.jpg",
+    "lat": 40.7596,
+    "lng": -111.8494,
+    "snapback_score": 7.97,
+    "description": "A gorgeous stadium set against the Wasatch Mountains with one of the most scenic backdrops in college football. The Utes faithful have grown into a legitimate Power Five atmosphere and Salt Lake City has become a real sports travel destination."
+  },
+  {
+    "id": "kroger-cfb",
+    "slug": "kroger-field",
+    "name": "Kroger Field",
+    "city": "Lexington",
+    "state": "KY",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Kentucky Wildcats"
+    ],
+    "capacity": 61000,
+    "opened": 1973,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/3683.jpg",
+    "lat": 38.0228,
+    "lng": -84.5044,
+    "snapback_score": 7.95,
+    "description": "Kentucky football has surprised many observers in recent years and Kroger Field delivers solid SEC atmosphere for big games. The Kentucky Bourbon Trail nearby makes Lexington one of the best sports destination cities in the SEC for non-game activities."
+  },
+  {
+    "id": "heinz-cfb",
+    "slug": "acrisure-stadium-cfb",
+    "name": "Acrisure Stadium (Pitt)",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "country": "USA",
+    "leagues": [
+      "CFB"
+    ],
+    "teams": [
+      "Pittsburgh Panthers"
+    ],
+    "capacity": 68400,
+    "opened": 2001,
+    "hero_url": "https://a.espncdn.com/i/venues/college-football/day/interior/3752.jpg",
+    "lat": 40.4468,
+    "lng": -80.0158,
+    "snapback_score": 7.97,
+    "description": "One of only a handful of CFB programs that plays in a professional NFL stadium. Pitt fans get access to Acrisure's premium amenities at college prices and the three-river view from the north stands is spectacular at any time of year."
+  }
+]

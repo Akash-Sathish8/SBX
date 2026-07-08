@@ -214,16 +214,6 @@ function GameContent({ g, intel, marches, detail }: { g: Game; intel: any; march
         </div></section>
       ) : null}
 
-      {/* BUILD MATCH GUIDE CTA → dedicated builder flow */}
-      {!g.tbd ? (
-        <section className="block tint py-[clamp(34px,5vw,52px)] bg-[#f7f6f2]"><div className="container max-w-[1180px] mx-auto px-[28px]">
-          <div className="eyebrow inline-flex items-center gap-[9px] font-extrabold text-[12.5px] tracking-[1.2px] uppercase text-black mb-[11px]">Make it yours</div>
-          <h2 className="shead font-display text-[clamp(28px,3.6vw,40px)] text-[#222] tracking-[0.5px] mb-[20px] [&:has(+.ssub)]:mb-[7px]">Your match guide</h2>
-          <div className="ssub text-[#6b6b6b] font-semibold text-[14px] uppercase tracking-[0.5px] m-0 mb-[22px]">A shareable card of your matchday plan</div>
-          <Link to="/build" search={{ game: g.id, mode: 'matchup' }} className="guidecta inline-block mt-[24px] font-display uppercase tracking-[0.6px] text-[15px] text-ink bg-brand-yellow rounded-[8px] px-[20px] py-[13px] shadow-[0_8px_22px_rgba(0,0,0,0.1)] hover:[filter:brightness(0.96)]">Build Match Guide →</Link>
-        </div></section>
-      ) : null}
-
       {/* CTA */}
       <section className="block endband py-[clamp(34px,5vw,52px)] bg-[#222]"><div className="container max-w-[1180px] mx-auto px-[28px] text-center">
         <Link to="/venue/$id" params={{ id: g.venue }} className="guidecta lg inline-block mt-0 font-display uppercase tracking-[0.6px] text-[16px] text-ink bg-brand-yellow rounded-[8px] px-[24px] py-[15px] shadow-[0_10px_26px_rgba(0,0,0,0.35)] hover:[filter:brightness(0.96)]">Plan the full matchday at {g.venueName} →</Link>

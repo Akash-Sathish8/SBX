@@ -11,10 +11,16 @@ import { useMatchScores } from '../lib/hooks'
 import { venueQueryOptions, sanitizeId } from '../lib/queries'
 import { venueMeta, VENUE_COORDS, NATION_FLAG } from '../lib/venues-meta'
 import { cap, splitSentences, dateChip, byDistance, isInside } from '../lib/utils'
-import type { Venue } from '../lib/data-types'
+import type { Venue, SportsVenue, LiveGame, Review } from '../lib/data-types'
 import { fetchVenueWeather } from '../lib/weather'
 import { absUrl, socialMeta } from '../lib/site'
 import { warmImage } from '../lib/dataCache'
+import VENUES_DATA from '../../data/venues.json'
+import EXPERIENCES_DATA from '../../data/experiences.json'
+import type { Experience } from '../lib/data-types'
+
+const FG_VENUES = VENUES_DATA as SportsVenue[]
+const FG_EXPERIENCES = EXPERIENCES_DATA as Experience[]
 
 export const Route = createFileRoute('/venue_/$id')({
   // Per-venue SEO metadata, rendered server-side from the bundled venue index.
@@ -38,9 +44,183 @@ export const Route = createFileRoute('/venue_/$id')({
   component: VenuePage,
 })
 
+// ---- Field Guide venue page (new multi-sport venues from data/venues.json) ----
+
+function FieldGuideVenuePage({ venue: v }: { venue: SportsVenue }) {
+  const experiences = FG_EXPERIENCES.filter(e => e.venue_id === v.id)
+
+  const { data: venueStats } = useQuery<{ avg_fans: number; avg_food: number; avg_unique: number; avg_stadium: number; count: number }>({
+    queryKey: ['venue-stats', v.id],
+    queryFn: () => fetch(`/api/venue-stats?venue_id=${v.id}`).then(r => r.json()),
+    staleTime: 5 * 60_000,
+  })
+
+  const { data: reviews = [] } = useQuery<Review[]>({
+    queryKey: ['venue-reviews', v.id],
+    queryFn: () => fetch(`/api/reviews?venue_id=${v.id}&limit=10`).then(r => r.json()),
+    staleTime: 2 * 60_000,
+  })
+
+  const { data: recentGames = [] } = useQuery<LiveGame[]>({
+    queryKey: ['venue-games', v.id],
+    queryFn: () => fetch(`/api/games?venue_id=${v.id}&limit=20`).then(r => r.json()),
+    staleTime: 5 * 60_000,
+  })
+
+  return (
+    <>
+      <SiteNav active="venues" />
+
+      {/* Hero */}
+      <section className="grid-overlay bg-[#222] text-white pt-[44px] pb-[38px] relative overflow-hidden">
+        {v.hero_url && (
+          <div className="absolute inset-0 after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(to_right,rgba(0,0,0,.85),rgba(0,0,0,.4))]">
+            <img src={v.hero_url} alt={v.name} className="w-full h-full object-cover object-center" />
+          </div>
+        )}
+        <div className="container relative z-[1] max-w-[1180px] mx-auto px-[28px]">
+          <Link to="/venues" className="inline-flex items-center gap-[6px] text-[#cfcfcf] font-bold text-[13px] uppercase tracking-[0.5px] mb-[14px] hover:text-brand-yellow [transition:color_.1s]">← Venues</Link>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {v.leagues?.map(l => (
+              <span key={l} className="text-[11px] font-bold uppercase tracking-[0.5px] text-ink bg-brand-yellow px-2 py-1 rounded">{l}</span>
+            ))}
+          </div>
+          <h1 className="font-display uppercase text-white tracking-[1px] leading-none text-[clamp(36px,5.5vw,72px)] mb-3">{v.name}</h1>
+          <p className="text-[#d6d6d6] text-[16px]">{v.city}, {v.state}{v.capacity > 0 ? ` · Cap. ${v.capacity.toLocaleString()}` : ''}{v.opened > 0 ? ` · Est. ${v.opened}` : ''}</p>
+
+          <div className="flex gap-6 mt-6">
+            {v.snapback_score > 0 && (
+              <div>
+                <div className="font-display text-[40px] text-brand-yellow leading-none">{v.snapback_score.toFixed(1)}</div>
+                <div className="font-body text-[11px] text-[#999] uppercase tracking-[0.5px]">Snapback Score</div>
+              </div>
+            )}
+            {venueStats && venueStats.count > 0 && (
+              <div>
+                <div className="font-display text-[40px] text-white leading-none">{((venueStats.avg_fans + venueStats.avg_food + venueStats.avg_unique + venueStats.avg_stadium) / 4).toFixed(1)}</div>
+                <div className="font-body text-[11px] text-[#999] uppercase tracking-[0.5px]">Fan Score ({venueStats.count})</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-[46px] bg-[#f4f4f4]">
+        <div className="container max-w-[1180px] mx-auto px-[28px]">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+            {/* Main column */}
+            <div className="lg:col-span-2">
+              {v.description && (
+                <div className="mb-8">
+                  <h2 className="font-display text-[20px] uppercase tracking-[1px] mb-3">About</h2>
+                  <p className="font-body text-[16px] text-[#444] leading-[1.7]">{v.description}</p>
+                </div>
+              )}
+
+              {/* Experiences at this venue */}
+              {experiences.length > 0 && (
+                <div className="mb-8">
+                  <h2 className="font-display text-[20px] uppercase tracking-[1px] mb-4">Experiences here</h2>
+                  <div className="flex flex-col gap-3">
+                    {experiences.map(exp => (
+                      <div key={exp.id} className="bg-white border-[3px] border-[#222] shadow-[4px_4px_0_#222] rounded-[8px] p-4 flex items-center gap-4">
+                        <div className="flex-1">
+                          <div className="font-display text-[16px] uppercase tracking-[0.5px]">{exp.exp_name}</div>
+                          <div className="font-body text-[12px] text-[#666]">{exp.league} · #{exp.rank} ranked</div>
+                          {exp.review_body && <p className="font-body text-[13px] text-[#555] mt-2 leading-[1.5] italic">"{exp.review_body.slice(0, 120)}..."</p>}
+                        </div>
+                        <div className="text-right shrink-0">
+                          <div className="font-display text-[32px] text-brand-yellow">{exp.final.toFixed(1)}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Fan reviews */}
+              <div className="mb-8">
+                <h2 className="font-display text-[20px] uppercase tracking-[1px] mb-4">Fan Reviews</h2>
+                {reviews.length === 0 ? (
+                  <div className="text-[#999] font-body text-[14px]">No reviews yet. <Link to="/profile" className="text-brand-yellow font-bold no-underline">Sign in to leave one →</Link></div>
+                ) : (
+                  <div className="flex flex-col gap-3">
+                    {reviews.map(r => (
+                      <div key={r.id} className="bg-white border-[3px] border-[#222] shadow-[4px_4px_0_#222] rounded-[8px] p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-body font-bold text-[14px]">{r.display_name ?? r.username ?? 'Fan'}</span>
+                          <span className="font-display text-[22px]">{r.rating}<span className="font-body text-[12px] text-[#999]">/10</span></span>
+                        </div>
+                        {r.body && <p className="font-body text-[14px] text-[#444] leading-[1.6]">{r.body}</p>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <div>
+              {/* Recent games */}
+              {recentGames.length > 0 && (
+                <div className="mb-8">
+                  <h2 className="font-display text-[18px] uppercase tracking-[1px] mb-4">Recent Games</h2>
+                  <div className="flex flex-col gap-2">
+                    {recentGames.slice(0, 10).map(g => (
+                      <Link key={g.id} to="/game/$id" params={{ id: g.id }} className="no-underline bg-white border-[2px] border-[#222] shadow-[3px_3px_0_#222] rounded-[6px] p-3 flex items-center justify-between hover:shadow-[4px_4px_0_#f7df02] [transition:box-shadow_.1s]">
+                        <div>
+                          <div className="font-body font-bold text-[13px] text-ink">{g.shortName}</div>
+                          <div className="font-body text-[11px] text-[#666]">{new Date(g.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                        </div>
+                        {(g.isLive || g.isFinal) && (
+                          <div className="font-display text-[16px]">{g.away.score}–{g.home.score}</div>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Quick stats */}
+              <div className="bg-ink text-white rounded-[8px] p-5">
+                <div className="font-display text-[16px] uppercase tracking-[1px] mb-4 text-brand-yellow">Venue Info</div>
+                {[
+                  v.capacity > 0 && { label: 'Capacity', value: v.capacity.toLocaleString() },
+                  v.opened > 0 && { label: 'Opened', value: String(v.opened) },
+                  v.teams?.length > 0 && { label: 'Teams', value: v.teams.join(', ') },
+                  { label: 'Location', value: `${v.city}, ${v.state}` },
+                ].filter(Boolean).map((s: any) => (
+                  <div key={s.label} className="flex justify-between py-2 border-b border-[#333] last:border-0">
+                    <span className="font-body text-[12px] text-[#999] uppercase tracking-[0.5px]">{s.label}</span>
+                    <span className="font-body text-[13px] text-white font-bold">{s.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="bg-black text-[#888] py-[40px] text-[13px]">
+        <div className="container max-w-[1180px] mx-auto px-[28px]">
+          © 2025 Snapback Sports — Field Guide. <Link to="/venues" className="text-brand-yellow font-bold">← All venues</Link>
+        </div>
+      </footer>
+    </>
+  )
+}
+
+// ---- WC2026 venue page (existing) ----
+
 function VenuePage() {
   const { id: rawId } = Route.useParams()
   const id = sanitizeId(rawId)
+
+  // Check if this is a Field Guide venue (from bundled data/venues.json)
+  const fgVenue = FG_VENUES.find(v => v.id === id || v.slug === id)
+  if (fgVenue) return <FieldGuideVenuePage venue={fgVenue} />
+
   // The stadium hero filename is the id for every venue, so kick off the photo
   // download immediately, in parallel with the JSON query.
   useEffect(() => { if (id) warmImage('/img/stadiums/' + id + '.jpg') }, [id])

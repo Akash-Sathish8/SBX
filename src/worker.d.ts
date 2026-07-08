@@ -18,11 +18,36 @@ interface RequestInit {
   cf?: { cacheEverything?: boolean; cacheTtl?: number } & Record<string, unknown>
 }
 
+// Minimal D1 globals used by src/lib/server/db.ts.
+// We inline only what we need rather than pulling in the full workers-types
+// globals (which conflict with lib.dom — see comment above).
+declare interface D1Result<T = Record<string, unknown>> {
+  results: T[]
+  success: boolean
+  meta: Record<string, unknown>
+}
+
+declare interface D1PreparedStatement {
+  bind(...values: unknown[]): D1PreparedStatement
+  first<T = Record<string, unknown>>(colName?: string): Promise<T | null>
+  run<T = Record<string, unknown>>(): Promise<D1Result<T>>
+  all<T = Record<string, unknown>>(): Promise<D1Result<T>>
+  raw<T = unknown[]>(): Promise<T[]>
+}
+
+declare interface D1Database {
+  prepare(query: string): D1PreparedStatement
+  batch<T = Record<string, unknown>>(statements: D1PreparedStatement[]): Promise<D1Result<T>[]>
+  exec(query: string): Promise<D1Result>
+  dump(): Promise<ArrayBuffer>
+}
+
 declare module 'cloudflare:workers' {
   // Bindings from wrangler.jsonc. KV is optional so non-Worker contexts
   // (vitest / Node) typecheck against kv.ts's in-memory fallback.
   export const env: {
     KV?: import('@cloudflare/workers-types').KVNamespace
     TILES?: import('@cloudflare/workers-types').R2Bucket
+    DB?: D1Database
   } & Record<string, unknown>
 }

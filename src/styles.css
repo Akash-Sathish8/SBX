@@ -7,9 +7,7 @@
    (theme + preflight + utilities). Preflight is the single global reset. The few
    irreducible primitives (a couple of @utility for repeated pseudo patterns, the
    marketing @keyframes, and the --notch clip var) live here too — there are no
-   per-page salvage stylesheets anymore. (casey-tracker.css stays separate: it's
-   linked only on the casey routes and carries casey-only fonts + JS-injected map
-   marker CSS that shouldn't ship on the marketing pages.)
+   per-page salvage stylesheets anymore.
    =========================================================================== */
 
 /* Self-hosted global fonts (Anton: display/headlines; Barlow: body, 400–800).
@@ -31,37 +29,12 @@
   --color-brand-yellow: #f7df02;
   --color-brand-yellow-dim: #e0c400;
 
-  /* Casey tracker — SBX light re-skin (moved here from casey-tracker.css).
-     Names keep their semantic roles; values are the light-flipped surfaces. */
-  --color-snap-yellow: #f7df02;
-  --color-snap-yellowDim: #e0c400;
-  --color-snap-black: #ffffff;
-  --color-snap-coal: #fafaf8;
-  --color-snap-carbon: #f2f2ee;
-  --color-snap-smoke: #ecece6;
-  --color-snap-ash: #e2e2da;
-  --color-snap-fog: #7a7a7a;
-  --color-snap-mist: #6a6a6a;
-  --color-snap-chalk: #141414;
-  --color-live: #e5202b;
-  --color-flight: #b89500;
-  --color-upcoming: #c9c9c0;
-  --color-done: #e2e2da;
-
   /* Type system. */
   --font-display: 'Anton', 'Oswald', Impact, sans-serif;
   --font-body: 'Barlow', system-ui, sans-serif;
   --font-mono: 'Barlow', system-ui, sans-serif;
 
-  /* Animations (keyframes live in casey-tracker.css). Registering them here makes
-     `animate-pulse-live`, `animate-hero-swap`, … real generated utilities — the v4
-     idiomatic form, so casey JSX uses them like any other utility (no hand-written
-     `.animate-*` class needed). */
-  --animate-pulse-live: pulse-live 1.5s ease-in-out infinite;
-  --animate-pulse-flight: pulse-flight 2s ease-in-out infinite;
-  --animate-hero-swap: hero-swap 480ms cubic-bezier(0.2, 0.9, 0.2, 1);
-  --animate-detail-reveal: detail-reveal 200ms ease-out;
-  /* marketing-page animations (keyframes defined below) */
+  /* Page animations */
   --animate-drop: drop 0.55s cubic-bezier(0.5, 0, 0.75, 0) forwards;
   --animate-marquee: venue-scroll 70s linear infinite;
 }
@@ -73,7 +46,7 @@
    utilities in the JSX.
    =========================================================================== */
 
-/* marketing keyframes (the casey ones live in casey-tracker.css). */
+/* Page keyframes */
 @keyframes drop { to { opacity: 1; transform: none; } }
 @keyframes venue-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -158,8 +131,3 @@ a { text-decoration: none; }
 /* Never let any element force a horizontal scroll / zoom-out on phones. */
 html, body { max-width: 100%; overflow-x: clip; }
 
-@supports (padding: max(0px)) {
-  .casey-shell [data-map-overlay='bottom'] {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-}

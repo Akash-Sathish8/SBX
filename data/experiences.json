@@ -1,0 +1,3162 @@
+[
+  {
+    "id": "wrigley-cubs",
+    "venue_id": "16",
+    "venue_name": "Wrigley Field",
+    "exp_name": "Chicago Cubs",
+    "league": "MLB",
+    "team": "CHC",
+    "rank": 1,
+    "fans": 9.4,
+    "food": 9.2,
+    "unique": 9.9,
+    "stadium": 9.7,
+    "final": 9.55,
+    "review_body": "Arguably the best stadium in sports. Iconic ivy, historic feel and not a bad seat in the house, with a party atmosphere in the bleachers. The Shake Shack burger and fries are some of the best stadium food we have had, and we caught a walk-off comeback here.",
+    "tips": [
+      [
+        "best-seats",
+        "There is not a bad seat in the house, but the outfield bleachers are a party in their own right with beer snakes and cup snakes."
+      ],
+      [
+        "food",
+        "The Shake Shack burger and fries under the center field bleachers are among the best stadium food anywhere. The Greek fries come in a Cubs helmet you keep if you finish it."
+      ],
+      [
+        "atmosphere",
+        "The classic brick, ivy and the nearly 100-year-old manually operated scoreboard give it a magical, historic feel even after renovations."
+      ],
+      [
+        "before",
+        "Wrigleyville has tons of pregame options. Sluggers is a great spot with batting cages, bar food and games."
+      ],
+      [
+        "tips",
+        "Make sure you check out the Small Cheval under the center field bleachers, it is one of the best things there."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/16.jpg"
+  },
+  {
+    "id": "lavell-edwards-holy-war",
+    "venue_id": "3801",
+    "venue_name": "LaVell Edwards Stadium",
+    "exp_name": "BYU Holy War",
+    "league": "CFB",
+    "team": "BYU",
+    "rank": 2,
+    "fans": 9.4,
+    "food": 8.0,
+    "unique": 9.5,
+    "stadium": 8.8,
+    "final": 9.0,
+    "review_body": "Took the number one spot on our scale. The fans and atmosphere reached the nines, Provo blew us away as a town, the mountain backdrop is a cheat code, and the Holy War rivalry energy was out of control. An unforgettable student-section experience.",
+    "tips": [
+      [
+        "atmosphere",
+        "One of the loudest stadiums we have been in, and it stays loud consistently from start to finish. The student section is electric."
+      ],
+      [
+        "food",
+        "Get the Cougar Tail, an 18-inch maple or blueberry donut. This is a sober crowd, so the famous local move is energy drinks and soda."
+      ],
+      [
+        "best-seats",
+        "Stunning backdrop with the mountains behind the stadium. The royal-blue uniforms pop and there is not a bad seat."
+      ],
+      [
+        "before",
+        "Provo surprised us, a much better town than expected. True Religion is a great breakfast spot."
+      ],
+      [
+        "tips",
+        "This is the Holy War rivalry with Utah, church versus state, and it is genuinely bloodthirsty and underrated."
+      ]
+    ],
+    "image": "/img/exp/lavell-edwards-stadium.jpg"
+  },
+  {
+    "id": "lambeau-packers",
+    "venue_id": "lambeau-nfl",
+    "venue_name": "Lambeau Field",
+    "exp_name": "Green Bay Packers",
+    "league": "NFL",
+    "team": "GB",
+    "rank": 3,
+    "fans": 9.6,
+    "food": 8.2,
+    "unique": 9.8,
+    "stadium": 8.9,
+    "final": 9.22,
+    "review_body": "The most storied venue in NFL history. Frozen tundra games are a bucket-list must, the Lambeau Leap tradition delivers every time, and the entire city shuts down on game day. No corporate seats here \u2014 just die-hard Packer faithful who have waited decades for their season tickets.",
+    "tips": [
+      [
+        "atmosphere",
+        "Every seat in the house is owned by a fan, not a corporation. The roar on a third down at Lambeau is unlike anything in the NFL."
+      ],
+      [
+        "food",
+        "Get a bratwurst from the tailgate lots before heading in. In-stadium options are solid but the real experience is outside."
+      ],
+      [
+        "before",
+        "The entire city of Green Bay is one giant tailgate. Residents rent their yards and driveways; park in one and you will be invited to eat."
+      ],
+      [
+        "tips",
+        "For a winter game, dress in layers you can peel. The cold is part of the experience but hypothermia is not."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3798.jpg"
+  },
+  {
+    "id": "michigan-stadium-big-house",
+    "venue_id": "mich-stadium-cfb",
+    "venue_name": "Michigan Stadium",
+    "exp_name": "Michigan Wolverines \u2014 The Big House",
+    "league": "CFB",
+    "team": "MICH",
+    "rank": 4,
+    "fans": 9.2,
+    "food": 7.8,
+    "unique": 9.6,
+    "stadium": 9.3,
+    "final": 9.05,
+    "review_body": "Over 100,000 fans every Saturday in the largest stadium in the Western Hemisphere. The tunnel walk, the maize-and-blue sea, and the roar at kickoff are unlike any sporting experience on earth. Ann Arbor is a near-perfect college town with incredible pregame energy.",
+    "tips": [
+      [
+        "atmosphere",
+        "Over 107,000 fans make this the loudest stadium by sheer volume in the sport. Get there early to feel the wave build."
+      ],
+      [
+        "food",
+        "Hot dogs and classic concessions \u2014 the experience is the draw, not the food. Load up in Ann Arbor before heading in."
+      ],
+      [
+        "before",
+        "Ann Arbor's Main Street and the neighborhoods surrounding the Big House are electric on game day."
+      ],
+      [
+        "tips",
+        "Wear maize and blue or you will stand out. Visiting fan sections are a brave choice."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3558.jpg"
+  },
+  {
+    "id": "arrowhead-chiefs",
+    "venue_id": "arrowhead-nfl",
+    "venue_name": "Arrowhead Stadium",
+    "exp_name": "Kansas City Chiefs",
+    "league": "NFL",
+    "team": "KC",
+    "rank": 5,
+    "fans": 9.7,
+    "food": 8.5,
+    "unique": 8.8,
+    "stadium": 8.7,
+    "final": 8.98,
+    "review_body": "The loudest stadium in the NFL by Guinness World Record standards. Chiefs fans bring it every single snap, and the tailgate scene in the massive parking lots is the best in the AFC. Home playoff games here are a religious experience.",
+    "tips": [
+      [
+        "atmosphere",
+        "World-record-loud on third downs. The crowd noise forces false starts and the energy never lets up."
+      ],
+      [
+        "food",
+        "Get the burnt ends from the tailgate vendors in the lots. In-stadium BBQ options are legitimate."
+      ],
+      [
+        "before",
+        "The lots open four hours before kickoff and are worth the full experience. Bring a grill or find one."
+      ],
+      [
+        "tips",
+        "Playoff games here are transcendent. If the Chiefs host in January, get tickets at any price."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3622.jpg"
+  },
+  {
+    "id": "td-garden-celtics",
+    "venue_id": "td-garden-nba",
+    "venue_name": "TD Garden",
+    "exp_name": "Boston Celtics",
+    "league": "NBA",
+    "team": "BOS",
+    "rank": 6,
+    "fans": 9.5,
+    "food": 8.3,
+    "unique": 8.9,
+    "stadium": 8.5,
+    "final": 8.86,
+    "review_body": "The most winning franchise in NBA history packed into a sardine-can arena that absolutely rocks. Banner-stacked rafters, a parquet floor you can stare at for hours, and Boston fans who know every player on the opposing roster. Playoff nights here are absolute madness.",
+    "tips": [
+      [
+        "atmosphere",
+        "Playoff TD Garden is the loudest NBA building in the country. The crowd is basketball-smart and merciless on visitors."
+      ],
+      [
+        "food",
+        "Lobster rolls pop up as a game-day special. Standard arena food but in Boston everything comes with a side of attitude."
+      ],
+      [
+        "before",
+        "The North End is walking distance \u2014 eat at a red-sauce Italian joint before the game."
+      ],
+      [
+        "tips",
+        "Sit in the upper deck behind the basket for the best value and surprisingly great sightlines."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1824.jpg"
+  },
+  {
+    "id": "neyland-tennessee",
+    "venue_id": "3853",
+    "venue_name": "Neyland Stadium",
+    "exp_name": "Tennessee Volunteers Football",
+    "league": "CFB",
+    "team": "TENN",
+    "rank": 7,
+    "fans": 9.5,
+    "food": 9.0,
+    "unique": 9.3,
+    "stadium": 8.8,
+    "final": 9.18,
+    "review_body": "A checkerboard night game at Neyland is one of the best environments in college football, with the loudest stadium moment we have ever heard. The club-level food was among the best we have had. The concourse gets clustered and post-game Ubers are nearly impossible.",
+    "tips": [
+      [
+        "atmosphere",
+        "A checkerboard night game with Rocky Top is one of the greatest atmospheres in college football. The first defensive third down was the loudest stadium moment we have ever heard across 200-plus stadiums."
+      ],
+      [
+        "food",
+        "The club-level brisket grilled cheese, New England lobster roll and Tennessee mac and cheese were some of the best stadium food we have ever had."
+      ],
+      [
+        "best-seats",
+        "There is not a bad seat in the house except one famous obstructed seat you have to peek around."
+      ],
+      [
+        "getting-there",
+        "Getting an Uber after the game is nearly impossible and took over two hours, so plan your ride home in advance."
+      ],
+      [
+        "tips",
+        "Tour the campus landmarks like the Rock and Ayres Hall, and the Vol Navy fans tailgate on boats on the river."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3853.jpg"
+  },
+  {
+    "id": "msg-knicks",
+    "venue_id": "msg-nba",
+    "venue_name": "Madison Square Garden",
+    "exp_name": "New York Knicks",
+    "league": "NBA",
+    "team": "NYK",
+    "rank": 8,
+    "fans": 9.3,
+    "food": 8.4,
+    "unique": 9.6,
+    "stadium": 8.6,
+    "final": 9.02,
+    "review_body": "The World's Most Famous Arena earns the title. Knicks playoff basketball in MSG is a cultural event, not just a game. The noise is deafening, the celebrities are courtside, and the history presses in from all angles. Even in a rebuilding year this building delivers.",
+    "tips": [
+      [
+        "atmosphere",
+        "Playoff MSG is as loud as anything in professional sports. The building shakes on big moments."
+      ],
+      [
+        "food",
+        "The Halal Guys cart outside beats most of what is inside. In-arena food is overpriced but there are decent options on every level."
+      ],
+      [
+        "before",
+        "Penn Station and the surrounding Midtown bars are the move. The Garden District bar is a classic pregame spot."
+      ],
+      [
+        "tips",
+        "Upper bowl tickets are still a great experience and significantly cheaper. The sightlines are steep but clear."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1830.jpg"
+  },
+  {
+    "id": "camp-randall-wisconsin",
+    "venue_id": "347",
+    "venue_name": "Camp Randall Stadium",
+    "exp_name": "Wisconsin Badgers Football",
+    "league": "CFB",
+    "team": "WIS",
+    "rank": 9,
+    "fans": 9.3,
+    "food": 7.5,
+    "unique": 9.0,
+    "stadium": 8.5,
+    "final": 8.66,
+    "review_body": "Landed as their number one college football experience and top five all time. Madison is arguably the best college town in America, the campus is gorgeous, and Jump Around is special. The only thing missing was a winning football team.",
+    "tips": [
+      [
+        "atmosphere",
+        "One of the best atmospheres they have seen. Jump Around between the third and fourth quarter makes the place bounce."
+      ],
+      [
+        "food",
+        "The club section food was a tad underwhelming \u2014 no cheese curds. Get the brats from regular concessions."
+      ],
+      [
+        "before",
+        "Madison is one of the best college towns in the country. State Street has pizza shops, ice cream, and live music right up to the capitol."
+      ],
+      [
+        "tips",
+        "Big game weekends can pair a Friday night basketball game at the Kohl Center with Saturday football."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/347.jpg"
+  },
+  {
+    "id": "ohio-stadium-buckeyes",
+    "venue_id": "3861",
+    "venue_name": "Ohio Stadium",
+    "exp_name": "Ohio State Buckeyes",
+    "league": "CFB",
+    "team": "OSU",
+    "rank": 10,
+    "fans": 9.0,
+    "food": 7.2,
+    "unique": 9.0,
+    "stadium": 9.5,
+    "final": 8.77,
+    "review_body": "The Shoe earns its reputation. The Tennessee CFP home game was the loudest the building has ever been. The Michigan rivalry game suffered from a flat noon-kickoff crowd. A beautiful stadium that comes alive for the biggest games.",
+    "tips": [
+      [
+        "best-seats",
+        "Ohio Stadium, the Shoe, is one of the most beautiful stadiums in college football. A split crowd right down the middle of the end zones is part of what makes the playoff games here pop."
+      ],
+      [
+        "atmosphere",
+        "For the CFP home game against Tennessee it was the loudest the crowd has ever been here, even with a near 50/50 Vol takeover."
+      ],
+      [
+        "food",
+        "Collect the free towels they hand out. Standard stadium concessions otherwise."
+      ],
+      [
+        "before",
+        "Campus and the stadium are both beautiful. In Columbus, the Short North has bar after bar packed on game day."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3861.jpg"
+  },
+  {
+    "id": "beaver-stadium-penn-state",
+    "venue_id": "pennst-cfb",
+    "venue_name": "Beaver Stadium",
+    "exp_name": "Penn State Nittany Lions \u2014 Whiteout",
+    "league": "CFB",
+    "team": "PSU",
+    "rank": 11,
+    "fans": 9.4,
+    "food": 7.5,
+    "unique": 8.8,
+    "stadium": 9.0,
+    "final": 8.77,
+    "review_body": "Whiteout games at Beaver Stadium are among the most visually stunning and aurally devastating experiences in college football. Over 106,000 fans dressed head to toe in white with the Blue Band roaring is a sight that does not compute until you are inside it.",
+    "tips": [
+      [
+        "atmosphere",
+        "A whiteout game is a bucket-list CFB experience. The crowd noise on third downs is ferocious."
+      ],
+      [
+        "food",
+        "Get the Peachy Paterno ice cream before or after the game \u2014 it is a Happy Valley institution."
+      ],
+      [
+        "before",
+        "State College is a classic college town. The Corner Room diner and the Creamery are both mandatory stops."
+      ],
+      [
+        "tips",
+        "Wear white even if you are not a Penn State fan \u2014 it adds to the experience and the crowd will appreciate it."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3632.jpg"
+  },
+  {
+    "id": "allen-fieldhouse-kansas",
+    "venue_id": "allen-cbb",
+    "venue_name": "Allen Fieldhouse",
+    "exp_name": "Kansas Jayhawks Basketball",
+    "league": "CBB",
+    "team": "KU",
+    "rank": 12,
+    "fans": 9.5,
+    "food": 7.5,
+    "unique": 9.3,
+    "stadium": 8.5,
+    "final": 8.8,
+    "review_body": "The most storied arena in college basketball. Allen Fieldhouse has produced Wilt Chamberlain, Danny Manning, Paul Pierce and too many others to list. The building creaks, it sweats, it shakes on big nights, and Kansas fans treat basketball the way Alabamians treat football.",
+    "tips": [
+      [
+        "atmosphere",
+        "The Phog is so loud the floor vibrates. Standing on the hardwood during warmups if you can access it is a life event."
+      ],
+      [
+        "food",
+        "Wheat State Golden Ale from Free State Brewing is the local craft pick \u2014 grab one on Mass Street before heading to the game."
+      ],
+      [
+        "before",
+        "Massachusetts Street in Lawrence is a top-five college bar district in America. Get dinner on Mass Street."
+      ],
+      [
+        "tips",
+        "Rock Chalk Jayhawk chant is the best in college sports. Learn it, join in."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/2171.jpg"
+  },
+  {
+    "id": "rose-bowl-cfp-2025",
+    "venue_id": "1056",
+    "venue_name": "Rose Bowl",
+    "exp_name": "2025 Rose Bowl (Ohio State vs. Oregon)",
+    "league": "CFB",
+    "team": null,
+    "rank": 13,
+    "fans": 9.0,
+    "food": 9.3,
+    "unique": 9.5,
+    "stadium": 9.2,
+    "final": 9.2,
+    "review_body": "The granddaddy of them all earned the top score of the entire CFP tour. The golf-course tailgates, the single-bowl design with no bad seat, the lumpia, and the third-quarter sunset over the hills make it feel like a bucket-list event.",
+    "tips": [
+      [
+        "getting-there",
+        "Parking lots are literally on a golf course, you tailgate on the fairways, which is a unique and great setup."
+      ],
+      [
+        "best-seats",
+        "One continuous bowl with no upper, lower, or 400 levels, so there is genuinely not a bad seat in the house."
+      ],
+      [
+        "food",
+        "Do not miss the lumpia, a Filipino egg roll that was maybe the best stadium food they have eaten in over 100 events."
+      ],
+      [
+        "atmosphere",
+        "Loud for both fan bases with a great split crowd. Games are scheduled so the sun sets behind the hills between the third and fourth quarter."
+      ],
+      [
+        "tips",
+        "The Rose Bowl gear is elite, the merch holds value. Try to catch the New Year's parade in the morning."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/1056.jpg"
+  },
+  {
+    "id": "hard-rock-cfp-natty",
+    "venue_id": "3948",
+    "venue_name": "Hard Rock Stadium",
+    "exp_name": "CFP National Championship at Hard Rock",
+    "league": "CFB",
+    "team": null,
+    "rank": 14,
+    "fans": 9.5,
+    "food": 9.0,
+    "unique": 9.3,
+    "stadium": 8.8,
+    "final": 9.17,
+    "review_body": "Our highest-rated experience. Every category scored over 8.5: a piping-hot Thor's hammer novelty food, unreal gameplay that came down to the final drive, a rare open-air championship stadium and a near 50/50 split crowd that was electric and deafening all night.",
+    "tips": [
+      [
+        "food",
+        "Get Thor's hammer, a novelty meat item that came piping hot and pretty tender for stadium food and fed about 20 people around us."
+      ],
+      [
+        "atmosphere",
+        "No-joke deafening and electric nonstop from both sides, close to a true 50/50 split rather than the corporate crowd you might expect."
+      ],
+      [
+        "best-seats",
+        "This open-air stadium is a real rarity this late in the season since most title games are in cold-weather domes."
+      ],
+      [
+        "before",
+        "The tailgate scene outside is a fun, hyped environment with both fan bases starved for a championship."
+      ],
+      [
+        "tips",
+        "A home national championship is incredibly rare. Getting in and out of the area was quick."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3948.jpg"
+  },
+  {
+    "id": "cameron-indoor-duke",
+    "venue_id": "cameron-cbb",
+    "venue_name": "Cameron Indoor Stadium",
+    "exp_name": "Duke Blue Devils Basketball",
+    "league": "CBB",
+    "team": "DUKE",
+    "rank": 15,
+    "fans": 9.5,
+    "food": 7.0,
+    "unique": 9.5,
+    "stadium": 8.5,
+    "final": 8.75,
+    "review_body": "Cameron Indoor is the most intense small-arena experience in American sports. The Crazies in the stands are so close to the court they can read opposing players' lips. Getting a ticket to a Duke-Carolina game at Cameron is one of the hardest tickets in sports.",
+    "tips": [
+      [
+        "atmosphere",
+        "The Cameron Crazies are the most organized, creative, and loud student section in college sports. They research and personally taunt every opposing player."
+      ],
+      [
+        "food",
+        "Standard arena concessions \u2014 the experience is everything here, not the food."
+      ],
+      [
+        "before",
+        "Krzyzewskiville is a tent city that forms before big rivalry games. Students camp for days."
+      ],
+      [
+        "tips",
+        "The arena holds about 9,000 people in a space designed for 5,000. The intimacy is unmatched."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/1914.jpg"
+  },
+  {
+    "id": "lsu-tiger-stadium",
+    "venue_id": "lsu-cfb",
+    "venue_name": "Tiger Stadium",
+    "exp_name": "LSU Tigers \u2014 Death Valley Night Game",
+    "league": "CFB",
+    "team": "LSU",
+    "rank": 16,
+    "fans": 9.3,
+    "food": 8.8,
+    "unique": 9.0,
+    "stadium": 8.8,
+    "final": 9.0,
+    "review_body": "Death Valley on a Saturday night in Baton Rouge is legitimately one of the most feared environments in college sports. The combination of SEC football, Louisiana food culture inside the stadium, and a full night-game crowd produces something close to chaos in the best possible way.",
+    "tips": [
+      [
+        "atmosphere",
+        "A night game at Death Valley is top-three CFB atmospheres. The noise on third down is ear-splitting."
+      ],
+      [
+        "food",
+        "Tiger Stadium has the best in-stadium Cajun food of any venue: boudin balls, crawfish etouffee po-boys, and jambalaya."
+      ],
+      [
+        "before",
+        "The Parade Grounds tailgate is enormous and covers the entire campus. Geaux Tiger gear is everywhere."
+      ],
+      [
+        "tips",
+        "Wear purple and gold. The student section is a wall of sound from kickoff."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3958.jpg"
+  },
+  {
+    "id": "fenway-red-sox",
+    "venue_id": "fenway-mlb",
+    "venue_name": "Fenway Park",
+    "exp_name": "Boston Red Sox",
+    "league": "MLB",
+    "team": "BOS",
+    "rank": 17,
+    "fans": 9.2,
+    "food": 8.5,
+    "unique": 9.7,
+    "stadium": 9.0,
+    "final": 9.12,
+    "review_body": "The oldest ballpark in America is a marvel. The Green Monster looms over everything, the Pesky Pole is a folk legend, and the Fenway Frank is a genuine institution. Boston baseball fans are the most knowledgeable in the sport and they let you know it.",
+    "tips": [
+      [
+        "atmosphere",
+        "Red Sox fans are intense, smart, and loud. Playoff games here are top-five baseball experiences in America."
+      ],
+      [
+        "food",
+        "Get a Fenway Frank \u2014 it is a steamed hot dog and a genuine icon. The clam chowder is also legitimately good."
+      ],
+      [
+        "best-seats",
+        "Monster seats above the left-field wall are unique and excellent. The right-field roof deck is a party."
+      ],
+      [
+        "tips",
+        "Yawkey Way (Jersey Street) outside the park is a block-long pregame party. Get there 90 minutes early."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/2.jpg"
+  },
+  {
+    "id": "yankee-stadium-world-series",
+    "venue_id": "208",
+    "venue_name": "Yankee Stadium",
+    "exp_name": "Yankees World Series",
+    "league": "MLB",
+    "team": "NYY",
+    "rank": 18,
+    "fans": 9.5,
+    "food": 8.8,
+    "unique": 9.0,
+    "stadium": 8.0,
+    "final": 8.86,
+    "review_body": "An incredible, memorable World Series night and the second highest baseball atmosphere they have scored. Yankee Stadium itself is a fairly run-of-the-mill ballpark, but the history, the crowd, and the gameplay made it a need-to-have experience. If the Yankees ever get back, go.",
+    "tips": [
+      [
+        "getting-there",
+        "The subway is the cheap way in at 2.90 each way to the Bronx. An Uber to the stadium ran 59 dollars."
+      ],
+      [
+        "best-seats",
+        "Lower-level seats near the action delivered an unreal World Series atmosphere with fans on their feet for every at bat."
+      ],
+      [
+        "food",
+        "The Lobel's steak sandwich is freshly carved meat cooked perfect medium rare, highly recommended."
+      ],
+      [
+        "atmosphere",
+        "One of the best baseball atmospheres they have rated. Yankees fans were rowdy early, and when the Dodgers came back their fans were heckling right back."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/208.jpg"
+  },
+  {
+    "id": "oracle-park-giants",
+    "venue_id": "oracle-mlb",
+    "venue_name": "Oracle Park",
+    "exp_name": "San Francisco Giants",
+    "league": "MLB",
+    "team": "SF",
+    "rank": 19,
+    "fans": 8.5,
+    "food": 9.0,
+    "unique": 9.3,
+    "stadium": 9.2,
+    "final": 9.0,
+    "review_body": "The best ballpark view in the major leagues with McCovey Cove behind right field. Splash hits are a real and recurring phenomenon. The food scene inside is legitimately excellent by any standard, and the San Francisco backdrop makes every game feel like a postcard.",
+    "tips": [
+      [
+        "best-seats",
+        "Right-field view seats overlooking the Bay are the most scenic in baseball. Sit on the waterfront side if you can."
+      ],
+      [
+        "food",
+        "Gilroy garlic fries are the signature item \u2014 the smell hits you on the way in. The Crab Sandwich is equally legitimate."
+      ],
+      [
+        "before",
+        "The Embarcadero waterfront before a game is one of the better pregame walks in sports."
+      ],
+      [
+        "tips",
+        "Kayakers wait in McCovey Cove for splash hit home runs. It happens more than you expect."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/43.jpg"
+  },
+  {
+    "id": "bell-centre-habs",
+    "venue_id": "bell-nhl",
+    "venue_name": "Bell Centre",
+    "exp_name": "Montreal Canadiens",
+    "league": "NHL",
+    "team": "MTL",
+    "rank": 20,
+    "fans": 9.5,
+    "food": 8.5,
+    "unique": 9.2,
+    "stadium": 8.8,
+    "final": 9.02,
+    "review_body": "The most successful franchise in NHL history in the most hockey-obsessed market in North America. A Habs playoff game at the Bell Centre is the loudest single sporting experience most North American fans will ever encounter. Montreal is a world-class sports city.",
+    "tips": [
+      [
+        "atmosphere",
+        "The Bell Centre on a playoff night is so loud it is physically overwhelming. Habs fans are the most intense hockey crowd on earth."
+      ],
+      [
+        "food",
+        "Montreal smoked meat sandwich from a venue concession \u2014 they make it right even in the building."
+      ],
+      [
+        "before",
+        "Old Montreal for dinner before a game is one of the best sporting event pregame dinners anywhere."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nhl/day/1809.jpg"
+  },
+  {
+    "id": "little-caesars-pistons-playoff",
+    "venue_id": "5404",
+    "venue_name": "Little Caesars Arena",
+    "exp_name": "Detroit Pistons Playoff Game",
+    "league": "NBA",
+    "team": "DET",
+    "rank": 21,
+    "fans": 9.6,
+    "food": 8.2,
+    "unique": 8.8,
+    "stadium": 8.5,
+    "final": 8.84,
+    "review_body": "One of the best playoff games and atmospheres ever witnessed in person, a back-and-forth thriller between the Pistons and Knicks. Detroit lost on a controversial no-call later admitted to be a foul. The passion of the crowd in their first home playoff game in over 15 years made it special.",
+    "tips": [
+      [
+        "atmosphere",
+        "One of the best basketball environments you will ever be in. The crowd was so loud during the Pistons comeback that ears were ringing for days."
+      ],
+      [
+        "food",
+        "The 313 Grill smash burger is above-average stadium food with caramelized onions, served very hot."
+      ],
+      [
+        "stadium",
+        "Really nice arena with an open-air feel and good views."
+      ],
+      [
+        "tips",
+        "If the Pistons are back in the playoffs and you live near Detroit, highly recommend going."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/5404.jpg"
+  },
+  {
+    "id": "rupp-arena-kentucky",
+    "venue_id": "rupp-cbb",
+    "venue_name": "Rupp Arena",
+    "exp_name": "Kentucky Wildcats Basketball",
+    "league": "CBB",
+    "team": "UK",
+    "rank": 22,
+    "fans": 9.2,
+    "food": 7.5,
+    "unique": 8.8,
+    "stadium": 8.0,
+    "final": 8.46,
+    "review_body": "Kentucky basketball is a religion and Rupp Arena is the cathedral. 23,500 fans in Big Blue Nation create a roar that rattles the entire downtown Lexington complex. A rivalry game against Louisville or Tennessee here is a top-five CBB atmosphere.",
+    "tips": [
+      [
+        "atmosphere",
+        "One of the loudest arenas in college basketball by sheer volume \u2014 23,500 fans in an enclosed space is a weapon."
+      ],
+      [
+        "food",
+        "The Wildcat burger at the concession stand is the local go-to."
+      ],
+      [
+        "before",
+        "Downtown Lexington has excellent bourbon bars within walking distance. The Keeneland horse racing track is nearby."
+      ],
+      [
+        "tips",
+        "The retired numbers hanging from the rafters are the best collection in college basketball \u2014 look up before you sit."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/251.jpg"
+  },
+  {
+    "id": "msg-rangers",
+    "venue_id": "msg-nba",
+    "venue_name": "Madison Square Garden",
+    "exp_name": "New York Rangers",
+    "league": "NHL",
+    "team": "NYR",
+    "rank": 23,
+    "fans": 9.2,
+    "food": 8.2,
+    "unique": 9.4,
+    "stadium": 8.6,
+    "final": 8.92,
+    "review_body": "Rangers playoff hockey at MSG is a uniquely powerful experience. The Garden was literally built for hockey and the echoing din of 20,000 people chanting Let's Go Rangers is one of the signature sounds in professional sports.",
+    "tips": [
+      [
+        "atmosphere",
+        "The Garden echoes differently for hockey than basketball. The sound wraps around and comes from everywhere."
+      ],
+      [
+        "tips",
+        "The cross-town rivalry with the Islanders is legitimately venomous. Both sides know the history deeply."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1830.jpg"
+  },
+  {
+    "id": "scotiabank-arena-leafs",
+    "venue_id": "scotiabank-nhl",
+    "venue_name": "Scotiabank Arena",
+    "exp_name": "Toronto Maple Leafs",
+    "league": "NHL",
+    "team": "TOR",
+    "rank": 24,
+    "fans": 9.3,
+    "food": 8.5,
+    "unique": 8.8,
+    "stadium": 8.8,
+    "final": 8.9,
+    "review_body": "The Maple Leafs may be the most tortured fanbase in professional sports but they show up with unmatched passion regardless. Scotiabank Arena on a playoff night is legitimately one of the loudest buildings in North American professional sports.",
+    "tips": [
+      [
+        "atmosphere",
+        "Leafs fans are the most passionate in the NHL. The roar when they score is primal in a building full of 70 years of heartbreak."
+      ],
+      [
+        "food",
+        "Poutine is widely available in the concourse \u2014 good Canadian food for a hockey game."
+      ],
+      [
+        "before",
+        "Maple Leaf Square outside the arena becomes a massive outdoor watch party for playoff games."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1838.jpg"
+  },
+  {
+    "id": "nebraska-memorial",
+    "venue_id": "3834",
+    "venue_name": "Memorial Stadium (Lincoln, NE)",
+    "exp_name": "Nebraska Football",
+    "league": "CFB",
+    "team": "NEB",
+    "rank": 25,
+    "fans": 9.0,
+    "food": 7.8,
+    "unique": 8.5,
+    "stadium": 8.3,
+    "final": 8.46,
+    "review_body": "A must-see if you are a college football junkie. The fans get it, the stadium packs out and stays loud, and downtown Lincoln surprised us with a great bar and restaurant scene. One of the warmest, most welcoming fan bases we have been around.",
+    "tips": [
+      [
+        "atmosphere",
+        "An 85,000-seat stadium that packs out and stays on its feet even for a 3:30 Michigan State game."
+      ],
+      [
+        "food",
+        "Get the Runza, the German-immigrant ground beef and cabbage sandwich \u2014 heavy on onions, but worth it."
+      ],
+      [
+        "before",
+        "Downtown Lincoln, the Railyard area, has a lot of bars and restaurants."
+      ],
+      [
+        "tips",
+        "Before the game balloons are released after the first score, a unique authentic tradition they had to bring back."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3834.jpg"
+  },
+  {
+    "id": "death-valley-clemson",
+    "venue_id": "clemson-cfb",
+    "venue_name": "Memorial Stadium (Clemson)",
+    "exp_name": "Clemson Tigers \u2014 Running Down the Hill",
+    "league": "CFB",
+    "team": "CLEM",
+    "rank": 26,
+    "fans": 9.0,
+    "food": 7.5,
+    "unique": 9.2,
+    "stadium": 9.0,
+    "final": 8.77,
+    "review_body": "Clemson's Death Valley may be college football's best-kept secret for atmosphere. Running down the Hill with Howard's Rock is one of the most electric pregame traditions in sport. The whole campus transforms on game day.",
+    "tips": [
+      [
+        "atmosphere",
+        "Running down the Hill is the single most electric pregame tradition in college football. The crowd erupts the moment the team steps onto the field."
+      ],
+      [
+        "food",
+        "Standard concessions but the tailgate food outside is excellent. Find the chicken sandwich stands."
+      ],
+      [
+        "before",
+        "The entire Clemson campus is a tailgate on game day. Tiger Town is everywhere."
+      ],
+      [
+        "tips",
+        "Touch Howard's Rock before the team descends \u2014 it is a tradition even visiting fans participate in."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3852.jpg"
+  },
+  {
+    "id": "td-garden-bruins",
+    "venue_id": "td-garden-nba",
+    "venue_name": "TD Garden",
+    "exp_name": "Boston Bruins",
+    "league": "NHL",
+    "team": "BOS",
+    "rank": 27,
+    "fans": 9.3,
+    "food": 8.3,
+    "unique": 8.5,
+    "stadium": 8.5,
+    "final": 8.7,
+    "review_body": "Boston hockey fans are as intense as any in professional sports. The Bruins playoff atmosphere at TD Garden is one of the ten best sporting experiences in America. Gold jersey nights in the Garden are unforgettable.",
+    "tips": [
+      [
+        "atmosphere",
+        "B's fans are relentless. The crowd noise from the first puck drop is at a level that NFL stadiums rarely match."
+      ],
+      [
+        "before",
+        "North End Italian dinner before a Bruins game is the definitive Boston sports evening."
+      ],
+      [
+        "tips",
+        "Get the gold away jersey for playoff games \u2014 the sea of gold in the Garden is electric."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1824.jpg"
+  },
+  {
+    "id": "oklahoma-memorial-cfp",
+    "venue_id": "3835",
+    "venue_name": "Memorial Stadium (Norman, OK)",
+    "exp_name": "Oklahoma Home CFP",
+    "league": "CFB",
+    "team": "OU",
+    "rank": 28,
+    "fans": 8.8,
+    "food": 8.8,
+    "unique": 8.5,
+    "stadium": 8.3,
+    "final": 8.62,
+    "review_body": "A big game in Norman is pound for pound a great college football experience. The stadium was absolutely juiced and rocking with everything a home playoff game should be: the bars, the frats, the entrance, the pregame, the fireworks and elite corn dogs.",
+    "tips": [
+      [
+        "getting-there",
+        "Old stadium that can be pretty difficult to navigate at times, so leave yourself extra time."
+      ],
+      [
+        "before",
+        "They block off the streets near Lloyd's and O'Connell's about four hours before kick and the bars, frats and tailgates are all going."
+      ],
+      [
+        "food",
+        "Get the state fair corn dogs \u2014 they were elite. The beef dog with pulled pork, coleslaw, fried onions and a creamy cheese sauce was immaculate."
+      ],
+      [
+        "atmosphere",
+        "The stadium entrance is one of the better ones you will see, with firework flags, fireworks out of the drum line, the Sooner Schooner and the team running out."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3835.jpg"
+  },
+  {
+    "id": "kinnick-stadium-iowa",
+    "venue_id": "kinnick-cfb",
+    "venue_name": "Kinnick Stadium",
+    "exp_name": "Iowa Hawkeyes \u2014 The Iowa Wave",
+    "league": "CFB",
+    "team": "IOWA",
+    "rank": 29,
+    "fans": 8.5,
+    "food": 7.5,
+    "unique": 9.0,
+    "stadium": 8.5,
+    "final": 8.43,
+    "review_body": "Kinnick's Iowa Wave \u2014 70,000 fans waving to sick children at the University of Iowa Children's Hospital at the end of the first quarter \u2014 is the most heartwarming tradition in American sports. The stadium itself is beautiful and the Hawks faithful are quietly one of the loudest in the Big Ten.",
+    "tips": [
+      [
+        "atmosphere",
+        "The Iowa Wave at the end of the first quarter is the most moving sports tradition in the country. Everyone stops, turns, and waves to the hospital."
+      ],
+      [
+        "food",
+        "Iowa pork tenderloin sandwich is the regional food item worth seeking out."
+      ],
+      [
+        "before",
+        "Iowa City has a great college bar scene on Clinton Street. Wig and Pen Pizza is a must."
+      ],
+      [
+        "tips",
+        "Get there early enough for the Iowa Wave \u2014 do not miss it."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3793.jpg"
+  },
+  {
+    "id": "chase-center-warriors",
+    "venue_id": "chase-nba",
+    "venue_name": "Chase Center",
+    "exp_name": "Golden State Warriors",
+    "league": "NBA",
+    "team": "GSW",
+    "rank": 30,
+    "fans": 8.8,
+    "food": 9.0,
+    "unique": 8.5,
+    "stadium": 9.2,
+    "final": 8.9,
+    "review_body": "Chase Center is one of the most premium NBA experiences in the country. The San Francisco waterfront location, the stunning privately-funded arena, and Warriors fans who have been through multiple championships create an electric combination.",
+    "tips": [
+      [
+        "atmosphere",
+        "The Dubs faithful can match any playoff atmosphere in the league. Thrive City outside the arena is excellent pregame."
+      ],
+      [
+        "food",
+        "The food options at Chase Center are among the best in the NBA \u2014 local SF chefs have contributed to the concession program."
+      ],
+      [
+        "before",
+        "Thrive City outside the arena is one of the best pregame outdoor experiences in professional sports."
+      ],
+      [
+        "tips",
+        "The Mission Bay neighborhood is newly developed and walkable. Worth exploring before or after."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/6270.jpg"
+  },
+  {
+    "id": "sanford-stadium-georgia",
+    "venue_id": "sanford-cfb",
+    "venue_name": "Sanford Stadium",
+    "exp_name": "Georgia Bulldogs Football",
+    "league": "CFB",
+    "team": "UGA",
+    "rank": 31,
+    "fans": 9.0,
+    "food": 8.2,
+    "unique": 8.8,
+    "stadium": 9.0,
+    "final": 8.82,
+    "review_body": "Athens, Georgia is one of the great college towns in America and Sanford Stadium between the hedges is a beautiful, historic venue. Georgia fans bring legitimate noise and the SEC atmosphere is everything you expect between the hedges.",
+    "tips": [
+      [
+        "atmosphere",
+        "Between the Hedges is the most iconic phrase in college football. The hedge-lined field is strikingly beautiful in person."
+      ],
+      [
+        "food",
+        "Athens downtown restaurants before the game are exceptional. The Varsity is a Georgia institution for a quick bite."
+      ],
+      [
+        "before",
+        "Athens has one of the best bar and music scenes of any college town. Go Friday night and stay through Sunday."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3917.jpg"
+  },
+  {
+    "id": "notre-dame-stadium-cfp",
+    "venue_id": "3855",
+    "venue_name": "Notre Dame Stadium",
+    "exp_name": "Notre Dame CFP",
+    "league": "CFB",
+    "team": "ND",
+    "rank": 32,
+    "fans": 8.8,
+    "food": 7.2,
+    "unique": 9.5,
+    "stadium": 9.0,
+    "final": 8.71,
+    "review_body": "The first-ever CFP home game at the Cathedral of college football. The history, the golden dome, the elite bookstore, and the tailgates make it special. The atmosphere was good but not quite the loudest, landing it as a strong but not chart-topping playoff experience.",
+    "tips": [
+      [
+        "best-seats",
+        "The Cathedral of college football. One big classic bowl with the famous golden dome and Touchdown Jesus nearby."
+      ],
+      [
+        "food",
+        "They do not sell booze inside, so know that going in. Standard stadium food otherwise."
+      ],
+      [
+        "before",
+        "Far and away the best bookstore they have seen on the tour \u2014 you can drop serious money there."
+      ],
+      [
+        "tips",
+        "Dress warm, it can snow. South Bend gets genuine playoff cold."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3855.jpg"
+  },
+  {
+    "id": "mercedes-benz-cfp-natty",
+    "venue_id": "5348",
+    "venue_name": "Mercedes-Benz Stadium",
+    "exp_name": "2025 CFP National Championship (ND vs. OSU)",
+    "league": "CFB",
+    "team": null,
+    "rank": 33,
+    "fans": 8.5,
+    "food": 9.0,
+    "unique": 8.5,
+    "stadium": 9.2,
+    "final": 8.77,
+    "review_body": "A well-deserving host for the national championship in a beautiful modern stadium with surprisingly affordable concession prices and enough die-hard fans to feel real anxiety as the game came down to one possession. The brutal in-and-out traffic holds it back.",
+    "tips": [
+      [
+        "best-seats",
+        "A gorgeous modern dome built for big events. Comfortable with a massive retractable roof."
+      ],
+      [
+        "food",
+        "The 40 dollar Barbecue Box (chicken thighs, ribs, apple pie, coleslaw, beans, cornbread) is fire and they only sell about 200 of them. The cornbread was the best stadium food anyone on the crew had ever had."
+      ],
+      [
+        "atmosphere",
+        "Beautiful modern arena and a great host city in Atlanta. The National Championship crowd felt like legit fans."
+      ],
+      [
+        "tips",
+        "Concession prices are very affordable here compared to most stadiums."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/interior/5348.jpg"
+  },
+  {
+    "id": "acrisure-steelers",
+    "venue_id": "acrisure-nfl",
+    "venue_name": "Acrisure Stadium",
+    "exp_name": "Pittsburgh Steelers",
+    "league": "NFL",
+    "team": "PIT",
+    "rank": 34,
+    "fans": 9.0,
+    "food": 8.5,
+    "unique": 8.8,
+    "stadium": 9.0,
+    "final": 8.85,
+    "review_body": "One of the great NFL venues. The Steelers fan base is the most geographically dispersed in football \u2014 you will find Terrible Towels in every visiting stadium in the league. Acrisure's view of the Pittsburgh rivers and skyline is the best stadium view in the NFL.",
+    "tips": [
+      [
+        "best-seats",
+        "The three-river view from the north stands at sunset is the best stadium panorama in American professional sports."
+      ],
+      [
+        "food",
+        "Primanti Brothers sandwich inside is the Pittsburgh tradition \u2014 a sandwich with coleslaw and fries piled on top."
+      ],
+      [
+        "atmosphere",
+        "The Terrible Towel wave is an NFL icon. Whatever your allegiance, be ready to participate \u2014 it is contagious."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3752.jpg"
+  },
+  {
+    "id": "alabama-bds",
+    "venue_id": "3657",
+    "venue_name": "Bryant-Denny Stadium",
+    "exp_name": "Alabama Crimson Tide Football",
+    "league": "CFB",
+    "team": "ALA",
+    "rank": 35,
+    "fans": 9.2,
+    "food": 6.5,
+    "unique": 8.8,
+    "stadium": 8.0,
+    "final": 8.26,
+    "review_body": "It just means more here. The campus, tailgates and atmosphere are electric and the light show is stunning, capped by one of the greatest games we have seen. The stadium itself is fairly average with tight bleacher seating, and the food is cold and prepackaged.",
+    "tips": [
+      [
+        "before",
+        "Hit The Strip for bars like Houndstooth and the Quad for white-tent tailgates \u2014 locals call it a cocktail party."
+      ],
+      [
+        "food",
+        "The chicken salad sandwich with ranch, bacon and cheddar is a good combo, though the food is cold and prepackaged."
+      ],
+      [
+        "atmosphere",
+        "The fans are electric from Friday night through kickoff, and the place gets as loud as anywhere when the home team scores. The light show is amazing."
+      ],
+      [
+        "tips",
+        "Stop by the Walk of Champions and the Denny Chimes on campus before the game."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3657.jpg"
+  },
+  {
+    "id": "iron-bowl-auburn",
+    "venue_id": "3785",
+    "venue_name": "Jordan-Hare Stadium",
+    "exp_name": "Iron Bowl @ Auburn",
+    "league": "CFB",
+    "team": "AUB",
+    "rank": 36,
+    "fans": 8.8,
+    "food": 7.0,
+    "unique": 9.2,
+    "stadium": 8.5,
+    "final": 8.46,
+    "review_body": "The traditions here are among the best in college football, from the eagle flight to Toomer's Corner rolling, and inside the stadium it gets genuinely loud. The outside tailgate was a little underwhelming SEC-chill, but the Iron Bowl history and a one-possession finish made it a bucket-list game.",
+    "tips": [
+      [
+        "atmosphere",
+        "Inside Jordan-Hare the crowd is rocking and it builds in levels through the game, a veteran crowd that keeps getting louder."
+      ],
+      [
+        "food",
+        "There was a 30-minute line for the Bell soft pretzel \u2014 it is good if you are cold and have had a few beers."
+      ],
+      [
+        "before",
+        "Toomer's Corner and the famous oak trees are the iconic spot; fans roll them with toilet paper after a big win."
+      ],
+      [
+        "tips",
+        "This is the Iron Bowl rivalry with Alabama, rich in history and hatred. The eagle flight before kickoff is elite."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3785.jpg"
+  },
+  {
+    "id": "allegiant-raiders",
+    "venue_id": "allegiant-nfl",
+    "venue_name": "Allegiant Stadium",
+    "exp_name": "Las Vegas Raiders",
+    "league": "NFL",
+    "team": "LV",
+    "rank": 37,
+    "fans": 8.0,
+    "food": 8.8,
+    "unique": 9.2,
+    "stadium": 9.5,
+    "final": 8.87,
+    "review_body": "The most dramatically designed stadium in professional sports. The black cube in the Nevada desert, the silver-and-black interior, and the entertainment level of the surrounding Las Vegas experience make Raiders games uniquely memorable regardless of the product on the field.",
+    "tips": [
+      [
+        "best-seats",
+        "The Al Davis torch is the most striking single architectural feature in any stadium. Sit where you can see it clearly."
+      ],
+      [
+        "before",
+        "The Strip is 3 miles away \u2014 build the full Las Vegas sports weekend experience around game day."
+      ],
+      [
+        "tips",
+        "Raiders games attract a legitimately eclectic mix of tourists and real fans that creates a party atmosphere unlike anywhere else in the NFL."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/6501.jpg"
+  },
+  {
+    "id": "american-airlines-luka-return",
+    "venue_id": "516",
+    "venue_name": "American Airlines Center",
+    "exp_name": "Luka's Return (Mavericks vs. Lakers)",
+    "league": "NBA",
+    "team": "DAL",
+    "rank": 38,
+    "fans": 9.0,
+    "food": 8.0,
+    "unique": 9.5,
+    "stadium": 8.8,
+    "final": 8.87,
+    "review_body": "One of the single most unique sporting events you can attend, seeing a superstar return after one of the biggest trades in sports history and torch his old team for 45 points while still getting a standing ovation. The arena is one of the nicest around with no bad views.",
+    "tips": [
+      [
+        "best-seats",
+        "Even up high there is not a bad view in the house."
+      ],
+      [
+        "food",
+        "The Texas cheese steak sandwich is the food item of the game, about 20 dollars and comes with chips."
+      ],
+      [
+        "atmosphere",
+        "An electric but emotional crowd for Luka's return in a Lakers jersey. Expect constant Fire Nico chants and MVP chants for Luka."
+      ],
+      [
+        "getting-there",
+        "Huge bottleneck leaving the arena after the game."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/516.jpg"
+  },
+  {
+    "id": "highmark-bills",
+    "venue_id": "highmark-nfl",
+    "venue_name": "Highmark Stadium",
+    "exp_name": "Buffalo Bills",
+    "league": "NFL",
+    "team": "BUF",
+    "rank": 39,
+    "fans": 9.5,
+    "food": 7.8,
+    "unique": 8.5,
+    "stadium": 7.5,
+    "final": 8.41,
+    "review_body": "Bills Mafia is the most fanatically passionate fan base in the AFC. The tailgate in the snow is a bucket-list experience and the in-game energy is unmatched when the Bills are rolling. The stadium is old but the fans make it feel legendary.",
+    "tips": [
+      [
+        "atmosphere",
+        "Bills Mafia tailgates in the snow are a cultural event. Tables are for jumping, not eating."
+      ],
+      [
+        "food",
+        "The wings in Buffalo are the point of the whole trip \u2014 load up on real Buffalo wings outside the stadium."
+      ],
+      [
+        "tips",
+        "A winter Bills playoff game is a bucket-list American sports experience. Dress like you are going ice fishing."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3883.jpg"
+  },
+  {
+    "id": "ppg-paints-penguins",
+    "venue_id": "ppg-nhl",
+    "venue_name": "PPG Paints Arena",
+    "exp_name": "Pittsburgh Penguins",
+    "league": "NHL",
+    "team": "PIT",
+    "rank": 40,
+    "fans": 8.8,
+    "food": 8.2,
+    "unique": 8.2,
+    "stadium": 8.2,
+    "final": 8.42,
+    "review_body": "Pittsburgh hockey fans are a revelation. The Penguins fanbase from the Lemieux-Jagr-Crosby dynasty eras remains loud, knowledgeable, and expectant. The Steel City tradition of pierogies and kielbasa extends into the arena.",
+    "tips": [
+      [
+        "atmosphere",
+        "Igloo chants and Let's Go Pens from a Pittsburgh crowd hit different when the team is contending."
+      ],
+      [
+        "food",
+        "Pittsburgh-style pierogies available in the concourse \u2014 eat them here even if PNC Park got there first."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nhl/day/1826.jpg"
+  },
+  {
+    "id": "lincoln-financial-eagles",
+    "venue_id": "linc-nfl",
+    "venue_name": "Lincoln Financial Field",
+    "exp_name": "Philadelphia Eagles",
+    "league": "NFL",
+    "team": "PHI",
+    "rank": 41,
+    "fans": 9.5,
+    "food": 8.0,
+    "unique": 8.0,
+    "stadium": 8.2,
+    "final": 8.5,
+    "review_body": "Eagles fans are the most passionate and intense in the NFL. Playoff games at the Linc are among the most hostile and electric environments in American sports. The Philly faithful will cheer their team through anything and boo everything else.",
+    "tips": [
+      [
+        "atmosphere",
+        "Eagles fans are legendary. A playoff game here in January is a religious experience."
+      ],
+      [
+        "food",
+        "Get a cheesesteak from one of the stands \u2014 this is Philly and they take it seriously even in the stadium."
+      ],
+      [
+        "before",
+        "Xfinity Live is the pregame destination for Eagles games too, right next door to the stadium."
+      ],
+      [
+        "tips",
+        "Visiting fans are advised to travel in large groups. The crowd is intense but the city is electric about football."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3806.jpg"
+  },
+  {
+    "id": "sofi-stadium-rams",
+    "venue_id": "sofi-nfl",
+    "venue_name": "SoFi Stadium",
+    "exp_name": "Los Angeles Rams",
+    "league": "NFL",
+    "team": "LAR",
+    "rank": 42,
+    "fans": 7.5,
+    "food": 9.0,
+    "unique": 9.0,
+    "stadium": 9.8,
+    "final": 8.72,
+    "review_body": "The most architecturally striking stadium in American sports history. The sweeping translucent roof, the dual-sided Oculus scoreboard, and the premium food options set a new standard for NFL venue design. The LA crowd can be lightly engaged but the building itself carries a 10.",
+    "tips": [
+      [
+        "best-seats",
+        "The AT&T Stadium has the largest HD TV on earth \u2014 a 160-yard scoreboard at field level. Upper deck seats still feel incredible because of it."
+      ],
+      [
+        "food",
+        "SoFi has chef-driven concessions that outclass every NFL venue. The wagyu hot dog and brisket bao bun are exceptional."
+      ],
+      [
+        "before",
+        "Inglewood is still developing as a destination, but the area around the stadium has improved significantly."
+      ],
+      [
+        "tips",
+        "Super Bowl and playoff SoFi is a completely different energy than a regular season Rams game."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/7065.jpg"
+  },
+  {
+    "id": "att-stadium-cowboys",
+    "venue_id": "att-nfl",
+    "venue_name": "AT&T Stadium (Jerry World)",
+    "exp_name": "Dallas Cowboys",
+    "league": "NFL",
+    "team": "DAL",
+    "rank": 43,
+    "fans": 8.5,
+    "food": 8.0,
+    "unique": 8.5,
+    "stadium": 9.5,
+    "final": 8.62,
+    "review_body": "Jerry World is the most technologically impressive sports venue in the country. The 160-yard-long HD scoreboard hanging over the field is something you have to see to believe. A Cowboys playoff game here in full noise approaches 9s across the board.",
+    "tips": [
+      [
+        "best-seats",
+        "AT&T Stadium has the largest HD TV on earth \u2014 a 160-yard scoreboard at field level. Upper deck seats still feel incredible because of it."
+      ],
+      [
+        "food",
+        "Jack Daniel's Tennessee Honey wings from the concession stands are the best in-stadium food item here."
+      ],
+      [
+        "before",
+        "Arlington does not have great walkability, so plan for a tailgate in the massive lots."
+      ],
+      [
+        "tips",
+        "Traffic out of Jerry World is legendary in a bad way. Plan an extra hour for departure."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3687.jpg"
+  },
+  {
+    "id": "truist-park-braves",
+    "venue_id": "218",
+    "venue_name": "Truist Park",
+    "exp_name": "Atlanta Braves",
+    "league": "MLB",
+    "team": "ATL",
+    "rank": 44,
+    "fans": 8.0,
+    "food": 8.8,
+    "unique": 8.5,
+    "stadium": 9.0,
+    "final": 8.57,
+    "review_body": "Known as the best party in baseball thanks to the Battery. The Chop House Club is one of the coolest seat setups around, there is a zip line and a museum inside, and the fielder's catch po'boy is excellent. Fans were quiet at a rainy day blowout.",
+    "tips": [
+      [
+        "before",
+        "The Battery is built right next to the park with bars and restaurants a stone's throw away, known as the best pregame party in baseball."
+      ],
+      [
+        "best-seats",
+        "The Chop House Club seats have food delivery to your seat, a beer chiller, phone charger and ordering from your seat \u2014 one of the coolest seat setups around."
+      ],
+      [
+        "food",
+        "The fielder's catch po'boy with lobster tails, fried oysters and candied bacon was excellent."
+      ],
+      [
+        "tips",
+        "There is a zip line inside the stadium, likely the only ballpark where you can zip line."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/218.jpg"
+  },
+  {
+    "id": "pnc-park-pirates",
+    "venue_id": "47",
+    "venue_name": "PNC Park",
+    "exp_name": "Pittsburgh Pirates",
+    "league": "MLB",
+    "team": "PIT",
+    "rank": 45,
+    "fans": 8.0,
+    "food": 9.0,
+    "unique": 8.8,
+    "stadium": 9.2,
+    "final": 8.7,
+    "review_body": "An underrated, breathtaking ballpark with top-five food in the pierogies and pot roast. Manny Sanguillen hanging at his barbecue spot every game is a unique touch. Fans were into it despite a rough game.",
+    "tips": [
+      [
+        "food",
+        "The pierogies with pot roast and pickles are a Pittsburgh staple and top-five stadium food, along with the renegade dog."
+      ],
+      [
+        "atmosphere",
+        "Pirates fans were into it all game, and there is a fun made-up celebration where fans wave their keys for Ke'Bryan Hayes."
+      ],
+      [
+        "tips",
+        "Pirates legend Manny Sanguillen sits outside his barbecue spot at PNC Park every single game, hanging with fans."
+      ],
+      [
+        "best-seats",
+        "Widely considered one of the most breathtaking and underrated stadiums in baseball, with great views across the river."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/47.jpg"
+  },
+  {
+    "id": "soldier-field-bears",
+    "venue_id": "soldier-nfl",
+    "venue_name": "Soldier Field",
+    "exp_name": "Chicago Bears",
+    "league": "NFL",
+    "team": "CHI",
+    "rank": 46,
+    "fans": 8.5,
+    "food": 8.0,
+    "unique": 8.8,
+    "stadium": 7.5,
+    "final": 8.22,
+    "review_body": "Playing on the lakefront with downtown Chicago as the backdrop, Soldier Field is one of the most visually stunning locations in professional sports. The stadium itself is awkward inside due to the renovation but the setting and Bears fans energy overcome it.",
+    "tips": [
+      [
+        "best-seats",
+        "The view of Lake Michigan and the Chicago skyline from the open end of the stadium is the best in the NFL."
+      ],
+      [
+        "before",
+        "The lakefront before a Bears game is one of the great pregame experiences in the NFL."
+      ],
+      [
+        "tips",
+        "The Bears have announced plans to move \u2014 go while you still can and see this iconic setting."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3933.jpg"
+  },
+  {
+    "id": "united-center-blackhawks",
+    "venue_id": "united-nhl",
+    "venue_name": "United Center",
+    "exp_name": "Chicago Blackhawks",
+    "league": "NHL",
+    "team": "CHI",
+    "rank": 47,
+    "fans": 8.8,
+    "food": 8.0,
+    "unique": 8.5,
+    "stadium": 8.0,
+    "final": 8.37,
+    "review_body": "A Blackhawks game in Chicago is a top-tier NHL experience. The NHL anthem tradition is the best in the sport \u2014 Chicago fans scream over the final notes and it is absolutely deafening. The United Center becomes a different building for hockey.",
+    "tips": [
+      [
+        "atmosphere",
+        "The national anthem at a Blackhawks game is the loudest single sports moment you will experience in Chicago. Do not miss it."
+      ],
+      [
+        "food",
+        "The Chicago experience means deep dish and Italian beef \u2014 find both near the arena before the game."
+      ],
+      [
+        "tips",
+        "The Madhouse on Madison earns its nickname during Blackhawks playoff hockey. Get tickets if the team is relevant."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1847.jpg"
+  },
+  {
+    "id": "united-center-bulls",
+    "venue_id": "united-nhl",
+    "venue_name": "United Center",
+    "exp_name": "Chicago Bulls",
+    "league": "NBA",
+    "team": "CHI",
+    "rank": 48,
+    "fans": 8.5,
+    "food": 8.0,
+    "unique": 8.5,
+    "stadium": 8.0,
+    "final": 8.27,
+    "review_body": "The Michael Jordan legacy still hangs in every corner of the United Center. The championship banners, the Jordan statue outside, and Bulls fans who have seen something that no other fan base has seen make this an emotional basketball experience.",
+    "tips": [
+      [
+        "atmosphere",
+        "When they play Sirius and the starting lineup announcer drops the names, the United Center gets chills-inducingly nostalgic."
+      ],
+      [
+        "before",
+        "The Jordan statue outside is a mandatory photo stop. West Town has good pregame bars nearby."
+      ],
+      [
+        "tips",
+        "Get a game-day program \u2014 the Bulls are one of the few teams that still make quality ones with Jordan history context."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1847.jpg"
+  },
+  {
+    "id": "mackey-arena-purdue",
+    "venue_id": "mackey-cbb",
+    "venue_name": "Mackey Arena",
+    "exp_name": "Purdue Boilermakers Basketball",
+    "league": "CBB",
+    "team": "PUR",
+    "rank": 49,
+    "fans": 9.0,
+    "food": 7.5,
+    "unique": 8.5,
+    "stadium": 8.2,
+    "final": 8.38,
+    "review_body": "Mackey Arena is one of the most underrated CBB venues in the country. Purdue's paint-the-floor atmosphere and the passionate West Lafayette crowd are infectious, and the student section stays through the final buzzer regardless of the score.",
+    "tips": [
+      [
+        "atmosphere",
+        "Mackey gets rated as one of the top-five toughest home-court advantages in the Big Ten consistently. The noise is focused and constant."
+      ],
+      [
+        "before",
+        "Stacked pregame scene on campus with Purdue students who take basketball seriously in a football conference."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/399.jpg"
+  },
+  {
+    "id": "carrier-dome-syracuse",
+    "venue_id": "carrier-cbb",
+    "venue_name": "JMA Wireless Dome",
+    "exp_name": "Syracuse Orange Basketball",
+    "league": "CBB",
+    "team": "SYR",
+    "rank": 50,
+    "fans": 8.8,
+    "food": 7.5,
+    "unique": 8.8,
+    "stadium": 7.5,
+    "final": 8.21,
+    "review_body": "The largest on-campus basketball arena in the country holds nearly 35,000 fans for the biggest games. Syracuse basketball in a snowstorm, with the student section packed and Otto the Orange running the court, is genuinely unlike anything else in college basketball.",
+    "tips": [
+      [
+        "atmosphere",
+        "35,000 fans in an indoor dome creates a wall of sound that is physically different from any normal basketball arena."
+      ],
+      [
+        "food",
+        "Salt Potatoes are the regional Central New York item to seek out \u2014 unusual, salty, buttery, and surprisingly good stadium food."
+      ],
+      [
+        "tips",
+        "The zone defense creates a unique game pace that takes adjusting to appreciate. Study it before you go."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/1964.jpg"
+  },
+  {
+    "id": "the-pit-new-mexico",
+    "venue_id": "2024",
+    "venue_name": "The Pit",
+    "exp_name": "New Mexico Lobos Basketball",
+    "league": "CBB",
+    "team": "UNM",
+    "rank": 51,
+    "fans": 9.0,
+    "food": 8.5,
+    "unique": 9.8,
+    "stadium": 8.0,
+    "final": 8.85,
+    "review_body": "The most unique stadium I have been to, built 37 feet underground with a roof that traps all the sound and bounces it back onto the court, making any game extremely loud. The crowd brought it even down double digits on a comeback. Green chili on the Laguna Burger is a best-kept secret.",
+    "tips": [
+      [
+        "atmosphere",
+        "Built 37 feet underground with a low flat roof, so there is nowhere for the sound to go \u2014 it bounces straight back down onto the court. Even down 10-plus on a comeback run it got louder than some college football games."
+      ],
+      [
+        "getting-there",
+        "Albuquerque sits at higher elevation than Denver, then you walk down the famous ramp 37 feet below street level into the arena."
+      ],
+      [
+        "food",
+        "Get the Laguna Burger with green chilies, tomato and melted American cheese, cooked to order in the back rather than sitting out."
+      ],
+      [
+        "best-seats",
+        "Any game and every game is loud and matters to these fans, so it is a must-go for any sports fan at least once."
+      ]
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Pit_mainentrance.jpg/960px-Pit_mainentrance.jpg"
+  },
+  {
+    "id": "dean-dome-unc",
+    "venue_id": "dean-dome-cbb",
+    "venue_name": "Dean E. Smith Center",
+    "exp_name": "UNC Tar Heels Basketball",
+    "league": "CBB",
+    "team": "UNC",
+    "rank": 52,
+    "fans": 8.8,
+    "food": 7.5,
+    "unique": 8.5,
+    "stadium": 8.0,
+    "final": 8.27,
+    "review_body": "The Dean Dome for a Carolina-Duke game is among the five best basketball experiences in America. The legacy of Dean Smith and Michael Jordan defines every brick and the student section turns genuinely hostile. Chapel Hill is a perfect college basketball city.",
+    "tips": [
+      [
+        "atmosphere",
+        "Carolina-Duke in the Dean Dome is a top-five CBB rivalry experience. The student section is engaged and loud from tip."
+      ],
+      [
+        "before",
+        "Franklin Street pregame for a Duke game is as good as it gets in college basketball. The bars are festive."
+      ],
+      [
+        "tips",
+        "Carolina Blue is everywhere and everyone in Chapel Hill treats basketball as seriously as any sport in the country."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/207.jpg"
+  },
+  {
+    "id": "intuit-dome-clippers",
+    "venue_id": "10642",
+    "venue_name": "Intuit Dome",
+    "exp_name": "Los Angeles Clippers",
+    "league": "NBA",
+    "team": "LAC",
+    "rank": 53,
+    "fans": 7.5,
+    "food": 8.0,
+    "unique": 9.0,
+    "stadium": 9.5,
+    "final": 8.5,
+    "review_body": "Steve Ballmer's 2 billion dollar arena is a state-of-the-art masterpiece with Face ID entry, charging ports at every seat and a massive Halo board. The one thing money has not yet bought is the fan energy.",
+    "tips": [
+      [
+        "getting-there",
+        "Entry is all Face ID. Once you set up the app you can walk straight through the door without pulling out your phone in under a minute."
+      ],
+      [
+        "food",
+        "Only two food spots because the whole design pushes you to watch the game. The 16 dollar double cheeseburger is solid."
+      ],
+      [
+        "best-seats",
+        "Every single seat has a USB-C charging port. The lower bowl is essentially all club section."
+      ],
+      [
+        "tips",
+        "Most teams play the Clippers and Lakers back to back on the West Coast road trip, so catch your team here \u2014 it is a cooler experience and about half the price."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/10642.jpg"
+  },
+  {
+    "id": "texas-cfp-dkr",
+    "venue_id": "3910",
+    "venue_name": "DKR-Texas Memorial Stadium",
+    "exp_name": "Texas CFP First Round",
+    "league": "CFB",
+    "team": "TEX",
+    "rank": 54,
+    "fans": 8.0,
+    "food": 7.5,
+    "unique": 8.5,
+    "stadium": 8.8,
+    "final": 8.2,
+    "review_body": "Texas hosting a CFP home game at DKR. The stadium and uniforms are beautiful and the city is great, but the atmosphere was a touch flat with students on winter break and Austin not being a classic college town.",
+    "tips": [
+      [
+        "best-seats",
+        "Texas wears one of the most beautiful, clean college football looks and the field views are great."
+      ],
+      [
+        "food",
+        "The corn dog at DKR is a solid stadium food pick, get it with mustard."
+      ],
+      [
+        "atmosphere",
+        "For the CFP first-round game the crowd was sleepy and a bit quiet pregame, partly because students were on winter break."
+      ],
+      [
+        "before",
+        "Austin is not a traditional college town, so the frat and bar buzz around the stadium is lighter, but the city itself is great."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3910.jpg"
+  },
+  {
+    "id": "state-farm-fiesta-bowl",
+    "venue_id": "3970",
+    "venue_name": "State Farm Stadium",
+    "exp_name": "Fiesta Bowl CFP Quarterfinal",
+    "league": "CFB",
+    "team": null,
+    "rank": 55,
+    "fans": 8.0,
+    "food": 8.0,
+    "unique": 8.5,
+    "stadium": 9.0,
+    "final": 8.37,
+    "review_body": "A neutral-site College Football Playoff game that delivered with a tremendous Cinderella matchup. The retractable-roof stadium with real grass rolled in is a unique touch, and the two-way traffic flow makes getting in and out easy.",
+    "tips": [
+      [
+        "atmosphere",
+        "For this Fiesta Bowl playoff game the crowd was roughly 92 percent one fan base, so it played like a near home game."
+      ],
+      [
+        "best-seats",
+        "We watched from one of the biggest suites you will ever be in. The retractable design with real grass rolled in is a highlight you can literally smell."
+      ],
+      [
+        "getting-there",
+        "The stadium uses smart two-way traffic flow for foot traffic in and out, which moves the crowd efficiently."
+      ],
+      [
+        "tips",
+        "They bring the natural grass field in and you can smell it. A genuinely cool stadium feature."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3970.jpg"
+  },
+  {
+    "id": "paycom-thunder",
+    "venue_id": "2559",
+    "venue_name": "Paycom Center",
+    "exp_name": "OKC Thunder",
+    "league": "NBA",
+    "team": "OKC",
+    "rank": 56,
+    "fans": 9.2,
+    "food": 8.0,
+    "unique": 7.8,
+    "stadium": 8.0,
+    "final": 8.31,
+    "review_body": "Loud City lives up to the name. Fans cheer through opposing runs instead of going quiet, and they keep the energy up the whole game. One of the most underrated NBA atmospheres in the country \u2014 small market, massive passion.",
+    "tips": [
+      [
+        "before",
+        "Before playoff games the Thunder host Thunder in the Park right by the arena, with live music, food trucks, and ticket giveaways."
+      ],
+      [
+        "atmosphere",
+        "Loud City lives up to the name. Fans cheer through opposing runs instead of going quiet, and they keep the energy up the whole game."
+      ],
+      [
+        "tips",
+        "Every seat in the building gets a rally shirt placed on it for playoff games. Wear the shirt, it is part of the deal here."
+      ],
+      [
+        "food",
+        "The chicken tinga tacos at the concession stands were genuinely good."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/2559.jpg"
+  },
+  {
+    "id": "capital-one-arena-wizards",
+    "venue_id": "1823",
+    "venue_name": "Capital One Arena",
+    "exp_name": "Washington Wizards / Capitals",
+    "league": "NBA",
+    "team": "WAS",
+    "rank": 57,
+    "fans": 8.0,
+    "food": 8.0,
+    "unique": 8.0,
+    "stadium": 8.2,
+    "final": 8.05,
+    "review_body": "A downtown Washington DC arena that hosts both the Wizards and Capitals in a walkable Penn Quarter location. NHL games here especially carry a different intensity level than the NBA product. The neighborhood before and after the game is excellent.",
+    "tips": [
+      [
+        "best-seats",
+        "Snapback sat in VIP seats practically on the floor, close enough to be right on top of the visiting team's bench."
+      ],
+      [
+        "tips",
+        "The team store inside the arena had current player jerseys in stock, including the latest City Edition."
+      ],
+      [
+        "before",
+        "Penn Quarter has some of the best restaurant options of any arena neighborhood in the country."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/1823.jpg"
+  },
+  {
+    "id": "kyle-field-aggie",
+    "venue_id": "3795",
+    "venue_name": "Kyle Field",
+    "exp_name": "Texas A&M (vs. Texas Lone Star Showdown)",
+    "league": "CFB",
+    "team": "TAMU",
+    "rank": 58,
+    "fans": 8.8,
+    "food": 7.2,
+    "unique": 8.5,
+    "stadium": 8.5,
+    "final": 8.37,
+    "review_body": "The return of the Texas A&M vs Texas rivalry made for one of the best rivalry atmospheres in college football. Great fans and traditions. The stadium is nice but campus is isolated and the gameplay was admittedly mid.",
+    "tips": [
+      [
+        "best-seats",
+        "A nice stadium that delivered an awesome split-crowd rivalry atmosphere when the Lone Star Showdown returned after 13 years."
+      ],
+      [
+        "atmosphere",
+        "The fans were awesome. They have yell leaders, not cheerleaders, and a midnight yell pep rally the night before every home game."
+      ],
+      [
+        "before",
+        "For a rivalry weekend, look for the over-the-top tailgates, including a whole cow roasted to feed hundreds of people."
+      ],
+      [
+        "tips",
+        "Campus is in the middle of nowhere College Station, so do not expect a college-town scene right outside the stadium."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3795.jpg"
+  },
+  {
+    "id": "citizens-bank-park-phillies",
+    "venue_id": "84",
+    "venue_name": "Citizens Bank Park",
+    "exp_name": "Philadelphia Phillies",
+    "league": "MLB",
+    "team": "PHI",
+    "rank": 59,
+    "fans": 8.5,
+    "food": 8.0,
+    "unique": 8.0,
+    "stadium": 8.0,
+    "final": 8.12,
+    "review_body": "A good modern ballpark with one of the best pregame setups in sports at Xfinity Live. Most of the food is pre-made rather than fresh, which holds it back, but the crab fries and Bull's BBQ stand out.",
+    "tips": [
+      [
+        "before",
+        "Xfinity Live just outside is the mecca for Philly pregame, with bars, food and a celebratory zip line setup when teams win."
+      ],
+      [
+        "food",
+        "Chickie's and Pete's crab fries (fries with Old Bay and cheese dip) are the signature item. Bull's BBQ burnt ends cheesesteak is made fresh."
+      ],
+      [
+        "atmosphere",
+        "Philly fans claim to be the best in sports and can approach a 10 in the playoffs."
+      ],
+      [
+        "tips",
+        "The Schwarber burger sounds and looks unremarkable but the flavors win you over."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/84.jpg"
+  },
+  {
+    "id": "autzen-oregon",
+    "venue_id": "3626",
+    "venue_name": "Autzen Stadium",
+    "exp_name": "Oregon Football",
+    "league": "CFB",
+    "team": "ORE",
+    "rank": 60,
+    "fans": 8.8,
+    "food": 7.5,
+    "unique": 8.5,
+    "stadium": 8.8,
+    "final": 8.47,
+    "review_body": "A beautiful stadium with phenomenal fans and a great college town in Eugene. We hit it during a blowout before students were back, so it landed in the low sevens, but for a big game this place rates much higher. Worth a return trip.",
+    "tips": [
+      [
+        "best-seats",
+        "There is not a bad seat in the building. Every single seat gives you a great view from anywhere."
+      ],
+      [
+        "atmosphere",
+        "Autzen gets insanely loud even for an early kick against a bad opponent. When the motorcycle revs at the entrance it sends chills."
+      ],
+      [
+        "food",
+        "The Big Ten buffalo chicken slider and the hamburger were good but ran about 30 dollars each. The ice cream sandwich was fantastic."
+      ],
+      [
+        "tips",
+        "Check the schedule before booking \u2014 the school runs on quarters so early-season games can happen before students are back."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3626.jpg"
+  },
+  {
+    "id": "moody-center-spurs",
+    "venue_id": "7317",
+    "venue_name": "Moody Center",
+    "exp_name": "KD's Return to Austin (Spurs vs. Suns)",
+    "league": "NBA",
+    "team": "SAS",
+    "rank": 61,
+    "fans": 8.0,
+    "food": 7.8,
+    "unique": 8.5,
+    "stadium": 8.2,
+    "final": 8.12,
+    "review_body": "A fun NBA experience if you are in Austin, with a nice new arena and good suite food, but it played out like a standard Spurs home game rather than the Kevin Durant homecoming we expected. Final Snapback experience score was a 6.73.",
+    "tips": [
+      [
+        "getting-there",
+        "Plan for a bottleneck leaving the building."
+      ],
+      [
+        "food",
+        "Suite spread had burnt ends, brisket, beef tacos, steak sliders, chicken wings and egg rolls. The steak slider was a surprise standout."
+      ],
+      [
+        "atmosphere",
+        "Brand new arena and a solid crowd for what is effectively a Spurs home game in Austin."
+      ],
+      [
+        "tips",
+        "The Spurs play here a couple of nights in a row as part of the I-35 series."
+      ]
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Moody_Center_-_UT_Austin_%2854984998424%29.jpg/960px-Moody_Center_-_UT_Austin_%2854984998424%29.jpg"
+  },
+  {
+    "id": "mountain-america-asu",
+    "venue_id": "3947",
+    "venue_name": "Mountain America Stadium",
+    "exp_name": "ASU Blackout",
+    "league": "CFB",
+    "team": "AZST",
+    "rank": 62,
+    "fans": 8.5,
+    "food": 8.5,
+    "unique": 8.0,
+    "stadium": 7.8,
+    "final": 8.22,
+    "review_body": "A great experience just outside the top tier. The stadium is a little old but the gameplay, the surprisingly elite concession food, and the Tempe and Scottsdale scene make it well worth a stop if you are on the West Coast.",
+    "tips": [
+      [
+        "atmosphere",
+        "After a monsoon rain stopped, it was basically a sellout and loud the entire game."
+      ],
+      [
+        "food",
+        "The honey chicken tenders and the birria taco specialty item were both excellent, and the cheeseburger hit the spot too."
+      ],
+      [
+        "before",
+        "Old Town Scottsdale is one of the best going-out scenes in the country, and Phoenix is about 20 minutes away."
+      ],
+      [
+        "tips",
+        "Beware the rare monsoon rain. Sit near the student section for the loudest energy in the building."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3947.jpg"
+  },
+  {
+    "id": "levi-stadium-49ers",
+    "venue_id": "levis-nfl",
+    "venue_name": "Levi's Stadium",
+    "exp_name": "San Francisco 49ers",
+    "league": "NFL",
+    "team": "SF",
+    "rank": 63,
+    "fans": 8.0,
+    "food": 9.0,
+    "unique": 8.0,
+    "stadium": 9.0,
+    "final": 8.45,
+    "review_body": "Levi's Stadium in Santa Clara is a premium facility with Silicon Valley money behind every square inch. The food program is among the top two or three in the NFL and the California weather makes for an almost uniformly pleasant experience.",
+    "tips": [
+      [
+        "food",
+        "Levi's has the best concessions in the NFL. The brisket sandwich and the locally-sourced California items are legitimate restaurant quality."
+      ],
+      [
+        "best-seats",
+        "The club sections have an observation deck overlooking the Santa Clara Valley \u2014 unusual and beautiful."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3958.jpg"
+  },
+  {
+    "id": "texas-tech-jones",
+    "venue_id": "3784",
+    "venue_name": "Jones AT&T Stadium",
+    "exp_name": "Texas Tech Football",
+    "league": "CFB",
+    "team": "TTU",
+    "rank": 64,
+    "fans": 8.2,
+    "food": 8.2,
+    "unique": 8.8,
+    "stadium": 8.5,
+    "final": 8.42,
+    "review_body": "The overall weekend experience in Lubbock with Raiderville and the barbecue was amazing and the facilities are the nicest in football. The Saturday game-day crowd for an 11 a.m. GameDay kick was underwhelming because everyone had been up for 48 hours.",
+    "tips": [
+      [
+        "before",
+        "Raiderville is a massive multi-day camp-out party outside the stadium. The barbecue burnt ends in Lubbock are incredible."
+      ],
+      [
+        "food",
+        "In-stadium food beat expectations. The buffalo chicken flatbread and the brisket sandwich were both surprisingly good."
+      ],
+      [
+        "atmosphere",
+        "When the whole stadium fills it gets loud, especially next to the band and in the student section."
+      ],
+      [
+        "best-seats",
+        "Students follow the rules here, so a respectful field-storm only happens to celebrate."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3784.jpg"
+  },
+  {
+    "id": "aloha-hawaii",
+    "venue_id": "3610",
+    "venue_name": "Aloha Stadium",
+    "exp_name": "Hawai'i Rainbow Warriors Football",
+    "league": "CFB",
+    "team": "HAW",
+    "rank": 65,
+    "fans": 8.0,
+    "food": 8.8,
+    "unique": 9.8,
+    "stadium": 6.5,
+    "final": 8.23,
+    "review_body": "A bucket-list, once-in-a-lifetime college football experience in paradise. The food-truck spread is incredible, the locals take care of you better than anywhere, and the trip itself is unmatched for uniqueness. The fan atmosphere is more laid-back than a big SEC night game.",
+    "tips": [
+      [
+        "before",
+        "The tailgates are a chill, family-and-community vibe. The Warrior Walk where the team arrives is a highlight."
+      ],
+      [
+        "food",
+        "Food trucks ring the stadium with endless options. Standouts included the Hawaiian blue cheeseburger and a katsu plate. Try a spam musubi."
+      ],
+      [
+        "tips",
+        "Learn a couple local words: chee-hoo is the celebration yell when the team scores."
+      ],
+      [
+        "getting-there",
+        "It is a long haul to get here but being in beautiful Honolulu makes it worth it."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3610.jpg"
+  },
+  {
+    "id": "american-family-field-brewers",
+    "venue_id": "4242",
+    "venue_name": "American Family Field",
+    "exp_name": "Milwaukee Brewers",
+    "league": "MLB",
+    "team": "MIL",
+    "rank": 66,
+    "fans": 7.8,
+    "food": 8.2,
+    "unique": 8.0,
+    "stadium": 8.0,
+    "final": 7.97,
+    "review_body": "A clean, solid ballpark with a fun retractable roof, sausage race and tailgating scene. The Wisconsin hot dog with cheese curds was the best food item. It is a nice but not standout stadium in a mid city.",
+    "tips": [
+      [
+        "atmosphere",
+        "They have live music in the stadium and a famous sausage race you can even buy merch for. The retractable roof and tailgating scene add to the vibe."
+      ],
+      [
+        "food",
+        "The best item is the Wisconsin hot dog topped with cheese curds, a slice of cheese, cheese sauce and ranch."
+      ],
+      [
+        "tips",
+        "If they say the roof is closed, prepare for it to feel over 120 degrees inside."
+      ],
+      [
+        "getting-there",
+        "It is a clean, navigable midsize ballpark and city, easy to get around compared to a big metropolis."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/4242.jpg"
+  },
+  {
+    "id": "crypto-com-lakers",
+    "venue_id": "crypto-nba",
+    "venue_name": "Crypto.com Arena",
+    "exp_name": "Los Angeles Lakers",
+    "league": "NBA",
+    "team": "LAL",
+    "rank": 67,
+    "fans": 8.0,
+    "food": 8.5,
+    "unique": 9.0,
+    "stadium": 8.5,
+    "final": 8.5,
+    "review_body": "The Lakers mystique is real even in a down year. The banners, the celebrity sightings, the tabloid-court atmosphere \u2014 it is genuinely unlike any other NBA game. Courtside at Crypto is the most photographed spot in professional basketball.",
+    "tips": [
+      [
+        "atmosphere",
+        "Celebrity row is a real phenomenon \u2014 you will see someone famous without trying."
+      ],
+      [
+        "food",
+        "The premium concession level has the best options. Standard arena food on the regular level."
+      ],
+      [
+        "tips",
+        "The arena is old by modern standards but the history in those walls is unmatched. Arrive early for the warmup spectacle."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1841.jpg"
+  },
+  {
+    "id": "empower-field-broncos",
+    "venue_id": "empower-nfl",
+    "venue_name": "Empower Field at Mile High",
+    "exp_name": "Denver Broncos",
+    "league": "NFL",
+    "team": "DEN",
+    "rank": 68,
+    "fans": 8.5,
+    "food": 8.0,
+    "unique": 8.0,
+    "stadium": 8.5,
+    "final": 8.27,
+    "review_body": "Mile High altitude makes this stadium legitimately harder to play in as a visiting team. Broncos fans bring consistent energy and the Rocky Mountains visible from the west side of the stadium provide a dramatic backdrop.",
+    "tips": [
+      [
+        "best-seats",
+        "West side upper deck seats have the Rocky Mountain backdrop directly in your view \u2014 one of the NFL's great stadium sceneries."
+      ],
+      [
+        "food",
+        "Colorado green chile cheese dog from the concession stands is the local food item worth finding."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3937.jpg"
+  },
+  {
+    "id": "folsom-field-buffs",
+    "venue_id": "3726",
+    "venue_name": "Folsom Field",
+    "exp_name": "Colorado Buffaloes",
+    "league": "CFB",
+    "team": "COL",
+    "rank": 69,
+    "fans": 7.5,
+    "food": 7.8,
+    "unique": 8.5,
+    "stadium": 8.8,
+    "final": 8.14,
+    "review_body": "A stunning stadium in a beautiful Boulder setting, but the fans are notably chill and casual, the lowest atmosphere we have rated. The pork skewers are great. Worth it especially while the Sanders-era novelty lasts.",
+    "tips": [
+      [
+        "food",
+        "The bacon-wrapped pork skewers were a standout, and the pulled pork nachos were solid."
+      ],
+      [
+        "atmosphere",
+        "The crowd is more chill and casual than SEC or rivalry games."
+      ],
+      [
+        "best-seats",
+        "The stadium is stunning and the Boulder campus and setting are a great time."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3726.jpg"
+  },
+  {
+    "id": "maravich-assembly-lsu-bball",
+    "venue_id": "pmac-cbb",
+    "venue_name": "Pete Maravich Assembly Center",
+    "exp_name": "LSU Tigers Basketball",
+    "league": "CBB",
+    "team": "LSU",
+    "rank": 70,
+    "fans": 8.5,
+    "food": 8.5,
+    "unique": 8.5,
+    "stadium": 7.8,
+    "final": 8.37,
+    "review_body": "Baton Rouge basketball has its own charm, especially when the Tigers are good. The PMAC roars in SEC play, and the Cajun food options make it one of the most unique food experiences in CBB.",
+    "tips": [
+      [
+        "atmosphere",
+        "The PMAC gets deafeningly loud on SEC game nights. Geaux Tigers chants are infectious."
+      ],
+      [
+        "food",
+        "Boudin balls are available in the concession stands \u2014 a genuinely great regional food item for a basketball arena."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/557.jpg"
+  },
+  {
+    "id": "vaught-hemingway-ole-miss",
+    "venue_id": "3974",
+    "venue_name": "Vaught-Hemingway Stadium",
+    "exp_name": "Ole Miss Football",
+    "league": "CFB",
+    "team": "MISS",
+    "rank": 71,
+    "fans": 7.5,
+    "food": 6.5,
+    "unique": 9.0,
+    "stadium": 8.5,
+    "final": 7.9,
+    "review_body": "The Grove tailgate is phenomenal and incredibly welcoming, and Oxford is a great college town. But the in-stadium atmosphere was quieter than expected and the stadium food was garbage. Come back for an SEC opponent at night and the score would be much higher.",
+    "tips": [
+      [
+        "before",
+        "The Grove is the headline tailgate. Tents go up the morning of, you can walk into nearly any tent and they will feed you a full plate."
+      ],
+      [
+        "atmosphere",
+        "Inside the stadium the crowd was honestly underwhelming for a non-conference game. Come back for an SEC night game like LSU."
+      ],
+      [
+        "food",
+        "Stadium food was poor. The barbecue nachos came out cold and the Grove Burger was not cooked well. The one perk is they have Chick-fil-A inside."
+      ],
+      [
+        "tips",
+        "Get there at 6 a.m. to claim Grove tent space on a big weekend. Oxford itself is a great college town."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3974.jpg"
+  },
+  {
+    "id": "spectrum-center-hornets",
+    "venue_id": "spectrum-nba",
+    "venue_name": "Spectrum Center",
+    "exp_name": "Charlotte Hornets",
+    "league": "NBA",
+    "team": "CHA",
+    "rank": 72,
+    "fans": 7.8,
+    "food": 7.8,
+    "unique": 7.5,
+    "stadium": 8.2,
+    "final": 7.82,
+    "review_body": "A solid mid-tier NBA arena in an underrated NBA city. Charlotte fans are passionate when the team is competitive and the uptown location makes it easy to pair with a great dinner or bar night.",
+    "tips": [
+      [
+        "before",
+        "Uptown Charlotte has excellent dining within walking distance."
+      ],
+      [
+        "food",
+        "Standard arena concessions. The Carolina BBQ stand is the regional highlight."
+      ],
+      [
+        "tips",
+        "Buzz City jerseys are among the best alternates in the league \u2014 grab one at the team store."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nba/day/1893.jpg"
+  },
+  {
+    "id": "truist-field-hurricanes",
+    "venue_id": "lenovo-nhl",
+    "venue_name": "Lenovo Center",
+    "exp_name": "Carolina Hurricanes",
+    "league": "NHL",
+    "team": "CAR",
+    "rank": 73,
+    "fans": 9.0,
+    "food": 8.0,
+    "unique": 8.5,
+    "stadium": 8.2,
+    "final": 8.47,
+    "review_body": "The Hurricanes have built one of the most passionate new hockey fanbases in the league. The storm surge celebrations after wins are the most creative post-game traditions in professional sports and the arena rocks from the first puck drop.",
+    "tips": [
+      [
+        "atmosphere",
+        "The storm surge celebration after a win is the most unique fan tradition in the NHL \u2014 the team plays games on the ice after the final buzzer."
+      ],
+      [
+        "food",
+        "NC BBQ options in the concourse are legitimately good. Get the pulled pork sandwich."
+      ],
+      [
+        "tips",
+        "The Hurricanes and their fans have proven that hockey can absolutely work in the South."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/999.jpg"
+  },
+  {
+    "id": "gillette-patriots",
+    "venue_id": "gillette-nfl",
+    "venue_name": "Gillette Stadium",
+    "exp_name": "New England Patriots",
+    "league": "NFL",
+    "team": "NE",
+    "rank": 74,
+    "fans": 8.5,
+    "food": 7.8,
+    "unique": 7.8,
+    "stadium": 8.5,
+    "final": 8.18,
+    "review_body": "In the dynasty years Gillette was a fortress that visiting teams dreaded. The stadium is solid if not spectacular, but the surrounding area and the passion of New England fans make it a worthwhile destination.",
+    "tips": [
+      [
+        "atmosphere",
+        "Patriot Place outside the stadium is a solid pregame destination with dining and entertainment."
+      ],
+      [
+        "food",
+        "New England clam chowder and a fried seafood option set Gillette apart from most NFL venues."
+      ],
+      [
+        "tips",
+        "The lighthouse at the north end of the stadium opens and closes for scores \u2014 a charming tradition."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3738.jpg"
+  },
+  {
+    "id": "kenan-stadium-unc",
+    "venue_id": "3787",
+    "venue_name": "Kenan Stadium",
+    "exp_name": "UNC - Bill Belichick's 1st Game",
+    "league": "CFB",
+    "team": "UNC",
+    "rank": 75,
+    "fans": 7.5,
+    "food": 7.5,
+    "unique": 8.5,
+    "stadium": 7.8,
+    "final": 7.87,
+    "review_body": "Bill Belichick's college debut brought a unique buzz and Chapel Hill is a great college town with an underrated Franklin Street pregame. The crowd is more wine-and-cheese than rowdy, and the game itself was a 48-14 blowout.",
+    "tips": [
+      [
+        "before",
+        "Chapel Hill is underrated and the pregame scene is great. Franklin Street has a real buzz, and the campus is beautiful with the bell tower."
+      ],
+      [
+        "atmosphere",
+        "It is a wine-and-cheese crowd, more khakis and quarter-zips than deafening noise."
+      ],
+      [
+        "food",
+        "The foot-long Carolina dog with chili, slaw, and onions surprisingly worked. There is also a Bojangles stand."
+      ],
+      [
+        "tips",
+        "You can walk onto the field at UNC during business hours \u2014 one of only a few power-five schools where that is allowed."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3787.jpg"
+  },
+  {
+    "id": "rice-eccles-utes",
+    "venue_id": "rice-eccles-cfb",
+    "venue_name": "Rice-Eccles Stadium",
+    "exp_name": "Utah Utes Football",
+    "league": "CFB",
+    "team": "UTAH",
+    "rank": 76,
+    "fans": 8.2,
+    "food": 7.5,
+    "unique": 8.0,
+    "stadium": 8.2,
+    "final": 7.97,
+    "review_body": "A great college football experience in one of the best college sports cities in the country. The Wasatch Mountains provide one of the most scenic CFB backdrops anywhere and Utah fans have grown into a legitimate Power Five atmosphere.",
+    "tips": [
+      [
+        "best-seats",
+        "The mountains behind the east stands are among the top-five most scenic views from any CFB stadium."
+      ],
+      [
+        "before",
+        "Salt Lake City has grown into a real college sports city with solid pregame bar options around campus."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/587.jpg"
+  },
+  {
+    "id": "bank-of-america-panthers",
+    "venue_id": "bofa-nfl",
+    "venue_name": "Bank of America Stadium",
+    "exp_name": "Carolina Panthers",
+    "league": "NFL",
+    "team": "CAR",
+    "rank": 77,
+    "fans": 7.8,
+    "food": 8.0,
+    "unique": 7.5,
+    "stadium": 8.0,
+    "final": 7.82,
+    "review_body": "A solid downtown Charlotte NFL experience. The stadium is well-designed and the neighborhood has grown up around it nicely. Panthers fans are committed when the team is relevant.",
+    "tips": [
+      [
+        "before",
+        "Uptown Charlotte is one of the better walkable NFL pregame neighborhoods in the league."
+      ],
+      [
+        "food",
+        "Carolina BBQ options are available \u2014 get the pulled pork sandwich."
+      ],
+      [
+        "tips",
+        "The Charlotte skyline view from the upper deck is impressive on a clear night."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3628.jpg"
+  },
+  {
+    "id": "iowa-state-jack-trice",
+    "venue_id": "3772",
+    "venue_name": "Jack Trice Stadium",
+    "exp_name": "Iowa State Football",
+    "league": "CFB",
+    "team": "IAST",
+    "rank": 78,
+    "fans": 8.0,
+    "food": 7.5,
+    "unique": 8.0,
+    "stadium": 7.5,
+    "final": 7.82,
+    "review_body": "Easy-living Midwest college football. The stadium and crowd are not the loudest or fanciest, and our game had low stakes, but the tailgate is among the best anywhere and the fan loyalty in cold rain is impressive.",
+    "tips": [
+      [
+        "before",
+        "Ames has one of the best tailgate scenes in the country. The lots fill for miles with RVs, and even on a three-game losing streak in 40-degree rain everyone shows up."
+      ],
+      [
+        "atmosphere",
+        "The colder and rainier it got, the louder the student section got. They hold down and do not leave."
+      ],
+      [
+        "food",
+        "The foot-long specialty corn dog and the chili cheese nachos are solid. Caramel kettle corn is a good add."
+      ],
+      [
+        "tips",
+        "Walk through the Jack Trice barrier monument, the only FBS stadium named after a Black athlete."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3772.jpg"
+  },
+  {
+    "id": "busch-stadium-cardinals",
+    "venue_id": "87",
+    "venue_name": "Busch Stadium",
+    "exp_name": "St. Louis Cardinals",
+    "league": "MLB",
+    "team": "STL",
+    "rank": 79,
+    "fans": 7.5,
+    "food": 7.5,
+    "unique": 7.0,
+    "stadium": 7.5,
+    "final": 7.37,
+    "review_body": "A historic but fairly basic ballpark. Ballpark Village and the Build-A-Bear inside are nice touches, and the Stinger donut is worth getting, but the city and stadium felt average overall.",
+    "tips": [
+      [
+        "before",
+        "Ballpark Village right outside has a great setup with bars where you can watch the game without buying a ticket."
+      ],
+      [
+        "food",
+        "Try the Stinger donut with chocolate and vanilla \u2014 it was a standout."
+      ],
+      [
+        "atmosphere",
+        "Cardinals fans showed up, and the game opened with a leadoff home run that got the crowd on its feet."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/87.jpg"
+  },
+  {
+    "id": "williams-brice-scar",
+    "venue_id": "3994",
+    "venue_name": "Williams-Brice Stadium",
+    "exp_name": "Palmetto Bowl @ SCAR",
+    "league": "CFB",
+    "team": "SCAR",
+    "rank": 80,
+    "fans": 7.8,
+    "food": 7.0,
+    "unique": 7.8,
+    "stadium": 7.5,
+    "final": 7.55,
+    "review_body": "Williams-Brice gets credit for a sellout and the students brought it late, but for a year where both rivals were down the energy was just fine. The campus is solid and the night bar scene is good. Not the year to catch this game.",
+    "tips": [
+      [
+        "atmosphere",
+        "The students showed up and did their part and it got genuinely loud, but for this rivalry game with both teams struggling it was not the rowdiest the stadium gets."
+      ],
+      [
+        "before",
+        "Lots of house-divided tailgates with Clemson and Carolina fans mixed together. The hatred is real."
+      ],
+      [
+        "tips",
+        "The 2001 Space Odyssey entrance is a signature, though it hits harder in a winning season. Sandstorm is a fun every-game tradition."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3994.jpg"
+  },
+  {
+    "id": "metlife-giants-jets",
+    "venue_id": "metlife-nfl",
+    "venue_name": "MetLife Stadium",
+    "exp_name": "New York Giants / Jets",
+    "league": "NFL",
+    "team": "NYG",
+    "rank": 81,
+    "fans": 8.0,
+    "food": 8.0,
+    "unique": 7.5,
+    "stadium": 8.5,
+    "final": 7.97,
+    "review_body": "The most unusual NFL stadium in the country \u2014 it has no home team branding to accommodate two franchises. New York area fans are knowledgeable and intense but the dual-use setup creates a sterile atmosphere that fancy architecture cannot fully fix.",
+    "tips": [
+      [
+        "getting-there",
+        "Take the NJ Transit train from Penn Station \u2014 parking and driving into the Meadowlands is an ordeal."
+      ],
+      [
+        "food",
+        "The premium food options in the club levels are good. Standard concessions on the main level are just fine."
+      ],
+      [
+        "tips",
+        "Giants and Jets fans are completely different cultures. The stadium is the same but the experience game to game varies significantly."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3839.jpg"
+  },
+  {
+    "id": "coastal-carolina-brooks",
+    "venue_id": "3654",
+    "venue_name": "Brooks Stadium (SC)",
+    "exp_name": "Coastal Carolina All You Can Eat",
+    "league": "CFB",
+    "team": "CCU",
+    "rank": 82,
+    "fans": 7.0,
+    "food": 8.0,
+    "unique": 8.0,
+    "stadium": 7.0,
+    "final": 7.45,
+    "review_body": "The free all-you-can-eat concessions are a genuinely unique draw and a fun non-power-four experience. The fans leaving at halftime and a brutal blowout drag it down, but it is still something worth getting out to if you're in the Myrtle Beach area in early fall.",
+    "tips": [
+      [
+        "food",
+        "Every ticket now comes with all-you-can-eat concessions. The selection is big enough, hot dogs are solid, popcorn is fresh and nachos are good."
+      ],
+      [
+        "atmosphere",
+        "The pregame intro and fireworks were electric, but a lot of fans leave at halftime to hit the bars."
+      ],
+      [
+        "before",
+        "Conway is near Myrtle Beach so you can play a round of golf, and there is a decent going-out scene."
+      ],
+      [
+        "tips",
+        "The teal turf is unique. Talk to students pregame and you'll get an honest read on the matchup."
+      ]
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/CoastalBrooksStad1.jpg/960px-CoastalBrooksStad1.jpg"
+  },
+  {
+    "id": "great-american-ball-park-reds",
+    "venue_id": "83",
+    "venue_name": "Great American Ball Park",
+    "exp_name": "Cincinnati Reds",
+    "league": "MLB",
+    "team": "CIN",
+    "rank": 83,
+    "fans": 7.0,
+    "food": 7.5,
+    "unique": 7.5,
+    "stadium": 7.0,
+    "final": 7.25,
+    "review_body": "A run-of-the-mill ballpark with a beautiful river-and-bridge view but little else that is unique. The Skyline chili coneys are the food highlight. The steamboat center field building and the Kentucky bridge view save it.",
+    "tips": [
+      [
+        "atmosphere",
+        "The view with the bridge and the river behind the outfield is stunning. The center field building looks like a steamboat."
+      ],
+      [
+        "food",
+        "Get the Skyline chili cheese coneys, basically a hot dog with chili, cheese, onions and mustard."
+      ],
+      [
+        "getting-there",
+        "It is close to Kentucky, so you can walk over the bridge between the two."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mlb/day/83.jpg"
+  },
+  {
+    "id": "albertsons-potato-bowl",
+    "venue_id": "3653",
+    "venue_name": "Albertsons Stadium",
+    "exp_name": "Idaho Potato Bowl",
+    "league": "CFB",
+    "team": "BSU",
+    "rank": 84,
+    "fans": 7.0,
+    "food": 7.0,
+    "unique": 8.5,
+    "stadium": 7.5,
+    "final": 7.5,
+    "review_body": "Not even close to being a punishment. Bowl games are something every big college football fan should attend once, and this one has the fun gimmick of the blue turf, a silly mascot and a good place to bring the whole family. The food was disappointing with no potato products.",
+    "tips": [
+      [
+        "atmosphere",
+        "The famous blue turf is a real sight to behold and worth seeing in person at least once."
+      ],
+      [
+        "food",
+        "Do not come expecting potato dishes \u2014 the lack of potato-based food items in the stadium is the biggest disappointment. Boise Fry Company outside is worth a stop."
+      ],
+      [
+        "best-seats",
+        "The view from up high is beautiful and stunning, and it is a very accessible, easy stadium to get around."
+      ],
+      [
+        "tips",
+        "It is a good family-friendly bowl with a fun potato mascot (Spudzy) and a little bit for everyone."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3653.jpg"
+  },
+  {
+    "id": "glass-bowl-italian-bowl",
+    "venue_id": "3739",
+    "venue_name": "Glass Bowl",
+    "exp_name": "Italian Bowl XLIV",
+    "league": "other",
+    "team": null,
+    "rank": 85,
+    "fans": 6.5,
+    "food": 7.0,
+    "unique": 9.5,
+    "stadium": 6.0,
+    "final": 7.22,
+    "review_body": "An unusual but fun day watching the Italian professional football league play their championship in Toledo. The players truly love the game and smashed low expectations, but it was a blowout snoozer and the small stadium sat mostly empty in blistering heat.",
+    "tips": [
+      [
+        "before",
+        "The pregame parking-lot scene had immaculate vibes with cornhole, a car show, food trucks, and a live band."
+      ],
+      [
+        "food",
+        "The suite level had actual Italian food: meatballs, mozzarella, bread, and a tiramisu type dessert."
+      ],
+      [
+        "best-seats",
+        "Upgrading to a VIP suite cost only about 10 dollars more than a regular ticket and got free Italian food and drink."
+      ],
+      [
+        "tips",
+        "You can walk right onto the field pregame with no one checking anything. Access here is wide open, which is part of what makes it unique."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3739.jpg"
+  },
+  {
+    "id": "doyt-perry-bgsu",
+    "venue_id": "3700",
+    "venue_name": "Doyt L. Perry Stadium",
+    "exp_name": "BGSU Midweek MACtion",
+    "league": "CFB",
+    "team": "BGSU",
+    "rank": 86,
+    "fans": 7.0,
+    "food": 7.5,
+    "unique": 8.5,
+    "stadium": 6.5,
+    "final": 7.35,
+    "review_body": "A true sicko game and a wonderful breath of fresh air, college football in its purest form away from the talking heads. Freezing cold Tuesday-night MACtion in the middle of Ohio is gritty, chaotic and genuinely fun. Worth doing at least one game like this a year.",
+    "tips": [
+      [
+        "atmosphere",
+        "This is midweek MACtion, a Tuesday-night game in 30-degree cold with rain or snow. Embrace the madness; chaotic plays, multiple fumbles per drive, and a small but devoted shirtless crowd."
+      ],
+      [
+        "food",
+        "The stuffed cheddar-jalapeno item was good and the bucket of donuts was a happy surprise. They even have a local beer, the Juniper ale."
+      ],
+      [
+        "tips",
+        "You can roam anywhere and easily find your group. Pudge the team's animal mascot is an internet sensation worth seeking out."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3700.jpg"
+  },
+  {
+    "id": "kent-state-dix-stadium",
+    "venue_id": "3696",
+    "venue_name": "Zoeller Field at Dix Stadium",
+    "exp_name": "Kent State MACtion",
+    "league": "CFB",
+    "team": "KENT",
+    "rank": 87,
+    "fans": 5.5,
+    "food": 6.5,
+    "unique": 8.5,
+    "stadium": 5.5,
+    "final": 6.42,
+    "review_body": "Not the worst experience in college football despite hosting the worst team. The free scarf and hat, field access, cheap food, short lines, and the pure novelty of a cold MACtion Tuesday night make it worth doing once, but probably not twice.",
+    "tips": [
+      [
+        "getting-there",
+        "Super easy access. You can pull an Uber right to a step from the front gate and buy your tickets two minutes before kickoff."
+      ],
+      [
+        "food",
+        "Cheap food and short lines. They serve chick-fil-a and even chicken broth on the sideline on a cold night."
+      ],
+      [
+        "atmosphere",
+        "A MACtion Tuesday night game with the worst team in college football, so it is empty like a video game, but it is a unique, low-key good time."
+      ],
+      [
+        "tips",
+        "It is free for students, the beer is cheap, and there is an underrated bar scene afterward around Water Street."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3696.jpg"
+  },
+  {
+    "id": "fedex-field-commanders",
+    "venue_id": "fedex-nfl",
+    "venue_name": "Northwest Stadium",
+    "exp_name": "Washington Commanders",
+    "league": "NFL",
+    "team": "WAS",
+    "rank": 88,
+    "fans": 7.5,
+    "food": 7.5,
+    "unique": 7.0,
+    "stadium": 7.0,
+    "final": 7.27,
+    "review_body": "A stadium in transition both physically and in terms of fan identity. The new Commanders era is bringing enthusiasm back to the fanbase and a new stadium is on the horizon.",
+    "tips": [
+      [
+        "before",
+        "The DMV sports scene is passionate \u2014 tailgates in the lots have real energy for big home games."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3719.jpg"
+  },
+  {
+    "id": "boone-pickens-osu",
+    "venue_id": "boone-pickens-cfb",
+    "venue_name": "Boone Pickens Stadium",
+    "exp_name": "Oklahoma State Cowboys",
+    "league": "CFB",
+    "team": "OKST",
+    "rank": 89,
+    "fans": 8.0,
+    "food": 7.8,
+    "unique": 8.0,
+    "stadium": 8.2,
+    "final": 8.0,
+    "review_body": "Stillwater delivers a surprisingly strong game-day atmosphere with a stadium that was rebuilt to be a genuine facility powerhouse. The Bedlam rivalry games are among the most passionate in the Big 12.",
+    "tips": [
+      [
+        "atmosphere",
+        "Stillwater becomes an entirely different city on game day. The campus fills and the noise is legitimate."
+      ],
+      [
+        "food",
+        "Eskimo Joe's just off campus is a must-visit tradition \u2014 the cheese fries are famous for a reason."
+      ],
+      [
+        "before",
+        "The bars along Main Street are lively and welcoming. Get there three hours early for the full experience."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3646.jpg"
+  },
+  {
+    "id": "ladd-peebles-south-alabama",
+    "venue_id": "3610",
+    "venue_name": "Aloha Stadium",
+    "exp_name": "Hawai'i Warriors Homecoming",
+    "league": "CFB",
+    "team": "HAW",
+    "rank": 90,
+    "fans": 7.8,
+    "food": 8.5,
+    "unique": 9.0,
+    "stadium": 6.5,
+    "final": 7.97,
+    "review_body": "A repeat visit to the rainbow warrior paradise proves the first trip was not a fluke. The food trucks are consistently the best in college football and locals embrace visitors as family. The temporary venue will be replaced but the aloha spirit is permanent.",
+    "tips": [
+      [
+        "tips",
+        "Try to align your trip with the homecoming game for the full flower-lei experience at the gate."
+      ],
+      [
+        "food",
+        "Manapua and malasadas from the food trucks outside are the sleeper hit food items."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3610.jpg"
+  },
+  {
+    "id": "kroger-field-kentucky",
+    "venue_id": "kroger-cfb",
+    "venue_name": "Kroger Field",
+    "exp_name": "Kentucky Wildcats Football",
+    "league": "CFB",
+    "team": "UK",
+    "rank": 91,
+    "fans": 8.0,
+    "food": 8.0,
+    "unique": 7.8,
+    "stadium": 7.8,
+    "final": 7.95,
+    "review_body": "Lexington loves its Wildcats more than most know. Kentucky football has had real moments of relevance and the crowd comes in full blue for big SEC games. The bourbon trail nearby makes Lexington a genuinely great sports weekend destination.",
+    "tips": [
+      [
+        "before",
+        "Kentucky Bourbon Trail tasting experiences near Lexington make this one of the best weekend destination setups in college sports."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3683.jpg"
+  },
+  {
+    "id": "bank-of-america-carolina-cfb",
+    "venue_id": "bofa-nfl",
+    "venue_name": "Bank of America Stadium",
+    "exp_name": "ACC Championship Game",
+    "league": "CFB",
+    "team": null,
+    "rank": 92,
+    "fans": 8.0,
+    "food": 8.0,
+    "unique": 8.0,
+    "stadium": 8.0,
+    "final": 8.0,
+    "review_body": "The ACC Championship in Charlotte is a well-run neutral site event in a professional stadium. The downtown location and accessible city make it an easy and enjoyable CFB weekend.",
+    "tips": [
+      [
+        "before",
+        "Charlotte uptown provides restaurant and bar options within easy walking distance of the stadium."
+      ],
+      [
+        "tips",
+        "Neutral site championship crowds are easier to navigate than hostile road environments."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3628.jpg"
+  },
+  {
+    "id": "ppg-arena-pitt-cfb",
+    "venue_id": "heinz-cfb",
+    "venue_name": "Acrisure Stadium",
+    "exp_name": "Pitt Panthers Football",
+    "league": "CFB",
+    "team": "PITT",
+    "rank": 93,
+    "fans": 7.5,
+    "food": 8.0,
+    "unique": 8.0,
+    "stadium": 8.5,
+    "final": 7.97,
+    "review_body": "College football in a professional NFL stadium is a legitimately different experience \u2014 Pitt Panthers fans in Acrisure Stadium get access to a facility that would be unthinkable for most CFB programs. The river views are spectacular.",
+    "tips": [
+      [
+        "best-seats",
+        "Playing in an NFL venue means premium amenities at college prices. The Primanti Brothers sandwich is available inside."
+      ],
+      [
+        "before",
+        "The South Side of Pittsburgh before a Pitt game is one of the livelier pregame scenes in ACC football."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3752.jpg"
+  },
+  {
+    "id": "northwest-stadium-cfb",
+    "venue_id": "fedex-nfl",
+    "venue_name": "Northwest Stadium",
+    "exp_name": "Commanders Rivalry Game",
+    "league": "NFL",
+    "team": "WAS",
+    "rank": 94,
+    "fans": 7.8,
+    "food": 7.5,
+    "unique": 7.2,
+    "stadium": 7.2,
+    "final": 7.47,
+    "review_body": "The old FedEx Field reputation is improving under new ownership and the Commanders brand. DC-area football fans are passionate and the rivalry games against the Eagles and Cowboys bring real energy to what has been a dormant venue.",
+    "tips": [
+      [
+        "tips",
+        "Avoid the parking if possible \u2014 the Metro to the stadium is the way."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/nfl/day/3719.jpg"
+  },
+  {
+    "id": "kohl-center-badgers-bball",
+    "venue_id": "kohl-cbb",
+    "venue_name": "Kohl Center",
+    "exp_name": "Wisconsin Badgers Basketball",
+    "league": "CBB",
+    "team": "WIS",
+    "rank": 95,
+    "fans": 8.5,
+    "food": 7.5,
+    "unique": 8.0,
+    "stadium": 8.2,
+    "final": 8.12,
+    "review_body": "The Kohl Center transforms on a big game night into one of the most electric CBB venues in the country. The combination of a great college town and a loud basketball arena makes a Wisconsin basketball weekend hard to beat.",
+    "tips": [
+      [
+        "atmosphere",
+        "Big rivalry games at the Kohl Center approach college football atmosphere levels in terms of student engagement."
+      ],
+      [
+        "before",
+        "Pair with a Saturday Camp Randall football game for the best sports weekend in the Big Ten."
+      ],
+      [
+        "tips",
+        "The student section in the lower bowl end opposite the shot clock is the loudest part of the building."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/mens-college-basketball/day/348.jpg"
+  },
+  {
+    "id": "north-carolina-kenan-bball",
+    "venue_id": "3787",
+    "venue_name": "Kenan Stadium",
+    "exp_name": "UNC Football Regular Season",
+    "league": "CFB",
+    "team": "UNC",
+    "rank": 96,
+    "fans": 7.2,
+    "food": 7.5,
+    "unique": 7.5,
+    "stadium": 7.8,
+    "final": 7.47,
+    "review_body": "A regular season Kenan Stadium experience without a signature moment is still a pleasant Chapel Hill afternoon. The campus and Franklin Street are always worth visiting even when the in-game product is not peak intensity.",
+    "tips": [
+      [
+        "before",
+        "Franklin Street is consistently excellent. Merritt's BLT on sourdough is one of the best pregame bites in CFB."
+      ],
+      [
+        "tips",
+        "The bookstore is excellent, near Notre Dame tier, loaded with Carolina blue and argyle gear."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3787.jpg"
+  },
+  {
+    "id": "williams-brice-regular",
+    "venue_id": "3994",
+    "venue_name": "Williams-Brice Stadium",
+    "exp_name": "South Carolina Gamecocks Regular Season",
+    "league": "CFB",
+    "team": "SCAR",
+    "rank": 97,
+    "fans": 7.5,
+    "food": 7.0,
+    "unique": 7.5,
+    "stadium": 7.5,
+    "final": 7.37,
+    "review_body": "A standard Williams-Brice experience for a non-rivalry SEC game. The Sandstorm entrance and 2001 Space Odyssey intro are highlights regardless of the opponent, and Columbia bar life on a game weekend is genuinely fun.",
+    "tips": [
+      [
+        "tips",
+        "Sandstorm before a South Carolina game remains one of the more contagious crowd-unification moments in CFB."
+      ],
+      [
+        "before",
+        "Five Points in Columbia has a legitimate bar and restaurant scene worth exploring on a game Friday night."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3994.jpg"
+  },
+  {
+    "id": "vaught-hemingway-sec-night",
+    "venue_id": "3974",
+    "venue_name": "Vaught-Hemingway Stadium",
+    "exp_name": "Ole Miss vs LSU SEC Night Game",
+    "league": "CFB",
+    "team": "MISS",
+    "rank": 98,
+    "fans": 9.0,
+    "food": 7.5,
+    "unique": 8.8,
+    "stadium": 8.5,
+    "final": 8.52,
+    "review_body": "The Ole Miss experience on an SEC night game against a ranked opponent with a full Grove tailgate is a completely different world than a cupcake non-conference afternoon game. The Grove comes alive and the stadium reaches true SEC decibels under the lights.",
+    "tips": [
+      [
+        "before",
+        "The Grove for an SEC night game reaches its absolute peak. Arrive at 5 a.m. to get tent space and commit to the full day."
+      ],
+      [
+        "atmosphere",
+        "SEC night games at Vaught-Hemingway genuinely rival the best atmospheres in the sport when the matchup is right."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3974.jpg"
+  },
+  {
+    "id": "bobcat-stadium-ohio",
+    "venue_id": "3739",
+    "venue_name": "Glass Bowl",
+    "exp_name": "Toledo Rockets MACtion",
+    "league": "CFB",
+    "team": "TOL",
+    "rank": 99,
+    "fans": 6.0,
+    "food": 7.0,
+    "unique": 7.5,
+    "stadium": 6.5,
+    "final": 6.65,
+    "review_body": "The Glass Bowl on a Wednesday MAC night is the definition of pure college football. The students who show up are completely invested, the staff is friendly, and the whole thing costs about the same as a movie. Come for the novelty, stay for the chaos.",
+    "tips": [
+      [
+        "tips",
+        "Wednesday MACtion is best enjoyed with a group of people who appreciate the absurdity. Bring a flask and low expectations for the football."
+      ],
+      [
+        "food",
+        "Concession food is cheap and basic. Fill up in the Toledo bar scene before kickoff."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/interior/3739.jpg"
+  },
+  {
+    "id": "aloha-stadium-warriors-night",
+    "venue_id": "3610",
+    "venue_name": "Aloha Stadium",
+    "exp_name": "Hawai'i Night Game Special",
+    "league": "CFB",
+    "team": "HAW",
+    "rank": 100,
+    "fans": 8.2,
+    "food": 8.8,
+    "unique": 9.2,
+    "stadium": 6.5,
+    "final": 8.12,
+    "review_body": "A night game in Honolulu under the lights at Aloha Stadium with the full food truck convoy is the most scenic and unique college football setting on American soil. The temporary venue will be missed once the new stadium opens. Get there while you can.",
+    "tips": [
+      [
+        "tips",
+        "A night game in Honolulu is a magical experience. Plan two extra days on either side for beach recovery."
+      ],
+      [
+        "food",
+        "The spam musubi and plate lunch options from the food trucks are the best pregame spread in college sports, full stop."
+      ]
+    ],
+    "image": "https://a.espncdn.com/i/venues/college-football/day/3610.jpg"
+  }
+]

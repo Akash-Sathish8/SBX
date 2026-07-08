@@ -41,5 +41,23 @@
       "binding": "TILES",
       "bucket_name": "sbx-tiles"
     }
-  ]
+  ],
+  // User data: reviews, tips, rankings diary, follows, sessions.
+  // Create via `wrangler d1 create sbx-db` (+ `--env preview`).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "sbx-db",
+      "database_id": "REPLACE_WITH_D1_ID",
+      "preview_database_id": "REPLACE_WITH_D1_PREVIEW_ID",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "GOOGLE_CLIENT_ID": "",
+    "GOOGLE_CLIENT_SECRET": "",
+    "ANTHROPIC_API_KEY": "",
+    "SESSION_SECRET": "",
+    "PUBLIC_URL": "https://sbx.snapbacksports.com"
+  }
 }

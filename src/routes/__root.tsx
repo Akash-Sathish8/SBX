@@ -7,9 +7,6 @@ import { prewarmShared } from '../lib/dataCache'
 // utilities + a few @utility/@keyframes primitives). Every marketing page is on
 // utilities now — there are no per-page salvage stylesheets left.
 import appCss from '../styles.css?url'
-// Casey tracker still ships its own custom CSS (markers/keyframes/MapLibre) —
-// preloaded so the /casey chunk's stylesheet is warm.
-import caseyTrackerCss from '../styles/casey-tracker.css?url'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -35,9 +32,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: 'icon', type: 'image/png', href: '/img/logo.png' },
       { rel: 'apple-touch-icon', href: '/img/logo.png' },
       { rel: 'stylesheet', href: appCss },
-      // preload (not prefetch): iOS Safari ignores rel=prefetch. Only the casey
-      // tracker has its own stylesheet left to warm.
-      { rel: 'preload', as: 'style', href: caseyTrackerCss },
     ],
   }),
   shellComponent: RootDocument,
