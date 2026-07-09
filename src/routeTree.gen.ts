@@ -17,12 +17,10 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as RankingsRouteImport } from './routes/rankings'
 import { Route as RankRouteImport } from './routes/rank'
 import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as GuideRouteImport } from './routes/guide'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as GameRouteImport } from './routes/game'
 import { Route as FeedRouteImport } from './routes/feed'
 import { Route as ConferencesRouteImport } from './routes/conferences'
-import { Route as BuildRouteImport } from './routes/build'
 import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UUsernameRouteImport } from './routes/u/$username'
@@ -89,11 +87,6 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GuideRoute = GuideRouteImport.update({
-  id: '/guide',
-  path: '/guide',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GamesRoute = GamesRouteImport.update({
   id: '/games',
   path: '/games',
@@ -112,11 +105,6 @@ const FeedRoute = FeedRouteImport.update({
 const ConferencesRoute = ConferencesRouteImport.update({
   id: '/conferences',
   path: '/conferences',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BuildRoute = BuildRouteImport.update({
-  id: '/build',
-  path: '/build',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgendaRoute = AgendaRouteImport.update({
@@ -248,12 +236,10 @@ const ApiAuthConfigRoute = ApiAuthConfigRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/build': typeof BuildRoute
   '/conferences': typeof ConferencesRoute
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
-  '/guide': typeof GuideRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
@@ -289,12 +275,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/build': typeof BuildRoute
   '/conferences': typeof ConferencesRoute
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
-  '/guide': typeof GuideRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
@@ -331,12 +315,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/build': typeof BuildRoute
   '/conferences': typeof ConferencesRoute
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
-  '/guide': typeof GuideRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
@@ -374,12 +356,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/agenda'
-    | '/build'
     | '/conferences'
     | '/feed'
     | '/game'
     | '/games'
-    | '/guide'
     | '/profile'
     | '/rank'
     | '/rankings'
@@ -415,12 +395,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/agenda'
-    | '/build'
     | '/conferences'
     | '/feed'
     | '/game'
     | '/games'
-    | '/guide'
     | '/profile'
     | '/rank'
     | '/rankings'
@@ -456,12 +434,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/agenda'
-    | '/build'
     | '/conferences'
     | '/feed'
     | '/game'
     | '/games'
-    | '/guide'
     | '/profile'
     | '/rank'
     | '/rankings'
@@ -498,12 +474,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgendaRoute: typeof AgendaRoute
-  BuildRoute: typeof BuildRoute
   ConferencesRoute: typeof ConferencesRoute
   FeedRoute: typeof FeedRoute
   GameRoute: typeof GameRoute
   GamesRoute: typeof GamesRoute
-  GuideRoute: typeof GuideRoute
   ProfileRoute: typeof ProfileRoute
   RankRoute: typeof RankRoute
   RankingsRoute: typeof RankingsRoute
@@ -595,13 +569,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guide': {
-      id: '/guide'
-      path: '/guide'
-      fullPath: '/guide'
-      preLoaderRoute: typeof GuideRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/games': {
       id: '/games'
       path: '/games'
@@ -628,13 +595,6 @@ declare module '@tanstack/react-router' {
       path: '/conferences'
       fullPath: '/conferences'
       preLoaderRoute: typeof ConferencesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/build': {
-      id: '/build'
-      path: '/build'
-      fullPath: '/build'
-      preLoaderRoute: typeof BuildRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agenda': {
@@ -818,12 +778,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgendaRoute: AgendaRoute,
-  BuildRoute: BuildRoute,
   ConferencesRoute: ConferencesRoute,
   FeedRoute: FeedRoute,
   GameRoute: GameRoute,
   GamesRoute: GamesRoute,
-  GuideRoute: GuideRoute,
   ProfileRoute: ProfileRoute,
   RankRoute: RankRoute,
   RankingsRoute: RankingsRoute,

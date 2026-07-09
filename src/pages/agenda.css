@@ -8,7 +8,7 @@
 html, body { margin: 0; }
 body { font-family: 'Barlow', system-ui, sans-serif; color: #161616; background: #f4f4f1; }
 
-.ag-wrap { max-width: 1080px; margin: 0 auto; padding: 18px 18px 64px; }
+.ag-wrap { max-width: none; margin: 0 auto; padding: 18px clamp(18px, 4vw, 72px) 64px; }
 .ag-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
 .ag-brand { display: flex; align-items: center; gap: 12px; font-family: 'Anton', 'Barlow', sans-serif; text-transform: uppercase; font-size: 19px; line-height: .88; letter-spacing: .5px; color: #111; }
 .ag-brand img { width: 44px; height: 44px; border-radius: 9px; box-shadow: 3px 3px 0 #111; }

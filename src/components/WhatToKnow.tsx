@@ -58,14 +58,37 @@ function timeAgo(iso: string): string {
   return Math.floor(mo / 12) + 'y ago'
 }
 
-export function WhatToKnow({ scope, targetId }: { scope: 'venue' | 'event'; targetId: string }) {
-  const sections = scope === 'venue' ? VENUE_SECTIONS : EVENT_SECTIONS
+// The single "+ add a tip" control, rendered ONCE on the section header row
+// (right of "What do I need to know?"), not per card. Signed out it opens the
+// auth modal; signed in it opens the composer (see WhatToKnow composerOpen).
+export function AddTipButton({ onOpen }: { onOpen: () => void }) {
   const { user, openAuth } = useAuth()
+  return (
+    <button className="wtk-addbar" onClick={() => (user ? onOpen() : openAuth('signin'))}>
+      {user ? '+ Add a tip' : '+ Sign in to add a tip'}
+    </button>
+  )
+}
+
+export function WhatToKnow({
+  scope, targetId, composerOpen = false, onComposerClose,
+}: {
+  scope: 'venue' | 'event'
+  targetId: string
+  composerOpen?: boolean
+  onComposerClose?: () => void
+}) {
+  const sections = scope === 'venue' ? VENUE_SECTIONS : EVENT_SECTIONS
   const [tips, setTips] = useState<Tip[]>([])
-  const [open, setOpen] = useState<string | null>(null) // section key with the composer open
+  const [sec, setSec] = useState(sections[0].key) // composer's target section
   const [draft, setDraft] = useState('')
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState<string | null>(null)
+
+  // Fresh composer every time it opens.
+  useEffect(() => {
+    if (composerOpen) { setDraft(''); setErr(null); setSec(sections[0].key) }
+  }, [composerOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Load tips for this target (client-only; re-runs if the target changes).
   useEffect(() => {
@@ -96,12 +119,7 @@ export function WhatToKnow({ scope, targetId }: { scope: 'venue' | 'event'; targ
     return out
   }, [tips])
 
-  const startAdd = (key: string) => {
-    if (!user) { openAuth('signin'); return }
-    setErr(null); setDraft(''); setOpen(key)
-  }
-
-  const submit = async (key: string) => {
+  const submit = async () => {
     const text = draft.trim()
     if (!text || busy) return
     setBusy(true); setErr(null)
@@ -109,10 +127,10 @@ export function WhatToKnow({ scope, targetId }: { scope: 'venue' | 'event'; targ
       const r = await fetch('/api/tips', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ scope, targetId, section: key, body: text }),
+        body: JSON.stringify({ scope, targetId, section: sec, body: text }),
       })
       const j = await r.json().catch(() => ({}))
-      if (r.ok && j?.ok && Array.isArray(j.data)) { setTips(j.data); setOpen(null); setDraft('') }
+      if (r.ok && j?.ok && Array.isArray(j.data)) { setTips(j.data); setDraft(''); onComposerClose?.() }
       else setErr(j?.error || 'Could not post your tip.')
     } catch {
       setErr('Network error. Try again.')
@@ -130,7 +148,30 @@ export function WhatToKnow({ scope, targetId }: { scope: 'venue' | 'event'; targ
   }
 
   return (
-    <div className="wtk">
+    <div className="wtk-wrap">
+      {composerOpen ? (
+        <div className="wtk-composer">
+          <div className="wtk-composerrow">
+            <select className="wtk-select" value={sec} onChange={(e) => setSec(e.target.value)} aria-label="Tip section">
+              {sections.map((s) => <option key={s.key} value={s.key}>{s.label}</option>)}
+            </select>
+          </div>
+          <textarea
+            className="wtk-textarea" rows={3} maxLength={500} autoFocus
+            placeholder={sections.find((s) => s.key === sec)?.hint}
+            value={draft} onChange={(e) => setDraft(e.target.value)}
+          />
+          {err ? <div className="wtk-err">{err}</div> : null}
+          <div className="wtk-formrow">
+            <button className="wtk-cancel" onClick={() => { setErr(null); onComposerClose?.() }}>Cancel</button>
+            <button className="wtk-post" disabled={busy || !draft.trim()} onClick={submit}>
+              {busy ? 'Posting…' : 'Post tip'}
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="wtk">
       {sections.map((s) => {
         const list = bySection[s.key] || []
         return (
@@ -171,28 +212,10 @@ export function WhatToKnow({ scope, targetId }: { scope: 'venue' | 'event'; targ
               <div className="wtk-empty"><span className="wtk-dot" /> No tips yet — be the first.</div>
             )}
 
-            {open === s.key ? (
-              <div className="wtk-form">
-                <textarea
-                  className="wtk-textarea" rows={3} maxLength={500} autoFocus
-                  placeholder={s.hint} value={draft} onChange={(e) => setDraft(e.target.value)}
-                />
-                {err ? <div className="wtk-err">{err}</div> : null}
-                <div className="wtk-formrow">
-                  <button className="wtk-cancel" onClick={() => { setOpen(null); setErr(null) }}>Cancel</button>
-                  <button className="wtk-post" disabled={busy || !draft.trim()} onClick={() => submit(s.key)}>
-                    {busy ? 'Posting…' : 'Post tip'}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button className="wtk-add" onClick={() => startAdd(s.key)}>
-                {user ? '+ Add a tip' : '+ Sign in to add a tip'}
-              </button>
-            )}
           </div>
         )
       })}
+      </div>
     </div>
   )
 }

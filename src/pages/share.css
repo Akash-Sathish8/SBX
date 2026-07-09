@@ -150,7 +150,7 @@ section.block{padding-top:22px}
 .wz-custom-use:disabled{opacity:.45;cursor:default}
 /* Nav sits as a fixed bar right above the flags footer: Back on the left,
    Skip stacked above Next on the right. Gradient lets cards fade behind it. */
-.wz-nav{position:fixed;left:0;right:0;bottom:calc(44px + env(safe-area-inset-bottom));z-index:44;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;max-width:1180px;margin:0 auto;padding:14px 28px 10px;background:linear-gradient(to top,#f7f6f2 78%,rgba(247,246,242,0));pointer-events:none}
+.wz-nav{position:fixed;left:0;right:0;bottom:calc(44px + env(safe-area-inset-bottom));z-index:44;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;max-width:none;margin:0 auto;padding:14px clamp(28px,4vw,72px) 10px;background:linear-gradient(to top,#f7f6f2 78%,rgba(247,246,242,0));pointer-events:none}
 .wz-nav>*{pointer-events:auto}
 .wz-nav-stack{display:flex;flex-direction:column;gap:8px;align-items:stretch;flex:none}
 /* Phones: each wizard step is ONE fixed screen. The page never scrolls (a

@@ -138,9 +138,11 @@ function Home() {
         <div className="shade" />
         <div className="container">
           <div className="fg-copy">
-            <span className="fg-kick">The fan's field guide</span>
-            <h1>Where does <span className="hl">gameday</span> take&nbsp;you?</h1>
-            <SearchBox />
+            <div className="fg-left">
+              <span className="fg-kick">The fan's field guide</span>
+              <h1>Where does <span className="hl">gameday</span> take&nbsp;you?</h1>
+              <SearchBox />
+            </div>
             <div className="doors">
               <Link to="/teams" search={{ league: undefined }} className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">By sport &amp; team</span><span className="door-count">Browse leagues</span></span></Link>
               <Link to="/weekend" className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">This weekend</span><span className="door-count">Upcoming slate</span></span></Link>
@@ -216,20 +218,6 @@ function Home() {
             ))}
           </div>
         ) : <div className="container"><div className="hload">Loading venues…</div></div>}
-      </section>
-
-      {/* Sport pivot — one tap re-aims the whole app at your league */}
-      <section className="hsec">
-        <div className="container">
-          <div className="sec">
-            <div className="sec-left"><span className="sec-eye">Browse the leagues</span><h2>Pick your sport</h2></div>
-          </div>
-          <div className="sportrow">
-            {[...LEAGUES, ...COLLEGE_LEAGUES].map((l) => (
-              <Link key={l} to="/teams" search={{ league: l }} className="spchip" style={{ ['--acc' as any]: SPORTS[l].accent }}><i /><span>{SPORTS[l].label}</span></Link>
-            ))}
-          </div>
-        </div>
       </section>
 
       <div className="statbar">
