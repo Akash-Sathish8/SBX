@@ -33,9 +33,6 @@ function Venues() {
   const [err, setErr] = useState<string | null>(null)
   const [filter, setFilter] = useState<'all' | League>('all')
   const [conf, setConf] = useState<string | null>(null)
-  // Explore-first: the grid renders only after a sport choice or an explicit
-  // "browse all" — never the raw 601-card list on first paint.
-  const [browseAll, setBrowseAll] = useState(false)
   // Progressive reveal — 601 cards (each a background-image fetch) is too heavy
   // to mount at once, especially on mobile.
   const PAGE = 24
@@ -51,7 +48,6 @@ function Venues() {
 
 
   const isCollege = filter === 'college-football' || filter === 'college-basketball'
-  const browsing = filter !== 'all' || browseAll
   const list = useMemo(
     () => (all
       ? all.filter((v) =>
@@ -74,9 +70,9 @@ function Venues() {
     return [...m.entries()].map(([name, x]) => ({ name, short: x.short, n: x.n })).sort((a, b) => a.short.localeCompare(b.short))
   }, [all, filter, isCollege])
   const pill = (k: string) => 'pill' + (filter === k ? ' on' : '')
-  const pickFilter = (f: 'all' | League) => { setFilter(f); setConf(null); setShown(PAGE); if (f !== 'all') setBrowseAll(false) }
+  const pickFilter = (f: 'all' | League) => { setFilter(f); setConf(null); setShown(PAGE) }
 
-  const visible = browsing ? list.slice(0, shown) : []
+  const visible = list.slice(0, shown)
   // Warm the photos for the visible slice so cards paint instantly.
   useEffect(() => {
     for (const v of visible) { const s = cardImg(v.image); if (s) warmImage(s) }
@@ -91,56 +87,25 @@ function Venues() {
           <div className="eyebrow">NFL · NBA · MLB · NHL · every home ground</div>
           <h1>Every <span className="hl">venue</span></h1>
           <SearchBox placeholder="Search a venue, team, or city…" />
-          {browsing ? (
-            <>
-              <div className="tally" id="tally">
-                <button className={'pill' + (browseAll && filter === 'all' ? ' on' : '')} onClick={() => { pickFilter('all'); setBrowseAll(true) }}>All venues</button>
-                {[...LEAGUES, ...COLLEGE_LEAGUES].map((l) => (
-                  <button key={l} className={pill(l)} onClick={() => pickFilter(l)}><b>{all ? count(l) : '—'}</b> {SPORTS[l].label}</button>
-                ))}
-              </div>
-              {isCollege && confList.length ? (
-                <div className="confrow">
-                  <button className={'cchip' + (conf === null ? ' on' : '')} onClick={() => { setConf(null); setShown(PAGE) }}>All conferences</button>
-                  {confList.map((c) => (
-                    <button key={c.name} className={'cchip' + (conf === c.name ? ' on' : '')} onClick={() => { setConf(c.name); setShown(PAGE) }}><b>{c.n}</b> {c.short}</button>
-                  ))}
-                </div>
-              ) : null}
-            </>
+          <div className="tally" id="tally">
+            <button className={pill('all')} onClick={() => pickFilter('all')}>All venues</button>
+            {[...LEAGUES, ...COLLEGE_LEAGUES].map((l) => (
+              <button key={l} className={pill(l)} onClick={() => pickFilter(l)}><b>{all ? count(l) : '—'}</b> {SPORTS[l].label}</button>
+            ))}
+          </div>
+          {isCollege && confList.length ? (
+            <div className="confrow">
+              <button className={'cchip' + (conf === null ? ' on' : '')} onClick={() => { setConf(null); setShown(PAGE) }}>All conferences</button>
+              {confList.map((c) => (
+                <button key={c.name} className={'cchip' + (conf === c.name ? ' on' : '')} onClick={() => { setConf(c.name); setShown(PAGE) }}><b>{c.n}</b> {c.short}</button>
+              ))}
+            </div>
           ) : null}
         </div>
       </section>
 
-      {!browsing ? (
-        <section className="block">
-          <div className="container">
-            <div className="entry-hd"><h2>Explore by sport</h2><span className="entry-sub">Pick a league to browse its buildings</span></div>
-            {all === null && !err ? <div className="loading">Loading venues…</div> : null}
-            {err ? <div className="empty">{err}</div> : null}
-            {all !== null && !err ? (
-              <>
-                <div className="sptiles">
-                  {[...LEAGUES, ...COLLEGE_LEAGUES].map((l) => (
-                    <button key={l} className="sptile" style={{ ['--acc' as any]: SPORTS[l].accent }} onClick={() => pickFilter(l)}>
-                      <span className="sp-lg">{SPORTS[l].label}</span>
-                      <span className="sp-n"><b>{count(l)}</b> venues</span>
-                    </button>
-                  ))}
-                </div>
-                <div className="browseall-row">
-                  <button className="pill loadmore" onClick={() => { setBrowseAll(true); setShown(PAGE) }}>Browse all {all.length} venues A–Z →</button>
-                </div>
-              </>
-            ) : null}
-          </div>
-        </section>
-      ) : null}
-
-      {browsing ? (
       <section className="block">
         <div className="container">
-          <button className="backexplore" onClick={() => { setBrowseAll(false); pickFilter('all') }}>← Explore by sport</button>
           {all === null && !err ? <div className="loading">Loading venues…</div> : null}
           {err ? <div className="empty">{err}</div> : null}
           {all !== null && !err && list.length === 0 ? (
@@ -181,7 +146,6 @@ function Venues() {
           ) : null}
         </div>
       </section>
-      ) : null}
 
       <footer>
         <div className="container">© 2026 Snapback Sports — Venues. <Link to="/">← Experiences</Link></div>

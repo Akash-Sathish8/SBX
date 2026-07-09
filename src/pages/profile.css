@@ -5,7 +5,7 @@ body{font-family:'Barlow',system-ui,sans-serif;color:#33352f;background:var(--li
 h1,h2{font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;color:var(--ink);letter-spacing:1px;line-height:1}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;height:auto}
-.container{max-width:1180px;margin:0 auto;padding:0 28px}
+.container{max-width:none;margin:0 auto;padding:0 clamp(28px,4vw,72px)}
 
 /* ---- buttons (shared look with the rest of the app) ---- */
 .pf-edit,.pf-save,.pf-mini-btn,.pf-signout{font-family:'Barlow';font-weight:800;text-transform:uppercase;letter-spacing:.6px;

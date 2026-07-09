@@ -82,7 +82,6 @@ function Teams() {
         <div className="container">
           <Link to="/" className="ghback">← Back</Link>
           <h1>Pick your <span className="hl">team</span></h1>
-          <p className="sub">Every team leads to its home venue, upcoming games and ranked experiences.</p>
         </div>
       </section>
 

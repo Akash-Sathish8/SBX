@@ -5,7 +5,7 @@ import { PageCssGuard } from '../components/PageCssGuard'
 import { getJSON, getJSONFresh, warmImage } from '../lib/dataCache'
 import { SPORTS } from '../lib/sports'
 import type { Venue, Game } from '../lib/espn'
-import { WhatToKnow } from '../components/WhatToKnow'
+import { WhatToKnow, AddTipButton } from '../components/WhatToKnow'
 import { ExpertNotes } from '../components/ExpertNotes'
 import { Reviews, type VenueRatings } from '../components/Reviews'
 import { useAuth } from '../components/auth/AuthProvider'
@@ -99,6 +99,7 @@ function VenuePage() {
 function VenueContent({ v, games, review }: { v: Venue; games: Game[] | null; review: boolean }) {
   const { user } = useAuth()
   const forumRef = useRef<HTMLElement>(null)
+  const [tipOpen, setTipOpen] = useState(false)
   // The fan's own pillar scores for THIS venue (matched by name — a ranked game
   // only stores the venue name), surfaced on the review card while they write.
   const [myRating, setMyRating] = useState<VenueRatings | null>(null)
@@ -180,11 +181,14 @@ function VenueContent({ v, games, review }: { v: Venue; games: Game[] | null; re
       {/* WHAT DO I NEED TO KNOW — the crowdsourced info-discovery core */}
       <section className="block tint" ref={forumRef}><div className="container">
         <div className="eyebrow">Snapback · crowdsourced</div>
-        <h2 className="shead">What do I need to know?</h2>
+        <div className="shead-row">
+          <h2 className="shead">What do I need to know?</h2>
+          <AddTipButton onOpen={() => setTipOpen(true)} />
+        </div>
         <div className="ssub">Insider tips &amp; reviews from fans who've actually been to {v.name}</div>
         <ExpertNotes scope="venue" targetId={v.id} />
         <div className="wtk-layout">
-          <WhatToKnow scope="venue" targetId={v.id} />
+          <WhatToKnow scope="venue" targetId={v.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
           <Reviews
             scope="venue"
             targetId={v.id}

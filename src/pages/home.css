@@ -10,7 +10,7 @@ body{font-family:'Barlow',system-ui,sans-serif;color:var(--body);background:var(
 h1,h2,h3{font-family:'Anton','Barlow',sans-serif;text-transform:uppercase;color:var(--ink);letter-spacing:1px;line-height:1}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;height:auto}
-.container{max-width:1180px;margin:0 auto;padding:0 28px}
+.container{max-width:none;margin:0 auto;padding:0 clamp(28px,4vw,72px)}
 .num{font-variant-numeric:tabular-nums}
 
 /* ---- poster hero: copy docked bottom-left, doors (mini tickets) under it.
@@ -53,7 +53,7 @@ img{max-width:100%;height:auto}
 .tchip::after{content:"";position:absolute;inset:3px;border:1px dashed var(--ink);border-radius:3px;pointer-events:none}
 .tchip:hover{box-shadow:4px 4px 0 var(--ink);transform:translate(-1px,-1px)}
 /* full-bleed rail whose first card aligns with the container edge */
-.hrail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:6px 28px 30px;padding-inline:max(28px, calc((100% - 1124px) / 2))}
+.hrail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:6px 28px 30px;padding-inline:clamp(28px,4vw,72px)}
 .hrail::-webkit-scrollbar{display:none}
 .hload{color:var(--gray);font-size:14px;font-weight:600;padding:6px 0 14px}
 .hlink{font-weight:800;border-bottom:2px solid var(--y)}
@@ -119,8 +119,21 @@ footer a{color:var(--y);font-weight:800;text-transform:uppercase;letter-spacing:
 
 /* ---- desktop ---- */
 @media(min-width:900px){
-  .doors{grid-template-columns:repeat(4,1fr)}
-  .door{min-height:86px}
+  /* split hero: copy bottom-left, the four explore tickets stacked vertically on the right.
+     Type + tickets scale up to fill the viewport-height hero (no dead space up top). */
+  .fg-copy{display:flex;align-items:flex-end;gap:clamp(32px,4vw,72px)}
+  .fg-left{flex:1;min-width:0}
+  .fg-kick{font-size:13px;padding:6px 12px}
+  .fg-hero h1{font-size:clamp(72px,6.5vw,132px)}
+  .fg-hero .sbx-search{max-width:680px;margin-top:28px}
+  .doors{margin-top:0;width:auto;flex:0 0 clamp(360px,28vw,520px);grid-template-columns:1fr;gap:24px}
+  .door{min-height:118px}
+  .door::before,.door::after{left:33px}
+  .door-stub{flex-basis:40px;padding-left:11px}
+  .door-stub b{font-size:10px}
+  .door-main{padding:14px 16px}
+  .door-label{font-size:17px}
+  .door-count{font-size:12px}
   .hsec{padding:44px 0 6px}
   .sec h2{font-size:36px}
   .hrail{gap:18px;scroll-snap-type:none}

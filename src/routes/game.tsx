@@ -5,7 +5,7 @@ import { PageCssGuard } from '../components/PageCssGuard'
 import { getJSON } from '../lib/dataCache'
 import { SPORTS, isLeague, type League } from '../lib/sports'
 import type { Game, GameTeam } from '../lib/espn'
-import { WhatToKnow } from '../components/WhatToKnow'
+import { WhatToKnow, AddTipButton } from '../components/WhatToKnow'
 import { ExpertNotes } from '../components/ExpertNotes'
 import { GamesThatWeekend, NearbyVenues, RelatedExperience } from '../components/NextHops'
 import css from '../pages/game.css?url'
@@ -95,6 +95,7 @@ function TeamSide({ t, side }: { t: GameTeam; side: 'home' | 'away' }) {
 
 function GameContent({ g }: { g: Game }) {
   const showScore = (g.state === 'post' || g.state === 'in') && g.home.score !== null && g.away.score !== null
+  const [tipOpen, setTipOpen] = useState(false)
   return (
     <>
       <section className="ghero">
@@ -121,17 +122,13 @@ function GameContent({ g }: { g: Game }) {
 
       <section className="block tint"><div className="container">
         <div className="eyebrow">Snapback · crowdsourced</div>
-        <h2 className="shead">What do I need to know?</h2>
+        <div className="shead-row">
+          <h2 className="shead">What do I need to know?</h2>
+          <AddTipButton onOpen={() => setTipOpen(true)} />
+        </div>
         <div className="ssub">Tips from fans for {g.away.displayName} @ {g.home.displayName}</div>
         <ExpertNotes scope="event" targetId={g.league + ':' + g.id} />
-        <WhatToKnow scope="event" targetId={g.league + ':' + g.id} />
-      </div></section>
-
-      <section className="block"><div className="container">
-        <div className="eyebrow">Make it yours</div>
-        <h2 className="shead">Your gameday guide</h2>
-        <div className="ssub">A shareable card of your gameday plan</div>
-        <Link to="/build" search={{ game: g.id, league: g.league, mode: 'matchup' }} className="guidecta">Build Gameday Guide →</Link>
+        <WhatToKnow scope="event" targetId={g.league + ':' + g.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
       </div></section>
 
       {/* Next hops — the trip doesn't end at this game. */}
