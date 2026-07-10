@@ -26,7 +26,7 @@ export const Route = createFileRoute('/api/auth/register')({
           )
         } catch (e: any) {
           const m = String(e?.message)
-          if (m === 'USERNAME_TAKEN') return Response.json({ ok: false, error: 'That username is taken — pick another.' }, { status: 409 })
+          if (m === 'USERNAME_TAKEN') return Response.json({ ok: false, error: 'That username is taken. Pick another.' }, { status: 409 })
           if (m === 'EMAIL_TAKEN') return Response.json({ ok: false, error: 'That email is already registered.' }, { status: 409 })
           return Response.json({ ok: false, error: 'Could not create account.' }, { status: 500 })
         }

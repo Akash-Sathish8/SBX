@@ -61,13 +61,13 @@ function notesBlock(notes: ExpertNote[], label = 'SNAPBACK EXPERT NOTES'): strin
 
 function tipsBlock(tips: Tip[], label = 'FAN TIPS'): string {
   if (!tips.length) return ''
-  const lines = tips.map((t) => `- [${t.section}] ${t.body} — ${t.author}`)
+  const lines = tips.map((t) => `- [${t.section}] ${t.body} (${t.author})`)
   return `${label}:\n${lines.join('\n')}`
 }
 
 function reviewsBlock(reviews: Review[], label = 'FAN REVIEWS'): string {
   if (!reviews.length) return ''
-  const lines = reviews.map((r) => `- ${r.rating != null ? `(${r.rating}/10) ` : ''}${r.body} — ${r.author}`)
+  const lines = reviews.map((r) => `- ${r.rating != null ? `(${r.rating}/10) ` : ''}${r.body} (${r.author})`)
   return `${label}:\n${lines.join('\n')}`
 }
 
@@ -76,7 +76,7 @@ function venueFacts(v: Venue): string {
   const phys = [v.surface, v.indoor === undefined ? undefined : v.indoor ? 'indoor' : 'outdoor'].filter(Boolean).join(', ')
   const teams = v.teams.map((t) => `${t.displayName} (${SPORTS[t.league]?.label ?? t.league})`).join('; ')
   return [
-    `VENUE: ${v.name}${loc ? ` — ${loc}` : ''}${phys ? ` — ${phys}` : ''}`,
+    `VENUE: ${v.name}${loc ? ` · ${loc}` : ''}${phys ? ` · ${phys}` : ''}`,
     teams ? `HOME TEAM(S): ${teams}` : '',
   ]
     .filter(Boolean)
@@ -93,7 +93,7 @@ function gamesHere(v: Venue, games: Game[]): string {
   const lines = here.map((g) => {
     const status = g.state === 'post' ? 'Final' : g.state === 'in' ? g.detail || 'Live' : fmtDate(g.date)
     const sc = (g.state === 'post' || g.state === 'in') && g.home.score != null && g.away.score != null ? ` (${g.away.abbr} ${g.away.score}–${g.home.score} ${g.home.abbr})` : ''
-    return `- ${g.away.displayName} @ ${g.home.displayName} — ${status}${sc}`
+    return `- ${g.away.displayName} @ ${g.home.displayName} · ${status}${sc}`
   })
   return `GAMES HERE:\n${lines.join('\n')}`
 }
@@ -147,7 +147,7 @@ export async function getEventContext(targetId: string): Promise<AssistantContex
   ])
 
   const status =
-    g.state === 'post' ? 'Final' : g.state === 'in' ? `Live — ${g.detail || 'in progress'}` : `Scheduled — ${fmtDate(g.date)}`
+    g.state === 'post' ? 'Final' : g.state === 'in' ? `Live: ${g.detail || 'in progress'}` : `Scheduled: ${fmtDate(g.date)}`
   const score =
     (g.state === 'post' || g.state === 'in') && g.home.score != null && g.away.score != null
       ? `SCORE: ${g.away.displayName} ${g.away.score} – ${g.home.score} ${g.home.displayName}`
@@ -155,7 +155,7 @@ export async function getEventContext(targetId: string): Promise<AssistantContex
   const venueLine = g.venue.name ? `VENUE: ${g.venue.name}${g.venue.city ? `, ${g.venue.city}` : ''}${g.venue.state ? `, ${g.venue.state}` : ''}` : ''
 
   const context = [
-    `GAME: ${g.away.displayName} @ ${g.home.displayName} — ${SPORTS[league]?.label ?? league}`,
+    `GAME: ${g.away.displayName} @ ${g.home.displayName} · ${SPORTS[league]?.label ?? league}`,
     `STATUS: ${status}`,
     score,
     venueLine,
@@ -177,12 +177,12 @@ export async function getEventContext(targetId: string): Promise<AssistantContex
 export async function getGeneralContext(): Promise<AssistantContext> {
   const exps = ((experiencesData as any).experiences ?? []) as Array<any>
   const ranked = exps.map(
-    (e) => `#${e.rank} ${e.name} (${e.location}, ${e.sport}) — fans ${e.fans}, food ${e.food}, unique ${e.unique}, stadium ${e.stadium}, overall ${e.final}`,
+    (e) => `#${e.rank} ${e.name} (${e.location}, ${e.sport}): fans ${e.fans}, food ${e.food}, unique ${e.unique}, stadium ${e.stadium}, overall ${e.final}`,
   )
   const context = [
     'SNAPBACK ranks the best live sports experiences in the US and helps fans figure out what to know before they go. Fans can browse venues and games, read Snapback and fan tips, and see the rankings on the site.',
     'Leagues covered: MLB, NFL, NBA, college football, and college basketball. There is no ticket-price data anywhere in Snapback.',
-    `SNAPBACK EXPERIENCE RANKINGS (${ranked.length} experiences; scores out of 10 — fans, food, uniqueness, stadium, and overall):`,
+    `SNAPBACK EXPERIENCE RANKINGS (${ranked.length} experiences; scores out of 10: fans, food, uniqueness, stadium, and overall):`,
     ranked.join('\n'),
   ].join('\n\n')
   return { title: 'Snapback', context }

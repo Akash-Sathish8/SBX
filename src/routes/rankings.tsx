@@ -2,9 +2,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
-import { getJSON } from '../lib/dataCache'
+import { getJSON, warmImage } from '../lib/dataCache'
 import type { Experience } from '../lib/experiences'
+import { expImage } from '../lib/experiences'
+import type { Venue } from '../lib/espn'
 import { collectionBySlug } from '../lib/collections'
+import { matchVenueForExperience } from '../lib/experienceMatch'
 import css from '../pages/rankings.css?url'
 
 // Expert-rated US sports experiences (built from public/data/experiences.csv via
@@ -26,20 +29,31 @@ export const Route = createFileRoute('/rankings')({
   },
   head: () => ({
     links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'rankings' }],
-    meta: [{ title: 'Snapback — Experience Rankings' }],
+    meta: [{ title: 'Snapback · Experience Rankings' }],
   }),
   component: Rankings,
 })
 
 const f1 = (n: number) => n.toFixed(1)
 
+const PILLARS = [
+  { key: 'fans', label: 'Fans & atmosphere' },
+  { key: 'food', label: 'Food & drink' },
+  { key: 'unique', label: 'Uniqueness' },
+  { key: 'stadium', label: 'The stadium' },
+] as const
+
 function Rankings() {
   const { collection: colSlug, q: qParam } = Route.useSearch()
   const col = colSlug ? collectionBySlug(colSlug) : undefined
   const [data, setData] = useState<ExpData | null>(null)
+  const [venues, setVenues] = useState<Venue[]>([])
   const [err, setErr] = useState<string | null>(null)
   const [q, setQ] = useState(qParam ?? '')
   const [sport, setSport] = useState('All Sports')
+  // Spotlight selection (by rank). Falls back to the first visible row whenever
+  // the current pick is filtered out.
+  const [selRank, setSelRank] = useState<number | null>(null)
 
   // Deep-linked search (?q= from home search results) wins over stale local state.
   useEffect(() => { if (qParam != null) setQ(qParam) }, [qParam])
@@ -49,6 +63,9 @@ function Rankings() {
     getJSON<ExpData>('/data/experiences.json')
       .then((d) => { if (alive) setData(d) })
       .catch(() => { if (alive) setErr("Couldn't load rankings.") })
+    getJSON('/api/venues')
+      .then((r: any) => { if (alive) setVenues(Array.isArray(r?.data) ? r.data : []) })
+      .catch(() => {})
     return () => { alive = false }
   }, [])
 
@@ -63,14 +80,22 @@ function Rankings() {
     })
   }, [data, q, sport, col])
 
+  const sel = useMemo(
+    () => list.find((e) => e.rank === selRank) ?? list[0] ?? null,
+    [list, selRank],
+  )
+  const selVenue = useMemo(() => (sel ? matchVenueForExperience(sel.name, venues) : null), [sel, venues])
+  const selImage = sel ? (sel.image ?? expImage(sel.name, venues)) : undefined
+  useEffect(() => { if (selImage) warmImage(selImage) }, [selImage])
+
   return (
     <>
       <PageCssGuard id="rankings" />
       <SiteNav />
       <section className="rhead">
         <div className="container">
-          <div className="eyebrow">Expert-rated · {data ? data.count : '—'} US experiences</div>
-          <h1>Our best <span className="hl">experiences</span></h1>
+          <div className="eyebrow">Expert-rated · {data ? data.count : '–'} US experiences</div>
+          <h1>Our best experiences</h1>
           {col ? (
             <div className="colchip">
               Collection: <b>{col.title}</b>
@@ -78,8 +103,7 @@ function Rankings() {
             </div>
           ) : null}
           <p className="sub">
-            Every US sports experience, ranked. Scored by our experts on fans, food,
-            uniqueness, and the stadium itself. Been to one? <Link to="/rank" className="logcta">Log a game →</Link>
+            <Link to="/rank" className="logcta">Log a game →</Link>
           </p>
           <div className="controls">
             <label className="search">
@@ -105,46 +129,63 @@ function Rankings() {
           {data !== null && !err ? (
             <>
               <p className="rcount">{list.length} {list.length === 1 ? 'experience' : 'experiences'}{sport !== 'All Sports' ? ` · ${sport}` : ''}</p>
-              <div className="rtable-wrap">
-                <table className="rtable">
-                  <thead>
-                    <tr>
-                      <th className="l">Rank</th>
-                      <th className="l">Experience</th>
-                      <th className="l">Location</th>
-                      <th className="l">Sport</th>
-                      <th>Fans</th>
-                      <th>Food</th>
-                      <th>Unique</th>
-                      <th>Stadium</th>
-                      <th>Final Score</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+              {list.length === 0 ? <div className="empty">No experiences match your search.</div> : (
+                <div className="splitr">
+                  {/* Leaderboard — hover or tap a row to load it into the spotlight */}
+                  <div className="lb" role="listbox" aria-label="Experience rankings">
                     {list.map((e) => (
-                      <tr key={e.rank}>
-                        <td className="l"><span className="rnum">#{e.rank}</span></td>
-                        <td className="l c-name">{e.name}</td>
-                        <td className="l c-loc">{e.location}</td>
-                        <td className="l"><span className="sporttag">{e.sport}</span></td>
-                        <td>{f1(e.fans)}</td>
-                        <td>{f1(e.food)}</td>
-                        <td>{f1(e.unique)}</td>
-                        <td>{f1(e.stadium)}</td>
-                        <td><span className="finalscore">{f1(e.final)}</span></td>
-                      </tr>
+                      <button
+                        key={e.rank}
+                        type="button"
+                        role="option"
+                        aria-selected={sel?.rank === e.rank}
+                        className={'lb-row' + (sel?.rank === e.rank ? ' on' : '')}
+                        onClick={() => setSelRank(e.rank)}
+                        onMouseEnter={() => setSelRank(e.rank)}
+                      >
+                        <span className="lb-rk">#{e.rank}</span>
+                        <span className="lb-txt">
+                          <span className="lb-nm">{e.name}</span>
+                          <span className="lb-city">{e.location}</span>
+                        </span>
+                        <span className="lb-score">{f1(e.final)}</span>
+                      </button>
                     ))}
-                    {list.length === 0 ? <tr><td colSpan={9} className="empty">No experiences match your search.</td></tr> : null}
-                  </tbody>
-                </table>
-              </div>
+                  </div>
+
+                  {/* Spotlight — the selected experience with its venue photo */}
+                  {sel ? (
+                    <div className="detail">
+                      {selImage
+                        ? <img src={selImage} alt={sel.name} />
+                        : <div className="detail-noimg" aria-hidden="true" />}
+                      <div className="detail-body">
+                        <div className="detail-nm">{sel.name}</div>
+                        <div className="detail-meta">
+                          #{sel.rank} in America · {sel.location} · {sel.sport}
+                          {selVenue ? <> · {selVenue.name}</> : null}
+                        </div>
+                        {PILLARS.map((p) => (
+                          <div key={p.key} className="bar">
+                            <div className="bar-lab"><span>{p.label}</span><span>{f1(sel[p.key])}</span></div>
+                            <div className="bar-tr"><i style={{ width: `${sel[p.key] * 10}%` }} /></div>
+                          </div>
+                        ))}
+                        {selVenue ? (
+                          <Link to="/venue" search={{ id: selVenue.id }} className="detail-cta">Plan this trip →</Link>
+                        ) : null}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              )}
             </>
           ) : null}
         </div>
       </section>
 
       <footer>
-        <div className="container">© 2026 Snapback Sports — Experience Rankings. <Link to="/">← Home</Link></div>
+        <div className="container">© 2026 Snapback Sports · Experience Rankings. <Link to="/">← Home</Link></div>
       </footer>
     </>
   )

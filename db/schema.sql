@@ -140,6 +140,18 @@ CREATE TABLE IF NOT EXISTS tips (
 );
 CREATE INDEX IF NOT EXISTS idx_tips_target ON tips (scope, target_id);
 
+-- Tip voting: one row per (tip, voter), vote is +1 (up) or -1 (down).
+-- Mirrors review_votes; counts are aggregated at read time.
+CREATE TABLE IF NOT EXISTS tip_votes (
+  tip_id     TEXT NOT NULL,
+  user_id    TEXT NOT NULL,           -- user id, or 'anon:<device-id>' for signed-out voters
+  vote       INTEGER NOT NULL,        -- 1 = up, -1 = down
+  created_at TEXT NOT NULL,
+  PRIMARY KEY (tip_id, user_id),
+  FOREIGN KEY (tip_id) REFERENCES tips(id)
+);
+CREATE INDEX IF NOT EXISTS idx_tip_votes_tip ON tip_votes (tip_id);
+
 -- Extensive fan reviews of a gameday experience (longer than a tip). Scoped to a
 -- venue id (or 'league:gameId'), optionally tied to the game attended. Real fan
 -- input only — never seeded with fabricated content.
@@ -156,6 +168,18 @@ CREATE TABLE IF NOT EXISTS reviews (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE INDEX IF NOT EXISTS idx_reviews_target ON reviews (scope, target_id);
+
+-- Review voting: one row per (review, voter), vote is +1 (up) or -1 (down).
+-- Toggling a vote off deletes the row; counts are aggregated at read time.
+CREATE TABLE IF NOT EXISTS review_votes (
+  review_id  TEXT NOT NULL,
+  user_id    TEXT NOT NULL,           -- user id, or 'anon:<device-id>' for signed-out voters
+  vote       INTEGER NOT NULL,        -- 1 = up, -1 = down
+  created_at TEXT NOT NULL,
+  PRIMARY KEY (review_id, user_id),
+  FOREIGN KEY (review_id) REFERENCES reviews(id)
+);
+CREATE INDEX IF NOT EXISTS idx_review_votes_review ON review_votes (review_id);
 
 -- Snapback editorial "expert notes" — curated insider knowledge extracted from
 -- first-party sources (e.g. transcripts of games the team actually attended).

@@ -38,7 +38,7 @@ export const Route = createFileRoute('/venue')({
       { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
       { rel: 'stylesheet', href: nexthopCss, 'data-page-css': 'venue game' },
     ],
-    meta: [{ title: 'Snapback — Venue' }],
+    meta: [{ title: 'Snapback · Venue' }],
   }),
   component: VenuePage,
 })
@@ -68,7 +68,7 @@ function VenuePage() {
     getJSON('/api/venues')
       .then((r: any) => {
         const v = (Array.isArray(r?.data) ? r.data : []).find((x: Venue) => x.id === id) ?? null
-        if (alive) { setVenue(v); if (v) { document.title = 'Snapback — ' + v.name; if (v.image) warmImage(v.image); v.teams.forEach((t: any) => t.logo && warmImage(t.logo)) } }
+        if (alive) { setVenue(v); if (v) { document.title = 'Snapback · ' + v.name; if (v.image) warmImage(v.image); v.teams.forEach((t: any) => t.logo && warmImage(t.logo)) } }
       })
       .catch(() => { if (alive) setVenue(null) })
     getJSON('/api/games')
@@ -83,7 +83,7 @@ function VenuePage() {
       <SiteNav active="venues" />
       <main id="app">{renderBody()}</main>
       <footer>
-        <div className="container">© 2026 Snapback Sports — Venues. <Link to="/venues">← All venues</Link></div>
+        <div className="container">© 2026 Snapback Sports · Venues. <Link to="/venues">← All venues</Link></div>
       </footer>
     </>
   )
@@ -158,7 +158,7 @@ function VenueContent({ v, games, review }: { v: Venue; games: Game[] | null; re
           <div className="vhero-row">
             <div className="vhero-title">
               <h1>{v.name}</h1>
-              <div className="altname">Home of <b>{v.teams.map((t) => t.displayName).join(' · ')}</b></div>
+              {v.teams.length ? <div className="altname">Home of <b>{v.teams.map((t) => t.displayName).join(' · ')}</b></div> : null}
             </div>
             <div className="vscores">
               {snap ? (
@@ -170,7 +170,7 @@ function VenueContent({ v, games, review }: { v: Venue; games: Game[] | null; re
               ) : null}
               <div className="vscore">
                 <div className="lab">Fan Score</div>
-                <div className="val">{hasFan ? fan!.score.toFixed(1) : '—'}</div>
+                <div className="val">{hasFan ? fan!.score.toFixed(1) : '–'}</div>
                 <div className="sub">{hasFan ? `${fan!.count} fan ${fan!.count === 1 ? 'rating' : 'ratings'}` : 'Be the first to rank it'}</div>
               </div>
             </div>

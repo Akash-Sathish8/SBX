@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getUserFromRequest } from '../../server/auth'
-import { dbGetTips, dbAddTip, dbDeleteTip, OFFICIAL_USER_ID, VERIFIED_USER_IDS, type Tip } from '../../server/db'
+import { getUserFromRequest, getVoterFromRequest } from '../../server/auth'
+import { dbGetTips, dbAddTip, dbDeleteTip, dbMyTipVotes, OFFICIAL_USER_ID, VERIFIED_USER_IDS, type Tip } from '../../server/db'
 
 const noStore = { 'Cache-Control': 'no-store' }
 const SCOPES = new Set(['venue', 'event'])
@@ -8,14 +8,28 @@ const isSlug = (s: any) => typeof s === 'string' && /^[a-z0-9:_-]{1,40}$/i.test(
 
 // Strip the internal user_id; expose a `mine` flag so the author (and only the
 // author) sees a delete control. Reads are public; the cookie is optional.
-function publicTip(t: Tip, uid?: string) {
+// `myVote` is the caller's own up/down (0 when signed out or not voted).
+function publicTip(t: Tip, uid?: string, myVotes?: Record<string, number>) {
   return {
     id: t.id, scope: t.scope, targetId: t.targetId, section: t.section,
     author: t.author, avatar: t.avatar ?? null, body: t.body, createdAt: t.createdAt,
+    up: t.up, down: t.down, myVote: myVotes?.[t.id] ?? 0,
     mine: !!uid && t.userId === uid,
     official: t.userId === OFFICIAL_USER_ID,
     verified: VERIFIED_USER_IDS.has(t.userId),
   }
+}
+
+// The target's tips with the caller's votes attached (shared by GET/POST/
+// DELETE). `myVote` works signed-out too: the voter key falls back to the
+// device's anon cookie (a freshly minted key has no votes, so skip the query).
+async function listForTarget(request: Request, scope: string, targetId: string, uid?: string) {
+  const { voter, setCookie } = getVoterFromRequest(request, uid)
+  const [tips, myVotes] = await Promise.all([
+    dbGetTips(scope, targetId),
+    setCookie ? Promise.resolve({} as Record<string, number>) : dbMyTipVotes(voter, scope, targetId),
+  ])
+  return tips.map((t) => publicTip(t, uid, myVotes))
 }
 
 // GET = public list for a target. POST = auth-gated create. DELETE ?id= = remove
@@ -29,7 +43,7 @@ export const Route = createFileRoute('/api/tips')({
         const targetId = url.searchParams.get('targetId') || ''
         if (!SCOPES.has(scope) || !targetId) return Response.json({ ok: false, error: 'Bad request.', data: [] }, { status: 400, headers: noStore })
         const user = await getUserFromRequest(request)
-        const data = (await dbGetTips(scope, targetId)).map((t) => publicTip(t, user?.id))
+        const data = await listForTarget(request, scope, targetId, user?.id)
         return Response.json({ ok: true, data }, { headers: noStore })
       },
       POST: async ({ request }) => {
@@ -45,7 +59,7 @@ export const Route = createFileRoute('/api/tips')({
         if (text.length < 1 || text.length > 500) return Response.json({ ok: false, error: 'Tip must be 1–500 characters.' }, { status: 400, headers: noStore })
         const author = (user.email.split('@')[0] || 'fan').slice(0, 40)
         await dbAddTip(user.id, author, scope, targetId, section, text)
-        const data = (await dbGetTips(scope, targetId)).map((t) => publicTip(t, user.id))
+        const data = await listForTarget(request, scope, targetId, user.id)
         return Response.json({ ok: true, data }, { headers: noStore })
       },
       DELETE: async ({ request }) => {
@@ -56,7 +70,7 @@ export const Route = createFileRoute('/api/tips')({
         const scope = url.searchParams.get('scope') || ''
         const targetId = url.searchParams.get('targetId') || ''
         if (id) await dbDeleteTip(user.id, id)
-        const data = SCOPES.has(scope) && targetId ? (await dbGetTips(scope, targetId)).map((t) => publicTip(t, user.id)) : []
+        const data = SCOPES.has(scope) && targetId ? await listForTarget(request, scope, targetId, user.id) : []
         return Response.json({ ok: true, data }, { headers: noStore })
       },
     },

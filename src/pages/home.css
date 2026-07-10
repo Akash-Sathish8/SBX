@@ -15,7 +15,9 @@ img{max-width:100%;height:auto}
 
 /* ---- poster hero: copy docked bottom-left, doors (mini tickets) under it.
    nav (72px) + hero = exactly one viewport on every screen ---- */
-.fg-hero{position:relative;min-height:calc(100vh - 72px);min-height:calc(100svh - 72px);display:flex;flex-direction:column;isolation:isolate;color:#fff;border-bottom:3px solid var(--ink)}
+/* z-5 lifts the hero's stacking context above the rails below it, so the search
+   dropdown paints over the ticket cards (nav stays on top at z-50) */
+.fg-hero{position:relative;z-index:5;min-height:calc(100vh - 72px);min-height:calc(100svh - 72px);display:flex;flex-direction:column;isolation:isolate;color:#fff;border-bottom:3px solid var(--ink)}
 .fg-hero .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center 30%;background-color:#0d0d0b}
 .fg-hero .shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,20,16,.42) 0%,rgba(20,20,16,.18) 36%,rgba(20,20,16,.55) 68%,rgba(20,20,16,.86) 100%)}
 .fg-hero .container{display:flex;flex-direction:column;align-items:flex-start;flex:1;width:100%;padding-top:38px;padding-bottom:26px}
@@ -42,6 +44,8 @@ img{max-width:100%;height:auto}
 .door-main{display:flex;flex-direction:column;align-items:flex-start;flex:1;padding:10px 12px;min-width:0}
 .door-label{font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.5px;color:var(--ink)}
 .door-count{margin-top:auto;padding-top:6px;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);font-variant-numeric:tabular-nums}
+/* the rank door leads the grid: full row on the mobile 2-col grid */
+.door.rankdoor{grid-column:1/-1}
 
 /* ---- sections: eyebrow + title flush-left, ticket-chip CTA on the right ---- */
 .hsec{padding:36px 0 4px}
@@ -119,15 +123,15 @@ footer a{color:var(--y);font-weight:800;text-transform:uppercase;letter-spacing:
 
 /* ---- desktop ---- */
 @media(min-width:900px){
-  /* split hero: copy bottom-left, the four explore tickets stacked vertically on the right.
+  /* split hero: copy bottom-left, the five explore tickets stacked vertically on the right.
      Type + tickets scale up to fill the viewport-height hero (no dead space up top). */
   .fg-copy{display:flex;align-items:flex-end;gap:clamp(32px,4vw,72px)}
   .fg-left{flex:1;min-width:0}
   .fg-kick{font-size:13px;padding:6px 12px}
   .fg-hero h1{font-size:clamp(72px,6.5vw,132px)}
   .fg-hero .sbx-search{max-width:680px;margin-top:28px}
-  .doors{margin-top:0;width:auto;flex:0 0 clamp(360px,28vw,520px);grid-template-columns:1fr;gap:24px}
-  .door{min-height:118px}
+  .doors{margin-top:0;width:auto;flex:0 0 clamp(360px,28vw,520px);grid-template-columns:1fr;gap:18px}
+  .door{min-height:104px}
   .door::before,.door::after{left:33px}
   .door-stub{flex-basis:40px;padding-left:11px}
   .door-stub b{font-size:10px}

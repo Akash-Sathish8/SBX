@@ -62,7 +62,7 @@ export function EditProfileModal({ data, venues, onClose, onSaved }: {
     setErr(null)
     try {
       const dataUrl = await resizeToDataUrl(file)
-      if (dataUrl.length > 50_000) { setErr('That image is too detailed — try a simpler one.'); return }
+      if (dataUrl.length > 50_000) { setErr('That image is too detailed. Try a simpler one.'); return }
       setAvatar(dataUrl)
     } catch {
       setErr('Could not read that image.')

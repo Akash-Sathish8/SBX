@@ -26,7 +26,7 @@ export const Route = createFileRoute('/team')({
       { rel: 'stylesheet', href: css, 'data-page-css': 'team' },
       { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
     ],
-    meta: [{ title: 'Snapback — Team' }],
+    meta: [{ title: 'Snapback · Team' }],
   }),
   component: TeamPage,
 })
@@ -49,7 +49,7 @@ function TeamPage() {
     getJSON('/api/teams?league=' + league)
       .then((r: any) => {
         const t = (Array.isArray(r?.data) ? r.data : []).find((x: TeamInfo) => x.id === id) ?? null
-        if (alive) { setTeam(t); if (t) { document.title = 'Snapback — ' + t.displayName; if (t.logo) warmImage(t.logo) } }
+        if (alive) { setTeam(t); if (t) { document.title = 'Snapback · ' + t.displayName; if (t.logo) warmImage(t.logo) } }
       })
       .catch(() => { if (alive) setTeam(null) })
     getJSON('/api/venues')

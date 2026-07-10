@@ -134,9 +134,12 @@ const seedReview = (userId, author, body) => {
 }
 
 seedTips('omer', 'omer', OMER_TIPS)
-seedReview('omer', 'omer', OMER_REVIEW)
 seedTips('robby', 'robby', ROBBY_TIPS)
-seedReview('robby', 'robby', ROBBY_REVIEW)
+// NO text reviews by design — their intel lives in the section tips, and the
+// Fan Reviews card is the photo field report (src/lib/fieldPhotos.ts).
+void OMER_REVIEW
+void ROBBY_REVIEW
+void seedReview
 
 lines.push('COMMIT;', '')
 writeFileSync(OUT, lines.join('\n'))

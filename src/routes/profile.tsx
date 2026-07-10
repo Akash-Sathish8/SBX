@@ -17,7 +17,7 @@ import css from '../pages/profile.css?url'
 export const Route = createFileRoute('/profile')({
   head: () => ({
     links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'profile' }],
-    meta: [{ title: 'Snapback — My Profile' }],
+    meta: [{ title: 'Snapback · My Profile' }],
   }),
   component: ProfilePage,
 })
@@ -101,7 +101,7 @@ function ProfilePage() {
         />
       ) : null}
 
-      <footer><div className="container">© 2026 Snapback Sports — My Profile. <Link to="/">← Home</Link></div></footer>
+      <footer><div className="container">© 2026 Snapback Sports · My Profile. <Link to="/">← Home</Link></div></footer>
     </>
   )
 }

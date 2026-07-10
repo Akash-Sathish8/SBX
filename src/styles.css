@@ -127,7 +127,7 @@ html, body { max-width: 100%; overflow-x: clip; }
 .wtk-offbadge { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #141414; color: #F7DF02; font-size: 9px; font-weight: 900; line-height: 1; }
 .wtk-official .wtk-offlogo { align-self: center; }
 /* One card per author per section: each of their tips is a line, divided when there's more than one. */
-.wtk-tipline { display: flex; align-items: flex-start; gap: 8px; }
+.wtk-tipline { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
 .wtk-tipline > span { flex: 1; min-width: 0; }
 .wtk-tipline + .wtk-tipline { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(20,20,20,.1); }
 .wtk-tipdel.inline { position: static; top: auto; right: auto; flex: 0 0 auto; align-self: flex-start; }
@@ -234,7 +234,58 @@ html, body { max-width: 100%; overflow-x: clip; }
 .rvw-body { font-size: 13.5px; color: #2a2a2a; font-weight: 500; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
 .rvw-del { position: absolute; top: 6px; right: 7px; border: 0; background: transparent; color: #bbb; font-size: 17px; line-height: 1; cursor: pointer; padding: 0 2px; }
 .rvw-del:hover { color: #e2483d; }
+/* voting, reddit style: one pill with both arrows around a single NET score
+   (ups minus downs). Transparent until an arrow is pressed (yellow up, red
+   down); votes work signed-out — no auth gate here. */
+.rvw-votes { display: inline-flex; align-items: center; align-self: flex-start; margin-top: 9px; border: 1.5px solid rgba(20, 20, 20, .13); border-radius: 999px; overflow: hidden; }
+.rvw-vote { border: 0; background: transparent; color: #9a9a90; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 11px; line-height: 1; padding: 6px 10px; cursor: pointer; transition: background .12s, color .12s; }
+.rvw-vote:hover { color: #141414; background: rgba(20, 20, 20, .06); }
+.rvw-vote.up.on { background: #F7DF02; color: #141414; }
+.rvw-vote.down.on { background: rgba(226, 72, 61, .14); color: #e2483d; }
+.rvw-net { min-width: 20px; text-align: center; font-weight: 800; font-size: 12.5px; color: #3a3a34; padding: 0 2px; }
+/* compact variant on tip lines: full-width row UNDER the tip text (the line
+   is flex-wrap, so a 100% basis pushes the pill onto its own row).
+   `wtkv`, not `tip` — venue.css owns a legacy white `.tip` card class. */
+.rvw-votes.wtkv { margin-top: 7px; flex: 0 0 100%; max-width: max-content; }
+.rvw-votes.wtkv .rvw-vote { padding: 4px 9px; font-size: 10px; }
+.rvw-votes.wtkv .rvw-net { font-size: 11.5px; min-width: 16px; }
 .rvw-empty { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #999; font-weight: 700; padding: 4px 0; }
+
+/* ---- Field-report photo strip on a review (first 4 + "+N" tile) ---- */
+.rvw-photos { display: flex; gap: 8px; margin-top: 11px; overflow-x: auto; padding-bottom: 3px; scrollbar-width: thin; scrollbar-color: #cdcdcd transparent; }
+.rvw-photo { position: relative; flex: 0 0 auto; width: 118px; height: 88px; padding: 0; border: 2px solid #141414; border-radius: 8px; overflow: hidden; background: #eee; cursor: pointer; }
+.rvw-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rvw-photo:hover img { transform: scale(1.05); transition: transform .15s; }
+.rvw-phototag { position: absolute; left: 5px; bottom: 5px; background: #F7DF02; color: #141414; font-family: 'Barlow', sans-serif; font-size: 8.5px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; border: 1.5px solid #141414; white-space: nowrap; }
+.rvw-photomore { flex: 0 0 auto; width: 118px; height: 88px; border: 2px solid #141414; border-radius: 8px; background: #141414; color: #F7DF02; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer; }
+.rvw-photomore b { font-family: 'Anton', 'Barlow', sans-serif; font-weight: 400; font-size: 20px; }
+.rvw-photomore span { font-family: 'Barlow', sans-serif; font-size: 8.5px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; }
+.rvw-photomore:hover { background: #000; }
+/* Photo-only field report: category blocks, each a 2-up tagged gallery. */
+.rvw-catblock { margin-top: 13px; }
+.rvw-cat { font-family: 'Anton', 'Barlow', sans-serif; font-size: 14px; letter-spacing: .8px; text-transform: uppercase; color: #141414; display: flex; align-items: baseline; gap: 7px; padding-bottom: 5px; border-bottom: 2px solid #141414; margin-bottom: 8px; }
+.rvw-cat i { font-style: normal; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 11px; color: #9a9a8e; }
+.rvw-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.rvw-gallery .rvw-photo, .rvw-gallery .rvw-photomore { width: 100%; height: 108px; }
+
+/* ---- Full-screen photo lightbox ---- */
+.lbx { position: fixed; inset: 0; z-index: 120; background: rgba(12, 12, 9, .92); display: flex; align-items: center; justify-content: center; }
+.lbx-in { margin: 0; max-width: min(92vw, 1100px); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.lbx-in img { max-width: 100%; max-height: 78vh; border: 3px solid #fff; border-radius: 10px; box-shadow: 6px 6px 0 rgba(0, 0, 0, .5); }
+.lbx-meta { display: flex; align-items: center; gap: 12px; font-family: 'Barlow', sans-serif; }
+.lbx-tag { background: #F7DF02; color: #141414; font-size: 11px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; border: 2px solid #141414; }
+.lbx-count { color: #fff; font-weight: 800; font-size: 13px; font-variant-numeric: tabular-nums; }
+.lbx-credit { color: #bdbcae; font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .5px; }
+.lbx-x { position: absolute; top: 14px; right: 18px; z-index: 2; background: transparent; border: 0; color: #fff; font-size: 40px; line-height: 1; cursor: pointer; padding: 4px 10px; }
+.lbx-x:hover { color: #F7DF02; }
+.lbx-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 52px; height: 52px; border-radius: 50%; border: 2px solid #fff; background: rgba(20, 20, 20, .6); color: #fff; font-size: 30px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; padding-bottom: 4px; }
+.lbx-nav:hover { background: #F7DF02; color: #141414; border-color: #141414; }
+.lbx-prev { left: 16px; }
+.lbx-next { right: 16px; }
+@media (max-width: 700px) {
+  .lbx-nav { width: 42px; height: 42px; font-size: 24px; }
+  .lbx-in img { max-height: 66vh; }
+}
 
 @media (max-width: 980px) {
   .wtk-layout { grid-template-columns: 1fr; }
@@ -244,3 +295,5 @@ html, body { max-width: 100%; overflow-x: clip; }
 @media (max-width: 560px) {
   .wtk-layout .wtk { grid-template-columns: 1fr; }
 }
+
+

@@ -19,7 +19,7 @@ export const Route = createFileRoute('/teams')({
   }),
   head: () => ({
     links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'teams' }],
-    meta: [{ title: 'Snapback — Teams' }],
+    meta: [{ title: 'Snapback · Teams' }],
   }),
   component: Teams,
 })

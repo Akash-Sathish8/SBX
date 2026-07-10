@@ -23,7 +23,7 @@ export const Route = createFileRoute('/agenda')({
       { rel: 'stylesheet', href: shareCss, 'data-page-css': 'build agenda' },
       { rel: 'stylesheet', href: css, 'data-page-css': 'agenda' },
     ],
-    meta: [{ title: 'Snapback — Gameday Agenda' }],
+    meta: [{ title: 'Snapback · Gameday Agenda' }],
   }),
   component: AgendaPage,
 })

@@ -100,8 +100,11 @@ export async function dbVenues(league?: League): Promise<Venue[]> {
   const sql =
     `SELECT v.*, vt.league AS tl, t.id AS tid, t.abbr AS tabbr, t.display_name AS tdisplay, t.logo AS tlogo, ` +
     `c.name AS conf_name, c.short_name AS conf_short ` +
-    `FROM venues v JOIN venue_teams vt ON vt.venue_id = v.id ` +
-    `JOIN teams t ON t.league = vt.league AND t.id = vt.team_id ` +
+    // LEFT JOINs: event venues (racetracks, golf courses, ...) have no tenant
+    // teams but still need venue pages; a league filter still narrows to that
+    // league's home grounds because WHERE vt.league drops team-less rows.
+    `FROM venues v LEFT JOIN venue_teams vt ON vt.venue_id = v.id ` +
+    `LEFT JOIN teams t ON t.league = vt.league AND t.id = vt.team_id ` +
     `LEFT JOIN conference_teams ct ON ct.league = vt.league AND ct.team_id = vt.team_id ` +
     `LEFT JOIN conferences c ON c.league = ct.league AND c.id = ct.conference_id ` +
     `${league ? 'WHERE vt.league = ?' : ''} ORDER BY v.name`
@@ -125,7 +128,7 @@ export async function dbVenues(league?: League): Promise<Venue[]> {
       }
       byId.set(id, v)
     }
-    v.teams.push({ league: r.tl as League, id: String(r.tid), abbr: r.tabbr ?? '', displayName: r.tdisplay ?? '', logo: r.tlogo ?? undefined, conference: r.conf_name ?? undefined, conferenceShort: r.conf_short ?? undefined })
+    if (r.tl) v.teams.push({ league: r.tl as League, id: String(r.tid), abbr: r.tabbr ?? '', displayName: r.tdisplay ?? '', logo: r.tlogo ?? undefined, conference: r.conf_name ?? undefined, conferenceShort: r.conf_short ?? undefined })
   }
   return [...byId.values()]
 }
@@ -419,6 +422,8 @@ export interface Tip {
   body: string
   createdAt: string
   userId: string
+  up: number // tip_votes aggregates (0 when the query doesn't join them)
+  down: number
 }
 
 function rowToTip(r: Row): Tip {
@@ -432,12 +437,19 @@ function rowToTip(r: Row): Tip {
     body: r.body,
     createdAt: r.created_at,
     userId: String(r.user_id),
+    up: Number(r._up ?? 0),
+    down: Number(r._down ?? 0),
   }
 }
 
+// Aggregated up/down counts per tip, LEFT JOINed into tip reads (the tips
+// mirror of the reviews VOTE_JOIN below).
+const TIP_VOTE_JOIN =
+  'LEFT JOIN (SELECT tip_id, SUM(vote = 1) AS up, SUM(vote = -1) AS down FROM tip_votes GROUP BY tip_id) tv ON tv.tip_id = t.id'
+
 export async function dbGetTips(scope: string, targetId: string): Promise<Tip[]> {
   const { results } = await db()
-    .prepare('SELECT t.*, u.avatar AS _avatar FROM tips t LEFT JOIN users u ON u.id = t.user_id WHERE t.scope = ? AND t.target_id = ? ORDER BY t.created_at DESC')
+    .prepare(`SELECT t.*, u.avatar AS _avatar, COALESCE(tv.up, 0) AS _up, COALESCE(tv.down, 0) AS _down FROM tips t LEFT JOIN users u ON u.id = t.user_id ${TIP_VOTE_JOIN} WHERE t.scope = ? AND t.target_id = ? ORDER BY t.created_at DESC`)
     .bind(scope, targetId)
     .all<Row>()
   return (results ?? []).map(rowToTip)
@@ -451,7 +463,41 @@ export async function dbAddTip(userId: string, author: string, scope: string, ta
 }
 
 export async function dbDeleteTip(userId: string, id: string): Promise<void> {
-  await db().prepare('DELETE FROM tips WHERE id = ? AND user_id = ?').bind(id, userId).run()
+  const res = await db().prepare('DELETE FROM tips WHERE id = ? AND user_id = ?').bind(id, userId).run()
+  // Only sweep votes when the caller really owned (and deleted) the tip.
+  if ((res.meta?.changes ?? 0) > 0) await db().prepare('DELETE FROM tip_votes WHERE tip_id = ?').bind(id).run()
+}
+
+// The caller's own votes on a target's tips (tip id -> 1 | -1); `voter` is a
+// user id or an 'anon:<device-id>' key — votes work signed-out.
+export async function dbMyTipVotes(voter: string, scope: string, targetId: string): Promise<Record<string, number>> {
+  const { results } = await db()
+    .prepare('SELECT tv.tip_id, tv.vote FROM tip_votes tv JOIN tips t ON t.id = tv.tip_id WHERE tv.user_id = ? AND t.scope = ? AND t.target_id = ?')
+    .bind(voter, scope, targetId)
+    .all<Row>()
+  const out: Record<string, number> = {}
+  for (const r of results ?? []) out[String(r.tip_id)] = Number(r.vote)
+  return out
+}
+
+// Cast/flip/clear a vote on a tip (vote 0 clears). Returns fresh counts, or
+// null when the tip id doesn't exist.
+export async function dbVoteTip(voter: string, tipId: string, vote: 1 | -1 | 0): Promise<{ up: number; down: number } | null> {
+  const exists = await db().prepare('SELECT id FROM tips WHERE id = ?').bind(tipId).first()
+  if (!exists) return null
+  if (vote === 0) {
+    await db().prepare('DELETE FROM tip_votes WHERE tip_id = ? AND user_id = ?').bind(tipId, voter).run()
+  } else {
+    await db()
+      .prepare('INSERT OR REPLACE INTO tip_votes (tip_id, user_id, vote, created_at) VALUES (?, ?, ?, ?)')
+      .bind(tipId, voter, vote, new Date().toISOString())
+      .run()
+  }
+  const row = await db()
+    .prepare('SELECT COALESCE(SUM(vote = 1), 0) AS up, COALESCE(SUM(vote = -1), 0) AS down FROM tip_votes WHERE tip_id = ?')
+    .bind(tipId)
+    .first<{ up: number; down: number }>()
+  return { up: Number(row?.up ?? 0), down: Number(row?.down ?? 0) }
 }
 
 // ---- extensive gameday reviews (longer-form than a tip; `reviews` table). Same
@@ -467,6 +513,8 @@ export interface Review {
   body: string
   createdAt: string
   userId: string
+  up: number // review_votes aggregates (0 when the query doesn't join them)
+  down: number
 }
 
 function rowToReview(r: Row): Review {
@@ -481,12 +529,19 @@ function rowToReview(r: Row): Review {
     body: r.body,
     createdAt: r.created_at,
     userId: String(r.user_id),
+    up: Number(r._up ?? 0),
+    down: Number(r._down ?? 0),
   }
 }
 
+// Aggregated up/down counts per review, LEFT JOINed into review reads.
+const VOTE_JOIN =
+  'LEFT JOIN (SELECT review_id, SUM(vote = 1) AS up, SUM(vote = -1) AS down FROM review_votes GROUP BY review_id) v ON v.review_id = r.id'
+
 export async function dbGetReviews(scope: string, targetId: string): Promise<Review[]> {
+  // Reddit-style ordering: net score (ups minus downs) first, then recency.
   const { results } = await db()
-    .prepare('SELECT r.*, u.avatar AS _avatar FROM reviews r LEFT JOIN users u ON u.id = r.user_id WHERE r.scope = ? AND r.target_id = ? ORDER BY r.created_at DESC')
+    .prepare(`SELECT r.*, u.avatar AS _avatar, COALESCE(v.up, 0) AS _up, COALESCE(v.down, 0) AS _down FROM reviews r LEFT JOIN users u ON u.id = r.user_id ${VOTE_JOIN} WHERE r.scope = ? AND r.target_id = ? ORDER BY (COALESCE(v.up, 0) - COALESCE(v.down, 0)) DESC, r.created_at DESC`)
     .bind(scope, targetId)
     .all<Row>()
   return (results ?? []).map(rowToReview)
@@ -496,7 +551,7 @@ export async function dbGetReviews(scope: string, targetId: string): Promise<Rev
 // public profile). Reviews are normally fetched by target; this is the by-user path.
 export async function dbGetReviewsByUser(userId: string): Promise<Review[]> {
   const { results } = await db()
-    .prepare('SELECT * FROM reviews WHERE user_id = ? ORDER BY created_at DESC')
+    .prepare(`SELECT r.*, COALESCE(v.up, 0) AS _up, COALESCE(v.down, 0) AS _down FROM reviews r ${VOTE_JOIN} WHERE r.user_id = ? ORDER BY r.created_at DESC`)
     .bind(userId)
     .all<Row>()
   return (results ?? []).map(rowToReview)
@@ -510,7 +565,42 @@ export async function dbAddReview(userId: string, author: string, scope: string,
 }
 
 export async function dbDeleteReview(userId: string, id: string): Promise<void> {
-  await db().prepare('DELETE FROM reviews WHERE id = ? AND user_id = ?').bind(id, userId).run()
+  const res = await db().prepare('DELETE FROM reviews WHERE id = ? AND user_id = ?').bind(id, userId).run()
+  // Only sweep votes when the caller really owned (and deleted) the review.
+  if ((res.meta?.changes ?? 0) > 0) await db().prepare('DELETE FROM review_votes WHERE review_id = ?').bind(id).run()
+}
+
+// The caller's own votes on a target's reviews (review id -> 1 | -1), so the
+// UI can highlight the arrow they already pressed. `voter` is a user id or an
+// 'anon:<device-id>' key — votes work signed-out.
+export async function dbMyReviewVotes(voter: string, scope: string, targetId: string): Promise<Record<string, number>> {
+  const { results } = await db()
+    .prepare('SELECT rv.review_id, rv.vote FROM review_votes rv JOIN reviews r ON r.id = rv.review_id WHERE rv.user_id = ? AND r.scope = ? AND r.target_id = ?')
+    .bind(voter, scope, targetId)
+    .all<Row>()
+  const out: Record<string, number> = {}
+  for (const r of results ?? []) out[String(r.review_id)] = Number(r.vote)
+  return out
+}
+
+// Cast/flip/clear a vote (vote 0 clears). Returns the review's fresh counts,
+// or null when the review id doesn't exist.
+export async function dbVoteReview(voter: string, reviewId: string, vote: 1 | -1 | 0): Promise<{ up: number; down: number } | null> {
+  const exists = await db().prepare('SELECT id FROM reviews WHERE id = ?').bind(reviewId).first()
+  if (!exists) return null
+  if (vote === 0) {
+    await db().prepare('DELETE FROM review_votes WHERE review_id = ? AND user_id = ?').bind(reviewId, voter).run()
+  } else {
+    await db()
+      .prepare('INSERT OR REPLACE INTO review_votes (review_id, user_id, vote, created_at) VALUES (?, ?, ?, ?)')
+      .bind(reviewId, voter, vote, new Date().toISOString())
+      .run()
+  }
+  const row = await db()
+    .prepare('SELECT COALESCE(SUM(vote = 1), 0) AS up, COALESCE(SUM(vote = -1), 0) AS down FROM review_votes WHERE review_id = ?')
+    .bind(reviewId)
+    .first<{ up: number; down: number }>()
+  return { up: Number(row?.up ?? 0), down: Number(row?.down ?? 0) }
 }
 
 // ---- college conferences + member schools (the /conferences page) ----

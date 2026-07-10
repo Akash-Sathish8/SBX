@@ -13,7 +13,7 @@ import css from '../pages/profile.css?url'
 export const Route = createFileRoute('/feed')({
   head: () => ({
     links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'profile' }],
-    meta: [{ title: 'Snapback — Following' }],
+    meta: [{ title: 'Snapback · Following' }],
   }),
   component: FeedPage,
 })
@@ -91,7 +91,7 @@ function FeedPage() {
             <div className="pf-empty">Loading…</div>
           ) : items.length === 0 ? (
             <div className="pf-empty">
-              No activity yet. Open a fan’s profile at <b>/u/their-name</b> and tap Follow — their logs and reviews show up here.
+              No activity yet. Open a fan’s profile at <b>/u/their-name</b> and tap Follow. Their logs and reviews show up here.
             </div>
           ) : (
             <>
@@ -110,7 +110,7 @@ function FeedPage() {
         </div>
       </div>
 
-      <footer><div className="container">© 2026 Snapback Sports — Following. <Link to="/">← Home</Link></div></footer>
+      <footer><div className="container">© 2026 Snapback Sports · Following. <Link to="/">← Home</Link></div></footer>
     </>
   )
 }

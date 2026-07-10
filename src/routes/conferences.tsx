@@ -15,7 +15,7 @@ interface Conference { id: string; name: string; shortName?: string; teams: Conf
 export const Route = createFileRoute('/conferences')({
   head: () => ({
     links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'conferences' }],
-    meta: [{ title: 'Snapback — College Conferences' }],
+    meta: [{ title: 'Snapback · College Conferences' }],
   }),
   component: ConferencesPage,
 })
@@ -109,7 +109,7 @@ function ConferencesPage() {
         </div>
       </section>
 
-      <footer><div className="container">© 2026 Snapback Sports — College conferences. <Link to="/">← Home</Link></div></footer>
+      <footer><div className="container">© 2026 Snapback Sports · College conferences. <Link to="/">← Home</Link></div></footer>
     </>
   )
 }
