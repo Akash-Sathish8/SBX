@@ -18,6 +18,7 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as RankingsRouteImport } from './routes/rankings'
 import { Route as RankRouteImport } from './routes/rank'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as NearRouteImport } from './routes/near'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as GameRouteImport } from './routes/game'
 import { Route as FeedRouteImport } from './routes/feed'
@@ -93,6 +94,11 @@ const RankRoute = RankRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NearRoute = NearRouteImport.update({
+  id: '/near',
+  path: '/near',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -258,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
+  '/near': typeof NearRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
@@ -300,6 +307,7 @@ export interface FileRoutesByTo {
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
+  '/near': typeof NearRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
@@ -343,6 +351,7 @@ export interface FileRoutesById {
   '/feed': typeof FeedRoute
   '/game': typeof GameRoute
   '/games': typeof GamesRoute
+  '/near': typeof NearRoute
   '/profile': typeof ProfileRoute
   '/rank': typeof RankRoute
   '/rankings': typeof RankingsRoute
@@ -387,6 +396,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/game'
     | '/games'
+    | '/near'
     | '/profile'
     | '/rank'
     | '/rankings'
@@ -429,6 +439,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/game'
     | '/games'
+    | '/near'
     | '/profile'
     | '/rank'
     | '/rankings'
@@ -471,6 +482,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/game'
     | '/games'
+    | '/near'
     | '/profile'
     | '/rank'
     | '/rankings'
@@ -514,6 +526,7 @@ export interface RootRouteChildren {
   FeedRoute: typeof FeedRoute
   GameRoute: typeof GameRoute
   GamesRoute: typeof GamesRoute
+  NearRoute: typeof NearRoute
   ProfileRoute: typeof ProfileRoute
   RankRoute: typeof RankRoute
   RankingsRoute: typeof RankingsRoute
@@ -613,6 +626,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/near': {
+      id: '/near'
+      path: '/near'
+      fullPath: '/near'
+      preLoaderRoute: typeof NearRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -842,6 +862,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeedRoute: FeedRoute,
   GameRoute: GameRoute,
   GamesRoute: GamesRoute,
+  NearRoute: NearRoute,
   ProfileRoute: ProfileRoute,
   RankRoute: RankRoute,
   RankingsRoute: RankingsRoute,

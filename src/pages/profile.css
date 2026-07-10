@@ -85,6 +85,13 @@ img{max-width:100%;height:auto}
 .pf-d-venuelink{color:#b58900;font-weight:800}
 .pf-d-venuelink:hover{color:#111}
 .pf-d-score{display:flex;align-items:center;justify-content:center;background:var(--k);border-radius:7px;padding:7px 13px;min-width:58px}
+/* own-profile rows are actionable: click to re-rate, share button inline */
+.pf-d-row.clickable{grid-template-columns:64px 1fr auto auto;cursor:pointer;transition:box-shadow .12s,transform .12s}
+.pf-d-row.clickable:hover{box-shadow:7px 7px 0 0 var(--y);transform:translate(-1px,-1px)}
+.pf-edithint{color:#b6a900;font-weight:800}
+.pf-d-share{background:#fff;border:2px solid #111;border-radius:999px;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:6px 12px;cursor:pointer;color:#111;white-space:nowrap}
+.pf-d-share:hover{background:var(--y)}
+.pf-d-share:disabled{opacity:.6;cursor:default}
 .pf-sv{font-family:'Anton','Barlow',sans-serif;font-size:22px;color:var(--y);line-height:1}
 
 /* ---- stats ---- */

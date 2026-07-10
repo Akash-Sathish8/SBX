@@ -14,7 +14,7 @@ export const Route = createFileRoute('/weekend')({
   head: () => ({
     links: [
       { rel: 'stylesheet', href: css, 'data-page-css': 'weekend' },
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
+      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
     ],
     meta: [{ title: 'Snapback · This Weekend' }],
   }),

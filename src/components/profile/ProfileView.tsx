@@ -60,7 +60,7 @@ export function ProfileView({ data, mine, venues, onEdit, headerAction }: {
       <div className="pf-body">
         <div className="container">
           <FavoritesRow favorites={data.favorites} venues={venues} mine={mine} onEdit={onEdit} />
-          <Diary rankings={data.rankings} venues={venues} mine={mine} />
+          <Diary rankings={data.rankings} venues={venues} mine={mine} handle={data.username} />
           <ProfileStats rankings={data.rankings} />
           <MyReviews reviews={data.reviews} venues={venues} mine={mine} />
         </div>

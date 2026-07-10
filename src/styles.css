@@ -175,6 +175,8 @@ html, body { max-width: 100%; overflow-x: clip; }
 .shead-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 .shead-row .shead { margin: 0; }
 .wtk-addbar { background: #141414; color: #fff; border: 0; border-radius: 999px; padding: 12px 24px; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; cursor: pointer; white-space: nowrap; }
+.shead-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wtk-addbar.guide { background: #F7DF02; color: #141414; display: inline-flex; align-items: center; }
 .wtk-addbar:hover { background: #000; }
 /* The single composer (opens above the tips grid): section picker + textarea. */
 .wtk-composer { border: 2px solid #141414; border-radius: 10px; background: #fff; padding: 14px 16px; margin: 8px 0 14px; }
@@ -240,8 +242,11 @@ html, body { max-width: 100%; overflow-x: clip; }
 .rvw-votes { display: inline-flex; align-items: center; align-self: flex-start; margin-top: 9px; border: 1.5px solid rgba(20, 20, 20, .13); border-radius: 999px; overflow: hidden; }
 /* review footer: the vote pill sits BELOW the review on its own row, split off
    by a dashed divider (tips keep the inline wtkv variant) */
-.rvw-foot { margin-top: 11px; padding-top: 9px; border-top: 1px dashed #e3e3d9; }
+.rvw-foot { margin-top: 11px; padding-top: 9px; border-top: 1px dashed #e3e3d9; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .rvw-foot .rvw-votes { margin-top: 0; }
+.rvw-sharebtn { border: 1.5px solid rgba(20, 20, 20, .13); border-radius: 999px; background: transparent; color: #8a8a80; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 11.5px; padding: 5px 12px; cursor: pointer; transition: border-color .12s, color .12s; }
+.rvw-sharebtn:hover { border-color: rgba(20, 20, 20, .5); color: #141414; }
+.rvw-sharebtn:disabled { opacity: .6; cursor: default; }
 .rvw-vote { border: 0; background: transparent; color: #9a9a90; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 11px; line-height: 1; padding: 6px 10px; cursor: pointer; transition: background .12s, color .12s; }
 .rvw-vote:hover { color: #141414; background: rgba(20, 20, 20, .06); }
 .rvw-vote.up.on { background: #F7DF02; color: #141414; }
@@ -271,6 +276,20 @@ html, body { max-width: 100%; overflow-x: clip; }
 .rvw-cat i { font-style: normal; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 11px; color: #9a9a8e; }
 .rvw-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .rvw-gallery .rvw-photo, .rvw-gallery .rvw-photomore { width: 100%; height: 108px; }
+
+/* ---- Share-card modal: preview + Share / Copy / Download ---- */
+.shm { position: fixed; inset: 0; z-index: 130; background: rgba(12, 12, 9, .9); display: flex; align-items: center; justify-content: center; padding: 18px; }
+.shm-in { position: relative; background: #fffdf6; border: 3px solid #141414; border-radius: 14px; box-shadow: 8px 8px 0 rgba(0, 0, 0, .5); padding: 16px; max-width: 380px; width: 100%; }
+.shm-prev { background: #141410; border: 2px solid #141414; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 240px; max-height: min(58vh, 520px); }
+.shm-prev img { width: 100%; height: 100%; max-height: min(58vh, 520px); object-fit: contain; display: block; }
+.shm-load { color: #bdbcae; font-weight: 700; font-size: 13.5px; padding: 40px 10px; }
+.shm-actions { display: flex; gap: 8px; margin-top: 12px; }
+.shm-btn { flex: 1; border: 2px solid #141414; border-radius: 999px; background: #fff; color: #141414; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 8px; cursor: pointer; white-space: nowrap; }
+.shm-btn:hover { background: #fff7c9; }
+.shm-btn.brand { background: #F7DF02; }
+.shm-btn.brand:hover { filter: brightness(1.04); background: #F7DF02; }
+.shm-btn:disabled { opacity: .55; cursor: default; }
+.shm-x { position: absolute; top: -14px; right: -14px; z-index: 2; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #141414; background: #F7DF02; color: #141414; font-weight: 800; font-size: 14px; cursor: pointer; box-shadow: 2px 2px 0 #141414; }
 
 /* ---- Full-screen photo lightbox ---- */
 .lbx { position: fixed; inset: 0; z-index: 120; background: rgba(12, 12, 9, .92); display: flex; align-items: center; justify-content: center; }

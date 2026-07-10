@@ -30,7 +30,9 @@ export const Route = createFileRoute('/')({
 })
 
 // Real local assets (checked into public/img) — no hotlinked or invented photos.
-const HERO_IMG = '/img/celebration2.jpg'
+// Neyland checkerboard, rendered as a whisper: heavily faded + blurred by the
+// .fg-hero .bg treatment so the type and tickets stay the primary read.
+const HERO_IMG = '/img/neyland-checkerboard.jpg'
 
 const LEAGUE_LINE = [...LEAGUES, ...COLLEGE_LEAGUES].map((l) => SPORTS[l].label)
 
@@ -130,12 +132,12 @@ function Home() {
         <div className="container">
           <div className="fg-copy">
             <div className="fg-left">
-              <span className="fg-kick">The fan's field guide</span>
               <h1>Where does <span className="hl">gameday</span> take&nbsp;you?</h1>
               <SearchBox />
             </div>
             <div className="doors">
               <Link to="/rank" className="door rankdoor"><span className="door-stub"><b>Rank</b></span><span className="door-main"><span className="door-label">Been there? Rank it</span><span className="door-count">Review your experiences</span></span></Link>
+              <Link to="/near" className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">Near you</span><span className="door-count">Games close to you</span></span></Link>
               <Link to="/teams" search={{ league: undefined }} className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">By sport &amp; team</span><span className="door-count">Browse leagues</span></span></Link>
               <Link to="/weekend" className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">Upcoming Events</span><span className="door-count">This weekend</span></span></Link>
               <Link to="/venues" className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">By venue</span><span className="door-count num">{venues?.length ? `${venues.length} venues` : 'The buildings'}</span></span></Link>

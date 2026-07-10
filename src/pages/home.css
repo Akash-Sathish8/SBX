@@ -18,13 +18,14 @@ img{max-width:100%;height:auto}
 /* z-5 lifts the hero's stacking context above the rails below it, so the search
    dropdown paints over the ticket cards (nav stays on top at z-50) */
 .fg-hero{position:relative;z-index:5;min-height:calc(100vh - 72px);min-height:calc(100svh - 72px);display:flex;flex-direction:column;isolation:isolate;color:#fff;border-bottom:3px solid var(--ink)}
-.fg-hero .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center 30%;background-color:#0d0d0b}
-.fg-hero .shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,20,16,.42) 0%,rgba(20,20,16,.18) 36%,rgba(20,20,16,.55) 68%,rgba(20,20,16,.86) 100%)}
+/* the photo is a tertiary thought: low opacity, desaturated, softly blurred
+   (the 1.04 scale hides the blur's edge vignette), under a heavy shade */
+.fg-hero .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center 40%;background-color:#0d0d0b;opacity:.5;filter:saturate(.5) brightness(.42) blur(2px);transform:scale(1.04)}
+.fg-hero .shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,10,8,.66) 0%,rgba(10,10,8,.5) 40%,rgba(10,10,8,.62) 70%,rgba(10,10,8,.88) 100%)}
 .fg-hero .container{display:flex;flex-direction:column;align-items:flex-start;flex:1;width:100%;padding-top:38px;padding-bottom:26px}
 /* margin-top:auto docks the copy to the hero's bottom edge — text never floats
    vertically centered, whatever the viewport height */
 .fg-copy{margin-top:auto;width:100%}
-.fg-kick{display:inline-flex;align-items:center;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2.5px;color:var(--ink);background:var(--y);border:2px solid var(--ink);border-radius:5px;padding:5px 10px;box-shadow:2px 2px 0 var(--ink)}
 .fg-hero h1{color:#fff;font-size:clamp(42px,9.6vw,84px);line-height:1.14;letter-spacing:.5px;margin:12px 0 0;max-width:13ch;text-shadow:0 2px 18px rgba(0,0,0,.5)}
 /* inline-block shrinks the highlight to its own line-height instead of Anton's
    tall font metrics — the yellow box must never overlap the lines around it */
@@ -123,15 +124,15 @@ footer a{color:var(--y);font-weight:800;text-transform:uppercase;letter-spacing:
 
 /* ---- desktop ---- */
 @media(min-width:900px){
-  /* split hero: copy bottom-left, the five explore tickets stacked vertically on the right.
-     Type + tickets scale up to fill the viewport-height hero (no dead space up top). */
-  .fg-copy{display:flex;align-items:flex-end;gap:clamp(32px,4vw,72px)}
-  .fg-left{flex:1;min-width:0}
-  .fg-kick{font-size:13px;padding:6px 12px}
-  .fg-hero h1{font-size:clamp(72px,6.5vw,132px)}
-  .fg-hero .sbx-search{max-width:680px;margin-top:28px}
-  .doors{margin-top:0;width:auto;flex:0 0 clamp(360px,28vw,520px);grid-template-columns:1fr;gap:18px}
+  /* centered hero: kick + headline + search vertically centered as one stack,
+     the five explore tickets in a single horizontal row underneath */
+  .fg-copy{display:flex;flex-direction:column;align-items:center;text-align:center;margin:auto 0}
+  .fg-left{display:flex;flex-direction:column;align-items:center;width:100%;min-width:0}
+  .fg-hero h1{font-size:clamp(60px,6vw,112px);max-width:18ch;margin-left:auto;margin-right:auto}
+  .fg-hero .sbx-search{width:100%;max-width:680px;margin:28px auto 0}
+  .doors{margin-top:36px;width:100%;grid-template-columns:repeat(6,1fr);gap:14px}
   .door{min-height:104px}
+  .door.rankdoor{grid-column:auto}
   .door::before,.door::after{left:33px}
   .door-stub{flex-basis:40px;padding-left:11px}
   .door-stub b{font-size:10px}

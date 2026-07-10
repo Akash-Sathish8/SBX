@@ -23,7 +23,7 @@ export const Route = createFileRoute('/game')({
   head: () => ({
     links: [
       { rel: 'stylesheet', href: css, 'data-page-css': 'game build' },
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
+      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
       { rel: 'stylesheet', href: nexthopCss, 'data-page-css': 'venue game' },
     ],
     meta: [{ title: 'Snapback · Game' }],
@@ -155,7 +155,10 @@ function GameContent({ g }: { g: Game }) {
         <div className="eyebrow">Snapback · crowdsourced</div>
         <div className="shead-row">
           <h2 className="shead">What do I need to know?</h2>
-          <AddTipButton onOpen={() => setTipOpen(true)} />
+          <div className="shead-actions">
+            {venue ? <Link to="/venue-plan" search={{ id: venue.id }} className="wtk-addbar guide">Build your guide →</Link> : null}
+            <AddTipButton onOpen={() => setTipOpen(true)} />
+          </div>
         </div>
         <div className="ssub">
           {venue
@@ -167,7 +170,7 @@ function GameContent({ g }: { g: Game }) {
             <ExpertNotes scope="venue" targetId={venue.id} />
             <div className="wtk-layout">
               <WhatToKnow scope="venue" targetId={venue.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
-              <Reviews scope="venue" targetId={venue.id} gameId={g.id} />
+              <Reviews scope="venue" targetId={venue.id} gameId={g.id} venueName={venue.name} venueCity={venue.city} />
             </div>
           </>
         ) : (
