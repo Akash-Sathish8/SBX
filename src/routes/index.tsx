@@ -13,18 +13,18 @@ import css from '../pages/home.css?url'
 import searchCss from '../pages/searchbox.css?url'
 
 // The explore home, TICKET STUB edition — discovery starts at pixel one. A
-// poster hero (FIELD GUIDE question + search) docks bottom-left on the crowd
-// photo with the four explore doors as mini tickets, then the page is
-// inventory: tonight's games as perforated ticket stubs, ranked experiences as
-// ADMIT ONE cards, venues as photo tickets. Every card is a real D1 /
-// experiences.json row; numbers are computed or omitted while loading.
+// poster hero (FIELD GUIDE question + search) sits vertically centered with
+// the five explore doors as mini tickets, then the page is inventory:
+// tonight's games as perforated ticket stubs, ranked experiences as ADMIT ONE
+// cards, venues as photo tickets. Every card is a real D1 / experiences.json
+// row; numbers are computed or omitted while loading.
 export const Route = createFileRoute('/')({
   head: () => ({
     links: [
       { rel: 'stylesheet', href: css, 'data-page-css': 'home' },
       { rel: 'stylesheet', href: searchCss, 'data-page-css': 'home venues' },
     ],
-    meta: [{ title: 'Snapback — Where does gameday take you?' }],
+    meta: [{ title: 'Snapback · Where does gameday take you?' }],
   }),
   component: Home,
 })
@@ -36,7 +36,6 @@ const LEAGUE_LINE = [...LEAGUES, ...COLLEGE_LEAGUES].map((l) => SPORTS[l].label)
 
 // Iconic parks lead the venue rail when present; the rest fills from any pro
 // venue that has a photo. (Editorial ordering over real rows, not invented data.)
-const ICONIC = ['Fenway Park', 'Wrigley Field', 'Dodger Stadium', 'Yankee Stadium', 'Oracle Park', 'Coors Field', 'Truist Park', 'Citizens Bank Park']
 
 const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 // The ticket stub carries the when: big line (time / LIVE / FINAL) over a small
@@ -117,14 +116,6 @@ function Home() {
     [exps, venues],
   )
 
-  const venueRail = useMemo(() => {
-    if (!venues) return null
-    const byName = new Map(venues.map((v) => [v.name, v]))
-    const iconic = ICONIC.map((n) => byName.get(n)).filter((v): v is Venue => !!v && !!v.image)
-    const rest = venues.filter((v) => v.image && !ICONIC.includes(v.name) && v.teams.some((t) => LEAGUES.includes(t.league)))
-    return [...iconic, ...rest].slice(0, 10)
-  }, [venues])
-
   const col = COLLECTIONS[0]
 
   return (
@@ -144,8 +135,9 @@ function Home() {
               <SearchBox />
             </div>
             <div className="doors">
+              <Link to="/rank" className="door rankdoor"><span className="door-stub"><b>Rank</b></span><span className="door-main"><span className="door-label">Been there? Rank it</span><span className="door-count">Review your experiences</span></span></Link>
               <Link to="/teams" search={{ league: undefined }} className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">By sport &amp; team</span><span className="door-count">Browse leagues</span></span></Link>
-              <Link to="/weekend" className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">This weekend</span><span className="door-count">Upcoming slate</span></span></Link>
+              <Link to="/weekend" className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">Upcoming Events</span><span className="door-count">This weekend</span></span></Link>
               <Link to="/venues" className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">By venue</span><span className="door-count num">{venues?.length ? `${venues.length} venues` : 'The buildings'}</span></span></Link>
               <Link to="/rankings" className="door"><span className="door-stub"><b>Explore</b></span><span className="door-main"><span className="door-label">Top ranked</span><span className="door-count num">{exps?.length ? `${exps.length} experiences` : 'The expert list'}</span></span></Link>
             </div>
@@ -198,26 +190,6 @@ function Home() {
             ))}
           </div>
         ) : <div className="container"><div className="hload">Loading rankings…</div></div>}
-      </section>
-
-      {/* Rail 3 — iconic buildings as photo tickets (caption on the stub, not the photo) */}
-      <section className="hsec">
-        <div className="container">
-          <div className="sec">
-            <div className="sec-left"><span className="sec-eye">{venues?.length ? `${venues.length} venues` : 'The buildings'}</span><h2>Iconic buildings</h2></div>
-            <Link to="/venues" className="tchip">All venues →</Link>
-          </div>
-        </div>
-        {venueRail ? (
-          <div className="hrail">
-            {venueRail.map((v) => (
-              <Link key={v.id} to="/venue" search={{ id: v.id }} className="venue" {...intentWarm(() => { const s = cardImg(v.image); if (s) warmImage(s) })}>
-                <img src={cardImg(v.image)} alt="" loading="lazy" />
-                <span className="venue-body"><span className="venue-name">{v.name}</span><span className="venue-city">{[v.city, v.state].filter(Boolean).join(', ')}</span></span>
-              </Link>
-            ))}
-          </div>
-        ) : <div className="container"><div className="hload">Loading venues…</div></div>}
       </section>
 
       <div className="statbar">

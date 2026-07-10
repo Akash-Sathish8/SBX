@@ -32,7 +32,9 @@ header.nav{position:sticky;top:0;z-index:50;background:var(--k);border-bottom:4p
 .btn-dark{background:var(--k);color:#fff;filter:drop-shadow(5px 5px 0 var(--y))}
 .navcta{box-shadow:inset 0 0 0 2px var(--y);padding:9px 18px;font-size:13px}
 
-.head{background:var(--k);color:#fff;padding:44px 0 38px;position:relative;overflow:hidden}
+/* overflow stays visible and z-5 lifts the header, so the search dropdown
+   escapes the section and paints over the venue card grid below */
+.head{background:var(--k);color:#fff;padding:44px 0 38px;position:relative;z-index:5}
 .head::after{content:"";position:absolute;inset:0;pointer-events:none;
   background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:32px 32px}
 .head .container{position:relative;z-index:1}

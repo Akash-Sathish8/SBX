@@ -3,9 +3,11 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
-import { getJSON } from '../lib/dataCache'
+import { getJSON, getJSONFresh } from '../lib/dataCache'
 import { SPORTS, RANKABLE_LEAGUES, type League } from '../lib/sports'
-import type { Game, TeamInfo } from '../lib/espn'
+import type { Game, TeamInfo, Venue } from '../lib/espn'
+import type { Experience } from '../lib/experiences'
+import { matchExperienceForVenue, matchExperienceForTeam } from '../lib/experienceMatch'
 import { useAuth } from '../components/auth/AuthProvider'
 import { SaveRankingsPrompt } from '../components/auth/SaveRankingsPrompt'
 import { ContributePrompt } from '../components/ContributePrompt'
@@ -21,7 +23,7 @@ import css from '../pages/rank.css?url'
 export const Route = createFileRoute('/rank')({
   head: () => ({
     links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'rank' }],
-    meta: [{ title: 'Snapback — Make your rankings' }],
+    meta: [{ title: 'Snapback · Make your rankings' }],
   }),
   component: RankPage,
 })
@@ -35,11 +37,28 @@ const fmtDate = (iso: string) => {
 const teamShort = (g: Game, side: 'home' | 'away') => g[side].location || g[side].displayName
 
 // The four pillars, identical to the expert-rankings columns on /rankings.
+// `desc` feeds the "?" tooltip so fans score against the same rubric the experts use.
 const PILLARS = [
-  { key: 'fans', label: 'Fans & atmosphere' },
-  { key: 'food', label: 'Food & concessions' },
-  { key: 'unique', label: 'Uniqueness' },
-  { key: 'stadium', label: 'The stadium itself' },
+  {
+    key: 'fans',
+    label: 'Fans & atmosphere',
+    desc: 'The crowd and the energy. Were fans loud, locked in, and did the building have juice from start to finish?',
+  },
+  {
+    key: 'food',
+    label: 'Food & concessions',
+    desc: 'What you ate and drank: quality, variety, and whether it was worth the concession-stand prices.',
+  },
+  {
+    key: 'unique',
+    label: 'Uniqueness',
+    desc: "The stuff you can't get anywhere else: traditions, chants, views, and only-here gameday moments.",
+  },
+  {
+    key: 'stadium',
+    label: 'The stadium itself',
+    desc: 'The building: sightlines, concourses, seats, and scoreboard. How good is the venue at hosting a game?',
+  },
 ] as const
 type PillarKey = (typeof PILLARS)[number]['key']
 
@@ -242,7 +261,7 @@ function RankPage() {
 
       <footer>
         <div className="container">
-          © 2026 Snapback Sports — {user ? 'Saved to your account.' : 'Your rankings live on this device.'} <Link to="/rankings">See the expert rankings →</Link>
+          © 2026 Snapback Sports · {user ? 'Saved to your account.' : 'Your rankings live on this device.'} <Link to="/rankings">See the expert rankings →</Link>
         </div>
       </footer>
     </>
@@ -403,7 +422,7 @@ function GamePicker({ league, team, existing, onBack, onPick }: { league: League
     <>
       <button className="rk-backlink" onClick={onBack}>← All teams</button>
       <p className="rk-step">
-        Step 2 · {team.displayName} — pick the date you went
+        Step 2 · {team.displayName}: pick the date you went
       </p>
       {games === null && !err ? <div className="rk-loading">Loading games…</div> : null}
       {err ? <div className="rk-empty">Couldn't load games. Try again.</div> : null}
@@ -438,9 +457,49 @@ function GamePicker({ league, team, existing, onBack, onPick }: { league: League
   )
 }
 
+// Live fan aggregate for this venue (see /api/venue-stats) — count is 0 until
+// fans have ranked games here, and pillar averages only render once they have.
+interface FanStats { count: number; fans: number; food: number; unique: number; stadium: number; score: number }
+
 function RatePanel({ game, onBack, onSave }: { game: Game; onBack: () => void; onSave: (s: Record<PillarKey, number>) => void }) {
   const [s, setS] = useState<Record<PillarKey, number>>({ fans: 7, food: 7, unique: 7, stadium: 7 })
+  const [fan, setFan] = useState<FanStats | null>(null)
+  const [exps, setExps] = useState<Experience[]>([])
+  const [venues, setVenues] = useState<Venue[]>([])
   const total = avg(s)
+
+  // Benchmarks: what other fans averaged at this venue, and what Snapback's
+  // experts scored the matching experience. Both are honest gaps — no data,
+  // no number.
+  useEffect(() => {
+    let alive = true
+    setFan(null)
+    if (game.venue.name) {
+      getJSONFresh('/api/venue-stats?venue=' + encodeURIComponent(game.venue.name))
+        .then((r: any) => { if (alive) setFan(r?.ok ? r.data : null) })
+        .catch(() => { if (alive) setFan(null) })
+    }
+    getJSON('/data/experiences.json')
+      .then((r: any) => { if (alive) setExps(Array.isArray(r?.experiences) ? r.experiences : []) })
+      .catch(() => { if (alive) setExps([]) })
+    getJSON('/api/venues')
+      .then((r: any) => { if (alive) setVenues(Array.isArray(r?.data) ? r.data : []) })
+      .catch(() => { if (alive) setVenues([]) })
+    return () => { alive = false }
+  }, [game.id, game.venue.name])
+
+  const exp = useMemo(() => {
+    if (!exps.length) return null
+    // The games API doesn't carry venue ids, so resolve the D1 venue by name
+    // (teams share buildings across leagues — hoops vs football), falling back
+    // to home tenant, then reuse the shared matcher (overrides + auto-match).
+    const vn = (game.venue.name || '').toLowerCase()
+    const hn = game.home.displayName.toLowerCase()
+    const ven =
+      (vn ? venues.find((v) => v.name.toLowerCase() === vn) : undefined) ??
+      venues.find((v) => (v.teams || []).some((t) => (t.displayName || '').toLowerCase() === hn))
+    return (ven && matchExperienceForVenue(ven, exps)) || matchExperienceForTeam(game.home.displayName, exps)
+  }, [exps, venues, game.venue.name, game.home.displayName])
 
   return (
     <div className="rk-rate">
@@ -459,7 +518,10 @@ function RatePanel({ game, onBack, onSave }: { game: Game; onBack: () => void; o
           <PillarRow
             key={p.key}
             label={p.label}
+            desc={p.desc}
             value={s[p.key]}
+            fanAvg={fan && fan.count > 0 ? fan[p.key] : undefined}
+            sbx={exp ? exp[p.key] : undefined}
             onChange={(n) => setS((prev) => ({ ...prev, [p.key]: n }))}
           />
         ))}
@@ -480,7 +542,16 @@ function RatePanel({ game, onBack, onSave }: { game: Game; onBack: () => void; o
 // so typing an exact score moves the slider and dragging updates the number. The
 // badge keeps a raw text draft while focused so partial input ("7." or an empty
 // field) isn't clobbered; the value is clamped to 1–10 (one decimal) on commit.
-function PillarRow({ label, value, onChange }: { label: string; value: number; onChange: (n: number) => void }) {
+// `fanAvg`/`sbx` render as reference chips beside your score — what fans here
+// averaged and what Snapback's experts gave it — so you rate with context.
+function PillarRow({ label, desc, value, fanAvg, sbx, onChange }: {
+  label: string
+  desc: string
+  value: number
+  fanAvg?: number
+  sbx?: number
+  onChange: (n: number) => void
+}) {
   const [draft, setDraft] = useState<string | null>(null)
   const clamp = (n: number) => Math.min(10, Math.max(1, Math.round(n * 10) / 10))
 
@@ -501,18 +572,41 @@ function PillarRow({ label, value, onChange }: { label: string; value: number; o
   return (
     <div className="rk-slider">
       <div className="rk-slabel">
-        <span>{label}</span>
-        <input
-          className="rk-sval"
-          type="text"
-          inputMode="decimal"
-          aria-label={`${label} score, 1 to 10`}
-          value={draft ?? value.toFixed(1)}
-          onFocus={(e) => e.currentTarget.select()}
-          onChange={(e) => onText(e.target.value)}
-          onBlur={commit}
-          onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur() }}
-        />
+        <span className="rk-slname">
+          {label}
+          <span className="rk-help">
+            <button type="button" className="rk-helpbtn" aria-label={`What "${label}" means`}>?</button>
+            <span role="tooltip" className="rk-helptip">{desc}</span>
+          </span>
+        </span>
+        <span className="rk-srefs">
+          {fanAvg != null ? (
+            <span className="rk-ref" title="Average score from fans who ranked a game here">
+              <span className="rk-refl">Fan avg</span>
+              <span className="rk-refv">{fanAvg.toFixed(1)}</span>
+            </span>
+          ) : null}
+          {sbx != null ? (
+            <span className="rk-ref sbx" title="Snapback's expert rating for this experience">
+              <span className="rk-refl">Snapback</span>
+              <span className="rk-refv">{sbx.toFixed(1)}</span>
+            </span>
+          ) : null}
+          <span className="rk-ref you">
+            <span className="rk-refl">You</span>
+            <input
+              className="rk-sval"
+              type="text"
+              inputMode="decimal"
+              aria-label={`${label} score, 1 to 10`}
+              value={draft ?? value.toFixed(1)}
+              onFocus={(e) => e.currentTarget.select()}
+              onChange={(e) => onText(e.target.value)}
+              onBlur={commit}
+              onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur() }}
+            />
+          </span>
+        </span>
       </div>
       <input
         type="range"

@@ -16,7 +16,7 @@ export const Route = createFileRoute('/venues')({
       { rel: 'stylesheet', href: css, 'data-page-css': 'venues' },
       { rel: 'stylesheet', href: searchCss, 'data-page-css': 'home venues' },
     ],
-    meta: [{ title: 'Snapback — Venues' }],
+    meta: [{ title: 'Snapback · Venues' }],
   }),
   component: Venues,
 })
@@ -90,7 +90,7 @@ function Venues() {
           <div className="tally" id="tally">
             <button className={pill('all')} onClick={() => pickFilter('all')}>All venues</button>
             {[...LEAGUES, ...COLLEGE_LEAGUES].map((l) => (
-              <button key={l} className={pill(l)} onClick={() => pickFilter(l)}><b>{all ? count(l) : '—'}</b> {SPORTS[l].label}</button>
+              <button key={l} className={pill(l)} onClick={() => pickFilter(l)}><b>{all ? count(l) : '–'}</b> {SPORTS[l].label}</button>
             ))}
           </div>
           {isCollege && confList.length ? (
@@ -148,7 +148,7 @@ function Venues() {
       </section>
 
       <footer>
-        <div className="container">© 2026 Snapback Sports — Venues. <Link to="/">← Experiences</Link></div>
+        <div className="container">© 2026 Snapback Sports · Venues. <Link to="/">← Experiences</Link></div>
       </footer>
     </>
   )

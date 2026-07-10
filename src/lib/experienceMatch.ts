@@ -75,6 +75,30 @@ export const EXP_OVERRIDE: Record<string, string> = {
   '2024': 'New Mexico Lobos Basketball', // The Pit
   '3947': 'ASU Blackout', // Mountain America Stadium
   '3970': 'Arizona Cardinals', // State Farm Stadium
+  // Event venues seeded by scripts/seed-event-venues.mjs (no ESPN tenants).
+  'ev-churchill-downs': 'Kentucky Derby',
+  'ev-indy-motor-speedway': 'Indy 500',
+  'ev-cotton-bowl': 'Red River Rivalry',
+  'ev-bethpage-black': 'Ryder Cup NYC',
+  'ev-washington-grizzly': 'Brawl of the Wild Montana',
+  'ev-daytona-speedway': 'Daytona 500',
+  'ev-chicago-street-course': 'NASCAR Chicago Street Race',
+  'ev-nassau-cricket-stadium': 'India vs. Pakistan Cricket T20 World Cup',
+  'ev-homewood-field': 'Premier Lacrosse League',
+  'ev-lower-com-field': 'USMNT World Cup Qualifier',
+  'ev-dana-j-dykhouse': 'SDSU Dakota Marker',
+  'ev-talladega-superspeedway': 'NASCAR Talladega RV Infield',
+  'ev-new-york-harbor': 'SailGP',
+  'ev-red-bull-arena': 'Hudson River Derby',
+  'ev-steinbrenner-field': 'Rays at Steinbrenner Field',
+  'ev-phoenix-raceway': 'NASCAR Championship',
+  'ev-arthur-ashe': 'US Open Tennis',
+  'ev-franklin-field': 'UPenn Football',
+  'ev-alumni-stadium-dsu': 'Delaware State Football Homecoming',
+  'ev-sonoma-raceway': 'Sonoma NASCAR',
+  'ev-pimlico': 'Preakness',
+  'ev-gulfstream-park': 'Pegasus World Cup',
+  'ev-oakland-coliseum': "Oakland A's",
 }
 
 // Match a venue to an expert experience: pinned override first, then team-name
@@ -95,4 +119,81 @@ export function matchExperienceForTeam(displayName: string, exps: Experience[]):
   const dn = (displayName || '').toLowerCase()
   if (dn.length <= 5) return null
   return exps.find((e) => e.name.toLowerCase().includes(dn)) ?? null
+}
+
+// The reverse direction: the D1 venue behind an experience (the rankings
+// spotlight's "Plan this trip" link). Event-named experiences at venues that
+// exist in D1 but have no EXP_OVERRIDE entry are pinned here; experiences at
+// venues Snapback doesn't track (Churchill Downs, speedways, golf courses)
+// stay unpinned — no venue page exists, so no link is shown. Honest gap.
+const EXP_VENUE_PIN: Record<string, string> = {
+  'National Championship 2026': '3948', // Hard Rock Stadium
+  'CFB National Championship (Alabama vs. OSU)': '3948',
+  'WWE Wrestlemania 41': '6501', // Allegiant Stadium
+  'Super Bowl LVIII': '6501',
+  'NFL Pro Bowl': '6501',
+  '2025 4 Nations Final Canada-USA': '1824', // TD Garden
+  'Minnesota High School Hockey Tourney': '1835', // Grand Casino Arena (ex-Xcel)
+  'Texas at Ohio State - 2025 Week 1': '3861', // Ohio Stadium
+  'Ohio State CFP': '3861',
+  '2024 CFB Semifinal (Washington vs. Texas)': '3493', // Caesars Superdome
+  'Super Bowl LIX (Chiefs vs. Eagles)': '3493',
+  'Neymar/Brazil Copa America Match': '7065', // SoFi Stadium
+  'USMNT vs Panama (Nations League Semifinal)': '7065',
+  'UFC 296': '5060', // T-Mobile Arena
+  'UCF 326': '5060',
+  'Penn State Whiteout CFP': '3632', // Beaver Stadium
+  'Penn State Outdoor Hockey': '3632',
+  "St. John's in MSG": '1830', // Madison Square Garden
+  'WWE (House Show)': '1830',
+  'Big East Tournament (UConn vs. Providence)': '1830',
+  '2023 March Madness Elite 8 (FAU vs. K State)': '1830',
+  'Champions Classic (Kentucky vs. Michigan St.)': '1830',
+  '2K Classic (Georgetown vs. Texas)': '1830',
+  'New York Liberty': '3559', // Barclays Center
+  'A10 Tournament': '3559',
+  'Atlanta United': '5348', // Mercedes-Benz Stadium
+  'CFB Backyard Brawl (WVU @ Pitt)': '3752', // Acrisure Stadium
+  'Georgia-Florida Rivalry Game': '3712', // EverBank Stadium
+  'NBA Summer League': '2083', // Thomas & Mack Center
+  '2022 NBA Finals (Warriors vs. Celtics)': '6270', // Chase Center
+  'Argentina - 2024 Copa America': '3839', // MetLife Stadium
+  '2024 Army-Navy Game': '3719', // Northwest Stadium
+  'Tampa Bay Bucaneeers': '3886', // Raymond James Stadium
+  'Big 12 Championship': '3687', // AT&T Stadium
+  'Chicago Fire': '3933', // Soldier Field
+  '2023 NBA Finals (Heat vs. Nuggets)': '892', // Ball Arena
+  'NJ Devils Playoff Game': '1826', // Prudential Center
+  'NBA All-Star Game': '3093', // Delta Center
+  'NASCAR Clash at the Coliseum': '477', // LA Memorial Coliseum
+  'Charlotte FC': '3628', // Bank of America Stadium
+  'PGA Championship 2019': 'ev-bethpage-black', // shares Bethpage with Ryder Cup NYC
+}
+
+// experience name (lowercased) -> venue id: reversed overrides + explicit pins
+// (pins win — an override value names the experience Snapback filmed there,
+// which isn't always the experience a ranking row refers to).
+const VENUE_BY_EXP: Record<string, string> = {}
+for (const [vid, exp] of Object.entries(EXP_OVERRIDE)) {
+  const k = exp.toLowerCase()
+  if (!(k in VENUE_BY_EXP)) VENUE_BY_EXP[k] = vid
+}
+for (const [exp, vid] of Object.entries(EXP_VENUE_PIN)) VENUE_BY_EXP[exp.toLowerCase()] = vid
+
+// Venue for an experience: pinned mapping first, then team-name auto-match
+// (e.g. "Chicago Cubs" -> Wrigley). Returns null when the venue isn't in D1.
+export function matchVenueForExperience(expName: string, venues: Venue[]): Venue | null {
+  const n = expName.toLowerCase()
+  const pinned = VENUE_BY_EXP[n]
+  if (pinned) {
+    const v = venues.find((v) => v.id === pinned)
+    if (v) return v
+  }
+  for (const ven of venues) {
+    for (const t of ven.teams || []) {
+      const dn = (t.displayName || '').toLowerCase()
+      if (dn.length > 5 && n.includes(dn)) return ven
+    }
+  }
+  return null
 }

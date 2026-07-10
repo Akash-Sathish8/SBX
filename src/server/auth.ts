@@ -109,6 +109,28 @@ function readCookie(request: Request, name: string): string | null {
   return null
 }
 
+// ---- anonymous voter identity (review/tip votes work signed-out) ----
+// A long-lived random id in its own cookie; signed-out votes key on
+// 'anon:<id>' so one device gets one vote per item. Signing in switches the
+// voter key to the real user id (the anon votes simply stop being "yours").
+export const ANON_COOKIE = 'sbx_anon'
+const ANON_MAX_AGE = 60 * 60 * 24 * 365
+
+export function anonCookieHeader(id: string, secure: boolean): string {
+  return `${ANON_COOKIE}=${id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${ANON_MAX_AGE}${secure ? '; Secure' : ''}`
+}
+
+// The voter key for vote reads/writes. When the device has no anon cookie yet
+// a fresh id is minted and `setCookie` is returned — vote WRITES must attach
+// it to the response; reads can ignore it (a fresh id has no votes anyway).
+export function getVoterFromRequest(request: Request, userId?: string | null): { voter: string; setCookie?: string } {
+  if (userId) return { voter: userId }
+  const existing = readCookie(request, ANON_COOKIE)
+  if (existing && /^[a-f0-9-]{8,64}$/i.test(existing)) return { voter: 'anon:' + existing }
+  const id = crypto.randomUUID()
+  return { voter: 'anon:' + id, setCookie: anonCookieHeader(id, isSecureRequest(request)) }
+}
+
 // ---- the workhorse used by every protected handler ----
 export interface AuthUser { id: string; email: string; username: string | null }
 

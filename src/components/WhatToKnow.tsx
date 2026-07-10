@@ -9,16 +9,16 @@ import { useAuth } from './auth/AuthProvider'
 type Section = { key: string; label: string; hint: string }
 
 const VENUE_SECTIONS: Section[] = [
-  { key: 'getting-there', label: 'Getting there', hint: 'Transit, parking, rideshare — what actually works on gameday.' },
+  { key: 'getting-there', label: 'Getting there', hint: 'Transit, parking, rideshare. What actually works on gameday.' },
   { key: 'best-seats', label: 'Best seats', hint: 'Where the view, the shade, or the atmosphere is best.' },
-  { key: 'food', label: 'Best food', hint: 'The must-get item — and exactly where to find it.' },
+  { key: 'food', label: 'Best food', hint: 'The must-get item, and exactly where to find it.' },
   { key: 'before', label: 'Before the game', hint: 'Bars, tailgates and pregame spots nearby.' },
   { key: 'atmosphere', label: 'Atmosphere', hint: 'What the crowd and the gameday feel are really like.' },
   { key: 'tips', label: 'Insider tips', hint: 'The stuff only regulars know.' },
 ]
 
 const EVENT_SECTIONS: Section[] = [
-  { key: 'getting-there', label: 'Getting there', hint: 'How to arrive — and when to show up.' },
+  { key: 'getting-there', label: 'Getting there', hint: 'How to arrive, and when to show up.' },
   { key: 'best-seats', label: 'Best seats for this one', hint: 'Sun, shade, sightlines and where the energy is.' },
   { key: 'before', label: 'Before the game', hint: 'Where to be beforehand.' },
   { key: 'tips', label: 'Insider tips', hint: "What you'd tell a friend going to this game." },
@@ -31,6 +31,9 @@ interface Tip {
   avatar?: string | null
   body: string
   createdAt: string
+  up: number
+  down: number
+  myVote: number // 1 | -1 | 0 — the caller's standing vote (works signed-out)
   mine: boolean
   official?: boolean
   verified?: boolean
@@ -78,6 +81,7 @@ export function WhatToKnow({
   composerOpen?: boolean
   onComposerClose?: () => void
 }) {
+  const { user } = useAuth()
   const sections = scope === 'venue' ? VENUE_SECTIONS : EVENT_SECTIONS
   const [tips, setTips] = useState<Tip[]>([])
   const [sec, setSec] = useState(sections[0].key) // composer's target section
@@ -90,17 +94,17 @@ export function WhatToKnow({
     if (composerOpen) { setDraft(''); setErr(null); setSec(sections[0].key) }
   }, [composerOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Load tips for this target (client-only; re-runs if the target changes).
+  // Load tips for this target (client-only; re-runs if the target changes, and
+  // on auth change — `mine` and `myVote` depend on who's asking).
   useEffect(() => {
     if (!targetId) return
     let alive = true
-    setTips([])
     fetch('/api/tips?scope=' + scope + '&targetId=' + encodeURIComponent(targetId))
       .then((r) => r.json())
       .then((j) => { if (alive && j?.ok && Array.isArray(j.data)) setTips(j.data) })
       .catch(() => {})
     return () => { alive = false }
-  }, [scope, targetId])
+  }, [scope, targetId, user?.id])
 
   // Group each author's tips within a section into ONE card. Verified voices
   // (Snapback, Jack Settleman) lead each section; the rest follow by recency.
@@ -145,6 +149,33 @@ export function WhatToKnow({
       .then((r) => r.json())
       .then((j) => { if (j?.ok && Array.isArray(j.data)) setTips(j.data) })
       .catch(() => {})
+  }
+
+  // Up/down vote on a tip: same press toggles off, the other flips. Works
+  // signed-out (the server keys anonymous votes on a device cookie).
+  // Optimistic counts, reconciled from the server response.
+  const vote = (t: Tip, dir: 1 | -1) => {
+    const next = t.myVote === dir ? 0 : dir
+    const apply = (x: Tip, up: number, down: number, myVote: number) => ({ ...x, up, down, myVote })
+    setTips((prev) => prev.map((x) => x.id !== t.id ? x : apply(x,
+      x.up + (next === 1 ? 1 : 0) - (x.myVote === 1 ? 1 : 0),
+      x.down + (next === -1 ? 1 : 0) - (x.myVote === -1 ? 1 : 0),
+      next,
+    )))
+    fetch('/api/tip-votes', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ tipId: t.id, vote: next }),
+    })
+      .then((r) => r.json())
+      .then((j) => {
+        setTips((prev) => prev.map((x) => x.id !== t.id ? x
+          : j?.ok && j.data ? apply(x, j.data.up, j.data.down, j.data.myVote)
+            : apply(x, t.up, t.down, t.myVote))) // failed — put the old counts back
+      })
+      .catch(() => {
+        setTips((prev) => prev.map((x) => (x.id !== t.id ? x : apply(x, t.up, t.down, t.myVote))))
+      })
   }
 
   return (
@@ -202,6 +233,25 @@ export function WhatToKnow({
                         <div key={t.id} className="wtk-tipline">
                           <span>{t.body}</span>
                           {t.mine ? <button className="wtk-tipdel inline" aria-label="Delete tip" onClick={() => remove(t)}>×</button> : null}
+                          <span className="rvw-votes wtkv">
+                            <button
+                              type="button"
+                              className={'rvw-vote up' + (t.myVote === 1 ? ' on' : '')}
+                              aria-label="Upvote tip"
+                              aria-pressed={t.myVote === 1}
+                              title="Helpful"
+                              onClick={() => vote(t, 1)}
+                            >▲</button>
+                            <span className="rvw-net num" title={t.up + ' up · ' + t.down + ' down'}>{t.up - t.down}</span>
+                            <button
+                              type="button"
+                              className={'rvw-vote down' + (t.myVote === -1 ? ' on' : '')}
+                              aria-label="Downvote tip"
+                              aria-pressed={t.myVote === -1}
+                              title="Not helpful"
+                              onClick={() => vote(t, -1)}
+                            >▼</button>
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -209,7 +259,7 @@ export function WhatToKnow({
                 ))}
               </div>
             ) : (
-              <div className="wtk-empty"><span className="wtk-dot" /> No tips yet — be the first.</div>
+              <div className="wtk-empty"><span className="wtk-dot" /> No tips yet. Be the first.</div>
             )}
 
           </div>

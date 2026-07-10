@@ -40,7 +40,7 @@ export function ProfileView({ data, mine, venues, onEdit, headerAction }: {
             <div className="pf-statline">
               <span><b>{summary.games}</b> games</span>
               <span><b>{summary.venuesN}</b> venues</span>
-              <span><b>{summary.avg ? summary.avg.toFixed(1) : '—'}</b> avg</span>
+              <span><b>{summary.avg ? summary.avg.toFixed(1) : '–'}</b> avg</span>
               {hasSocial ? (
                 <>
                   <span><b>{data.followers ?? 0}</b> followers</span>

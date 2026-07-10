@@ -27,9 +27,11 @@ import { Route as UUsernameRouteImport } from './routes/u/$username'
 import { Route as ApiVenuesRouteImport } from './routes/api/venues'
 import { Route as ApiVenueStatsRouteImport } from './routes/api/venue-stats'
 import { Route as ApiTipsRouteImport } from './routes/api/tips'
+import { Route as ApiTipVotesRouteImport } from './routes/api/tip-votes'
 import { Route as ApiTeamsRouteImport } from './routes/api/teams'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as ApiReviewsRouteImport } from './routes/api/reviews'
+import { Route as ApiReviewVotesRouteImport } from './routes/api/review-votes'
 import { Route as ApiRankingsRouteImport } from './routes/api/rankings'
 import { Route as ApiProfileRouteImport } from './routes/api/profile'
 import { Route as ApiMatchScoreRouteImport } from './routes/api/match-score'
@@ -137,6 +139,11 @@ const ApiTipsRoute = ApiTipsRouteImport.update({
   path: '/api/tips',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTipVotesRoute = ApiTipVotesRouteImport.update({
+  id: '/api/tip-votes',
+  path: '/api/tip-votes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiTeamsRoute = ApiTeamsRouteImport.update({
   id: '/api/teams',
   path: '/api/teams',
@@ -150,6 +157,11 @@ const ApiSearchRoute = ApiSearchRouteImport.update({
 const ApiReviewsRoute = ApiReviewsRouteImport.update({
   id: '/api/reviews',
   path: '/api/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiReviewVotesRoute = ApiReviewVotesRouteImport.update({
+  id: '/api/review-votes',
+  path: '/api/review-votes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiRankingsRoute = ApiRankingsRouteImport.update({
@@ -257,9 +269,11 @@ export interface FileRoutesByFullPath {
   '/api/match-score': typeof ApiMatchScoreRoute
   '/api/profile': typeof ApiProfileRoute
   '/api/rankings': typeof ApiRankingsRoute
+  '/api/review-votes': typeof ApiReviewVotesRoute
   '/api/reviews': typeof ApiReviewsRoute
   '/api/search': typeof ApiSearchRoute
   '/api/teams': typeof ApiTeamsRoute
+  '/api/tip-votes': typeof ApiTipVotesRoute
   '/api/tips': typeof ApiTipsRoute
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
@@ -296,9 +310,11 @@ export interface FileRoutesByTo {
   '/api/match-score': typeof ApiMatchScoreRoute
   '/api/profile': typeof ApiProfileRoute
   '/api/rankings': typeof ApiRankingsRoute
+  '/api/review-votes': typeof ApiReviewVotesRoute
   '/api/reviews': typeof ApiReviewsRoute
   '/api/search': typeof ApiSearchRoute
   '/api/teams': typeof ApiTeamsRoute
+  '/api/tip-votes': typeof ApiTipVotesRoute
   '/api/tips': typeof ApiTipsRoute
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
@@ -336,9 +352,11 @@ export interface FileRoutesById {
   '/api/match-score': typeof ApiMatchScoreRoute
   '/api/profile': typeof ApiProfileRoute
   '/api/rankings': typeof ApiRankingsRoute
+  '/api/review-votes': typeof ApiReviewVotesRoute
   '/api/reviews': typeof ApiReviewsRoute
   '/api/search': typeof ApiSearchRoute
   '/api/teams': typeof ApiTeamsRoute
+  '/api/tip-votes': typeof ApiTipVotesRoute
   '/api/tips': typeof ApiTipsRoute
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
@@ -377,9 +395,11 @@ export interface FileRouteTypes {
     | '/api/match-score'
     | '/api/profile'
     | '/api/rankings'
+    | '/api/review-votes'
     | '/api/reviews'
     | '/api/search'
     | '/api/teams'
+    | '/api/tip-votes'
     | '/api/tips'
     | '/api/venue-stats'
     | '/api/venues'
@@ -416,9 +436,11 @@ export interface FileRouteTypes {
     | '/api/match-score'
     | '/api/profile'
     | '/api/rankings'
+    | '/api/review-votes'
     | '/api/reviews'
     | '/api/search'
     | '/api/teams'
+    | '/api/tip-votes'
     | '/api/tips'
     | '/api/venue-stats'
     | '/api/venues'
@@ -455,9 +477,11 @@ export interface FileRouteTypes {
     | '/api/match-score'
     | '/api/profile'
     | '/api/rankings'
+    | '/api/review-votes'
     | '/api/reviews'
     | '/api/search'
     | '/api/teams'
+    | '/api/tip-votes'
     | '/api/tips'
     | '/api/venue-stats'
     | '/api/venues'
@@ -495,9 +519,11 @@ export interface RootRouteChildren {
   ApiMatchScoreRoute: typeof ApiMatchScoreRoute
   ApiProfileRoute: typeof ApiProfileRoute
   ApiRankingsRoute: typeof ApiRankingsRoute
+  ApiReviewVotesRoute: typeof ApiReviewVotesRoute
   ApiReviewsRoute: typeof ApiReviewsRoute
   ApiSearchRoute: typeof ApiSearchRoute
   ApiTeamsRoute: typeof ApiTeamsRoute
+  ApiTipVotesRoute: typeof ApiTipVotesRoute
   ApiTipsRoute: typeof ApiTipsRoute
   ApiVenueStatsRoute: typeof ApiVenueStatsRoute
   ApiVenuesRoute: typeof ApiVenuesRoute
@@ -639,6 +665,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiTipsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/tip-votes': {
+      id: '/api/tip-votes'
+      path: '/api/tip-votes'
+      fullPath: '/api/tip-votes'
+      preLoaderRoute: typeof ApiTipVotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/teams': {
       id: '/api/teams'
       path: '/api/teams'
@@ -658,6 +691,13 @@ declare module '@tanstack/react-router' {
       path: '/api/reviews'
       fullPath: '/api/reviews'
       preLoaderRoute: typeof ApiReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/review-votes': {
+      id: '/api/review-votes'
+      path: '/api/review-votes'
+      fullPath: '/api/review-votes'
+      preLoaderRoute: typeof ApiReviewVotesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/rankings': {
@@ -799,9 +839,11 @@ const rootRouteChildren: RootRouteChildren = {
   ApiMatchScoreRoute: ApiMatchScoreRoute,
   ApiProfileRoute: ApiProfileRoute,
   ApiRankingsRoute: ApiRankingsRoute,
+  ApiReviewVotesRoute: ApiReviewVotesRoute,
   ApiReviewsRoute: ApiReviewsRoute,
   ApiSearchRoute: ApiSearchRoute,
   ApiTeamsRoute: ApiTeamsRoute,
+  ApiTipVotesRoute: ApiTipVotesRoute,
   ApiTipsRoute: ApiTipsRoute,
   ApiVenueStatsRoute: ApiVenueStatsRoute,
   ApiVenuesRoute: ApiVenuesRoute,

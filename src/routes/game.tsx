@@ -25,7 +25,7 @@ export const Route = createFileRoute('/game')({
       { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
       { rel: 'stylesheet', href: nexthopCss, 'data-page-css': 'venue game' },
     ],
-    meta: [{ title: 'Snapback — Game' }],
+    meta: [{ title: 'Snapback · Game' }],
   }),
   component: GamePage,
 })
@@ -57,7 +57,7 @@ function GamePage() {
         if (!g) throw new Error('not found')
         if (alive) {
           setState({ status: 'ok', g })
-          document.title = 'Snapback — ' + g.away.displayName + ' @ ' + g.home.displayName
+          document.title = 'Snapback · ' + g.away.displayName + ' @ ' + g.home.displayName
         }
       })
       .catch(() => { if (alive) setState({ status: 'error' }) })
@@ -70,7 +70,7 @@ function GamePage() {
       <SiteNav active="games" />
       <main id="app">{renderBody()}</main>
       <footer>
-        <div className="container">© 2026 Snapback Sports — Games. <Link to="/games">← All games</Link></div>
+        <div className="container">© 2026 Snapback Sports · Games. <Link to="/games">← All games</Link></div>
       </footer>
     </>
   )

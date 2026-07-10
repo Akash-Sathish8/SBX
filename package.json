@@ -28,12 +28,19 @@
     "db:migrate:profiles:remote": "wrangler d1 execute DB --remote --file db/migrate-001-profiles.sql",
     "db:migrate:displayname:local": "wrangler d1 execute DB --local --file db/migrate-002-display-name.sql",
     "db:migrate:displayname:remote": "wrangler d1 execute DB --remote --file db/migrate-002-display-name.sql",
+    "db:migrate:reviewvotes:local": "wrangler d1 execute DB --local --file db/migrate-003-review-votes.sql",
+    "db:migrate:reviewvotes:remote": "wrangler d1 execute DB --remote --file db/migrate-003-review-votes.sql",
+    "db:migrate:tipvotes:local": "wrangler d1 execute DB --local --file db/migrate-004-tip-votes.sql",
+    "db:migrate:tipvotes:remote": "wrangler d1 execute DB --remote --file db/migrate-004-tip-votes.sql",
     "db:seed:jack": "node scripts/seed-jack.mjs",
     "db:seed:jack:local": "wrangler d1 execute DB --local --file db/seed.jack.generated.sql",
     "db:seed:jack:remote": "wrangler d1 execute DB --remote --file db/seed.jack.generated.sql",
     "db:seed:akash": "node scripts/seed-akash-deansmith.mjs",
     "db:seed:akash:local": "wrangler d1 execute DB --local --file db/seed.akash-deansmith.generated.sql",
-    "db:seed:akash:remote": "wrangler d1 execute DB --remote --file db/seed.akash-deansmith.generated.sql"
+    "db:seed:akash:remote": "wrangler d1 execute DB --remote --file db/seed.akash-deansmith.generated.sql",
+    "db:seed:event-venues": "node scripts/seed-event-venues.mjs",
+    "db:seed:event-venues:local": "wrangler d1 execute DB --local --file db/seed.event-venues.generated.sql",
+    "db:seed:event-venues:remote": "wrangler d1 execute DB --remote --file db/seed.event-venues.generated.sql"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",

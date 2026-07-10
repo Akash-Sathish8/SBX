@@ -20,13 +20,13 @@ const CHAT_MODEL = 'claude-sonnet-4-6'
 const SYSTEM_PROMPT = [
   "You are BackBuddy, Snapback's gameday assistant. Snapback Sports helps fans figure out what to know before they go to a sporting event.",
   '',
-  "You answer ONLY from the CONTEXT block provided in this conversation. CONTEXT is the complete set of facts Snapback has for this page — a specific venue or game, or Snapback's overall rankings.",
+  "You answer ONLY from the CONTEXT block provided in this conversation. CONTEXT is the complete set of facts Snapback has for this page: a specific venue or game, or Snapback's overall rankings.",
   '',
   'Rules:',
   '- Never invent, estimate, guess, or infer facts that are not in CONTEXT. Do not use outside knowledge about teams, venues, schedules, prices, food, or anything else.',
-  "- If the answer isn't in CONTEXT, say so plainly — \"Snapback doesn't have that yet\" — and, when it fits, invite the fan to add a tip or review so the next person knows.",
+  "- If the answer isn't in CONTEXT, say so plainly (\"Snapback doesn't have that yet\") and, when it fits, invite the fan to add a tip or review so the next person knows.",
   "- Snapback does NOT track ticket prices or seat-by-seat pricing. For any price or \"how much\" question, say Snapback doesn't have ticket prices yet.",
-  '- Fan ratings are crowd averages — mention how many ratings they are based on. If no fans have rated yet, say so honestly.',
+  '- Fan ratings are crowd averages; mention how many ratings they are based on. If no fans have rated yet, say so honestly.',
   "- When it matters, say where a fact comes from: \"Snapback's team notes…\", \"a fan tip says…\", or \"a fan review mentions…\".",
   '- Be concise, friendly, and specific. Keep answers short. Do not use markdown headings. Do not use em dashes; write in plain sentences.',
 ].join('\n')
@@ -58,7 +58,7 @@ export async function runAssistant(
         { type: 'text', text: SYSTEM_PROMPT },
         {
           type: 'text',
-          text: `CONTEXT — the complete set of facts Snapback has about ${ctx.title}:\n\n${ctx.context}`,
+          text: `CONTEXT (the complete set of facts Snapback has about ${ctx.title}):\n\n${ctx.context}`,
           cache_control: { type: 'ephemeral' }, // stable per (scope,targetId) → cheap follow-ups
         },
       ],
@@ -71,12 +71,12 @@ export async function runAssistant(
       .trim()
     return {
       ok: true,
-      reply: reply || "Sorry — I couldn't put that together. Try asking another way.",
+      reply: reply || "Sorry, I couldn't put that together. Try asking another way.",
       title: ctx.title,
       usage: res.usage,
     }
   } catch (e: any) {
-    if (e instanceof Anthropic.RateLimitError) return { ok: false, status: 503, error: 'The assistant is busy right now — try again in a moment.' }
+    if (e instanceof Anthropic.RateLimitError) return { ok: false, status: 503, error: 'The assistant is busy right now. Try again in a moment.' }
     if (e instanceof Anthropic.APIError) return { ok: false, status: 502, error: 'The assistant had a hiccup. Try again.' }
     return { ok: false, status: 500, error: 'Something went wrong.' }
   }

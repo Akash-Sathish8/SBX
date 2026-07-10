@@ -16,7 +16,7 @@ export const Route = createFileRoute('/weekend')({
       { rel: 'stylesheet', href: css, 'data-page-css': 'weekend' },
       { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
     ],
-    meta: [{ title: 'Snapback — This Weekend' }],
+    meta: [{ title: 'Snapback · This Weekend' }],
   }),
   component: Weekend,
 })
@@ -56,7 +56,7 @@ function Weekend() {
           <Link to="/" className="ghback">← Back</Link>
           <h1>This <span className="hl">weekend</span></h1>
           <p className="sub">
-            {shortDate(win.days[0])} – {shortDate(win.days[2])} · every game, every league — tap one for its full guide.
+            {shortDate(win.days[0])} – {shortDate(win.days[2])} · every game, every league. Tap one for its full guide.
           </p>
         </div>
       </section>

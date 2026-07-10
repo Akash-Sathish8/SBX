@@ -47,7 +47,7 @@ export const Route = createFileRoute('/api/assistant')({
         // Per-user hourly rate limit (counts attempts, including failures).
         const bucket = new Date().toISOString().slice(0, 13) // 'YYYY-MM-DDTHH'
         const count = await dbAssistantRateBump(user.id, bucket)
-        if (count > HOURLY_LIMIT) return Response.json({ ok: false, error: "You've hit the hourly limit for the assistant — try again later." }, { status: 429, headers: noStore })
+        if (count > HOURLY_LIMIT) return Response.json({ ok: false, error: "You've hit the hourly limit for the assistant. Try again later." }, { status: 429, headers: noStore })
 
         const result = await runAssistant(scope as 'venue' | 'event' | 'general', scope === 'general' ? undefined : targetId, messages)
         if (!result.ok) return Response.json({ ok: false, error: result.error }, { status: result.status, headers: noStore })
