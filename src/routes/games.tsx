@@ -15,7 +15,7 @@ export const Route = createFileRoute('/games')({
     links: [
       { rel: 'stylesheet', href: css, 'data-page-css': 'games' },
       // Shared GameRow styles — identical id string on every route that links it.
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
+      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
     ],
     meta: [{ title: 'Snapback · Games' }],
   }),

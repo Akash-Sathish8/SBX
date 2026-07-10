@@ -43,7 +43,8 @@
     "db:seed:event-venues:remote": "wrangler d1 execute DB --remote --file db/seed.event-venues.generated.sql",
     "db:repair:venues": "node scripts/repair-venue-links.mjs",
     "db:repair:venues:local": "wrangler d1 execute DB --local --file db/seed.venue-repairs.generated.sql",
-    "db:repair:venues:remote": "wrangler d1 execute DB --remote --file db/seed.venue-repairs.generated.sql"
+    "db:repair:venues:remote": "wrangler d1 execute DB --remote --file db/seed.venue-repairs.generated.sql",
+    "build:city-coords": "node scripts/build-city-coords.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",

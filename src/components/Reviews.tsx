@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { FIELD_PHOTOS, type FieldPhoto } from '../lib/fieldPhotos'
 import { PhotoLightbox } from './PhotoLightbox'
 import { useAuth } from './auth/AuthProvider'
+import { ReviewShareCard } from './ReviewShareCard'
+import { ShareCardModal } from './ShareCardModal'
 
 // Elongated, scrollable "Reviews" card shown beside the WhatToKnow tips grid on the
 // venue page (and reused in the post-rating contribute flow). Extensive fan reviews
@@ -53,7 +55,7 @@ const RATING_PILLARS: { key: keyof VenueRatings; label: string }[] = [
 const fmtPillar = (n: number) => (Math.round(n * 10) / 10).toString()
 
 export function Reviews({
-  scope, targetId, gameId, defaultRating, startOpen = false, venueRatings,
+  scope, targetId, gameId, defaultRating, startOpen = false, venueRatings, venueName, venueCity,
 }: {
   scope: 'venue' | 'event'
   targetId: string
@@ -61,6 +63,8 @@ export function Reviews({
   defaultRating?: number | null
   startOpen?: boolean
   venueRatings?: VenueRatings | null
+  venueName?: string // enables the share card on your own reviews
+  venueCity?: string
 }) {
   const { user } = useAuth()
   const [reviews, setReviews] = useState<Review[]>([])
@@ -71,6 +75,9 @@ export function Reviews({
   const [err, setErr] = useState<string | null>(null)
   // Field-report photo strip: static photos keyed by venue + author (lowercased).
   const [lbx, setLbx] = useState<{ photos: FieldPhoto[]; index: number; credit: string } | null>(null)
+  // Pending share hands the card to ShareCardModal (native sheet / copy /
+  // download on the pre-rendered PNG).
+  const [shareRv, setShareRv] = useState<Review | null>(null)
   const photosFor = (author: string): FieldPhoto[] | null =>
     (scope === 'venue' && FIELD_PHOTOS[targetId]?.[author.toLowerCase()]) || null
 
@@ -307,6 +314,9 @@ export function Reviews({
                   onClick={() => vote(rv, -1)}
                 >▼</button>
               </div>
+              {rv.mine && venueName ? (
+                <button className="rvw-sharebtn" onClick={() => setShareRv(rv)}>↓ Share</button>
+              ) : null}
               </div>
               {rv.mine ? <button className="rvw-del" aria-label="Delete review" onClick={() => remove(rv)}>×</button> : null}
             </div>
@@ -315,6 +325,28 @@ export function Reviews({
           <div className="rvw-empty"><span className="wtk-dot" /> No reviews yet. Be the first to write one.</div>
         )}
       </div>
+
+      {shareRv && venueName ? (
+        <ShareCardModal
+          filename={`snapback-review-${shareRv.id.slice(0, 8)}.png`}
+          title="Snapback"
+          text="My review on Snapback"
+          onClose={() => setShareRv(null)}
+        >
+          <ReviewShareCard
+            r={{
+              venueName,
+              venueCity,
+              author: shareRv.author,
+              body: shareRv.body,
+              rating: shareRv.rating,
+              createdAt: shareRv.createdAt,
+              net: shareRv.up - shareRv.down,
+              photos: photosFor(shareRv.author) ?? undefined,
+            }}
+          />
+        </ShareCardModal>
+      ) : null}
 
       {lbx ? (
         <PhotoLightbox

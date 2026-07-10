@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
@@ -11,6 +11,8 @@ import { matchExperienceForVenue, matchExperienceForTeam } from '../lib/experien
 import { useAuth } from '../components/auth/AuthProvider'
 import { SaveRankingsPrompt } from '../components/auth/SaveRankingsPrompt'
 import { ContributePrompt } from '../components/ContributePrompt'
+import { BallotShareCard, type BallotCardRow } from '../components/BallotShareCard'
+import { ShareCardModal } from '../components/ShareCardModal'
 import css from '../pages/rank.css?url'
 
 // "Make your rankings" — a fan ranks the games they ACTUALLY went to. Pick the
@@ -21,6 +23,13 @@ import css from '../pages/rank.css?url'
 // locally, and once signed in it syncs to D1 so it follows you across devices.
 
 export const Route = createFileRoute('/rank')({
+  // `?edit=<gameId>` deep-links straight into the pre-filled rate panel for a
+  // game already on the ballot (the profile Diary rows land here).
+  validateSearch: (s: Record<string, unknown>) => {
+    const out: { edit?: string } = {}
+    if (s.edit != null && String(s.edit).trim()) out.edit = String(s.edit)
+    return out
+  },
   head: () => ({
     links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'rank' }],
     meta: [{ title: 'Snapback · Make your rankings' }],
@@ -138,11 +147,18 @@ function savePrompt(p: PromptState) {
 function RankPage() {
   const { user, openAuth } = useAuth()
   const navigate = useNavigate()
+  const { edit: editParam } = Route.useSearch()
   const [mine, setMine] = useState<MyRank[]>([])
   const [hydrated, setHydrated] = useState(false)
   const [adding, setAdding] = useState(false)
   const [prompt, setPrompt] = useState(false)
   const [contribute, setContribute] = useState<MyRank | null>(null)
+  // Share: null = idle; otherwise the ShareCardModal renders this payload and
+  // handles the rasterise / native-sheet / copy / download flow.
+  const [share, setShare] = useState<{ rows: BallotCardRow[]; total: number; title?: string; filename: string } | null>(null)
+  // Edit: re-open the rate panel for a game already on the ballot.
+  const [editing, setEditing] = useState<{ r: MyRank; g: Game } | null>(null)
+  const [editErr, setEditErr] = useState<string | null>(null)
 
   // Load once on the client (localStorage is unavailable during SSR).
   useEffect(() => {
@@ -186,10 +202,21 @@ function RankPage() {
     persist(mine.filter((m) => m.gameId !== id))
     if (user) fetch('/api/rankings?gameId=' + encodeURIComponent(id), { method: 'DELETE' }).catch(() => {})
   }
-  const upsert = (r: MyRank) => {
+  const upsert = (r: MyRank, opts?: { quiet?: boolean }) => {
     const isNew = !mine.some((m) => m.gameId === r.gameId)
     persist([...mine.filter((m) => m.gameId !== r.gameId), r].sort((a, b) => b.score - a.score))
     setAdding(false)
+    if (opts?.quiet) {
+      // Re-rating an existing entry: sync the server, skip the tip handoff.
+      if (user) {
+        fetch('/api/rankings', {
+          method: 'PUT',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ rankings: [r] }),
+        }).catch(() => {})
+      }
+      return
+    }
     if (user) {
       fetch('/api/rankings', {
         method: 'PUT',
@@ -216,6 +243,36 @@ function RankPage() {
   }
 
   const ranked = useMemo(() => [...mine].sort((a, b) => b.score - a.score), [mine])
+
+  const toCardRow = (r: MyRank): BallotCardRow => ({
+    away: r.away, home: r.home, venue: r.venue, league: SPORTS[r.league]?.label ?? '', date: r.date, score: r.score,
+  })
+  const shareBallot = () =>
+    setShare({ rows: ranked.map(toCardRow), total: ranked.length, filename: 'snapback-ballot.png' })
+  const shareOne = (r: MyRank) =>
+    setShare({ rows: [toCardRow(r)], total: 1, title: 'My Gameday Rating', filename: `snapback-rating-${r.gameId}.png` })
+
+  // Deep link (?edit=<gameId>) from the profile Diary: open that game's edit
+  // panel once the ballot has hydrated. Consumed at most once per visit.
+  const editConsumed = useRef(false)
+  useEffect(() => {
+    if (!hydrated || !editParam || editConsumed.current) return
+    const r = mine.find((m) => m.gameId === editParam)
+    if (r) { editConsumed.current = true; startEdit(r) }
+  }, [hydrated, editParam, mine]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Row click -> re-open the rate panel, pre-filled. The panel needs the real
+  // Game (benchmarks resolve from it), so fetch it by id first.
+  const startEdit = (r: MyRank) => {
+    setEditErr(null)
+    getJSON('/api/games?id=' + encodeURIComponent(r.gameId) + '&league=' + r.league)
+      .then((res: any) => {
+        const g = (Array.isArray(res?.data) ? res.data : []).find((x: Game) => x.id === r.gameId)
+        if (g) { setEditing({ r, g }); setAdding(false) }
+        else setEditErr("Couldn't load that game to re-rate it.")
+      })
+      .catch(() => setEditErr("Couldn't load that game to re-rate it."))
+  }
   // Show the picker up front when the list is empty; otherwise it's behind "Add".
   const showAdd = adding || (hydrated && mine.length === 0)
 
@@ -244,15 +301,45 @@ function RankPage() {
             <div className="rk-yours">
               <div className="rk-yhead">
                 <h2>Your rankings <span className="rk-count">{ranked.length}</span></h2>
-                {!showAdd ? (
-                  <button className="btn brand" onClick={() => setAdding(true)}>+ Add a game</button>
-                ) : null}
+                <div className="rk-yactions">
+                  <button className="btn" onClick={shareBallot}>↓ Share my ballot</button>
+                  {!showAdd ? (
+                    <button className="btn brand" onClick={() => setAdding(true)}>+ Add a game</button>
+                  ) : null}
+                </div>
               </div>
+              {editErr ? <div className="rk-empty">{editErr}</div> : null}
               <div className="rk-list">
                 {ranked.map((r, i) => (
-                  <YourRow key={r.gameId} r={r} place={i + 1} onRemove={() => remove(r.gameId)} />
+                  <YourRow
+                    key={r.gameId}
+                    r={r}
+                    place={i + 1}
+                    onEdit={() => startEdit(r)}
+                    onShare={() => shareOne(r)}
+                    onRemove={() => remove(r.gameId)}
+                  />
                 ))}
               </div>
+            </div>
+          ) : null}
+
+          {editing ? (
+            <div className="rk-add">
+              <div className="rk-ahead">
+                <h2>Update your rating</h2>
+                <button className="rk-x" aria-label="Close" onClick={() => setEditing(null)}>Done</button>
+              </div>
+              <RatePanel
+                game={editing.g}
+                initial={{ fans: editing.r.fans, food: editing.r.food, unique: editing.r.unique, stadium: editing.r.stadium }}
+                backLabel="← Cancel"
+                onBack={() => setEditing(null)}
+                onSave={(scores) => {
+                  upsert({ ...editing.r, ...scores, score: avg(scores), ts: Date.now() }, { quiet: true })
+                  setEditing(null)
+                }}
+              />
             </div>
           ) : null}
 
@@ -268,6 +355,17 @@ function RankPage() {
         </div>
       </section>
 
+      {share ? (
+        <ShareCardModal
+          filename={share.filename}
+          title="Snapback"
+          text="My gameday rankings on Snapback"
+          onClose={() => setShare(null)}
+        >
+          <BallotShareCard rows={share.rows} total={share.total} title={share.title} handle={user?.username ?? null} />
+        </ShareCardModal>
+      ) : null}
+
       <footer>
         <div className="container">
           © 2026 Snapback Sports · {user ? 'Saved to your account.' : 'Your rankings live on this device.'} <Link to="/rankings">See the expert rankings →</Link>
@@ -281,9 +379,11 @@ function Logo({ src }: { src?: string }) {
   return src ? <img className="rk-logo" src={src} alt="" width={26} height={26} loading="lazy" /> : <span className="rk-logo ph" aria-hidden="true" />
 }
 
-function YourRow({ r, place, onRemove }: { r: MyRank; place: number; onRemove: () => void }) {
+function YourRow({ r, place, onEdit, onShare, onRemove }: { r: MyRank; place: number; onEdit: () => void; onShare: () => void; onRemove: () => void }) {
   return (
-    <div className="rk-row">
+    <div className="rk-row clickable" role="button" tabIndex={0} title="Update your rating"
+      onClick={onEdit}
+      onKeyDown={(e) => { if (e.key === 'Enter') onEdit() }}>
       <span className="rk-place">#{place}</span>
       <div className="rk-rmid">
         <div className="rk-rteams">
@@ -294,11 +394,12 @@ function YourRow({ r, place, onRemove }: { r: MyRank; place: number; onRemove: (
           <span className="rk-tn">{r.home}</span>
         </div>
         <div className="rk-rmeta">
-          {SPORTS[r.league].label} · {r.venue}{r.city ? ' · ' + r.city : ''} · {fmtDate(r.date)}
+          {SPORTS[r.league].label} · {r.venue}{r.city ? ' · ' + r.city : ''} · {fmtDate(r.date)} · <span className="rk-edithint">edit rating</span>
         </div>
       </div>
+      <button className="rk-share" aria-label="Share this rating" onClick={(e) => { e.stopPropagation(); onShare() }}>↓ Share</button>
       <div className="rk-rscore"><span className="rk-sv">{r.score.toFixed(1)}</span><span className="rk-sl">your score</span></div>
-      <button className="rk-del" aria-label="Remove from your rankings" onClick={onRemove}>×</button>
+      <button className="rk-del" aria-label="Remove from your rankings" onClick={(e) => { e.stopPropagation(); onRemove() }}>×</button>
     </div>
   )
 }
@@ -470,8 +571,14 @@ function GamePicker({ league, team, existing, onBack, onPick }: { league: League
 // fans have ranked games here, and pillar averages only render once they have.
 interface FanStats { count: number; fans: number; food: number; unique: number; stadium: number; score: number }
 
-function RatePanel({ game, onBack, onSave }: { game: Game; onBack: () => void; onSave: (s: Record<PillarKey, number>) => void }) {
-  const [s, setS] = useState<Record<PillarKey, number>>({ fans: 7, food: 7, unique: 7, stadium: 7 })
+function RatePanel({ game, onBack, onSave, initial, backLabel = '← Pick another game' }: {
+  game: Game
+  onBack: () => void
+  onSave: (s: Record<PillarKey, number>) => void
+  initial?: Record<PillarKey, number>
+  backLabel?: string
+}) {
+  const [s, setS] = useState<Record<PillarKey, number>>(initial ?? { fans: 7, food: 7, unique: 7, stadium: 7 })
   const [fan, setFan] = useState<FanStats | null>(null)
   const [exps, setExps] = useState<Experience[]>([])
   const [venues, setVenues] = useState<Venue[]>([])
@@ -512,7 +619,7 @@ function RatePanel({ game, onBack, onSave }: { game: Game; onBack: () => void; o
 
   return (
     <div className="rk-rate">
-      <button className="rk-backlink" onClick={onBack}>← Pick another game</button>
+      <button className="rk-backlink" onClick={onBack}>{backLabel}</button>
       <div className="rk-rctx">
         <div className="rk-rcmatch">
           <Logo src={game.away.logo} /><span className="rk-tn">{teamShort(game, 'away')}</span>

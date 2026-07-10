@@ -37,7 +37,7 @@ export const Route = createFileRoute('/venue')({
   head: () => ({
     links: [
       { rel: 'stylesheet', href: css, 'data-page-css': 'venue' },
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
+      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
       { rel: 'stylesheet', href: nexthopCss, 'data-page-css': 'venue game' },
     ],
     meta: [{ title: 'Snapback · Venue' }],
@@ -191,7 +191,10 @@ function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | nul
         <div className="eyebrow">Snapback · crowdsourced</div>
         <div className="shead-row">
           <h2 className="shead">What do I need to know?</h2>
-          <AddTipButton onOpen={() => setTipOpen(true)} />
+          <div className="shead-actions">
+            <Link to="/venue-plan" search={{ id: v.id }} className="wtk-addbar guide">Build your guide →</Link>
+            <AddTipButton onOpen={() => setTipOpen(true)} />
+          </div>
         </div>
         <div className="ssub">Insider tips &amp; reviews from fans who've actually been to {v.name}</div>
         <ExpertNotes scope="venue" targetId={v.id} />
@@ -200,6 +203,8 @@ function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | nul
           <Reviews
             scope="venue"
             targetId={v.id}
+            venueName={v.name}
+            venueCity={v.city}
             venueRatings={myRating}
             defaultRating={myRating ? Math.round(myRating.score) : null}
             startOpen={review && !!user}

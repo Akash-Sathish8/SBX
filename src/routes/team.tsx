@@ -24,7 +24,7 @@ export const Route = createFileRoute('/team')({
   head: () => ({
     links: [
       { rel: 'stylesheet', href: css, 'data-page-css': 'team' },
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue' },
+      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
     ],
     meta: [{ title: 'Snapback · Team' }],
   }),
