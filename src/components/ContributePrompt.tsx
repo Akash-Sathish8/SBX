@@ -4,11 +4,10 @@ import { getJSON } from '../lib/dataCache'
 import type { MyRank } from '../lib/myRankings'
 import type { Venue } from '../lib/espn'
 
-// Inline nudge shown on /rank right after a fan adds a ranking: invite them to
-// contribute the qualitative side — tips + a written review — for that venue.
-// A ranked game only carries the venue NAME, so we resolve it to a venue id via
-// /api/venues (the same name match the venue page uses) to deep-link into the
-// venue's "What do I need to know?" forum with the review form open (?review=1).
+// Inline nudge shown on /rank right after a fan adds a ranking, as the FALLBACK
+// when the direct post-rank handoff couldn't resolve the venue up front (rank.tsx
+// normally navigates straight to the venue's tip composer, ?tip=1). A ranked game
+// only carries the venue NAME, so we resolve it to a venue id via /api/venues.
 export function ContributePrompt({ r, onDismiss }: { r: MyRank; onDismiss: () => void }) {
   const [venueId, setVenueId] = useState<string | null>(null)
 
@@ -29,13 +28,13 @@ export function ContributePrompt({ r, onDismiss }: { r: MyRank; onDismiss: () =>
       <div className="sbx-sp-copy">
         <strong>Help other fans</strong>
         <span>
-          You ranked {r.away} @ {r.home}{r.venue ? ` at ${r.venue}` : ''}. Leave tips &amp; write a review of the experience.
+          You ranked {r.away} @ {r.home}{r.venue ? ` at ${r.venue}` : ''}. Leave a tip to help the next fan going.
         </span>
       </div>
       <div className="sbx-sp-actions">
         {venueId ? (
-          <Link className="sbx-sp-go" to="/venue" search={{ id: venueId, review: 1 }} onClick={onDismiss}>
-            Write a review →
+          <Link className="sbx-sp-go" to="/venue" search={{ id: venueId, tip: 1 }} onClick={onDismiss}>
+            Leave a tip →
           </Link>
         ) : (
           <Link className="sbx-sp-go" to="/venues" onClick={onDismiss}>

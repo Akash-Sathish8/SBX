@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
@@ -137,6 +137,7 @@ function savePrompt(p: PromptState) {
 
 function RankPage() {
   const { user, openAuth } = useAuth()
+  const navigate = useNavigate()
   const [mine, setMine] = useState<MyRank[]>([])
   const [hydrated, setHydrated] = useState(false)
   const [adding, setAdding] = useState(false)
@@ -189,13 +190,21 @@ function RankPage() {
     const isNew = !mine.some((m) => m.gameId === r.gameId)
     persist([...mine.filter((m) => m.gameId !== r.gameId), r].sort((a, b) => b.score - a.score))
     setAdding(false)
-    setContribute(r) // nudge to leave tips + a review for this venue
     if (user) {
       fetch('/api/rankings', {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ rankings: [r] }),
       }).catch(() => {})
+      // Straight to the venue's tip composer (skippable there) — tips beat
+      // general reviews for the next fan. Unknown venue: inline nudge instead.
+      getJSON('/api/venues')
+        .then((res: any) => {
+          const match = (Array.isArray(res?.data) ? res.data : []).find((v: any) => v.name === r.venue)
+          if (match) navigate({ to: '/venue', search: { id: match.id, tip: 1 } })
+          else setContribute(r)
+        })
+        .catch(() => setContribute(r))
     } else if (isNew) {
       // Nudge to save: the first ranking, then every few after that.
       const p = loadPrompt()

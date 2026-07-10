@@ -40,7 +40,10 @@
     "db:seed:akash:remote": "wrangler d1 execute DB --remote --file db/seed.akash-deansmith.generated.sql",
     "db:seed:event-venues": "node scripts/seed-event-venues.mjs",
     "db:seed:event-venues:local": "wrangler d1 execute DB --local --file db/seed.event-venues.generated.sql",
-    "db:seed:event-venues:remote": "wrangler d1 execute DB --remote --file db/seed.event-venues.generated.sql"
+    "db:seed:event-venues:remote": "wrangler d1 execute DB --remote --file db/seed.event-venues.generated.sql",
+    "db:repair:venues": "node scripts/repair-venue-links.mjs",
+    "db:repair:venues:local": "wrangler d1 execute DB --local --file db/seed.venue-repairs.generated.sql",
+    "db:repair:venues:remote": "wrangler d1 execute DB --remote --file db/seed.venue-repairs.generated.sql"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",

@@ -25,11 +25,13 @@ export const Route = createFileRoute('/venue')({
   // Coerce to string: TanStack's default parser turns a numeric ?id=3687 into the
   // number 3687, which a `typeof === 'string'` check would drop (breaks direct
   // loads / shared links to venues whose ESPN id is all digits).
-  // `?review=1` is the post-rank handoff from /rank: open the review form + scroll.
+  // `?tip=1` is the post-rank handoff from /rank: open the tip composer + scroll
+  // (`?review=1` is the older review handoff, kept working for old links).
   // Kept optional so every existing `<Link to="/venue" search={{ id }}>` stays valid.
   validateSearch: (s: Record<string, unknown>) => {
-    const out: { id: string; review?: 1 } = { id: s.id != null ? String(s.id) : '' }
+    const out: { id: string; review?: 1; tip?: 1 } = { id: s.id != null ? String(s.id) : '' }
     if (s.review === '1' || s.review === 1) out.review = 1
+    if (s.tip === '1' || s.tip === 1) out.tip = 1
     return out
   },
   head: () => ({
@@ -56,7 +58,7 @@ const kickoff = (iso: string) => {
 }
 
 function VenuePage() {
-  const { id: rawId, review } = Route.useSearch()
+  const { id: rawId, review, tip } = Route.useSearch()
   const id = (rawId || '').replace(/[^a-z0-9_-]/gi, '')
   const [venue, setVenue] = useState<Venue | null | undefined>(undefined) // undefined = loading
   const [games, setGames] = useState<Game[] | null>(null)
@@ -92,11 +94,11 @@ function VenuePage() {
     if (!id) return <div className="loadwrap">No venue selected. <Link to="/venues" className="ulink">Back to venues →</Link></div>
     if (venue === undefined) return <div className="loadwrap">Loading venue…</div>
     if (venue === null) return <div className="loadwrap">Couldn't load this venue. <Link to="/venues" className="ulink">Back to venues →</Link></div>
-    return <VenueContent v={venue} games={games} review={review === 1} />
+    return <VenueContent v={venue} games={games} review={review === 1} tip={tip === 1} />
   }
 }
 
-function VenueContent({ v, games, review }: { v: Venue; games: Game[] | null; review: boolean }) {
+function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | null; review: boolean; tip: boolean }) {
   const { user } = useAuth()
   const forumRef = useRef<HTMLElement>(null)
   const [tipOpen, setTipOpen] = useState(false)
@@ -126,10 +128,15 @@ function VenueContent({ v, games, review }: { v: Venue; games: Game[] | null; re
   const snap = useMemo(() => (exps ? matchExperienceForVenue(v, exps) : null), [exps, v])
   const hasFan = !!fan && fan.count > 0
 
-  // Post-rank handoff (?review=1): land on the open form by scrolling the forum in.
+  // Post-rank handoff (?tip=1 / ?review=1): land on the open form by scrolling
+  // the forum in. The tip composer only auto-opens for signed-in fans (posting
+  // is auth-gated); signed-out fans land at the forum's sign-in button.
   useEffect(() => {
-    if (review && forumRef.current) forumRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [review])
+    if ((review || tip) && forumRef.current) forumRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [review, tip])
+  useEffect(() => {
+    if (tip && user) setTipOpen(true)
+  }, [tip, user])
 
   const tenantAbbrs = new Set(v.teams.map((t) => t.abbr))
   const here = useMemo(() => {
@@ -188,7 +195,7 @@ function VenueContent({ v, games, review }: { v: Venue; games: Game[] | null; re
         <div className="ssub">Insider tips &amp; reviews from fans who've actually been to {v.name}</div>
         <ExpertNotes scope="venue" targetId={v.id} />
         <div className="wtk-layout">
-          <WhatToKnow scope="venue" targetId={v.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
+          <WhatToKnow scope="venue" targetId={v.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} cancelLabel={tip ? 'Skip' : 'Cancel'} />
           <Reviews
             scope="venue"
             targetId={v.id}

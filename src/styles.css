@@ -238,6 +238,10 @@ html, body { max-width: 100%; overflow-x: clip; }
    (ups minus downs). Transparent until an arrow is pressed (yellow up, red
    down); votes work signed-out — no auth gate here. */
 .rvw-votes { display: inline-flex; align-items: center; align-self: flex-start; margin-top: 9px; border: 1.5px solid rgba(20, 20, 20, .13); border-radius: 999px; overflow: hidden; }
+/* review footer: the vote pill sits BELOW the review on its own row, split off
+   by a dashed divider (tips keep the inline wtkv variant) */
+.rvw-foot { margin-top: 11px; padding-top: 9px; border-top: 1px dashed #e3e3d9; }
+.rvw-foot .rvw-votes { margin-top: 0; }
 .rvw-vote { border: 0; background: transparent; color: #9a9a90; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 11px; line-height: 1; padding: 6px 10px; cursor: pointer; transition: background .12s, color .12s; }
 .rvw-vote:hover { color: #141414; background: rgba(20, 20, 20, .06); }
 .rvw-vote.up.on { background: #F7DF02; color: #141414; }

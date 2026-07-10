@@ -4,9 +4,10 @@ import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { getJSON } from '../lib/dataCache'
 import { SPORTS, isLeague, type League } from '../lib/sports'
-import type { Game, GameTeam } from '../lib/espn'
+import type { Game, GameTeam, Venue } from '../lib/espn'
 import { WhatToKnow, AddTipButton } from '../components/WhatToKnow'
 import { ExpertNotes } from '../components/ExpertNotes'
+import { Reviews } from '../components/Reviews'
 import { GamesThatWeekend, NearbyVenues, RelatedExperience } from '../components/NextHops'
 import css from '../pages/game.css?url'
 import rowCss from '../pages/gamerow.css?url'
@@ -96,6 +97,36 @@ function TeamSide({ t, side }: { t: GameTeam; side: 'home' | 'away' }) {
 function GameContent({ g }: { g: Game }) {
   const showScore = (g.state === 'post' || g.state === 'in') && g.home.score !== null && g.away.score !== null
   const [tipOpen, setTipOpen] = useState(false)
+
+  // The crowdsourced layer belongs to the BUILDING, not the fixture: resolve
+  // the game's D1 venue (by name, falling back to the home tenant — the games
+  // API doesn't carry venue ids) and show that venue's expert notes, tips,
+  // reviews, and field photos. Unresolvable venue -> event-scoped fallback.
+  const [venue, setVenue] = useState<Venue | null>(null)
+  useEffect(() => {
+    let alive = true
+    getJSON('/api/venues')
+      .then((r: any) => {
+        if (!alive) return
+        const venues: Venue[] = Array.isArray(r?.data) ? r.data : []
+        const vn = (g.venue.name || '').toLowerCase()
+        const hn = g.home.displayName.toLowerCase()
+        const gc = (g.venue.city || '').toLowerCase()
+        // Home-tenant fallback only when the cities agree — a spring-training
+        // or neutral-site game (London, Maui, ...) must NOT show the home
+        // team's regular building. A missing city on either side counts as
+        // agreement (better a near-certain match than an empty section).
+        const tenant = venues.find((x) => (x.teams || []).some((t) => (t.displayName || '').toLowerCase() === hn))
+        const cityOk = !gc || !tenant?.city || tenant.city.toLowerCase() === gc
+        const v =
+          (vn ? venues.find((x) => x.name.toLowerCase() === vn) : undefined) ??
+          (tenant && cityOk ? tenant : null)
+        setVenue(v)
+      })
+      .catch(() => { if (alive) setVenue(null) })
+    return () => { alive = false }
+  }, [g.venue.name, g.home.displayName])
+
   return (
     <>
       <section className="ghero">
@@ -126,9 +157,25 @@ function GameContent({ g }: { g: Game }) {
           <h2 className="shead">What do I need to know?</h2>
           <AddTipButton onOpen={() => setTipOpen(true)} />
         </div>
-        <div className="ssub">Tips from fans for {g.away.displayName} @ {g.home.displayName}</div>
-        <ExpertNotes scope="event" targetId={g.league + ':' + g.id} />
-        <WhatToKnow scope="event" targetId={g.league + ':' + g.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
+        <div className="ssub">
+          {venue
+            ? <>Insider tips &amp; reviews from fans who've actually been to {venue.name}</>
+            : <>Tips from fans for {g.away.displayName} @ {g.home.displayName}</>}
+        </div>
+        {venue ? (
+          <>
+            <ExpertNotes scope="venue" targetId={venue.id} />
+            <div className="wtk-layout">
+              <WhatToKnow scope="venue" targetId={venue.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
+              <Reviews scope="venue" targetId={venue.id} gameId={g.id} />
+            </div>
+          </>
+        ) : (
+          <>
+            <ExpertNotes scope="event" targetId={g.league + ':' + g.id} />
+            <WhatToKnow scope="event" targetId={g.league + ':' + g.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
+          </>
+        )}
       </div></section>
 
       {/* Next hops — the trip doesn't end at this game. */}

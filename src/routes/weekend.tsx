@@ -4,7 +4,7 @@ import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { GameRow } from '../components/GameRow'
 import { getJSON } from '../lib/dataCache'
-import { SPORTS, LEAGUES, type League } from '../lib/sports'
+import { SPORTS, RANKABLE_LEAGUES, type League } from '../lib/sports'
 import { weekendWindow, localDayKey } from '../lib/weekend'
 import type { Game } from '../lib/espn'
 import css from '../pages/weekend.css?url'
@@ -36,7 +36,9 @@ function Weekend() {
 
   useEffect(() => {
     let alive = true
-    getJSON(`/api/games?from=${encodeURIComponent(win.from)}&to=${encodeURIComponent(win.to)}&limit=300`)
+    // limit=1000: a fall weekend (NFL + NHL + NBA + both college slates) tops
+    // 320+ games — 300 was silently truncating the window. dbGames caps at 2000.
+    getJSON(`/api/games?from=${encodeURIComponent(win.from)}&to=${encodeURIComponent(win.to)}&limit=1000`)
       .then((r: any) => { if (alive) setAll(Array.isArray(r?.data) ? r.data : []) })
       .catch(() => { if (alive) setErrMsg("Couldn't load the weekend slate.") })
     return () => { alive = false }
@@ -65,7 +67,7 @@ function Weekend() {
         <div className="container">
           <div className="filters">
             <button className={'chip' + (filter === 'all' ? ' on' : '')} onClick={() => setFilter('all')}>All sports</button>
-            {LEAGUES.map((l) => (
+            {RANKABLE_LEAGUES.map((l) => (
               <button key={l} className={'chip' + (l === filter ? ' on' : '')} onClick={() => setFilter(l)}>{SPORTS[l].label}</button>
             ))}
           </div>

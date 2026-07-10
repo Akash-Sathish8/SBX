@@ -74,12 +74,13 @@ export function AddTipButton({ onOpen }: { onOpen: () => void }) {
 }
 
 export function WhatToKnow({
-  scope, targetId, composerOpen = false, onComposerClose,
+  scope, targetId, composerOpen = false, onComposerClose, cancelLabel = 'Cancel',
 }: {
   scope: 'venue' | 'event'
   targetId: string
   composerOpen?: boolean
   onComposerClose?: () => void
+  cancelLabel?: string // "Skip" on the post-rank handoff
 }) {
   const { user } = useAuth()
   const sections = scope === 'venue' ? VENUE_SECTIONS : EVENT_SECTIONS
@@ -106,8 +107,12 @@ export function WhatToKnow({
     return () => { alive = false }
   }, [scope, targetId, user?.id])
 
-  // Group each author's tips within a section into ONE card. Verified voices
-  // (Snapback, Jack Settleman) lead each section; the rest follow by recency.
+  // Group each author's tips within a section into ONE card, ordered by votes:
+  // tips inside a card sort by net score (ups minus downs), and cards sort by
+  // their best tip's net score. Votes update `tips` optimistically, so the
+  // order reshuffles live as arrows are pressed. Ties: verified voices
+  // (Snapback, Jack Settleman) first, then recency.
+  const net = (t: Tip) => t.up - t.down
   const bySection = useMemo(() => {
     const out: Record<string, TipGroup[]> = {}
     for (const t of tips) {
@@ -119,7 +124,13 @@ export function WhatToKnow({
       if (!g.avatar && t.avatar) g.avatar = t.avatar
       if (t.createdAt > g.latest) g.latest = t.createdAt
     }
-    for (const k in out) out[k].sort((a, b) => (b.verified ? 1 : 0) - (a.verified ? 1 : 0) || (b.latest < a.latest ? -1 : 1))
+    for (const k in out) {
+      for (const g of out[k]) g.tips.sort((a, b) => net(b) - net(a) || (b.createdAt < a.createdAt ? -1 : 1))
+      out[k].sort((a, b) =>
+        net(b.tips[0]) - net(a.tips[0]) ||
+        (b.verified ? 1 : 0) - (a.verified ? 1 : 0) ||
+        (b.latest < a.latest ? -1 : 1))
+    }
     return out
   }, [tips])
 
@@ -194,7 +205,7 @@ export function WhatToKnow({
           />
           {err ? <div className="wtk-err">{err}</div> : null}
           <div className="wtk-formrow">
-            <button className="wtk-cancel" onClick={() => { setErr(null); onComposerClose?.() }}>Cancel</button>
+            <button className="wtk-cancel" onClick={() => { setErr(null); onComposerClose?.() }}>{cancelLabel}</button>
             <button className="wtk-post" disabled={busy || !draft.trim()} onClick={submit}>
               {busy ? 'Posting…' : 'Post tip'}
             </button>
