@@ -270,7 +270,7 @@ export function Reviews({
           </div>
         ))}
         {reviews.length ? (
-          reviews.map((rv) => (
+          [...reviews].sort((a, b) => (b.up - b.down) - (a.up - a.down) || (b.createdAt < a.createdAt ? -1 : 1)).map((rv) => (
             <div key={rv.id} className={'rvw-item' + (rv.official ? ' official' : '')}>
               <div className="rvw-itemmeta">
                 {rv.verified ? (
@@ -287,6 +287,7 @@ export function Reviews({
               </div>
               <div className="rvw-body">{rv.body}</div>
               {strip(rv.author)}
+              <div className="rvw-foot">
               <div className="rvw-votes">
                 <button
                   type="button"
@@ -305,6 +306,7 @@ export function Reviews({
                   title="Not helpful"
                   onClick={() => vote(rv, -1)}
                 >▼</button>
+              </div>
               </div>
               {rv.mine ? <button className="rvw-del" aria-label="Delete review" onClick={() => remove(rv)}>×</button> : null}
             </div>
