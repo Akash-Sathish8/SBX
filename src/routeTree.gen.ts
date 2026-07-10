@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WeekendRouteImport } from './routes/weekend'
 import { Route as VenuesRouteImport } from './routes/venues'
+import { Route as VenuePlanRouteImport } from './routes/venue-plan'
 import { Route as VenueRouteImport } from './routes/venue'
 import { Route as TeamsRouteImport } from './routes/teams'
 import { Route as TeamRouteImport } from './routes/team'
@@ -57,6 +58,11 @@ const WeekendRoute = WeekendRouteImport.update({
 const VenuesRoute = VenuesRouteImport.update({
   id: '/venues',
   path: '/venues',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VenuePlanRoute = VenuePlanRouteImport.update({
+  id: '/venue-plan',
+  path: '/venue-plan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VenueRoute = VenueRouteImport.update({
@@ -258,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/team': typeof TeamRoute
   '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
+  '/venue-plan': typeof VenuePlanRoute
   '/venues': typeof VenuesRoute
   '/weekend': typeof WeekendRoute
   '/api/assistant': typeof ApiAssistantRoute
@@ -299,6 +306,7 @@ export interface FileRoutesByTo {
   '/team': typeof TeamRoute
   '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
+  '/venue-plan': typeof VenuePlanRoute
   '/venues': typeof VenuesRoute
   '/weekend': typeof WeekendRoute
   '/api/assistant': typeof ApiAssistantRoute
@@ -341,6 +349,7 @@ export interface FileRoutesById {
   '/team': typeof TeamRoute
   '/teams': typeof TeamsRoute
   '/venue': typeof VenueRoute
+  '/venue-plan': typeof VenuePlanRoute
   '/venues': typeof VenuesRoute
   '/weekend': typeof WeekendRoute
   '/api/assistant': typeof ApiAssistantRoute
@@ -384,6 +393,7 @@ export interface FileRouteTypes {
     | '/team'
     | '/teams'
     | '/venue'
+    | '/venue-plan'
     | '/venues'
     | '/weekend'
     | '/api/assistant'
@@ -425,6 +435,7 @@ export interface FileRouteTypes {
     | '/team'
     | '/teams'
     | '/venue'
+    | '/venue-plan'
     | '/venues'
     | '/weekend'
     | '/api/assistant'
@@ -466,6 +477,7 @@ export interface FileRouteTypes {
     | '/team'
     | '/teams'
     | '/venue'
+    | '/venue-plan'
     | '/venues'
     | '/weekend'
     | '/api/assistant'
@@ -508,6 +520,7 @@ export interface RootRouteChildren {
   TeamRoute: typeof TeamRoute
   TeamsRoute: typeof TeamsRoute
   VenueRoute: typeof VenueRoute
+  VenuePlanRoute: typeof VenuePlanRoute
   VenuesRoute: typeof VenuesRoute
   WeekendRoute: typeof WeekendRoute
   ApiAssistantRoute: typeof ApiAssistantRoute
@@ -551,6 +564,13 @@ declare module '@tanstack/react-router' {
       path: '/venues'
       fullPath: '/venues'
       preLoaderRoute: typeof VenuesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/venue-plan': {
+      id: '/venue-plan'
+      path: '/venue-plan'
+      fullPath: '/venue-plan'
+      preLoaderRoute: typeof VenuePlanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/venue': {
@@ -828,6 +848,7 @@ const rootRouteChildren: RootRouteChildren = {
   TeamRoute: TeamRoute,
   TeamsRoute: TeamsRoute,
   VenueRoute: VenueRoute,
+  VenuePlanRoute: VenuePlanRoute,
   VenuesRoute: VenuesRoute,
   WeekendRoute: WeekendRoute,
   ApiAssistantRoute: ApiAssistantRoute,

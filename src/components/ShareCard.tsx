@@ -1,6 +1,7 @@
 // Shareable matchday-plan card — light editorial. Rendered at full pixel size
 // (1080 wide) for export; the builder scales it down for preview.
-import { forwardRef, useLayoutEffect, useRef } from 'react'
+import { forwardRef, useRef } from 'react'
+import { useShareCardFit } from '../lib/useShareCardFit'
 
 type Spot = { name: string; note?: string; where?: string }
 export type Plan = {
@@ -39,9 +40,8 @@ export const ShareCard = forwardRef<HTMLDivElement, { plan: Plan; format: 'story
     ;(plan.merch || []).forEach((s) => steps.push({ label: 'Merch', name: s.name, note: s.note, where: s.where }))
     ;(plan.post || []).forEach((s) => steps.push({ label: 'After the whistle', name: s.name, note: s.note, where: s.where }))
 
-    // Content-aware fill: measure the timeline and auto-scale its type (--scf) so
-    // the plan fills the fixed 1080x1920 frame whether few or many spots are picked,
-    // and never overflows (which would clip text).
+    // Content-aware fill (extracted to useShareCardFit; story-only, exactly as
+    // before — square uses fixed sizes on this card).
     const localRef = useRef<HTMLDivElement | null>(null)
     const setRefs = (node: HTMLDivElement | null) => {
       localRef.current = node
@@ -49,35 +49,7 @@ export const ShareCard = forwardRef<HTMLDivElement, { plan: Plan; format: 'story
       else if (ref) (ref as any).current = node
     }
     const sig = format + '|' + steps.map((s) => s.label + s.name + (s.note || '') + (s.where || '')).join('¦')
-    useLayoutEffect(() => {
-      const root = localRef.current
-      if (!root || format !== 'story') return
-      const tl = root.querySelector('.sc-tl') as HTMLElement | null
-      const pad = root.querySelector('.sc-pad') as HTMLElement | null
-      const foot = root.querySelector('.sc-foot') as HTMLElement | null
-      if (!tl || !pad) return
-      const wheres = Array.from(root.querySelectorAll<HTMLElement>('.sc-swhere'))
-      const notes = Array.from(root.querySelectorAll<HTMLElement>('.sc-snote'))
-      // reset to full detail + neutral scale before measuring
-      root.style.setProperty('--scf', '1')
-      wheres.forEach((el) => { el.style.display = '' })
-      notes.forEach((el) => { el.style.display = '' })
-      const padBottom = parseFloat(getComputedStyle(pad).paddingBottom) || 56
-      const avail = root.offsetHeight - tl.offsetTop - (foot ? foot.offsetHeight : 0) - padBottom - 6
-      // un-stretch the (flex:1) timeline so scrollHeight is the true content height
-      const measure = () => { const f = tl.style.flex; tl.style.flex = '0 0 auto'; const h = tl.scrollHeight; tl.style.flex = f; return h }
-      if (avail > 0) {
-        // Agenda too tall to fit readably → CUT secondary detail before shrinking
-        // type: drop the muted "where" line first, then the "note" line.
-        if (measure() > avail) wheres.forEach((el) => { el.style.display = 'none' })
-        if (measure() > avail) notes.forEach((el) => { el.style.display = 'none' })
-        // Final micro-fit: scale up to fill (few steps) or down to fit (many).
-        const scf = Math.max(0.5, Math.min(1.3, avail / measure()))
-        root.style.setProperty('--scf', String(Math.round(scf * 1000) / 1000))
-      }
-      // very short plans read better centered; longer ones spread along the timeline
-      tl.style.justifyContent = steps.length <= 2 ? 'space-around' : 'space-between'
-    }, [sig])
+    useShareCardFit(localRef, sig, { fit: format === 'story', stepsCount: steps.length })
     return (
       <div ref={setRefs} className={'sc ' + (format === 'story' ? 'sc-story' : 'sc-square')}>
         <div className="sc-tex" />

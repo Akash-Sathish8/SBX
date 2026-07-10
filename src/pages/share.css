@@ -60,6 +60,14 @@
 .sc-square .sc-step.walk{border-left-color:#111}
 .sc-square .sc-sname{font-size:34px}
 .sc-square .sc-snote{font-size:23px}
+/* square content-aware fill (venue card): same --scf mechanism as .sc-story.
+   Inert for the matchday card — it never sets --scf in square mode, so these
+   calc() rules resolve to the static sizes above. */
+.sc-square .sc-slab{font-size:calc(25px * var(--scf,1))}
+.sc-square .sc-sname{font-size:calc(34px * var(--scf,1))}
+.sc-square .sc-snote{font-size:calc(23px * var(--scf,1))}
+.sc-square .sc-swhere{font-size:calc(23px * var(--scf,1))}
+.sc-square .sc-tl.grid{gap:calc(26px * var(--scf,1)) calc(40px * var(--scf,1))}
 
 .sc-foot{display:flex;align-items:center;justify-content:space-between;border-top:3px solid #ddd;padding-top:26px;margin-top:auto}
 .sc-foot span{font-size:24px;color:#888;font-weight:600}

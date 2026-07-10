@@ -32,12 +32,13 @@ export function getLogoDataUri(): Promise<string> {
 }
 
 /**
- * Rasterise the offscreen full-size ShareCard node (1080×1920) to a PNG Blob.
+ * Rasterise the offscreen full-size ShareCard node to a PNG Blob. Defaults to
+ * the 1080×1920 story frame; pass `size` for other formats (1080×1080 square).
  * Centralises: real-font layout, logo data-URI inlining, image decode-await, font
  * embedding (Anton/Barlow), and pixelRatio:2 supersampling so small type (the round
  * pill, timeline dots, date chip, labels) stays crisp.
  */
-export async function renderShareCardBlob(node: HTMLElement): Promise<Blob> {
+export async function renderShareCardBlob(node: HTMLElement, size?: { width?: number; height?: number }): Promise<Blob> {
   // 1. ensure the live node is laid out with the real fonts before capture
   try { await (document as any).fonts?.ready } catch { /* ignore */ }
   // 2. swap the logo on the (offscreen) export node to a data URI so html-to-image
@@ -56,8 +57,8 @@ export async function renderShareCardBlob(node: HTMLElement): Promise<Blob> {
   try { fontEmbedCSS = await getShareFontEmbedCss() } catch { fontEmbedCSS = undefined }
   const url = await toPng(node, {
     pixelRatio: 2,
-    width: 1080,
-    height: 1920,
+    width: size?.width ?? 1080,
+    height: size?.height ?? 1920,
     ...(fontEmbedCSS ? { fontEmbedCSS } : { skipFonts: true }),
   })
   return await (await fetch(url)).blob()

@@ -23,6 +23,7 @@ import gamesCss from '../pages/games.css?url'
 import homeCss from '../pages/home.css?url'
 import searchboxCss from '../pages/searchbox.css?url'
 import venueCss from '../pages/venue.css?url'
+import venuePlanCss from '../pages/venue-plan.css?url'
 import venuesCss from '../pages/venues.css?url'
 import shareCss from '../pages/share.css?url'
 import gamerowCss from '../pages/gamerow.css?url'
@@ -69,6 +70,7 @@ export const Route = createRootRoute({
       { rel: 'preload', as: 'style', href: homeCss },
       { rel: 'preload', as: 'style', href: searchboxCss },
       { rel: 'preload', as: 'style', href: venueCss },
+      { rel: 'preload', as: 'style', href: venuePlanCss },
       { rel: 'preload', as: 'style', href: venuesCss },
       { rel: 'preload', as: 'style', href: shareCss },
       { rel: 'preload', as: 'style', href: gamerowCss },

@@ -166,6 +166,7 @@ function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | nul
             <div className="vhero-title">
               <h1>{v.name}</h1>
               {v.teams.length ? <div className="altname">Home of <b>{v.teams.map((t) => t.displayName).join(' · ')}</b></div> : null}
+              <Link to="/venue-plan" search={{ id: v.id }} className="dir-btn" style={{ margin: '16px 0 0' }}>Plan your visit →</Link>
             </div>
             <div className="vscores">
               {snap ? (
