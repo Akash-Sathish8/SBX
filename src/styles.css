@@ -277,20 +277,6 @@ html, body { max-width: 100%; overflow-x: clip; }
 .rvw-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .rvw-gallery .rvw-photo, .rvw-gallery .rvw-photomore { width: 100%; height: 108px; }
 
-/* ---- Share-card modal: preview + Share / Copy / Download ---- */
-.shm { position: fixed; inset: 0; z-index: 130; background: rgba(12, 12, 9, .9); display: flex; align-items: center; justify-content: center; padding: 18px; }
-.shm-in { position: relative; background: #fffdf6; border: 3px solid #141414; border-radius: 14px; box-shadow: 8px 8px 0 rgba(0, 0, 0, .5); padding: 16px; max-width: 380px; width: 100%; }
-.shm-prev { background: #141410; border: 2px solid #141414; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 240px; max-height: min(58vh, 520px); }
-.shm-prev img { width: 100%; height: 100%; max-height: min(58vh, 520px); object-fit: contain; display: block; }
-.shm-load { color: #bdbcae; font-weight: 700; font-size: 13.5px; padding: 40px 10px; }
-.shm-actions { display: flex; gap: 8px; margin-top: 12px; }
-.shm-btn { flex: 1; border: 2px solid #141414; border-radius: 999px; background: #fff; color: #141414; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 8px; cursor: pointer; white-space: nowrap; }
-.shm-btn:hover { background: #fff7c9; }
-.shm-btn.brand { background: #F7DF02; }
-.shm-btn.brand:hover { filter: brightness(1.04); background: #F7DF02; }
-.shm-btn:disabled { opacity: .55; cursor: default; }
-.shm-x { position: absolute; top: -14px; right: -14px; z-index: 2; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #141414; background: #F7DF02; color: #141414; font-weight: 800; font-size: 14px; cursor: pointer; box-shadow: 2px 2px 0 #141414; }
-
 /* ---- Full-screen photo lightbox ---- */
 .lbx { position: fixed; inset: 0; z-index: 120; background: rgba(12, 12, 9, .92); display: flex; align-items: center; justify-content: center; }
 .lbx-in { margin: 0; max-width: min(92vw, 1100px); display: flex; flex-direction: column; align-items: center; gap: 12px; }

@@ -1,0 +1,46 @@
+/* Tailwind v4 entry (CSS-first config). The Snapback design language as theme
+   tokens so converted pages write `bg-brand text-ink font-display` instead of
+   hex soup. Loaded globally from __root alongside the legacy styles.css;
+   legacy per-route CSS files are deleted page-by-page as each converts. */
+@import 'tailwindcss';
+
+@theme {
+  /* brand */
+  --color-brand: #f7df02; /* the yellow */
+  --color-ink: #141410; /* near-black */
+  --color-ink-soft: #222222;
+  --color-cream: #fffdf6; /* card stock */
+  --color-paper: #f4f4f1; /* page background */
+  --color-tip: #faf7e8; /* tip-card wash */
+  --color-muted: #6b6b6b;
+  --color-muted-dark: #8a8a7c;
+  --color-gold: #b6a900; /* pressed/rank accents */
+  --color-danger: #e2483d;
+  --color-live: #e8362c;
+
+  /* type */
+  --font-display: 'Anton', 'Barlow', sans-serif;
+  --font-sans: 'Barlow', system-ui, sans-serif;
+
+  /* the hard offset shadows the ticket language uses */
+  --shadow-punch: 3px 3px 0 0 var(--color-ink);
+  --shadow-punch-lg: 6px 6px 0 0 var(--color-ink);
+  --shadow-punch-brand: 5px 5px 0 0 var(--color-brand);
+}
+
+/* Legacy-variable bridge: shared stylesheets that outlive a page's conversion
+   (gamerow.css, searchbox.css, the wtk/rvw blocks in styles.css) consume the
+   :root vars every per-page CSS used to declare. Converted pages no longer
+   ship that :root, so the canonical values live here until the last shared
+   sheet is ported. Delete this block when gamerow/searchbox/styles convert. */
+:root {
+  --y: #f7df02;
+  --k: #222222;
+  --white: #fff;
+  --light: #f4f4f1;
+  --card: #fffdf6;
+  --ink: #141410;
+  --body: #33352f;
+  --gray: #6b6b6b;
+  --green: #1f9d4d;
+}

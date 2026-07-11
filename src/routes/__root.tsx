@@ -5,6 +5,7 @@ import { AuthProvider } from '../components/auth/AuthProvider'
 import { AssistantChat } from '../components/AssistantChat'
 
 import appCss from '../styles.css?url'
+import twCss from '../styles/tailwind.css?url'
 // Global, always-on auth styles (modal + save prompt). Untagged on purpose:
 // PageCssGuard only disables links carrying data-page-css, so this survives on
 // every route — the auth modal can open from home, /rank, anywhere.
@@ -59,6 +60,9 @@ export const Route = createRootRoute({
       },
       { rel: 'icon', type: 'image/png', href: '/img/logo.png' },
       { rel: 'apple-touch-icon', href: '/img/logo.png' },
+      // Tailwind loads FIRST so legacy page CSS keeps winning ties while pages
+      // convert; untagged, so PageCssGuard never disables it.
+      { rel: 'stylesheet', href: twCss },
       { rel: 'stylesheet', href: appCss },
       { rel: 'stylesheet', href: authCss },
       { rel: 'stylesheet', href: navCss },

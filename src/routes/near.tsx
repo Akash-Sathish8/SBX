@@ -8,7 +8,6 @@ import { SPORTS, RANKABLE_LEAGUES, type League } from '../lib/sports'
 import { toStoredUtc, localDayKey } from '../lib/weekend'
 import { cityKey, haversineMiles, fmtMiles, loadCityCoords, type LatLng } from '../lib/geo'
 import type { Game } from '../lib/espn'
-import css from '../pages/near.css?url'
 import rowCss from '../pages/gamerow.css?url'
 
 // "Near you" — upcoming games sorted by real distance from the fan (Jack's
@@ -18,10 +17,11 @@ import rowCss from '../pages/gamerow.css?url'
 // explicit — a "Use my location" button or a city picker, never an unprompted
 // permission dialog — and the last anchor persists per device.
 
+// First fully-Tailwind page of the migration: no per-route page CSS — only the
+// shared gamerow.css for the GameRow rows (PageCssGuard still needs the id).
 export const Route = createFileRoute('/near')({
   head: () => ({
     links: [
-      { rel: 'stylesheet', href: css, 'data-page-css': 'near' },
       { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
     ],
     meta: [{ title: 'Snapback · Near You' }],
@@ -136,81 +136,94 @@ function Near() {
     return list
   }, [nearby])
 
+  const container = 'mx-auto w-full px-[clamp(28px,4vw,72px)]'
+  const chip = (on: boolean) =>
+    'cursor-pointer border-2 border-ink px-3.5 py-2 text-[13px] font-bold uppercase tracking-[0.4px] text-ink ' +
+    (on ? 'bg-brand' : 'bg-white')
+  const emptyCls = 'px-0.5 py-[18px] text-[15px] text-muted [&_a]:border-b-2 [&_a]:border-brand [&_a]:font-extrabold'
+
   return (
-    <>
+    <div className="min-h-screen bg-paper font-sans text-[#33352f] [&_h1]:font-display [&_h2]:font-display [&_h1]:uppercase [&_h2]:uppercase [&_h1]:leading-none [&_h2]:leading-none [&_h1]:tracking-[1px] [&_h2]:tracking-[1px]">
       <PageCssGuard id="near" />
       <SiteNav />
-      <section className="head">
-        <div className="container">
-          <Link to="/" className="ghback">← Back</Link>
-          <h1>Near <span className="hl">you</span></h1>
-          <p className="sub">
+      <section className="relative z-[5] bg-ink-soft py-10 pb-[38px] text-white">
+        {/* the faint grid the dark headers carry */}
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:32px_32px]" />
+        <div className={container + ' relative z-[1]'}>
+          <Link to="/" className="mb-3.5 inline-flex items-center gap-1.5 text-[13px] font-bold uppercase tracking-[0.5px] text-[#cfcfcf] hover:text-brand">← Back</Link>
+          <h1 className="text-[clamp(30px,6.4vw,84px)] text-white">Near <span className="inline-block bg-brand px-2.5 text-ink shadow-[5px_5px_0_#000]">you</span></h1>
+          <p className="mt-[18px] max-w-[64ch] text-lg leading-normal text-[#d6d6d6]">
             {anchor
               ? <>Every game within {RANGE_MILES} miles of {anchor.label} over the next {WINDOW_DAYS} days, nearest first.</>
               : <>Games close to you over the next {WINDOW_DAYS} days. Share your location or pick your city.</>}
           </p>
-          <div className="locrow">
-            <button className="locbtn" disabled={locBusy} onClick={useMyLocation}>
+          <div className="mt-5 flex flex-wrap items-center gap-3.5">
+            <button
+              className="cursor-pointer rounded-lg border-2 border-black bg-brand px-[18px] py-[11px] text-[13px] font-extrabold uppercase tracking-[0.6px] text-ink shadow-[3px_3px_0_#000] hover:brightness-105 disabled:cursor-default disabled:opacity-60"
+              disabled={locBusy}
+              onClick={useMyLocation}
+            >
               {locBusy ? 'Locating…' : '📍 Use my location'}
             </button>
-            <div className="citypick">
+            <div className="relative">
               <input
+                className="w-60 rounded-lg border-2 border-black bg-white px-3.5 py-[11px] font-sans text-sm font-semibold text-ink shadow-[3px_3px_0_#000] focus:border-brand focus:outline-none"
                 value={cityQ}
                 onChange={(e) => setCityQ(e.target.value)}
                 placeholder="or pick your city…"
                 aria-label="Pick your city"
               />
               {citySuggestions.length ? (
-                <div className="citysugg">
+                <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-20 overflow-hidden rounded-lg border-2 border-black bg-white shadow-[4px_4px_0_#000]">
                   {citySuggestions.map((k) => (
-                    <button key={k} onClick={() => pickCity(k)}>{cityLabel(k)}</button>
+                    <button key={k} className="block w-full cursor-pointer border-t border-[#eee] bg-white px-[13px] py-[9px] text-left font-sans text-[13.5px] font-bold text-ink first:border-t-0 hover:bg-[#fff7c9]" onClick={() => pickCity(k)}>{cityLabel(k)}</button>
                   ))}
                 </div>
               ) : null}
             </div>
-            {anchor ? <span className="locnow">Showing: <b>{anchor.label}</b></span> : null}
-            {locErr ? <span className="locerr">{locErr}</span> : null}
+            {anchor ? <span className="text-[13px] font-bold uppercase tracking-[0.4px] text-[#cfcfcf]">Showing: <b className="text-brand">{anchor.label}</b></span> : null}
+            {locErr ? <span className="w-full text-[13px] font-bold text-[#f2b8b3]">{locErr}</span> : null}
           </div>
         </div>
       </section>
 
-      <section className="block">
-        <div className="container">
+      <section className="py-[38px] pb-[46px]">
+        <div className={container}>
           {anchor ? (
-            <div className="filters">
-              <button className={'chip' + (filter === 'all' ? ' on' : '')} onClick={() => setFilter('all')}>All sports</button>
+            <div className="mb-1.5 flex flex-wrap gap-2.5">
+              <button className={chip(filter === 'all')} onClick={() => setFilter('all')}>All sports</button>
               {RANKABLE_LEAGUES.map((l) => (
-                <button key={l} className={'chip' + (l === filter ? ' on' : '')} onClick={() => setFilter(l)}>{SPORTS[l].label}</button>
+                <button key={l} className={chip(l === filter)} onClick={() => setFilter(l)}>{SPORTS[l].label}</button>
               ))}
             </div>
           ) : null}
 
           {!hydrated || (anchor && (games === null || coords === null)) ? (
-            <div className="loading">Finding games near you…</div>
+            <div className="py-10 font-semibold text-muted">Finding games near you…</div>
           ) : null}
 
           {hydrated && !anchor ? (
-            <div className="empty">Set your location above and the slate fills in. Nothing is stored beyond this device.</div>
+            <div className={emptyCls}>Set your location above and the slate fills in. Nothing is stored beyond this device.</div>
           ) : null}
 
           {anchor && nearby !== null ? (
             days.length ? (
               days.map((day) => (
                 <section key={day.date.toISOString()}>
-                  <div className="dayhd">
-                    <h2>{dayLabel(day.date)}</h2>
-                    <span className="cnt">{day.items.length} {day.items.length === 1 ? 'game' : 'games'}</span>
+                  <div className="mb-3.5 mt-[30px] flex items-baseline gap-3 border-b-[3px] border-ink pb-2">
+                    <h2 className="text-2xl text-ink">{dayLabel(day.date)}</h2>
+                    <span className="text-[13px] font-bold text-muted">{day.items.length} {day.items.length === 1 ? 'game' : 'games'}</span>
                   </div>
                   {day.items.map(({ g, miles }) => (
-                    <div key={g.league + ':' + g.id} className="near-item">
-                      <span className="near-dist num">{fmtMiles(miles)}</span>
+                    <div key={g.league + ':' + g.id} className="relative">
+                      <span className="num pointer-events-none absolute -top-[9px] right-2.5 z-[3] rounded-full bg-ink-soft px-2.5 py-[3px] text-[11px] font-extrabold uppercase tracking-[0.6px] text-brand shadow-[2px_2px_0_rgba(0,0,0,0.35)]">{fmtMiles(miles)}</span>
                       <GameRow g={g} />
                     </div>
                   ))}
                 </section>
               ))
             ) : (
-              <div className="empty">
+              <div className={emptyCls}>
                 {filter === 'all'
                   ? <>No games within {RANGE_MILES} miles in the next {WINDOW_DAYS} days. <Link to="/games">Browse the full schedule →</Link></>
                   : <>No {SPORTS[filter].label} games near you in this window. <Link to="/games">See the {SPORTS[filter].label} schedule →</Link></>}
@@ -220,7 +233,7 @@ function Near() {
         </div>
       </section>
 
-      <footer><div className="container">© 2026 Snapback Sports. <Link to="/">← Explore</Link></div></footer>
-    </>
+      <footer className="bg-black py-10 text-[13px] text-[#888]"><div className={container}>© 2026 Snapback Sports. <Link to="/" className="font-bold text-brand">← Explore</Link></div></footer>
+    </div>
   )
 }

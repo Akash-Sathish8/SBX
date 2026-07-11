@@ -73,21 +73,26 @@ export function ShareCardModal({
     a.click()
   }
 
+  // Tailwind-only styling (first converted surface of the tailwind migration).
+  const btn =
+    'flex-1 cursor-pointer whitespace-nowrap rounded-full border-2 border-ink bg-white px-2 py-[11px] ' +
+    'font-sans text-[12.5px] font-extrabold uppercase tracking-[0.5px] text-ink hover:bg-[#fff7c9] ' +
+    'disabled:cursor-default disabled:opacity-55'
   return (
-    <div className="shm" role="dialog" aria-modal="true" aria-label="Share card" onClick={onClose}>
-      <div className="shm-in" onClick={(e) => e.stopPropagation()}>
-        <button className="shm-x" aria-label="Close" onClick={onClose}>✕</button>
-        <div className="shm-prev">
+    <div className="fixed inset-0 z-[130] flex items-center justify-center bg-[rgba(12,12,9,0.9)] p-[18px]" role="dialog" aria-modal="true" aria-label="Share card" onClick={onClose}>
+      <div className="relative w-full max-w-[380px] rounded-[14px] border-[3px] border-ink bg-cream p-4 shadow-[8px_8px_0_rgba(0,0,0,0.5)]" onClick={(e) => e.stopPropagation()}>
+        <button className="absolute -right-3.5 -top-3.5 z-[2] h-8 w-8 cursor-pointer rounded-full border-2 border-ink bg-brand text-sm font-extrabold text-ink shadow-[2px_2px_0_#141410]" aria-label="Close" onClick={onClose}>✕</button>
+        <div className="flex min-h-[240px] max-h-[min(58vh,520px)] items-center justify-center overflow-hidden rounded-[10px] border-2 border-ink bg-ink">
           {url
-            ? <img src={url} alt="Share card preview" />
-            : <div className="shm-load">{err ? "Couldn't render the card. Try again." : 'Rendering your card…'}</div>}
+            ? <img src={url} alt="Share card preview" className="block h-full max-h-[min(58vh,520px)] w-full object-contain" />
+            : <div className="px-2.5 py-10 text-[13.5px] font-bold text-[#bdbcae]">{err ? "Couldn't render the card. Try again." : 'Rendering your card…'}</div>}
         </div>
-        <div className="shm-actions">
+        <div className="mt-3 flex gap-2">
           {canNative || !blob ? (
-            <button className="shm-btn brand" disabled={!canNative} onClick={doShare}>Share…</button>
+            <button className={btn + ' bg-brand hover:bg-brand hover:brightness-105'} disabled={!canNative} onClick={doShare}>Share…</button>
           ) : null}
-          <button className="shm-btn" disabled={!blob} onClick={doCopy}>{copied ? 'Copied!' : 'Copy image'}</button>
-          <button className="shm-btn" disabled={!url} onClick={doDownload}>↓ Download</button>
+          <button className={btn} disabled={!blob} onClick={doCopy}>{copied ? 'Copied!' : 'Copy image'}</button>
+          <button className={btn} disabled={!url} onClick={doDownload}>↓ Download</button>
         </div>
       </div>
       {/* offscreen full-size card, rasterised once on mount */}

@@ -2,11 +2,13 @@ import { defineConfig } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { cloudflare } from '@cloudflare/vite-plugin'
 import viteReact from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'node:url'
 
-// Tailwind + devtools intentionally removed: this app injects each page's
-// original CSS verbatim (per-route) for pixel-exact parity with the static site,
-// and devtools UI must not appear in screenshots.
+// Styling is migrating BACK to Tailwind (v4, CSS-first config in
+// src/styles/tailwind.css). Legacy per-route CSS files remain until each page
+// is converted — new/converted surfaces use utilities only. Devtools UI stays
+// removed (must not appear in screenshots).
 const config = defineConfig({
   server: {
     allowedHosts: ["curler-thrive-crested.ngrok-free.dev"],
@@ -18,6 +20,7 @@ const config = defineConfig({
     },
   },
   plugins: [
+    tailwindcss(),
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tanstackStart(),
     viteReact(),
