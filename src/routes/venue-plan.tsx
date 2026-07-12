@@ -14,7 +14,6 @@ import { ShareCardModal } from '../components/ShareCardModal'
 import type { Venue } from '../lib/espn'
 import { PageCssGuard } from '../components/PageCssGuard'
 import shareCss from '../pages/share.css?url'
-import css from '../pages/venue-plan.css?url'
 
 export const Route = createFileRoute('/venue-plan')({
   // Coerce to string: TanStack parses a numeric ?id=209 into a number, which a
@@ -25,7 +24,6 @@ export const Route = createFileRoute('/venue-plan')({
       // 'build agenda venue-plan': must match agenda.tsx's tag — TanStack dedupes
       // by href and only one link (with one tag) survives across the routes.
       { rel: 'stylesheet', href: shareCss, 'data-page-css': 'build agenda venue-plan' },
-      { rel: 'stylesheet', href: css, 'data-page-css': 'venue-plan' },
     ],
     meta: [{ title: 'Snapback · Venue Plan' }],
   }),
@@ -72,12 +70,12 @@ function VenuePlanPage() {
   return (
     <>
       <PageCssGuard id="venue-plan" />
-      <main className="vp-wrap">
-        <header className="vp-top">
-          <Link to="/" className="vp-brand" aria-label="Snapback home" style={{ textDecoration: 'none', color: 'inherit' }}><img src="/img/logo.png" alt="" /><span>Snapback<br />Venue plan</span></Link>
-          {v ? <button className="vp-link" onClick={() => navigate({ to: '/venue-plan', search: { id: '' } })}>← Change venue</button> : null}
+      <main className="min-h-dvh bg-[#f4f4f1] text-[#161616] mx-auto pt-[18px] px-[clamp(18px,4vw,72px)] pb-[64px]">
+        <header className="flex items-center justify-between gap-[14px] mb-[20px]">
+          <Link to="/" className="flex items-center gap-[12px] font-display uppercase text-[19px] leading-[1.04] tracking-[.5px] text-[#111]" aria-label="Snapback home" style={{ textDecoration: 'none', color: 'inherit' }}><img className="w-[44px] h-[44px] rounded-[9px] shadow-[3px_3px_0_#111]" src="/img/logo.png" alt="" /><span>Snapback<br />Venue plan</span></Link>
+          {v ? <button className="bg-none border-0 font-extrabold uppercase tracking-[.5px] text-[12.5px] text-[#111] cursor-pointer px-[2px] py-[6px]" onClick={() => navigate({ to: '/venue-plan', search: { id: '' } })}>← Change venue</button> : null}
         </header>
-        {!venues ? <div className="vp-load">Loading…</div>
+        {!venues ? <div className="py-[70px] text-center text-[#8a8a8a] font-bold">Loading…</div>
           : v ? <Editor key={v.id} v={v} />
             : <Picker venues={venues} onPick={(vid) => navigate({ to: '/venue-plan', search: { id: vid } })} />}
       </main>
@@ -93,10 +91,10 @@ function Picker({ venues, onPick }: { venues: Venue[]; onPick: (id: string) => v
     [venues, ql],
   )
   return (
-    <div className="vp-pick">
-      <h1 className="vp-h1">Plan your venue visit</h1>
-      <div className="vp-sub">Pick the venue, then stack up what you're doing there. It saves automatically.</div>
-      <div className="search vp-search"><SearchIcon className="si" /><input type="search" placeholder="Search venue, city or team…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
+    <div>
+      <h1 className="font-display text-[clamp(30px,6vw,46px)] tracking-[.5px] text-[#111] mt-[2px] mb-[4px] uppercase">Plan your venue visit</h1>
+      <div className="text-[#777] font-semibold mb-[18px]">Pick the venue, then stack up what you're doing there. It saves automatically.</div>
+      <div className="search mb-[16px] max-w-[540px]"><SearchIcon className="si" /><input type="search" placeholder="Search venue, city or team…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
       <div className="bld-venues">
         {list.map((x) => (
           <button key={x.id} className="bld-venue" onClick={() => onPick(x.id)}>
@@ -184,44 +182,44 @@ function Editor({ v }: { v: Venue }) {
   const anyFilled = plan.steps.length > 0
 
   return (
-    <div className="vp-edit">
-      <div className="vp-fields">
-        <div className="vp-vname">{v.name}</div>
-        <div className="vp-meta">{[v.city, v.state].filter(Boolean).join(', ')}{v.teams.length ? ' · ' + v.teams.map((t) => t.displayName).join(' · ') : ''}</div>
+    <div className="grid grid-cols-1 gap-[24px] min-[900px]:grid-cols-[1fr_400px] min-[900px]:items-start">
+      <div>
+        <div className="font-display text-[clamp(22px,5vw,30px)] text-[#111] tracking-[.4px] uppercase">{v.name}</div>
+        <div className="text-[13px] font-bold uppercase tracking-[.4px] text-[#999] mt-[4px] mb-[18px]">{[v.city, v.state].filter(Boolean).join(', ')}{v.teams.length ? ' · ' + v.teams.map((t) => t.displayName).join(' · ') : ''}</div>
         {SECTIONS.map((s) => {
           const sugs = s.tipSection ? picks[s.tipSection] || [] : []
           return (
-            <div key={s.key} className="vp-field">
-              <span className="vp-flabel">{s.label}</span>
+            <div key={s.key} className="mb-[22px]">
+              <span className="block text-[12px] font-extrabold uppercase tracking-[.7px] text-[#9a7e00] mb-[7px]">{s.label}</span>
               {items[s.key].length ? (
-                <div className="vp-items">
+                <div className="grid gap-[8px] mb-[8px]">
                   {items[s.key].map((it) => (
-                    <div key={it.id} className="vp-item">
-                      <input className="vp-input" maxLength={MAXLEN} value={it.text} onChange={(e) => editItem(s.key, it.id, e.target.value)} />
-                      <button className="vp-del" aria-label="Remove" title="Remove" onClick={() => removeItem(s.key, it.id)}>×</button>
+                    <div key={it.id} className="flex items-center gap-[8px]">
+                      <input className="w-full flex-1 font-sans text-[15.5px] font-semibold leading-[1.4] text-[#111] bg-white border-2 border-[#e4e4de] rounded-[10px] px-[13px] py-[10px] shadow-[0_6px_18px_rgba(0,0,0,0.05)] placeholder:text-[#b3b3ac] placeholder:font-medium focus:outline-0 focus:border-[#111]" maxLength={MAXLEN} value={it.text} onChange={(e) => editItem(s.key, it.id, e.target.value)} />
+                      <button className="flex-none w-[36px] h-[36px] border-0 rounded-[8px] bg-[#eceae2] text-[#666] text-[17px] font-extrabold leading-none cursor-pointer hover:bg-[#111] hover:text-white" aria-label="Remove" title="Remove" onClick={() => removeItem(s.key, it.id)}>×</button>
                     </div>
                   ))}
                 </div>
               ) : null}
-              <div className="vp-add">
+              <div className="flex gap-[8px]">
                 <input
-                  className="vp-input" maxLength={MAXLEN} placeholder={s.ph} value={drafts[s.key]}
+                  className="w-full flex-1 font-sans text-[15.5px] font-semibold leading-[1.4] text-[#111] bg-white border-2 border-[#e4e4de] rounded-[10px] px-[13px] py-[10px] shadow-[0_6px_18px_rgba(0,0,0,0.05)] placeholder:text-[#b3b3ac] placeholder:font-medium focus:outline-0 focus:border-[#111]" maxLength={MAXLEN} placeholder={s.ph} value={drafts[s.key]}
                   onChange={(e) => setDrafts((p) => ({ ...p, [s.key]: e.target.value }))}
                   onKeyDown={(e) => { if (e.key === 'Enter') commitDraft(s.key) }}
                 />
-                <button className="vp-addbtn" disabled={!drafts[s.key].trim()} onClick={() => commitDraft(s.key)}>Add</button>
+                <button className="flex-none font-display uppercase tracking-[.5px] text-[13px] text-[#111] bg-[#F7DF02] border-0 rounded-[8px] px-[16px] cursor-pointer disabled:opacity-[.45] disabled:cursor-default" disabled={!drafts[s.key].trim()} onClick={() => commitDraft(s.key)}>Add</button>
               </div>
               {sugs.length ? (
                 <>
-                  <div className="vp-chipslab">From the fans — tap to add</div>
-                  <div className="vp-chips">
+                  <div className="text-[10.5px] font-extrabold uppercase tracking-[.5px] text-[#b3b3ac] mt-[11px]">From the fans — tap to add</div>
+                  <div className="flex flex-wrap gap-[7px] mt-[7px]">
                     {sugs.map((sg) => {
                       const on = items[s.key].some((x) => x.sourceId === sg.id)
                       return (
-                        <button key={sg.id} className={'vp-chip' + (on ? ' on' : '')} title={sg.text} onClick={() => toggleSuggestion(s.key, sg)}>
-                          <span className="plus">{on ? '✓' : '+'}</span>
-                          <span className="t">{sg.text}</span>
-                          <span className="by">{sg.by}{!sg.expert && sg.net > 0 ? ' · ▲' + sg.net : ''}</span>
+                        <button key={sg.id} className={'inline-flex items-center gap-[8px] max-w-full text-left font-[inherit] text-[12.5px] font-semibold leading-[1.3] text-[#333] border rounded-[18px] px-[12px] py-[6px] cursor-pointer transition-[border-color,background] duration-[.12s] hover:border-[#caa600] ' + (on ? 'bg-[#fff3b0] border-[#ecd96b]' : 'bg-white border-[#e2e0d6]')} title={sg.text} onClick={() => toggleSuggestion(s.key, sg)}>
+                          <span className="flex-none font-extrabold text-[#111]">{on ? '✓' : '+'}</span>
+                          <span className="overflow-hidden [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">{sg.text}</span>
+                          <span className="flex-none text-[#9a7e00] font-extrabold text-[10.5px] uppercase tracking-[.3px] whitespace-nowrap">{sg.by}{!sg.expert && sg.net > 0 ? ' · ▲' + sg.net : ''}</span>
                         </button>
                       )
                     })}
@@ -231,11 +229,11 @@ function Editor({ v }: { v: Venue }) {
             </div>
           )
         })}
-        <div className="vp-savednote">Saved automatically on this device.</div>
+        <div className="text-[12px] text-[#9a9a9a] font-semibold mt-[4px]">Saved automatically on this device.</div>
       </div>
 
-      <div className="vp-preview">
-        <div className="bld-tabs">
+      <div className="sticky top-[16px] flex flex-col items-center max-[900px]:static">
+        <div className="bld-tabs mb-[12px]">
           <button className={'bld-tab' + (fmt === 'story' ? ' on' : '')} onClick={() => setFmt('story')}>Story · 9:16</button>
           <button className={'bld-tab' + (fmt === 'square' ? ' on' : '')} onClick={() => setFmt('square')}>Square · 1:1</button>
         </div>
@@ -243,8 +241,8 @@ function Editor({ v }: { v: Venue }) {
           <div className="sb-pvcap">{fmt === 'story' ? 'Story · 9:16' : 'Square · 1:1'}</div>
           <div className={fmt === 'story' ? 'sb-scale-story' : 'sb-scale-square'}><VenueShareCard plan={plan} format={fmt} /></div>
         </div>
-        <div className="vp-actions">
-          <button className="sb-btn dark" disabled={!anyFilled} onClick={() => setSharing(true)}>Share</button>
+        <div className="flex gap-[12px] mt-[16px] justify-center">
+          <button className="sb-btn dark disabled:opacity-[.45] disabled:cursor-not-allowed" disabled={!anyFilled} onClick={() => setSharing(true)}>Share</button>
         </div>
       </div>
 
