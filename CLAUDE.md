@@ -19,13 +19,28 @@ shadcn is our design component library. All components are vendored in
 - Legacy pages adopt shadcn as each converts to Tailwind (page CSS file deleted).
 
 ## Data: use Drizzle for D1
-New D1 data-layer code goes through drizzle-orm (`drizzle-orm/d1`) — see
-`src/server/auth-schema.ts` for the pattern (snake_case columns, ISO-text dates
-via customType). Pre-existing raw prepared statements in `src/server/db.ts` stay
-until deliberately ported.
+The whole data layer is Drizzle (`drizzle-orm/d1`). The unified schema is the
+single source of truth: tables in `src/server/db/schema.ts` (snake_case columns,
+ISO-text dates via the `isoDate` customType), relations in
+`src/server/db/relations.ts`, and the lazy client in `src/server/db/client.ts`.
+App queries live in `src/server/db.ts` (use the relational query builder,
+`db().query.x.findMany({ with })`, where it fits). Never hand-write raw SQL.
+
+Migrations are clean-slate and Drizzle-owned: edit the schema, then
+`npm run db:generate` (drizzle-kit → `drizzle/*.sql`) and
+`npm run db:migrate:local` / `:remote` (`wrangler d1 migrations apply`). There is
+no `db/schema.sql`. `npm run db:setup:local` = migrate + ingest + seed. Offline
+seed GENERATORS in `scripts/*.mjs` still emit raw `INSERT OR REPLACE` SQL — that's
+expected; they don't query the live DB. (Note: `seed.snapback-tips`/`jack`/`crew`
+generators are stale — they still emit a dropped `password_hash` column.)
 
 ## Auth
-Better Auth (email/password via username plugin + Google OAuth), configured in
-`src/server/better-auth.ts`, mounted at `/api/auth/$`. Protected routes call
-`getUserFromRequest()` from `src/server/auth.ts`. Passwords are PBKDF2 via a
-custom hasher (Workers CPU budget — don't switch to the scrypt default).
+Better Auth (email/password via username plugin + Google OAuth), following the
+TanStack Start docs layout: instance in `src/lib/auth.ts` (exported as `auth`, a
+lazy Proxy over a per-request singleton because Workers `env` isn't safe at module
+load; `tanstackStartCookies()` is the LAST plugin), server helpers in
+`src/lib/auth.functions.ts` (`getSession`/`ensureSession` serverFns + the
+request-based `getUserFromRequest()` that `/api/*` handlers call), client in
+`src/lib/auth-client.ts`. Mounted at `/api/auth/$`. Passwords are PBKDF2 via a
+custom hasher in `src/server/password.ts` (Workers CPU budget — don't switch to
+the scrypt default).
