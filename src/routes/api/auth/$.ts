@@ -3,8 +3,7 @@ import { auth } from '@/lib/auth'
 
 // Catch-all mount for Better Auth. Everything under /api/auth/* — sign-up,
 // sign-in (email/username/social), sign-out, get-session, the Google OAuth
-// callback — is handled by the library. /api/auth/config stays a static
-// sibling route (static segments outrank the splat).
+// callback — is handled by the library.
 export const Route = createFileRoute('/api/auth/$')({
   server: {
     handlers: {

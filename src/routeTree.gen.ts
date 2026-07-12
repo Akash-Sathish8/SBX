@@ -44,7 +44,6 @@ import { Route as ApiExpertNotesRouteImport } from './routes/api/expert-notes'
 import { Route as ApiConferencesRouteImport } from './routes/api/conferences'
 import { Route as ApiAssistantRouteImport } from './routes/api/assistant'
 import { Route as ApiUUsernameRouteImport } from './routes/api/u/$username'
-import { Route as ApiAuthConfigRouteImport } from './routes/api/auth/config'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const WeekendRoute = WeekendRouteImport.update({
@@ -222,11 +221,6 @@ const ApiUUsernameRoute = ApiUUsernameRouteImport.update({
   path: '/api/u/$username',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthConfigRoute = ApiAuthConfigRouteImport.update({
-  id: '/api/auth/config',
-  path: '/api/auth/config',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -269,7 +263,6 @@ export interface FileRoutesByFullPath {
   '/api/venues': typeof ApiVenuesRoute
   '/u/$username': typeof UUsernameRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/auth/config': typeof ApiAuthConfigRoute
   '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRoutesByTo {
@@ -308,7 +301,6 @@ export interface FileRoutesByTo {
   '/api/venues': typeof ApiVenuesRoute
   '/u/$username': typeof UUsernameRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/auth/config': typeof ApiAuthConfigRoute
   '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRoutesById {
@@ -348,7 +340,6 @@ export interface FileRoutesById {
   '/api/venues': typeof ApiVenuesRoute
   '/u/$username': typeof UUsernameRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/auth/config': typeof ApiAuthConfigRoute
   '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRouteTypes {
@@ -389,7 +380,6 @@ export interface FileRouteTypes {
     | '/api/venues'
     | '/u/$username'
     | '/api/auth/$'
-    | '/api/auth/config'
     | '/api/u/$username'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -428,7 +418,6 @@ export interface FileRouteTypes {
     | '/api/venues'
     | '/u/$username'
     | '/api/auth/$'
-    | '/api/auth/config'
     | '/api/u/$username'
   id:
     | '__root__'
@@ -467,7 +456,6 @@ export interface FileRouteTypes {
     | '/api/venues'
     | '/u/$username'
     | '/api/auth/$'
-    | '/api/auth/config'
     | '/api/u/$username'
   fileRoutesById: FileRoutesById
 }
@@ -507,7 +495,6 @@ export interface RootRouteChildren {
   ApiVenuesRoute: typeof ApiVenuesRoute
   UUsernameRoute: typeof UUsernameRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  ApiAuthConfigRoute: typeof ApiAuthConfigRoute
   ApiUUsernameRoute: typeof ApiUUsernameRoute
 }
 
@@ -758,13 +745,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiUUsernameRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/config': {
-      id: '/api/auth/config'
-      path: '/api/auth/config'
-      fullPath: '/api/auth/config'
-      preLoaderRoute: typeof ApiAuthConfigRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -811,7 +791,6 @@ const rootRouteChildren: RootRouteChildren = {
   ApiVenuesRoute: ApiVenuesRoute,
   UUsernameRoute: UUsernameRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  ApiAuthConfigRoute: ApiAuthConfigRoute,
   ApiUUsernameRoute: ApiUUsernameRoute,
 }
 export const routeTree = rootRouteImport
