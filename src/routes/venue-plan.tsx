@@ -4,13 +4,13 @@
 // the venue page's "Plan your visit" deep-link). Pick a venue, stack up what
 // you're doing per section — type it or tap a fan tip / expert note — live-
 // preview the share card, download/share the PNG. Auto-saves per venue.
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { getJSON } from '../lib/dataCache'
 import { cardImg } from '../lib/img'
 import { VenueShareCard, type VenuePlanCard } from '../components/VenueShareCard'
-import { renderShareCardBlob } from '../lib/renderShareCard'
+import { ShareCardModal } from '../components/ShareCardModal'
 import type { Venue } from '../lib/espn'
 import { PageCssGuard } from '../components/PageCssGuard'
 import shareCss from '../pages/share.css?url'
@@ -127,8 +127,9 @@ function Editor({ v }: { v: Venue }) {
   const [drafts, setDrafts] = useState<Record<SectionKey, string>>({ get: '', before: '', seats: '', eat: '', moves: '', after: '' })
   const [picks, setPicks] = useState<Record<string, Suggestion[]>>({}) // keyed by tipSection
   const [fmt, setFmt] = useState<'story' | 'square'>('story')
-  const [busy, setBusy] = useState('')
-  const stageRef = useRef<HTMLDivElement>(null)
+  // null = idle; when set, ShareCardModal renders the card offscreen and drives
+  // the native sheet / copy / download — same flow as the rankings share.
+  const [sharing, setSharing] = useState(false)
 
   useEffect(() => {
     try { localStorage.setItem(saveKey(v.id), JSON.stringify(items)) } catch { /* ignore */ }
@@ -181,28 +182,6 @@ function Editor({ v }: { v: Venue }) {
     steps: SECTIONS.flatMap((s) => items[s.key].map((it) => ({ label: s.card, name: it.text, by: it.by ? 'via ' + it.by : undefined }))),
   }
   const anyFilled = plan.steps.length > 0
-
-  async function renderBlob(): Promise<Blob | null> {
-    const node = stageRef.current; if (!node) return null
-    return renderShareCardBlob(node, { width: 1080, height: fmt === 'story' ? 1920 : 1080 })
-  }
-  async function download() {
-    setBusy('download')
-    try { const b = await renderBlob(); if (!b) return; const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = `snapback-venue-plan-${v.id}-${fmt}.png`; a.click(); URL.revokeObjectURL(u) } catch { /* noop */ } finally { setBusy('') }
-  }
-  async function share() {
-    setBusy('share')
-    try {
-      const b = await renderBlob(); if (!b) return
-      const file = new File([b], `snapback-venue-plan-${v.id}.png`, { type: 'image/png' })
-      const nav: any = navigator
-      // The card stays neutral — the ask ("is this right?") travels as the caption.
-      const text = `My ${v.name} plan — is this the right things to do here?`
-      if (nav.canShare && nav.canShare({ files: [file] })) await nav.share({ files: [file], title: 'Snapback venue plan', text })
-      else if (nav.share) await nav.share({ title: 'Snapback venue plan', text })
-      else { const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = file.name; a.click(); URL.revokeObjectURL(u) }
-    } catch { /* dismissed */ } finally { setBusy('') }
-  }
 
   return (
     <div className="vp-edit">
@@ -265,12 +244,22 @@ function Editor({ v }: { v: Venue }) {
           <div className={fmt === 'story' ? 'sb-scale-story' : 'sb-scale-square'}><VenueShareCard plan={plan} format={fmt} /></div>
         </div>
         <div className="vp-actions">
-          <button className="sb-btn" disabled={!!busy || !anyFilled} onClick={download}>{busy === 'download' ? 'Rendering…' : '↓ Download'}</button>
-          <button className="sb-btn dark" disabled={!!busy || !anyFilled} onClick={share}>{busy === 'share' ? 'Preparing…' : 'Share'}</button>
+          <button className="sb-btn dark" disabled={!anyFilled} onClick={() => setSharing(true)}>Share</button>
         </div>
       </div>
 
-      <div className="sb-stage" aria-hidden><VenueShareCard ref={stageRef} plan={plan} format={fmt} /></div>
+      {sharing ? (
+        <ShareCardModal
+          filename={`snapback-venue-plan-${v.id}-${fmt}.png`}
+          title="Snapback venue plan"
+          // The card stays neutral — the ask ("is this right?") travels as the caption.
+          text={`My ${v.name} plan — is this the right things to do here?`}
+          size={{ width: 1080, height: fmt === 'story' ? 1920 : 1080 }}
+          onClose={() => setSharing(false)}
+        >
+          <VenueShareCard plan={plan} format={fmt} />
+        </ShareCardModal>
+      ) : null}
     </div>
   )
 }

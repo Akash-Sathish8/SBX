@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
@@ -17,25 +17,34 @@ import { renderShareCardBlob } from '../lib/renderShareCard'
 // below and rasterised via the shared pipeline. Built on shadcn Dialog (portal,
 // escape, backdrop click, focus trap) with the ticket-language skin on top.
 export function ShareCardModal({
-  filename, title, text, onClose, children,
+  filename, title, text, size, onClose, children,
 }: {
   filename: string
   title: string
   text?: string
+  // Card frame to rasterise; defaults to the 1080×1920 story frame. Pass e.g.
+  // { width: 1080, height: 1080 } for the square format (venue plan).
+  size?: { width?: number; height?: number }
   onClose: () => void
   children: ReactNode
 }) {
-  const stageRef = useRef<HTMLDivElement>(null)
+  // Ref-as-state, not useRef: the offscreen stage below lives inside the Radix
+  // Dialog portal, which doesn't attach its children until AFTER this component's
+  // first effect would run — a plain useRef read races to null and the card
+  // "fails to render". A ref callback flips this state the instant the node
+  // mounts (its children commit first), so the rasterise fires exactly then.
+  const [stage, setStage] = useState<HTMLDivElement | null>(null)
   const [blob, setBlob] = useState<Blob | null>(null)
   const [url, setUrl] = useState<string | null>(null)
   const [err, setErr] = useState(false)
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
+    if (!stage) return
     let alive = true
-    const node = stageRef.current?.firstElementChild as HTMLElement | null
+    const node = stage.firstElementChild as HTMLElement | null
     if (!node) { setErr(true); return }
-    renderShareCardBlob(node)
+    renderShareCardBlob(node, size)
       .then((b) => {
         if (!alive) return
         setBlob(b)
@@ -43,7 +52,7 @@ export function ShareCardModal({
       })
       .catch(() => { if (alive) setErr(true) })
     return () => { alive = false }
-  }, [])
+  }, [stage])
   useEffect(() => () => { if (url) URL.revokeObjectURL(url) }, [url])
 
   const file = blob ? new File([blob], filename, { type: 'image/png' }) : null
@@ -98,7 +107,7 @@ export function ShareCardModal({
           <Button variant="outline" className={btn} disabled={!url} onClick={doDownload}>↓ Download</Button>
         </div>
         {/* offscreen full-size card, rasterised once on mount */}
-        <div ref={stageRef} style={{ position: 'fixed', left: -12000, top: 0, pointerEvents: 'none' }} aria-hidden="true">
+        <div ref={setStage} style={{ position: 'fixed', left: -12000, top: 0, pointerEvents: 'none' }} aria-hidden="true">
           {children}
         </div>
       </DialogContent>
