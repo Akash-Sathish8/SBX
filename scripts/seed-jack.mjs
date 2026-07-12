@@ -65,11 +65,12 @@ const avatar = 'data:image/jpeg;base64,' + b64
 
 const lines = ['PRAGMA foreign_keys=OFF;', 'BEGIN TRANSACTION;']
 
-// The profile. Sentinel password hash 'system:jacksettleman' can never verify, so
-// there is no login yet. display_name is the shown name; username is the URL handle.
+// Author-only account (never signs in) — Better Auth columns, no password.
+// display_name is the shown name; username is the normalized URL handle and
+// display_username preserves the casing.
 lines.push(
-  'INSERT OR REPLACE INTO users (id,email,username,password_hash,created_at,display_name,bio,avatar,favorites) VALUES (' +
-    `${q(JACK.id)},${q(JACK.email)},${q(JACK.username)},'system:jacksettleman',${q(ts)},${q(JACK.displayName)},NULL,${q(avatar)},NULL);`,
+  'INSERT OR REPLACE INTO users (id,email,username,display_username,display_name,email_verified,created_at,updated_at,bio,avatar,favorites) VALUES (' +
+    `${q(JACK.id)},${q(JACK.email)},${q(JACK.username.toLowerCase())},${q(JACK.username)},${q(JACK.displayName)},1,${q(ts)},${q(ts)},NULL,${q(avatar)},NULL);`,
 )
 
 for (const [section, body] of TIPS) {
