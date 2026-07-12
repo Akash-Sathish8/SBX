@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { dbVenueFanStats } from '../../server/db'
+import { dbVenueFanStats } from '../../server/queries'
 
 // GET /api/venue-stats?venue=<name> -> the fan ranking for a venue: the average
 // of every signed-in fan's ranking of a game there (user_rankings is keyed by the

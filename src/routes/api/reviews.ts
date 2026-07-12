@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getUserFromRequest, getVoterFromRequest } from '@/lib/auth.functions'
-import { dbGetReviews, dbGetReviewsByUser, dbAddReview, dbDeleteReview, dbMyReviewVotes, OFFICIAL_USER_ID, VERIFIED_USER_IDS, type Review } from '../../server/db'
+import { dbGetReviews, dbGetReviewsByUser, dbAddReview, dbDeleteReview, dbMyReviewVotes, OFFICIAL_USER_ID, VERIFIED_USER_IDS, type Review } from '../../server/queries'
 
 const noStore = { 'Cache-Control': 'no-store' }
 const SCOPES = new Set(['venue', 'event'])

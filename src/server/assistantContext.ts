@@ -23,7 +23,7 @@ import {
   type Tip,
   type Review,
   type VenueFanStats,
-} from './db'
+} from './queries'
 import type { Game, Venue } from '../lib/espn'
 import { SPORTS, isLeague, type League } from '../lib/sports'
 import experiencesData from '../../public/data/experiences.json'

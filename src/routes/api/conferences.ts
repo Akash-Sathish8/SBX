@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { dbConferences } from '../../server/db'
+import { dbConferences } from '../../server/queries'
 import { isCollegeLeague } from '@/lib/sports'
 
 // GET /api/conferences?league=college-football|college-basketball — every D1

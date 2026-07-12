@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { dbVenues } from '../../server/db';
+import { dbVenues } from '../../server/queries';
 import { isLeague } from '@/lib/sports';
 
 // Venues from D1. `?league=` narrows to that league's home grounds; omitted =

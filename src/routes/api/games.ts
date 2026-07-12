@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { dbGameById, dbGames, type GamesQuery } from '../../server/db';
+import { dbGameById, dbGames, type GamesQuery } from '../../server/queries';
 import { overlayLiveScores } from '../../server/live';
 import { isLeague } from '@/lib/sports';
 
