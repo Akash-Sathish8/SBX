@@ -6,7 +6,7 @@ import { PageCssGuard } from '../../components/PageCssGuard'
 import { ProfileView } from '../../components/profile/ProfileView'
 import { FollowButton } from '../../components/profile/FollowButton'
 import { useVenues } from '../../components/profile/useVenues'
-import { container, notchBtn, notchDark, empty } from '../../components/profile/ui'
+import { container, notchButton, empty } from '../../components/profile/ui'
 import type { ProfileData } from '../../components/profile/types'
 
 // Public, shareable fan profile — same diary-feed view as /profile, read-only,
@@ -61,7 +61,7 @@ function PublicProfilePage() {
   const headerAction = data ? (
     <>
       {mine ? (
-        <Button asChild variant="brand" className={notchBtn}><Link to="/profile">Edit profile</Link></Button>
+        <Button asChild variant="brand" className={notchButton()}><Link to="/profile">Edit profile</Link></Button>
       ) : (
         <FollowButton
           username={data.username || username}
@@ -69,7 +69,7 @@ function PublicProfilePage() {
           onChange={(f, followers) => { setIsFollowing(f); setData((d) => (d ? { ...d, followers } : d)) }}
         />
       )}
-      <Button variant="brand" className={notchBtn + ' ' + notchDark} onClick={share}>{copied ? 'Copied!' : 'Share'}</Button>
+      <Button variant="brand" className={notchButton({ tone: 'dark' })} onClick={share}>{copied ? 'Copied!' : 'Share'}</Button>
     </>
   ) : null
 

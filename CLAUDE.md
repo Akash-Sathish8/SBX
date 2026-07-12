@@ -23,7 +23,7 @@ The whole data layer is Drizzle (`drizzle-orm/d1`). The unified schema is the
 single source of truth: tables in `src/server/db/schema.ts` (snake_case columns,
 ISO-text dates via the `isoDate` customType), relations in
 `src/server/db/relations.ts`, and the lazy client in `src/server/db/client.ts`.
-App queries live in `src/server/db.ts` (use the relational query builder,
+App queries live in `src/server/queries.ts` (use the relational query builder,
 `db().query.x.findMany({ with })`, where it fits). Never hand-write raw SQL.
 
 Migrations are clean-slate and Drizzle-owned: edit the schema, then

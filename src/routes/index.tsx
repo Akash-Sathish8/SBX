@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -54,7 +55,6 @@ function stubWhen(g: Game): { big: string; small: string } {
 
 /* ---- home.css, translated to utilities ---- */
 // .container — shared page gutter
-const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
 // .hsec / .sec / .sec-left / .sec-eye / .sec h2 — eyebrow + title flush-left
 const hsec = 'pb-1 pt-9 min-[900px]:pb-1.5 min-[900px]:pt-11'
 const sec = 'mb-[18px] flex flex-wrap items-end gap-x-3.5 gap-y-3'

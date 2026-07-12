@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
+import { containerWide } from '../lib/ui'
 import { GameRow } from '../components/GameRow'
 import { getJSON } from '../lib/dataCache'
 import { SPORTS, RANKABLE_LEAGUES, type League } from '../lib/sports'
@@ -133,7 +134,7 @@ function Near() {
     return list
   }, [nearby])
 
-  const container = 'mx-auto w-full px-[clamp(28px,4vw,72px)]'
+  const container = containerWide
   const chip = (on: boolean) =>
     'cursor-pointer border-2 border-ink px-3.5 py-2 text-[13px] font-bold uppercase tracking-[0.4px] text-ink ' +
     (on ? 'bg-brand' : 'bg-white')

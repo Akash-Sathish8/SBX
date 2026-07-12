@@ -105,9 +105,16 @@ lines.push(`DELETE FROM tips WHERE user_id IN ('omer','robby') AND target_id IN 
 lines.push(`DELETE FROM reviews WHERE user_id IN ('omer','robby') AND target_id = ${q(VENUE_ID)};`)
 
 for (const u of USERS) {
+  // Profile row — Better Auth columns (no password on users anymore).
   lines.push(
-    'INSERT OR REPLACE INTO users (id,email,username,password_hash,created_at,display_name,bio,avatar,favorites) VALUES (' +
-      `${q(u.id)},${q(u.email)},${q(u.username)},${q(hashPassword(PASSWORD))},${q(ts)},${q(u.display)},NULL,${q(u.avatar)},NULL);`,
+    'INSERT OR REPLACE INTO users (id,email,username,display_username,display_name,email_verified,created_at,updated_at,bio,avatar,favorites) VALUES (' +
+      `${q(u.id)},${q(u.email)},${q(u.username)},${q(u.username)},${q(u.display)},1,${q(ts)},${q(ts)},NULL,${q(u.avatar)},NULL);`,
+  )
+  // These stay loginable (shared demo password) — under Better Auth the PBKDF2
+  // hash lives in the account table (provider 'credential'), not on users.
+  lines.push(
+    'INSERT OR REPLACE INTO account (id,user_id,account_id,provider_id,password,created_at,updated_at) VALUES (' +
+      `${q('acct-' + u.id)},${q(u.id)},${q(u.id)},'credential',${q(hashPassword(PASSWORD))},${q(ts)},${q(ts)});`,
   )
 }
 

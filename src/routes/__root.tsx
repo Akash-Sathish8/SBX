@@ -5,7 +5,6 @@ import { AuthProvider } from '../components/auth/AuthProvider'
 import { AssistantChat } from '../components/AssistantChat'
 
 import appCss from '../styles.css?url'
-import twCss from '../styles/tailwind.css?url'
 // Eagerly preload every page's stylesheet at startup so client-side navigation
 // applies page CSS from cache near-instantly — mitigates the flash of unstyled
 // content (FOUC) from the per-route <link> loading after the HTML paints. Kept as
@@ -14,7 +13,6 @@ import twCss from '../styles/tailwind.css?url'
 // (entries drop out of this list as each page converts to Tailwind and its
 // css file is deleted — games/venues/teams/conferences are already gone)
 import agendaCss from '../pages/agenda.css?url'
-import venuePlanCss from '../pages/venue-plan.css?url'
 import shareCss from '../pages/share.css?url'
 
 export const Route = createRootRoute({
@@ -44,14 +42,13 @@ export const Route = createRootRoute({
       },
       { rel: 'icon', type: 'image/png', href: '/img/logo.png' },
       { rel: 'apple-touch-icon', href: '/img/logo.png' },
-      // Tailwind loads FIRST so legacy page CSS keeps winning ties while pages
-      // convert; untagged, so PageCssGuard never disables it.
-      { rel: 'stylesheet', href: twCss },
+      // styles.css = the Tailwind entry + global fallbacks. Untagged so
+      // PageCssGuard never disables it; legacy per-route CSS still wins ties
+      // (it loads after, unlayered) while pages convert.
       { rel: 'stylesheet', href: appCss },
       // preload (not prefetch): iOS Safari ignores rel=prefetch, so the warmup
       // never happened on the platform that needs it most.
       { rel: 'preload', as: 'style', href: agendaCss },
-      { rel: 'preload', as: 'style', href: venuePlanCss },
       { rel: 'preload', as: 'style', href: shareCss },
     ],
   }),

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { dbGetExpertNotes } from '../../server/db'
+import { dbGetExpertNotes } from '../../server/queries'
 
 // GET /api/expert-notes?scope=&targetId= — Snapback's editorial "what to know"
 // notes for a venue/game (read-only; curated, not user UGC). Empty until the

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getUserFromRequest } from '@/lib/auth.functions'
-import { dbAssistantRateBump } from '../../server/db'
+import { dbAssistantRateBump } from '../../server/queries'
 import { runAssistant, type AssistantTurn } from '../../server/assistant'
 
 // POST /api/assistant — grounded chat about one venue or game. Auth-gated (the

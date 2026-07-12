@@ -7,7 +7,7 @@ import { ProfileStats } from './ProfileStats'
 import { MyReviews } from './MyReviews'
 import type { ProfileData } from './types'
 import type { VenueIndex } from './useVenues'
-import { container, notchBtn } from './ui'
+import { container, notchButton } from './ui'
 
 const statB = 'mr-[4px] font-display text-[18px] tracking-[.5px] text-brand'
 
@@ -55,7 +55,7 @@ export function ProfileView({ data, mine, venues, onEdit, headerAction }: {
             {sinceYear ? <div className="mt-[9px] text-[12px] font-bold uppercase tracking-[.6px] text-[#8f8f8f]">Member since {sinceYear}</div> : null}
           </div>
           <div className="flex flex-wrap items-center gap-[10px] max-[760px]:ml-0 max-[760px]:w-full ml-auto">
-            {mine ? <Button variant="brand" className={notchBtn} onClick={onEdit}>Edit profile</Button> : null}
+            {mine ? <Button variant="brand" className={notchButton()} onClick={onEdit}>Edit profile</Button> : null}
             {headerAction}
           </div>
         </div>

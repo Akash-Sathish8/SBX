@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
@@ -27,7 +28,6 @@ const leagueTags = (v: Venue) => [...new Set(v.teams.map((t) => SPORTS[t.league]
 // once per league in the data (for filtering) but should show once on the card.
 const uniqTeams = (v: Venue) => [...new Map(v.teams.map((t) => [t.id, t])).values()]
 
-const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
 
 // League filter chip (legacy .tally .pill) — white brutalist tile that lifts on
 // hover, presses on click, and fills brand yellow when active.

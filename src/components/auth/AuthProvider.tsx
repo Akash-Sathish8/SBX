@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { authClient } from '@/lib/auth-client'
 import { AuthModal } from './AuthModal'
 
@@ -17,7 +17,6 @@ interface AuthContextValue {
   register: (email: string, password: string, username: string) => Promise<Result>
   logout: () => Promise<void>
   loginWithGoogle: () => Promise<Result>
-  googleEnabled: boolean
   openAuth: (mode?: AuthMode) => void
   closeAuth: () => void
 }
@@ -53,23 +52,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data: session, isPending } = authClient.useSession()
   const [open, setOpen] = useState(false)
   const [mode, setMode] = useState<AuthMode>('signin')
-  const [googleEnabled, setGoogleEnabled] = useState(false)
 
   const user = useMemo<AuthUser | null>(() => {
     const u = session?.user as (AuthUser & { displayUsername?: string | null }) | undefined
     if (!u) return null
     return { id: u.id, email: u.email, username: u.displayUsername ?? u.username ?? null }
   }, [session])
-
-  // Public client config: is the Google button live on this deployment?
-  useEffect(() => {
-    let alive = true
-    fetch('/api/auth/config')
-      .then((r) => r.json())
-      .then((j) => { if (alive) setGoogleEnabled(!!j?.googleEnabled) })
-      .catch(() => {})
-    return () => { alive = false }
-  }, [])
 
   const login = useCallback(async (email: string, password: string): Promise<Result> => {
     try {
@@ -106,7 +94,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Google: Better Auth's redirect flow — the page navigates away to Google
   // and comes back signed in via /api/auth/callback/google.
   const loginWithGoogle = useCallback(async (): Promise<Result> => {
-    if (!googleEnabled) return { ok: false, error: 'Google sign-in isn’t set up yet.' }
+    // No pre-flight "is Google enabled" probe — Better Auth returns an error if the
+    // provider isn't configured on the worker, which we surface like any other.
     try {
       const { error } = await authClient.signIn.social({
         provider: 'google',
@@ -117,14 +106,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch {
       return { ok: false, error: 'Google sign-in failed.' }
     }
-  }, [googleEnabled])
+  }, [])
 
   const openAuth = useCallback((m: AuthMode = 'signin') => { setMode(m); setOpen(true) }, [])
   const closeAuth = useCallback(() => setOpen(false), [])
 
   const value = useMemo<AuthContextValue>(
-    () => ({ user, loading: isPending, login, register, logout, loginWithGoogle, googleEnabled, openAuth, closeAuth }),
-    [user, isPending, login, register, logout, loginWithGoogle, googleEnabled, openAuth, closeAuth],
+    () => ({ user, loading: isPending, login, register, logout, loginWithGoogle, openAuth, closeAuth }),
+    [user, isPending, login, register, logout, loginWithGoogle, openAuth, closeAuth],
   )
 
   return (

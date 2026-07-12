@@ -395,7 +395,8 @@ const lines = [
   'BEGIN TRANSACTION;',
   'DELETE FROM tips;',
   "DELETE FROM reviews WHERE user_id = 'snapback-official';",
-  `INSERT OR IGNORE INTO users (id,email,username,password_hash,created_at) VALUES (${q(OFFICIAL.id)},${q(OFFICIAL.email)},${q(OFFICIAL.username)},'system:snapback',${q(ts)});`,
+  // Author-only account (never signs in) — Better Auth columns, no password.
+  `INSERT OR IGNORE INTO users (id,email,username,display_username,display_name,email_verified,created_at,updated_at) VALUES (${q(OFFICIAL.id)},${q(OFFICIAL.email)},${q(OFFICIAL.username.toLowerCase())},${q(OFFICIAL.username)},${q(OFFICIAL.author)},1,${q(ts)},${q(ts)});`,
 ]
 // Venues extracted from the full transcript archive (parallel agents -> consolidate).
 const GEN = JSON.parse(readFileSync(path.join(ROOT, 'data', 'snapback-venues.generated.json'), 'utf8'))

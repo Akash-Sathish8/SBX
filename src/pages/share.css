@@ -28,6 +28,11 @@
 .sc-chip.y{background:#F7DF02;color:#111;font-weight:800}
 .sc-venue{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;font-size:30px;color:#666;font-weight:600;text-align:center;margin-bottom:44px}
 
+/* venue-card title tier (moved from venue-plan.css: the card only renders on the
+   venue-plan route, and html-to-image serialises computed styles from the live DOM) */
+.scv-title { font-family: 'Anton', 'Barlow', sans-serif; font-size: 84px; line-height: .98; letter-spacing: 1px; text-transform: uppercase; color: #111; margin: 6px 0 16px; }
+.sc-square .scv-title { font-size: 62px; margin: 2px 0 12px; }
+
 /* story timeline — steps distribute to fill the full card height */
 .sc-tl{position:relative;flex:0 0 auto;padding-left:58px;display:flex;flex-direction:column;justify-content:flex-start;gap:30px}
 .sc-tl::before{content:"";position:absolute;left:16px;top:14px;bottom:14px;width:4px;background:#e3d98f}

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -24,7 +25,6 @@ const dayLabel = (d: Date) => `${WD[d.getDay()]} · ${MON[d.getMonth()]} ${d.get
 const shortDate = (d: Date) => `${MON[d.getMonth()]} ${d.getDate()}`
 
 // The old .container: full-bleed with the clamped gutters every section shares.
-const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
 // .empty — quiet gray notices ("no games", load errors).
 const emptyCls = 'px-[2px] py-[18px] text-[15px] text-muted'
 // .empty a — bold with the yellow underline.

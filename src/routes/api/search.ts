@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { dbSearchTeams, dbSearchVenues, dbSearchGames } from '../../server/db'
+import { dbSearchTeams, dbSearchVenues, dbSearchGames } from '../../server/queries'
 import { tokenize, scoreMatch, gameBoost } from '@/lib/searchScore'
 import { LEAGUES, COLLEGE_LEAGUES } from '@/lib/sports'
 import experiencesData from '../../../public/data/experiences.json'

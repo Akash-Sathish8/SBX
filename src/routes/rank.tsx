@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { containerWide as container } from '../lib/ui'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
@@ -41,7 +42,6 @@ export const Route = createFileRoute('/rank')({
 })
 
 // The old .container: full-bleed with the clamped gutters every section shares.
-const container = 'mx-auto w-full px-[clamp(28px,4vw,72px)]'
 // The old .btn: notched ticket-corner CTA cut with clip-path, hard drop shadow
 // that presses flat on :active. Layered onto <Button variant="secondary"> so the
 // bg/hover-bg get pinned explicitly per call site (gray or brand yellow).

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { dbTeams } from '../../server/db';
+import { dbTeams } from '../../server/queries';
 import { isLeague } from '@/lib/sports';
 
 // Team directory from D1. `?league=` narrows; omitted = all three.

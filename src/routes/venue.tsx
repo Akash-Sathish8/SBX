@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
@@ -53,7 +54,6 @@ const kickoff = (iso: string) => {
   return isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
 }
 
-const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
 // Section header trio (legacy .eyebrow / .shead / .ssub, editorial refresh).
 const eyebrowCls = 'mb-[11px] inline-flex items-center gap-[9px] text-[12.5px] font-extrabold tracking-[1.2px] text-black uppercase'
 const sheadCls = 'font-display text-[clamp(28px,3.6vw,40px)] leading-none tracking-[.5px] text-ink-soft uppercase'

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { containerWide as container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
@@ -26,7 +27,6 @@ export const Route = createFileRoute('/game')({
 })
 
 // Legacy .container — full-width with the responsive gutter.
-const container = 'mx-auto w-full px-[clamp(28px,4vw,72px)]'
 // Legacy .ulink — global styles.css `a{color:inherit;text-decoration:none}` is
 // unlayered and beats utilities, hence the important suffixes.
 const ulink = 'text-ink-soft! underline!'
