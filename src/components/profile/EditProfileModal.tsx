@@ -9,7 +9,7 @@ import { AVATAR_PRESETS } from './types'
 import { Avatar } from './Avatar'
 import type { ProfileData } from './types'
 import type { VenueIndex } from './useVenues'
-import { notchBtn, miniBtn, miniGhost } from './ui'
+import { notchButton } from './ui'
 
 // Resize a picked image to a 128x128 cover-cropped square and return a webp data
 // URL (~5-15KB) so it fits comfortably in the users.avatar column. No blob store
@@ -127,8 +127,8 @@ export function EditProfileModal({ data, venues, onClose, onSaved }: {
             <div className="flex items-center gap-[14px]">
               <Avatar avatar={avatar} name={data.username} size={64} />
               <div className="flex flex-wrap gap-[8px]">
-                <Button variant="brand" className={cn(notchBtn, miniBtn)} onClick={() => fileRef.current?.click()}>Upload</Button>
-                {avatar ? <Button variant="brand" className={cn(notchBtn, miniBtn, miniGhost)} onClick={() => setAvatar(null)}>Remove</Button> : null}
+                <Button variant="brand" className={notchButton({ size: 'mini' })} onClick={() => fileRef.current?.click()}>Upload</Button>
+                {avatar ? <Button variant="brand" className={notchButton({ size: 'mini', tone: 'ghost' })} onClick={() => setAvatar(null)}>Remove</Button> : null}
                 <input ref={fileRef} type="file" accept="image/*" hidden onChange={pickFile} />
               </div>
             </div>
@@ -188,8 +188,8 @@ export function EditProfileModal({ data, venues, onClose, onSaved }: {
         </div>
 
         <div className="flex shrink-0 justify-end gap-[10px] border-t-[3px] border-[#111] px-[20px] py-[16px]">
-          <Button variant="brand" className={cn(notchBtn, miniBtn, miniGhost)} onClick={onClose}>Cancel</Button>
-          <Button variant="brand" className={notchBtn} disabled={busy} onClick={save}>{busy ? 'Saving…' : 'Save profile'}</Button>
+          <Button variant="brand" className={notchButton({ size: 'mini', tone: 'ghost' })} onClick={onClose}>Cancel</Button>
+          <Button variant="brand" className={notchButton()} disabled={busy} onClick={save}>{busy ? 'Saving…' : 'Save profile'}</Button>
         </div>
       </DialogContent>
     </Dialog>

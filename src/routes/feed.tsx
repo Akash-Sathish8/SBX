@@ -7,7 +7,7 @@ import { PageCssGuard } from '../components/PageCssGuard'
 import { useAuth } from '../components/auth/AuthProvider'
 import { Avatar } from '../components/profile/Avatar'
 import { useVenues } from '../components/profile/useVenues'
-import { container, notchBtn, miniBtn, empty } from '../components/profile/ui'
+import { container, notchButton, empty } from '../components/profile/ui'
 import { SPORTS } from '../lib/sports'
 
 // The following feed — recent logs + reviews from the fans you follow, newest
@@ -82,7 +82,7 @@ function FeedPage() {
       <PageCssGuard id="profile" />
       <SiteNav />
       <section className="relative overflow-hidden bg-[#222] pt-[34px] pb-[30px] text-white after:pointer-events-none after:absolute after:inset-0 after:bg-size-[32px_32px] after:[background-image:linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] after:content-['']">
-        <div className={container + ' relative z-[1]'}>
+        <div className={cn(container, 'relative z-[1]')}>
           <h1 className="font-display text-[clamp(28px,5vw,44px)] uppercase leading-none tracking-[1px] !text-white">Following</h1>
           <div className="mt-[8px] flex flex-wrap gap-[18px] text-[14px] text-[#cfcfcf]"><span>Recent activity from fans you follow</span></div>
         </div>
@@ -92,7 +92,7 @@ function FeedPage() {
         <div className={container}>
           {!user ? (
             <div className={empty}>
-              <Button variant="brand" className={notchBtn} onClick={() => openAuth('signin')}>Sign in</Button>
+              <Button variant="brand" className={notchButton()} onClick={() => openAuth('signin')}>Sign in</Button>
               <p className="mt-[12px]">Sign in and follow other fans to build your feed.</p>
             </div>
           ) : loading ? (
@@ -108,7 +108,7 @@ function FeedPage() {
               </div>
               {cursor ? (
                 <div className="mt-[18px]">
-                  <Button variant="brand" className={cn(notchBtn, miniBtn)} disabled={more} onClick={() => { setMore(true); load(cursor).finally(() => setMore(false)) }}>
+                  <Button variant="brand" className={notchButton({ size: 'mini' })} disabled={more} onClick={() => { setMore(true); load(cursor).finally(() => setMore(false)) }}>
                     {more ? 'Loading…' : 'Load more'}
                   </Button>
                 </div>

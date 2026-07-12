@@ -4,6 +4,7 @@ import { GameRow } from './GameRow'
 import { getJSON, intentWarm, warmImage } from '../lib/dataCache'
 import { LEAGUES, type League } from '../lib/sports'
 import { cardImg } from '../lib/img'
+import { cn } from '../lib/utils'
 import { weekendWindow } from '../lib/weekend'
 import { matchExperienceForVenue, matchExperienceForTeam } from '../lib/experienceMatch'
 import type { Game, Venue } from '../lib/espn'
@@ -101,7 +102,7 @@ export function RelatedExperience({ g }: { g: Game }) {
   return (
     <section className={block}><div className={container}>
       <div className={eyebrow}>Expert-rated</div>
-      <h2 className={shead + ' !mb-[20px]'}>How this trip rates</h2>
+      <h2 className={cn(shead, '!mb-[20px]')}>How this trip rates</h2>
       <Link to="/rankings" search={{ q: hit.m.name }} className="flex max-w-[520px] flex-col gap-[4px] rounded-[10px] border-[3px] border-[#222222] bg-[#111] px-[18px] py-[16px] text-white! shadow-[6px_6px_0_0_#f7df02] [transition:box-shadow_.15s,transform_.12s] hover:shadow-[9px_9px_0_0_#f7df02] hover:[transform:translate(-1px,-1px)]">
         <span className="flex items-center gap-[7px] text-[11px] font-extrabold uppercase tracking-[.8px] text-[#f7df02]"><img src="/img/logo.png" alt="" width={18} height={18} className="rounded-[4px]" /> Snapback Score</span>
         <span className="font-display text-[38px] tracking-[.5px] text-[#f7df02]">{hit.m.final.toFixed(1)}</span>

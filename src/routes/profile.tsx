@@ -9,7 +9,7 @@ import { ProfileView } from '../components/profile/ProfileView'
 import { EditProfileModal } from '../components/profile/EditProfileModal'
 import { useVenues } from '../components/profile/useVenues'
 import type { ProfileData, ProfileReview } from '../components/profile/types'
-import { container, notchBtn, notchDark, miniBtn, miniGhost } from '../components/profile/ui'
+import { container, notchButton } from '../components/profile/ui'
 
 // "My Profile" — a Letterboxd-style fan profile: identity (avatar, bio, stats),
 // pinned favorite venues, a reverse-chron diary of every game you've logged, your
@@ -77,8 +77,8 @@ function ProfilePage() {
           <div className="flex flex-wrap items-center justify-between gap-[14px] px-[28px] py-[13px] text-[14px] font-bold">
             <span>Create a free account so your diary, reviews, and favorites follow you to any device.</span>
             <div className="flex flex-wrap gap-[10px]">
-              <Button variant="brand" className={notchBtn} onClick={() => openAuth('register')}>Create account</Button>
-              <Button variant="brand" className={notchBtn + ' ' + miniBtn + ' ' + miniGhost} onClick={() => openAuth('signin')}>Sign in</Button>
+              <Button variant="brand" className={notchButton()} onClick={() => openAuth('register')}>Create account</Button>
+              <Button variant="brand" className={notchButton({ size: 'mini', tone: 'ghost' })} onClick={() => openAuth('signin')}>Sign in</Button>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@ function ProfilePage() {
         mine
         venues={venues}
         onEdit={() => (user ? setEditing(true) : openAuth('register'))}
-        headerAction={user ? <Button variant="brand" className={notchBtn + ' ' + notchDark} onClick={() => logout()}>Sign out</Button> : null}
+        headerAction={user ? <Button variant="brand" className={notchButton({ tone: 'dark' })} onClick={() => logout()}>Sign out</Button> : null}
       />
 
       {editing && user ? (

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useAuth } from '../auth/AuthProvider'
-import { notchBtn, notchDark } from './ui'
+import { notchButton } from './ui'
 
 // Follow / unfollow a fan. Optimistic toggle; reverts on failure. Signed-out taps
 // open the sign-in modal (same pattern as Reviews.tsx).
@@ -35,7 +35,7 @@ export function FollowButton({ username, initialFollowing, onChange }: {
   }
 
   return (
-    <Button variant="brand" className={cn(notchBtn, 'px-[20px]', following && notchDark)} onClick={toggle} disabled={busy}>
+    <Button variant="brand" className={cn(notchButton({ tone: following ? 'dark' : 'default' }), 'px-[20px]')} onClick={toggle} disabled={busy}>
       {following ? 'Following' : 'Follow'}
     </Button>
   )
