@@ -5,6 +5,7 @@ import { getJSON, intentWarm, warmImage } from '../lib/dataCache'
 import { LEAGUES, type League } from '../lib/sports'
 import { cardImg } from '../lib/img'
 import { cn } from '../lib/utils'
+import { block, container, eyebrow, shead } from '../lib/ui'
 import { weekendWindow } from '../lib/weekend'
 import { matchExperienceForVenue, matchExperienceForTeam } from '../lib/experienceMatch'
 import type { Game, Venue } from '../lib/espn'
@@ -19,11 +20,7 @@ import type { Experience } from '../lib/experiences'
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const fmtDay = (d: Date) => `${MON[d.getMonth()]} ${d.getDate()}`
 
-// Section chrome, formerly venue.css/game.css: section.block, .container, .eyebrow, .shead.
-const block = 'bg-white py-[clamp(34px,5vw,52px)]'
-const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
-const eyebrow = 'mb-[11px] inline-flex items-center gap-[9px] text-[12.5px] font-extrabold uppercase tracking-[1.2px] text-black'
-const shead = 'mb-[5px] font-display text-[clamp(28px,3.6vw,40px)] leading-none tracking-[.5px] text-[#141410]'
+// block / container / eyebrow / shead now come from src/lib/ui (shared chrome).
 const nhSub = 'mt-[-4px] mb-[16px] text-[13px] font-semibold text-[#76766c]'
 const nhLink = 'border-b-2 border-[#f7df02] font-extrabold'
 const nhEmpty = 'pt-[6px] pb-[10px] text-[14.5px] font-semibold text-[#76766c]'

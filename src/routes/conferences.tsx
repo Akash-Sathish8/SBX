@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
@@ -29,7 +30,6 @@ const TABS: { key: CollegeLeague; label: string }[] = [
 ]
 
 // .container — full-width shell with the clamped gutters every section shares.
-const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
 
 function ConferencesPage() {
   const [league, setLeague] = useState<CollegeLeague>('college-football')

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
@@ -31,7 +32,6 @@ export const Route = createFileRoute('/team')({
 const todayIso = () => new Date().toISOString().slice(0, 10)
 
 // .container — shared page gutter
-const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
 // .ulink / .empty a — yellow-underlined emphasis link
 const ulink = 'border-b-2 border-brand font-extrabold'
 // .loadwrap — centered full-page status text

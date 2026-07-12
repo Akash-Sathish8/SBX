@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { containerWide as container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
@@ -48,7 +49,6 @@ const PILLARS = [
 ] as const
 
 // The old .container: full-bleed with the clamped gutters every section shares.
-const container = 'mx-auto w-full px-[clamp(28px,4vw,72px)]'
 // .loading / .empty in the results block.
 const emptyCls = 'p-[34px] text-center font-semibold text-[#8a8a82]'
 

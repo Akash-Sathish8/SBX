@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -29,7 +30,6 @@ interface ConfTeam { id: string; abbr: string; displayName: string; location: st
 interface Conf { id: string; name: string; shortName?: string; teams: ConfTeam[] }
 
 // .container — shared page gutter
-const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
 
 function TeamCard({ league, t }: { league: League; t: { id: string; abbr: string; displayName: string; location?: string; logo?: string } }) {
   const warm = () => { if (t.logo) warmImage(t.logo) }

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { containerWide as container } from '../lib/ui'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { SiteNav } from '../components/SiteNav'
@@ -19,7 +20,6 @@ export const Route = createFileRoute('/games')({
   component: Games,
 })
 
-const container = 'mx-auto w-full px-[clamp(28px,4vw,72px)]'
 // Legacy .chip — square league filter pill; brand-yellow when active. On phones
 // (≤640px) the filters row is a swipeable rail, so chips snap and never shrink.
 const chipCls = (on: boolean) =>
