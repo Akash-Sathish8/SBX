@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getAuth } from '../../../server/better-auth'
+import { auth } from '@/lib/auth'
 
 // Catch-all mount for Better Auth. Everything under /api/auth/* — sign-up,
 // sign-in (email/username/social), sign-out, get-session, the Google OAuth
@@ -8,8 +8,8 @@ import { getAuth } from '../../../server/better-auth'
 export const Route = createFileRoute('/api/auth/$')({
   server: {
     handlers: {
-      GET: async ({ request }) => getAuth().handler(request),
-      POST: async ({ request }) => getAuth().handler(request),
+      GET: async ({ request }) => auth.handler(request),
+      POST: async ({ request }) => auth.handler(request),
     },
   },
 })

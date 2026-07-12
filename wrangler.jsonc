@@ -38,12 +38,15 @@
   },
   // SBX system-of-record. For production, run `wrangler d1 create sbx-db` and
   // paste the returned database_id below (local dev uses a local SQLite file and
-  // ignores the id). Schema: db/schema.sql. Apply via package.json db:* scripts.
+  // ignores the id). Schema is defined in Drizzle (src/server/db/schema.ts);
+  // `npm run db:generate` authors migrations into ./drizzle and `npm run
+  // db:migrate:local | db:migrate:remote` applies them via the migrations_dir below.
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "sbx-db",
-      "database_id": "00000000-0000-0000-0000-000000000000"
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "drizzle"
     }
   ]
 }

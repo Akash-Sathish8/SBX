@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getUserFromRequest, getVoterFromRequest } from '../../server/auth'
+import { getUserFromRequest, getVoterFromRequest } from '@/lib/auth.functions'
 import { dbGetTips, dbAddTip, dbDeleteTip, dbMyTipVotes, OFFICIAL_USER_ID, VERIFIED_USER_IDS, type Tip } from '../../server/db'
 
 const noStore = { 'Cache-Control': 'no-store' }

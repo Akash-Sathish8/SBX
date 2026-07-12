@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getUserFromRequest } from '../../../server/auth'
+import { getUserFromRequest } from '@/lib/auth.functions'
 import { dbGetPublicProfile, dbIsFollowing, OFFICIAL_USER_ID, type Review } from '../../../server/db'
 
 const noStore = { 'Cache-Control': 'no-store' }

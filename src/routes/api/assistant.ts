@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getUserFromRequest } from '../../server/auth'
+import { getUserFromRequest } from '@/lib/auth.functions'
 import { dbAssistantRateBump } from '../../server/db'
 import { runAssistant, type AssistantTurn } from '../../server/assistant'
 

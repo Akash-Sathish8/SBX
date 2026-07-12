@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { googleConfigured } from '../../../server/better-auth'
+import { googleConfigured } from '@/lib/auth'
 
 // GET /api/auth/config — public client config. Tells the browser whether the
 // Google button should be live (needs GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET
