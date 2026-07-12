@@ -4,7 +4,7 @@
    so the page is self-contained without touching the consumer product. */
 
 :root { --y: #F7DF02; --k: #222; }
-* { box-sizing: border-box; }
+/* (universal reset removed — Tailwind preflight zeroes margin/padding + sets border-box globally) */
 html, body { margin: 0; }
 body { font-family: 'Barlow', system-ui, sans-serif; color: #161616; background: #f4f4f1; }
 

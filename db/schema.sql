@@ -74,29 +74,79 @@ CREATE INDEX IF NOT EXISTS idx_games_home_team   ON games (league, home_team_id)
 CREATE INDEX IF NOT EXISTS idx_venue_teams_venue ON venue_teams (venue_id);
 
 -- ---------------------------------------------------------------------------
--- Accounts (self-contained email+password auth — no external IdP) + the
--- server mirror of a fan's personal rankings (rank.tsx). Sessions are a jose
--- HS256 JWT in an httpOnly cookie; nothing here references an external service.
+-- Accounts — Better Auth (email+password via the username plugin, plus Google
+-- OAuth). The library owns users/session/account/verification through the
+-- drizzle schema in src/server/auth-schema.ts; app code keeps querying `users`
+-- directly for profile/UGC joins. Sessions are DB rows referenced by an
+-- httpOnly cookie. Better Auth's camelCase field names map onto these
+-- snake_case columns; timestamps stay ISO TEXT like the rest of this schema.
 -- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS users (
-  id            TEXT PRIMARY KEY,        -- crypto.randomUUID()
-  email         TEXT NOT NULL,           -- stored lowercased
-  username      TEXT,                    -- public handle, required at sign-up; NULL for OAuth users
-  password_hash TEXT NOT NULL,           -- "pbkdf2$<iters>$<saltB64>$<hashB64>"
-  created_at    TEXT NOT NULL,           -- ISO timestamp
-  bio           TEXT,                    -- short profile bio (app-capped ~280 chars)
-  avatar        TEXT,                    -- 'data:image/...' (128px webp), 'preset:N', or NULL (initials)
-  favorites     TEXT,                    -- JSON array of up to 4 favorite venue ids, e.g. ["3632","43"]
-  display_name  TEXT                     -- friendly name shown on the profile (e.g. "Jack Settleman"); username stays the URL handle
+  id               TEXT PRIMARY KEY,     -- crypto.randomUUID()
+  email            TEXT NOT NULL,        -- stored lowercased
+  username         TEXT,                 -- normalized (lowercase) public handle; NULL for OAuth users who haven't picked one
+  display_username TEXT,                 -- the handle as typed (case preserved for display)
+  email_verified   INTEGER NOT NULL DEFAULT 0,
+  created_at       TEXT NOT NULL,        -- ISO timestamp
+  updated_at       TEXT NOT NULL,        -- ISO timestamp
+  bio              TEXT,                 -- short profile bio (app-capped ~280 chars)
+  avatar           TEXT,                 -- 'data:image/...' (128px webp), 'preset:N', or NULL (initials)
+  favorites        TEXT,                 -- JSON array of up to 4 favorite venue ids, e.g. ["3632","43"]
+  display_name     TEXT                  -- friendly name shown on the profile; Better Auth's `name` field. username stays the URL handle
 );
--- NOTE: bio/avatar/favorites are shipped as db/migrate-001-profiles.sql and
--- display_name as db/migrate-002-display-name.sql for already-provisioned DBs
--- (a fresh schema.sql run includes them via the body above, but it can't ALTER an
--- existing users table).
+-- NOTE: bio/avatar/favorites shipped as db/migrate-001-profiles.sql, display_name
+-- as db/migrate-002-display-name.sql, and the Better Auth columns/tables as
+-- db/migrate-003-better-auth.sql for already-provisioned DBs (a fresh schema.sql
+-- run includes everything via the bodies here, but it can't ALTER existing tables).
 CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users (email);
--- Case-insensitive uniqueness: "CoolGuy" and "coolguy" can't both exist. NULLs are
--- distinct in SQLite, so OAuth users (no username yet) don't collide.
+-- Case-insensitive uniqueness backstop: "CoolGuy" and "coolguy" can't both exist
+-- (Better Auth normalizes to lowercase before insert anyway). NULLs are distinct
+-- in SQLite, so OAuth users (no username yet) don't collide.
 CREATE UNIQUE INDEX IF NOT EXISTS idx_users_username ON users (username COLLATE NOCASE);
+
+-- Better Auth session/account/verification (see src/server/auth-schema.ts).
+CREATE TABLE IF NOT EXISTS session (
+  id         TEXT PRIMARY KEY,
+  user_id    TEXT NOT NULL,
+  token      TEXT NOT NULL,
+  expires_at TEXT NOT NULL,             -- ISO timestamp
+  ip_address TEXT,
+  user_agent TEXT,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_session_token ON session (token);
+CREATE INDEX IF NOT EXISTS idx_session_user ON session (user_id);
+
+CREATE TABLE IF NOT EXISTS account (
+  id                       TEXT PRIMARY KEY,
+  user_id                  TEXT NOT NULL,
+  account_id               TEXT NOT NULL,  -- provider's user id; equals user_id for 'credential'
+  provider_id              TEXT NOT NULL,  -- 'credential' | 'google'
+  access_token             TEXT,
+  refresh_token            TEXT,
+  id_token                 TEXT,
+  access_token_expires_at  TEXT,
+  refresh_token_expires_at TEXT,
+  scope                    TEXT,
+  password                 TEXT,           -- "pbkdf2$<iters>$<saltB64>$<hashB64>" for 'credential' (src/server/password.ts)
+  created_at               TEXT NOT NULL,
+  updated_at               TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE INDEX IF NOT EXISTS idx_account_user ON account (user_id);
+CREATE INDEX IF NOT EXISTS idx_account_provider ON account (provider_id, account_id);
+
+CREATE TABLE IF NOT EXISTS verification (
+  id         TEXT PRIMARY KEY,
+  identifier TEXT NOT NULL,
+  value      TEXT NOT NULL,
+  expires_at TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_verification_identifier ON verification (identifier);
 
 -- One row per (user, game). Denormalized snapshot mirroring MyRank in rank.tsx,
 -- so the list renders without re-joining games (which may be re-seeded).

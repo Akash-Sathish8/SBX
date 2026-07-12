@@ -9,9 +9,7 @@ import { WhatToKnow, AddTipButton } from '../components/WhatToKnow'
 import { ExpertNotes } from '../components/ExpertNotes'
 import { Reviews } from '../components/Reviews'
 import { GamesThatWeekend, NearbyVenues, RelatedExperience } from '../components/NextHops'
-import css from '../pages/game.css?url'
-import rowCss from '../pages/gamerow.css?url'
-import nexthopCss from '../pages/nexthop.css?url'
+import { Badge } from '@/components/ui/badge'
 
 export const Route = createFileRoute('/game')({
   validateSearch: (s: Record<string, unknown>) => ({
@@ -21,15 +19,17 @@ export const Route = createFileRoute('/game')({
     league: isLeague(s.league as string) ? (s.league as League) : undefined,
   }),
   head: () => ({
-    links: [
-      { rel: 'stylesheet', href: css, 'data-page-css': 'game build' },
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
-      { rel: 'stylesheet', href: nexthopCss, 'data-page-css': 'venue game' },
-    ],
+    links: [],
     meta: [{ title: 'Snapback · Game' }],
   }),
   component: GamePage,
 })
+
+// Legacy .container — full-width with the responsive gutter.
+const container = 'mx-auto w-full px-[clamp(28px,4vw,72px)]'
+// Legacy .ulink — global styles.css `a{color:inherit;text-decoration:none}` is
+// unlayered and beats utilities, hence the important suffixes.
+const ulink = 'text-ink-soft! underline!'
 
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -66,30 +66,33 @@ function GamePage() {
   }, [id, league])
 
   return (
-    <>
+    <div className="min-h-screen bg-white font-sans text-[#33352f]">
       <PageCssGuard id="game" />
       <SiteNav active="games" />
       <main id="app">{renderBody()}</main>
-      <footer>
-        <div className="container">© 2026 Snapback Sports · Games. <Link to="/games">← All games</Link></div>
+      <footer className="bg-black py-10 text-[13px] text-[#888]">
+        <div className={container}>© 2026 Snapback Sports · Games. <Link to="/games" className="font-bold text-brand!">← All games</Link></div>
       </footer>
-    </>
+    </div>
   )
 
   function renderBody() {
-    if (!id) return <div className="loadwrap">No game selected. <Link to="/games" className="ulink">Back to games →</Link></div>
-    if (state.status === 'loading') return <div className="loadwrap">Loading game…</div>
-    if (state.status === 'error') return <div className="loadwrap">Couldn't find this game. <Link to="/games" className="ulink">Back to games →</Link></div>
+    const loadwrap = 'py-20 text-center font-bold uppercase tracking-[1px] text-muted'
+    if (!id) return <div className={loadwrap}>No game selected. <Link to="/games" className={ulink}>Back to games →</Link></div>
+    if (state.status === 'loading') return <div className={loadwrap}>Loading game…</div>
+    if (state.status === 'error') return <div className={loadwrap}>Couldn't find this game. <Link to="/games" className={ulink}>Back to games →</Link></div>
     return <GameContent g={state.g!} />
   }
 }
 
-function TeamSide({ t, side }: { t: GameTeam; side: 'home' | 'away' }) {
+// Legacy .gteam/.glogo/.gname/.gsub (the .home/.away hooks carried no styles).
+// .glogo height needs `!`: the global unlayered `img{height:auto}` beats utilities.
+function TeamSide({ t }: { t: GameTeam }) {
   return (
-    <div className={'gteam ' + side}>
-      {t.logo ? <img className="glogo" src={t.logo} alt="" width={64} height={64} /> : null}
-      <span className="gname">{t.location || t.displayName}</span>
-      <span className="gsub">{t.name}</span>
+    <div className="flex min-w-0 flex-col items-center gap-[clamp(8px,1.6vw,14px)]">
+      {t.logo ? <img className="h-[clamp(56px,11vw,96px)]! w-[clamp(56px,11vw,96px)] object-contain drop-shadow-[0_5px_12px_rgba(0,0,0,0.5)]" src={t.logo} alt="" width={64} height={64} /> : null}
+      <span className="font-display text-[clamp(23px,4.4vw,50px)] uppercase leading-[1.02] tracking-[0.5px] text-balance text-white max-[560px]:text-[clamp(26px,8vw,34px)]">{t.location || t.displayName}</span>
+      <span className="text-[13px] font-bold uppercase tracking-[0.6px] text-[rgba(255,255,255,0.65)]">{t.name}</span>
     </div>
   )
 }
@@ -129,38 +132,40 @@ function GameContent({ g }: { g: Game }) {
 
   return (
     <>
-      <section className="ghero">
-        <div className="flagbg" aria-hidden>
-          <div className="fhalf left" style={{ background: g.away.color || '#1a1a1a' }} />
-          <div className="fhalf right" style={{ background: g.home.color || '#1a1a1a' }} />
+      {/* Legacy .ghero — team-color flag halves under a radial ink scrim (::before). */}
+      <section className="relative overflow-hidden bg-ink-soft pt-[clamp(30px,5vw,52px)] pb-[clamp(30px,5vw,46px)] text-white before:absolute before:inset-0 before:z-[1] before:bg-[radial-gradient(120%_120%_at_50%_0%,rgba(20,20,16,0.34)_0%,rgba(20,20,16,0.72)_55%,rgba(20,20,16,0.9)_100%)] before:content-['']">
+        <div className="absolute inset-0 z-0" aria-hidden>
+          <div className="absolute inset-y-0 left-0 w-[62%] bg-cover bg-center opacity-30 saturate-[1.05] [-webkit-mask-image:linear-gradient(to_right,#000_42%,transparent_95%)] [mask-image:linear-gradient(to_right,#000_42%,transparent_95%)]" style={{ background: g.away.color || '#1a1a1a' }} />
+          <div className="absolute inset-y-0 right-0 w-[62%] bg-cover bg-center opacity-30 saturate-[1.05] [-webkit-mask-image:linear-gradient(to_left,#000_42%,transparent_95%)] [mask-image:linear-gradient(to_left,#000_42%,transparent_95%)]" style={{ background: g.home.color || '#1a1a1a' }} />
         </div>
-        <div className="container">
-          <div className="ground">{SPORTS[g.league].label}{g.state === 'in' ? ' · LIVE' : ''}</div>
-          <div className="gmatch">
-            <TeamSide t={g.away} side="away" />
+        <div className={container + ' relative z-[2] text-center'}>
+          <Badge className="mb-[clamp(16px,3vw,24px)] rounded-[5px] border-0 bg-brand px-[13px] py-1.5 text-[12px] font-extrabold tracking-[1.4px] uppercase text-[#111]">{SPORTS[g.league].label}{g.state === 'in' ? ' · LIVE' : ''}</Badge>
+          <div className="mx-auto grid max-w-[880px] grid-cols-[1fr_auto_1fr] items-center gap-[clamp(12px,3.5vw,40px)] max-[560px]:max-w-[340px] max-[560px]:grid-cols-1 max-[560px]:gap-2.5">
+            <TeamSide t={g.away} />
             {showScore
-              ? <span className="gscore">{g.away.score}<span className="gdash">–</span>{g.home.score}</span>
-              : <span className="gvs">@</span>}
-            <TeamSide t={g.home} side="home" />
+              ? <span className="inline-flex flex-none items-center gap-2 font-display text-[clamp(34px,7vw,68px)] tracking-[1px] text-white">{g.away.score}<span className="text-brand">–</span>{g.home.score}</span>
+              : <span className="flex h-[clamp(40px,6vw,58px)] w-[clamp(40px,6vw,58px)] flex-none items-center justify-center rounded-full bg-brand font-display text-[clamp(14px,2vw,21px)] tracking-[0.5px] text-[#111] shadow-[0_6px_18px_rgba(0,0,0,0.35)] max-[560px]:mx-auto max-[560px]:my-[2px]">@</span>}
+            <TeamSide t={g.home} />
           </div>
-          <div className="gmeta">
+          <div className="mt-[clamp(16px,3vw,22px)] text-[15px] font-semibold tracking-[0.3px] text-[#dcdcdc]">
             {when(g)}
-            {g.venue.name ? <> · <span className="glink">{g.venue.name}</span></> : null}
+            {g.venue.name ? <> · <span className="border-b border-[rgba(247,223,2,0.45)] font-bold text-brand hover:border-brand">{g.venue.name}</span></> : null}
             {g.venue.city ? ', ' + g.venue.city : ''}
           </div>
         </div>
       </section>
 
-      <section className="block tint"><div className="container">
-        <div className="eyebrow">Snapback · crowdsourced</div>
+      {/* Legacy section.block.tint (.shead-row/.wtk-addbar/.wtk-layout stay: they live in the global styles.css) */}
+      <section className="bg-[#f7f6f2] py-[clamp(34px,5vw,52px)]"><div className={container}>
+        <div className="mb-[11px] inline-flex items-center gap-[9px] text-[12.5px] font-extrabold tracking-[1.2px] uppercase text-black">Snapback · crowdsourced</div>
         <div className="shead-row">
-          <h2 className="shead">What do I need to know?</h2>
+          <h2 className="shead font-display text-[clamp(28px,3.6vw,40px)] uppercase leading-none tracking-[0.5px] text-ink-soft">What do I need to know?</h2>
           <div className="shead-actions">
-            {venue ? <Link to="/venue-plan" search={{ id: venue.id }} className="wtk-addbar guide">Build your guide →</Link> : null}
+            {venue ? <Link to="/venue-plan" search={{ id: venue.id }} className="wtk-addbar guide inline-flex items-center rounded-full bg-brand px-6 py-3 font-sans text-[13px] font-extrabold uppercase tracking-[.5px] whitespace-nowrap text-[#141414]! cursor-pointer hover:bg-black [line-height:normal]">Build your guide →</Link> : null}
             <AddTipButton onOpen={() => setTipOpen(true)} />
           </div>
         </div>
-        <div className="ssub">
+        <div className="mb-[22px] text-sm font-semibold tracking-[0.5px] uppercase text-muted">
           {venue
             ? <>Insider tips &amp; reviews from fans who've actually been to {venue.name}</>
             : <>Tips from fans for {g.away.displayName} @ {g.home.displayName}</>}
@@ -168,7 +173,7 @@ function GameContent({ g }: { g: Game }) {
         {venue ? (
           <>
             <ExpertNotes scope="venue" targetId={venue.id} />
-            <div className="wtk-layout">
+            <div className="wtk-layout mt-2 grid grid-cols-[minmax(0,1fr)_clamp(300px,28%,380px)] items-stretch gap-[18px] max-[980px]:grid-cols-1">
               <WhatToKnow scope="venue" targetId={venue.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
               <Reviews scope="venue" targetId={venue.id} gameId={g.id} venueName={venue.name} venueCity={venue.city} />
             </div>

@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { useAuth } from '../components/auth/AuthProvider'
 import { Avatar } from '../components/profile/Avatar'
 import { useVenues } from '../components/profile/useVenues'
+import { container, notchBtn, miniBtn, empty } from '../components/profile/ui'
 import { SPORTS } from '../lib/sports'
-import css from '../pages/profile.css?url'
 
 // The following feed — recent logs + reviews from the fans you follow, newest
 // first. Auth-gated content; keyset-paginated via the nextCursor "Load more".
 export const Route = createFileRoute('/feed')({
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'profile' }],
     meta: [{ title: 'Snapback · Following' }],
   }),
   component: FeedPage,
 })
+
+const feedItem = 'grid grid-cols-[42px_1fr_auto] items-center gap-[13px] rounded-[8px] border-[3px] border-[#222] bg-white px-[16px] py-[13px] shadow-[5px_5px_0_#222]'
+const feedAvatar = 'border-2 shadow-[2px_2px_0_rgba(0,0,0,.3)]'
+const feedSub = 'mt-[4px] text-[12px] font-semibold uppercase tracking-[.3px] text-[#6b6b6b]'
+const venueLink = 'font-extrabold !text-[#b58900] hover:!text-[#111]'
+const scoreChip = 'flex min-w-[58px] items-center justify-center rounded-[7px] bg-[#222] px-[13px] py-[7px]'
+const scoreVal = 'font-display text-[22px] leading-none text-brand'
 
 interface FeedItem {
   kind: 'ranking' | 'review'
@@ -73,36 +81,36 @@ function FeedPage() {
     <>
       <PageCssGuard id="profile" />
       <SiteNav />
-      <section className="pf-hero">
-        <div className="container">
-          <h1 className="pf-name">Following</h1>
-          <div className="pf-statline" style={{ marginTop: 8 }}><span>Recent activity from fans you follow</span></div>
+      <section className="relative overflow-hidden bg-[#222] pt-[34px] pb-[30px] text-white after:pointer-events-none after:absolute after:inset-0 after:bg-size-[32px_32px] after:[background-image:linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] after:content-['']">
+        <div className={container + ' relative z-[1]'}>
+          <h1 className="font-display text-[clamp(28px,5vw,44px)] uppercase leading-none tracking-[1px] !text-white">Following</h1>
+          <div className="mt-[8px] flex flex-wrap gap-[18px] text-[14px] text-[#cfcfcf]"><span>Recent activity from fans you follow</span></div>
         </div>
       </section>
 
-      <div className="pf-body">
-        <div className="container">
+      <div className="pt-[30px] pb-[70px]">
+        <div className={container}>
           {!user ? (
-            <div className="pf-empty">
-              <button className="pf-save" onClick={() => openAuth('signin')}>Sign in</button>
-              <p style={{ marginTop: 12 }}>Sign in and follow other fans to build your feed.</p>
+            <div className={empty}>
+              <Button variant="brand" className={notchBtn} onClick={() => openAuth('signin')}>Sign in</Button>
+              <p className="mt-[12px]">Sign in and follow other fans to build your feed.</p>
             </div>
           ) : loading ? (
-            <div className="pf-empty">Loading…</div>
+            <div className={empty}>Loading…</div>
           ) : items.length === 0 ? (
-            <div className="pf-empty">
+            <div className={empty}>
               No activity yet. Open a fan’s profile at <b>/u/their-name</b> and tap Follow. Their logs and reviews show up here.
             </div>
           ) : (
             <>
-              <div className="pf-feed">
+              <div className="flex flex-col gap-[11px]">
                 {items.map((it, i) => <FeedRow key={it.kind + i + it.createdAt} it={it} venues={venues} />)}
               </div>
               {cursor ? (
-                <div style={{ marginTop: 18 }}>
-                  <button className="pf-mini-btn" disabled={more} onClick={() => { setMore(true); load(cursor).finally(() => setMore(false)) }}>
+                <div className="mt-[18px]">
+                  <Button variant="brand" className={cn(notchBtn, miniBtn)} disabled={more} onClick={() => { setMore(true); load(cursor).finally(() => setMore(false)) }}>
                     {more ? 'Loading…' : 'Load more'}
-                  </button>
+                  </Button>
                 </div>
               ) : null}
             </>
@@ -110,28 +118,28 @@ function FeedPage() {
         </div>
       </div>
 
-      <footer><div className="container">© 2026 Snapback Sports · Following. <Link to="/">← Home</Link></div></footer>
+      <footer className="bg-black py-[34px] text-[13px] text-[#888]"><div className={container}>© 2026 Snapback Sports · Following. <Link to="/" className="font-bold !text-brand">← Home</Link></div></footer>
     </>
   )
 }
 
 function FeedRow({ it, venues }: { it: FeedItem; venues: ReturnType<typeof useVenues> }) {
   const author = it.author || 'Fan'
-  const authorLink = <Link to="/u/$username" params={{ username: author }} className="pf-feed-author">{it.authorName || author}</Link>
+  const authorLink = <Link to="/u/$username" params={{ username: author }} className={venueLink}>{it.authorName || author}</Link>
 
   if (it.kind === 'ranking' && it.ranking) {
     const r = it.ranking
     const v = venues.byName.get((r.venue ?? '').trim().toLowerCase())
     return (
-      <div className="pf-feed-item">
-        <Avatar avatar={it.avatar} name={it.authorName || author} size={42} />
-        <div className="pf-feed-main">
-          <div className="pf-feed-line">{authorLink} logged <b>{r.away} @ {r.home}</b></div>
-          <div className="pf-feed-sub">
-            {SPORTS[r.league as keyof typeof SPORTS]?.label ?? r.league} · {v ? <Link to="/venue" search={{ id: v.id }} className="pf-d-venuelink">{r.venue}</Link> : r.venue} · {timeAgo(it.createdAt)}
+      <div className={feedItem}>
+        <Avatar avatar={it.avatar} name={it.authorName || author} size={42} className={feedAvatar} />
+        <div className="min-w-0">
+          <div className="text-[15px] leading-[1.35] text-[#222] [&_b]:font-extrabold">{authorLink} logged <b>{r.away} @ {r.home}</b></div>
+          <div className={feedSub}>
+            {SPORTS[r.league as keyof typeof SPORTS]?.label ?? r.league} · {v ? <Link to="/venue" search={{ id: v.id }} className={venueLink}>{r.venue}</Link> : r.venue} · {timeAgo(it.createdAt)}
           </div>
         </div>
-        <div className="pf-d-score"><span className="pf-sv">{r.score.toFixed(1)}</span></div>
+        <div className={scoreChip}><span className={scoreVal}>{r.score.toFixed(1)}</span></div>
       </div>
     )
   }
@@ -140,15 +148,15 @@ function FeedRow({ it, venues }: { it: FeedItem; venues: ReturnType<typeof useVe
     const rv = it.review
     const v = rv.scope === 'venue' ? venues.byId.get(rv.targetId) : undefined
     return (
-      <div className="pf-feed-item">
-        <Avatar avatar={it.avatar} name={it.authorName || author} size={42} />
-        <div className="pf-feed-main">
-          <div className="pf-feed-line">
-            {authorLink} reviewed {v ? <Link to="/venue" search={{ id: v.id }} className="pf-d-venuelink">{v.name}</Link> : <b>{rv.scope === 'event' ? 'a game' : 'a venue'}</b>}
-            {typeof rv.rating === 'number' ? <span className="pf-review-score" style={{ marginLeft: 8 }}>{rv.rating}/10</span> : null}
+      <div className={feedItem}>
+        <Avatar avatar={it.avatar} name={it.authorName || author} size={42} className={feedAvatar} />
+        <div className="min-w-0">
+          <div className="text-[15px] leading-[1.35] text-[#222] [&_b]:font-extrabold">
+            {authorLink} reviewed {v ? <Link to="/venue" search={{ id: v.id }} className={venueLink}>{v.name}</Link> : <b>{rv.scope === 'event' ? 'a game' : 'a venue'}</b>}
+            {typeof rv.rating === 'number' ? <span className="ml-[8px] rounded-[5px] bg-[#222] px-[9px] py-px font-display text-[13px] text-brand">{rv.rating}/10</span> : null}
           </div>
-          <div className="pf-feed-sub">{timeAgo(it.createdAt)}</div>
-          <div className="pf-feed-body">{rv.body}</div>
+          <div className={feedSub}>{timeAgo(it.createdAt)}</div>
+          <div className="mt-[7px] line-clamp-4 text-[14px] leading-[1.5] whitespace-pre-wrap text-[#33352f]">{rv.body}</div>
         </div>
       </div>
     )

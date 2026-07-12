@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from '@tanstack/react-router'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useAuth } from './auth/AuthProvider'
 
 // Floating BackBuddy assistant — a Snapback-cap button pinned bottom-right of EVERY
@@ -89,48 +91,57 @@ export function AssistantChat() {
     }
   }
 
+  const msgBase = 'max-w-[88%] whitespace-pre-wrap rounded-[13px] px-[13px] py-[10px] text-[14px] leading-[1.5] [overflow-wrap:anywhere]'
   return (
     <>
       <button
-        className={'asst-fab' + (open ? ' open' : '')}
+        className="fixed right-[18px] bottom-[18px] z-[90] flex h-[62px] w-[62px] cursor-pointer items-center justify-center overflow-hidden rounded-full border-[3px] border-[#111] bg-[#111] p-0 shadow-[4px_4px_0_rgba(0,0,0,.28)] [transition:transform_120ms_ease,box-shadow_120ms_ease] hover:[transform:translateY(-2px)] hover:shadow-[6px_6px_0_rgba(0,0,0,.28)] active:[transform:translateY(0)] active:shadow-[2px_2px_0_rgba(0,0,0,.28)] focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[#F7DF02] max-[520px]:right-[14px] max-[520px]:bottom-[14px]"
         aria-label={open ? 'Close BackBuddy' : 'Ask BackBuddy'}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
       >
-        {open ? <span className="asst-fab-x" aria-hidden>×</span> : <img className="asst-fab-logo" src="/img/logo.png" alt="" width={62} height={62} />}
+        {open ? <span className="text-[30px] leading-none text-[#F7DF02]" aria-hidden>×</span> : <img className="block h-full! w-full object-cover" src="/img/logo.png" alt="" width={62} height={62} />}
       </button>
 
       {open ? (
-        <div className="asst-panel" role="dialog" aria-label="BackBuddy assistant">
-          <div className="asst-panel-head">
-            <span className="asst-spark" aria-hidden>✦</span>
-            <span className="asst-panel-title">Ask Snapback</span>
-            <button className="asst-close" aria-label="Close" onClick={() => setOpen(false)}>×</button>
+        <div className="fixed right-[18px] bottom-[92px] z-[91] flex max-h-[min(72vh,560px)] w-[min(384px,calc(100vw-36px))] origin-bottom-right animate-[asstpop_140ms_ease-out] flex-col overflow-hidden rounded-[16px] border-[2.5px] border-[#111] bg-white shadow-[6px_6px_0_rgba(0,0,0,.2)] max-[520px]:right-[12px] max-[520px]:bottom-[86px] max-[520px]:left-[12px] max-[520px]:max-h-[74vh] max-[520px]:w-auto" role="dialog" aria-label="BackBuddy assistant">
+          <div className="flex items-center gap-[10px] border-b-[2.5px] border-[#111] bg-[#F7DF02] px-[15px] py-[13px]">
+            <span className="text-[16px] leading-none text-[#111]" aria-hidden>✦</span>
+            <span className="font-display text-[18px] uppercase leading-none tracking-[.8px] text-[#111]">Ask Snapback</span>
+            <button className="ml-auto flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full border-0 bg-[#111] p-0 text-[20px] leading-none text-white hover:bg-[#333]" aria-label="Close" onClick={() => setOpen(false)}>×</button>
           </div>
-          <div className="asst-sub">{sub}</div>
+          <div className="px-[15px] pt-[9px] text-[11.5px] font-bold uppercase tracking-[.3px] text-[#999]">{sub}</div>
 
-          <div className="asst-stream" ref={streamRef}>
+          <div className="flex min-h-[120px] flex-1 flex-col gap-[10px] overflow-y-auto bg-white px-[15px] py-[14px]" ref={streamRef}>
             {turns.length === 0 ? (
-              <div className="asst-empty">
-                <p>BackBuddy here, how can I help?</p>
-                <div className="asst-chips">
+              <div className="text-[14px] leading-[1.5] text-[#444]">
+                <p className="m-0 mb-[12px]">BackBuddy here, how can I help?</p>
+                <div className="flex flex-wrap gap-[8px]">
                   {SUGGESTIONS[scope].map((s) => (
-                    <button key={s} type="button" className="asst-chip" onClick={() => send(s)} disabled={busy}>{s}</button>
+                    <Button key={s} type="button" variant="outline" className="h-auto rounded-[999px] border-2 border-[#222] bg-white px-[13px] py-[7px] text-[13px] font-semibold text-[#222] [transition:background_120ms] enabled:hover:bg-[#F7DF02] enabled:hover:text-[#222]" onClick={() => send(s)} disabled={busy}>{s}</Button>
                   ))}
                 </div>
               </div>
             ) : (
-              turns.map((t, i) => <div key={i} className={'asst-msg ' + t.role}>{t.content}</div>)
+              turns.map((t, i) => (
+                <div key={i} className={msgBase + (t.role === 'user' ? ' self-end rounded-br-[3px] bg-[#222] text-white' : ' self-start rounded-bl-[3px] bg-[#f4f4f4] text-[#1a1a1a]')}>{t.content}</div>
+              ))
             )}
-            {busy ? <div className="asst-msg assistant asst-typing"><span /><span /><span /></div> : null}
+            {busy ? (
+              <div className={msgBase + ' inline-flex items-center gap-[4px] self-start rounded-bl-[3px] bg-[#f4f4f4]'}>
+                <span className="h-[6px] w-[6px] animate-[asstblink_1s_infinite_ease-in-out] rounded-full bg-[#bbb]" />
+                <span className="h-[6px] w-[6px] animate-[asstblink_1s_infinite_ease-in-out] rounded-full bg-[#bbb] [animation-delay:.2s]" />
+                <span className="h-[6px] w-[6px] animate-[asstblink_1s_infinite_ease-in-out] rounded-full bg-[#bbb] [animation-delay:.4s]" />
+              </div>
+            ) : null}
           </div>
 
-          {err ? <div className="asst-err">{err}</div> : null}
+          {err ? <div className="border-t border-[#f3c9c4] bg-[#fce8e6] px-[15px] py-[8px] text-[13px] text-[#a61b1b]">{err}</div> : null}
 
-          <form className="asst-form" onSubmit={(e) => { e.preventDefault(); send(draft) }}>
-            <input
+          <form className="flex gap-[8px] border-t-2 border-[#111] bg-white p-[12px]" onSubmit={(e) => { e.preventDefault(); send(draft) }}>
+            <Input
               ref={inputRef}
-              className="asst-input"
+              className="h-auto min-w-0 flex-1 rounded-[9px] border-2 border-[#cfcfcf] bg-white px-[12px] py-[10px] text-[14px] text-[#222] focus-visible:border-[#111] focus-visible:ring-0 disabled:bg-[#f3f3f3] md:text-[14px]"
               value={draft}
               maxLength={2000}
               placeholder={user ? 'Ask a question…' : 'Sign in to ask BackBuddy'}
@@ -138,7 +149,7 @@ export function AssistantChat() {
               onFocus={() => { if (!user) openAuth('signin') }}
               disabled={busy}
             />
-            <button className="asst-send" type="submit" disabled={busy || !draft.trim()}>{busy ? '…' : 'Ask'}</button>
+            <Button className="h-auto flex-[0_0_auto] rounded-[9px] border-0 bg-[#111] px-[16px] py-[10px] text-[13px] font-extrabold uppercase tracking-[.5px] text-white hover:bg-[#111]" type="submit" disabled={busy || !draft.trim()}>{busy ? '…' : 'Ask'}</Button>
           </form>
         </div>
       ) : null}

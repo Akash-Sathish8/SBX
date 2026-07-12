@@ -29,6 +29,13 @@
   "triggers": {
     "crons": ["*/2 * * * *"]
   },
+  // Better Auth needs its public origin to build the Google OAuth redirect_uri
+  // (https://<origin>/api/auth/callback/google — register that in the Google
+  // Cloud console). Secrets AUTH_SECRET / GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET
+  // are set with `wrangler secret put ...`.
+  "vars": {
+    "BETTER_AUTH_URL": "https://sbx.snapbacksports.com"
+  },
   // SBX system-of-record. For production, run `wrangler d1 create sbx-db` and
   // paste the returned database_id below (local dev uses a local SQLite file and
   // ignores the id). Schema: db/schema.sql. Apply via package.json db:* scripts.

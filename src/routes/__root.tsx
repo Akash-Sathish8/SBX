@@ -6,32 +6,16 @@ import { AssistantChat } from '../components/AssistantChat'
 
 import appCss from '../styles.css?url'
 import twCss from '../styles/tailwind.css?url'
-// Global, always-on auth styles (modal + save prompt). Untagged on purpose:
-// PageCssGuard only disables links carrying data-page-css, so this survives on
-// every route — the auth modal can open from home, /rank, anywhere.
-import authCss from '../styles/auth.css?url'
-// Global subpage nav styles (the hamburger menu). Untagged for the same reason as
-// authCss — SiteNav renders on every non-home route and must always be styled.
-import navCss from '../styles/nav.css?url'
 // Eagerly preload every page's stylesheet at startup so client-side navigation
 // applies page CSS from cache near-instantly — mitigates the flash of unstyled
 // content (FOUC) from the per-route <link> loading after the HTML paints. Kept as
 // preload (not mounted stylesheets) so it never conflicts with the per-route link
 // that styles each page on first/SSR paint, incl. CSS shared across routes.
+// (entries drop out of this list as each page converts to Tailwind and its
+// css file is deleted — games/venues/teams/conferences are already gone)
 import agendaCss from '../pages/agenda.css?url'
-import gameCss from '../pages/game.css?url'
-import gamesCss from '../pages/games.css?url'
-import homeCss from '../pages/home.css?url'
-import searchboxCss from '../pages/searchbox.css?url'
-import venueCss from '../pages/venue.css?url'
 import venuePlanCss from '../pages/venue-plan.css?url'
-import venuesCss from '../pages/venues.css?url'
 import shareCss from '../pages/share.css?url'
-import gamerowCss from '../pages/gamerow.css?url'
-import weekendCss from '../pages/weekend.css?url'
-import teamCss from '../pages/team.css?url'
-import teamsCss from '../pages/teams.css?url'
-import nexthopCss from '../pages/nexthop.css?url'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -64,24 +48,11 @@ export const Route = createRootRoute({
       // convert; untagged, so PageCssGuard never disables it.
       { rel: 'stylesheet', href: twCss },
       { rel: 'stylesheet', href: appCss },
-      { rel: 'stylesheet', href: authCss },
-      { rel: 'stylesheet', href: navCss },
       // preload (not prefetch): iOS Safari ignores rel=prefetch, so the warmup
       // never happened on the platform that needs it most.
       { rel: 'preload', as: 'style', href: agendaCss },
-      { rel: 'preload', as: 'style', href: gameCss },
-      { rel: 'preload', as: 'style', href: gamesCss },
-      { rel: 'preload', as: 'style', href: homeCss },
-      { rel: 'preload', as: 'style', href: searchboxCss },
-      { rel: 'preload', as: 'style', href: venueCss },
       { rel: 'preload', as: 'style', href: venuePlanCss },
-      { rel: 'preload', as: 'style', href: venuesCss },
       { rel: 'preload', as: 'style', href: shareCss },
-      { rel: 'preload', as: 'style', href: gamerowCss },
-      { rel: 'preload', as: 'style', href: weekendCss },
-      { rel: 'preload', as: 'style', href: teamCss },
-      { rel: 'preload', as: 'style', href: teamsCss },
-      { rel: 'preload', as: 'style', href: nexthopCss },
     ],
   }),
   shellComponent: RootDocument,

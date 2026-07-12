@@ -3,6 +3,15 @@
    hex soup. Loaded globally from __root alongside the legacy styles.css;
    legacy per-route CSS files are deleted page-by-page as each converts. */
 @import 'tailwindcss';
+/* enter/exit keyframes for shadcn components (dialog fade/zoom etc.) */
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* BackBuddy assistant (AssistantChat.tsx) — panel pop-in + typing-dot blink,
+   referenced via animate-[asstpop_...] / animate-[asstblink_...]. */
+@keyframes asstpop { from { opacity: 0; transform: translateY(8px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes asstblink { 0%, 80%, 100% { opacity: .3; } 40% { opacity: 1; } }
 
 @theme {
   /* brand */
@@ -26,6 +35,29 @@
   --shadow-punch: 3px 3px 0 0 var(--color-ink);
   --shadow-punch-lg: 6px 6px 0 0 var(--color-ink);
   --shadow-punch-brand: 5px 5px 0 0 var(--color-brand);
+
+  /* shadcn/ui tokens (src/components/ui/*), mapped onto the Snapback palette.
+     Light surfaces by default — dark shells (e.g. the auth sheet) override
+     per-component with explicit classes. */
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-cream);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-cream);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary: var(--color-brand);
+  --color-primary-foreground: var(--color-ink);
+  --color-secondary: var(--color-paper);
+  --color-secondary-foreground: var(--color-ink);
+  /* NB: --color-muted stays the brand's #6b6b6b text gray (defined above) —
+     shadcn's muted-foreground plays the same role, so they share the value. */
+  --color-muted-foreground: #6b6b6b;
+  --color-accent: var(--color-tip);
+  --color-accent-foreground: var(--color-ink);
+  --color-destructive: var(--color-danger);
+  --color-border: #e4e2d9;
+  --color-input: #e4e2d9;
+  --color-ring: var(--color-gold);
 }
 
 /* Legacy-variable bridge: shared stylesheets that outlive a page's conversion
@@ -43,4 +75,34 @@
   --body: #33352f;
   --gray: #6b6b6b;
   --green: #1f9d4d;
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+.dark {
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }

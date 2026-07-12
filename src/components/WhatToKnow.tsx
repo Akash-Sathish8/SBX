@@ -1,4 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { NativeSelect } from '@/components/ui/native-select'
+import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 import { useAuth } from './auth/AuthProvider'
 
 // Crowdsourced "what do I need to know?" layer — the Letterboxd-for-sports core.
@@ -61,15 +65,28 @@ function timeAgo(iso: string): string {
   return Math.floor(mo / 12) + 'y ago'
 }
 
+// Compact vote-pill arrow (the legacy .rvw-vote in its .wtkv variant): quiet
+// until pressed — yellow up, red-washed down. The `on` state must also pin the
+// hover colors so a pressed arrow doesn't flicker.
+const voteBtnCls = (on: boolean, dir: 'up' | 'down') => cn(
+  'h-auto cursor-pointer rounded-none px-[9px] py-1 font-sans text-[10px] leading-none font-extrabold text-[#9a9a90] transition-[background-color,color] duration-[120ms] hover:bg-[rgba(20,20,20,.06)] hover:text-[#141414]',
+  on && dir === 'up' && 'bg-brand text-[#141414] hover:bg-brand hover:text-[#141414]',
+  on && dir === 'down' && 'bg-[rgba(226,72,61,.14)] text-danger hover:bg-[rgba(226,72,61,.14)] hover:text-danger',
+)
+
 // The single "+ add a tip" control, rendered ONCE on the section header row
 // (right of "What do I need to know?"), not per card. Signed out it opens the
 // auth modal; signed in it opens the composer (see WhatToKnow composerOpen).
 export function AddTipButton({ onOpen }: { onOpen: () => void }) {
   const { user, openAuth } = useAuth()
   return (
-    <button className="wtk-addbar" onClick={() => (user ? onOpen() : openAuth('signin'))}>
+    <Button
+      variant="ghost"
+      className="h-auto cursor-pointer rounded-full bg-[#141414] px-6 py-3 font-sans text-[13px] font-extrabold tracking-[.5px] whitespace-nowrap text-white uppercase [line-height:normal] hover:bg-black hover:text-white"
+      onClick={() => (user ? onOpen() : openAuth('signin'))}
+    >
       {user ? '+ Add a tip' : '+ Sign in to add a tip'}
-    </button>
+    </Button>
   )
 }
 
@@ -190,78 +207,104 @@ export function WhatToKnow({
   }
 
   return (
-    <div className="wtk-wrap">
+    <div className="font-sans [line-height:normal]">
       {composerOpen ? (
-        <div className="wtk-composer">
-          <div className="wtk-composerrow">
-            <select className="wtk-select" value={sec} onChange={(e) => setSec(e.target.value)} aria-label="Tip section">
+        <div className="mt-2 mb-3.5 rounded-[10px] border-2 border-[#141414] bg-white px-4 py-3.5">
+          <div className="mb-2.5">
+            <NativeSelect
+              className="h-auto cursor-pointer rounded-[8px] border-2 border-[#141414] bg-white py-2 pr-8 pl-2.5 font-sans text-[13px] font-bold text-[#141414] shadow-none [line-height:normal]"
+              value={sec} onChange={(e) => setSec(e.target.value)} aria-label="Tip section"
+            >
               {sections.map((s) => <option key={s.key} value={s.key}>{s.label}</option>)}
-            </select>
+            </NativeSelect>
           </div>
-          <textarea
-            className="wtk-textarea" rows={3} maxLength={500} autoFocus
+          <Textarea
+            className="field-sizing-fixed min-h-0 w-full resize-y rounded-[8px] border-2 border-[#141414] bg-white px-[11px] py-[9px] font-sans text-[13.5px] font-medium text-[#141414] shadow-none [line-height:normal] focus-visible:border-[#caa800] focus-visible:ring-0 md:text-[13.5px]"
+            rows={3} maxLength={500} autoFocus
             placeholder={sections.find((s) => s.key === sec)?.hint}
             value={draft} onChange={(e) => setDraft(e.target.value)}
           />
-          {err ? <div className="wtk-err">{err}</div> : null}
-          <div className="wtk-formrow">
-            <button className="wtk-cancel" onClick={() => { setErr(null); onComposerClose?.() }}>{cancelLabel}</button>
-            <button className="wtk-post" disabled={busy || !draft.trim()} onClick={submit}>
+          {err ? <div className="mt-1.5 text-[12px] font-bold text-[#c0392b]">{err}</div> : null}
+          <div className="mt-2 flex justify-end gap-2">
+            <Button
+              variant="ghost"
+              className="h-auto cursor-pointer px-2.5 py-2 font-sans text-[12.5px] font-bold text-[#888] hover:bg-transparent hover:text-[#141414]"
+              onClick={() => { setErr(null); onComposerClose?.() }}
+            >{cancelLabel}</Button>
+            <Button
+              variant="brand"
+              className="h-auto cursor-pointer rounded-[8px] px-4 py-[9px] font-sans text-[12.5px] tracking-[.4px] text-[#111]"
+              disabled={busy || !draft.trim()} onClick={submit}
+            >
               {busy ? 'Posting…' : 'Post tip'}
-            </button>
+            </Button>
           </div>
         </div>
       ) : null}
 
-      <div className="wtk">
+      <div className="mt-2 grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3.5 [.wtk-layout_&]:mt-0 [.wtk-layout_&]:grid-cols-3 [.wtk-layout_&]:max-[980px]:grid-cols-2 [.wtk-layout_&]:max-[560px]:grid-cols-1">
       {sections.map((s) => {
         const list = bySection[s.key] || []
         return (
-          <div key={s.key} className="wtk-card">
-            <div className="wtk-h">{s.label}</div>
-            <div className="wtk-hint">{s.hint}</div>
+          <div key={s.key} className="rounded-[10px] border-2 border-[#141414] bg-white px-4 py-[15px]">
+            <div className="font-display text-[19px] tracking-[.4px] text-[#141414] uppercase">{s.label}</div>
+            <div className="mt-[5px] text-[13px] leading-[1.4] font-semibold text-[#666]">{s.hint}</div>
 
             {list.length ? (
-              <div className="wtk-tips">
+              <div className="mt-3 flex max-h-[300px] flex-col gap-2.5 overflow-x-hidden overflow-y-auto overscroll-contain border-t border-dashed border-[#ddd] pt-[11px] pr-[5px] [scrollbar-color:#cdcdcd_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[7px] [&::-webkit-scrollbar-thumb]:rounded-[4px] [&::-webkit-scrollbar-thumb]:bg-[#cdcdcd] [&::-webkit-scrollbar-track]:bg-transparent">
                 {list.map((g) => (
-                  <div key={(g.verified ? 'v:' : 'u:') + g.author} className={'wtk-tip' + (g.verified ? ' official' : '')}>
-                    <div className="wtk-tipmeta">
+                  <div
+                    key={(g.verified ? 'v:' : 'u:') + g.author}
+                    className={cn(
+                      'relative rounded-[8px] border-[1.5px] border-[#e7dca0] bg-tip py-[9px] pr-[26px] pl-[11px]',
+                      g.verified && 'border-[#141414] border-l-4 border-l-brand bg-white',
+                    )}
+                  >
+                    <div className="mb-[3px] flex items-baseline gap-2">
                       {g.verified ? (
-                        <span className="wtk-official">
-                          <img className="wtk-offlogo" src={g.avatar || '/img/logo.png'} alt="" width={20} height={20} />
-                          <span className="wtk-offname">{g.author}</span>
-                          <span className="wtk-offbadge" title="Verified" aria-label="Verified">✓</span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <img className="block h-5! w-5 self-center rounded-full border-[1.5px] border-[#141414] object-cover" src={g.avatar || '/img/logo.png'} alt="" width={20} height={20} />
+                          <span className="text-[12px] font-extrabold tracking-[.3px] text-[#141414] uppercase">{g.author}</span>
+                          <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#141414] text-[9px] leading-none font-black text-brand" title="Verified" aria-label="Verified">✓</span>
                         </span>
                       ) : (
                         <>
-                          <span className="wtk-tipauthor">{g.author}</span>
-                          <span className="wtk-tipago">{timeAgo(g.latest)}</span>
+                          <span className="text-[12px] font-extrabold tracking-[.3px] text-[#141414] uppercase">{g.author}</span>
+                          <span className="text-[11px] font-semibold text-[#9a9a9a]">{timeAgo(g.latest)}</span>
                         </>
                       )}
                     </div>
-                    <div className="wtk-tipbody">
+                    <div className="text-[13.5px] leading-[1.4] font-medium whitespace-pre-wrap text-[#2a2a2a] [overflow-wrap:anywhere]">
                       {g.tips.map((t) => (
-                        <div key={t.id} className="wtk-tipline">
-                          <span>{t.body}</span>
-                          {t.mine ? <button className="wtk-tipdel inline" aria-label="Delete tip" onClick={() => remove(t)}>×</button> : null}
-                          <span className="rvw-votes wtkv">
-                            <button
+                        <div key={t.id} className="flex flex-wrap items-start gap-2 [&:not(:first-child)]:mt-2 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-[rgba(20,20,20,.1)] [&:not(:first-child)]:pt-2">
+                          <span className="min-w-0 flex-1">{t.body}</span>
+                          {t.mine ? (
+                            <Button
+                              variant="ghost"
+                              className="h-auto flex-none cursor-pointer self-start rounded-none px-[2px] py-0 text-[17px] leading-none font-normal text-[#bbb] hover:bg-transparent hover:text-danger"
+                              aria-label="Delete tip" onClick={() => remove(t)}
+                            >×</Button>
+                          ) : null}
+                          <span className="mt-[7px] inline-flex max-w-max flex-[0_0_100%] items-center self-start overflow-hidden rounded-full border-[1.5px] border-[rgba(20,20,20,.13)]">
+                            <Button
                               type="button"
-                              className={'rvw-vote up' + (t.myVote === 1 ? ' on' : '')}
+                              variant="ghost"
+                              className={voteBtnCls(t.myVote === 1, 'up')}
                               aria-label="Upvote tip"
                               aria-pressed={t.myVote === 1}
                               title="Helpful"
                               onClick={() => vote(t, 1)}
-                            >▲</button>
-                            <span className="rvw-net num" title={t.up + ' up · ' + t.down + ' down'}>{t.up - t.down}</span>
-                            <button
+                            >▲</Button>
+                            <span className="min-w-4 px-[2px] text-center text-[11.5px] font-extrabold text-[#3a3a34]" title={t.up + ' up · ' + t.down + ' down'}>{t.up - t.down}</span>
+                            <Button
                               type="button"
-                              className={'rvw-vote down' + (t.myVote === -1 ? ' on' : '')}
+                              variant="ghost"
+                              className={voteBtnCls(t.myVote === -1, 'down')}
                               aria-label="Downvote tip"
                               aria-pressed={t.myVote === -1}
                               title="Not helpful"
                               onClick={() => vote(t, -1)}
-                            >▼</button>
+                            >▼</Button>
                           </span>
                         </div>
                       ))}
@@ -270,7 +313,7 @@ export function WhatToKnow({
                 ))}
               </div>
             ) : (
-              <div className="wtk-empty"><span className="wtk-dot" /> No tips yet. Be the first.</div>
+              <div className="mt-3 flex items-center gap-2 border-t border-dashed border-[#ddd] pt-[11px] text-[12.5px] font-bold text-[#999]"><span className="h-[7px] w-[7px] flex-none rounded-full bg-brand" /> No tips yet. Be the first.</div>
             )}
 
           </div>

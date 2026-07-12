@@ -1,8 +1,15 @@
 import { useMemo, useRef, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 import { AVATAR_PRESETS } from './types'
 import { Avatar } from './Avatar'
 import type { ProfileData } from './types'
 import type { VenueIndex } from './useVenues'
+import { notchBtn, miniBtn, miniGhost } from './ui'
 
 // Resize a picked image to a 128x128 cover-cropped square and return a webp data
 // URL (~5-15KB) so it fits comfortably in the users.avatar column. No blob store
@@ -29,6 +36,11 @@ function resizeToDataUrl(file: File): Promise<string> {
     img.src = url
   })
 }
+
+const flabel = 'flex items-center justify-between text-[12px] font-extrabold uppercase tracking-[.5px] text-[#111]'
+const fcount = 'font-bold text-[#6b6b6b]'
+const field = 'flex flex-col gap-[9px]'
+const fieldInput = 'h-auto w-full rounded-[7px] border-2 border-[#111] bg-white px-[12px] py-[9px] font-sans text-[14px] shadow-none focus-visible:ring-0 md:text-[14px]'
 
 export function EditProfileModal({ data, venues, onClose, onSaved }: {
   data: ProfileData
@@ -95,30 +107,36 @@ export function EditProfileModal({ data, venues, onClose, onSaved }: {
   }
 
   return (
-    <div className="pf-modal-scrim" onClick={onClose}>
-      <div className="pf-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Edit profile">
-        <div className="pf-modal-head">
-          <h2>Edit profile</h2>
-          <button className="pf-modal-x" aria-label="Close" onClick={onClose}>×</button>
+    <Dialog open onOpenChange={(o) => { if (!o) onClose() }}>
+      <DialogContent
+        showCloseButton={false}
+        overlayClassName="z-[50] bg-black/55"
+        className="top-[34px] z-[50] flex max-h-[calc(100dvh-68px)] w-[calc(100%-32px)] max-w-[520px] translate-y-0 flex-col gap-0 overflow-hidden rounded-[10px] border-[3px] border-[#111] bg-white p-0 shadow-[8px_8px_0_#000] sm:max-w-[520px]"
+      >
+        <div className="flex shrink-0 items-center justify-between border-b-[3px] border-[#111] px-[20px] py-[16px]">
+          <DialogTitle className="font-display text-[20px] uppercase tracking-[1px] text-[#222]">Edit profile</DialogTitle>
+          <DialogClose asChild>
+            <button className="cursor-pointer border-0 bg-none text-[26px] leading-none text-[#111]" aria-label="Close">×</button>
+          </DialogClose>
         </div>
 
-        <div className="pf-modal-body">
+        <div className="flex flex-1 flex-col gap-[18px] overflow-y-auto px-[20px] py-[18px]">
           {/* Avatar */}
-          <div className="pf-field">
-            <label className="pf-flabel">Avatar</label>
-            <div className="pf-avatar-edit">
+          <div className={field}>
+            <Label className={flabel}>Avatar</Label>
+            <div className="flex items-center gap-[14px]">
               <Avatar avatar={avatar} name={data.username} size={64} />
-              <div className="pf-avatar-actions">
-                <button className="pf-mini-btn" onClick={() => fileRef.current?.click()}>Upload</button>
-                {avatar ? <button className="pf-mini-btn ghost" onClick={() => setAvatar(null)}>Remove</button> : null}
+              <div className="flex flex-wrap gap-[8px]">
+                <Button variant="brand" className={cn(notchBtn, miniBtn)} onClick={() => fileRef.current?.click()}>Upload</Button>
+                {avatar ? <Button variant="brand" className={cn(notchBtn, miniBtn, miniGhost)} onClick={() => setAvatar(null)}>Remove</Button> : null}
                 <input ref={fileRef} type="file" accept="image/*" hidden onChange={pickFile} />
               </div>
             </div>
-            <div className="pf-presets">
+            <div className="flex flex-wrap gap-[8px]">
               {AVATAR_PRESETS.map((c, i) => (
                 <button
                   key={i}
-                  className={'pf-preset' + (avatar === `preset:${i}` ? ' on' : '')}
+                  className={cn('h-[30px] w-[30px] cursor-pointer rounded-full border-2 border-[#111] p-0', avatar === `preset:${i}` && 'outline-[3px] outline-offset-2 outline-[#111]')}
                   style={{ background: c }}
                   aria-label={`Preset ${i + 1}`}
                   onClick={() => setAvatar(`preset:${i}`)}
@@ -128,52 +146,52 @@ export function EditProfileModal({ data, venues, onClose, onSaved }: {
           </div>
 
           {/* Display name */}
-          <div className="pf-field">
-            <label className="pf-flabel">Display name <span className="pf-fcount">{displayName.length}/40</span></label>
-            <input className="pf-search" maxLength={40} placeholder="The name shown on your profile (e.g. Jack Settleman)" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
+          <div className={field}>
+            <Label className={flabel}>Display name <span className={fcount}>{displayName.length}/40</span></Label>
+            <Input className={fieldInput} maxLength={40} placeholder="The name shown on your profile (e.g. Jack Settleman)" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
           </div>
 
           {/* Bio */}
-          <div className="pf-field">
-            <label className="pf-flabel">Bio <span className="pf-fcount">{bio.length}/280</span></label>
-            <textarea className="pf-bio" rows={3} maxLength={280} placeholder="Season-ticket holder. Ballpark hunter. Tell people what you’re about." value={bio} onChange={(e) => setBio(e.target.value)} />
+          <div className={field}>
+            <Label className={flabel}>Bio <span className={fcount}>{bio.length}/280</span></Label>
+            <Textarea className={cn(fieldInput, 'resize-y')} rows={3} maxLength={280} placeholder="Season-ticket holder. Ballpark hunter. Tell people what you’re about." value={bio} onChange={(e) => setBio(e.target.value)} />
           </div>
 
           {/* Favorites */}
-          <div className="pf-field">
-            <label className="pf-flabel">Favorite venues <span className="pf-fcount">{favorites.length}/4</span></label>
+          <div className={field}>
+            <Label className={flabel}>Favorite venues <span className={fcount}>{favorites.length}/4</span></Label>
             {favorites.length ? (
-              <div className="pf-fav-chips">
+              <div className="flex flex-wrap gap-[8px]">
                 {favorites.map((id) => (
-                  <button key={id} className="pf-fav-chip" onClick={() => toggleFav(id)}>
+                  <button key={id} className="cursor-pointer rounded-[20px] border-2 border-[#111] bg-brand px-[11px] py-[4px] text-[12px] font-extrabold" onClick={() => toggleFav(id)}>
                     {venues.byId.get(id)?.name ?? id} <span aria-hidden="true">×</span>
                   </button>
                 ))}
               </div>
             ) : null}
-            <input className="pf-search" placeholder="Search venues to pin…" value={search} onChange={(e) => setSearch(e.target.value)} />
-            <div className="pf-picker">
+            <Input className={fieldInput} placeholder="Search venues to pin…" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <div className="max-h-[190px] overflow-auto rounded-[7px] border-2 border-[#eee]">
               {matches.map((v) => {
                 const on = favorites.includes(v.id)
                 const full = favorites.length >= 4 && !on
                 return (
-                  <button key={v.id} className={'pf-pick' + (on ? ' on' : '')} disabled={full} onClick={() => toggleFav(v.id)}>
-                    <span className="pf-pick-name">{v.name}</span>
-                    <span className="pf-pick-city">{v.city ?? ''}</span>
+                  <button key={v.id} className={cn('flex w-full cursor-pointer items-center justify-between gap-[10px] border-0 border-b border-[#f0f0f0] bg-white px-[12px] py-[9px] text-left font-sans hover:bg-[#fafafa] disabled:opacity-40', on && 'bg-[#fffbe0]')} disabled={full} onClick={() => toggleFav(v.id)}>
+                    <span className="text-[14px] font-bold text-[#222]">{v.name}</span>
+                    <span className="text-[12px] text-[#6b6b6b]">{v.city ?? ''}</span>
                   </button>
                 )
               })}
             </div>
           </div>
 
-          {err ? <div className="pf-err">{err}</div> : null}
+          {err ? <div className="text-[13px] font-bold text-[#c0392b]">{err}</div> : null}
         </div>
 
-        <div className="pf-modal-foot">
-          <button className="pf-mini-btn ghost" onClick={onClose}>Cancel</button>
-          <button className="pf-save" disabled={busy} onClick={save}>{busy ? 'Saving…' : 'Save profile'}</button>
+        <div className="flex shrink-0 justify-end gap-[10px] border-t-[3px] border-[#111] px-[20px] py-[16px]">
+          <Button variant="brand" className={cn(notchBtn, miniBtn, miniGhost)} onClick={onClose}>Cancel</Button>
+          <Button variant="brand" className={notchBtn} disabled={busy} onClick={save}>{busy ? 'Saving…' : 'Save profile'}</Button>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }

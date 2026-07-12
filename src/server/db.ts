@@ -751,8 +751,10 @@ export async function dbGetFollowingFeed(followerId: string, opts: { limit?: num
   const ph = ids.map(() => '?').join(',')
   const before = opts.before ?? null
 
-  const rkSql = `SELECT ur.*, u.username AS _author, u.display_name AS _name, u.avatar AS _avatar FROM user_rankings ur JOIN users u ON u.id = ur.user_id WHERE ur.user_id IN (${ph}) ${before ? 'AND ur.created_at < ?' : ''} ORDER BY ur.created_at DESC LIMIT ?`
-  const rvSql = `SELECT r.*, u.username AS _author, u.display_name AS _name, u.avatar AS _avatar FROM reviews r JOIN users u ON u.id = r.user_id WHERE r.user_id IN (${ph}) ${before ? 'AND r.created_at < ?' : ''} ORDER BY r.created_at DESC LIMIT ?`
+  // COALESCE: since Better Auth, `username` is stored normalized (lowercase);
+  // display_username keeps the casing the fan typed.
+  const rkSql = `SELECT ur.*, COALESCE(u.display_username, u.username) AS _author, u.display_name AS _name, u.avatar AS _avatar FROM user_rankings ur JOIN users u ON u.id = ur.user_id WHERE ur.user_id IN (${ph}) ${before ? 'AND ur.created_at < ?' : ''} ORDER BY ur.created_at DESC LIMIT ?`
+  const rvSql = `SELECT r.*, COALESCE(u.display_username, u.username) AS _author, u.display_name AS _name, u.avatar AS _avatar FROM reviews r JOIN users u ON u.id = r.user_id WHERE r.user_id IN (${ph}) ${before ? 'AND r.created_at < ?' : ''} ORDER BY r.created_at DESC LIMIT ?`
   const rkBinds = before ? [...ids, before, limit] : [...ids, limit]
   const rvBinds = before ? [...ids, before, limit] : [...ids, limit]
 
@@ -770,7 +772,7 @@ export async function dbGetFollowingFeed(followerId: string, opts: { limit?: num
 
 export async function dbGetPublicProfile(username: string): Promise<PublicProfile | null> {
   const u = await db()
-    .prepare('SELECT id, username, display_name, bio, avatar, favorites, created_at FROM users WHERE username = ? COLLATE NOCASE LIMIT 1')
+    .prepare('SELECT id, COALESCE(display_username, username) AS username, display_name, bio, avatar, favorites, created_at FROM users WHERE username = ? COLLATE NOCASE LIMIT 1')
     .bind(username)
     .first<{ id: string; username: string | null; display_name: string | null; bio: string | null; avatar: string | null; favorites: string | null; created_at: string | null }>()
   if (!u || !u.username) return null

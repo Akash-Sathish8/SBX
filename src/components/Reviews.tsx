@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 import { FIELD_PHOTOS, type FieldPhoto } from '../lib/fieldPhotos'
 import { PhotoLightbox } from './PhotoLightbox'
 import { useAuth } from './auth/AuthProvider'
@@ -54,6 +58,26 @@ const RATING_PILLARS: { key: keyof VenueRatings; label: string }[] = [
 ]
 const fmtPillar = (n: number) => (Math.round(n * 10) / 10).toString()
 
+// Reddit-style vote pill arrow: quiet until pressed — yellow up, red-washed
+// down. The `on` state must also pin the hover colors so a pressed arrow
+// doesn't flicker.
+const voteBtnCls = (on: boolean, dir: 'up' | 'down') => cn(
+  'h-auto cursor-pointer rounded-none px-2.5 py-1.5 font-sans text-[11px] leading-none font-extrabold text-[#9a9a90] transition-[background-color,color] duration-[120ms] hover:bg-[rgba(20,20,20,.06)] hover:text-[#141414]',
+  on && dir === 'up' && 'bg-brand text-[#141414] hover:bg-brand hover:text-[#141414]',
+  on && dir === 'down' && 'bg-[rgba(226,72,61,.14)] text-danger hover:bg-[rgba(226,72,61,.14)] hover:text-danger',
+)
+
+// Photo tiles: fixed 118x88 thumbs on the horizontal strip; full-width 108px
+// cells inside the 2-up category gallery.
+const photoTileCls = (inGallery: boolean) => cn(
+  'group relative flex-none cursor-pointer overflow-hidden rounded-[8px] border-2 border-[#141414] bg-[#eee] p-0',
+  inGallery ? 'h-[108px] w-full' : 'h-[88px] w-[118px]',
+)
+const moreTileCls = (inGallery: boolean) => cn(
+  'flex flex-none cursor-pointer flex-col items-center justify-center gap-[2px] rounded-[8px] border-2 border-[#141414] bg-[#141414] text-brand hover:bg-black',
+  inGallery ? 'h-[108px] w-full' : 'h-[88px] w-[118px]',
+)
+
 export function Reviews({
   scope, targetId, gameId, defaultRating, startOpen = false, venueRatings, venueName, venueCity,
 }: {
@@ -81,6 +105,15 @@ export function Reviews({
   const photosFor = (author: string): FieldPhoto[] | null =>
     (scope === 'venue' && FIELD_PHOTOS[targetId]?.[author.toLowerCase()]) || null
 
+  const photoImg = (p: FieldPhoto) => (
+    // h-full needs `!`: the unlayered global `img { height: auto }` in
+    // styles.css beats layered utilities.
+    <img className="block h-full! w-full object-cover transition-transform duration-150 group-hover:scale-105" src={p.src} alt={p.area} loading="lazy" decoding="async" />
+  )
+  const photoTag = (p: FieldPhoto) => (
+    <span className="absolute bottom-[5px] left-[5px] rounded-[3px] border-[1.5px] border-[#141414] bg-brand px-1.5 py-[2px] font-sans text-[8.5px] font-extrabold tracking-[.5px] whitespace-nowrap text-[#141414] uppercase">{p.area}</span>
+  )
+
   // The scrolling thumbnail strip (first 4 + "+N"). Shared by reviews that have
   // photos AND photo-only field reports (an author with photos but no review).
   const strip = (author: string) => {
@@ -88,16 +121,16 @@ export function Reviews({
     if (!photos?.length) return null
     const openAt = (index: number) => setLbx({ photos, index, credit: author })
     return (
-      <div className="rvw-photos">
+      <div className="mt-[11px] flex gap-2 overflow-x-auto pb-[3px] [scrollbar-color:#cdcdcd_transparent] [scrollbar-width:thin]">
         {photos.slice(0, 4).map((p, i) => (
-          <button key={p.src} type="button" className="rvw-photo" onClick={() => openAt(i)} aria-label={'View photo: ' + p.area}>
-            <img src={p.src} alt={p.area} loading="lazy" decoding="async" />
-            <span className="rvw-phototag">{p.area}</span>
+          <button key={p.src} type="button" className={photoTileCls(false)} onClick={() => openAt(i)} aria-label={'View photo: ' + p.area}>
+            {photoImg(p)}
+            {photoTag(p)}
           </button>
         ))}
         {photos.length > 4 ? (
-          <button type="button" className="rvw-photomore" onClick={() => openAt(4)}>
-            <b>+{photos.length - 4}</b><span>All photos</span>
+          <button type="button" className={moreTileCls(false)} onClick={() => openAt(4)}>
+            <b className="font-display text-[20px] font-normal">+{photos.length - 4}</b><span className="font-sans text-[8.5px] font-extrabold tracking-[1.2px] uppercase">All photos</span>
           </button>
         ) : null}
       </div>
@@ -121,18 +154,18 @@ export function Reviews({
     return (
       <>
         {groups.map((g) => (
-          <div key={g.name} className="rvw-catblock">
-            <div className="rvw-cat">{g.name} <i>{g.items.length}</i></div>
-            <div className="rvw-gallery">
+          <div key={g.name} className="mt-[13px]">
+            <div className="mb-2 flex items-baseline gap-[7px] border-b-2 border-[#141414] pb-[5px] font-display text-[14px] tracking-[.8px] text-[#141414] uppercase">{g.name} <i className="font-sans text-[11px] font-extrabold text-[#9a9a8e] not-italic">{g.items.length}</i></div>
+            <div className="grid grid-cols-2 gap-[7px]">
               {g.items.slice(0, CAT_MAX).map(({ p, flat }) => (
-                <button key={p.src} type="button" className="rvw-photo" onClick={() => openAt(flat)} aria-label={'View photo: ' + p.area}>
-                  <img src={p.src} alt={p.area} loading="lazy" decoding="async" />
-                  <span className="rvw-phototag">{p.area}</span>
+                <button key={p.src} type="button" className={photoTileCls(true)} onClick={() => openAt(flat)} aria-label={'View photo: ' + p.area}>
+                  {photoImg(p)}
+                  {photoTag(p)}
                 </button>
               ))}
               {g.items.length > CAT_MAX ? (
-                <button type="button" className="rvw-photomore" onClick={() => openAt(g.items[CAT_MAX].flat)}>
-                  <b>+{g.items.length - CAT_MAX}</b><span>{g.name}</span>
+                <button type="button" className={moreTileCls(true)} onClick={() => openAt(g.items[CAT_MAX].flat)}>
+                  <b className="font-display text-[20px] font-normal">+{g.items.length - CAT_MAX}</b><span className="font-sans text-[8.5px] font-extrabold tracking-[1.2px] uppercase">{g.name}</span>
                 </button>
               ) : null}
             </div>
@@ -227,102 +260,132 @@ export function Reviews({
   }
 
   return (
-    <aside className="rvw">
-      <div className="rvw-head">
-        <span className="rvw-h">Fan Reviews</span>
-        <span className="rvw-count">{reviews.length + photoOnlyAuthors.length}</span>
+    <aside className="flex min-h-0 flex-col overflow-hidden rounded-[10px] border-2 border-[#141414] bg-white font-sans [line-height:normal]">
+      <div className="flex items-center gap-[9px] border-b-2 border-[#141414] bg-brand px-[15px] py-[11px]">
+        <span className="font-display text-[19px] tracking-[.4px] text-[#141414] uppercase">Fan Reviews</span>
+        <span className="ml-auto inline-flex h-[22px] min-w-[22px] items-center justify-center rounded-[11px] bg-[#141414] px-[7px] text-[12px] font-extrabold text-white">{reviews.length + photoOnlyAuthors.length}</span>
       </div>
 
       {open ? (
-        <div className="rvw-form">
+        <div className="px-[15px] pt-[13px] pb-1">
           {venueRatings ? (
-            <div className="rvw-ratings">
-              <span className="rvw-ratlab">Your venue ratings</span>
-              <div className="rvw-ratchips">
+            <div className="mb-[11px]">
+              <span className="mb-1.5 block text-[10.5px] font-extrabold tracking-[.5px] text-[#8a8a82] uppercase">Your venue ratings</span>
+              <div className="flex flex-wrap gap-1.5">
                 {RATING_PILLARS.map((p) => (
-                  <span key={p.key} className="rvw-chip">{p.label} <b>{fmtPillar(venueRatings[p.key])}</b></span>
+                  <Badge key={p.key} variant="outline" className="gap-[5px] rounded-full border-[1.5px] border-[#e7dca0] bg-tip px-2.5 py-[3px] text-[11px] font-bold tracking-[.3px] text-[#5a5a52] uppercase">{p.label} <b className="font-display text-[14px] font-normal text-[#141414]">{fmtPillar(venueRatings[p.key])}</b></Badge>
                 ))}
               </div>
             </div>
           ) : null}
-          <div className="rvw-raterow">
-            <span className="rvw-ratelab">Your score</span>
-            <div className="rvw-rate">
+          <div className="mb-2.5">
+            <span className="mb-1.5 block text-[10.5px] font-extrabold tracking-[.5px] text-[#8a8a82] uppercase">Your score</span>
+            <div className="grid grid-cols-10 gap-[5px] max-[560px]:grid-cols-5">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
-                <button key={n} type="button" className={'rvw-num' + (rating === n ? ' on' : '')} onClick={() => setRating(rating === n ? null : n)}>{n}</button>
+                <Button
+                  key={n}
+                  type="button"
+                  variant="ghost"
+                  className={cn(
+                    'h-[30px] min-w-0 cursor-pointer rounded-[6px] border-[1.5px] border-[#d9d9cf] bg-white p-0 font-sans text-[13px] font-extrabold text-[#555] hover:border-[#141414] hover:bg-white hover:text-[#555]',
+                    rating === n && 'border-[#141414] bg-brand text-[#141414] hover:bg-brand hover:text-[#141414]',
+                  )}
+                  onClick={() => setRating(rating === n ? null : n)}
+                >{n}</Button>
               ))}
             </div>
           </div>
-          <textarea
-            className="rvw-textarea" rows={7} maxLength={4000} autoFocus
+          <Textarea
+            className="field-sizing-fixed min-h-[124px] w-full resize-y rounded-[8px] border-[1.5px] border-[#d9d9cf] bg-white px-3 py-2.5 font-sans text-[13.5px] leading-[1.45] text-[#2a2a2a] shadow-none focus-visible:border-[#141414] focus-visible:ring-0 md:text-[13.5px]"
+            rows={7} maxLength={4000} autoFocus
             placeholder="What was the gameday experience really like? The crowd, the food, getting in and out, the moments that made it."
             value={draft} onChange={(e) => setDraft(e.target.value)}
           />
-          {err ? <div className="wtk-err">{err}</div> : null}
-          <div className="rvw-formrow">
-            <button className="wtk-cancel" onClick={() => { setOpen(false); setErr(null) }}>Cancel</button>
-            <button className="wtk-post" disabled={busy || !draft.trim()} onClick={submit}>{busy ? 'Posting…' : 'Post review'}</button>
+          {err ? <div className="mt-1.5 text-[12px] font-bold text-[#c0392b]">{err}</div> : null}
+          <div className="mt-[9px] flex justify-end gap-2">
+            <Button
+              variant="ghost"
+              className="h-auto cursor-pointer px-2.5 py-2 font-sans text-[12.5px] font-bold text-[#888] hover:bg-transparent hover:text-[#141414]"
+              onClick={() => { setOpen(false); setErr(null) }}
+            >Cancel</Button>
+            <Button
+              variant="brand"
+              className="h-auto cursor-pointer rounded-[8px] px-4 py-[9px] font-sans text-[12.5px] tracking-[.4px] text-[#111]"
+              disabled={busy || !draft.trim()} onClick={submit}
+            >{busy ? 'Posting…' : 'Post review'}</Button>
           </div>
         </div>
       ) : null}
 
-      <div className="rvw-list">
+      <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto px-[15px] pt-3 pb-3.5 max-[980px]:max-h-[440px] max-[980px]:flex-initial">
         {photoOnlyAuthors.map((author) => (
-          <div key={'photos:' + author} className="rvw-item">
-            <div className="rvw-itemmeta">
-              <span className="rvw-author">{author}</span>
-              <span className="rvw-ago">📸 {photosFor(author)?.length} photos · field report</span>
+          <div key={'photos:' + author} className="relative rounded-[9px] border-[1.5px] border-[#ecece4] bg-[#faf9f5] py-2.5 pr-[26px] pl-3">
+            <div className="mb-1 flex flex-wrap items-baseline gap-2">
+              <span className="text-[12px] font-extrabold tracking-[.3px] text-[#141414] uppercase">{author}</span>
+              <span className="ml-auto text-[11px] font-semibold text-[#9a9a9a]">📸 {photosFor(author)?.length} photos · field report</span>
             </div>
             {gallery(author)}
           </div>
         ))}
         {reviews.length ? (
           [...reviews].sort((a, b) => (b.up - b.down) - (a.up - a.down) || (b.createdAt < a.createdAt ? -1 : 1)).map((rv) => (
-            <div key={rv.id} className={'rvw-item' + (rv.official ? ' official' : '')}>
-              <div className="rvw-itemmeta">
+            <div key={rv.id} className="relative rounded-[9px] border-[1.5px] border-[#ecece4] bg-[#faf9f5] py-2.5 pr-[26px] pl-3">
+              <div className="mb-1 flex flex-wrap items-baseline gap-2">
                 {rv.verified ? (
-                  <span className="wtk-official">
-                    <img className="wtk-offlogo" src={rv.avatar || '/img/logo.png'} alt="" width={20} height={20} />
-                    <span className="wtk-offname">{rv.author}</span>
-                    <span className="wtk-offbadge" title="Verified" aria-label="Verified">✓</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <img className="block h-5! w-5 self-center rounded-full border-[1.5px] border-[#141414] object-cover" src={rv.avatar || '/img/logo.png'} alt="" width={20} height={20} />
+                    <span className="text-[12px] font-extrabold tracking-[.3px] text-[#141414] uppercase">{rv.author}</span>
+                    <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#141414] text-[9px] leading-none font-black text-brand" title="Verified" aria-label="Verified">✓</span>
                   </span>
                 ) : (
-                  <span className="rvw-author">{rv.author}</span>
+                  <span className="text-[12px] font-extrabold tracking-[.3px] text-[#141414] uppercase">{rv.author}</span>
                 )}
-                {typeof rv.rating === 'number' ? <span className="rvw-score">{rv.rating}/10</span> : null}
-                <span className="rvw-ago">{timeAgo(rv.createdAt)}</span>
+                {typeof rv.rating === 'number' ? <span className="rounded-[5px] bg-brand px-1.5 py-px font-display text-[12px] tracking-[.3px] text-[#141414]">{rv.rating}/10</span> : null}
+                <span className="ml-auto text-[11px] font-semibold text-[#9a9a9a]">{timeAgo(rv.createdAt)}</span>
               </div>
-              <div className="rvw-body">{rv.body}</div>
+              <div className="text-[13.5px] leading-[1.45] font-medium whitespace-pre-wrap text-[#2a2a2a] [overflow-wrap:anywhere]">{rv.body}</div>
               {strip(rv.author)}
-              <div className="rvw-foot">
-              <div className="rvw-votes">
-                <button
+              <div className="mt-[11px] flex items-center justify-between gap-2.5 border-t border-dashed border-[#e3e3d9] pt-[9px]">
+              <div className="inline-flex items-center self-start overflow-hidden rounded-full border-[1.5px] border-[rgba(20,20,20,.13)]">
+                <Button
                   type="button"
-                  className={'rvw-vote up' + (rv.myVote === 1 ? ' on' : '')}
+                  variant="ghost"
+                  className={voteBtnCls(rv.myVote === 1, 'up')}
                   aria-label={'Upvote review by ' + rv.author}
                   aria-pressed={rv.myVote === 1}
                   title="Helpful"
                   onClick={() => vote(rv, 1)}
-                >▲</button>
-                <span className="rvw-net num" title={rv.up + ' up · ' + rv.down + ' down'}>{rv.up - rv.down}</span>
-                <button
+                >▲</Button>
+                <span className="min-w-5 px-[2px] text-center text-[12.5px] font-extrabold text-[#3a3a34]" title={rv.up + ' up · ' + rv.down + ' down'}>{rv.up - rv.down}</span>
+                <Button
                   type="button"
-                  className={'rvw-vote down' + (rv.myVote === -1 ? ' on' : '')}
+                  variant="ghost"
+                  className={voteBtnCls(rv.myVote === -1, 'down')}
                   aria-label={'Downvote review by ' + rv.author}
                   aria-pressed={rv.myVote === -1}
                   title="Not helpful"
                   onClick={() => vote(rv, -1)}
-                >▼</button>
+                >▼</Button>
               </div>
               {rv.mine && venueName ? (
-                <button className="rvw-sharebtn" onClick={() => setShareRv(rv)}>↓ Share</button>
+                <Button
+                  variant="ghost"
+                  className="h-auto cursor-pointer rounded-full border-[1.5px] border-[rgba(20,20,20,.13)] bg-transparent px-3 py-[5px] font-sans text-[11.5px] font-extrabold text-[#8a8a80] transition-[border-color,color] duration-[120ms] hover:border-[rgba(20,20,20,.5)] hover:bg-transparent hover:text-[#141414] disabled:opacity-60"
+                  onClick={() => setShareRv(rv)}
+                >↓ Share</Button>
               ) : null}
               </div>
-              {rv.mine ? <button className="rvw-del" aria-label="Delete review" onClick={() => remove(rv)}>×</button> : null}
+              {rv.mine ? (
+                <Button
+                  variant="ghost"
+                  className="absolute top-1.5 right-[7px] h-auto cursor-pointer rounded-none px-[2px] py-0 text-[17px] leading-none font-normal text-[#bbb] hover:bg-transparent hover:text-danger"
+                  aria-label="Delete review" onClick={() => remove(rv)}
+                >×</Button>
+              ) : null}
             </div>
           ))
         ) : photoOnlyAuthors.length ? null : (
-          <div className="rvw-empty"><span className="wtk-dot" /> No reviews yet. Be the first to write one.</div>
+          <div className="flex items-center gap-2 py-1 text-[12.5px] font-bold text-[#999]"><span className="h-[7px] w-[7px] flex-none rounded-full bg-brand" /> No reviews yet. Be the first to write one.</div>
         )}
       </div>
 

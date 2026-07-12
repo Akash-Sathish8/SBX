@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { GameRow } from '../components/GameRow'
@@ -8,8 +10,6 @@ import { SPORTS, isLeague, type League } from '../lib/sports'
 import type { TeamInfo, Venue, Game } from '../lib/espn'
 import type { Experience } from '../lib/experiences'
 import { matchExperienceForVenue, matchExperienceForTeam } from '../lib/experienceMatch'
-import css from '../pages/team.css?url'
-import rowCss from '../pages/gamerow.css?url'
 
 // Team page — the fandom axis: one team's home venue, upcoming games and ranked
 // experience. Everything real: teams/venues/games from D1, experience from
@@ -22,16 +22,30 @@ export const Route = createFileRoute('/team')({
     id: s.id != null ? String(s.id) : '',
   }),
   head: () => ({
-    links: [
-      { rel: 'stylesheet', href: css, 'data-page-css': 'team' },
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
-    ],
+    links: [],
     meta: [{ title: 'Snapback · Team' }],
   }),
   component: TeamPage,
 })
 
 const todayIso = () => new Date().toISOString().slice(0, 10)
+
+// .container — shared page gutter
+const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
+// .ulink / .empty a — yellow-underlined emphasis link
+const ulink = 'border-b-2 border-brand font-extrabold'
+// .loadwrap — centered full-page status text
+const loadwrap = 'px-[28px] py-20 text-center font-semibold text-muted'
+// .pill — hero eyebrow chips (Badge overrides keep the exact legacy geometry)
+const pill = 'whitespace-normal rounded-[4px] border-0 bg-brand px-[10px] py-[5px] text-[11px] font-extrabold uppercase tracking-[.8px] text-[#111] shadow-[3px_3px_0_rgba(0,0,0,.4)]'
+// .eyebrow — yellow section label
+const eyebrow = 'mb-4 gap-[9px] whitespace-normal rounded-[3px] border-0 bg-brand px-3 py-[5px] text-[12px] font-bold uppercase tracking-[1.4px] text-[#111] shadow-[4px_4px_0_#000]'
+// .hopcard — dark next-hop card (home venue / snapback score)
+const hopcard = 'relative flex min-h-[150px] items-end overflow-hidden rounded-[10px] border-[3px] border-ink-soft bg-ink-soft text-white! shadow-[6px_6px_0_0_#222222] [transition:box-shadow_.15s,transform_.12s] hover:shadow-[9px_9px_0_0_#f7df02] hover:transform-[translate(-1px,-1px)]'
+// .hopcard .lab — small yellow label line
+const hoplab = 'flex items-center gap-[7px] text-[11px] font-extrabold uppercase tracking-[.8px] text-brand'
+// .hopcard .sub — muted footnote line
+const hopsub = 'mt-1 text-[12.5px] font-semibold text-[#d9d9d0]'
 
 function TeamPage() {
   const { league: rawLeague, id: rawId } = Route.useSearch()
@@ -82,18 +96,20 @@ function TeamPage() {
   }, [exps, venue, team])
 
   return (
-    <>
+    <div className="min-h-screen bg-[#f4f4f4] font-sans text-[#33352f]">
       <PageCssGuard id="team" />
       <SiteNav active="teams" />
       <main id="app">{renderBody()}</main>
-      <footer><div className="container">© 2026 Snapback Sports. <Link to="/teams">← All teams</Link></div></footer>
-    </>
+      <footer className="mt-[26px] bg-black py-10 text-[13px] text-[#888]">
+        <div className={container}>© 2026 Snapback Sports. <Link to="/teams" search={{ league: undefined }} className="font-bold text-brand!">← All teams</Link></div>
+      </footer>
+    </div>
   )
 
   function renderBody() {
-    if (!league || !id) return <div className="loadwrap">No team selected. <Link to="/teams" className="ulink">Browse teams →</Link></div>
-    if (team === undefined) return <div className="loadwrap">Loading team…</div>
-    if (team === null) return <div className="loadwrap">Couldn't find this team. <Link to="/teams" className="ulink">Browse teams →</Link></div>
+    if (!league || !id) return <div className={loadwrap}>No team selected. <Link to="/teams" search={{ league: undefined }} className={ulink}>Browse teams →</Link></div>
+    if (team === undefined) return <div className={loadwrap}>Loading team…</div>
+    if (team === null) return <div className={loadwrap}>Couldn't find this team. <Link to="/teams" search={{ league: undefined }} className={ulink}>Browse teams →</Link></div>
     return <TeamContent league={league} t={team} venue={venue ?? null} games={games} snap={snap} />
   }
 }
@@ -102,35 +118,38 @@ function TeamContent({ league, t, venue, games, snap }: { league: League; t: Tea
   const accent = t.color ? (t.color.startsWith('#') ? t.color : '#' + t.color) : '#333'
   return (
     <>
-      <section className="thero" style={{ background: `radial-gradient(120% 140% at 50% -10%, ${accent}, #0a0a0a 70%)` }}>
-        <Link className="back" to="/teams">← All teams</Link>
-        <div className="container">
-          {t.logo ? <img className="tlogo" src={t.logo} alt="" width={96} height={96} /> : null}
-          <div className="teyebrow"><span className="pill">{SPORTS[league].label}</span>{t.location ? <span className="pill loc">{t.location}</span> : null}</div>
-          <h1>{t.displayName}</h1>
+      <section className="relative overflow-hidden pt-[30px] pb-[34px] text-white" style={{ background: `radial-gradient(120% 140% at 50% -10%, ${accent}, #0a0a0a 70%)` }}>
+        <Link className="relative z-[2] mb-[18px] ml-7 inline-flex text-[13px] font-bold uppercase tracking-[.5px] text-[#e8e8e8]! transition-colors hover:text-brand!" to="/teams" search={{ league: undefined }}>← All teams</Link>
+        <div className={cn(container, 'relative z-[2]')}>
+          {t.logo ? <img className="mb-3.5 h-24 w-24 object-contain drop-shadow-[4px_4px_0_rgba(0,0,0,.45)]" src={t.logo} alt="" width={96} height={96} /> : null}
+          <div className="mb-3 flex flex-wrap gap-2">
+            <Badge className={pill}>{SPORTS[league].label}</Badge>
+            {t.location ? <Badge className={cn(pill, 'bg-white')}>{t.location}</Badge> : null}
+          </div>
+          <h1 className="font-display text-[clamp(32px,8vw,64px)] uppercase leading-none tracking-[1px] text-white [text-shadow:3px_3px_0_rgba(0,0,0,.35)]">{t.displayName}</h1>
         </div>
       </section>
 
       {(venue || snap) ? (
-        <section className="block"><div className="container">
-          <div className="eyebrow">Where they play · how it rates</div>
-          <div className="hopcards">
+        <section className="pt-[34px] pb-2"><div className={container}>
+          <Badge className={eyebrow}>Where they play · how it rates</Badge>
+          <div className="grid grid-cols-[1fr_1fr] gap-3.5 max-[700px]:grid-cols-1">
             {venue ? (
-              <Link to="/venue" search={{ id: venue.id }} className={'hopcard venue' + (venue.image ? '' : ' noimg')}>
-                {venue.image ? <div className="bg" style={{ backgroundImage: `url('${venue.image}')` }} /> : null}
-                <div className="m">
-                  <div className="lab">Home venue</div>
-                  <div className="nm">{venue.name}</div>
-                  <div className="sub">{[venue.city, venue.state].filter(Boolean).join(', ')} · full guide →</div>
+              <Link to="/venue" search={{ id: venue.id }} className={cn(hopcard, "after:absolute after:inset-0 after:bg-[linear-gradient(180deg,rgba(0,0,0,.1)_30%,rgba(0,0,0,.78))] after:content-['']")}>
+                {venue.image ? <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${venue.image}')` }} /> : null}
+                <div className="relative z-[2] px-4 py-3.5">
+                  <div className={hoplab}>Home venue</div>
+                  <div className="mt-[5px] font-display text-[22px] leading-[1.05] tracking-[.5px]">{venue.name}</div>
+                  <div className={hopsub}>{[venue.city, venue.state].filter(Boolean).join(', ')} · full guide →</div>
                 </div>
               </Link>
             ) : null}
             {snap ? (
-              <Link to="/rankings" className="hopcard score">
-                <div className="m">
-                  <div className="lab"><img src="/img/logo.png" alt="" width={18} height={18} /> Snapback Score</div>
-                  <div className="val">{snap.final.toFixed(1)}</div>
-                  <div className="sub">#{snap.rank} in America · {snap.name} · see the rankings →</div>
+              <Link to="/rankings" className={cn(hopcard, 'bg-[#111]')}>
+                <div className="relative z-[2] px-4 py-3.5">
+                  <div className={hoplab}><img src="/img/logo.png" alt="" width={18} height={18} className="rounded-[4px]" /> Snapback Score</div>
+                  <div className="mt-1 font-display text-[40px] tracking-[.5px] text-brand">{snap.final.toFixed(1)}</div>
+                  <div className={hopsub}>#{snap.rank} in America · {snap.name} · see the rankings →</div>
                 </div>
               </Link>
             ) : null}
@@ -138,12 +157,12 @@ function TeamContent({ league, t, venue, games, snap }: { league: League; t: Tea
         </div></section>
       ) : null}
 
-      <section className="block"><div className="container">
-        <div className="eyebrow">On the schedule</div>
-        <h2 className="shead">Upcoming games</h2>
-        {games === null ? <div className="loading">Loading games…</div> : null}
+      <section className="pt-[34px] pb-[46px]"><div className={container}>
+        <Badge className={eyebrow}>On the schedule</Badge>
+        <h2 className="mb-3.5 font-display text-[26px] uppercase leading-none tracking-[1px] text-ink-soft">Upcoming games</h2>
+        {games === null ? <div className="py-[26px] font-semibold text-muted">Loading games…</div> : null}
         {games && !games.length ? (
-          <div className="empty">No upcoming {t.displayName} games on the schedule. <Link to="/games">Browse all games →</Link></div>
+          <div className="px-[2px] pt-3 pb-[22px] text-[15px] text-muted">No upcoming {t.displayName} games on the schedule. <Link to="/games" className={ulink}>Browse all games →</Link></div>
         ) : null}
         {games && games.length ? games.map((g) => <GameRow key={g.league + ':' + g.id} g={g} />) : null}
       </div></section>

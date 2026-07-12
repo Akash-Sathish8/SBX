@@ -44,12 +44,8 @@ import { Route as ApiExpertNotesRouteImport } from './routes/api/expert-notes'
 import { Route as ApiConferencesRouteImport } from './routes/api/conferences'
 import { Route as ApiAssistantRouteImport } from './routes/api/assistant'
 import { Route as ApiUUsernameRouteImport } from './routes/api/u/$username'
-import { Route as ApiAuthRegisterRouteImport } from './routes/api/auth/register'
-import { Route as ApiAuthMeRouteImport } from './routes/api/auth/me'
-import { Route as ApiAuthLogoutRouteImport } from './routes/api/auth/logout'
-import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
-import { Route as ApiAuthGoogleRouteImport } from './routes/api/auth/google'
 import { Route as ApiAuthConfigRouteImport } from './routes/api/auth/config'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const WeekendRoute = WeekendRouteImport.update({
   id: '/weekend',
@@ -226,34 +222,14 @@ const ApiUUsernameRoute = ApiUUsernameRouteImport.update({
   path: '/api/u/$username',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthRegisterRoute = ApiAuthRegisterRouteImport.update({
-  id: '/api/auth/register',
-  path: '/api/auth/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthMeRoute = ApiAuthMeRouteImport.update({
-  id: '/api/auth/me',
-  path: '/api/auth/me',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthLogoutRoute = ApiAuthLogoutRouteImport.update({
-  id: '/api/auth/logout',
-  path: '/api/auth/logout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthLoginRoute = ApiAuthLoginRouteImport.update({
-  id: '/api/auth/login',
-  path: '/api/auth/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthGoogleRoute = ApiAuthGoogleRouteImport.update({
-  id: '/api/auth/google',
-  path: '/api/auth/google',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiAuthConfigRoute = ApiAuthConfigRouteImport.update({
   id: '/api/auth/config',
   path: '/api/auth/config',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -292,12 +268,8 @@ export interface FileRoutesByFullPath {
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
   '/u/$username': typeof UUsernameRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/auth/config': typeof ApiAuthConfigRoute
-  '/api/auth/google': typeof ApiAuthGoogleRoute
-  '/api/auth/login': typeof ApiAuthLoginRoute
-  '/api/auth/logout': typeof ApiAuthLogoutRoute
-  '/api/auth/me': typeof ApiAuthMeRoute
-  '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRoutesByTo {
@@ -335,12 +307,8 @@ export interface FileRoutesByTo {
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
   '/u/$username': typeof UUsernameRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/auth/config': typeof ApiAuthConfigRoute
-  '/api/auth/google': typeof ApiAuthGoogleRoute
-  '/api/auth/login': typeof ApiAuthLoginRoute
-  '/api/auth/logout': typeof ApiAuthLogoutRoute
-  '/api/auth/me': typeof ApiAuthMeRoute
-  '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRoutesById {
@@ -379,12 +347,8 @@ export interface FileRoutesById {
   '/api/venue-stats': typeof ApiVenueStatsRoute
   '/api/venues': typeof ApiVenuesRoute
   '/u/$username': typeof UUsernameRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/auth/config': typeof ApiAuthConfigRoute
-  '/api/auth/google': typeof ApiAuthGoogleRoute
-  '/api/auth/login': typeof ApiAuthLoginRoute
-  '/api/auth/logout': typeof ApiAuthLogoutRoute
-  '/api/auth/me': typeof ApiAuthMeRoute
-  '/api/auth/register': typeof ApiAuthRegisterRoute
   '/api/u/$username': typeof ApiUUsernameRoute
 }
 export interface FileRouteTypes {
@@ -424,12 +388,8 @@ export interface FileRouteTypes {
     | '/api/venue-stats'
     | '/api/venues'
     | '/u/$username'
+    | '/api/auth/$'
     | '/api/auth/config'
-    | '/api/auth/google'
-    | '/api/auth/login'
-    | '/api/auth/logout'
-    | '/api/auth/me'
-    | '/api/auth/register'
     | '/api/u/$username'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -467,12 +427,8 @@ export interface FileRouteTypes {
     | '/api/venue-stats'
     | '/api/venues'
     | '/u/$username'
+    | '/api/auth/$'
     | '/api/auth/config'
-    | '/api/auth/google'
-    | '/api/auth/login'
-    | '/api/auth/logout'
-    | '/api/auth/me'
-    | '/api/auth/register'
     | '/api/u/$username'
   id:
     | '__root__'
@@ -510,12 +466,8 @@ export interface FileRouteTypes {
     | '/api/venue-stats'
     | '/api/venues'
     | '/u/$username'
+    | '/api/auth/$'
     | '/api/auth/config'
-    | '/api/auth/google'
-    | '/api/auth/login'
-    | '/api/auth/logout'
-    | '/api/auth/me'
-    | '/api/auth/register'
     | '/api/u/$username'
   fileRoutesById: FileRoutesById
 }
@@ -554,12 +506,8 @@ export interface RootRouteChildren {
   ApiVenueStatsRoute: typeof ApiVenueStatsRoute
   ApiVenuesRoute: typeof ApiVenuesRoute
   UUsernameRoute: typeof UUsernameRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiAuthConfigRoute: typeof ApiAuthConfigRoute
-  ApiAuthGoogleRoute: typeof ApiAuthGoogleRoute
-  ApiAuthLoginRoute: typeof ApiAuthLoginRoute
-  ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
-  ApiAuthMeRoute: typeof ApiAuthMeRoute
-  ApiAuthRegisterRoute: typeof ApiAuthRegisterRoute
   ApiUUsernameRoute: typeof ApiUUsernameRoute
 }
 
@@ -810,46 +758,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiUUsernameRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/register': {
-      id: '/api/auth/register'
-      path: '/api/auth/register'
-      fullPath: '/api/auth/register'
-      preLoaderRoute: typeof ApiAuthRegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/me': {
-      id: '/api/auth/me'
-      path: '/api/auth/me'
-      fullPath: '/api/auth/me'
-      preLoaderRoute: typeof ApiAuthMeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/logout': {
-      id: '/api/auth/logout'
-      path: '/api/auth/logout'
-      fullPath: '/api/auth/logout'
-      preLoaderRoute: typeof ApiAuthLogoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/login': {
-      id: '/api/auth/login'
-      path: '/api/auth/login'
-      fullPath: '/api/auth/login'
-      preLoaderRoute: typeof ApiAuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/google': {
-      id: '/api/auth/google'
-      path: '/api/auth/google'
-      fullPath: '/api/auth/google'
-      preLoaderRoute: typeof ApiAuthGoogleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/auth/config': {
       id: '/api/auth/config'
       path: '/api/auth/config'
       fullPath: '/api/auth/config'
       preLoaderRoute: typeof ApiAuthConfigRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -890,12 +810,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiVenueStatsRoute: ApiVenueStatsRoute,
   ApiVenuesRoute: ApiVenuesRoute,
   UUsernameRoute: UUsernameRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiAuthConfigRoute: ApiAuthConfigRoute,
-  ApiAuthGoogleRoute: ApiAuthGoogleRoute,
-  ApiAuthLoginRoute: ApiAuthLoginRoute,
-  ApiAuthLogoutRoute: ApiAuthLogoutRoute,
-  ApiAuthMeRoute: ApiAuthMeRoute,
-  ApiAuthRegisterRoute: ApiAuthRegisterRoute,
   ApiUUsernameRoute: ApiUUsernameRoute,
 }
 export const routeTree = rootRouteImport

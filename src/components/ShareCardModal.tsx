@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { cn } from '@/lib/utils'
 import { renderShareCardBlob } from '../lib/renderShareCard'
 
 // Share flow for the consumer-facing cards (ballot / rating / review): render
@@ -11,7 +14,8 @@ import { renderShareCardBlob } from '../lib/renderShareCard'
 // to a download. Here every button press is its own gesture on a ready file.
 //
 // `children` is the full-size card (1080x1920), mounted in the offscreen stage
-// below and rasterised via the shared pipeline.
+// below and rasterised via the shared pipeline. Built on shadcn Dialog (portal,
+// escape, backdrop click, focus trap) with the ticket-language skin on top.
 export function ShareCardModal({
   filename, title, text, onClose, children,
 }: {
@@ -42,13 +46,6 @@ export function ShareCardModal({
   }, [])
   useEffect(() => () => { if (url) URL.revokeObjectURL(url) }, [url])
 
-  // Escape closes (matches the photo lightbox behavior).
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
-
   const file = blob ? new File([blob], filename, { type: 'image/png' }) : null
   const nav = typeof navigator !== 'undefined' ? (navigator as any) : null
   const canNative = !!(file && nav?.canShare && nav.canShare({ files: [file] }))
@@ -73,15 +70,21 @@ export function ShareCardModal({
     a.click()
   }
 
-  // Tailwind-only styling (first converted surface of the tailwind migration).
   const btn =
-    'flex-1 cursor-pointer whitespace-nowrap rounded-full border-2 border-ink bg-white px-2 py-[11px] ' +
-    'font-sans text-[12.5px] font-extrabold uppercase tracking-[0.5px] text-ink hover:bg-[#fff7c9] ' +
-    'disabled:cursor-default disabled:opacity-55'
+    'h-auto flex-1 whitespace-nowrap rounded-full border-2 border-ink bg-white px-2 py-[11px] ' +
+    'font-sans text-[12.5px] font-extrabold uppercase tracking-[0.5px] text-ink hover:bg-[#fff7c9] hover:text-ink ' +
+    'disabled:opacity-55'
   return (
-    <div className="fixed inset-0 z-[130] flex items-center justify-center bg-[rgba(12,12,9,0.9)] p-[18px]" role="dialog" aria-modal="true" aria-label="Share card" onClick={onClose}>
-      <div className="relative w-full max-w-[380px] rounded-[14px] border-[3px] border-ink bg-cream p-4 shadow-[8px_8px_0_rgba(0,0,0,0.5)]" onClick={(e) => e.stopPropagation()}>
-        <button className="absolute -right-3.5 -top-3.5 z-[2] h-8 w-8 cursor-pointer rounded-full border-2 border-ink bg-brand text-sm font-extrabold text-ink shadow-[2px_2px_0_#141410]" aria-label="Close" onClick={onClose}>✕</button>
+    <Dialog open onOpenChange={(o) => { if (!o) onClose() }}>
+      <DialogContent
+        showCloseButton={false}
+        overlayClassName="z-[130] bg-[rgba(12,12,9,0.9)]"
+        className="z-[130] block w-[calc(100%-36px)] max-w-[380px] rounded-[14px] border-[3px] border-ink bg-cream p-4 shadow-[8px_8px_0_rgba(0,0,0,0.5)] sm:max-w-[380px]"
+      >
+        <DialogTitle className="sr-only">Share card</DialogTitle>
+        <DialogClose asChild>
+          <button className="absolute -right-3.5 -top-3.5 z-[2] h-8 w-8 cursor-pointer rounded-full border-2 border-ink bg-brand text-sm font-extrabold text-ink shadow-[2px_2px_0_#141410]" aria-label="Close">✕</button>
+        </DialogClose>
         <div className="flex min-h-[240px] max-h-[min(58vh,520px)] items-center justify-center overflow-hidden rounded-[10px] border-2 border-ink bg-ink">
           {url
             ? <img src={url} alt="Share card preview" className="block h-full max-h-[min(58vh,520px)] w-full object-contain" />
@@ -89,16 +92,16 @@ export function ShareCardModal({
         </div>
         <div className="mt-3 flex gap-2">
           {canNative || !blob ? (
-            <button className={btn + ' bg-brand hover:bg-brand hover:brightness-105'} disabled={!canNative} onClick={doShare}>Share…</button>
+            <Button variant="outline" className={cn(btn, 'bg-brand hover:bg-brand hover:brightness-105')} disabled={!canNative} onClick={doShare}>Share…</Button>
           ) : null}
-          <button className={btn} disabled={!blob} onClick={doCopy}>{copied ? 'Copied!' : 'Copy image'}</button>
-          <button className={btn} disabled={!url} onClick={doDownload}>↓ Download</button>
+          <Button variant="outline" className={btn} disabled={!blob} onClick={doCopy}>{copied ? 'Copied!' : 'Copy image'}</Button>
+          <Button variant="outline" className={btn} disabled={!url} onClick={doDownload}>↓ Download</Button>
         </div>
-      </div>
-      {/* offscreen full-size card, rasterised once on mount */}
-      <div ref={stageRef} style={{ position: 'fixed', left: -12000, top: 0, pointerEvents: 'none' }} aria-hidden="true">
-        {children}
-      </div>
-    </div>
+        {/* offscreen full-size card, rasterised once on mount */}
+        <div ref={stageRef} style={{ position: 'fixed', left: -12000, top: 0, pointerEvents: 'none' }} aria-hidden="true">
+          {children}
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }

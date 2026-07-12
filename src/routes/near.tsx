@@ -8,7 +8,6 @@ import { SPORTS, RANKABLE_LEAGUES, type League } from '../lib/sports'
 import { toStoredUtc, localDayKey } from '../lib/weekend'
 import { cityKey, haversineMiles, fmtMiles, loadCityCoords, type LatLng } from '../lib/geo'
 import type { Game } from '../lib/espn'
-import rowCss from '../pages/gamerow.css?url'
 
 // "Near you" — upcoming games sorted by real distance from the fan (Jack's
 // trending-near-me ask). Distance is CITY-level: venue cities map to centroid
@@ -21,9 +20,7 @@ import rowCss from '../pages/gamerow.css?url'
 // shared gamerow.css for the GameRow rows (PageCssGuard still needs the id).
 export const Route = createFileRoute('/near')({
   head: () => ({
-    links: [
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
-    ],
+    links: [],
     meta: [{ title: 'Snapback · Near You' }],
   }),
   component: Near,

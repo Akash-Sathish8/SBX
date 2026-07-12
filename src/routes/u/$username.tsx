@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { Button } from '@/components/ui/button'
 import { SiteNav } from '../../components/SiteNav'
 import { PageCssGuard } from '../../components/PageCssGuard'
 import { ProfileView } from '../../components/profile/ProfileView'
 import { FollowButton } from '../../components/profile/FollowButton'
 import { useVenues } from '../../components/profile/useVenues'
+import { container, notchBtn, notchDark, empty } from '../../components/profile/ui'
 import type { ProfileData } from '../../components/profile/types'
-import css from '../../pages/profile.css?url'
 
 // Public, shareable fan profile — same diary-feed view as /profile, read-only,
 // with a Follow button. Reachable at /u/<username>; the app has no server loaders
 // so this renders client-side (generic title set below).
 export const Route = createFileRoute('/u/$username')({
   head: ({ params }) => ({
-    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'profile' }],
     meta: [{ title: `${params.username} on Snapback` }],
   }),
   component: PublicProfilePage,
@@ -61,7 +61,7 @@ function PublicProfilePage() {
   const headerAction = data ? (
     <>
       {mine ? (
-        <Link to="/profile" className="pf-edit">Edit profile</Link>
+        <Button asChild variant="brand" className={notchBtn}><Link to="/profile">Edit profile</Link></Button>
       ) : (
         <FollowButton
           username={data.username || username}
@@ -69,7 +69,7 @@ function PublicProfilePage() {
           onChange={(f, followers) => { setIsFollowing(f); setData((d) => (d ? { ...d, followers } : d)) }}
         />
       )}
-      <button className="pf-signout" onClick={share}>{copied ? 'Copied!' : 'Share'}</button>
+      <Button variant="brand" className={notchBtn + ' ' + notchDark} onClick={share}>{copied ? 'Copied!' : 'Share'}</Button>
     </>
   ) : null
 
@@ -78,16 +78,16 @@ function PublicProfilePage() {
       <PageCssGuard id="profile" />
       <SiteNav />
       {state === 'loading' ? (
-        <div className="pf-body"><div className="container"><div className="pf-empty">Loading…</div></div></div>
+        <div className="pt-[30px] pb-[70px]"><div className={container}><div className={empty}>Loading…</div></div></div>
       ) : state === '404' ? (
-        <div className="pf-body"><div className="container">
-          <h1 style={{ fontSize: 28, marginBottom: 10 }}>No fan named “{username}”</h1>
-          <div className="pf-empty">That profile doesn’t exist. <Link to="/">← Home</Link></div>
+        <div className="pt-[30px] pb-[70px]"><div className={container}>
+          <h1 className="mb-[10px] font-display text-[28px] uppercase tracking-[1px] text-[#222]">No fan named “{username}”</h1>
+          <div className={empty}>That profile doesn’t exist. <Link to="/" className="font-extrabold !text-[#b58900] hover:!text-[#111]">← Home</Link></div>
         </div></div>
       ) : data ? (
         <ProfileView data={data} mine={false} venues={venues} headerAction={headerAction} />
       ) : null}
-      <footer><div className="container">© 2026 Snapback Sports. <Link to="/">← Home</Link></div></footer>
+      <footer className="bg-black py-[34px] text-[13px] text-[#888]"><div className={container}>© 2026 Snapback Sports. <Link to="/" className="font-bold !text-brand">← Home</Link></div></footer>
     </>
   )
 }

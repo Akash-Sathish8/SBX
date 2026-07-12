@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon, MapPinIcon, CalendarDaysIcon, TrophyIcon } from 'lucide-react'
+import { Input } from '@/components/ui/input'
 import { getJSON } from '../lib/dataCache'
 import { SPORTS, type League } from '../lib/sports'
 
 // The explore search box — live grouped suggestions from /api/search (teams,
 // venues, games, ranked experiences; all real D1/experiences.json rows).
-// Styled by pages/searchbox.css (multi-route stylesheet, id "home venues").
+// Self-contained Tailwind (was pages/searchbox.css); the `sbx-search` marker
+// class stays so index.tsx's desktop max-width override still targets it.
+const lic = 'h-[16px] w-[16px] text-[#55554c]'
 
 interface TeamHit { league: League; id: string; abbr: string; displayName: string; location: string; logo?: string; venueName?: string }
 interface VenueHit { id: string; name: string; city?: string; state?: string; image?: string; teams: { league: League; abbr: string; displayName: string }[] }
@@ -36,28 +39,28 @@ function toItems(d: SearchData): Item[] {
   const items: Item[] = []
   for (const t of d.teams) items.push({
     key: `t:${t.league}:${t.id}`, group: 'Teams',
-    icon: t.logo ? <img src={t.logo} alt="" width={26} height={26} loading="lazy" /> : <span className="abbr">{t.abbr.slice(0, 3)}</span>,
+    icon: t.logo ? <img className="h-[26px]! w-[26px] object-contain" src={t.logo} alt="" width={26} height={26} loading="lazy" /> : <span className="font-display text-[10px] text-[#111]">{t.abbr.slice(0, 3)}</span>,
     title: t.displayName,
     sub: [SPORTS[t.league].label, t.venueName].filter(Boolean).join(' · '),
     to: '/team', search: { league: t.league, id: t.id },
   })
   for (const v of d.venues) items.push({
     key: `v:${v.id}`, group: 'Venues',
-    icon: <MapPinIcon className="lic" />,
+    icon: <MapPinIcon className={lic} />,
     title: v.name,
     sub: [[v.city, v.state].filter(Boolean).join(', '), v.teams[0] ? `home of the ${v.teams[0].displayName}` : ''].filter(Boolean).join(' · '),
     to: '/venue', search: { id: v.id },
   })
   for (const g of d.games) items.push({
     key: `g:${g.league}:${g.id}`, group: 'Games',
-    icon: <CalendarDaysIcon className="lic" />,
+    icon: <CalendarDaysIcon className={lic} />,
     title: g.name || g.shortName,
     sub: [SPORTS[g.league].label, gameWhen(g)].filter(Boolean).join(' · '),
     to: '/game', search: { id: g.id, league: g.league },
   })
   for (const e of d.experiences) items.push({
     key: `e:${e.rank}`, group: 'Ranked experiences',
-    icon: <TrophyIcon className="lic" />,
+    icon: <TrophyIcon className={lic} />,
     title: e.name,
     sub: `Ranked #${e.rank} in America · ${e.final.toFixed(2)}`,
     to: '/rankings', search: { q: e.name },
@@ -122,26 +125,27 @@ export function SearchBox({ placeholder = 'Search any team, venue, game or city�
   let flat = -1
 
   return (
-    <div className="sbx-search" ref={wrapRef}>
-      <div className={'sbx-box' + (showSugg && groups.length ? ' open' : '')}>
-        <SearchIcon className="sbx-si" />
-        <input
+    <div className="sbx-search relative max-w-[640px]" ref={wrapRef}>
+      <div className={'flex items-center gap-[10px] border-[3px] border-[#222222] bg-white px-[15px] py-[13px] shadow-[5px_5px_0_0_#222222] ' + (showSugg && groups.length ? 'rounded-[10px_10px_0_0]' : 'rounded-[10px]')}>
+        <SearchIcon className="h-[18px] w-[18px] flex-none text-[#141410] opacity-65" />
+        <Input
           type="search"
           value={q}
           placeholder={placeholder}
           autoComplete="off"
           autoFocus={autoFocus}
           aria-label="Search"
+          className="h-auto w-full border-0 bg-transparent p-0 text-[16px] font-semibold text-[#141410] shadow-none placeholder:font-medium placeholder:text-[#9a9a9a] focus-visible:ring-0 md:text-[16px]"
           onChange={(e) => { setQ(e.target.value); setOpen(true) }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
         />
       </div>
       {showSugg ? (
-        <div className="sbx-sugg" role="listbox">
+        <div className="absolute top-full right-0 left-0 z-[60] max-h-[400px] overflow-y-auto rounded-[0_0_10px_10px] border-[3px] border-t-0 border-[#222222] bg-white shadow-[5px_8px_0_0_#222222]" role="listbox">
           {groups.length ? groups.map(({ g, rows }) => (
             <div key={g}>
-              <div className="sbx-glab">{g}</div>
+              <div className="border-t border-[#eeede6] bg-[#fbf7dd] px-[15px] py-[6px] text-[10px] font-extrabold uppercase tracking-[1px] text-[#8a8a00]">{g}</div>
               {rows.map((it) => {
                 flat++
                 const on = flat === idx
@@ -150,18 +154,21 @@ export function SearchBox({ placeholder = 'Search any team, venue, game or city�
                     key={it.key}
                     to={it.to}
                     search={it.search as any}
-                    className={'sbx-row' + (on ? ' on' : '')}
+                    className={'flex cursor-pointer items-center gap-[11px] border-t border-[#f0efe8] px-[15px] py-[11px] hover:bg-[#fdf6c8]' + (on ? ' bg-[#fdf6c8]' : '')}
                     onClick={() => setOpen(false)}
                   >
-                    <span className="sbx-ic">{it.icon}</span>
-                    <span className="sbx-m"><span className="t">{it.title}</span><span className="d">{it.sub}</span></span>
-                    <span className="sbx-go">→</span>
+                    <span className="flex h-[30px] w-[30px] flex-[0_0_auto] items-center justify-center overflow-hidden rounded-[8px] bg-[#f2f1ea]">{it.icon}</span>
+                    <span className="flex min-w-0 flex-col">
+                      <span className="overflow-hidden text-[13.5px] font-extrabold leading-[1.2] text-ellipsis whitespace-nowrap text-[#141410]">{it.title}</span>
+                      <span className="mt-[1px] overflow-hidden text-[11.5px] font-semibold text-ellipsis whitespace-nowrap text-[#76766c]">{it.sub}</span>
+                    </span>
+                    <span className="ml-auto flex-[0_0_auto] font-display text-[15px] text-[#111]">→</span>
                   </Link>
                 )
               })}
             </div>
           )) : (
-            <div className="sbx-empty">Nothing found for “{q.trim()}”.</div>
+            <div className="px-[15px] py-[14px] text-[13.5px] font-semibold text-[#76766c]">Nothing found for “{q.trim()}”.</div>
           )}
         </div>
       ) : null}

@@ -2,6 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { getJSON, getJSONFresh, warmImage } from '../lib/dataCache'
 import { SPORTS } from '../lib/sports'
 import type { Venue, Game } from '../lib/espn'
@@ -13,9 +16,6 @@ import { loadMyRankings } from '../lib/myRankings'
 import type { Experience } from '../lib/experiences'
 import { matchExperienceForVenue } from '../lib/experienceMatch'
 import { GamesThatWeekend, NearbyVenues } from '../components/NextHops'
-import css from '../pages/venue.css?url'
-import rowCss from '../pages/gamerow.css?url'
-import nexthopCss from '../pages/nexthop.css?url'
 
 // The fan ranking for this venue: averaged across every signed-in fan who ranked
 // a game here (served by /api/venue-stats). `count` is 0 until anyone has.
@@ -35,11 +35,7 @@ export const Route = createFileRoute('/venue')({
     return out
   },
   head: () => ({
-    links: [
-      { rel: 'stylesheet', href: css, 'data-page-css': 'venue' },
-      { rel: 'stylesheet', href: rowCss, 'data-page-css': 'games weekend team game venue near' },
-      { rel: 'stylesheet', href: nexthopCss, 'data-page-css': 'venue game' },
-    ],
+    links: [],
     meta: [{ title: 'Snapback · Venue' }],
   }),
   component: VenuePage,
@@ -56,6 +52,18 @@ const kickoff = (iso: string) => {
   const d = new Date(iso)
   return isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
 }
+
+const container = 'mx-auto px-[clamp(28px,4vw,72px)]'
+// Section header trio (legacy .eyebrow / .shead / .ssub, editorial refresh).
+const eyebrowCls = 'mb-[11px] inline-flex items-center gap-[9px] text-[12.5px] font-extrabold tracking-[1.2px] text-black uppercase'
+const sheadCls = 'font-display text-[clamp(28px,3.6vw,40px)] leading-none tracking-[.5px] text-ink-soft uppercase'
+const ssubCls = 'mb-[26px] text-[14px] font-semibold tracking-[.5px] text-muted uppercase'
+const eleadCls = 'mb-[20px] max-w-[74ch] text-[16px] leading-[1.55] text-[#33352f]'
+// Hero score cards (legacy .vscore and its .lab/.val/.sub children).
+const vscoreCls = 'min-w-[124px] rounded-[13px] bg-white px-[18px] py-[12px]'
+const vscoreLabCls = 'flex items-center gap-[6px] font-sans text-[11px] font-extrabold tracking-[.5px] uppercase'
+const vscoreValCls = 'mt-[6px] font-display text-[34px] leading-none tracking-[.5px] text-[#16160f]'
+const vscoreSubCls = 'mt-[5px] text-[11px] font-semibold tracking-[.2px] text-[#9a9a92]'
 
 function VenuePage() {
   const { id: rawId, review, tip } = Route.useSearch()
@@ -80,20 +88,22 @@ function VenuePage() {
   }, [id])
 
   return (
-    <>
+    <div className="min-h-screen bg-[#f4f4f4] font-sans text-[#33352f]">
       <PageCssGuard id="venue" />
       <SiteNav active="venues" />
       <main id="app">{renderBody()}</main>
-      <footer>
-        <div className="container">© 2026 Snapback Sports · Venues. <Link to="/venues">← All venues</Link></div>
+      <footer className="bg-black py-[40px] text-[13px] text-[#888]">
+        <div className={container}>© 2026 Snapback Sports · Venues. <Link className="font-bold text-brand!" to="/venues">← All venues</Link></div>
       </footer>
-    </>
+    </div>
   )
 
   function renderBody() {
-    if (!id) return <div className="loadwrap">No venue selected. <Link to="/venues" className="ulink">Back to venues →</Link></div>
-    if (venue === undefined) return <div className="loadwrap">Loading venue…</div>
-    if (venue === null) return <div className="loadwrap">Couldn't load this venue. <Link to="/venues" className="ulink">Back to venues →</Link></div>
+    const loadwrap = 'py-[80px] text-center font-bold tracking-[1px] text-muted uppercase'
+    const ulink = 'text-ink-soft! underline'
+    if (!id) return <div className={loadwrap}>No venue selected. <Link to="/venues" className={ulink}>Back to venues →</Link></div>
+    if (venue === undefined) return <div className={loadwrap}>Loading venue…</div>
+    if (venue === null) return <div className={loadwrap}>Couldn't load this venue. <Link to="/venues" className={ulink}>Back to venues →</Link></div>
     return <VenueContent v={venue} games={games} review={review === 1} tip={tip === 1} />
   }
 }
@@ -152,34 +162,36 @@ function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | nul
 
   return (
     <>
-      <section className={'hero' + (hasPhoto ? '' : ' lean')} style={hasPhoto ? undefined : leanStyle}>
-        {hasPhoto ? <div className="bg" style={{ backgroundImage: `url('${v.image}')` }} /> : null}
-        <Link className="back" to="/venues">← All venues</Link>
-        <div className="container">
-          <div className="vlogos-hero">
-            {v.teams.map((t) => (t.logo ? <img key={t.id} src={t.logo} alt={t.displayName} width={72} height={72} /> : null))}
+      <section className="relative flex min-h-[420px] items-end overflow-hidden bg-ink-soft text-white" style={hasPhoto ? undefined : leanStyle}>
+        {hasPhoto ? <div className="absolute inset-0 z-0 bg-cover bg-center after:absolute after:inset-0 after:content-[''] after:bg-[linear-gradient(180deg,rgba(20,20,20,.35)_0%,rgba(20,20,20,.72)_55%,rgba(20,20,20,.95)_100%)]" style={{ backgroundImage: `url('${v.image}')` }} /> : null}
+        <Link className="absolute top-0 left-0 z-[5] inline-flex items-center gap-[7px] px-[18px] py-[14px] text-[13px] font-bold tracking-[.6px] text-white uppercase [text-shadow:0_1px_4px_rgba(0,0,0,.7)] hover:text-brand!" to="/venues">← All venues</Link>
+        <div className={cn(container, 'relative z-[2] w-full pt-[34px] pb-[30px]')}>
+          <div className="mb-[18px] flex flex-wrap items-center gap-[18px]">
+            {v.teams.map((t) => (t.logo ? <img key={t.id} className="object-contain drop-shadow-[0_3px_10px_rgba(0,0,0,.55)]" src={t.logo} alt={t.displayName} width={72} height={72} /> : null))}
           </div>
-          <div className="heyebrow">
-            <span className="pillcity">{[v.city, v.state].filter(Boolean).join(', ')}</span>
+          <div className="mb-[14px] inline-flex flex-wrap items-center gap-[10px]">
+            <Badge variant="ghost" className="gap-[7px] rounded-[3px] border-0 bg-[rgba(255,255,255,.12)] px-[11px] py-[5px] text-[12px] font-bold tracking-[.6px] whitespace-normal text-white uppercase">{[v.city, v.state].filter(Boolean).join(', ')}</Badge>
           </div>
-          <div className="vhero-row">
-            <div className="vhero-title">
-              <h1>{v.name}</h1>
-              {v.teams.length ? <div className="altname">Home of <b>{v.teams.map((t) => t.displayName).join(' · ')}</b></div> : null}
-              <Link to="/venue-plan" search={{ id: v.id }} className="dir-btn" style={{ margin: '16px 0 0' }}>Plan your visit →</Link>
+          <div className="flex flex-wrap items-end justify-between gap-[32px]">
+            <div className="min-w-0">
+              <h1 className="max-w-[16ch] font-display text-[clamp(40px,7vw,86px)] leading-[.95] tracking-[1px] text-white uppercase">{v.name}</h1>
+              {v.teams.length ? <div className="mt-[10px] text-[15px] font-semibold tracking-[.3px] text-[#bdbdbd]">Home of <b className="text-white">{v.teams.map((t) => t.displayName).join(' · ')}</b></div> : null}
+              <Button asChild variant="brand" className="mt-[16px] h-auto rounded-[8px] px-[20px] py-[12px] font-display text-[15px] font-normal tracking-[.5px] text-[#111]! shadow-[0_6px_18px_rgba(0,0,0,.1)] transition-[filter,translate] duration-[120ms,80ms] ease-[ease] hover:brightness-[.96] active:translate-y-[1px]">
+                <Link to="/venue-plan" search={{ id: v.id }}>Plan your visit →</Link>
+              </Button>
             </div>
-            <div className="vscores">
+            <div className="flex flex-wrap gap-[12px]">
               {snap ? (
-                <div className="vscore snap">
-                  <div className="lab"><img className="cap" src="/img/logo.png" alt="" width={18} height={18} /> Snapback Score</div>
-                  <div className="val">{snap.final.toFixed(1)}</div>
-                  <div className="sub">Expert-rated · #{snap.rank}</div>
+                <div className={cn(vscoreCls, 'border-2 border-brand shadow-[0_8px_22px_rgba(247,223,2,.34)]')}>
+                  <div className={cn(vscoreLabCls, 'text-[#16160f]')}><img className="h-[18px] w-[18px] flex-none rounded-[4px]" src="/img/logo.png" alt="" width={18} height={18} /> Snapback Score</div>
+                  <div className={vscoreValCls}>{snap.final.toFixed(1)}</div>
+                  <div className={vscoreSubCls}>Expert-rated · #{snap.rank}</div>
                 </div>
               ) : null}
-              <div className="vscore">
-                <div className="lab">Fan Score</div>
-                <div className="val">{hasFan ? fan!.score.toFixed(1) : '–'}</div>
-                <div className="sub">{hasFan ? `${fan!.count} fan ${fan!.count === 1 ? 'rating' : 'ratings'}` : 'Be the first to rank it'}</div>
+              <div className={cn(vscoreCls, 'border border-[#e6e6e0] shadow-[0_8px_22px_rgba(0,0,0,.32)]')}>
+                <div className={cn(vscoreLabCls, 'text-[#8a8a82]')}>Fan Score</div>
+                <div className={vscoreValCls}>{hasFan ? fan!.score.toFixed(1) : '–'}</div>
+                <div className={vscoreSubCls}>{hasFan ? `${fan!.count} fan ${fan!.count === 1 ? 'rating' : 'ratings'}` : 'Be the first to rank it'}</div>
               </div>
             </div>
           </div>
@@ -187,18 +199,18 @@ function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | nul
       </section>
 
       {/* WHAT DO I NEED TO KNOW — the crowdsourced info-discovery core */}
-      <section className="block tint" ref={forumRef}><div className="container">
-        <div className="eyebrow">Snapback · crowdsourced</div>
+      <section className="bg-[#f7f6f2] py-[48px]" ref={forumRef}><div className={container}>
+        <div className={eyebrowCls}>Snapback · crowdsourced</div>
         <div className="shead-row">
-          <h2 className="shead">What do I need to know?</h2>
+          <h2 className={sheadCls}>What do I need to know?</h2>
           <div className="shead-actions">
-            <Link to="/venue-plan" search={{ id: v.id }} className="wtk-addbar guide">Build your guide →</Link>
+            <Link to="/venue-plan" search={{ id: v.id }} className="wtk-addbar guide inline-flex items-center rounded-full bg-brand px-6 py-3 font-sans text-[13px] font-extrabold uppercase tracking-[.5px] whitespace-nowrap text-[#141414]! cursor-pointer hover:bg-black [line-height:normal]">Build your guide →</Link>
             <AddTipButton onOpen={() => setTipOpen(true)} />
           </div>
         </div>
-        <div className="ssub">Insider tips &amp; reviews from fans who've actually been to {v.name}</div>
+        <div className={ssubCls}>Insider tips &amp; reviews from fans who've actually been to {v.name}</div>
         <ExpertNotes scope="venue" targetId={v.id} />
-        <div className="wtk-layout">
+        <div className="wtk-layout mt-2 grid grid-cols-[minmax(0,1fr)_clamp(300px,28%,380px)] items-stretch gap-[18px] max-[980px]:grid-cols-1">
           <WhatToKnow scope="venue" targetId={v.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} cancelLabel={tip ? 'Skip' : 'Cancel'} />
           <Reviews
             scope="venue"
@@ -212,19 +224,19 @@ function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | nul
         </div>
       </div></section>
 
-      <section className="block"><div className="container">
-        <div className="eyebrow">On the schedule</div>
-        <h2 className="shead">Games here</h2>
-        <div className="ssub">Upcoming &amp; recent at {v.name}</div>
-        {here === null ? <div className="elead">Loading games…</div> : null}
-        {here && !here.length ? <div className="elead">No games on the schedule here right now.</div> : null}
+      <section className="bg-white py-[48px]"><div className={container}>
+        <div className={eyebrowCls}>On the schedule</div>
+        <h2 className={cn(sheadCls, 'mb-[5px]')}>Games here</h2>
+        <div className={ssubCls}>Upcoming &amp; recent at {v.name}</div>
+        {here === null ? <div className={eleadCls}>Loading games…</div> : null}
+        {here && !here.length ? <div className={eleadCls}>No games on the schedule here right now.</div> : null}
         {here && here.length ? (
-          <div className="vgames">
+          <div className="mt-[6px] flex flex-col gap-[10px]">
             {here.slice(0, 20).map((g) => (
-              <Link key={g.id} to="/game" search={{ id: g.id, league: g.league }} className="vgrow">
-                <span className="vg-lg">{SPORTS[g.league].label}</span>
-                <span className="vg-match">{g.away.location || g.away.displayName} <span className="vg-at">@</span> {g.home.location || g.home.displayName}</span>
-                <span className="vg-when">{g.state === 'post' ? 'Final' : g.state === 'in' ? (g.detail || 'Live') : `${fmt(g.date)} · ${kickoff(g.date)}`}</span>
+              <Link key={g.id} to="/game" search={{ id: g.id, league: g.league }} className="grid grid-cols-[auto_1fr_auto] items-center gap-[14px] rounded-[8px] border-2 border-ink-soft bg-white px-[16px] py-[13px] [transition:translate_.12s,filter_.12s] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:drop-shadow-[7px_7px_0_#222] max-[560px]:grid-cols-[auto_1fr]">
+                <Badge variant="ghost" className="rounded-[4px] border-0 bg-ink-soft px-[8px] py-[4px] text-[11px] font-extrabold tracking-[.6px] whitespace-normal text-white">{SPORTS[g.league].label}</Badge>
+                <span className="text-[16px] font-extrabold text-ink-soft">{g.away.location || g.away.displayName} <span className="font-bold text-muted">@</span> {g.home.location || g.home.displayName}</span>
+                <span className="text-[12.5px] font-bold tracking-[.4px] whitespace-nowrap text-muted uppercase max-[560px]:col-start-2 max-[560px]:justify-self-start">{g.state === 'post' ? 'Final' : g.state === 'in' ? (g.detail || 'Live') : `${fmt(g.date)} · ${kickoff(g.date)}`}</span>
               </Link>
             ))}
           </div>

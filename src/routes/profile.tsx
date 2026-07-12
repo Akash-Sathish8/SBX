@@ -4,11 +4,12 @@ import { SiteNav } from '../components/SiteNav'
 import { PageCssGuard } from '../components/PageCssGuard'
 import { useAuth } from '../components/auth/AuthProvider'
 import { loadMyRankings, type MyRank } from '../lib/myRankings'
+import { Button } from '@/components/ui/button'
 import { ProfileView } from '../components/profile/ProfileView'
 import { EditProfileModal } from '../components/profile/EditProfileModal'
 import { useVenues } from '../components/profile/useVenues'
 import type { ProfileData, ProfileReview } from '../components/profile/types'
-import css from '../pages/profile.css?url'
+import { container, notchBtn, notchDark, miniBtn, miniGhost } from '../components/profile/ui'
 
 // "My Profile" — a Letterboxd-style fan profile: identity (avatar, bio, stats),
 // pinned favorite venues, a reverse-chron diary of every game you've logged, your
@@ -16,7 +17,6 @@ import css from '../pages/profile.css?url'
 // (localStorage, or D1 when signed in); bio/avatar/favorites/reviews come from D1.
 export const Route = createFileRoute('/profile')({
   head: () => ({
-    links: [{ rel: 'stylesheet', href: css, 'data-page-css': 'profile' }],
     meta: [{ title: 'Snapback · My Profile' }],
   }),
   component: ProfilePage,
@@ -73,12 +73,12 @@ function ProfilePage() {
       <SiteNav />
 
       {!user ? (
-        <div className="pf-signin">
-          <div className="container pf-signin-in">
+        <div className="border-b-[3px] border-[#111] bg-brand text-[#111]">
+          <div className="flex flex-wrap items-center justify-between gap-[14px] px-[28px] py-[13px] text-[14px] font-bold">
             <span>Create a free account so your diary, reviews, and favorites follow you to any device.</span>
-            <div className="pf-signin-cta">
-              <button className="pf-save" onClick={() => openAuth('register')}>Create account</button>
-              <button className="pf-mini-btn ghost" onClick={() => openAuth('signin')}>Sign in</button>
+            <div className="flex flex-wrap gap-[10px]">
+              <Button variant="brand" className={notchBtn} onClick={() => openAuth('register')}>Create account</Button>
+              <Button variant="brand" className={notchBtn + ' ' + miniBtn + ' ' + miniGhost} onClick={() => openAuth('signin')}>Sign in</Button>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@ function ProfilePage() {
         mine
         venues={venues}
         onEdit={() => (user ? setEditing(true) : openAuth('register'))}
-        headerAction={user ? <button className="pf-signout" onClick={() => logout()}>Sign out</button> : null}
+        headerAction={user ? <Button variant="brand" className={notchBtn + ' ' + notchDark} onClick={() => logout()}>Sign out</Button> : null}
       />
 
       {editing && user ? (
@@ -101,7 +101,7 @@ function ProfilePage() {
         />
       ) : null}
 
-      <footer><div className="container">© 2026 Snapback Sports · My Profile. <Link to="/">← Home</Link></div></footer>
+      <footer className="bg-black py-[34px] text-[13px] text-[#888]"><div className={container}>© 2026 Snapback Sports · My Profile. <Link to="/" className="font-bold !text-brand">← Home</Link></div></footer>
     </>
   )
 }
