@@ -231,7 +231,7 @@ function RankPage() {
     persist(mine.filter((m) => m.gameId !== id))
     if (user) fetch('/api/rankings?gameId=' + encodeURIComponent(id), { method: 'DELETE' }).catch(() => {})
   }
-  const upsert = (r: MyRank, opts?: { quiet?: boolean }) => {
+  const upsert = (r: MyRank, opts?: { quiet?: boolean; venueId?: string }) => {
     const isNew = !mine.some((m) => m.gameId === r.gameId)
     persist([...mine.filter((m) => m.gameId !== r.gameId), r].sort((a, b) => b.score - a.score))
     setAdding(false)
@@ -252,15 +252,20 @@ function RankPage() {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ rankings: [r] }),
       }).catch(() => {})
-      // Straight to the venue's tip composer (skippable there) — tips beat
-      // general reviews for the next fan. Unknown venue: inline nudge instead.
-      getJSON('/api/venues')
-        .then((res: any) => {
-          const match = (Array.isArray(res?.data) ? res.data : []).find((v: any) => v.name === r.venue)
-          if (match) navigate({ to: '/venue', search: { id: match.id, tip: 1 } })
-          else setContribute(r)
-        })
-        .catch(() => setContribute(r))
+      // Drop them on that venue's page (scrolled to the tips + reviews section,
+      // nothing force-opened) so they can leave a tip / write a review. Prefer the
+      // rated game's real venue id; fall back to a name-match, then the inline nudge.
+      if (opts?.venueId) {
+        navigate({ to: '/venue', search: { id: opts.venueId, intel: 1 } })
+      } else {
+        getJSON('/api/venues')
+          .then((res: any) => {
+            const match = (Array.isArray(res?.data) ? res.data : []).find((v: any) => v.name === r.venue)
+            if (match) navigate({ to: '/venue', search: { id: match.id, intel: 1 } })
+            else setContribute(r)
+          })
+          .catch(() => setContribute(r))
+      }
     } else if (isNew) {
       // Nudge to save: the first ranking, then every few after that.
       const p = loadPrompt()
@@ -457,7 +462,7 @@ function YourRow({ r, place, onEdit, onShare, onRemove }: { r: MyRank; place: nu
 
 // ---- Add flow: league + team → game → rate ----------------------------------
 
-function AddFlow({ onSave, onClose, existing }: { onSave: (r: MyRank) => void; onClose?: () => void; existing: Set<string> }) {
+function AddFlow({ onSave, onClose, existing }: { onSave: (r: MyRank, opts?: { venueId?: string }) => void; onClose?: () => void; existing: Set<string> }) {
   const [league, setLeague] = useState<League>('mlb')
   const [team, setTeam] = useState<TeamInfo | null>(null)
   const [picked, setPicked] = useState<Game | null>(null)
@@ -491,7 +496,9 @@ function AddFlow({ onSave, onClose, existing }: { onSave: (r: MyRank) => void; o
               ...scores,
               score: avg(scores),
               ts: Date.now(),
-            })
+              // Pass the rated game's real venue id so the post-rate handoff can
+              // link straight to /venue?id=… (no fragile venue-name match).
+            }, { venueId: picked.venue.id })
           }
         />
       ) : team ? (

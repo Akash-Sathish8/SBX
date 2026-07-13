@@ -26,13 +26,16 @@ export const Route = createFileRoute('/venue')({
   // Coerce to string: TanStack's default parser turns a numeric ?id=3687 into the
   // number 3687, which a `typeof === 'string'` check would drop (breaks direct
   // loads / shared links to venues whose ESPN id is all digits).
-  // `?tip=1` is the post-rank handoff from /rank: open the tip composer + scroll
-  // (`?review=1` is the older review handoff, kept working for old links).
-  // Kept optional so every existing `<Link to="/venue" search={{ id }}>` stays valid.
+  // `?intel=1` is the post-rank handoff from /rank: just scroll to the "What do I
+  // need to know?" section (tips + reviews) — nothing force-opened. `?tip=1` /
+  // `?review=1` additionally auto-open a composer (older handoffs, kept working for
+  // existing links). Kept optional so every plain `<Link to="/venue" search={{ id }}>`
+  // stays valid.
   validateSearch: (s: Record<string, unknown>) => {
-    const out: { id: string; review?: 1; tip?: 1 } = { id: s.id != null ? String(s.id) : '' }
+    const out: { id: string; review?: 1; tip?: 1; intel?: 1 } = { id: s.id != null ? String(s.id) : '' }
     if (s.review === '1' || s.review === 1) out.review = 1
     if (s.tip === '1' || s.tip === 1) out.tip = 1
+    if (s.intel === '1' || s.intel === 1) out.intel = 1
     return out
   },
   head: () => ({
@@ -66,7 +69,7 @@ const vscoreValCls = 'mt-[6px] font-display text-[34px] leading-none tracking-[.
 const vscoreSubCls = 'mt-[5px] text-[11px] font-semibold tracking-[.2px] text-[#9a9a92]'
 
 function VenuePage() {
-  const { id: rawId, review, tip } = Route.useSearch()
+  const { id: rawId, review, tip, intel } = Route.useSearch()
   const id = (rawId || '').replace(/[^a-z0-9_-]/gi, '')
   const [venue, setVenue] = useState<Venue | null | undefined>(undefined) // undefined = loading
   const [games, setGames] = useState<Game[] | null>(null)
@@ -104,11 +107,11 @@ function VenuePage() {
     if (!id) return <div className={loadwrap}>No venue selected. <Link to="/venues" className={ulink}>Back to venues →</Link></div>
     if (venue === undefined) return <div className={loadwrap}>Loading venue…</div>
     if (venue === null) return <div className={loadwrap}>Couldn't load this venue. <Link to="/venues" className={ulink}>Back to venues →</Link></div>
-    return <VenueContent v={venue} games={games} review={review === 1} tip={tip === 1} />
+    return <VenueContent v={venue} games={games} review={review === 1} tip={tip === 1} intel={intel === 1} />
   }
 }
 
-function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | null; review: boolean; tip: boolean }) {
+function VenueContent({ v, games, review, tip, intel }: { v: Venue; games: Game[] | null; review: boolean; tip: boolean; intel: boolean }) {
   const { user } = useAuth()
   const forumRef = useRef<HTMLElement>(null)
   const [tipOpen, setTipOpen] = useState(false)
@@ -138,12 +141,12 @@ function VenueContent({ v, games, review, tip }: { v: Venue; games: Game[] | nul
   const snap = useMemo(() => (exps ? matchExperienceForVenue(v, exps) : null), [exps, v])
   const hasFan = !!fan && fan.count > 0
 
-  // Post-rank handoff (?tip=1 / ?review=1): land on the open form by scrolling
-  // the forum in. The tip composer only auto-opens for signed-in fans (posting
-  // is auth-gated); signed-out fans land at the forum's sign-in button.
+  // Post-rank handoff (?intel=1 / ?tip=1 / ?review=1): scroll the "What do I need
+  // to know?" forum into view. `?intel=1` stops there (just lands them on the tips
+  // + reviews section); `?tip=1` additionally auto-opens the tip composer below.
   useEffect(() => {
-    if ((review || tip) && forumRef.current) forumRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [review, tip])
+    if ((review || tip || intel) && forumRef.current) forumRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [review, tip, intel])
   useEffect(() => {
     if (tip && user) setTipOpen(true)
   }, [tip, user])
