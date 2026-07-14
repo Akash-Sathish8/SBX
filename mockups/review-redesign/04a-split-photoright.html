@@ -1,0 +1,262 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04a · Split-Sticky · Photo-Right (Crowd) — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  /* compact top bar */
+  .bar{position:sticky;top:0;z-index:40;background:var(--ink);color:#fff;border-bottom:2px solid #000}
+  .bar .in{display:flex;align-items:center;gap:16px;height:58px;padding:0 24px;max-width:1500px;margin:0 auto}
+  .bar .mark{font-family:var(--display);font-size:22px;letter-spacing:.5px;text-transform:uppercase;line-height:1;white-space:nowrap}
+  .bar .home{font-size:12.5px;font-weight:600;color:#bdbdb5;white-space:nowrap}
+  .bar .scores{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .bar .sb{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;letter-spacing:.4px;
+    text-transform:uppercase;color:#e8e8e0}
+  .bar .sb b{font-family:var(--display);font-size:18px;color:var(--brand);letter-spacing:.5px}
+  .bar .sb.fan b{color:#fff}
+  .bar .add{background:var(--brand);color:var(--ink);border:2px solid #000;border-radius:999px;padding:7px 15px;
+    font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;box-shadow:2px 2px 0 0 #000}
+
+  /* split shell — reading LEFT, photo RIGHT and bigger */
+  .split{display:grid;grid-template-columns:42% 58%;max-width:1500px;margin:0 auto;align-items:start}
+
+  /* LEFT — scrolling sections of authored tips */
+  .read{padding:26px 20px 60px 24px}
+  .intro{padding:14px 4px 20px}
+  .intro h1{font-family:var(--display);font-size:clamp(30px,3.6vw,46px);line-height:.95;text-transform:uppercase;
+    letter-spacing:.5px;color:var(--ink);margin:10px 0 10px}
+  .intro .lead{font-size:15.5px;line-height:1.6;color:#3a3b33;max-width:48ch}
+  /* social proof strip */
+  .proof{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+  .stack{display:flex;padding-left:9px}
+  .stack .ini,.stack .av{width:30px;height:30px;margin-left:-9px;border:2px solid var(--paper);
+    box-shadow:0 0 0 1.5px var(--ink);position:relative;border-radius:50%}
+  .stack .av{object-fit:cover;background:var(--ink)}
+  .proof .txt{font-size:13px;font-weight:600;color:#4a4b44}
+  .proof .txt b{font-family:var(--display);font-weight:400;font-size:16px;color:var(--ink);margin:0 1px}
+
+  .sec{padding:18px 20px 20px;border:2px solid var(--line);border-radius:14px;margin-bottom:16px;
+    background:#fbfaf5;transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;scroll-margin-top:74px}
+  .sec.active{border-color:var(--ink);background:var(--cream);box-shadow:var(--punch)}
+  .sec .head{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+  .sec .idx{font-family:var(--display);font-size:19px;color:var(--ink);background:var(--brand);border:2px solid var(--ink);
+    border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex:none;
+    box-shadow:2px 2px 0 0 var(--ink);opacity:.35;transition:opacity .3s ease}
+  .sec.active .idx{opacity:1}
+  .sec .ttl{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:1}
+  .sec .cnt{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-left:auto}
+
+  /* an authored tip: avatar + name + timeAgo + text + votes */
+  .tp{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-top:1px dashed #e0ddcf;
+    transition:opacity .25s ease}
+  .tp:first-of-type{border-top:0}
+  .tp>.ini,.tp>.av{width:28px;height:28px;font-size:10px;flex:none;margin-top:1px}
+  .tp>.av{border-radius:50%;border:1.5px solid var(--ink);object-fit:cover;background:var(--ink)}
+  .tp.reading .tmain .tmeta .nm{color:var(--ink)}
+  .tp.reading{position:relative}
+  .tp.reading::before{content:'';position:absolute;left:-20px;top:12px;bottom:12px;width:3px;background:var(--brand);border-radius:2px}
+  .tp .tmain{flex:1;min-width:0}
+  .tp .tmeta{display:flex;align-items:center;gap:6px;margin-bottom:2px;flex-wrap:wrap}
+  .tp .pin{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);
+    border:1px solid #e7dca0;background:var(--tip);border-radius:4px;padding:1px 5px}
+  .tp .cam{font-size:9px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#7a7a70;
+    display:inline-flex;align-items:center;gap:3px}
+  .tp .tbody{font-size:14.5px;line-height:1.5;color:#282a24;font-weight:500}
+  .tp .tbody b{color:var(--ink);font-weight:800}
+  .tp .vote{flex:none;margin-top:1px}
+
+  /* RIGHT — BIG sticky photo stage bound to the current fan's tip */
+  .stage{position:sticky;top:58px;height:calc(100vh - 58px);padding:26px 24px 26px 20px}
+  .stageInner{position:relative;height:100%;border:2px solid var(--ink);border-radius:16px;overflow:hidden;
+    box-shadow:var(--punch-lg);background:var(--ink)}
+  .stageInner .frame{position:absolute;inset:0}
+  .stageInner .frame img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease;transform:scale(1.02)}
+  .stageInner .frame.on img{opacity:1}
+  .stageInner::after{content:'';position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(20,20,16,0) 38%,rgba(20,20,16,.9) 100%)}
+  .areaTag{position:absolute;top:16px;left:16px;z-index:3}
+  .rail{position:absolute;top:0;left:0;height:4px;background:var(--brand);width:0;z-index:4;transition:width .4s ease}
+  .stageMeta{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:26px 28px 24px;color:#fff}
+  .stageMeta .stg{font-family:var(--display);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--brand);display:flex;align-items:center;gap:8px}
+  .stageMeta .stg .n{background:var(--brand);color:var(--ink);border-radius:4px;padding:1px 7px;font-size:12px}
+  .stageMeta h2{font-family:var(--display);font-size:clamp(30px,3.6vw,48px);line-height:.95;text-transform:uppercase;
+    letter-spacing:.5px;margin:9px 0 12px}
+  .stageMeta .scap{font-size:15px;line-height:1.55;font-weight:500;color:#eceace;max-width:52ch;margin-bottom:16px}
+  /* the BIG credit chip that binds the photo to its poster */
+  .stageCredit{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.14);
+    border:1.5px solid rgba(255,255,255,.4);backdrop-filter:blur(3px);border-radius:999px;padding:6px 16px 6px 6px}
+  .stageCredit .av,.stageCredit .ini{width:34px;height:34px;font-size:12px;border-color:#fff}
+  .stageCredit .who-name{font-size:14px;font-weight:800;color:#fff;letter-spacing:.2px}
+  .stageCredit .who-sub{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--brand)}
+  .stageCredit .vf{width:15px;height:15px;background:var(--brand);color:var(--ink);font-size:9px}
+  .counter{position:absolute;bottom:26px;right:28px;z-index:4;font-family:var(--display);font-size:14px;
+    letter-spacing:1px;color:#fff;opacity:.75}
+  .counter b{color:var(--brand)}
+
+  @media(max-width:900px){
+    .split{grid-template-columns:1fr}
+    .stage{position:relative;top:0;height:62vh;min-height:340px;padding:16px;order:-1}
+    .read{padding:8px 16px 40px}
+    .tp.reading::before{left:-8px}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 04a — Split-Sticky · Photo-Right</span>
+  <span style="color:#fff;text-transform:none;letter-spacing:.3px">Scroll a crowd of authored tips left — the big photo right re-credits to whichever fan you're reading</span>
+</div>
+
+<!-- compact top bar -->
+<div class="bar"><div class="in">
+  <span class="mark" id="vName">Madison Square Garden</span>
+  <span class="home" id="vHome">New York Knicks · New York, NY</span>
+  <span class="scores">
+    <span class="sb">★ Snapback <b id="vSnap">9.2</b> <span style="color:#8a8a82" id="vRank">#3</span></span>
+    <span class="sb fan">Fan <b id="vFan">8.7</b> <span style="color:#8a8a82" id="vRev">214</span></span>
+    <span class="add">+ Add a tip</span>
+  </span>
+</div></div>
+
+<div class="split">
+  <!-- LEFT: reading column of authored tips -->
+  <div class="read">
+    <div class="intro">
+      <div class="eyebrow"><span class="dot"></span> Snapback · crowdsourced field guide</div>
+      <h1>What do I need<br>to know?</h1>
+      <div class="lead">Insider tips &amp; photos from fans who've actually been. Scroll the tips on the left — the big photo on the right swaps to whichever fan's shot you're reading, credited to them.</div>
+      <div class="proof"><div class="stack" id="proofStack"></div>
+        <span class="txt" id="proofTxt"></span></div>
+    </div>
+    <div id="sections"><!-- injected --></div>
+  </div>
+
+  <!-- RIGHT: BIG sticky stage bound to the current tip's author -->
+  <div class="stage"><div class="stageInner">
+    <span class="rail" id="rail"></span>
+    <div id="frames"><!-- injected --></div>
+    <span class="tag areaTag" id="areaTag"></span>
+    <div class="stageMeta">
+      <div class="stg"><span class="n" id="stageNum">01</span> <span id="stageKick"></span></div>
+      <h2 id="stageTitle"></h2>
+      <div class="scap" id="stageCap"></div>
+      <div class="stageCredit" id="stageCredit"></div>
+    </div>
+    <div class="counter"><b id="cNow">01</b> / <span id="cTot">06</span></div>
+  </div></div>
+</div>
+
+<script src="_crowd.js"></script>
+<script>
+  const C = window.CROWD;   // shared dataset from _crowd.js (which owns `const P`)
+
+  // venue chrome
+  vName.textContent = C.venue.name;
+  vHome.textContent = `${C.venue.team} · ${C.venue.city}`;
+  vSnap.textContent = C.venue.snap; vRank.textContent = '#'+C.venue.rank;
+  vFan.textContent = C.venue.fan;   vRev.textContent = C.venue.reviews;
+
+  // social proof avatar stack
+  proofStack.innerHTML = ['jack','mike','sarah','tommy','jenn','marcus','nina','carl']
+    .map(id => C.avatar(id)).join('');
+  proofTxt.innerHTML = `<b>${C.venue.fans}</b> fans contributed · <b>${C.venue.tips}</b> tips · <b>${C.venue.reviews}</b> reviews · updated <b>2d</b> ago`;
+
+  // helper: sort a section's tips pinned-first then by votes
+  const sortTips = ts => [...ts].sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0) || b.up-a.up);
+
+  // BUILD left column (authored tips grouped by section) + right photo frames.
+  // Every tip that has a photo becomes a frame the stage can swap to, credited to its author.
+  const secWrap = document.getElementById('sections');
+  const frameWrap = document.getElementById('frames');
+  const stops = [];            // ordered list of tips-with-photos → drive the stage
+  let secHtml = '', frameHtml = '', frameSet = new Set(), stopIdx = 0;
+
+  C.sections.forEach((sec, si) => {
+    const tips = sortTips(C.tipsFor(sec.key));
+    const withPhoto = tips.filter(t => t.photo).length;
+    let rows = '';
+    tips.forEach(t => {
+      const f = C.fan(t.by);
+      const hasPhoto = !!t.photo;
+      let stopAttr = '';
+      if(hasPhoto){
+        // register a stage stop for this authored photo
+        const idx = stopIdx++;
+        stops.push({ by:t.by, section:sec.label, kick:sec.label, cap:t.text,
+                     tag:t.photo.area, src:t.photo.src, secIndex:si });
+        stopAttr = ` data-stop="${idx}"`;
+        // one frame per photo
+        frameHtml += `<div class="frame${idx===0?' on':''}" data-stop="${idx}"><img src="${t.photo.src}" alt=""></div>`;
+      }
+      rows += `<div class="tp${hasPhoto?' has-photo':''}"${stopAttr}>
+        ${C.avatar(t.by)}
+        <div class="tmain">
+          <div class="tmeta">${C.nameTag(t.by)}
+            ${t.pinned?'<span class="pin">Pinned</span>':`<span class="ago">${t.ago} ago</span>`}
+            ${hasPhoto?'<span class="cam">📷 Photo</span>':''}
+          </div>
+          <div class="tbody">${t.text}</div>
+        </div>
+        ${C.votePill(t.up)}
+      </div>`;
+    });
+    secHtml += `<section class="sec${si===0?' active':''}" id="sec-${sec.key}" data-section="${si}">
+      <div class="head"><span class="idx">${si+1}</span><span class="ttl">${sec.label}</span>
+        <span class="cnt">${tips.length} tips · ${withPhoto} photos</span></div>
+      ${rows}
+    </section>`;
+  });
+  secWrap.innerHTML = secHtml;
+  frameWrap.innerHTML = frameHtml;
+
+  // stage refs
+  const frames = [...frameWrap.querySelectorAll('.frame')];
+  const areaTag=document.getElementById('areaTag'), stageNum=document.getElementById('stageNum'),
+    stageKick=document.getElementById('stageKick'), stageTitle=document.getElementById('stageTitle'),
+    stageCap=document.getElementById('stageCap'), stageCredit=document.getElementById('stageCredit'),
+    rail=document.getElementById('rail'), cNow=document.getElementById('cNow'), cTot=document.getElementById('cTot');
+  cTot.textContent = C.sections.length;
+
+  let current = -1;
+  function activate(idx){
+    if(idx === current || idx == null) return;
+    current = idx;
+    const s = stops[idx];
+    frames.forEach(f => f.classList.toggle('on', +f.dataset.stop === idx));
+    stageNum.textContent = String(s.secIndex+1).padStart(2,'0');
+    stageKick.textContent = s.kick;
+    stageTitle.textContent = s.section;
+    stageCap.textContent = s.cap;
+    areaTag.textContent = s.tag;
+    const f = C.fan(s.by);
+    stageCredit.innerHTML = `${C.avatar(s.by)}
+      <span><span class="who-name">${f.name}${f.verified?'<span class="vf" style="display:inline-flex;margin-left:5px">✓</span>':''}</span><br>
+      <span class="who-sub">${f.verified?'Verified · Snapback':'Fan photo'}</span></span>`;
+    rail.style.width = ((s.secIndex+1)/C.sections.length*100) + '%';
+    cNow.textContent = String(s.secIndex+1).padStart(2,'0');
+    // highlight the tip being read
+    document.querySelectorAll('.tp.reading').forEach(el=>el.classList.remove('reading'));
+    const tipEl = document.querySelector(`.tp[data-stop="${idx}"]`);
+    if(tipEl) tipEl.classList.add('reading');
+    // active section chrome
+    document.querySelectorAll('.sec').forEach(el=>el.classList.toggle('active', +el.dataset.section === s.secIndex));
+  }
+
+  // IntersectionObserver: as each photo-bearing tip enters the reading zone, swap the stage to it.
+  const io = new IntersectionObserver((entries)=>{
+    let best=null, bestDist=Infinity;
+    for(const e of entries){
+      if(!e.isIntersecting) continue;
+      const dist = Math.abs(e.boundingClientRect.top - window.innerHeight*0.3);
+      if(dist < bestDist){ bestDist=dist; best=e.target; }
+    }
+    if(best) activate(+best.dataset.stop);
+  }, { rootMargin:'-20% 0px -50% 0px', threshold:[0,0.5,1] });
+  document.querySelectorAll('.tp[data-stop]').forEach(el=>io.observe(el));
+
+  // first photo shows on load
+  activate(0);
+</script>
+</body></html>

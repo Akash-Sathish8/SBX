@@ -1,0 +1,260 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>15c · Dashboard — Radar Breakdown — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;margin:4px 0 4px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5}
+  .top .home b{color:var(--brand)}
+  .stage{background:#f7f6f2;padding:38px 0 64px}
+
+  /* ---- centerpiece: radar panel ---- */
+  .radar-panel{background:var(--cream);border:2px solid var(--ink);border-radius:18px;box-shadow:var(--punch-lg);
+    padding:24px 26px 20px;margin-top:18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:30px;align-items:center;position:relative;overflow:hidden}
+  .radar-panel::after{content:'';position:absolute;left:-70px;bottom:-70px;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle,rgba(247,223,2,.14),transparent 70%);pointer-events:none}
+  .radar-wrap{position:relative;z-index:2;width:420px;max-width:100%;margin:0 auto}
+  .radar-wrap svg{width:100%;height:auto;display:block;overflow:visible}
+
+  .axis-line{stroke:#141410;stroke-width:1.5;opacity:.22}
+  .ring{fill:none;stroke:#141410;stroke-width:1.5;opacity:.16}
+  .ring.outer{opacity:.9;stroke-width:2}
+  .plot-fill{fill:rgba(247,223,2,.55);stroke:#141410;stroke-width:2.5;stroke-linejoin:round}
+  .plot-dot{fill:var(--brand);stroke:#141410;stroke-width:2}
+  .ax-label{font-family:'Anton',sans-serif;font-size:19px;fill:#141410;text-transform:uppercase;letter-spacing:.5px}
+  .ax-val{font-family:'Anton',sans-serif;font-size:15px;fill:#141410}
+  .ax-val-bg{fill:var(--brand);stroke:#141410;stroke-width:1.5}
+  .ring-tick{font-family:'Barlow',sans-serif;font-size:8.5px;font-weight:800;fill:#8a8a7c}
+
+  /* overall block beside radar */
+  .radar-side{position:relative;z-index:2}
+  .radar-side .eyebrow .dot{background:var(--ink)}
+  .radar-side .mega{font-family:var(--display);font-size:clamp(84px,11vw,124px);line-height:.8;color:var(--ink);letter-spacing:1px;margin:10px 0 0}
+  .radar-side .mega small{font-family:var(--sans);font-size:20px;font-weight:800;color:var(--muted)}
+  .radar-side .sub{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .radar-side .rank{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--brand);
+    border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin:14px 0 0}
+  .radar-side .fan{margin-top:16px;padding-top:14px;border-top:1px dashed #e0ddcf;display:flex;align-items:baseline;gap:10px}
+  .radar-side .fan .v{font-family:var(--display);font-size:34px;color:var(--ink);line-height:.9}
+  .radar-side .fan .k{font-size:11.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .radar-side .crowd{display:flex;align-items:center;gap:10px;margin-top:14px}
+  .radar-side .crowd .stack{display:flex;padding-left:8px}
+  .radar-side .crowd .stack .ini,.radar-side .crowd .stack .av{width:26px;height:26px;margin-left:-8px;border:2px solid var(--cream);
+    box-shadow:0 0 0 1.5px var(--ink);position:relative}
+  .radar-side .crowd .txt{font-size:11.5px;font-weight:700;color:var(--muted)}
+  .radar-side .crowd .txt b{font-family:var(--display);font-weight:400;font-size:14px;color:var(--ink);margin:0 1px}
+  .radar-side .legend{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted);margin-top:14px}
+  .radar-side .legend .swatch{width:16px;height:16px;border:2px solid var(--ink);border-radius:4px;background:rgba(247,223,2,.55)}
+
+  /* ---- one evidence card per pillar ---- */
+  .ev-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:18px}
+  .ev{background:var(--cream);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch);overflow:hidden;display:flex;flex-direction:column}
+  .ev .ph{position:relative;aspect-ratio:16/11;border-bottom:2px solid var(--ink);overflow:hidden}
+  .ev .ph img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+  .ev:hover .ph img{transform:scale(1.05)}
+  .ev .ph .tag{position:absolute;left:8px;top:8px}
+  .ev .ph .credit{position:absolute;left:8px;bottom:8px}
+  .ev .ph .num{position:absolute;right:8px;top:8px;font-family:var(--display);font-size:34px;color:var(--brand);line-height:.8;
+    text-shadow:0 2px 8px rgba(0,0,0,.8);letter-spacing:.5px}
+  .ev .bd{padding:13px 14px 14px;display:flex;flex-direction:column;flex:1}
+  .ev .name{font-family:var(--display);font-size:23px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:.9}
+  .ev .quote{font-size:12.5px;line-height:1.42;color:#2a2a2a;font-weight:500;margin-top:9px;display:flex;gap:7px;align-items:flex-start;flex:1}
+  .ev .quote::before{content:'\201C';font-family:var(--display);font-size:22px;color:var(--brand);line-height:.55;flex:none}
+  .ev .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:11px;padding-top:10px;border-top:1px dashed #e0ddcf}
+  .ev .ft .who2{display:inline-flex;align-items:center;gap:6px}
+  .ev .ft .vote button{padding:3px 7px;font-size:10px}
+
+  /* ---- recent reviews strip ---- */
+  .rev-head{display:flex;align-items:center;gap:10px;margin:26px 0 12px}
+  .rev-head .t{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink)}
+  .rev-head .c{background:var(--ink);color:#fff;border-radius:11px;padding:3px 11px;font-size:12px;font-weight:800}
+  .rev-head .avg{font-size:12px;font-weight:700;color:#5a5a52}
+  .rev-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .rev{background:var(--cream);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--punch);overflow:hidden;display:flex;flex-direction:column}
+  .rev .rv-photo{position:relative;aspect-ratio:16/9;border-bottom:2px solid var(--ink);overflow:hidden}
+  .rev .rv-photo img{width:100%;height:100%;object-fit:cover}
+  .rev .rv-photo .tag{position:absolute;left:7px;bottom:7px}
+  .rev .rv-bd{padding:12px 13px 13px}
+  .rev .rv-meta{display:flex;align-items:center;gap:7px;margin-bottom:6px;flex-wrap:wrap}
+  .rev .rv-meta .rate{font-size:12px;padding:1px 7px}
+  .rev .rv-body{font-size:12.5px;line-height:1.42;color:#2a2a2a;font-weight:500}
+  .rev .rv-ft{display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding-top:9px;border-top:1px dashed #e0ddcf}
+  .rev .rv-ft .vote button{padding:3px 7px;font-size:10px}
+
+  /* verdict */
+  .verdict{margin-top:20px;background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch-lg);
+    padding:20px 26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .verdict .score{font-size:24px;padding:5px 13px}
+  .verdict .txt{font-size:14.5px;line-height:1.55;color:#eceace;flex:1;min-width:280px}
+  .verdict .txt b{color:#fff}
+
+  @media(max-width:980px){
+    .radar-panel{grid-template-columns:1fr;gap:20px}
+    .ev-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .rev-strip{grid-template-columns:1fr}
+  }
+  @media(max-width:520px){
+    .ev-grid{grid-template-columns:1fr}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 15c — Dashboard · Radar Breakdown</span>
+  <span style="color:#fff">An SVG radar of the four pillars, then one fan-credited photo card per pillar plus a strip of recent fan reviews</span></div>
+
+<header class="top"><div class="wrap">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home" id="home"></div>
+</div></header>
+
+<section class="stage"><div class="wrap">
+  <div class="eyebrow"><span class="dot"></span> Snapback · the four-pillar breakdown, from the crowd</div>
+
+  <!-- RADAR CENTERPIECE -->
+  <div class="radar-panel">
+    <div class="radar-wrap">
+      <svg viewBox="0 0 400 400" role="img" aria-label="Radar chart: Fans 9.4, Food 8.9, Unique 9.5, Stadium 8.8">
+        <!-- center 200,200 · max radius 150 (=10.0) -->
+        <circle class="ring outer" cx="200" cy="200" r="150"/>
+        <circle class="ring" cx="200" cy="200" r="120"/>
+        <circle class="ring" cx="200" cy="200" r="90"/>
+        <circle class="ring" cx="200" cy="200" r="60"/>
+        <circle class="ring" cx="200" cy="200" r="30"/>
+
+        <!-- 4 axes: up=Fans, right=Food, down=Unique, left=Stadium -->
+        <line class="axis-line" x1="200" y1="200" x2="200" y2="50"/>
+        <line class="axis-line" x1="200" y1="200" x2="350" y2="200"/>
+        <line class="axis-line" x1="200" y1="200" x2="200" y2="350"/>
+        <line class="axis-line" x1="200" y1="200" x2="50" y2="200"/>
+
+        <!-- ring scale ticks along the top axis -->
+        <text class="ring-tick" x="205" y="83">8</text>
+        <text class="ring-tick" x="205" y="113">6</text>
+        <text class="ring-tick" x="205" y="143">4</text>
+
+        <!-- plotted polygon: Fans(top,9.4) r=141 y=59 ; Food(right,8.9) r=133.5 x=333.5 ; Unique(bottom,9.5) r=142.5 y=342.5 ; Stadium(left,8.8) r=132 x=68 -->
+        <polygon class="plot-fill" points="200,59 333.5,200 200,342.5 68,200"/>
+
+        <circle class="plot-dot" cx="200" cy="59" r="5.5"/>
+        <circle class="plot-dot" cx="333.5" cy="200" r="5.5"/>
+        <circle class="plot-dot" cx="200" cy="342.5" r="5.5"/>
+        <circle class="plot-dot" cx="68" cy="200" r="5.5"/>
+
+        <!-- value badges at each vertex -->
+        <g><rect class="ax-val-bg" x="181" y="38" width="38" height="20" rx="5"/><text class="ax-val" x="200" y="52.5" text-anchor="middle">9.4</text></g>
+        <g><rect class="ax-val-bg" x="326" y="182" width="38" height="20" rx="5"/><text class="ax-val" x="345" y="196.5" text-anchor="middle">8.9</text></g>
+        <g><rect class="ax-val-bg" x="181" y="344" width="38" height="20" rx="5"/><text class="ax-val" x="200" y="358.5" text-anchor="middle">9.5</text></g>
+        <g><rect class="ax-val-bg" x="36" y="182" width="38" height="20" rx="5"/><text class="ax-val" x="55" y="196.5" text-anchor="middle">8.8</text></g>
+
+        <!-- axis labels -->
+        <text class="ax-label" x="200" y="24" text-anchor="middle">Fans</text>
+        <text class="ax-label" x="392" y="205" text-anchor="end">Food</text>
+        <text class="ax-label" x="200" y="390" text-anchor="middle">Unique</text>
+        <text class="ax-label" x="8" y="205" text-anchor="start">Stadium</text>
+      </svg>
+    </div>
+
+    <div class="radar-side" id="radar-side"></div>
+  </div>
+
+  <!-- ONE EVIDENCE CARD PER PILLAR -->
+  <div class="ev-grid" id="ev-grid"></div>
+
+  <!-- RECENT FAN REVIEWS -->
+  <div class="rev-head" id="rev-head"></div>
+  <div class="rev-strip" id="rev-strip"></div>
+
+  <!-- VERDICT -->
+  <div class="verdict" id="verdict"></div>
+
+</div></section>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  var C = window.CROWD, v = C.venue;
+
+  document.getElementById('home').innerHTML =
+    'Home of '+v.team+' · <b>Snapback '+v.snap+'</b> · Fan '+v.fan+' ('+v.reviews+')';
+
+  // radar side / overall block
+  var stackIds = ['jack','grace','mike','tommy','jenn','danny','rob'];
+  document.getElementById('radar-side').innerHTML = ''+
+    '<div class="eyebrow"><span class="dot"></span> Snapback Score</div>'+
+    '<div class="mega">'+v.snap+'<small>&nbsp;/ 10</small></div>'+
+    '<div class="sub">Crowd-rated across four pillars</div>'+
+    '<span class="rank">★ #'+v.rank+' in the NBA</span>'+
+    '<div class="fan"><span class="v">'+v.fan+'</span><span class="k">Fan score · '+v.reviews+' ratings</span></div>'+
+    '<div class="crowd">'+
+      '<div class="stack">'+stackIds.map(function(id){return C.avatar(id);}).join('')+'</div>'+
+      '<div class="txt"><b>'+v.fans+'</b> fans · <b>'+v.tips+'</b> tips · <b>'+v.reviews+'</b> reviews</div>'+
+    '</div>'+
+    '<div class="legend"><span class="swatch"></span> Yellow area = how MSG scores on each pillar</div>';
+
+  // one evidence card per pillar (evidence[0], credited to its fan)
+  document.getElementById('ev-grid').innerHTML = C.pillars.map(function(p){
+    var e = p.evidence[0];
+    return ''+
+      '<div class="ev">'+
+        '<div class="ph">'+
+          '<img src="'+e.photo.src+'" alt="">'+
+          '<span class="num">'+p.score+'</span>'+
+          '<span class="tag">'+e.photo.area+'</span>'+
+          C.credit(e.by)+
+        '</div>'+
+        '<div class="bd">'+
+          '<div class="name">'+p.label+'</div>'+
+          '<div class="quote"><span>'+e.quote+'</span></div>'+
+          '<div class="ft">'+
+            '<span class="who2">'+C.avatar(e.by)+C.nameTag(e.by)+'</span>'+
+            C.votePill(C.fans[e.by].verified?63:47)+
+          '</div>'+
+        '</div>'+
+      '</div>';
+  }).join('');
+
+  // recent fan reviews strip (avatar + name + rate + snippet + their photo)
+  document.getElementById('rev-head').innerHTML =
+    '<span class="t">Recent Fan Reviews</span><span class="c">'+v.reviews+'</span><span class="avg">avg '+v.fan+' / 10</span>';
+
+  document.getElementById('rev-strip').innerHTML = C.reviews.slice(0,3).map(function(r){
+    var ph = r.photos[0];
+    var snippet = r.body.length > 130 ? r.body.slice(0,127).trim()+'…' : r.body;
+    return ''+
+      '<div class="rev">'+
+        '<div class="rv-photo"><img src="'+ph.src+'" alt=""><span class="tag">'+ph.area+'</span></div>'+
+        '<div class="rv-bd">'+
+          '<div class="rv-meta">'+C.avatar(r.by)+C.nameTag(r.by)+'<span class="rate">'+r.rating+'/10</span><span class="ago">'+r.ago+'</span></div>'+
+          '<div class="rv-body">'+snippet+'</div>'+
+          '<div class="rv-ft"><span class="ago">📷 '+r.photos.length+' photo'+(r.photos.length>1?'s':'')+'</span>'+C.votePill(r.up)+'</div>'+
+        '</div>'+
+      '</div>';
+  }).join('');
+
+  document.getElementById('verdict').innerHTML =
+    '<span class="who" style="color:#fff">'+C.avatar('jack')+' Jack Settleman <span class="vf">✓</span></span>'+
+    '<span class="score">'+v.snap+'</span>'+
+    '<div class="txt">Best crowd in the NBA, best steak sandwich in the building, worst pizza. Come in on transit, sit center-200s, stand up all night. <b>— Jack’s verdict, echoed by '+v.fans+' fans</b></div>';
+
+  // vote pills
+  document.querySelectorAll('.vote').forEach(function(vp){
+    var n=vp.querySelector('.n'),base=+n.textContent,state=0;
+    var btns=vp.querySelectorAll('button');
+    btns.forEach(function(b,i){
+      b.addEventListener('click',function(){
+        var dir=i===0?1:-1;
+        state=state===dir?0:dir;
+        n.textContent=base+state;
+        btns[0].style.color=state===1?'#141410':'';
+        btns[1].style.color=state===-1?'#e2483d':'';
+      });
+    });
+  });
+})();
+</script>
+</body></html>

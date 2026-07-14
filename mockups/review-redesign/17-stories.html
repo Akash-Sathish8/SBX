@@ -1,0 +1,163 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>17 · Story Reel — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body{background:radial-gradient(120% 90% at 50% 0%,#2a2a24 0%,#141410 60%);min-height:100vh}
+  .stage{display:flex;flex-direction:column;align-items:center;padding:34px 16px 60px}
+
+  /* the open story lives full-bleed inside .screen */
+  .story{position:absolute;inset:0;background:#000;overflow:hidden}
+  .story .bg{position:absolute;inset:0}
+  .story .bg img{width:100%;height:100%;object-fit:cover}
+  .story .grad-top{position:absolute;left:0;right:0;top:0;height:190px;background:linear-gradient(180deg,rgba(0,0,0,.72),rgba(0,0,0,0))}
+  .story .grad-bot{position:absolute;left:0;right:0;bottom:0;height:340px;background:linear-gradient(0deg,rgba(0,0,0,.92),rgba(0,0,0,.15) 70%,rgba(0,0,0,0))}
+
+  /* segmented progress bars across the very top */
+  .bars{position:absolute;top:14px;left:12px;right:12px;display:flex;gap:5px;z-index:30}
+  .bars .seg{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.32);overflow:hidden}
+  .bars .seg .fill{display:block;height:100%;width:0;background:var(--brand)}
+  .bars .seg.done .fill{width:100%}
+  .bars .seg.active .fill{width:38%}
+
+  /* header: section avatar row (circular, ringed yellow) */
+  .story-head{position:absolute;top:28px;left:12px;right:12px;z-index:30}
+  .avrow{display:flex;gap:14px;margin-top:12px;padding:2px 2px 4px;overflow-x:auto;scrollbar-width:none}
+  .avrow::-webkit-scrollbar{display:none}
+  .av-item{flex:none;width:60px;text-align:center}
+  .av-ring{width:58px;height:58px;border-radius:50%;padding:2.5px;background:rgba(255,255,255,.28);
+    display:flex;align-items:center;justify-content:center}
+  .av-item.active .av-ring{background:var(--brand);box-shadow:0 0 0 1.5px var(--ink),0 3px 10px rgba(0,0,0,.5)}
+  .av-item.seen .av-ring{background:rgba(247,223,2,.45)}
+  .av-ring .av-img{width:100%;height:100%;border-radius:50%;overflow:hidden;border:2px solid #000}
+  .av-ring .av-img img{width:100%;height:100%;object-fit:cover}
+  .av-item .av-lab{margin-top:6px;font-size:10px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:#fff;
+    text-shadow:0 1px 4px rgba(0,0,0,.8);white-space:nowrap}
+  .av-item.active .av-lab{color:var(--brand)}
+
+  /* the msg brand row above avatars */
+  .brandbar{display:flex;align-items:center;gap:9px}
+  .brandbar .logo{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.6);object-fit:cover;background:#000}
+  .brandbar .nm{font-size:13px;font-weight:800;color:#fff;letter-spacing:.2px;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+  .brandbar .nm span{display:block;font-size:10px;font-weight:700;color:#d8d8cf;letter-spacing:.4px;text-transform:uppercase}
+  .brandbar .more{margin-left:auto;color:#fff;font-size:19px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+
+  /* the section label chip mid-photo */
+  .story-label{position:absolute;top:150px;left:16px;z-index:25;display:inline-flex;align-items:center;gap:8px;
+    background:var(--brand);color:var(--ink);border:1.5px solid var(--ink);border-radius:4px;padding:5px 11px;
+    font-family:var(--display);font-size:15px;text-transform:uppercase;letter-spacing:.6px;box-shadow:var(--punch)}
+  .story-area{position:absolute;top:150px;right:16px;z-index:25}
+  .story-area .tag{font-size:10px;padding:3px 9px}
+
+  /* Jack's tip overlaid near the bottom */
+  .story-foot{position:absolute;left:16px;right:16px;bottom:26px;z-index:25}
+  .story-foot .big{font-family:var(--display);font-size:34px;line-height:.94;text-transform:uppercase;color:#fff;
+    letter-spacing:.5px;margin-bottom:12px;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+  .story-foot .big em{font-style:normal;color:var(--brand)}
+  .story-foot .tipbox{background:rgba(255,253,246,.96);border:1.5px solid var(--ink);border-radius:12px;
+    padding:13px 14px;box-shadow:var(--punch)}
+  .story-foot .tipbox p{margin:0;font-size:14px;line-height:1.5;font-weight:600;color:#22241f}
+  .story-foot .who{margin-top:10px}
+  .story-foot .who .av{width:20px;height:20px}
+
+  /* faint tap zones */
+  .tapzone{position:absolute;top:96px;bottom:0;width:34%;z-index:20;display:flex;align-items:center;justify-content:center}
+  .tapzone.left{left:0}
+  .tapzone.right{right:0}
+  .tapzone .hint{opacity:0;transition:opacity .15s ease;font-size:11px;font-weight:800;letter-spacing:.5px;
+    text-transform:uppercase;color:#fff;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.35);
+    border-radius:999px;padding:6px 12px;backdrop-filter:blur(2px)}
+  .tapzone:hover .hint{opacity:1}
+
+  /* caption under the phone */
+  .caption{max-width:390px;margin:22px auto 0;text-align:center}
+  .caption .eyebrow{justify-content:center;color:var(--brand)}
+  .caption .eyebrow .dot{background:var(--brand)}
+  .caption p{margin:10px 0 0;font-size:14px;line-height:1.55;font-weight:500;color:#d6d6cd}
+  .caption p b{color:#fff}
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 17 — Story Reel</span><span style="color:#fff">Mobile · tap through each topic like Instagram Stories</span>
+</div>
+
+<div class="stage">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="story">
+        <!-- full-bleed best-seats photo -->
+        <div class="bg"><img src="../../public/img/reports/citi/robby/r10.jpg" alt="View from the 100 level"></div>
+        <div class="grad-top"></div>
+        <div class="grad-bot"></div>
+
+        <!-- segmented progress: 5 topics, Best Seats (2nd) active -->
+        <div class="bars">
+          <span class="seg done"><span class="fill"></span></span>
+          <span class="seg active"><span class="fill"></span></span>
+          <span class="seg"><span class="fill"></span></span>
+          <span class="seg"><span class="fill"></span></span>
+          <span class="seg"><span class="fill"></span></span>
+        </div>
+
+        <!-- header: brand + section avatar row -->
+        <div class="story-head">
+          <div class="brandbar">
+            <img class="logo" src="../../public/img/logo.png" alt="">
+            <div class="nm">Madison Square Garden<span>Knicks · Snapback 9.2</span></div>
+            <div class="more">···</div>
+          </div>
+          <div class="avrow">
+            <div class="av-item seen"><div class="av-ring"><div class="av-img"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""></div></div><div class="av-lab">Getting in</div></div>
+            <div class="av-item active"><div class="av-ring"><div class="av-img"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""></div></div><div class="av-lab">Seats</div></div>
+            <div class="av-item"><div class="av-ring"><div class="av-img"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""></div></div><div class="av-lab">Food</div></div>
+            <div class="av-item"><div class="av-ring"><div class="av-img"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""></div></div><div class="av-lab">Vibe</div></div>
+            <div class="av-item"><div class="av-ring"><div class="av-img"><img src="../../public/img/reports/citi/robby/r44.jpg" alt=""></div></div><div class="av-lab">Lounges</div></div>
+          </div>
+        </div>
+
+        <!-- section label + area tag -->
+        <div class="story-label">Best Seats</div>
+        <div class="story-area"><span class="tag">100 Level</span></div>
+
+        <!-- faint tap zones -->
+        <div class="tapzone left"><span class="hint">‹ Back</span></div>
+        <div class="tapzone right"><span class="hint">Next ›</span></div>
+
+        <!-- Jack's tip near the bottom + verified byline -->
+        <div class="story-foot">
+          <div class="big">Sit <em>center 200s</em></div>
+          <div class="tipbox">
+            <p>Front rows in the 200s in the center sections beat behind the basket, even down low. The Hyundai Bridge is a cool spot and good value.</p>
+            <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <div class="eyebrow"><span class="dot"></span> Snapback Stories</div>
+    <p>Tap through each topic — <b>Getting in, Seats, Food, Vibe, Lounges</b> — like a story reel. Every frame is one big photo with Jack's verified tip over it. Tap right for the next, left to go back.</p>
+  </div>
+</div>
+
+<script>
+  // lightweight demo: tapping the zones nudges the active segment/avatar (visual only)
+  (function(){
+    var order = ['Getting in','Seats','Food','Vibe','Lounges'];
+    var i = 1; // Best Seats active
+    var segs = document.querySelectorAll('.bars .seg');
+    var avs = document.querySelectorAll('.avrow .av-item');
+    function render(){
+      segs.forEach(function(s,idx){ s.classList.toggle('done', idx<i); s.classList.toggle('active', idx===i); });
+      avs.forEach(function(a,idx){ a.classList.toggle('seen', idx<i); a.classList.toggle('active', idx===i); });
+    }
+    document.querySelector('.tapzone.right').addEventListener('click', function(){ if(i<order.length-1){ i++; render(); } });
+    document.querySelector('.tapzone.left').addEventListener('click', function(){ if(i>0){ i--; render(); } });
+  })();
+</script>
+</body></html>

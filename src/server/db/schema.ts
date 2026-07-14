@@ -213,6 +213,7 @@ export const userRankings = sqliteTable('user_rankings', {
   homeLogo: text('home_logo'),
   date: text('date').notNull(),
   venue: text('venue').notNull(),
+  venueId: text('venue_id'), // the game's venue id — fan scores aggregate by this (name is the legacy fallback)
   city: text('city'),
   fans: real('fans').notNull(),
   food: real('food').notNull(),
@@ -225,6 +226,8 @@ export const userRankings = sqliteTable('user_rankings', {
 }, (t) => ({
   pk: primaryKey({ columns: [t.userId, t.gameId] }),
   byUser: index('idx_user_rankings_user').on(t.userId),
+  byVenueId: index('idx_user_rankings_venue_id').on(t.venueId),
+  byVenue: index('idx_user_rankings_venue').on(t.venue),
 }))
 
 export const tips = sqliteTable('tips', {

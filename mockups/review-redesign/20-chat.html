@@ -1,0 +1,262 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20 · Ask-a-Local Thread — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body{background:var(--paper)}
+
+  /* thread frame — sits like a chat window */
+  .frame{max-width:620px;margin:26px auto 0;background:var(--cream);border:2px solid var(--ink);border-radius:20px;
+    box-shadow:var(--punch-lg);overflow:hidden;display:flex;flex-direction:column;min-height:78vh}
+
+  /* chat header (the "person" you're texting) */
+  .chead{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--ink);color:#fff;border-bottom:2px solid var(--ink)}
+  .chead .av{width:44px;height:44px;border-radius:50%;border:2px solid var(--brand);object-fit:cover;background:var(--ink)}
+  .chead .nm{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:.5px;line-height:1;display:flex;align-items:center;gap:8px}
+  .chead .vf{width:17px;height:17px;border-radius:50%;background:var(--brand);color:var(--ink);font-size:10px;font-weight:900;display:inline-flex;align-items:center;justify-content:center}
+  .chead .sub{font-size:12px;font-weight:600;color:#bdbdb5;margin-top:3px;display:flex;align-items:center;gap:6px}
+  .chead .live{width:8px;height:8px;border-radius:50%;background:#54d67a;box-shadow:0 0 0 3px rgba(84,214,122,.25)}
+  .chead .score{margin-left:auto;font-size:20px;padding:4px 12px}
+
+  .venuebar{background:var(--tip);border-bottom:2px solid var(--ink);padding:9px 18px;font-size:12px;font-weight:700;
+    letter-spacing:.4px;text-transform:uppercase;color:#5a5a52;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .venuebar b{font-family:var(--display);font-weight:400;font-size:15px;color:var(--ink)}
+
+  /* message stream */
+  .stream{flex:1;padding:20px 18px 10px;display:flex;flex-direction:column;gap:4px;background:
+    radial-gradient(circle at 18px 18px, rgba(20,20,16,.035) 1.4px, transparent 1.5px) 0 0/22px 22px}
+  .daystamp{align-self:center;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted-2);
+    background:rgba(20,20,16,.05);border-radius:999px;padding:4px 12px;margin:6px 0}
+
+  .row{display:flex;flex-direction:column;max-width:82%;margin:7px 0}
+  .row.me{align-self:flex-end;align-items:flex-end}
+  .row.jack{align-self:flex-start;align-items:flex-start}
+
+  /* fan (me) — grey right bubble */
+  .b-me{background:#e7e5dc;color:#22241f;border:1.5px solid #d3d1c6;border-radius:16px 16px 4px 16px;
+    padding:10px 14px;font-size:15px;line-height:1.45;font-weight:500}
+
+  /* Jack — cream/yellow left bubble with avatar */
+  .jrow{display:flex;gap:9px;align-items:flex-end}
+  .jrow .av{width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);object-fit:cover;background:var(--ink);flex:none}
+  .jname{font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--ink);
+    margin:0 0 4px 39px;display:inline-flex;align-items:center;gap:6px}
+  .jname .vf{width:14px;height:14px;border-radius:50%;background:var(--ink);color:var(--brand);font-size:8px;font-weight:900;display:inline-flex;align-items:center;justify-content:center}
+  .b-jack{background:var(--cream);border:2px solid var(--ink);border-radius:16px 16px 16px 4px;box-shadow:var(--punch);
+    padding:0;overflow:hidden;max-width:420px}
+  .b-jack .txt{padding:11px 14px 12px;font-size:15px;line-height:1.5;color:#22241f}
+  .b-jack .txt .hl{background:linear-gradient(transparent 60%,#faf1a6 60%);font-weight:600}
+  /* inline photo attachment inside the bubble */
+  .att{position:relative;border-top:2px solid var(--ink)}
+  .att img{width:100%;aspect-ratio:5/3;object-fit:cover;display:block}
+  .att .tag{position:absolute;left:9px;bottom:9px}
+  .att.two{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--ink)}
+  .att.two img{aspect-ratio:1/1}
+  .att.two .tag{left:7px;bottom:7px}
+
+  .meta{font-size:10.5px;font-weight:700;color:var(--muted-2);margin-top:5px;display:flex;align-items:center;gap:9px}
+  .row.jack .meta{margin-left:39px}
+  .meta .vote{transform:scale(.92);transform-origin:left}
+  .meta .rd{color:var(--gold)}
+
+  /* typing indicator */
+  .typing{display:flex;gap:9px;align-items:flex-end;align-self:flex-start;margin:7px 0}
+  .typing .av{width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);object-fit:cover;background:var(--ink);flex:none}
+  .typing .dots{background:var(--cream);border:2px solid var(--ink);border-radius:16px 16px 16px 4px;box-shadow:var(--punch);
+    padding:12px 15px;display:flex;gap:5px}
+  .typing .dots i{width:8px;height:8px;border-radius:50%;background:var(--muted-2);animation:blink 1.2s infinite}
+  .typing .dots i:nth-child(2){animation-delay:.18s}
+  .typing .dots i:nth-child(3){animation-delay:.36s}
+  @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+  /* reveal animation as messages "arrive" */
+  .pending{opacity:0;transform:translateY(10px)}
+  .arrive{animation:arrive .32s ease forwards}
+  @keyframes arrive{to{opacity:1;transform:none}}
+
+  /* input bar pinned at bottom of the frame */
+  .inbar{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--cream);border-top:2px solid var(--ink)}
+  .inbar .field{flex:1;display:flex;align-items:center;gap:9px;background:#fff;border:2px solid var(--ink);
+    border-radius:999px;padding:9px 15px}
+  .inbar .field input{border:0;outline:0;flex:1;font-family:var(--sans);font-size:15px;color:var(--ink);background:transparent}
+  .inbar .field input::placeholder{color:#9a9a90}
+  .inbar .clip{color:var(--muted-2);font-size:17px}
+  .inbar .send{width:44px;height:44px;border-radius:50%;background:var(--brand);border:2px solid var(--ink);
+    box-shadow:var(--punch);cursor:pointer;font-size:18px;color:var(--ink);display:flex;align-items:center;justify-content:center;flex:none}
+
+  /* suggested quick-questions above the bar */
+  .suggest{display:flex;gap:8px;padding:10px 14px 0;overflow-x:auto;scrollbar-width:none}
+  .suggest::-webkit-scrollbar{display:none}
+  .qbtn{flex:none;background:#e7e5dc;border:1.5px solid #d3d1c6;border-radius:999px;padding:7px 14px;font-size:12.5px;
+    font-weight:700;color:#44453d;cursor:pointer;white-space:nowrap;transition:transform .12s ease,background .12s ease}
+  .qbtn:hover{background:var(--brand);border-color:var(--ink);transform:translateY(-1px)}
+
+  @media(max-width:560px){.frame{margin-top:0;border-radius:0;border-left:0;border-right:0;min-height:100vh}.b-jack{max-width:100%}}
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-weight:800;font-size:12px;letter-spacing:1px;
+  text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 20 — Ask-a-Local Thread</span><span style="color:#fff">Text a friend who knows the building · every answer arrives with the photo that proves it</span></div>
+
+<div class="frame">
+
+  <div class="chead">
+    <img class="av" src="../../public/img/logo.png" alt="">
+    <div>
+      <div class="nm">Jack Settleman <span class="vf">✓</span></div>
+      <div class="sub"><span class="live"></span> Knows Madison Square Garden · replies fast</div>
+    </div>
+    <span class="score">9.2</span>
+  </div>
+
+  <div class="venuebar">
+    <span>📍</span><b>Madison Square Garden</b><span>· New York Knicks · New York, NY</span>
+    <span style="margin-left:auto">Snapback #3 · Fan 8.7 (214)</span>
+  </div>
+
+  <div class="stream" id="stream">
+    <div class="daystamp">Gameday · your first Knicks night</div>
+    <!-- messages injected here in gameday order -->
+  </div>
+
+  <div class="suggest" id="suggest"></div>
+
+  <div class="inbar">
+    <div class="field">
+      <span class="clip">📎</span>
+      <input id="inp" placeholder="Ask a local…" autocomplete="off">
+    </div>
+    <button class="send" id="send" title="Send">➤</button>
+  </div>
+
+</div>
+
+<script>
+  const P = '../../public/img/reports/citi/robby/';
+  const LOGO = '../../public/img/logo.png';
+
+  // The gameday, told as a Q&A: get in → seat → food → crowd (+ insider close)
+  const THREAD = [
+    {
+      q:"First time at MSG tonight — how do I actually get in?",
+      a:`Best ways in: <span class="hl">walking, the subway, the LIRR, or NJ Transit.</span> Driving would be my last choice — the building's right on top of Penn. When you're at the doors, come through the <span class="hl">100 level gates</span>; the merch store there has a way shorter line than the MSG lobby.`,
+      photos:[[P+'r20.jpg','Gates'],[P+'r59.jpg','Outside']], up:38
+    },
+    {
+      q:"Anywhere good to kill time before tip-off?",
+      a:`Yeah — pregame at <span class="hl">Nick and Stef's, Stout, or Mustang Harry's</span>, all a short walk. Or, there's a <span class="hl">Chase reserve lounge inside the arena</span> you can book a spot in ahead of time.`,
+      photos:[[P+'r44.jpg','Chase Lounge']], up:22
+    },
+    {
+      q:"Where should I sit? Don't want to blow the budget.",
+      a:`Go for the <span class="hl">front rows of the 200s in the center sections</span> — they beat behind the basket even down low. The <span class="hl">Hyundai Bridge</span> is a cool spot and good value too. If you splurge, the Delta Club is all-inclusive food and drink.`,
+      photos:[[P+'r10.jpg','100 Level'],[P+'r40.jpg','300 Level']], up:41
+    },
+    {
+      q:"Okay I'm starving — what should I eat?",
+      a:`Easy. The <span class="hl">steak sandwich outside section 107</span> is the best food in the building. Also grab a <span class="hl">Garden Market burger</span> — best basic food in sports, it's the bun. And do NOT get the pizza, it's bad in the arena.`,
+      photos:[[P+'r25.jpg','Steak Sandwich'],[P+'r30.jpg','Garden Market']], up:57
+    },
+    {
+      q:"What's the crowd actually like?",
+      a:`<span class="hl">Best crowd in the NBA.</span> Be ready to stand and the seats are tight between people. Fewer gimmicks than other arenas — not the most family-friendly — but plenty of in-game stuff like t-shirt tosses. The energy is worth it.`,
+      photos:[[P+'r17.jpg','Concourse']], up:63
+    },
+    {
+      q:"Anything else I should know going in?",
+      a:`One thing: <span class="hl">alcohol is very expensive inside MSG</span>, so budget for it or handle it at a bar pregame. That's the whole playbook — enjoy the Garden. 🏀`,
+      photos:[[P+'r04.jpg','Team Store']], up:26
+    },
+  ];
+
+  const stream = document.getElementById('stream');
+  const suggest = document.getElementById('suggest');
+  const inp = document.getElementById('inp');
+
+  function scroll(){ stream.scrollTop = stream.scrollHeight; window.scrollTo(0, document.body.scrollHeight); }
+
+  function addQuestion(text){
+    const row=document.createElement('div');
+    row.className='row me pending';
+    row.innerHTML=`<div class="b-me">${text}</div><div class="meta">You · just now ✓✓</div>`;
+    stream.appendChild(row);
+    requestAnimationFrame(()=>row.classList.add('arrive'));
+    scroll();
+  }
+
+  function addTyping(){
+    const t=document.createElement('div');
+    t.className='typing pending'; t.id='typing';
+    t.innerHTML=`<img class="av" src="${LOGO}" alt=""><div class="dots"><i></i><i></i><i></i></div>`;
+    stream.appendChild(t);
+    requestAnimationFrame(()=>t.classList.add('arrive'));
+    scroll();
+    return t;
+  }
+
+  function addAnswer(item){
+    const t=document.getElementById('typing'); if(t) t.remove();
+    const attClass = item.photos.length>1 ? 'att two' : 'att';
+    const atts = item.photos.map(([src,tag])=>`<img src="${src}" alt=""><span class="tag">${tag}</span>`).join('');
+    const row=document.createElement('div');
+    row.className='row jack pending';
+    row.innerHTML=`
+      <div class="jname">Jack <span class="vf">✓</span></div>
+      <div class="jrow">
+        <img class="av" src="${LOGO}" alt="">
+        <div class="b-jack">
+          <div class="txt">${item.a}</div>
+          <div class="${attClass}">${atts}</div>
+        </div>
+      </div>
+      <div class="meta"><span class="vote"><button>▲</button><span class="n">${item.up}</span><button>▼</button></span><span class="rd">Verified local ✓</span></div>`;
+    stream.appendChild(row);
+    requestAnimationFrame(()=>row.classList.add('arrive'));
+    scroll();
+  }
+
+  // Render the whole transcript immediately so the mockup reads fully on load
+  // (no long timed reveal — a screenshot / first glance must show every answer
+  // and its inline photo). Typed follow-ups below still animate in live.
+  function renderAll(){
+    THREAD.forEach(item=>{ addQuestion(item.q); addAnswer(item); });
+    buildSuggest();
+    scroll();
+  }
+
+  // quick-question chips (remaining/replay questions) + free-typed handler
+  const EXTRA = [
+    {q:"Is the Hyundai Bridge worth it?", a:`For the price, yeah — the <span class="hl">Hyundai Bridge is good value</span> and a genuinely cool vantage point over the floor.`, photos:[[P+'r56.jpg','400 Level']], up:14},
+    {q:"Best merch without the huge line?", a:`Hit the <span class="hl">merch store through the 100 level gates</span> — way shorter line than the big one in the MSG lobby.`, photos:[[P+'r63.jpg','Team Store']], up:19},
+    {q:"Where's the Delta Club?", a:`Club level — and it's <span class="hl">all-inclusive food and drink</span> (non-alcoholic). Worth it if you want to settle in early.`, photos:[[P+'r57.jpg','Delta Club']], up:11},
+  ];
+  function buildSuggest(){
+    suggest.innerHTML='';
+    EXTRA.forEach(item=>{
+      const b=document.createElement('button');
+      b.className='qbtn'; b.textContent=item.q;
+      b.addEventListener('click',()=>{ ask(item); b.remove(); });
+      suggest.appendChild(b);
+    });
+  }
+  function ask(item){
+    addQuestion(item.q);
+    setTimeout(()=>{ addTyping(); setTimeout(()=>addAnswer(item), 950); }, 380);
+  }
+  function askFree(text){
+    addQuestion(text);
+    setTimeout(()=>{ addTyping();
+      setTimeout(()=>addAnswer({a:`Good question — here's what I'd do: <span class="hl">come in on transit through the 100 gates, sit center-200s, and eat the steak sandwich outside 107.</span> That's the Garden in one line.`, photos:[[P+'r10.jpg','100 Level']], up:9}), 1000);
+    }, 380);
+  }
+
+  document.getElementById('send').addEventListener('click',fire);
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')fire();});
+  function fire(){ const v=inp.value.trim(); if(!v)return; inp.value=''; askFree(v); }
+
+  // kick off — full thread on load
+  renderAll();
+</script>
+</body></html>

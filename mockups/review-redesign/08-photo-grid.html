@@ -1,0 +1,252 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>08 · Instagram Photo Grid — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:8px 0 0}
+  .stage{background:var(--cream);border-bottom:2px solid var(--ink);padding:28px 0 22px}
+
+  /* profile header */
+  .prof{display:flex;align-items:center;gap:30px}
+  .avwrap{flex:none;position:relative}
+  .avwrap .ring{width:132px;height:132px;border-radius:50%;border:3px solid var(--ink);padding:5px;background:var(--brand);
+    box-shadow:var(--punch);display:flex;align-items:center;justify-content:center}
+  .avwrap .ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid var(--ink);background:var(--ink)}
+  .avwrap .vf{position:absolute;right:2px;bottom:6px;width:30px;height:30px;border-radius:50%;background:var(--ink);
+    color:var(--brand);border:2.5px solid var(--cream);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+  .pmeta{min-width:0}
+  .pname-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .pname{font-family:var(--display);font-size:clamp(26px,3.4vw,40px);text-transform:uppercase;letter-spacing:.6px;color:var(--ink);line-height:1}
+  .follow{display:inline-flex;gap:9px}
+  .stats{display:flex;gap:28px;margin:14px 0 10px}
+  .stats .st b{font-family:var(--display);font-size:22px;color:var(--ink);display:block;line-height:1}
+  .stats .st span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+  .bio{max-width:60ch}
+  .bio .who{margin-bottom:5px}
+  .bio p{margin:0;font-size:14.5px;line-height:1.5;color:#2a2a2a}
+  .bio .snap{display:inline-flex;align-items:center;gap:6px;margin-top:9px;font-size:12px;font-weight:800;
+    text-transform:uppercase;letter-spacing:.5px;color:var(--ink)}
+  .bio .snap .score{font-size:15px;padding:2px 9px}
+
+  /* filter chips */
+  .filters{background:#f7f6f2;border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:20}
+  .filterrow{display:flex;gap:9px;padding:13px 0;flex-wrap:wrap}
+  .fchip{border:2px solid var(--ink);background:var(--cream);border-radius:999px;padding:7px 17px;font-size:12px;
+    font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--ink);cursor:pointer;transition:all .12s ease}
+  .fchip:hover{box-shadow:var(--punch)}
+  .fchip.on{background:var(--brand);box-shadow:var(--punch)}
+  .fchip .c{opacity:.55;font-weight:700}
+
+  /* grid */
+  .gridwrap{background:#f7f6f2;padding:20px 0 56px}
+  .iggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .cell{position:relative;aspect-ratio:1/1;border:2px solid var(--ink);border-radius:8px;overflow:hidden;cursor:pointer;
+    background:#eee;box-shadow:var(--punch)}
+  .cell img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+  .cell:hover img{transform:scale(1.06)}
+  .cell .over{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,16,0) 45%,rgba(20,20,16,.82));
+    opacity:0;transition:opacity .18s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:11px}
+  .cell:hover .over{opacity:1}
+  .cell .over .tag{align-self:flex-start;margin-bottom:auto}
+  .cell .over .ot{color:#fff;font-family:var(--display);font-size:16px;text-transform:uppercase;letter-spacing:.4px;line-height:1}
+  .cell .over .os{color:#e8e6d8;font-size:11px;font-weight:700;margin-top:4px;display:flex;align-items:center;gap:5px}
+  .cell.hide{display:none}
+  .cell .corner{position:absolute;top:7px;right:7px;background:var(--brand);border:2px solid var(--ink);border-radius:5px;
+    width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;opacity:0;transition:opacity .18s ease}
+  .cell:hover .corner{opacity:1}
+
+  /* lightbox */
+  .lb{position:fixed;inset:0;background:rgba(20,20,16,.86);z-index:100;display:none;align-items:center;justify-content:center;padding:24px}
+  .lb.open{display:flex}
+  .lbcard{background:var(--cream);border:2.5px solid var(--ink);border-radius:14px;box-shadow:var(--punch-lg);
+    display:grid;grid-template-columns:1.25fr 1fr;max-width:900px;width:100%;max-height:88vh;overflow:hidden}
+  .lbimg{position:relative;background:#000;min-height:340px}
+  .lbimg img{width:100%;height:100%;object-fit:cover;max-height:88vh}
+  .lbimg .tag{position:absolute;left:11px;bottom:11px;font-size:11px;padding:3px 9px}
+  .lbside{padding:20px 21px 22px;display:flex;flex-direction:column}
+  .lbside .who{margin-bottom:13px}
+  .lblab{font-family:var(--display);font-size:26px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:1}
+  .lbloc{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:5px 0 14px}
+  .lbcap{font-size:15px;line-height:1.55;color:#2a2a2a}
+  .lbcap b{color:var(--ink)}
+  .lbactions{margin-top:auto;padding-top:18px;border-top:1px dashed #ddd9c9;display:flex;align-items:center;gap:14px}
+  .likebtn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--ink);background:var(--cream);border-radius:999px;
+    padding:7px 15px;font-size:13px;font-weight:800;cursor:pointer;transition:all .12s ease;color:var(--ink)}
+  .likebtn:hover{box-shadow:var(--punch)}
+  .likebtn.liked{background:var(--brand)}
+  .likebtn .heart{font-size:15px}
+  .lbclose{position:absolute;top:12px;right:14px;z-index:5;width:38px;height:38px;border-radius:50%;border:2px solid var(--ink);
+    background:var(--cream);font-size:19px;font-weight:900;cursor:pointer;box-shadow:var(--punch);color:var(--ink);line-height:1}
+  .lbnav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:2px solid var(--ink);
+    background:var(--cream);font-size:20px;font-weight:900;cursor:pointer;box-shadow:var(--punch);z-index:5;color:var(--ink)}
+  .lbnav.prev{left:-21px}.lbnav.next{right:-21px}
+  @media(max-width:720px){
+    .prof{flex-direction:column;align-items:flex-start;gap:18px}
+    .lbcard{grid-template-columns:1fr;max-height:92vh;overflow-y:auto}
+    .lbnav{display:none}
+  }
+</style></head>
+<body>
+<div style="background:var(--ink);color:var(--brand);font-weight:800;font-size:12px;letter-spacing:1px;
+  text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 08 — Instagram Photo Grid</span><span style="color:#fff">The venue as a photo profile — tap a square, get Jack's tip</span></div>
+
+<section class="stage"><div class="wrap">
+  <div class="prof">
+    <div class="avwrap">
+      <div class="ring"><img src="../../public/img/logo.png" alt="MSG"></div>
+      <span class="vf">✓</span>
+    </div>
+    <div class="pmeta">
+      <div class="pname-row">
+        <div class="pname">Madison Square Garden</div>
+        <span class="follow"><span class="pill-brand">Follow</span><span class="pill-dark">+ Add photo</span></span>
+      </div>
+      <div class="stats">
+        <div class="st"><b>214</b><span>Ratings</span></div>
+        <div class="st"><b>27</b><span>Photos</span></div>
+        <div class="st"><b>9.2</b><span>Snapback</span></div>
+        <div class="st"><b>#3</b><span>NBA rank</span></div>
+      </div>
+      <div class="bio">
+        <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <p>Home of the New York Knicks · New York, NY. Best crowd in the NBA — be ready to stand. Sit center-200s, eat the steak sandwich outside 107, skip the pizza.</p>
+        <span class="snap"><span class="score">9.2</span> Snapback verdict · 8.7 fan score</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<div class="filters"><div class="wrap"><div class="filterrow" id="filters">
+  <span class="fchip on" data-f="all">All <span class="c">·14</span></span>
+  <span class="fchip" data-f="seats">Seats <span class="c">·3</span></span>
+  <span class="fchip" data-f="food">Food <span class="c">·4</span></span>
+  <span class="fchip" data-f="concourse">Concourse <span class="c">·4</span></span>
+  <span class="fchip" data-f="lounges">Lounges <span class="c">·3</span></span>
+</div></div></div>
+
+<div class="gridwrap"><div class="wrap">
+  <div class="iggrid" id="grid"></div>
+</div></div>
+
+<!-- lightbox -->
+<div class="lb" id="lb">
+  <div class="lbcard" role="dialog" aria-modal="true">
+    <button class="lbnav prev" id="lbPrev" aria-label="Previous">‹</button>
+    <div class="lbimg">
+      <button class="lbclose" id="lbClose" aria-label="Close">×</button>
+      <img id="lbImg" src="" alt=""><span class="tag" id="lbTag"></span>
+    </div>
+    <div class="lbside">
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+      <div class="lblab" id="lbLab"></div>
+      <div class="lbloc" id="lbLoc"></div>
+      <div class="lbcap" id="lbCap"></div>
+      <div class="lbactions">
+        <button class="likebtn" id="lbLike"><span class="heart">♡</span> <span id="lbLikeN">0</span></button>
+        <span class="vote"><button>▲</button><span class="n" id="lbVote">0</span><button>▼</button></span>
+      </div>
+    </div>
+    <button class="lbnav next" id="lbNext" aria-label="Next">›</button>
+  </div>
+</div>
+
+<script>
+const P='../../public/img/reports/citi/robby/';
+// each photo carries its category, area tag, and the matching Jack tip
+const PHOTOS=[
+  {img:'r10.jpg',cat:'seats',tag:'100 Level',lab:'Center 200s',loc:'Lower bowl · best value',likes:412,votes:41,
+    cap:'<b>Front rows in the 200s in the center sections beat behind the basket, even down low.</b> If you can get into the Delta Club, it comes with all-inclusive food and drink.'},
+  {img:'r25.jpg',cat:'food',tag:'Steak Sandwich',lab:'The Steak Sandwich',loc:'Concourse · outside Sec 107',likes:688,votes:57,
+    cap:'<b>Best food in MSG is the steak sandwich outside section 107.</b> This is the one thing to eat in the building.'},
+  {img:'r17.jpg',cat:'concourse',tag:'Tip-off',lab:'Best Crowd in the NBA',loc:'In-bowl · gametime',likes:903,votes:63,
+    cap:'<b>Best crowd in the NBA.</b> Be ready to stand, and the seats are tight between people, but the energy is worth it — plus t-shirt tosses.'},
+  {img:'r30.jpg',cat:'food',tag:'Garden Market',lab:'Garden Market Burgers',loc:'Concourse',likes:534,votes:44,
+    cap:'<b>The hamburgers from the Garden Market are the best basic food item in sports.</b> They use a different type of bun that is fantastic.'},
+  {img:'r40.jpg',cat:'seats',tag:'300 Level',lab:'Hyundai Bridge',loc:'Upper · best value',likes:276,votes:33,
+    cap:'<b>The Chase Bridge and the Hyundai Bridge are both cool spots, and the Hyundai Bridge is good value.</b>'},
+  {img:'r44.jpg',cat:'lounges',tag:'Chase Lounge',lab:'Chase Reserve Lounge',loc:'Inside the arena',likes:198,votes:22,
+    cap:'<b>There is a Chase reserve lounge inside the arena.</b> You can reserve a spot pregame — a calm place to start the night.'},
+  {img:'r20.jpg',cat:'concourse',tag:'Gates',lab:'The 100-Level Gates',loc:'Ground entrance',likes:241,votes:38,
+    cap:'<b>Get in through the 100 level gates.</b> The merch store there has a way shorter line than the one in the MSG lobby.'},
+  {img:'r26.jpg',cat:'food',tag:'Burgers',lab:'Concourse Eats',loc:'Main concourse',likes:187,votes:19,
+    cap:'Carnegie Deli is another good one. <b>Skip the pizza, it is bad in the arena.</b>'},
+  {img:'r57.jpg',cat:'lounges',tag:'Delta Club',lab:'Delta Club',loc:'Club level · all-inclusive',likes:224,votes:26,
+    cap:'<b>The Delta Club comes with all-inclusive food and drink (non-alcoholic).</b> Great if you want to eat without a line.'},
+  {img:'r56.jpg',cat:'seats',tag:'400 Level',lab:'Upper Deck',loc:'400 level',likes:143,votes:14,
+    cap:'The 400s are the cheap way in, but center-200s are the sweet spot. <b>Front rows in the 200s beat behind the basket, even down low.</b>'},
+  {img:'r12.jpg',cat:'concourse',tag:'Concourse',lab:'The Concourse',loc:'Main level',likes:129,votes:11,
+    cap:'Know going in: <b>alcoholic drinks are very expensive inside MSG.</b> Budget for it before you get up there.'},
+  {img:'r51.jpg',cat:'lounges',tag:'Bar',lab:'Pregame Bar',loc:'Nearby · 7th Ave',likes:167,votes:18,
+    cap:'<b>Pregame spots nearby:</b> Nick and Stef\'s, The Rutherford, Stout, Mustang Harry\'s, and American Whiskey.'},
+  {img:'r01.jpg',cat:'food',tag:'Concessions',lab:'Concessions',loc:'Concourse',likes:112,votes:9,
+    cap:'Plenty of stands, but the steak sandwich outside 107 and the Garden Market burgers are the ones worth the walk.'},
+  {img:'r04.jpg',cat:'concourse',tag:'Team Store',lab:'The Team Store',loc:'100 level gates',likes:158,votes:31,
+    cap:'<b>The merch store through the 100 level gates has a way shorter line than the one in the MSG lobby.</b>'},
+];
+
+const grid=document.getElementById('grid');
+grid.innerHTML=PHOTOS.map((p,i)=>`
+  <div class="cell" data-cat="${p.cat}" data-i="${i}">
+    <img src="${P+p.img}" alt="">
+    <span class="corner">🔍</span>
+    <div class="over">
+      <span class="tag">${p.tag}</span>
+      <div class="ot">${p.lab}</div>
+      <div class="os"><img src="../../public/img/logo.png" style="width:14px;height:14px;border-radius:50%;border:1px solid #fff" alt=""> Jack's tip ›</div>
+    </div>
+  </div>`).join('');
+
+// filters
+document.getElementById('filters').addEventListener('click',e=>{
+  const c=e.target.closest('.fchip');if(!c)return;
+  document.querySelectorAll('.fchip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');
+  const f=c.dataset.f;
+  document.querySelectorAll('.cell').forEach(cell=>{
+    cell.classList.toggle('hide',f!=='all'&&cell.dataset.cat!==f);
+  });
+});
+
+// lightbox
+const lb=document.getElementById('lb');
+let cur=0;
+function openLB(i){
+  cur=i;const p=PHOTOS[i];
+  document.getElementById('lbImg').src=P+p.img;
+  document.getElementById('lbTag').textContent=p.tag;
+  document.getElementById('lbLab').textContent=p.lab;
+  document.getElementById('lbLoc').textContent=p.loc;
+  document.getElementById('lbCap').innerHTML=p.cap;
+  document.getElementById('lbLikeN').textContent=p.likes;
+  document.getElementById('lbVote').textContent=p.votes;
+  const like=document.getElementById('lbLike');
+  like.classList.remove('liked');like.querySelector('.heart').textContent='♡';
+  lb.classList.add('open');
+}
+function step(d){
+  // walk to next VISIBLE cell
+  const cells=[...document.querySelectorAll('.cell')].filter(c=>!c.classList.contains('hide'));
+  const idxs=cells.map(c=>+c.dataset.i);
+  let pos=idxs.indexOf(cur);
+  pos=(pos+d+idxs.length)%idxs.length;
+  openLB(idxs[pos]);
+}
+grid.addEventListener('click',e=>{const c=e.target.closest('.cell');if(c)openLB(+c.dataset.i);});
+document.getElementById('lbClose').addEventListener('click',()=>lb.classList.remove('open'));
+document.getElementById('lbPrev').addEventListener('click',()=>step(-1));
+document.getElementById('lbNext').addEventListener('click',()=>step(1));
+lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open');});
+document.getElementById('lbLike').addEventListener('click',e=>{
+  const b=e.currentTarget,n=document.getElementById('lbLikeN');
+  if(b.classList.toggle('liked')){b.querySelector('.heart').textContent='♥';n.textContent=+n.textContent+1;}
+  else{b.querySelector('.heart').textContent='♡';n.textContent=+n.textContent-1;}
+});
+document.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')lb.classList.remove('open');
+  if(e.key==='ArrowLeft')step(-1);
+  if(e.key==='ArrowRight')step(1);
+});
+</script>
+</body></html>

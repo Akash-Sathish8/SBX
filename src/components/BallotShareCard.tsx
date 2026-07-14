@@ -10,6 +10,8 @@ import type { CSSProperties } from 'react'
 export interface BallotCardRow {
   away: string
   home: string
+  awayLogo?: string
+  homeLogo?: string
   venue: string
   league: string
   date: string
@@ -72,7 +74,11 @@ export const BallotShareCard = forwardRef<HTMLDivElement, { rows: BallotCardRow[
                     <span style={{ ...anton, fontSize: 46, color: '#b6a900', width: 84, textAlign: 'center' }}>{i + 1}</span>
                   )}
                   <span style={{ minWidth: 0, flex: 1 }}>
-                    <span style={{ display: 'block', fontWeight: 800, fontSize: 33, color: INK, lineHeight: 1.15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.away} @ {r.home}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                      {r.awayLogo ? <img className="sc-team" src={r.awayLogo} alt="" width={46} height={46} style={{ objectFit: 'contain', flex: '0 0 auto' }} /> : null}
+                      <span style={{ fontWeight: 800, fontSize: 31, color: INK, lineHeight: 1.15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>{r.away} @ {r.home}</span>
+                      {r.homeLogo ? <img className="sc-team" src={r.homeLogo} alt="" width={46} height={46} style={{ objectFit: 'contain', flex: '0 0 auto' }} /> : null}
+                    </span>
                     <span style={{ display: 'block', fontSize: 21, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#8a8a7c', marginTop: 6, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {r.venue}{r.league ? ' · ' + r.league : ''} · {fmtRowDate(r.date)}
                     </span>

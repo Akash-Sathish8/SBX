@@ -7,7 +7,7 @@ import { GameRow } from '../components/GameRow'
 import { getJSON } from '../lib/dataCache'
 import { SPORTS, RANKABLE_LEAGUES, type League } from '../lib/sports'
 import { toStoredUtc, localDayKey } from '../lib/weekend'
-import { cityKey, haversineMiles, fmtMiles, loadCityCoords, type LatLng } from '../lib/geo'
+import { cityKey, haversineMiles, fmtMiles, loadCityCoords, loadAnchor, saveAnchor, type Anchor, type LatLng } from '../lib/geo'
 import type { Game } from '../lib/espn'
 
 // "Near you" — upcoming games sorted by real distance from the fan (Jack's
@@ -29,21 +29,6 @@ export const Route = createFileRoute('/near')({
 
 const RANGE_MILES = 150
 const WINDOW_DAYS = 14
-
-interface Anchor extends LatLng { label: string }
-const STORE_KEY = 'sbx:near-loc:v1'
-
-function loadAnchor(): Anchor | null {
-  try {
-    const a = JSON.parse(window.localStorage.getItem(STORE_KEY) || 'null')
-    return a && typeof a.lat === 'number' && typeof a.lng === 'number' ? a : null
-  } catch {
-    return null
-  }
-}
-function saveAnchor(a: Anchor) {
-  try { window.localStorage.setItem(STORE_KEY, JSON.stringify(a)) } catch { /* ignore */ }
-}
 
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']

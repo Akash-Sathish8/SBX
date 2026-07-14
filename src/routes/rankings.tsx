@@ -45,7 +45,7 @@ const PILLARS = [
   { key: 'fans', label: 'Fans & atmosphere' },
   { key: 'food', label: 'Food & drink' },
   { key: 'unique', label: 'Uniqueness' },
-  { key: 'stadium', label: 'The stadium' },
+  { key: 'stadium', label: 'Gameday' },
 ] as const
 
 // The old .container: full-bleed with the clamped gutters every section shares.
@@ -151,7 +151,8 @@ function Rankings() {
               <p className="mb-3 text-[13px] font-bold uppercase tracking-[.5px] text-[#8a8a82]">{list.length} {list.length === 1 ? 'experience' : 'experiences'}{sport !== 'All Sports' ? ` · ${sport}` : ''}</p>
               {list.length === 0 ? <div className={emptyCls}>No experiences match your search.</div> : (
                 <div className="grid grid-cols-[1.05fr_1.5fr] items-stretch gap-5 max-[900px]:grid-cols-1">
-                  {/* Leaderboard — hover or tap a row to load it into the spotlight */}
+                  {/* Leaderboard — CLICK a row to load it into the spotlight (it holds;
+                      hover only tints the row so it reads as tappable). */}
                   <div
                     className="max-h-[680px] overflow-y-auto rounded-xl border-2 border-[#16160f] bg-white [scrollbar-width:thin] max-[900px]:max-h-[480px]"
                     role="listbox"
@@ -165,7 +166,6 @@ function Rankings() {
                         aria-selected={sel?.rank === e.rank}
                         variant="ghost"
                         onClick={() => setSelRank(e.rank)}
-                        onMouseEnter={() => setSelRank(e.rank)}
                         className={cn(
                           'flex h-auto w-full cursor-pointer items-center justify-start gap-3 whitespace-normal rounded-none border-t-[1.5px] border-[#ecece4] px-3.5 py-2.5 text-left text-[16px] font-normal text-[#16160f] first:border-t-0 hover:text-[#16160f]',
                           sel?.rank === e.rank ? 'bg-brand hover:bg-brand' : 'bg-white hover:bg-[#fff7c9]',

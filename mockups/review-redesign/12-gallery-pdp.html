@@ -1,0 +1,276 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>12 · Gallery Hero + Thumb Rail — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .stage{padding:26px 0 56px}
+
+  /* venue header */
+  .vhead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    border-bottom:2px solid var(--ink);padding-bottom:16px}
+  .vhead h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;
+    color:var(--ink);line-height:.92;margin:6px 0 6px}
+  .vhead .home{font-size:14px;font-weight:600;color:var(--muted)}
+  .vhead .home b{color:var(--ink)}
+  .vhead .scores{display:flex;gap:10px}
+  .miniscore{background:var(--cream);border:2px solid var(--ink);border-radius:10px;padding:8px 14px;box-shadow:var(--punch);text-align:center}
+  .miniscore.snap{border-color:var(--brand)}
+  .miniscore .l{font-size:9.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#8a8a82}
+  .miniscore .v{font-family:var(--display);font-size:26px;color:#16160f;line-height:1;margin-top:2px}
+
+  /* main gallery grid */
+  .gallery{display:grid;grid-template-columns:1fr 380px;gap:24px;margin-top:24px;align-items:start}
+
+  .stagecol{display:flex;flex-direction:column;gap:12px}
+  .heroframe{position:relative;border:2px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:var(--punch-lg);
+    aspect-ratio:4/3;background:#111}
+  .heroframe img{width:100%;height:100%;object-fit:cover;display:block}
+  .heroframe .tag{position:absolute;left:12px;bottom:12px;font-size:11px;padding:4px 10px}
+  .heroframe .count{position:absolute;right:12px;top:12px;background:rgba(20,20,16,.78);color:#fff;
+    font-size:11px;font-weight:800;letter-spacing:.5px;border-radius:999px;padding:4px 11px}
+
+  /* hero thumb rail (within current section) */
+  .rail{display:flex;gap:9px;overflow-x:auto;padding:2px 0 6px}
+  .rail .photo{flex:none;width:88px;height:66px;border-width:2px;border-radius:7px;cursor:pointer;opacity:.72;
+    transition:opacity .15s, box-shadow .15s, transform .15s}
+  .rail .photo.on{opacity:1;box-shadow:var(--punch)}
+  .rail .photo:hover{opacity:1;transform:translateY(-2px)}
+
+  /* right info panel */
+  .panel{background:var(--cream);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--punch);
+    padding:20px 20px 18px;position:sticky;top:16px}
+  .panel .cat{font-size:11.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold)}
+  .panel h2{font-family:var(--display);font-size:34px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);
+    line-height:.95;margin:5px 0 10px}
+  .panel .areatag{margin-bottom:14px}
+  .panel .who-row{display:flex;align-items:center;gap:8px;padding-bottom:12px;margin-bottom:4px;border-bottom:2px solid var(--ink)}
+  .tiplist{list-style:none;margin:0;padding:0}
+  .tiplist li{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-top:1px dashed #e0ddcf;
+    font-size:14.5px;line-height:1.5;color:#2a2a2a}
+  .tiplist li:first-child{border-top:0}
+  .tiplist .vote{flex:none;margin-top:1px}
+  .panel .ctl{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:14px;border-top:2px solid var(--ink)}
+  .navbtn{flex:1;cursor:pointer;border:2px solid var(--ink);border-radius:999px;background:var(--brand);color:var(--ink);
+    font-family:var(--sans);font-weight:800;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;
+    padding:10px 14px;box-shadow:var(--punch);transition:transform .08s}
+  .navbtn.ghost{background:var(--cream)}
+  .navbtn:active{transform:translate(2px,2px);box-shadow:none}
+
+  /* section groups below */
+  .groups{margin-top:40px}
+  .groups .eyebrow{margin-bottom:6px}
+  .groups h3{font-family:var(--display);font-size:clamp(24px,3vw,34px);text-transform:uppercase;letter-spacing:.5px;
+    color:var(--ink-soft);margin:0 0 4px}
+  .grouprow{margin-top:22px}
+  .grouphdr{display:flex;align-items:baseline;gap:12px;border-bottom:1.5px solid var(--line);padding-bottom:6px;margin-bottom:12px}
+  .grouphdr .gt{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink)}
+  .grouphdr .gn{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .groupthumbs{display:flex;gap:10px;flex-wrap:wrap}
+  .groupthumbs .photo{width:132px;aspect-ratio:4/3;border-width:2px;cursor:pointer;box-shadow:var(--punch);
+    transition:transform .12s}
+  .groupthumbs .photo:hover{transform:translateY(-3px)}
+  .groupthumbs .photo.on{outline:3px solid var(--brand);outline-offset:2px}
+  .groupthumbs .photo .tag{left:5px;bottom:5px}
+
+  @media(max-width:880px){
+    .gallery{grid-template-columns:1fr}
+    .panel{position:static}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 12 — Gallery Hero + Thumb Rail</span><span style="color:#fff">Product-page gallery · pick a view, the hero + tips swap to match</span>
+</div>
+
+<section class="stage"><div class="wrap-wide">
+
+  <!-- venue header -->
+  <div class="vhead">
+    <div>
+      <span class="chip">New York, NY</span>
+      <h1>Madison Square Garden</h1>
+      <div class="home">Home of <b>New York Knicks</b> · shot &amp; rated by <span class="who" style="display:inline-flex;vertical-align:middle"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+    </div>
+    <div class="scores">
+      <div class="miniscore snap"><div class="l">★ Snapback #3</div><div class="v">9.2</div></div>
+      <div class="miniscore"><div class="l">Fan · 214</div><div class="v">8.7</div></div>
+    </div>
+  </div>
+
+  <!-- main gallery -->
+  <div class="gallery">
+    <!-- LEFT: hero + rail -->
+    <div class="stagecol">
+      <div class="heroframe">
+        <img id="heroImg" src="../../public/img/reports/citi/robby/r10.jpg" alt="">
+        <span class="tag" id="heroTag">100 Level</span>
+        <span class="count" id="heroCount">View 1 / 3</span>
+      </div>
+      <div class="rail" id="rail"><!-- filled by JS --></div>
+    </div>
+
+    <!-- RIGHT: info panel -->
+    <aside class="panel">
+      <div class="cat" id="pCat">Best Seats</div>
+      <h2 id="pTitle">Where to sit</h2>
+      <span class="tag areatag" id="pArea">100 Level</span>
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span style="margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)">Verified visit</span></div>
+      <ul class="tiplist" id="pTips"><!-- filled by JS --></ul>
+      <div class="ctl">
+        <button class="navbtn ghost" id="prevBtn">← Prev view</button>
+        <button class="navbtn" id="nextBtn">Next view →</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- section groups -->
+  <div class="groups">
+    <div class="eyebrow"><span class="dot"></span> Every angle of the building</div>
+    <h3>Browse by section</h3>
+    <div class="ssub">Tap any photo to load it above — the tips update to match what you're looking at.</div>
+    <div id="groups"><!-- filled by JS --></div>
+  </div>
+
+</div></section>
+
+<script>
+  // ---- content model: each "view" = a photo + area tag, grouped into sections ----
+  var SECTIONS = [
+    { key:'seats', cat:'Best Seats', title:'Where to sit',
+      tips:[
+        {t:'Front rows in the 200s in the center sections beat behind the basket, even down low.', v:41},
+        {t:'The Chase Bridge and Hyundai Bridge are both cool spots — the Hyundai Bridge is good value.', v:33},
+        {t:'The Delta Club comes with all-inclusive food and drink (non-alcoholic).', v:19}
+      ],
+      views:[
+        {s:'r10.jpg', a:'100 Level'},
+        {s:'r40.jpg', a:'300 Level'},
+        {s:'r56.jpg', a:'400 Level'}
+      ] },
+    { key:'food', cat:'Best Food', title:'What to eat',
+      tips:[
+        {t:'Best food in MSG is the steak sandwich outside section 107.', v:57},
+        {t:'The Garden Market hamburgers are the best basic food in sports — a fantastic bun.', v:44},
+        {t:'Carnegie Deli is another good one. Skip the pizza, it’s bad in the arena.', v:28}
+      ],
+      views:[
+        {s:'r25.jpg', a:'Steak Sandwich'},
+        {s:'r30.jpg', a:'Garden Market'},
+        {s:'r26.jpg', a:'Burgers'},
+        {s:'r38.jpg', a:'Menus'},
+        {s:'r01.jpg', a:'Concessions'}
+      ] },
+    { key:'lounges', cat:'Lounges', title:'Pregame lounges',
+      tips:[
+        {t:'There’s a Chase reserve lounge inside the arena — reserve a spot pregame.', v:22},
+        {t:'The Delta Club is all-inclusive food and drink if you can get in.', v:16}
+      ],
+      views:[
+        {s:'r44.jpg', a:'Chase Lounge'},
+        {s:'r57.jpg', a:'Delta Club'},
+        {s:'r51.jpg', a:'Bar'},
+        {s:'r49.jpg', a:'Lounge'}
+      ] },
+    { key:'concourse', cat:'Getting In', title:'The concourse',
+      tips:[
+        {t:'Come in through the 100 level gates — a way shorter merch line than the MSG lobby.', v:31},
+        {t:'Best ways in: walking, the subway, the LIRR, or NJ Transit. Skip driving.', v:38}
+      ],
+      views:[
+        {s:'r59.jpg', a:'Outside'},
+        {s:'r20.jpg', a:'Gates'},
+        {s:'r17.jpg', a:'Concourse'},
+        {s:'r04.jpg', a:'Team Store'}
+      ] }
+  ];
+  var P = '../../public/img/reports/citi/robby/';
+
+  // flatten into a single ordered view list so prev/next crosses sections
+  var VIEWS = [];
+  SECTIONS.forEach(function(sec, si){
+    sec.views.forEach(function(v, vi){
+      VIEWS.push({ sec:si, vi:vi, s:v.s, a:v.a });
+    });
+  });
+
+  var cur = 0;
+  var heroImg = document.getElementById('heroImg');
+  var heroTag = document.getElementById('heroTag');
+  var heroCount = document.getElementById('heroCount');
+  var pCat = document.getElementById('pCat');
+  var pTitle = document.getElementById('pTitle');
+  var pArea = document.getElementById('pArea');
+  var pTips = document.getElementById('pTips');
+  var rail = document.getElementById('rail');
+
+  function render(){
+    var view = VIEWS[cur];
+    var sec = SECTIONS[view.sec];
+
+    heroImg.src = P + view.s;
+    heroTag.textContent = view.a;
+    heroCount.textContent = 'View ' + (view.vi + 1) + ' / ' + sec.views.length;
+
+    pCat.textContent = sec.cat;
+    pTitle.textContent = sec.title;
+    pArea.textContent = view.a;
+
+    // tips for the section
+    pTips.innerHTML = sec.tips.map(function(tp){
+      return '<li><span>' + tp.t + '</span>' +
+        '<span class="vote"><button>▲</button><span class="n">' + tp.v + '</span><button>▼</button></span></li>';
+    }).join('');
+
+    // hero rail = this section's views
+    rail.innerHTML = sec.views.map(function(v, i){
+      // global index of this view
+      var gi = VIEWS.findIndex(function(x){ return x.sec === view.sec && x.vi === i; });
+      return '<div class="photo' + (i === view.vi ? ' on' : '') + '" data-gi="' + gi + '">' +
+        '<img src="' + P + v.s + '" alt=""></div>';
+    }).join('');
+
+    // sync group highlight
+    document.querySelectorAll('.groupthumbs .photo').forEach(function(el){
+      el.classList.toggle('on', +el.dataset.gi === cur);
+    });
+  }
+
+  function go(i){
+    cur = (i + VIEWS.length) % VIEWS.length;
+    render();
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function(){ go(cur - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ go(cur + 1); });
+  rail.addEventListener('click', function(e){
+    var el = e.target.closest('.photo'); if(!el) return;
+    go(+el.dataset.gi);
+  });
+
+  // build the section groups (all thumbs, grouped)
+  var groupsWrap = document.getElementById('groups');
+  groupsWrap.innerHTML = SECTIONS.map(function(sec, si){
+    var thumbs = sec.views.map(function(v, i){
+      var gi = VIEWS.findIndex(function(x){ return x.sec === si && x.vi === i; });
+      return '<div class="photo" data-gi="' + gi + '"><img src="' + P + v.s + '" alt="">' +
+        '<span class="tag">' + v.a + '</span></div>';
+    }).join('');
+    return '<div class="grouprow">' +
+      '<div class="grouphdr"><span class="gt">' + sec.cat + '</span>' +
+      '<span class="gn">' + sec.views.length + ' photos</span></div>' +
+      '<div class="groupthumbs">' + thumbs + '</div></div>';
+  }).join('');
+
+  groupsWrap.addEventListener('click', function(e){
+    var el = e.target.closest('.photo'); if(!el) return;
+    go(+el.dataset.gi);
+    document.querySelector('.gallery').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+
+  render();
+</script>
+</body></html>

@@ -1,0 +1,252 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10 · Scrollytelling Parallax — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  html{scroll-behavior:smooth}
+  body{background:var(--ink)}
+
+  /* progress bar */
+  .prog{position:fixed;top:0;left:0;right:0;height:5px;background:rgba(255,255,255,.12);z-index:90}
+  .prog .fill{height:100%;width:0;background:var(--brand);box-shadow:0 0 0 1px var(--ink)}
+
+  /* fixed venue tab, top-right */
+  .venue-tab{position:fixed;top:16px;right:18px;z-index:80;display:flex;align-items:center;gap:10px;
+    background:var(--cream);border:2px solid var(--ink);border-radius:10px;box-shadow:var(--punch);
+    padding:7px 12px 7px 9px}
+  .venue-tab img{width:26px;height:26px;border-radius:6px;border:1.5px solid var(--ink);object-fit:cover}
+  .venue-tab .vn{font-family:var(--display);font-size:14px;line-height:1;letter-spacing:.4px;color:var(--ink)}
+  .venue-tab .vs{display:flex;align-items:center;gap:5px;margin-top:3px}
+  .venue-tab .score{font-size:12px;padding:1px 6px}
+  .venue-tab .fan{font-size:10px;font-weight:800;letter-spacing:.4px;color:var(--muted);text-transform:uppercase}
+
+  /* scroll scenes */
+  .scene{position:relative;height:100vh}
+  .scene .bg{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--ink)}
+  .scene .bg img{position:absolute;top:-12%;left:0;width:100%;height:124%;object-fit:cover;will-change:transform}
+  .scene .bg::after{content:'';position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(20,20,16,.86) 0%,rgba(20,20,16,.55) 42%,rgba(20,20,16,.12) 100%)}
+
+  /* the translucent tip panel that scrolls up over the scene */
+  .panel-track{position:absolute;inset:0;display:flex;align-items:center;pointer-events:none}
+  .panel{position:relative;z-index:3;margin-left:clamp(24px,7vw,110px);max-width:520px;pointer-events:auto}
+  .bignum{font-family:var(--display);font-size:clamp(90px,16vw,190px);line-height:.72;color:var(--brand);
+    text-shadow:5px 5px 0 var(--ink);letter-spacing:2px;-webkit-text-stroke:1px var(--ink)}
+  .glass{margin-top:-14px;background:rgba(255,253,246,.94);border:2px solid var(--ink);border-radius:14px;
+    box-shadow:var(--punch-lg);padding:22px 24px 20px;backdrop-filter:blur(3px)}
+  .glass .area{position:absolute;transform:translateY(-50%);top:0;right:20px}
+  .glass .step{font-family:var(--display);font-size:clamp(30px,4vw,46px);text-transform:uppercase;letter-spacing:.5px;
+    color:var(--ink);line-height:.95}
+  .glass .kick{font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+  .glass .tip{font-size:16.5px;line-height:1.55;font-weight:500;color:#26271f;margin-top:11px}
+  .glass .foot{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .glass .foot .who{font-size:11.5px}
+
+  /* intro / hero scene */
+  .intro .bg::after{background:linear-gradient(180deg,rgba(20,20,16,.35),rgba(20,20,16,.9))}
+  .intro .panel-track{align-items:flex-end}
+  .intro .panel{margin:0 auto 12vh;max-width:900px;text-align:center;padding:0 24px}
+  .intro h1{font-family:var(--display);font-size:clamp(46px,9vw,120px);line-height:.9;letter-spacing:1px;
+    text-transform:uppercase;color:#fff;margin:14px 0 10px;text-shadow:0 4px 24px rgba(0,0,0,.5)}
+  .intro .sub{font-size:16px;font-weight:600;color:#e6e6df;letter-spacing:.3px}
+  .intro .scores{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+  .intro .sc{background:var(--cream);border:2px solid var(--ink);border-radius:12px;padding:11px 18px;min-width:118px;box-shadow:var(--punch)}
+  .intro .sc.snap{border-color:var(--brand)}
+  .intro .sc .l{font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#8a8a82}
+  .intro .sc .v{font-family:var(--display);font-size:32px;color:#16160f;line-height:1;margin-top:4px}
+  .intro .sc .s{font-size:10.5px;font-weight:700;color:#9a9a92;margin-top:3px}
+  .scroll-cue{margin-top:26px;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand);
+    display:inline-flex;align-items:center;gap:8px;animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* verdict scene */
+  .verdict-scene .bg::after{background:linear-gradient(180deg,rgba(20,20,16,.55),rgba(20,20,16,.94))}
+  .verdict-scene .panel-track{align-items:center}
+  .verdict-scene .panel{margin:0 auto;max-width:760px;text-align:center;padding:0 24px}
+  .vcard{background:var(--cream);border:2px solid var(--ink);border-radius:16px;box-shadow:var(--punch-lg);padding:28px 30px}
+  .vcard .qt{font-size:19px;line-height:1.55;font-weight:600;color:#22241f;text-align:left}
+  .vcard .top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .vcard .score{font-size:26px;padding:4px 14px}
+
+  @media(max-width:720px){
+    .scene .bg::after{background:linear-gradient(180deg,rgba(20,20,16,.35),rgba(20,20,16,.9))}
+    .panel-track{align-items:flex-end}
+    .panel{margin:0 20px 12vh;max-width:none}
+    .venue-tab .vn{display:none}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;position:relative;z-index:95">
+  <span>Concept 10 — Scrollytelling Parallax</span><span style="color:#fff">A cinematic scroll-story · photos take over full-screen, tips drift up over each</span>
+</div>
+
+<div class="prog"><div class="fill" id="fill"></div></div>
+
+<div class="venue-tab">
+  <img src="../../public/img/logo.png" alt="">
+  <div>
+    <div class="vn">MSG</div>
+    <div class="vs"><span class="score">9.2</span><span class="fan">Fan 8.7 · 214</span></div>
+  </div>
+</div>
+
+<!-- ============ INTRO ============ -->
+<section class="scene intro" data-parallax>
+  <div class="bg"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""></div>
+  <div class="panel-track"><div class="panel">
+    <span class="chip" style="background:var(--brand);border-color:var(--ink);color:var(--ink)">New York, NY · Home of the Knicks</span>
+    <h1>Madison Square<br>Garden</h1>
+    <div class="sub">A fan's gameday, told scene by scene — from the street to the final buzzer.</div>
+    <div class="scores">
+      <div class="sc snap"><div class="l">★ Snapback</div><div class="v">9.2</div><div class="s">Expert · #3</div></div>
+      <div class="sc"><div class="l">Fan Score</div><div class="v">8.7</div><div class="s">214 ratings</div></div>
+    </div>
+    <div class="scroll-cue">Scroll to begin ↓</div>
+  </div></div>
+</section>
+
+<!-- ============ 01 ARRIVE ============ -->
+<section class="scene" data-parallax>
+  <div class="bg"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""></div>
+  <div class="panel-track"><div class="panel">
+    <div class="bignum">01</div>
+    <div class="glass">
+      <span class="tag area">Outside</span>
+      <div class="kick">Getting there</div>
+      <div class="step">Arrive</div>
+      <div class="tip">Best ways in: walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice.</div>
+      <div class="foot"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="vote"><button>▲</button><span class="n">38</span><button>▼</button></span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 02 GET IN ============ -->
+<section class="scene" data-parallax>
+  <div class="bg"><img src="../../public/img/reports/citi/robby/r20.jpg" alt=""></div>
+  <div class="panel-track"><div class="panel">
+    <div class="bignum">02</div>
+    <div class="glass">
+      <span class="tag area">Gates</span>
+      <div class="kick">Through the doors</div>
+      <div class="step">Get in</div>
+      <div class="tip">Come in through the 100 level gates — the merch store there has a way shorter line than the one in the MSG lobby.</div>
+      <div class="foot"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="vote"><button>▲</button><span class="n">31</span><button>▼</button></span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 03 PREGAME ============ -->
+<section class="scene" data-parallax>
+  <div class="bg"><img src="../../public/img/reports/citi/robby/r44.jpg" alt=""></div>
+  <div class="panel-track"><div class="panel">
+    <div class="bignum">03</div>
+    <div class="glass">
+      <span class="tag area">Chase Lounge</span>
+      <div class="kick">Before the game</div>
+      <div class="step">Pregame</div>
+      <div class="tip">There's a Chase reserve lounge inside the arena you can book a spot in pregame. Nearby: Nick and Stef's, Stout, and Mustang Harry's.</div>
+      <div class="foot"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="vote"><button>▲</button><span class="n">22</span><button>▼</button></span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 04 YOUR SEAT ============ -->
+<section class="scene" data-parallax>
+  <div class="bg"><img src="../../public/img/reports/citi/robby/r40.jpg" alt=""></div>
+  <div class="panel-track"><div class="panel">
+    <div class="bignum">04</div>
+    <div class="glass">
+      <span class="tag area">100 Level</span>
+      <div class="kick">Best seats</div>
+      <div class="step">Your seat</div>
+      <div class="tip">Front rows in the 200s in the center sections beat behind the basket, even down low. The Hyundai Bridge is a cool spot and good value.</div>
+      <div class="foot"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="vote"><button>▲</button><span class="n">41</span><button>▼</button></span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 05 EAT ============ -->
+<section class="scene" data-parallax>
+  <div class="bg"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""></div>
+  <div class="panel-track"><div class="panel">
+    <div class="bignum">05</div>
+    <div class="glass">
+      <span class="tag area">Steak Sandwich · 107</span>
+      <div class="kick">Best food</div>
+      <div class="step">Eat</div>
+      <div class="tip">The best food in MSG is the steak sandwich outside section 107. The Garden Market hamburgers are the best basic food in sports. Skip the pizza.</div>
+      <div class="foot"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="vote"><button>▲</button><span class="n">57</span><button>▼</button></span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ 06 THE CROWD ============ -->
+<section class="scene" data-parallax>
+  <div class="bg"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""></div>
+  <div class="panel-track"><div class="panel">
+    <div class="bignum">06</div>
+    <div class="glass">
+      <span class="tag area">Tip-off</span>
+      <div class="kick">Atmosphere</div>
+      <div class="step">The crowd</div>
+      <div class="tip">Best crowd in the NBA. Be ready to stand, and the seats are tight — but there's plenty of in-game entertainment like t-shirt tosses. The energy is worth it.</div>
+      <div class="foot"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="vote"><button>▲</button><span class="n">63</span><button>▼</button></span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ VERDICT ============ -->
+<section class="scene verdict-scene" data-parallax>
+  <div class="bg"><img src="../../public/img/reports/citi/robby/r18.jpg" alt=""></div>
+  <div class="panel-track"><div class="panel">
+    <div class="bignum" style="text-align:center">07</div>
+    <div class="vcard">
+      <div class="top">
+        <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="score" style="margin-left:auto">9.2</span>
+      </div>
+      <div class="qt">"Best crowd in the NBA. Be ready to stand and the seats are tight, but the energy is worth it. Eat the steak sandwich outside section 107 and the Garden Market hamburgers, and skip the arena pizza. Get in through the 100 level gates for a shorter merch line, and know the alcohol is very expensive."</div>
+      <div style="margin-top:18px;display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap">
+        <span class="vote"><button>▲</button><span class="n">128</span><button>▼</button></span>
+        <span style="font-size:12px;font-weight:700;color:var(--muted)">+ 213 more fan reviews</span>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<script>
+  // progress bar
+  var fill = document.getElementById('fill');
+  var scenes = document.querySelectorAll('.scene[data-parallax] .bg img');
+  function onScroll(){
+    var st = window.scrollY || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    fill.style.width = (h > 0 ? (st / h * 100) : 0) + '%';
+    // subtle parallax per scene image
+    var vh = window.innerHeight;
+    scenes.forEach(function(img){
+      var scene = img.closest('.scene');
+      var r = scene.getBoundingClientRect();
+      // progress of this scene through the viewport, -1 .. 1
+      var p = (r.top + r.height/2 - vh/2) / vh;
+      var shift = Math.max(-1, Math.min(1, p)) * 7; // percent
+      img.style.transform = 'translateY(' + shift + '%)';
+    });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(!ticking){ requestAnimationFrame(function(){ onScroll(); ticking = false; }); ticking = true; }
+  }, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+</script>
+</body></html>

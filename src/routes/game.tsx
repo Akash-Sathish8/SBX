@@ -9,7 +9,9 @@ import type { Game, GameTeam, Venue } from '../lib/espn'
 import { WhatToKnow, AddTipButton } from '../components/WhatToKnow'
 import { ExpertNotes } from '../components/ExpertNotes'
 import { Reviews } from '../components/Reviews'
-import { GamesThatWeekend, NearbyVenues, RelatedExperience } from '../components/NextHops'
+import { NearbyVenues, RelatedExperience } from '../components/NextHops'
+import { FanScorePill, useFanScores } from '../components/FanScore'
+import { LogGameButton } from '../components/LogGameButton'
 import { Badge } from '@/components/ui/badge'
 
 export const Route = createFileRoute('/game')({
@@ -100,6 +102,7 @@ function TeamSide({ t }: { t: GameTeam }) {
 function GameContent({ g }: { g: Game }) {
   const showScore = (g.state === 'post' || g.state === 'in') && g.home.score !== null && g.away.score !== null
   const [tipOpen, setTipOpen] = useState(false)
+  const fanScores = useFanScores()
 
   // The crowdsourced layer belongs to the BUILDING, not the fixture: resolve
   // the game's D1 venue (by name, falling back to the home tenant — the games
@@ -152,6 +155,9 @@ function GameContent({ g }: { g: Game }) {
             {g.venue.name ? <> · <span className="border-b border-[rgba(247,223,2,0.45)] font-bold text-brand hover:border-brand">{g.venue.name}</span></> : null}
             {g.venue.city ? ', ' + g.venue.city : ''}
           </div>
+          <div className="mt-[clamp(18px,3vw,24px)] flex justify-center">
+            <LogGameButton game={g} />
+          </div>
         </div>
       </section>
 
@@ -165,16 +171,17 @@ function GameContent({ g }: { g: Game }) {
             <AddTipButton onOpen={() => setTipOpen(true)} />
           </div>
         </div>
-        <div className="mb-[22px] text-sm font-semibold tracking-[0.5px] uppercase text-muted">
+        <div className="mb-[22px] flex flex-wrap items-center gap-x-[14px] gap-y-[10px] text-sm font-semibold tracking-[0.5px] uppercase text-muted">
           {venue
             ? <>Insider tips &amp; reviews from fans who've actually been to {venue.name}</>
             : <>Tips from fans for {g.away.displayName} @ {g.home.displayName}</>}
+          {venue ? <FanScorePill stat={fanScores?.[venue.id]} /> : null}
         </div>
         {venue ? (
           <>
             <ExpertNotes scope="venue" targetId={venue.id} />
-            <div className="wtk-layout mt-2 grid grid-cols-[minmax(0,1fr)_clamp(300px,28%,380px)] items-stretch gap-[18px] max-[980px]:grid-cols-1">
-              <WhatToKnow scope="venue" targetId={venue.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
+            <WhatToKnow scope="venue" targetId={venue.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} />
+            <div className="mt-8">
               <Reviews scope="venue" targetId={venue.id} gameId={g.id} venueName={venue.name} venueCity={venue.city} />
             </div>
           </>
@@ -188,7 +195,6 @@ function GameContent({ g }: { g: Game }) {
 
       {/* Next hops — the trip doesn't end at this game. */}
       <RelatedExperience g={g} />
-      <GamesThatWeekend anchorDate={g.date} city={g.venue.city} league={g.league} excludeGameKey={g.league + ':' + g.id} />
       <NearbyVenues city={g.venue.city} state={g.venue.state} excludeName={g.venue.name} />
     </>
   )

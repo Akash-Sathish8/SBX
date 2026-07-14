@@ -1,0 +1,227 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04c · Split-Sticky · Stacked mobile (Crowd) — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:34px 16px 44px;background:radial-gradient(1200px 600px at 50% -10%,#fbf9ef,var(--paper))}
+  .phonecap{margin-top:20px;font-size:13.5px;font-weight:600;color:var(--muted);text-align:center;max-width:440px;line-height:1.5}
+  .phonecap b{color:var(--ink)}
+
+  /* mobile top chrome inside the screen */
+  .mtop{position:absolute;top:0;left:0;right:0;z-index:50;height:52px;display:flex;align-items:center;gap:10px;
+    padding:0 16px;background:var(--ink);color:#fff;border-bottom:2px solid #000}
+  .mtop .back{font-size:18px;font-weight:800;color:#cfcfc7;line-height:1}
+  .mtop .mk{font-family:var(--display);font-size:15px;letter-spacing:.4px;text-transform:uppercase;line-height:1}
+  .mtop .sc{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;
+    letter-spacing:.4px;text-transform:uppercase;color:#e8e8e0}
+  .mtop .sc b{font-family:var(--display);font-size:14px;color:var(--brand)}
+
+  /* STICKY PHOTO — top ~45% of screen, bound to the CURRENT tip's author */
+  .mstage{position:absolute;top:52px;left:0;right:0;height:352px;z-index:30;overflow:hidden;
+    border-bottom:2px solid var(--ink);background:var(--ink)}
+  .mstage .frame{position:absolute;inset:0}
+  .mstage .frame img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease}
+  .mstage .frame.on img{opacity:1}
+  .mstage::after{content:'';position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(20,20,16,.15) 0%,rgba(20,20,16,0) 26%,rgba(20,20,16,.9) 100%)}
+  .mstage .areaTag{position:absolute;top:12px;left:12px;z-index:3}
+  .mstage .venuePill{position:absolute;top:12px;right:12px;z-index:3;background:rgba(20,20,16,.66);color:#fff;
+    border:1.5px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 10px;font-size:10px;font-weight:800;
+    letter-spacing:.4px;text-transform:uppercase}
+  .mmeta{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:14px 16px 14px;color:#fff}
+  .mmeta .stg{font-family:var(--display);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--brand);
+    display:flex;align-items:center;gap:7px}
+  .mmeta .stg .n{background:var(--brand);color:var(--ink);border-radius:4px;padding:1px 6px;font-size:11px}
+  .mmeta h2{font-family:var(--display);font-size:27px;line-height:.95;text-transform:uppercase;letter-spacing:.5px;margin:6px 0 9px}
+  /* the credit chip binding the pinned photo to whoever posted it */
+  .mcredit{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);
+    border:1.5px solid rgba(255,255,255,.42);border-radius:999px;padding:4px 13px 4px 4px}
+  .mcredit .av,.mcredit .ini{width:27px;height:27px;font-size:9.5px;border-color:#fff}
+  .mcredit .who-name{font-size:12px;font-weight:800;color:#fff;letter-spacing:.2px;display:inline-flex;align-items:center;gap:4px}
+  .mcredit .who-sub{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--brand)}
+  .mcredit .vf{width:13px;height:13px;background:var(--brand);color:var(--ink);font-size:8px}
+  /* progress rail */
+  .mrail{position:absolute;top:0;left:0;height:3px;background:var(--brand);width:0;z-index:5;transition:width .4s ease}
+
+  /* SCROLLING TIPS — under the sticky photo */
+  .mfeed{position:absolute;top:404px;left:0;right:0;bottom:0;overflow-y:auto;z-index:20;
+    padding:14px 14px 60px;background:var(--paper);-webkit-overflow-scrolling:touch}
+  .mintro{padding:2px 4px 12px}
+  .mintro .eyebrow{font-size:11px}
+  .mintro p{font-size:12.5px;line-height:1.55;color:#3a3b33;margin:8px 0 0}
+  .mintro .stack{display:flex;padding-left:8px;margin-top:9px}
+  .mintro .stack .av,.mintro .stack .ini{width:24px;height:24px;margin-left:-8px;border:2px solid var(--paper);
+    box-shadow:0 0 0 1.5px var(--ink);border-radius:50%}
+  .mintro .stack .av{object-fit:cover;background:var(--ink)}
+  .msec{background:var(--cream);border:2px solid var(--line);border-radius:14px;padding:13px 13px 11px;margin-bottom:13px;
+    transition:border-color .3s ease,box-shadow .3s ease;scroll-margin-top:12px}
+  .msec.active{border-color:var(--ink);box-shadow:var(--punch)}
+  .msec .head{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+  .msec .idx{font-family:var(--display);font-size:15px;color:var(--ink);background:var(--brand);border:2px solid var(--ink);
+    border-radius:7px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex:none;opacity:.4;transition:opacity .3s ease}
+  .msec.active .idx{opacity:1}
+  .msec .ttl{font-family:var(--display);font-size:19px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink);line-height:1}
+  .msec .cnt{margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+  /* authored tip: avatar + name + timeAgo + text + votes */
+  .mtp{display:flex;gap:8px;align-items:flex-start;padding:9px 0;border-top:1px dashed #e0ddcf}
+  .mtp:first-of-type{border-top:0}
+  .mtp .ini,.mtp .av{width:24px;height:24px;font-size:9px}
+  .mtp .av{border-radius:50%;border:1.5px solid var(--ink);object-fit:cover;background:var(--ink)}
+  .mtp.reading{position:relative}
+  .mtp.reading::before{content:'';position:absolute;left:-6px;top:9px;bottom:9px;width:3px;background:var(--brand);border-radius:2px}
+  .mtp .tmain{flex:1;min-width:0}
+  .mtp .tmeta{display:flex;align-items:center;gap:5px;margin-bottom:1px;flex-wrap:wrap}
+  .mtp .tmeta .nm{font-size:11px}
+  .mtp .pin{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--gold);
+    border:1px solid #e7dca0;background:var(--tip);border-radius:4px;padding:0 4px}
+  .mtp .cam{font-size:8.5px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:#8a8a80}
+  .mtp .tbody{font-size:12.5px;line-height:1.45;color:#282a24;font-weight:500}
+  .mtp .tbody b{color:var(--ink);font-weight:800}
+  .mtp .vote{flex:none;margin-top:1px;transform:scale(.86);transform-origin:right top}
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 04c — Split-Sticky · Stacked (mobile)</span>
+  <span style="color:#fff;text-transform:none;letter-spacing:.3px">Pinned top photo re-credits to whichever fan's tip you scroll to below</span>
+</div>
+
+<div class="page">
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+
+    <!-- top chrome -->
+    <div class="mtop">
+      <span class="back">‹</span>
+      <span class="mk" id="vName">Madison Square Garden</span>
+      <span class="sc">★ <b id="vSnap">9.2</b></span>
+    </div>
+
+    <!-- STICKY PHOTO STAGE — bound to the current tip's author -->
+    <div class="mstage">
+      <span class="mrail" id="rail"></span>
+      <div id="frames"><!-- injected --></div>
+      <span class="tag areaTag" id="areaTag"></span>
+      <span class="venuePill" id="venuePill">Knicks · New York</span>
+      <div class="mmeta">
+        <div class="stg"><span class="n" id="stageNum">01</span> <span id="stageKick"></span></div>
+        <h2 id="stageTitle"></h2>
+        <div class="mcredit" id="stageCredit"></div>
+      </div>
+    </div>
+
+    <!-- SCROLLING TIPS -->
+    <div class="mfeed" id="feed">
+      <div class="mintro">
+        <div class="eyebrow"><span class="dot"></span> A crowd's field guide</div>
+        <p id="introTxt"></p>
+        <div class="stack" id="introStack"></div>
+      </div>
+      <div id="sections"><!-- injected --></div>
+    </div>
+
+  </div></div>
+
+  <div class="phonecap"><b>Stacked mobile split</b> — the top photo stays pinned and re-credits to the fan whose tip you're reading; scroll the crowd's tips underneath.</div>
+</div>
+
+<script src="_crowd.js"></script>
+<script>
+  const C = window.CROWD;   // shared dataset from _crowd.js (which owns `const P`)
+
+  vName.textContent = C.venue.name;
+  vSnap.textContent = C.venue.snap;
+  venuePill.textContent = `${C.venue.team.replace('New York ','')} · New York`;
+  introTxt.innerHTML = `Insider tips &amp; photos from <b>${C.venue.fans}</b> fans who've actually been. Scroll the tips — the pinned photo up top swaps to that fan's shot.`;
+  document.getElementById('introStack').innerHTML =
+    ['jack','grace','mike','tommy','sarah','danny'].map(id=>C.avatar(id)).join('');
+
+  const sortTips = ts => [...ts].sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0) || b.up-a.up);
+
+  // BUILD feed (authored tips grouped by section) + a frame per photo-bearing tip.
+  const secWrap=document.getElementById('sections'), frameWrap=document.getElementById('frames');
+  const stops=[];             // ordered photo stops for the pinned stage
+  let secHtml='', frameHtml='', stopIdx=0;
+
+  C.sections.forEach((sec,si)=>{
+    const tips = sortTips(C.tipsFor(sec.key));
+    const withPhoto = tips.filter(t=>t.photo).length;
+    let rows='';
+    tips.forEach(t=>{
+      const hasPhoto=!!t.photo;
+      let stopAttr='';
+      if(hasPhoto){
+        const idx=stopIdx++;
+        stops.push({by:t.by, section:sec.label, kick:sec.label, tag:t.photo.area, secIndex:si});
+        stopAttr=` data-stop="${idx}"`;
+        frameHtml += `<div class="frame${idx===0?' on':''}" data-stop="${idx}"><img src="${t.photo.src}" alt=""></div>`;
+      }
+      rows += `<div class="mtp${hasPhoto?' has-photo':''}"${stopAttr}>
+        ${C.avatar(t.by)}
+        <div class="tmain">
+          <div class="tmeta">${C.nameTag(t.by)}
+            ${t.pinned?'<span class="pin">Pinned</span>':`<span class="ago">${t.ago}</span>`}
+            ${hasPhoto?'<span class="cam">📷</span>':''}
+          </div>
+          <div class="tbody">${t.text}</div>
+        </div>
+        ${C.votePill(t.up)}
+      </div>`;
+    });
+    secHtml += `<section class="msec${si===0?' active':''}" id="msec-${sec.key}" data-section="${si}">
+      <div class="head"><span class="idx">${si+1}</span><span class="ttl">${sec.label}</span>
+        <span class="cnt">${tips.length} · ${withPhoto}📷</span></div>
+      ${rows}
+    </section>`;
+  });
+  secWrap.innerHTML=secHtml;
+  frameWrap.innerHTML=frameHtml;
+
+  const frames=[...frameWrap.querySelectorAll('.frame')];
+  const areaTag=document.getElementById('areaTag'), stageNum=document.getElementById('stageNum'),
+    stageKick=document.getElementById('stageKick'), stageTitle=document.getElementById('stageTitle'),
+    stageCredit=document.getElementById('stageCredit'), rail=document.getElementById('rail'),
+    feed=document.getElementById('feed');
+
+  let current=-1;
+  function activate(idx){
+    if(idx===current || idx==null) return;
+    current=idx;
+    const s=stops[idx];
+    frames.forEach(f=>f.classList.toggle('on', +f.dataset.stop===idx));
+    stageNum.textContent=String(s.secIndex+1).padStart(2,'0');
+    stageKick.textContent=s.kick;
+    stageTitle.textContent=s.section;
+    areaTag.textContent=s.tag;
+    const f=C.fan(s.by);
+    stageCredit.innerHTML = `${C.avatar(s.by)}
+      <span><span class="who-name">${f.name}${f.verified?'<span class="vf">✓</span>':''}</span><br>
+      <span class="who-sub">${f.verified?'Verified · Snapback':'Fan photo'}</span></span>`;
+    rail.style.width=((s.secIndex+1)/C.sections.length*100)+'%';
+    document.querySelectorAll('.mtp.reading').forEach(el=>el.classList.remove('reading'));
+    const tipEl=document.querySelector(`.mtp[data-stop="${idx}"]`);
+    if(tipEl) tipEl.classList.add('reading');
+    document.querySelectorAll('.msec').forEach(el=>el.classList.toggle('active', +el.dataset.section===s.secIndex));
+  }
+
+  // IntersectionObserver inside the scrolling feed — swap pinned photo + credit to the fan being read
+  const io=new IntersectionObserver((entries)=>{
+    let best=null, bestDist=Infinity;
+    const feedTop=feed.getBoundingClientRect().top;
+    for(const e of entries){
+      if(!e.isIntersecting) continue;
+      const dist=Math.abs(e.boundingClientRect.top - feedTop - 30);
+      if(dist<bestDist){ bestDist=dist; best=e.target; }
+    }
+    if(best) activate(+best.dataset.stop);
+  }, { root:feed, rootMargin:'0px 0px -55% 0px', threshold:[0,0.4,1] });
+  document.querySelectorAll('.mtp[data-stop]').forEach(el=>io.observe(el));
+
+  // Best Seats pinned first — its top (pinned Jack) photo shows on load
+  activate(0);
+  requestAnimationFrame(()=>{ document.getElementById('msec-best-seats').scrollIntoView({block:'start'}); });
+</script>
+</body></html>

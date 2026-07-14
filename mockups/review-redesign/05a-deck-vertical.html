@@ -1,0 +1,273 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05a · Fan Photo-Reviews — Vertical — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  html,body{height:100%}
+  body{overflow:hidden}
+  .banner{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--ink);color:var(--brand);
+    font-family:var(--sans);font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+    padding:8px 24px;display:flex;justify-content:space-between;gap:14px}
+  .banner span:last-child{color:#fff;font-weight:700;text-transform:none;letter-spacing:.3px;opacity:.92}
+
+  /* deck rail — VERTICAL snap */
+  .deck{position:fixed;inset:33px 0 0 0;overflow-y:auto;overflow-x:hidden;
+    scroll-snap-type:y mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+  .deck::-webkit-scrollbar{display:none}
+  .deck{scrollbar-width:none}
+
+  .chap{position:relative;width:100%;height:calc(100vh - 33px);scroll-snap-align:start;overflow:hidden;
+    display:flex;align-items:flex-end;color:#fff}
+  .chap .bg{position:absolute;inset:0}
+  .chap .bg img{width:100%;height:100%;object-fit:cover}
+  .chap .bg::after{content:'';position:absolute;inset:0;
+    background:linear-gradient(0deg,rgba(20,20,16,.95) 0%,rgba(20,20,16,.6) 44%,rgba(20,20,16,.12) 78%,rgba(20,20,16,.4) 100%)}
+
+  .chap .content{position:relative;z-index:3;width:100%;max-width:900px;
+    padding:0 clamp(24px,7vw,110px) clamp(52px,9vh,90px)}
+  .chap .num{font-family:var(--display);font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--brand);
+    display:inline-flex;align-items:center;gap:10px}
+  .chap .num::before{content:'';width:34px;height:3px;background:var(--brand);display:inline-block}
+
+  /* fan byline row — avatar + name + verified + rating + time */
+  .byline{display:flex;align-items:center;gap:12px;margin:16px 0 16px;flex-wrap:wrap}
+  .byline .ini,.byline .av{width:52px;height:52px;font-size:17px;border-width:2px}
+  .byline .av{border-radius:50%;object-fit:cover;background:var(--ink)}
+  .byline .who-meta{display:flex;flex-direction:column;gap:3px}
+  .byline .who-name{display:flex;align-items:center;gap:8px}
+  .byline .nm{font-size:19px;color:#fff}
+  .byline .vf{width:17px;height:17px;font-size:10px}
+  .byline .sub{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#c9c8bd}
+  .byline .rate{font-size:24px;padding:3px 12px;margin-left:auto}
+
+  .chap .quote{font-size:clamp(21px,2.9vw,36px);line-height:1.28;font-weight:700;color:#fff;max-width:22ch;
+    letter-spacing:.2px;text-shadow:0 4px 26px rgba(0,0,0,.5);margin:0}
+  .chap .quote b{color:var(--brand);font-weight:800}
+  .chap .body{font-size:clamp(15px,1.5vw,18px);line-height:1.55;font-weight:500;color:#eceadf;max-width:58ch;margin:16px 0 0}
+
+  .chap .areaTag{position:absolute;z-index:3;left:clamp(24px,7vw,110px);top:calc(33px + 30px)}
+  .chap .votechip{display:inline-flex;align-items:center;gap:6px;background:rgba(20,20,16,.55);
+    border:1.5px solid rgba(255,255,255,.28);border-radius:999px;padding:4px 12px;margin-top:16px;
+    font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#f1f0e6}
+  .chap .votechip b{font-family:var(--display);font-weight:400;color:var(--brand);font-size:15px}
+
+  /* second-photo peek for reviews that have two shots */
+  .chap .peek{position:absolute;z-index:3;right:clamp(24px,6vw,70px);top:calc(33px + 70px);
+    width:clamp(120px,15vw,190px);border:2px solid #fff;border-radius:10px;overflow:hidden;
+    box-shadow:0 12px 34px rgba(0,0,0,.6);transform:rotate(2.5deg)}
+  .chap .peek img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5}
+  .chap .peek .plabel{position:absolute;left:6px;bottom:6px}
+
+  /* title card */
+  .chap.title{align-items:center}
+  .chap.title .content{max-width:940px;padding-bottom:0}
+  .chap.title .home{font-size:15px;font-weight:600;color:#d8d8cf;letter-spacing:.5px;margin-top:14px}
+  .chap.title h2{font-family:var(--display);font-size:clamp(52px,10.5vw,142px);line-height:.88;text-transform:uppercase;
+    letter-spacing:1px;margin:14px 0 24px;text-shadow:0 6px 34px rgba(0,0,0,.45)}
+  .chap.title .scores{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .tcard{background:rgba(255,255,255,.06);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,.3);
+    border-radius:14px;padding:14px 20px;min-width:150px}
+  .tcard.snap{border-color:var(--brand)}
+  .tcard .l{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#cfcfc5;
+    display:flex;gap:6px;align-items:center}
+  .tcard .v{font-family:var(--display);font-size:42px;line-height:1;margin-top:8px;color:#fff}
+  .tcard.snap .v{color:var(--brand)}
+  .tcard .s{font-size:11px;font-weight:600;color:#b7b7ad;margin-top:6px}
+  /* contributor stack on the title card */
+  .proof{display:flex;align-items:center;gap:13px;margin-top:24px;flex-wrap:wrap}
+  .stack{display:flex;padding-left:9px}
+  .stack .ini,.stack .av{width:34px;height:34px;margin-left:-9px;border:2px solid var(--ink);
+    box-shadow:0 0 0 1.5px #fff;position:relative}
+  .proof .txt{font-size:13.5px;font-weight:600;color:#e2e1d6}
+  .proof .txt b{font-family:var(--display);font-weight:400;font-size:17px;color:var(--brand);margin:0 1px}
+  .scrollhint{margin-top:30px;display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:800;
+    letter-spacing:1px;text-transform:uppercase;color:#e9e9df}
+  .scrollhint .arw{width:34px;height:34px;border-radius:50%;border:2px solid var(--brand);color:var(--brand);
+    display:flex;align-items:center;justify-content:center;animation:nudge 1.4s ease-in-out infinite}
+  @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* vertical chapter-dot rail (right) */
+  .rail{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;
+    gap:11px;align-items:flex-end;background:rgba(20,20,16,.5);border:1.5px solid rgba(255,255,255,.24);
+    border-radius:999px;padding:13px 11px;backdrop-filter:blur(6px)}
+  .rail button{display:flex;align-items:center;gap:9px;border:0;background:none;cursor:pointer;padding:0;
+    color:rgba(255,255,255,.6);font-family:var(--sans);font-weight:800;font-size:10px;letter-spacing:.6px;
+    text-transform:uppercase}
+  .rail .lbl{opacity:0;max-width:0;overflow:hidden;white-space:nowrap;transition:opacity .2s ease,max-width .25s ease}
+  .rail button:hover .lbl,.rail button.on .lbl{opacity:1;max-width:120px}
+  .rail .d{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.4);flex:none;
+    transition:background .2s ease,height .2s ease,border-radius .2s ease}
+  .rail button.on{color:#fff}
+  .rail button.on .d{background:var(--brand);height:26px;border-radius:6px}
+
+  /* top progress */
+  .pbar{position:fixed;top:33px;left:0;height:3px;background:var(--brand);width:0;z-index:55;transition:width .3s ease}
+
+  /* prev/next nudge arrows (bottom-left) */
+  .nav{position:fixed;left:22px;bottom:22px;z-index:50;display:flex;flex-direction:column;gap:9px}
+  .nav button{width:48px;height:48px;border-radius:50%;background:var(--brand);color:var(--ink);border:2px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;box-shadow:var(--punch);
+    font-family:var(--display);transition:transform .12s ease,opacity .2s ease;padding:0}
+  .nav button:hover{transform:scale(1.06)}
+  .nav button:active{transform:scale(.95)}
+  .nav button.hide{opacity:0;pointer-events:none}
+
+  @media(max-width:760px){
+    .rail{gap:9px;padding:11px 9px}
+    .rail .lbl{display:none}
+    .chap .quote{font-size:clamp(22px,6.5vw,34px)}
+    .chap .content{padding-bottom:clamp(72px,11vh,96px)}
+    .chap .peek{display:none}
+    .byline .rate{margin-left:0}
+    .nav{display:none}
+  }
+</style></head>
+<body>
+
+<div class="banner"><span>Concept 05a — Fan Photo-Reviews · Vertical</span><span>Scroll through one fan's photo-review at a time — every shot credited to who took it</span></div>
+
+<div class="pbar" id="pbar"></div>
+
+<div class="deck" id="deck"></div>
+
+<div class="rail" id="rail"></div>
+<div class="nav"><button id="prev" class="hide" aria-label="Previous chapter">‹</button><button id="next" aria-label="Next chapter">›</button></div>
+
+<script src="_crowd.js"></script>
+<script>
+  const C = window.CROWD, V = C.venue;
+
+  // ---- assemble the run of fan photo-reviews (each is ONE fan's shot) ----
+  // full reviews first (richest attribution: rating + quote + up to 2 photos),
+  // then a couple of standout photo-tips to round out the deck.
+  const reviewCards = C.reviews.map(r => ({
+    kind:'review', by:r.by, rating:r.rating, up:r.up, ago:r.ago,
+    body:r.body, photos:r.photos
+  }));
+  const topTips = ['atmosphere','best-seats']  // strong, photo-backed tip sections
+    .map(sec => C.tips.find(t => t.section === sec && t.photo && !t.pinned))
+    .filter(Boolean)
+    .map(t => ({ kind:'tip', by:t.by, up:t.up, ago:t.ago, body:t.text, photos:[t.photo] }));
+  const cards = [...reviewCards, ...topTips]; // 6 reviews + 2 tips = 8 chapters
+
+  const areaLabels = {
+    review:'Fan review', tip:'Photo tip'
+  };
+
+  // ---- byline: avatar + name(+verified) + their rating ----
+  function fanByline(card){
+    const f = C.fans[card.by];
+    const label = card.kind === 'review' ? 'Fan review' : 'Photo tip';
+    const rate = card.rating != null
+      ? `<span class="rate">${card.rating}/10</span>` : '';
+    return `<div class="byline">
+      ${C.avatar(card.by)}
+      <div class="who-meta">
+        <span class="who-name"><span class="nm">${f.name}</span>${f.verified?'<span class="vf">✓</span>':''}</span>
+        <span class="sub">${label} · ${card.ago}</span>
+      </div>
+      ${rate}
+    </div>`;
+  }
+
+  // ---- render deck ----
+  const deckEl = document.getElementById('deck');
+  const html = [];
+
+  // 0 · TITLE
+  html.push(`
+    <section class="chap title" data-chap data-label="MSG">
+      <div class="bg"><img src="${C.reviews[0].photos[0].src}" alt=""></div>
+      <div class="content">
+        <div class="num">The Fan Field Report</div>
+        <div class="home">${V.city} · Home of the ${V.team}</div>
+        <h2>${V.name}</h2>
+        <div class="scores">
+          <div class="tcard snap"><div class="l">★ Snapback Score</div><div class="v">${V.snap}</div><div class="s">Expert-rated · #${V.rank} in the league</div></div>
+          <div class="tcard"><div class="l">Fan Score</div><div class="v">${V.fan}</div><div class="s">${V.reviews} fan reviews</div></div>
+        </div>
+        <div class="proof">
+          <div class="stack" id="stack"></div>
+          <span class="txt"><b>${V.fans}</b> fans contributed · <b>${V.reviews}</b> reviews · <b>${V.tips}</b> tips</span>
+        </div>
+        <div class="scrollhint"><span class="arw">↓</span> Scroll — each screen is one fan's photo-review</div>
+      </div>
+    </section>`);
+
+  // 1..N · one fan's photo-review each
+  cards.forEach((card, i) => {
+    const main = card.photos[0];
+    const peek = card.photos[1];
+    const f = C.fans[card.by];
+    html.push(`
+      <section class="chap" data-chap data-label="${f.name.split(' ')[0]}">
+        <div class="bg"><img src="${main.src}" alt=""></div>
+        <span class="tag areaTag">${main.area}</span>
+        ${peek ? `<div class="peek"><img src="${peek.src}" alt=""><span class="tag plabel">${peek.area}</span></div>` : ''}
+        <div class="content">
+          <div class="num">${String(i+1).padStart(2,'0')} / ${card.kind === 'review' ? 'Fan review' : 'Photo tip'}</div>
+          ${fanByline(card)}
+          <p class="quote">${card.kind === 'review' ? `“${card.body}”` : `“${card.body}”`}</p>
+          <span class="votechip">▲ <b>${card.up}</b> found this helpful</span>
+        </div>
+      </section>`);
+  });
+
+  deckEl.innerHTML = html.join('');
+
+  // contributor stack (logo + a handful of fans)
+  const stackIds = ['jack','grace','mike','rob','tommy','danny','sarah','carl'];
+  document.getElementById('stack').innerHTML = stackIds.map(id => C.avatar(id)).join('');
+
+  // ---- nav wiring ----
+  const deck = deckEl;
+  const chaps = [...deck.querySelectorAll('[data-chap]')];
+  const rail = document.getElementById('rail');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const pbar = document.getElementById('pbar');
+  let idx = 0;
+
+  chaps.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Chapter ' + (i+1) + ': ' + c.dataset.label);
+    b.innerHTML = '<span class="lbl">' + c.dataset.label + '</span><span class="d"></span>';
+    b.addEventListener('click', () => go(i));
+    rail.appendChild(b);
+  });
+  const railEls = [...rail.children];
+
+  function go(i){
+    idx = Math.max(0, Math.min(chaps.length - 1, i));
+    chaps[idx].scrollIntoView({behavior:'smooth', block:'start'});
+    paint();
+  }
+  function paint(){
+    railEls.forEach((d, i) => d.classList.toggle('on', i === idx));
+    prev.classList.toggle('hide', idx === 0);
+    next.classList.toggle('hide', idx === chaps.length - 1);
+    pbar.style.width = ((idx+1)/chaps.length*100) + '%';
+  }
+
+  prev.addEventListener('click', () => go(idx - 1));
+  next.addEventListener('click', () => go(idx + 1));
+
+  let raf;
+  deck.addEventListener('scroll', () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const h = deck.clientHeight;
+      const i = Math.round(deck.scrollTop / h);
+      if(i !== idx){ idx = i; paint(); }
+    });
+  }, {passive:true});
+
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); go(idx + 1); }
+    if(e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  || e.key === 'PageUp'){ e.preventDefault(); go(idx - 1); }
+  });
+
+  window.addEventListener('resize', () => go(idx));
+  paint();
+</script>
+</body></html>

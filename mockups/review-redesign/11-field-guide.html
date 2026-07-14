@@ -1,0 +1,221 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>11 · The Field Guide — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body{background:#e9e7de;
+    background-image:radial-gradient(circle at 1px 1px, rgba(20,20,16,.05) 1px, transparent 0);
+    background-size:22px 22px}
+
+  .sheet-wrap{max-width:920px;margin:34px auto 60px;padding:0 20px}
+  .sheet{background:var(--cream);border:2px solid var(--ink);border-radius:6px;box-shadow:var(--punch-lg);
+    position:relative;overflow:hidden}
+  /* punched holes down the left, like a field notebook */
+  .holes{position:absolute;left:16px;top:0;bottom:0;width:14px;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;padding:40px 0;z-index:2}
+  .holes span{width:12px;height:12px;border-radius:50%;background:#e9e7de;border:2px solid var(--ink);
+    box-shadow:inset 1px 1px 0 rgba(0,0,0,.12)}
+
+  .sheet .inner{padding:30px 34px 38px 62px}
+
+  /* masthead */
+  .mast{border-bottom:3px solid var(--ink);padding-bottom:16px}
+  .mast .row1{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .mast .brand-tag{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+  .mast h1{font-family:var(--display);font-size:clamp(34px,6vw,58px);line-height:.9;letter-spacing:1px;
+    text-transform:uppercase;color:var(--ink);margin:6px 0 8px}
+  .mast .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:600;color:var(--muted)}
+  .mast .stamp{margin-left:auto;text-align:center;border:2px solid var(--ink);border-radius:8px;
+    padding:6px 12px;background:var(--brand);box-shadow:var(--punch);transform:rotate(2.5deg)}
+  .mast .stamp .n{font-family:var(--display);font-size:26px;line-height:.9;color:var(--ink)}
+  .mast .stamp .l{font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-soft)}
+
+  .lede{font-size:15.5px;line-height:1.6;font-weight:500;color:#33352f;margin:16px 0 6px;max-width:62ch}
+
+  /* two-column: itinerary + cheat sheet */
+  .layout{display:grid;grid-template-columns:1fr 268px;gap:30px;margin-top:20px;align-items:start}
+
+  /* itinerary steps */
+  .steps{position:relative}
+  .stp{display:grid;grid-template-columns:44px 132px 1fr;gap:16px;align-items:start;padding:16px 0;position:relative}
+  .stp + .stp{border-top:1.5px dashed #d9d4bf}
+  .chipnum{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--brand);
+    font-family:var(--display);font-size:22px;display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--ink);box-shadow:var(--punch)}
+  .stp .photo{width:132px;aspect-ratio:4/3;box-shadow:var(--punch)}
+  .stp .photo .tag{left:5px;bottom:5px}
+  .stp .body{min-width:0}
+  .stp .ttl{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .stp .ttl .t{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:1}
+  .stp .ttl .lead-line{flex:1;min-width:30px;border-bottom:2px dotted #cfc9b0;transform:translateY(-4px)}
+  .stp .ttl .area{font-size:9px}
+  .stp .tip{font-size:14px;line-height:1.5;font-weight:500;color:#2a2a2a;margin-top:7px}
+  .stp .who{margin-top:8px;font-size:11px}
+
+  /* cheat sheet sidebar */
+  .cheat{background:var(--tip);border:2px solid var(--ink);border-radius:10px;box-shadow:var(--punch);
+    padding:18px 18px 20px;position:sticky;top:18px}
+  .cheat h3{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);
+    line-height:.95;margin:0 0 3px}
+  .cheat .sub{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .must{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-top:1.5px dashed #e2d9a8}
+  .must:first-of-type{border-top:0;padding-top:2px}
+  .must .box{flex:none;width:22px;height:22px;border:2px solid var(--ink);border-radius:5px;background:var(--cream);
+    display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink);font-weight:900;margin-top:1px}
+  .must .mt{font-size:13.5px;line-height:1.4;color:#2a2a2a}
+  .must .mt b{color:var(--ink)}
+  .cheat .rule{margin-top:14px;border-top:2px solid var(--ink);padding-top:12px}
+  .cheat .warn{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.4;font-weight:600;color:#7a5a12}
+  .cheat .warn .b{flex:none;font-size:14px}
+  .cheat .sig{margin-top:14px;display:flex;align-items:center;gap:8px;font-size:11px}
+
+  /* footer verdict strip */
+  .foot{margin-top:22px;border-top:3px solid var(--ink);padding-top:16px;display:flex;align-items:center;
+    gap:14px;flex-wrap:wrap}
+  .foot .score{font-size:24px;padding:4px 14px}
+  .foot .fq{font-size:13.5px;line-height:1.5;font-weight:600;color:#26271f;flex:1;min-width:220px}
+
+  @media(max-width:760px){
+    .layout{grid-template-columns:1fr}
+    .cheat{position:static;order:-1}
+    .stp{grid-template-columns:40px 1fr}
+    .stp .photo{grid-column:1/-1;width:100%;max-width:220px}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 11 — The Field Guide</span><span style="color:#fff">A printed pocket itinerary · numbered steps you screenshot before you go</span>
+</div>
+
+<div class="sheet-wrap">
+  <div class="sheet">
+    <div class="holes"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="inner">
+
+      <!-- masthead -->
+      <div class="mast">
+        <div class="row1">
+          <span class="brand-tag">◆ Snapback Field Report</span>
+        </div>
+        <h1>MSG Field Guide</h1>
+        <div class="meta">
+          <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> By Jack Settleman <span class="vf">✓</span></span>
+          <span>·</span><span>New York Knicks</span><span>·</span><span>New York, NY</span>
+          <span class="stamp"><div class="n">9.2</div><div class="l">Snapback · #3</div></span>
+        </div>
+      </div>
+
+      <p class="lede">There's no building in sports like the Garden. Follow the seven steps below in order — arrive right, sit right, eat right — and a Knicks night becomes the best crowd in the NBA.</p>
+
+      <div class="layout">
+        <!-- ITINERARY -->
+        <div class="steps">
+
+          <!-- 1 -->
+          <div class="stp">
+            <div class="chipnum">1</div>
+            <div class="photo"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""><span class="tag">Outside</span></div>
+            <div class="body">
+              <div class="ttl"><span class="t">Get there</span><span class="lead-line"></span></div>
+              <div class="tip">Best ways in: walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice.</div>
+              <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+            </div>
+          </div>
+
+          <!-- 2 -->
+          <div class="stp">
+            <div class="chipnum">2</div>
+            <div class="photo"><img src="../../public/img/reports/citi/robby/r20.jpg" alt=""><span class="tag">Gates</span></div>
+            <div class="body">
+              <div class="ttl"><span class="t">Get in</span><span class="lead-line"></span></div>
+              <div class="tip">Come in through the 100 level gates — the merch store there has a way shorter line than the one in the MSG lobby.</div>
+              <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+            </div>
+          </div>
+
+          <!-- 3 -->
+          <div class="stp">
+            <div class="chipnum">3</div>
+            <div class="photo"><img src="../../public/img/reports/citi/robby/r44.jpg" alt=""><span class="tag">Chase Lounge</span></div>
+            <div class="body">
+              <div class="ttl"><span class="t">Pregame</span><span class="lead-line"></span></div>
+              <div class="tip">There's a Chase reserve lounge inside the arena you can book pregame. Nearby: Nick and Stef's, Stout, and Mustang Harry's.</div>
+              <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div class="stp">
+            <div class="chipnum">4</div>
+            <div class="photo"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""><span class="tag">100 Level</span></div>
+            <div class="body">
+              <div class="ttl"><span class="t">Find your seat</span><span class="lead-line"></span></div>
+              <div class="tip">Front rows in the 200s in the center sections beat behind the basket, even down low. The Hyundai Bridge is a cool spot and good value.</div>
+              <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div class="stp">
+            <div class="chipnum">5</div>
+            <div class="photo"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""><span class="tag">Steak Sandwich</span></div>
+            <div class="body">
+              <div class="ttl"><span class="t">Eat</span><span class="lead-line"></span></div>
+              <div class="tip">The best food in MSG is the steak sandwich outside section 107. The Garden Market hamburgers are the best basic food in sports. Skip the pizza.</div>
+              <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+            </div>
+          </div>
+
+          <!-- 6 -->
+          <div class="stp">
+            <div class="chipnum">6</div>
+            <div class="photo"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""><span class="tag">Tip-off</span></div>
+            <div class="body">
+              <div class="ttl"><span class="t">Soak it in</span><span class="lead-line"></span></div>
+              <div class="tip">Best crowd in the NBA. Be ready to stand, and the seats are tight — but there's plenty of in-game entertainment like t-shirt tosses.</div>
+              <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+            </div>
+          </div>
+
+          <!-- 7 -->
+          <div class="stp">
+            <div class="chipnum">7</div>
+            <div class="photo"><img src="../../public/img/reports/citi/robby/r04.jpg" alt=""><span class="tag">Team Store</span></div>
+            <div class="body">
+              <div class="ttl"><span class="t">On the way out</span><span class="lead-line"></span></div>
+              <div class="tip">Grab merch through the 100 level gates for the shorter line. One heads-up: alcoholic drinks are very expensive inside MSG — budget for it.</div>
+              <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CHEAT SHEET -->
+        <aside class="cheat">
+          <h3>Jack's cheat sheet</h3>
+          <div class="sub">3 must-dos ◆ don't skip</div>
+          <div class="must"><span class="box">✓</span><span class="mt"><b>Eat the steak sandwich</b> outside section 107 — best food in the building.</span></div>
+          <div class="must"><span class="box">✓</span><span class="mt"><b>Sit center-200s</b>, front rows. They beat behind the basket, even down low.</span></div>
+          <div class="must"><span class="box">✓</span><span class="mt"><b>Come in on transit</b> — subway, LIRR, or NJ Transit. Skip driving.</span></div>
+          <div class="rule">
+            <div class="warn"><span class="b">!</span><span>Alcohol is very expensive inside MSG. And skip the arena pizza.</span></div>
+          </div>
+          <div class="sig"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+        </aside>
+      </div>
+
+      <!-- verdict footer -->
+      <div class="foot">
+        <span class="score">9.2</span>
+        <div class="fq">"Best crowd in the NBA, best steak sandwich in the building, worst pizza. Come in on transit, sit center-200s, and stand up." — <b>Jack's verdict</b></div>
+        <span class="vote"><button>▲</button><span class="n">128</span><button>▼</button></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body></html>

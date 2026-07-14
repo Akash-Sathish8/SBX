@@ -1,0 +1,280 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03c · Digest Rows AT SCALE — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;margin:4px 0 4px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5}
+  .stage{background:#f7f6f2;padding:42px 0 60px}
+
+  /* social proof strip */
+  .proof{display:flex;align-items:center;gap:13px;margin-top:16px;flex-wrap:wrap}
+  .stack{display:flex;padding-left:9px}
+  .stack .ini,.stack .av{width:32px;height:32px;margin-left:-9px;border:2px solid #f7f6f2;
+    box-shadow:0 0 0 1.5px var(--ink);position:relative}
+  .proof .txt{font-size:13.5px;font-weight:600;color:#4a4b44}
+  .proof .txt b{font-family:var(--display);font-weight:400;font-size:17px;color:var(--ink);margin:0 1px}
+
+  /* one card, thin-divided rows */
+  .digest{margin-top:20px;background:var(--cream);border:2px solid var(--ink);border-radius:14px;
+    box-shadow:var(--punch-lg);overflow:hidden}
+  .row{display:grid;grid-template-columns:340px 1fr;gap:26px;padding:22px 26px;border-top:1.5px solid var(--line);align-items:start}
+  .row:first-child{border-top:0}
+
+  /* filmstrip — now a 2x2 with a +N overflow + contributor caption */
+  .strip{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .strip .photo{aspect-ratio:4/3;border-width:2px;border-radius:8px;box-shadow:var(--punch)}
+  .strip .photo .tag{left:5px;bottom:5px;font-size:8px;padding:2px 5px}
+  .moretile{aspect-ratio:4/3;border:2px solid var(--ink);border-radius:8px;background:var(--ink);color:var(--brand);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--punch);cursor:pointer}
+  .moretile b{font-family:var(--display);font-size:22px;line-height:1}
+  .moretile span{font-size:8px;font-weight:800;letter-spacing:.8px;text-transform:uppercase}
+  .stripcap{grid-column:1/-1;font-size:11px;font-weight:700;color:var(--muted);margin-top:1px;display:flex;align-items:center;gap:6px}
+
+  /* text side */
+  .rt .head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .rt .lab{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:1;letter-spacing:.5px;color:var(--ink);font-size:26px}
+  .rt .cnt{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .sortpill{margin-left:auto;display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);border-radius:999px;
+    padding:4px 11px;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#6b6b6b;background:#fff}
+
+  /* per-tip row: avatar + author meta + body + vote */
+  .tline{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px dashed #ece9dd}
+  .tline:first-of-type{border-top:0}
+  .tline.more{display:none}
+  .rt.expanded .tline.more{display:flex}
+  .tline .av{width:27px;height:27px;border-radius:50%;border:1.5px solid var(--ink);object-fit:cover;background:var(--ink);flex:none;margin-top:1px}
+  .ini{width:27px;height:27px;border-radius:50%;border:1.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800;color:#fff;flex:none;margin-top:1px}
+  .tmain{flex:1;min-width:0}
+  .tmeta{display:flex;align-items:center;gap:6px;margin-bottom:1px;flex-wrap:wrap}
+  .tmeta .nm{font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.2px}
+  .tmeta .vf{width:14px;height:14px;border-radius:50%;background:var(--ink);color:var(--brand);font-size:8px;font-weight:900;display:inline-flex;align-items:center;justify-content:center}
+  .tmeta .ago{font-size:11px;font-weight:600;color:#a3a091}
+  .tmeta .pin{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);border:1px solid #e7dca0;background:var(--tip);border-radius:4px;padding:1px 5px}
+  .tbody{font-size:13.5px;line-height:1.45;color:#2a2a2a;font-weight:500}
+  .tbody b{font-weight:800;color:var(--ink)}
+  .tline .vote{flex:none;margin-top:2px;transform:scale(.9);transform-origin:right top}
+
+  .showmore{margin-top:7px;background:none;border:0;cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:800;
+    letter-spacing:.4px;text-transform:uppercase;color:var(--gold);padding:5px 0;display:inline-flex;align-items:center;gap:6px}
+  .rt.expanded .showmore{display:none}
+
+  /* reviews block */
+  .reviews{margin-top:22px;background:var(--cream);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch-lg);overflow:hidden}
+  .rhead{display:flex;align-items:center;gap:10px;background:var(--brand);border-bottom:2px solid var(--ink);padding:12px 20px}
+  .rhead .t{font-family:var(--display);font-size:19px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink)}
+  .rhead .c{margin-left:auto;background:var(--ink);color:#fff;border-radius:11px;padding:3px 11px;font-size:12px;font-weight:800}
+  .rvrow{display:grid;grid-template-columns:1fr 128px;gap:18px;padding:15px 20px;border-top:1px dashed #ece9dd;align-items:center}
+  .rvrow:first-of-type{border-top:0}
+  .rvhead{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  .rvbody{font-size:13.5px;line-height:1.45;color:#2a2a2a;font-weight:500}
+  .rvphoto{aspect-ratio:4/3;border:2px solid var(--ink);border-radius:8px;overflow:hidden;box-shadow:var(--punch)}
+  .rvphoto img{width:100%;height:100%;object-fit:cover}
+  .readall{display:block;text-align:center;padding:13px;background:#fff;border-top:2px solid var(--ink);
+    font-size:13px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--ink)}
+
+  @media(max-width:760px){.row{grid-template-columns:1fr;gap:16px;padding:20px}.rvrow{grid-template-columns:1fr}.rvphoto{max-width:200px}}
+</style></head>
+<body>
+
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 03c — Digest Rows · AT SCALE</span>
+  <span style="color:#fff;text-transform:none;letter-spacing:.3px">How it reads once ~14 fans have contributed — per-tip authors, vote-sorted, overflow, multi-fan photos</span>
+</div>
+
+<header class="top"><div class="wrap">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home">Home of New York Knicks · <b style="color:var(--brand)">Snapback 9.2</b> (#3) · Fan 8.7 (214)</div>
+</div></header>
+
+<section class="stage"><div class="wrap">
+  <div class="shead-row">
+    <div><div class="eyebrow"><span class="dot"></span> Snapback · crowdsourced</div>
+      <h2 class="shead" style="margin-top:8px">What do I need to know?</h2></div>
+    <div style="display:flex;gap:10px"><span class="pill-brand">Build your guide →</span><span class="pill-dark">+ Add a tip</span></div>
+  </div>
+  <div class="ssub" style="margin-top:10px">Insider tips &amp; photos from fans who've actually been to Madison Square Garden</div>
+
+  <div class="proof">
+    <div class="stack">
+      <img class="av" src="../../public/img/logo.png" alt="">
+      <span class="ini" style="background:#c0392b">MD</span>
+      <span class="ini" style="background:#2b6cb0">SK</span>
+      <span class="ini" style="background:#6b46c1">TV</span>
+      <span class="ini" style="background:#b7791f">JR</span>
+      <span class="ini" style="background:#2f855a">ML</span>
+      <span class="ini" style="background:#97266d">NP</span>
+      <span class="ini" style="background:#285e61">CW</span>
+    </div>
+    <span class="txt"><b>73</b> fans contributed · <b>128</b> tips · <b>214</b> reviews · updated <b>2d</b> ago</span>
+  </div>
+
+  <div class="digest">
+
+    <!-- BEST SEATS -->
+    <div class="row">
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""><span class="tag">100 Level</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r40.jpg" alt=""><span class="tag">300 Level</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r56.jpg" alt=""><span class="tag">Hyundai Bridge</span></div>
+        <div class="moretile"><b>+13</b><span>Seat views</span></div>
+        <div class="stripcap">📷 16 photos from 9 fans</div>
+      </div>
+      <div class="rt">
+        <div class="head"><span class="lab">Best Seats</span><span class="cnt">7 tips · 6 fans</span><span class="sortpill">Top ▾</span></div>
+        <div class="tline"><img class="av" src="../../public/img/logo.png" alt=""><div class="tmain"><div class="tmeta"><span class="nm">Jack Settleman</span><span class="vf">✓</span><span class="pin">Pinned</span></div><div class="tbody">Front rows in the <b>200s, center sections</b> beat behind the basket, even down low.</div></div><span class="vote"><button>▲</button><span class="n">41</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#6b46c1">TV</span><div class="tmain"><div class="tmeta"><span class="nm">Tommy V.</span><span class="ago">2w ago</span></div><div class="tbody">The <b>Hyundai Bridge</b> is the best value seat in the building. Get there for warmups, it fills up fast.</div></div><span class="vote"><button>▲</button><span class="n">36</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#2b6cb0">SK</span><div class="tmain"><div class="tmeta"><span class="nm">Sarah K.</span><span class="ago">3w ago</span></div><div class="tbody">Sections <b>104-105 by the tunnel</b> — you see the players walk out. My kids loved it.</div></div><span class="vote"><button>▲</button><span class="n">24</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#2f855a">ML</span><div class="tmain"><div class="tmeta"><span class="nm">Marcus L.</span><span class="ago">1mo ago</span></div><div class="tbody">Skip the last 3 rows of the 200s — the overhang cuts off the scoreboard.</div></div><span class="vote"><button>▲</button><span class="n">19</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#4a5568">LG</span><div class="tmain"><div class="tmeta"><span class="nm">Leo G.</span><span class="ago">1mo ago</span></div><div class="tbody">Chase Bridge is cool once, but you're far from the floor. Do it for the photos, not the game.</div></div><span class="vote"><button>▲</button><span class="n">12</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#22543d">PN</span><div class="tmain"><div class="tmeta"><span class="nm">Priya N.</span><span class="ago">2mo ago</span></div><div class="tbody">If you're tall, aisle seats in <b>213/214</b> have way more legroom.</div></div><span class="vote"><button>▲</button><span class="n">9</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#9c4221">RM</span><div class="tmain"><div class="tmeta"><span class="nm">Rob M.</span><span class="ago">2mo ago</span></div><div class="tbody">Resale in the 200s drops right after tipoff. I've gotten center 200s for under face.</div></div><span class="vote"><button>▲</button><span class="n">7</span><button>▼</button></span></div>
+        <button class="showmore">Show 3 more tips ▾</button>
+      </div>
+    </div>
+
+    <!-- BEST FOOD -->
+    <div class="row">
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""><span class="tag">Steak Sandwich</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r30.jpg" alt=""><span class="tag">Garden Market</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r26.jpg" alt=""><span class="tag">Burgers</span></div>
+        <div class="moretile"><b>+23</b><span>Food</span></div>
+        <div class="stripcap">📷 26 photos from 11 fans</div>
+      </div>
+      <div class="rt">
+        <div class="head"><span class="lab">Best Food</span><span class="cnt">8 tips · 7 fans</span><span class="sortpill">Top ▾</span></div>
+        <div class="tline"><img class="av" src="../../public/img/logo.png" alt=""><div class="tmain"><div class="tmeta"><span class="nm">Jack Settleman</span><span class="vf">✓</span><span class="pin">Pinned</span></div><div class="tbody">Best food in MSG is the <b>steak sandwich outside section 107</b>.</div></div><span class="vote"><button>▲</button><span class="n">57</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#c0392b">MD</span><div class="tmain"><div class="tmeta"><span class="nm">Mike D.</span><span class="ago">5d ago</span></div><div class="tbody">Second the steak sandwich. Get it before tip or the line is <b>20 deep by the 1st quarter</b>.</div></div><span class="vote"><button>▲</button><span class="n">48</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#b7791f">JR</span><div class="tmain"><div class="tmeta"><span class="nm">Jenn R.</span><span class="ago">2w ago</span></div><div class="tbody"><b>Garden Market burger</b> is the move. The hot honey chicken is underrated too.</div></div><span class="vote"><button>▲</button><span class="n">33</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#c53030">DP</span><div class="tmain"><div class="tmeta"><span class="nm">Danny P.</span><span class="ago">3w ago</span></div><div class="tbody"><b>Skip the pizza</b>, everyone's right. The chopped cheese near 109 is actually solid.</div></div><span class="vote"><button>▲</button><span class="n">27</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#285e61">CW</span><div class="tmain"><div class="tmeta"><span class="nm">Carl W.</span><span class="ago">1mo ago</span></div><div class="tbody">Kosher cart by 115 has a great pastrami. If you know, you know.</div></div><span class="vote"><button>▲</button><span class="n">21</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#702459">GV</span><div class="tmain"><div class="tmeta"><span class="nm">Grace V.</span><span class="ago">1mo ago</span></div><div class="tbody">Boomer's fries. That's the whole tip.</div></div><span class="vote"><button>▲</button><span class="n">16</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#97266d">NP</span><div class="tmain"><div class="tmeta"><span class="nm">Nina P.</span><span class="ago">2mo ago</span></div><div class="tbody">Veggie options are limited — the <b>Garden Market veggie burger</b> is the safe bet.</div></div><span class="vote"><button>▲</button><span class="n">12</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#1a365d">ES</span><div class="tmain"><div class="tmeta"><span class="nm">Elliot S.</span><span class="ago">2mo ago</span></div><div class="tbody">Coffee stand near 208 for the night games. Saved me in the 4th.</div></div><span class="vote"><button>▲</button><span class="n">8</span><button>▼</button></span></div>
+        <button class="showmore">Show 4 more tips ▾</button>
+      </div>
+    </div>
+
+    <!-- GETTING THERE -->
+    <div class="row">
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""><span class="tag">Outside</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r20.jpg" alt=""><span class="tag">Gates</span></div>
+        <div class="stripcap">📷 5 photos from 4 fans</div>
+      </div>
+      <div class="rt">
+        <div class="head"><span class="lab">Getting There</span><span class="cnt">5 tips · 5 fans</span><span class="sortpill">Top ▾</span></div>
+        <div class="tline"><img class="av" src="../../public/img/logo.png" alt=""><div class="tmain"><div class="tmeta"><span class="nm">Jack Settleman</span><span class="vf">✓</span><span class="pin">Pinned</span></div><div class="tbody">Best ways in: <b>walking, the subway, the LIRR, or NJ Transit</b>. Driving would be my last choice.</div></div><span class="vote"><button>▲</button><span class="n">38</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#9c4221">RM</span><div class="tmain"><div class="tmeta"><span class="nm">Rob M.</span><span class="ago">1w ago</span></div><div class="tbody">Come out of Penn and use the <b>7th Ave entrance</b> — way less of a crush than 8th.</div></div><span class="vote"><button>▲</button><span class="n">22</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#97266d">NP</span><div class="tmain"><div class="tmeta"><span class="nm">Nina P.</span><span class="ago">3w ago</span></div><div class="tbody">If you must drive, the <b>Icon garage on 31st</b> is cheaper if you prepay online.</div></div><span class="vote"><button>▲</button><span class="n">14</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#c0392b">MD</span><div class="tmain"><div class="tmeta"><span class="nm">Mike D.</span><span class="ago">1mo ago</span></div><div class="tbody">The <b>A/C/E to 34th</b> drops you right at the door. The 1/2/3 is a block walk.</div></div><span class="vote"><button>▲</button><span class="n">10</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#22543d">PN</span><div class="tmain"><div class="tmeta"><span class="nm">Priya N.</span><span class="ago">1mo ago</span></div><div class="tbody">Leave 10 min early — the Penn construction reroutes the sidewalk on 8th.</div></div><span class="vote"><button>▲</button><span class="n">6</span><button>▼</button></span></div>
+        <button class="showmore">Show 2 more tips ▾</button>
+      </div>
+    </div>
+
+    <!-- BEFORE THE GAME -->
+    <div class="row">
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r44.jpg" alt=""><span class="tag">Chase Lounge</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r51.jpg" alt=""><span class="tag">Stout</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r57.jpg" alt=""><span class="tag">Delta Club</span></div>
+        <div class="moretile"><b>+6</b><span>Pregame</span></div>
+        <div class="stripcap">📷 9 photos from 5 fans</div>
+      </div>
+      <div class="rt">
+        <div class="head"><span class="lab">Before The Game</span><span class="cnt">5 tips · 5 fans</span><span class="sortpill">Top ▾</span></div>
+        <div class="tline"><img class="av" src="../../public/img/logo.png" alt=""><div class="tmain"><div class="tmeta"><span class="nm">Jack Settleman</span><span class="vf">✓</span><span class="pin">Pinned</span></div><div class="tbody">Pregame spots nearby: <b>Nick and Stef's</b>, The Rutherford, Stout, Mustang Harry's, American Whiskey.</div></div><span class="vote"><button>▲</button><span class="n">22</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#285e61">CW</span><div class="tmain"><div class="tmeta"><span class="nm">Carl W.</span><span class="ago">4d ago</span></div><div class="tbody">Stout gets slammed. <b>Liberty NYC on 33rd</b> has more room and cheaper pitchers.</div></div><span class="vote"><button>▲</button><span class="n">17</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#4a5568">LG</span><div class="tmain"><div class="tmeta"><span class="nm">Leo G.</span><span class="ago">2w ago</span></div><div class="tbody">The <b>Chase reserve lounge</b> is legit if you have the card — quiet place to sit before doors.</div></div><span class="vote"><button>▲</button><span class="n">12</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#6b46c1">TV</span><div class="tmain"><div class="tmeta"><span class="nm">Tommy V.</span><span class="ago">1mo ago</span></div><div class="tbody">Do the Nick and Stef's happy hour, then walk over. Best pregame in the area.</div></div><span class="vote"><button>▲</button><span class="n">9</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#702459">GV</span><div class="tmain"><div class="tmeta"><span class="nm">Grace V.</span><span class="ago">1mo ago</span></div><div class="tbody">Mustang Harry's for the big group — they can seat 12 without a reservation.</div></div><span class="vote"><button>▲</button><span class="n">5</span><button>▼</button></span></div>
+        <button class="showmore">Show 2 more tips ▾</button>
+      </div>
+    </div>
+
+    <!-- ATMOSPHERE -->
+    <div class="row">
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""><span class="tag">Tip-off</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r15.jpg" alt=""><span class="tag">Concourse</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r18.jpg" alt=""><span class="tag">Crowd</span></div>
+        <div class="moretile"><b>+7</b><span>Gameday</span></div>
+        <div class="stripcap">📷 10 photos from 7 fans</div>
+      </div>
+      <div class="rt">
+        <div class="head"><span class="lab">Atmosphere</span><span class="cnt">7 tips · 7 fans</span><span class="sortpill">Top ▾</span></div>
+        <div class="tline"><img class="av" src="../../public/img/logo.png" alt=""><div class="tmain"><div class="tmeta"><span class="nm">Jack Settleman</span><span class="vf">✓</span><span class="pin">Pinned</span></div><div class="tbody"><b>Best crowd in the NBA.</b> Be ready to stand, seats are tight. Plenty of in-game stuff like <b>t-shirt tosses</b>.</div></div><span class="vote"><button>▲</button><span class="n">63</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#702459">GV</span><div class="tmain"><div class="tmeta"><span class="nm">Grace V.</span><span class="ago">6d ago</span></div><div class="tbody">When the Knicks go on a run the building is <b>unreal</b>. Nothing like a playoff MSG.</div></div><span class="vote"><button>▲</button><span class="n">51</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#1a365d">ES</span><div class="tmain"><div class="tmeta"><span class="nm">Elliot S.</span><span class="ago">2w ago</span></div><div class="tbody">Bring earplugs for the little ones — it gets genuinely loud in the 4th.</div></div><span class="vote"><button>▲</button><span class="n">18</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#c53030">DP</span><div class="tmain"><div class="tmeta"><span class="nm">Danny P.</span><span class="ago">3w ago</span></div><div class="tbody">Spike Lee's usually courtside. Half the fun is the celeb-spotting.</div></div><span class="vote"><button>▲</button><span class="n">15</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#2b6cb0">SK</span><div class="tmain"><div class="tmeta"><span class="nm">Sarah K.</span><span class="ago">1mo ago</span></div><div class="tbody">Not super family-friendly on a rowdy night, but the energy is worth it.</div></div><span class="vote"><button>▲</button><span class="n">12</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#2f855a">ML</span><div class="tmain"><div class="tmeta"><span class="nm">Marcus L.</span><span class="ago">1mo ago</span></div><div class="tbody">The Garden of Dreams moments at halftime always get me.</div></div><span class="vote"><button>▲</button><span class="n">9</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#4a5568">LG</span><div class="tmain"><div class="tmeta"><span class="nm">Leo G.</span><span class="ago">2mo ago</span></div><div class="tbody">Get there for the intro video — they nail it every time.</div></div><span class="vote"><button>▲</button><span class="n">6</span><button>▼</button></span></div>
+        <button class="showmore">Show 3 more tips ▾</button>
+      </div>
+    </div>
+
+    <!-- INSIDER TIPS -->
+    <div class="row">
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r04.jpg" alt=""><span class="tag">Team Store</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r63.jpg" alt=""><span class="tag">Merch</span></div>
+        <div class="stripcap">📷 6 photos from 5 fans</div>
+      </div>
+      <div class="rt">
+        <div class="head"><span class="lab">Insider Tips</span><span class="cnt">7 tips · 6 fans</span><span class="sortpill">Top ▾</span></div>
+        <div class="tline"><img class="av" src="../../public/img/logo.png" alt=""><div class="tmain"><div class="tmeta"><span class="nm">Jack Settleman</span><span class="vf">✓</span><span class="pin">Pinned</span></div><div class="tbody">The merch store through the <b>100 level gates</b> has a way shorter line than the MSG lobby.</div></div><span class="vote"><button>▲</button><span class="n">31</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#c53030">DP</span><div class="tmain"><div class="tmeta"><span class="nm">Danny P.</span><span class="ago">1w ago</span></div><div class="tbody">Alcohol is brutal — <b>$18 beers</b>. Handle it before you come in.</div></div><span class="vote"><button>▲</button><span class="n">29</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#2b6cb0">SK</span><div class="tmain"><div class="tmeta"><span class="nm">Sarah K.</span><span class="ago">2w ago</span></div><div class="tbody"><b>Restrooms on the 200 level</b> are way less crowded than the 100s at halftime.</div></div><span class="vote"><button>▲</button><span class="n">21</span><button>▼</button></span></div>
+        <div class="tline"><span class="ini" style="background:#22543d">PN</span><div class="tmain"><div class="tmeta"><span class="nm">Priya N.</span><span class="ago">3w ago</span></div><div class="tbody">Mobile ticket only — <b>download the MSG app</b> before you get there, signal is bad inside.</div></div><span class="vote"><button>▲</button><span class="n">17</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#9c4221">RM</span><div class="tmain"><div class="tmeta"><span class="nm">Rob M.</span><span class="ago">1mo ago</span></div><div class="tbody">The Chase Bridge entrance has the shortest security line most nights.</div></div><span class="vote"><button>▲</button><span class="n">11</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#c0392b">MD</span><div class="tmain"><div class="tmeta"><span class="nm">Mike D.</span><span class="ago">1mo ago</span></div><div class="tbody">Coat check by 110 fills up. In winter, get there early or wear layers you can stuff.</div></div><span class="vote"><button>▲</button><span class="n">8</span><button>▼</button></span></div>
+        <div class="tline more"><span class="ini" style="background:#285e61">CW</span><div class="tmain"><div class="tmeta"><span class="nm">Carl W.</span><span class="ago">2mo ago</span></div><div class="tbody">Free water refill stations near the ramps — don't buy the $6 bottles.</div></div><span class="vote"><button>▲</button><span class="n">5</span><button>▼</button></span></div>
+        <button class="showmore">Show 3 more tips ▾</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAN REVIEWS at scale -->
+  <div class="reviews">
+    <div class="rhead"><span class="t">Fan Reviews</span><span class="c">214</span>
+      <span style="font-size:12px;font-weight:700;color:#5a5a52;margin-left:8px">avg 8.7 / 10</span></div>
+    <div class="rvrow">
+      <div>
+        <div class="rvhead"><span class="ini" style="background:#702459">GV</span><span class="nm" style="font-size:12.5px;font-weight:800">Grace V.</span><span class="score" style="font-size:12px;padding:1px 8px">9/10</span><span class="ago" style="font-size:11px;font-weight:600;color:#a3a091">6d ago</span></div>
+        <div class="rvbody">First playoff game and I get why people lose their minds over this place. Loud from the jump, the steak sandwich lived up to the hype, and our 200s center seats were perfect. Getting out through Penn was the only rough part.</div>
+      </div>
+      <div class="rvphoto"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""></div>
+    </div>
+    <div class="rvrow">
+      <div>
+        <div class="rvhead"><span class="ini" style="background:#c0392b">MD</span><span class="nm" style="font-size:12.5px;font-weight:800">Mike D.</span><span class="score" style="font-size:12px;padding:1px 8px">8/10</span><span class="ago" style="font-size:11px;font-weight:600;color:#a3a091">2w ago</span></div>
+        <div class="rvbody">Food slaps, seats were tight, worth every dollar for the atmosphere. Steak sandwich as advertised — just get there before tipoff. Docking a point for the beer prices.</div>
+      </div>
+      <div class="rvphoto"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""></div>
+    </div>
+    <div class="rvrow">
+      <div>
+        <div class="rvhead"><span class="ini" style="background:#9c4221">RM</span><span class="nm" style="font-size:12.5px;font-weight:800">Rob M.</span><span class="score" style="font-size:12px;padding:1px 8px">7/10</span><span class="ago" style="font-size:11px;font-weight:600;color:#a3a091">3w ago</span></div>
+        <div class="rvbody">Getting in was a mess with the Penn construction, but once you're inside it's the best building in sports. Came in the 7th Ave side like the tips said and it was much smoother.</div>
+      </div>
+      <div class="rvphoto"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""></div>
+    </div>
+    <a class="readall" href="#">Read all 214 reviews →</a>
+  </div>
+
+</div></section>
+
+<script>
+  // "Show N more tips" — reveal the hidden vote-sorted overflow for a section
+  document.querySelectorAll('.showmore').forEach(btn=>{
+    btn.addEventListener('click',()=>btn.closest('.rt').classList.add('expanded'));
+  });
+</script>
+</body></html>

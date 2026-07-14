@@ -1,0 +1,295 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05 · Full-Bleed Chaptered Deck — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  html,body{height:100%}
+  body{overflow:hidden}
+  .banner{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--ink);color:var(--brand);
+    font-family:var(--sans);font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+    padding:8px 24px;display:flex;justify-content:space-between}
+  .banner span:last-child{color:#fff}
+
+  /* deck rail — horizontal snap */
+  .deck{position:fixed;inset:34px 0 0 0;display:flex;overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+  .deck::-webkit-scrollbar{display:none}
+  .deck{scrollbar-width:none}
+
+  .chap{position:relative;flex:0 0 100vw;height:100%;scroll-snap-align:start;overflow:hidden;
+    display:flex;align-items:flex-end;color:#fff}
+  .chap .bg{position:absolute;inset:0}
+  .chap .bg img{width:100%;height:100%;object-fit:cover}
+  .chap .bg::after{content:'';position:absolute;inset:0;
+    background:linear-gradient(105deg,rgba(20,20,16,.82) 0%,rgba(20,20,16,.5) 42%,rgba(20,20,16,.2) 100%),
+               linear-gradient(0deg,rgba(20,20,16,.9),rgba(20,20,16,0) 55%)}
+
+  .chap .content{position:relative;z-index:3;max-width:720px;padding:0 clamp(28px,6vw,90px) clamp(52px,8vh,86px)}
+  .chap .num{font-family:var(--display);font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--brand);
+    display:inline-flex;align-items:center;gap:10px}
+  .chap .num::before{content:'';width:34px;height:3px;background:var(--brand);display:inline-block}
+  .chap h2{font-family:var(--display);font-size:clamp(46px,8.5vw,110px);line-height:.9;text-transform:uppercase;
+    letter-spacing:1px;margin:16px 0 18px;text-shadow:0 6px 30px rgba(0,0,0,.4)}
+  .chap .caps{display:flex;flex-direction:column;gap:12px;max-width:56ch;margin-bottom:6px}
+  .chap .cp{display:flex;gap:12px;align-items:flex-start;font-size:clamp(15px,1.5vw,18px);line-height:1.5;
+    font-weight:500;color:#f1f0e6}
+  .chap .cp .b{width:8px;height:8px;border-radius:2px;background:var(--brand);flex:none;margin-top:8px}
+  .chap .cp b{color:#fff}
+  .chap .who{color:#fff;margin-top:20px}
+  .chap .areaTag{position:absolute;z-index:3}
+
+  /* title card (chapter 0) */
+  .chap.title{align-items:center}
+  .chap.title .content{max-width:900px;padding-bottom:0}
+  .chap.title .home{font-size:15px;font-weight:600;color:#d8d8cf;letter-spacing:.5px}
+  .chap.title h2{font-size:clamp(52px,10vw,138px);margin:14px 0 22px}
+  .chap.title .scores{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .tcard{background:rgba(255,255,255,.06);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,.3);
+    border-radius:14px;padding:14px 20px;min-width:150px}
+  .tcard.snap{border-color:var(--brand)}
+  .tcard .l{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#cfcfc5;
+    display:flex;gap:6px;align-items:center}
+  .tcard .v{font-family:var(--display);font-size:42px;line-height:1;margin-top:8px;color:#fff}
+  .tcard.snap .v{color:var(--brand)}
+  .tcard .s{font-size:11px;font-weight:600;color:#b7b7ad;margin-top:6px}
+  .scrollhint{margin-top:34px;display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:800;
+    letter-spacing:1px;text-transform:uppercase;color:#e9e9df}
+  .scrollhint .arw{width:34px;height:34px;border-radius:50%;border:2px solid var(--brand);color:var(--brand);
+    display:flex;align-items:center;justify-content:center;animation:nudge 1.4s ease-in-out infinite}
+  @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
+  /* verdict card (last chapter) */
+  .chap.verdict h2{font-size:clamp(40px,7vw,90px)}
+  .chap.verdict .qt{font-size:clamp(16px,1.7vw,20px);line-height:1.6;color:#eceace;max-width:60ch;
+    border-left:5px solid var(--brand);padding-left:18px;margin:4px 0 20px}
+
+  /* thumbnail strip on section chapters */
+  .strip{display:flex;gap:9px;margin-top:22px}
+  .strip .tw{width:78px;height:58px;border:2px solid #fff;border-radius:8px;overflow:hidden;
+    box-shadow:0 6px 18px rgba(0,0,0,.5)}
+  .strip .tw img{width:100%;height:100%;object-fit:cover}
+
+  /* nav arrows */
+  .nav{position:fixed;top:calc(34px + (100vh - 34px)/2);transform:translateY(-50%);z-index:50;
+    width:52px;height:52px;border-radius:50%;background:var(--brand);color:var(--ink);border:2px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;box-shadow:var(--punch);
+    font-family:var(--display);transition:transform .12s ease,opacity .2s ease}
+  .nav:hover{transform:translateY(-50%) scale(1.06)}
+  .nav:active{transform:translateY(-50%) scale(.96)}
+  .nav.prev{left:22px}.nav.next{right:22px}
+  .nav.hide{opacity:0;pointer-events:none}
+
+  /* chapter dots */
+  .dots{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:50;display:flex;gap:10px;
+    background:rgba(20,20,16,.55);border:1.5px solid rgba(255,255,255,.28);border-radius:999px;padding:9px 14px;
+    backdrop-filter:blur(6px)}
+  .dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.42);cursor:pointer;padding:0;
+    transition:background .2s ease,width .2s ease,border-radius .2s ease}
+  .dots button.on{background:var(--brand);width:26px;border-radius:6px}
+
+  /* top progress */
+  .pbar{position:fixed;top:34px;left:0;height:3px;background:var(--brand);width:0;z-index:55;transition:width .3s ease}
+
+  @media(max-width:760px){
+    .deck{flex-direction:column;overflow-x:hidden;overflow-y:auto;scroll-snap-type:y mandatory}
+    .chap{flex:0 0 100%;height:calc(100vh - 34px)}
+    .nav{display:none}
+    .chap .content{padding-bottom:clamp(64px,10vh,90px)}
+    .dots{flex-direction:column;left:auto;right:16px;bottom:auto;top:50%;transform:translateY(-50%)}
+    .dots button.on{width:9px;height:26px;border-radius:6px}
+  }
+</style></head>
+<body>
+
+<div class="banner"><span>Concept 05 — Full-Bleed Chaptered Deck</span><span>Cinematic chapters — the gameday as a slide deck</span></div>
+
+<div class="pbar" id="pbar"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 0 · TITLE -->
+  <section class="chap title" data-chap>
+    <div class="bg"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""></div>
+    <div class="content">
+      <div class="num">The Snapback Field Report</div>
+      <div class="home" style="margin-top:14px">New York, NY · Home of the New York Knicks</div>
+      <h2>Madison Square Garden</h2>
+      <div class="scores">
+        <div class="tcard snap"><div class="l">★ Snapback Score</div><div class="v">9.2</div><div class="s">Expert-rated · #3 in the league</div></div>
+        <div class="tcard"><div class="l">Fan Score</div><div class="v">8.7</div><div class="s">214 fan ratings</div></div>
+        <div class="tcard"><div class="l">Your guide</div><div class="v" style="font-size:26px;margin-top:12px">Jack S. ✓</div><div class="s">Verified · been there</div></div>
+      </div>
+      <div class="scrollhint"><span class="arw">→</span> Scroll to walk the gameday, chapter by chapter</div>
+    </div>
+  </section>
+
+  <!-- 1 · GETTING IN -->
+  <section class="chap" data-chap>
+    <div class="bg"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""></div>
+    <span class="tag areaTag" style="left:clamp(28px,6vw,90px);top:44px">Outside · Gates</span>
+    <div class="content">
+      <div class="num">01 / Getting in</div>
+      <h2>Get to<br>the door</h2>
+      <div class="caps">
+        <div class="cp"><span class="b"></span><span>Best ways in: walking, the subway, the LIRR, or NJ Transit. <b>Driving would be my last choice.</b></span></div>
+        <div class="cp"><span class="b"></span><span>Come in through the <b>100 level gates</b> — the merch store there has a way shorter line than the MSG lobby.</span></div>
+      </div>
+      <div class="strip">
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r20.jpg" alt=""></div>
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""></div>
+      </div>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+    </div>
+  </section>
+
+  <!-- 2 · WHERE TO SIT -->
+  <section class="chap" data-chap>
+    <div class="bg"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""></div>
+    <span class="tag areaTag" style="left:clamp(28px,6vw,90px);top:44px">100 Level</span>
+    <div class="content">
+      <div class="num">02 / Where to sit</div>
+      <h2>Take the<br>200s</h2>
+      <div class="caps">
+        <div class="cp"><span class="b"></span><span>Front rows in the <b>200s in the center sections</b> beat behind the basket, even down low.</span></div>
+        <div class="cp"><span class="b"></span><span>The Chase Bridge and Hyundai Bridge are both cool spots — the <b>Hyundai Bridge is good value.</b></span></div>
+        <div class="cp"><span class="b"></span><span>The Delta Club comes with all-inclusive food and drink (non-alcoholic).</span></div>
+      </div>
+      <div class="strip">
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r40.jpg" alt=""></div>
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r56.jpg" alt=""></div>
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r57.jpg" alt=""></div>
+      </div>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+    </div>
+  </section>
+
+  <!-- 3 · WHAT TO EAT -->
+  <section class="chap" data-chap>
+    <div class="bg"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""></div>
+    <span class="tag areaTag" style="left:clamp(28px,6vw,90px);top:44px">Steak Sandwich · Sec 107</span>
+    <div class="content">
+      <div class="num">03 / What to eat</div>
+      <h2>Steak<br>outside 107</h2>
+      <div class="caps">
+        <div class="cp"><span class="b"></span><span>The best food in MSG is the <b>steak sandwich outside section 107.</b></span></div>
+        <div class="cp"><span class="b"></span><span>The Garden Market hamburgers are the best basic food in sports — a different bun that's fantastic.</span></div>
+        <div class="cp"><span class="b"></span><span>Carnegie Deli is another good one. <b>Skip the pizza</b>, it's bad in the arena.</span></div>
+      </div>
+      <div class="strip">
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r30.jpg" alt=""></div>
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r26.jpg" alt=""></div>
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r01.jpg" alt=""></div>
+      </div>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+    </div>
+  </section>
+
+  <!-- 4 · THE CROWD -->
+  <section class="chap" data-chap>
+    <div class="bg"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""></div>
+    <span class="tag areaTag" style="left:clamp(28px,6vw,90px);top:44px">Tip-off · Concourse</span>
+    <div class="content">
+      <div class="num">04 / The crowd</div>
+      <h2>Stand<br>up</h2>
+      <div class="caps">
+        <div class="cp"><span class="b"></span><span><b>Best crowd in the NBA.</b> Be ready to stand, and the seats are tight between people.</span></div>
+        <div class="cp"><span class="b"></span><span>Not the most family-friendly, but plenty of in-game entertainment like <b>t-shirt tosses.</b> The energy is worth it.</span></div>
+      </div>
+      <div class="strip">
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r18.jpg" alt=""></div>
+        <div class="tw"><img src="../../public/img/reports/citi/robby/r19.jpg" alt=""></div>
+      </div>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+    </div>
+  </section>
+
+  <!-- 5 · VERDICT -->
+  <section class="chap verdict" data-chap>
+    <div class="bg"><img src="../../public/img/reports/citi/robby/r04.jpg" alt=""></div>
+    <span class="tag areaTag" style="left:clamp(28px,6vw,90px);top:44px">Team Store · Snapback 9.2</span>
+    <div class="content">
+      <div class="num">05 / The verdict</div>
+      <h2>Worth<br>the night</h2>
+      <div class="qt">"Best crowd in the NBA. Be ready to stand and the seats are tight, but the energy is worth it. Eat the steak sandwich outside section 107 and the Garden Market hamburgers, and skip the arena pizza. Get in through the 100 level gates for a shorter merch line — and know the alcohol is very expensive."</div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="score" style="font-size:26px;padding:4px 14px">9.2</span>
+        <span style="font-size:13px;font-weight:700;color:#cfcfc5">Snapback Score · #3 · 214 fan ratings</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<button class="nav prev hide" id="prev" aria-label="Previous chapter">‹</button>
+<button class="nav next" id="next" aria-label="Next chapter">›</button>
+<div class="dots" id="dots"></div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const chaps = [...deck.querySelectorAll('[data-chap]')];
+  const dots = document.getElementById('dots');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const pbar = document.getElementById('pbar');
+  let idx = 0;
+
+  const isVertical = () => window.matchMedia('(max-width:760px)').matches;
+
+  // build dots
+  chaps.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Chapter ' + (i+1));
+    b.addEventListener('click', () => go(i));
+    dots.appendChild(b);
+  });
+  const dotEls = [...dots.children];
+
+  function go(i){
+    idx = Math.max(0, Math.min(chaps.length - 1, i));
+    const el = chaps[idx];
+    if(isVertical()) el.scrollIntoView({behavior:'smooth', block:'start'});
+    else deck.scrollTo({left: idx * window.innerWidth, behavior:'smooth'});
+    paint();
+  }
+  function paint(){
+    dotEls.forEach((d, i) => d.classList.toggle('on', i === idx));
+    prev.classList.toggle('hide', idx === 0);
+    next.classList.toggle('hide', idx === chaps.length - 1);
+    pbar.style.width = ((idx+1)/chaps.length*100) + '%';
+  }
+
+  prev.addEventListener('click', () => go(idx - 1));
+  next.addEventListener('click', () => go(idx + 1));
+
+  // keep idx in sync while scrolling / snapping
+  let raf;
+  deck.addEventListener('scroll', () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const i = isVertical()
+        ? Math.round(deck.scrollTop / (window.innerHeight - 34))
+        : Math.round(deck.scrollLeft / window.innerWidth);
+      if(i !== idx){ idx = i; paint(); }
+    });
+  }, {passive:true});
+
+  // keyboard
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ e.preventDefault(); go(idx + 1); }
+    if(e.key === 'ArrowLeft'  || e.key === 'ArrowUp'){ e.preventDefault(); go(idx - 1); }
+  });
+
+  // translate vertical wheel to horizontal deck movement on desktop
+  deck.addEventListener('wheel', (e) => {
+    if(isVertical()) return;
+    if(Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+      deck.scrollLeft += e.deltaY;
+      e.preventDefault();
+    }
+  }, {passive:false});
+
+  window.addEventListener('resize', () => go(idx));
+  paint();
+</script>
+</body></html>

@@ -1,0 +1,266 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05c · Fan Photo-Reviews — Carousel — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  html,body{height:100%}
+  body{overflow:hidden;background:#0e0e0b}
+  .banner{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--ink);color:var(--brand);
+    font-family:var(--sans);font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+    padding:8px 24px;display:flex;justify-content:space-between;gap:14px}
+  .banner span:last-child{color:#fff;font-weight:700;text-transform:none;letter-spacing:.3px;opacity:.92}
+
+  /* dark stage */
+  .stage{position:fixed;inset:33px 0 0 0;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 10%,#232219 0%,#131310 55%,#0b0b08 100%);
+    display:flex;align-items:center;justify-content:center}
+  .stage::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(60% 60% at 50% 46%,rgba(247,223,2,.06),transparent 70%)}
+
+  .track-mask{position:relative;width:100%;height:100%;overflow:hidden}
+  .track{position:absolute;top:50%;left:50%;display:flex;align-items:center;gap:34px;
+    transform:translate(-50%,-50%);transition:transform .42s cubic-bezier(.22,.61,.36,1);will-change:transform}
+
+  /* a fan photo-review card */
+  .card2{flex:0 0 auto;width:min(560px,80vw);background:var(--cream);border:2px solid var(--ink);border-radius:16px;
+    box-shadow:0 26px 60px rgba(0,0,0,.55);overflow:hidden;opacity:.4;transform:scale(.86);
+    transition:opacity .42s ease,transform .42s ease,box-shadow .42s ease}
+  .card2.active{opacity:1;transform:scale(1);box-shadow:12px 12px 0 0 var(--brand),0 30px 70px rgba(0,0,0,.6)}
+
+  .card2 .ph{position:relative;height:clamp(240px,42vh,380px);overflow:hidden;border-bottom:2px solid var(--ink);background:#222}
+  .card2 .ph img{width:100%;height:100%;object-fit:cover}
+  .card2 .ph::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,20,16,.55),transparent 42%)}
+  /* credit chip (author) top-left, rating badge top-right — both bind the photo to the fan */
+  .card2 .credit{position:absolute;left:14px;top:14px;z-index:2;font-size:12px;padding:4px 12px 4px 4px}
+  .card2 .credit .ini,.card2 .credit .av{width:26px;height:26px;font-size:10px}
+  .card2 .rateTop{position:absolute;right:14px;top:14px;z-index:2;font-size:16px;padding:3px 11px;
+    border:1.5px solid var(--ink);box-shadow:2px 2px 0 0 var(--ink)}
+  .card2 .areaTag{position:absolute;left:14px;bottom:14px;z-index:2}
+  .card2 .kindtag{position:absolute;right:14px;bottom:14px;z-index:2;font-family:var(--display);font-size:11px;
+    letter-spacing:1.4px;text-transform:uppercase;color:#fff;background:rgba(20,20,16,.7);
+    border:1.5px solid rgba(255,255,255,.3);border-radius:5px;padding:3px 9px}
+
+  .card2 .body{padding:20px 26px 24px}
+  /* fan byline below the photo */
+  .card2 .byline{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+  .card2 .byline .ini,.card2 .byline .av{width:42px;height:42px;font-size:15px;border-width:2px}
+  .card2 .byline .av{border-radius:50%;object-fit:cover;background:var(--ink)}
+  .card2 .byline .who-meta{display:flex;flex-direction:column;gap:2px}
+  .card2 .byline .who-name{display:flex;align-items:center;gap:7px}
+  .card2 .byline .nm{font-size:17px;color:var(--ink)}
+  .card2 .byline .vf{width:16px;height:16px;font-size:9px}
+  .card2 .byline .sub{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+  .card2 .quote{font-size:16.5px;line-height:1.5;font-weight:600;color:#26261f;margin:0}
+  .card2 .quote b{color:var(--ink);font-weight:800}
+  .card2 .foot{margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    border-top:1.5px solid var(--line);padding-top:14px}
+  .card2 .votechip{display:inline-flex;align-items:center;gap:6px;background:var(--tip);border:1.5px solid #e7dca0;
+    border-radius:999px;padding:4px 12px;font-size:11.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#5a5a52}
+  .card2 .votechip b{font-family:var(--display);font-weight:400;font-size:14px;color:var(--ink)}
+
+  /* title card variant (dark) */
+  .card2.title{background:var(--ink);color:#fff}
+  .card2.title .ph::after{background:linear-gradient(0deg,rgba(20,20,16,.85),rgba(20,20,16,.15) 60%)}
+  .card2.title .body{padding:22px 26px 26px}
+  .card2.title .kicker{font-size:12px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--brand)}
+  .card2.title h2{font-family:var(--display);font-size:clamp(30px,3.4vw,44px);line-height:.94;text-transform:uppercase;
+    letter-spacing:.6px;margin:6px 0 14px;color:#fff}
+  .card2.title .home{font-size:13px;font-weight:600;color:#d8d8cf;margin-bottom:6px}
+  .card2.title .scores{display:flex;gap:11px;flex-wrap:wrap;margin-top:4px}
+  .tcard{border:2px solid rgba(255,255,255,.28);border-radius:12px;padding:11px 16px;min-width:118px}
+  .tcard.snap{border-color:var(--brand)}
+  .tcard .l{font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#cfcfc5;display:flex;gap:5px;align-items:center}
+  .tcard .v{font-family:var(--display);font-size:34px;line-height:1;margin-top:5px;color:#fff}
+  .tcard.snap .v{color:var(--brand)}
+  .tcard .s{font-size:10.5px;font-weight:600;color:#b7b7ad;margin-top:4px}
+  .card2.title .proof{display:flex;align-items:center;gap:11px;margin-top:18px;border-top:1.5px solid rgba(255,255,255,.16);padding-top:16px;flex-wrap:wrap}
+  .card2.title .stack{display:flex;padding-left:9px}
+  .card2.title .stack .ini,.card2.title .stack .av{width:30px;height:30px;margin-left:-9px;border:2px solid var(--ink);box-shadow:0 0 0 1.5px #fff;position:relative}
+  .card2.title .ptxt{font-size:12px;font-weight:600;color:#d8d8cf}
+  .card2.title .ptxt b{font-family:var(--display);font-weight:400;font-size:15px;color:var(--brand)}
+
+  /* nav arrows */
+  .nav{position:fixed;top:calc(33px + (100vh - 33px)/2);transform:translateY(-50%);z-index:50;
+    width:56px;height:56px;border-radius:50%;background:var(--brand);color:var(--ink);border:2px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:var(--punch);
+    font-family:var(--display);transition:transform .12s ease,opacity .2s ease}
+  .nav:hover{transform:translateY(-50%) scale(1.06)}
+  .nav:active{transform:translateY(-50%) scale(.96)}
+  .nav.prev{left:26px}.nav.next{right:26px}
+  .nav.hide{opacity:0;pointer-events:none}
+
+  /* dots + label */
+  .foot-ui{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:50;display:flex;flex-direction:column;
+    align-items:center;gap:9px}
+  .now{font-family:var(--sans);font-weight:800;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#d8d8cf}
+  .now b{color:var(--brand)}
+  .dots{display:flex;gap:10px;background:rgba(20,20,16,.6);border:1.5px solid rgba(255,255,255,.24);
+    border-radius:999px;padding:9px 14px;backdrop-filter:blur(6px)}
+  .dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.42);cursor:pointer;padding:0;
+    transition:background .2s ease,width .2s ease,border-radius .2s ease}
+  .dots button.on{background:var(--brand);width:26px;border-radius:6px}
+
+  /* top progress */
+  .pbar{position:fixed;top:33px;left:0;height:3px;background:var(--brand);width:0;z-index:55;transition:width .3s ease}
+
+  @media(max-width:760px){
+    .track{gap:20px}
+    .card2{width:88vw}
+    .card2 .ph{height:34vh}
+    .nav{width:46px;height:46px;font-size:20px}
+    .nav.prev{left:10px}.nav.next{right:10px}
+  }
+</style></head>
+<body>
+
+<div class="banner"><span>Concept 05c — Fan Photo-Reviews · Carousel</span><span>Flip through fan photo-reviews — each card is one fan's shot, credited, on a dark stage</span></div>
+
+<div class="pbar" id="pbar"></div>
+
+<div class="stage">
+  <div class="track-mask">
+    <div class="track" id="track"></div>
+  </div>
+</div>
+
+<button class="nav prev" id="prev" aria-label="Previous review">‹</button>
+<button class="nav next" id="next" aria-label="Next review">›</button>
+
+<div class="foot-ui">
+  <div class="now" id="now"></div>
+  <div class="dots" id="dots"></div>
+</div>
+
+<script src="_crowd.js"></script>
+<script>
+  const C = window.CROWD, V = C.venue;
+
+  // ---- assemble fan photo-reviews: full reviews + standout photo-tips ----
+  const reviewCards = C.reviews.map(r => ({
+    kind:'review', by:r.by, rating:r.rating, up:r.up, ago:r.ago, body:r.body, photo:r.photos[0]
+  }));
+  const topTips = ['atmosphere','best-seats']
+    .map(sec => C.tips.find(t => t.section === sec && t.photo && !t.pinned))
+    .filter(Boolean)
+    .map(t => ({ kind:'tip', by:t.by, up:t.up, ago:t.ago, body:t.text, photo:t.photo }));
+  const cards = [...reviewCards, ...topTips]; // 8 fan photo-reviews
+
+  const track = document.getElementById('track');
+  const html = [];
+
+  // 0 · TITLE card
+  html.push(`
+    <article class="card2 title" data-chap data-now="Madison Square Garden">
+      <div class="ph">
+        <img src="${C.reviews[0].photos[0].src}" alt="">
+        <span class="tag areaTag">${V.city}</span>
+      </div>
+      <div class="body">
+        <div class="kicker">The Fan Field Report</div>
+        <div class="home" style="margin-top:6px">Home of the ${V.team}</div>
+        <h2>${V.name}</h2>
+        <div class="scores">
+          <div class="tcard snap"><div class="l">★ Snapback</div><div class="v">${V.snap}</div><div class="s">#${V.rank} in the league</div></div>
+          <div class="tcard"><div class="l">Fan Score</div><div class="v">${V.fan}</div><div class="s">${V.reviews} reviews</div></div>
+        </div>
+        <div class="proof">
+          <div class="stack" id="stack"></div>
+          <span class="ptxt"><b>${V.reviews}</b> fan reviews · <b>${V.fans}</b> fans contributed</span>
+        </div>
+      </div>
+    </article>`);
+
+  // fan photo-review cards
+  cards.forEach((card) => {
+    const f = C.fans[card.by];
+    html.push(`
+      <article class="card2" data-chap data-now="${f.name}">
+        <div class="ph">
+          <img src="${card.photo.src}" alt="">
+          <span class="credit">${C.avatar(card.by)}${f.name}</span>
+          ${card.rating != null ? `<span class="rate rateTop">${card.rating}/10</span>` : ''}
+          <span class="tag areaTag">${card.photo.area}</span>
+          <span class="kindtag">${card.kind === 'review' ? 'Review' : 'Photo tip'}</span>
+        </div>
+        <div class="body">
+          <div class="byline">
+            ${C.avatar(card.by)}
+            <div class="who-meta">
+              <span class="who-name"><span class="nm">${f.name}</span>${f.verified?'<span class="vf">✓</span>':''}</span>
+              <span class="sub">${card.kind === 'review' ? 'Fan review' : 'Photo tip'} · ${card.ago}</span>
+            </div>
+          </div>
+          <p class="quote">“${card.body}”</p>
+          <div class="foot"><span class="votechip">▲ <b>${card.up}</b> helpful</span></div>
+        </div>
+      </article>`);
+  });
+
+  track.innerHTML = html.join('');
+
+  const stackIds = ['jack','grace','mike','rob','tommy','danny','sarah','carl'];
+  document.getElementById('stack').innerHTML = stackIds.map(id => C.avatar(id)).join('');
+
+  // ---- carousel wiring ----
+  const cardEls = [...track.querySelectorAll('[data-chap]')];
+  const dots = document.getElementById('dots');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const pbar = document.getElementById('pbar');
+  const now = document.getElementById('now');
+  const START = 1; // first FAN review card centered on load
+  let idx = START;
+
+  cardEls.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Review ' + (i+1));
+    b.addEventListener('click', () => go(i));
+    dots.appendChild(b);
+  });
+  const dotEls = [...dots.children];
+
+  function layout(){
+    const active = cardEls[idx];
+    const trackCenter = track.offsetWidth / 2;
+    const cardCenter = active.offsetLeft + active.offsetWidth / 2;
+    const shift = trackCenter - cardCenter;
+    track.style.transform = 'translate(calc(-50% + ' + shift + 'px), -50%)';
+  }
+  function paint(){
+    cardEls.forEach((c, i) => c.classList.toggle('active', i === idx));
+    dotEls.forEach((d, i) => d.classList.toggle('on', i === idx));
+    prev.classList.toggle('hide', idx === 0);
+    next.classList.toggle('hide', idx === cardEls.length - 1);
+    pbar.style.width = ((idx+1)/cardEls.length*100) + '%';
+    now.innerHTML = 'Review <b>' + (idx+1) + '</b> of ' + cardEls.length + ' · ' + cardEls[idx].dataset.now;
+    layout();
+  }
+  function go(i){ idx = Math.max(0, Math.min(cardEls.length - 1, i)); paint(); }
+
+  prev.addEventListener('click', () => go(idx - 1));
+  next.addEventListener('click', () => go(idx + 1));
+  cardEls.forEach((c, i) => c.addEventListener('click', () => { if(i !== idx) go(i); }));
+
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ e.preventDefault(); go(idx + 1); }
+    if(e.key === 'ArrowLeft'  || e.key === 'ArrowUp'){ e.preventDefault(); go(idx - 1); }
+  });
+
+  let wlock = false;
+  window.addEventListener('wheel', (e) => {
+    const d = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    if(Math.abs(d) < 12 || wlock) return;
+    wlock = true;
+    go(idx + (d > 0 ? 1 : -1));
+    setTimeout(() => wlock = false, 480);
+  }, {passive:true});
+
+  let rz;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(layout, 80); });
+
+  // synchronous first paint so the active review card is rendered for a screenshot
+  paint();
+  window.addEventListener('load', layout);
+  window.requestAnimationFrame(() => window.requestAnimationFrame(layout));
+</script>
+</body></html>

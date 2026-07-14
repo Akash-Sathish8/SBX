@@ -40,6 +40,7 @@ import { Route as ApiMatchScoreRouteImport } from './routes/api/match-score'
 import { Route as ApiGamesRouteImport } from './routes/api/games'
 import { Route as ApiFollowRouteImport } from './routes/api/follow'
 import { Route as ApiFeedRouteImport } from './routes/api/feed'
+import { Route as ApiFanScoresRouteImport } from './routes/api/fan-scores'
 import { Route as ApiExpertNotesRouteImport } from './routes/api/expert-notes'
 import { Route as ApiConferencesRouteImport } from './routes/api/conferences'
 import { Route as ApiAssistantRouteImport } from './routes/api/assistant'
@@ -201,6 +202,11 @@ const ApiFeedRoute = ApiFeedRouteImport.update({
   path: '/api/feed',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiFanScoresRoute = ApiFanScoresRouteImport.update({
+  id: '/api/fan-scores',
+  path: '/api/fan-scores',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiExpertNotesRoute = ApiExpertNotesRouteImport.update({
   id: '/api/expert-notes',
   path: '/api/expert-notes',
@@ -247,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/api/assistant': typeof ApiAssistantRoute
   '/api/conferences': typeof ApiConferencesRoute
   '/api/expert-notes': typeof ApiExpertNotesRoute
+  '/api/fan-scores': typeof ApiFanScoresRoute
   '/api/feed': typeof ApiFeedRoute
   '/api/follow': typeof ApiFollowRoute
   '/api/games': typeof ApiGamesRoute
@@ -285,6 +292,7 @@ export interface FileRoutesByTo {
   '/api/assistant': typeof ApiAssistantRoute
   '/api/conferences': typeof ApiConferencesRoute
   '/api/expert-notes': typeof ApiExpertNotesRoute
+  '/api/fan-scores': typeof ApiFanScoresRoute
   '/api/feed': typeof ApiFeedRoute
   '/api/follow': typeof ApiFollowRoute
   '/api/games': typeof ApiGamesRoute
@@ -324,6 +332,7 @@ export interface FileRoutesById {
   '/api/assistant': typeof ApiAssistantRoute
   '/api/conferences': typeof ApiConferencesRoute
   '/api/expert-notes': typeof ApiExpertNotesRoute
+  '/api/fan-scores': typeof ApiFanScoresRoute
   '/api/feed': typeof ApiFeedRoute
   '/api/follow': typeof ApiFollowRoute
   '/api/games': typeof ApiGamesRoute
@@ -364,6 +373,7 @@ export interface FileRouteTypes {
     | '/api/assistant'
     | '/api/conferences'
     | '/api/expert-notes'
+    | '/api/fan-scores'
     | '/api/feed'
     | '/api/follow'
     | '/api/games'
@@ -402,6 +412,7 @@ export interface FileRouteTypes {
     | '/api/assistant'
     | '/api/conferences'
     | '/api/expert-notes'
+    | '/api/fan-scores'
     | '/api/feed'
     | '/api/follow'
     | '/api/games'
@@ -440,6 +451,7 @@ export interface FileRouteTypes {
     | '/api/assistant'
     | '/api/conferences'
     | '/api/expert-notes'
+    | '/api/fan-scores'
     | '/api/feed'
     | '/api/follow'
     | '/api/games'
@@ -479,6 +491,7 @@ export interface RootRouteChildren {
   ApiAssistantRoute: typeof ApiAssistantRoute
   ApiConferencesRoute: typeof ApiConferencesRoute
   ApiExpertNotesRoute: typeof ApiExpertNotesRoute
+  ApiFanScoresRoute: typeof ApiFanScoresRoute
   ApiFeedRoute: typeof ApiFeedRoute
   ApiFollowRoute: typeof ApiFollowRoute
   ApiGamesRoute: typeof ApiGamesRoute
@@ -717,6 +730,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiFeedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/fan-scores': {
+      id: '/api/fan-scores'
+      path: '/api/fan-scores'
+      fullPath: '/api/fan-scores'
+      preLoaderRoute: typeof ApiFanScoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/expert-notes': {
       id: '/api/expert-notes'
       path: '/api/expert-notes'
@@ -775,6 +795,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAssistantRoute: ApiAssistantRoute,
   ApiConferencesRoute: ApiConferencesRoute,
   ApiExpertNotesRoute: ApiExpertNotesRoute,
+  ApiFanScoresRoute: ApiFanScoresRoute,
   ApiFeedRoute: ApiFeedRoute,
   ApiFollowRoute: ApiFollowRoute,
   ApiGamesRoute: ApiGamesRoute,

@@ -8,8 +8,12 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { getJSON, intentWarm, warmImage } from '../lib/dataCache'
+import { FanScorePill, useFanScores } from '../components/FanScore'
 import { SPORTS, LEAGUES, COLLEGE_LEAGUES, type League } from '../lib/sports'
 import { cardImg } from '../lib/img'
+import { matchExperienceForVenue } from '../lib/experienceMatch'
+import type { Experience } from '../lib/experiences'
+import { cityKey, haversineMiles, loadCityCoords, loadAnchor, saveAnchor, type Anchor, type LatLng } from '../lib/geo'
 import type { Venue } from '../lib/espn'
 
 export const Route = createFileRoute('/venues')({
@@ -47,8 +51,14 @@ const cchipCls = (on: boolean) => cn(
 function Venues() {
   const [all, setAll] = useState<Venue[] | null>(null)
   const [err, setErr] = useState<string | null>(null)
+  const fanScores = useFanScores()
+  const [exps, setExps] = useState<Experience[] | null>(null)
   const [filter, setFilter] = useState<'all' | League>('all')
   const [conf, setConf] = useState<string | null>(null)
+  const [sort, setSort] = useState<'top' | 'near' | 'az'>('top')
+  const [anchor, setAnchor] = useState<Anchor | null>(null)
+  const [coords, setCoords] = useState<Record<string, LatLng> | null>(null)
+  const [locErr, setLocErr] = useState<string | null>(null)
   // Progressive reveal — 601 cards (each a background-image fetch) is too heavy
   // to mount at once, especially on mobile.
   const PAGE = 24
@@ -59,8 +69,35 @@ function Venues() {
     getJSON('/api/venues')
       .then((r: any) => { if (alive) setAll(Array.isArray(r?.data) ? r.data : []) })
       .catch(() => { if (alive) setErr("Couldn't load venues.") })
+    getJSON('/data/experiences.json')
+      .then((r: any) => { if (alive) setExps(Array.isArray(r?.experiences) ? r.experiences : []) })
+      .catch(() => { if (alive) setExps([]) })
+    setAnchor(loadAnchor())
     return () => { alive = false }
   }, [])
+
+  // Each venue's Snapback expert score (the /rankings match) — the default sort key.
+  const expScore = useMemo(() => {
+    const m: Record<string, number> = {}
+    if (all && exps) for (const v of all) { const e = matchExperienceForVenue(v, exps); if (e) m[v.id] = e.final }
+    return m
+  }, [all, exps])
+
+  // "Near you": prompt for the device location (persisted, shared with /near).
+  const requestLocation = () => {
+    if (!coords) loadCityCoords().then(setCoords).catch(() => {})
+    if (anchor) return
+    if (typeof navigator === 'undefined' || !navigator.geolocation) { setLocErr("This browser can't share your location."); return }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => { const a: Anchor = { lat: pos.coords.latitude, lng: pos.coords.longitude, label: 'your location' }; setAnchor(a); saveAnchor(a); setLocErr(null) },
+      () => setLocErr('Location denied — showing top rated. Set it on the Near-you page.'),
+      { maximumAge: 600000, timeout: 10000 },
+    )
+  }
+  const pickSort = (s: 'top' | 'near' | 'az') => {
+    setSort(s); setShown(PAGE); setLocErr(null)
+    if (s === 'near') requestLocation()
+  }
 
 
   const isCollege = filter === 'college-football' || filter === 'college-basketball'
@@ -87,7 +124,22 @@ function Venues() {
   }, [all, filter, isCollege])
   const pickFilter = (f: 'all' | League) => { setFilter(f); setConf(null); setShown(PAGE) }
 
-  const visible = list.slice(0, shown)
+  // Sort the filtered list: default by Snapback expert score (venues with no
+  // matched experience last), or A–Z, or nearest-first when a location is set.
+  const sorted = useMemo(() => {
+    const arr = [...list]
+    if (sort === 'az') {
+      arr.sort((a, b) => a.name.localeCompare(b.name))
+    } else if (sort === 'near' && anchor && coords) {
+      const dist = (v: Venue) => { const c = coords[cityKey(v.city, v.state)]; return c ? haversineMiles(anchor, c) : Infinity }
+      arr.sort((a, b) => dist(a) - dist(b) || a.name.localeCompare(b.name))
+    } else {
+      arr.sort((a, b) => (expScore[b.id] ?? -1) - (expScore[a.id] ?? -1) || a.name.localeCompare(b.name))
+    }
+    return arr
+  }, [list, sort, anchor, coords, expScore])
+
+  const visible = sorted.slice(0, shown)
   // Warm the photos for the visible slice so cards paint instantly.
   useEffect(() => {
     for (const v of visible) { const s = cardImg(v.image); if (s) warmImage(s) }
@@ -124,6 +176,15 @@ function Venues() {
               ))}
             </div>
           ) : null}
+          {/* Sort control — default Top rated (Snapback expert score), plus Near you + A–Z */}
+          <div className="mt-[16px] flex flex-wrap items-center gap-[8px]">
+            <span className="mr-[2px] text-[12px] font-extrabold tracking-[.8px] text-[#bdbdb5] uppercase">Sort</span>
+            <Button variant="outline" className={cchipCls(sort === 'top')} aria-pressed={sort === 'top'} onClick={() => pickSort('top')}>Top rated</Button>
+            <Button variant="outline" className={cchipCls(sort === 'near')} aria-pressed={sort === 'near'} onClick={() => pickSort('near')}>Near you</Button>
+            <Button variant="outline" className={cchipCls(sort === 'az')} aria-pressed={sort === 'az'} onClick={() => pickSort('az')}>A–Z</Button>
+            {sort === 'near' && anchor ? <span className="text-[12px] font-semibold text-[#bdbdb5]">Nearest to {anchor.label}</span> : null}
+            {sort === 'near' && locErr ? <span className="text-[12px] font-semibold text-[#f7df02]">{locErr} <Link to="/near" className="underline">Near you →</Link></span> : null}
+          </div>
         </div>
       </section>
 
@@ -173,7 +234,16 @@ function Venues() {
                   </div>
                   <div className="px-[18px] pt-[15px] pb-[17px]">
                     <div className="font-display text-[23px] leading-[1.05] tracking-[.6px] text-ink-soft">{v.name}</div>
-                    <div className="mt-[6px] text-[13px] font-semibold tracking-[.4px] text-muted uppercase">{uniqTeams(v).map((t) => t.displayName).join(' · ')}</div>
+                    <div className="mt-[6px] flex flex-wrap items-center gap-x-[10px] gap-y-[6px]">
+                      <span className="text-[13px] font-semibold tracking-[.4px] text-muted uppercase">{uniqTeams(v).map((t) => t.displayName).join(' · ')}</span>
+                      {expScore[v.id] != null ? (
+                        <span className="inline-flex items-center gap-[5px] rounded-full border-[1.5px] border-ink-soft bg-ink-soft px-[9px] py-[3px] [line-height:normal]" title="Snapback expert score">
+                          <img className="h-[13px]! w-[13px] rounded-[3px]" src="/img/logo.png" alt="" width={13} height={13} />
+                          <b className="font-display text-[14px] font-normal text-brand">{expScore[v.id].toFixed(1)}</b>
+                        </span>
+                      ) : null}
+                      <FanScorePill stat={fanScores?.[v.id]} />
+                    </div>
                   </div>
                 </Link>
               ))}

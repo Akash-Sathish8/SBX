@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { GameRow } from './GameRow'
 import { getJSON, intentWarm, warmImage } from '../lib/dataCache'
-import { LEAGUES, type League } from '../lib/sports'
+import { LEAGUES } from '../lib/sports'
 import { cardImg } from '../lib/img'
 import { cn } from '../lib/utils'
 import { block, container, eyebrow, shead } from '../lib/ui'
-import { weekendWindow } from '../lib/weekend'
+import { FanScorePill, useFanScores } from './FanScore'
 import { matchExperienceForVenue, matchExperienceForTeam } from '../lib/experienceMatch'
 import type { Game, Venue } from '../lib/espn'
 import type { Experience } from '../lib/experiences'
@@ -17,62 +16,9 @@ import type { Experience } from '../lib/experiences'
 // Self-contained Tailwind (was pages/nexthop.css + the .block/.eyebrow/.shead
 // chrome the host pages used to supply); GameRow carries its own styles.
 
-const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const fmtDay = (d: Date) => `${MON[d.getMonth()]} ${d.getDate()}`
-
 // block / container / eyebrow / shead now come from src/lib/ui (shared chrome).
 const nhSub = 'mt-[-4px] mb-[16px] text-[13px] font-semibold text-[#76766c]'
-const nhLink = 'border-b-2 border-[#f7df02] font-extrabold'
 const nhEmpty = 'pt-[6px] pb-[10px] text-[14.5px] font-semibold text-[#76766c]'
-
-// Other games in the Fri–Sun window nearest the anchor date (same city first,
-// then same league), excluding the page's own game/venue.
-export function GamesThatWeekend({ anchorDate, city, league, excludeGameKey, excludeVenueName }: {
-  anchorDate?: string
-  city?: string
-  league?: League
-  excludeGameKey?: string
-  excludeVenueName?: string
-}) {
-  const win = useMemo(() => {
-    const d = anchorDate ? new Date(anchorDate) : new Date()
-    return weekendWindow(isNaN(d.getTime()) ? new Date() : d)
-  }, [anchorDate])
-  const [games, setGames] = useState<Game[] | null>(null)
-
-  useEffect(() => {
-    let alive = true
-    getJSON(`/api/games?from=${encodeURIComponent(win.from)}&to=${encodeURIComponent(win.to)}&limit=300`)
-      .then((r: any) => { if (alive) setGames(Array.isArray(r?.data) ? r.data : []) })
-      .catch(() => { if (alive) setGames([]) })
-    return () => { alive = false }
-  }, [win])
-
-  const list = useMemo(() => {
-    if (!games) return null
-    const cityLc = (city ?? '').toLowerCase()
-    return games
-      .filter((g) => (g.league + ':' + g.id) !== excludeGameKey && (!excludeVenueName || g.venue.name !== excludeVenueName))
-      .map((g) => ({
-        g,
-        tier: cityLc && (g.venue.city ?? '').toLowerCase() === cityLc ? 0 : league && g.league === league ? 1 : 2,
-      }))
-      .sort((a, b) => a.tier - b.tier || a.g.date.localeCompare(b.g.date))
-      .slice(0, 6)
-      .map((x) => x.g)
-  }, [games, city, league, excludeGameKey, excludeVenueName])
-
-  return (
-    <section className={block}><div className={container}>
-      <div className={eyebrow}>Keep exploring</div>
-      <h2 className={shead}>More that weekend</h2>
-      <div className={nhSub}>{fmtDay(win.days[0])} – {fmtDay(win.days[2])}{city ? ` · ${city} first` : ''} · <Link to="/weekend" className={nhLink}>full weekend slate →</Link></div>
-      {list === null ? <div className={nhEmpty}>Loading games…</div> : null}
-      {list && !list.length ? <div className={nhEmpty}>Nothing else on the slate that weekend.</div> : null}
-      {list && list.length ? list.map((g) => <GameRow key={g.league + ':' + g.id} g={g} />) : null}
-    </div></section>
-  )
-}
 
 // The ranked-experience card for a game's venue/home team (venue pages already
 // surface their Snapback Score in the hero, so this module is for /game).
@@ -117,6 +63,7 @@ export function NearbyVenues({ city, state, excludeId, excludeName }: {
   excludeName?: string
 }) {
   const [venues, setVenues] = useState<Venue[] | null>(null)
+  const fanScores = useFanScores()
   useEffect(() => {
     let alive = true
     getJSON('/api/venues').then((r: any) => { if (alive) setVenues(Array.isArray(r?.data) ? r.data : []) }).catch(() => { if (alive) setVenues([]) })
@@ -161,9 +108,10 @@ export function NearbyVenues({ city, state, excludeId, excludeName }: {
               <span className="flex h-[86px] items-center justify-center overflow-hidden bg-[#16160f]">
                 {img ? <img src={img} alt="" loading="lazy" className="h-full! w-full object-cover" /> : logo ? <img src={logo} alt="" loading="lazy" className="h-[52px]! w-[52px] object-contain" /> : null}
               </span>
-              <span className="flex flex-col gap-[2px] px-[12px] py-[10px]">
+              <span className="flex flex-col gap-[5px] px-[12px] py-[10px]">
                 <span className="text-[13.5px] font-extrabold leading-[1.15] text-[#141410]">{v.name}</span>
                 <span className="text-[11.5px] font-semibold text-[#76766c]">{[v.city, v.state].filter(Boolean).join(', ')}</span>
+                <FanScorePill stat={fanScores?.[v.id]} className="mt-[2px] self-start" />
               </span>
             </Link>
           )

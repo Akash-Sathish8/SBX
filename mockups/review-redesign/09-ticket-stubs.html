@@ -1,0 +1,182 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>09 · Ticket-Stub Stack — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .stage{background:#e9e8e1;padding:34px 0 70px;
+    background-image:radial-gradient(rgba(20,20,16,.045) 1.2px,transparent 1.2px);background-size:18px 18px}
+
+  /* ---- venue "master" ticket at top ---- */
+  .venue-ticket{position:relative;background:var(--ink);color:#fff;border:2.5px solid var(--ink);border-radius:16px;
+    box-shadow:var(--punch-lg);overflow:hidden;display:grid;grid-template-columns:1fr 150px;margin-bottom:38px}
+  .venue-ticket .vt-main{padding:24px 28px 22px;position:relative}
+  .venue-ticket .kick{display:inline-flex;gap:7px;align-items:center;background:var(--brand);color:var(--ink);font-weight:800;
+    font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:3px}
+  .venue-ticket h1{font-family:var(--display);font-size:clamp(30px,4.4vw,50px);text-transform:uppercase;letter-spacing:1px;
+    margin:12px 0 6px;line-height:.95}
+  .venue-ticket .home{font-size:13.5px;font-weight:600;color:#bdbdb5}
+  .venue-ticket .row{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap;align-items:center}
+  .vt-sc{background:#fff;color:var(--ink);border-radius:9px;padding:6px 13px}
+  .vt-sc.snap{border:2px solid var(--brand)}
+  .vt-sc .l{font-size:9.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#8a8a82}
+  .vt-sc .v{font-family:var(--display);font-size:24px;line-height:1}
+  .venue-ticket .vt-stub{background:var(--brand);color:var(--ink);border-left:3px dashed var(--ink);position:relative;
+    display:flex;align-items:center;justify-content:center}
+  .venue-ticket .vt-stub .rot{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--display);font-size:20px;
+    text-transform:uppercase;letter-spacing:2px;text-align:center}
+  .venue-ticket .vt-stub .adm{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:800;letter-spacing:1px}
+  .venue-ticket .vt-stub .barcode{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+    width:60%;height:34px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px)}
+  /* notches on the perforation */
+  .notch{position:absolute;width:22px;height:22px;background:#e9e8e1;border:2.5px solid var(--ink);border-radius:50%}
+  .venue-ticket .notch.t{top:-13px}.venue-ticket .notch.b{bottom:-13px}
+  .venue-ticket .notch{right:calc(150px - 11px)}
+
+  /* ---- section tickets ---- */
+  .stack{display:flex;flex-direction:column;gap:30px}
+  .ticket{position:relative;background:var(--cream);border:2.5px solid var(--ink);border-radius:16px;
+    box-shadow:var(--punch-lg);display:grid;grid-template-columns:210px 1fr 74px;min-height:200px;
+    transition:transform .18s ease,box-shadow .18s ease;cursor:default}
+  .ticket:nth-child(odd){transform:rotate(-.5deg)}
+  .ticket:nth-child(even){transform:rotate(.6deg)}
+  .ticket:hover{transform:rotate(0) translateY(-3px);box-shadow:8px 8px 0 0 var(--ink);z-index:5}
+
+  /* photo window (die-cut) */
+  .tk-win{position:relative;margin:14px;border:2.5px solid var(--ink);border-radius:11px;overflow:hidden;background:#000;
+    box-shadow:inset 0 0 0 3px var(--cream),inset 0 0 0 5px var(--ink)}
+  .tk-win img{width:100%;height:100%;object-fit:cover;min-height:172px}
+  .tk-win .tag{position:absolute;left:9px;bottom:9px;font-size:10px;padding:3px 8px;z-index:2}
+  .tk-win .no{position:absolute;top:9px;left:9px;background:var(--ink);color:var(--brand);font-family:var(--display);
+    font-size:13px;border-radius:5px;padding:1px 8px;letter-spacing:.5px;z-index:2}
+
+  /* details / body */
+  .tk-body{padding:16px 8px 16px 4px;position:relative;display:flex;flex-direction:column}
+  .tk-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .tk-lab{font-family:var(--display);font-size:27px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:.95}
+  .tk-sub{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+  .tk-who{margin:11px 0 9px}
+  .tk-tip{font-size:14.5px;line-height:1.5;color:#26261f}
+  .tk-tip b{color:var(--ink)}
+  .tk-meta{margin-top:auto;padding-top:13px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .tk-fields{display:flex;gap:20px}
+  .tk-field .fl{font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--muted-2)}
+  .tk-field .fv{font-family:var(--display);font-size:16px;color:var(--ink);letter-spacing:.4px;line-height:1;margin-top:2px}
+  .tk-barcode{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+  .tk-barcode .bars{width:118px;height:26px;
+    background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5.5px,transparent 5.5px 8px,var(--ink) 8px 9px,transparent 9px 12px)}
+  .tk-barcode .bn{font-family:var(--sans);font-variant-numeric:tabular-nums;font-size:9.5px;font-weight:800;letter-spacing:2px;color:var(--muted)}
+
+  /* right stub end */
+  .tk-stub{position:relative;background:var(--brand);border-left:3px dashed var(--ink);border-radius:0 13px 13px 0;
+    display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .tk-stub .rot{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--display);font-size:16px;
+    text-transform:uppercase;letter-spacing:1.5px;color:var(--ink);text-align:center}
+  .tk-stub .adm{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;letter-spacing:1px;color:var(--ink)}
+  .tk-stub .sn{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;
+    font-variant-numeric:tabular-nums;color:var(--ink);letter-spacing:.5px;white-space:nowrap}
+
+  /* perforation notches at the vertical stub divider */
+  .ticket .notch{position:absolute;width:22px;height:22px;background:#e9e8e1;border:2.5px solid var(--ink);border-radius:50%;
+    right:calc(74px - 11px);z-index:3}
+  .ticket .notch.t{top:-13px}
+  .ticket .notch.b{bottom:-13px}
+  /* subtle horizontal perforation across body */
+  .perf{position:absolute;left:210px;right:74px;top:50%;height:0;border-top:2px dashed #d9d5c2;opacity:.5}
+
+  .footnote{text-align:center;margin-top:40px;font-size:12.5px;font-weight:700;color:var(--muted)}
+
+  @media(max-width:760px){
+    .ticket{grid-template-columns:1fr 60px}
+    .tk-win{grid-column:1;min-height:0}
+    .tk-body{grid-column:1;padding:4px 14px 16px}
+    .tk-win{margin:14px 14px 0}
+    .ticket .notch{right:calc(60px - 11px)}
+    .perf{display:none}
+    .venue-ticket{grid-template-columns:1fr 110px}
+    .venue-ticket .notch{right:calc(110px - 11px)}
+  }
+</style></head>
+<body>
+<div style="background:var(--ink);color:var(--brand);font-weight:800;font-size:12px;letter-spacing:1px;
+  text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 09 — Ticket-Stub Stack</span><span style="color:#fff">Every tip is a torn ticket stub — photo window die-cut in</span></div>
+
+<section class="stage"><div class="wrap">
+
+  <!-- venue master ticket -->
+  <div class="venue-ticket">
+    <span class="notch t"></span><span class="notch b"></span>
+    <div class="vt-main">
+      <span class="kick"><span class="dot" style="background:var(--ink)"></span> Snapback · Admit One</span>
+      <h1>Madison Square<br>Garden</h1>
+      <div class="home">New York Knicks · New York, NY</div>
+      <div class="row">
+        <div class="vt-sc snap"><div class="l">★ Snapback</div><div class="v">9.2</div></div>
+        <div class="vt-sc"><div class="l">Fan Score</div><div class="v">8.7</div></div>
+        <div class="vt-sc"><div class="l">NBA Rank</div><div class="v">#3</div></div>
+        <span class="who" style="color:#fff;margin-left:4px"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+      </div>
+    </div>
+    <div class="vt-stub">
+      <span class="adm">SEC · ROW · SEAT</span>
+      <span class="rot">Gameday Guide</span>
+      <span class="barcode"></span>
+    </div>
+  </div>
+
+  <div class="eyebrow" style="margin-bottom:6px"><span class="dot"></span> Snapback · tear off a tip</div>
+  <h2 class="shead" style="margin-bottom:22px">Your stub for every stop</h2>
+
+  <div class="stack" id="stack"></div>
+
+  <div class="footnote">7 stubs · one from Jack Settleman ✓ · 214 fans have rated this arena</div>
+</div></section>
+
+<script>
+const P='../../public/img/reports/citi/robby/';
+const TICKETS=[
+  {no:'01',lab:'Getting There',sub:'Arrive · 7th Ave',img:'r59.jpg',tag:'Outside',sec:'GATE',row:'ANY',seat:'—',stub:'The Commute',sn:'MSG·TRANSIT·01',
+   tip:'<b>Best ways in: walking, the subway, the LIRR, or NJ Transit.</b> Driving would be my last choice.'},
+  {no:'02',lab:'Get In',sub:'Entrance · 100 level',img:'r20.jpg',tag:'Gates',sec:'100',row:'GATE',seat:'A',stub:'The Fast Line',sn:'MSG·GATE·100',
+   tip:'Come in through the 100 level gates — <b>the merch store there has a way shorter line than the one in the MSG lobby.</b>'},
+  {no:'03',lab:'Before The Game',sub:'Pregame · reserve lounge',img:'r44.jpg',tag:'Chase Lounge',sec:'CLUB',row:'RSV',seat:'—',stub:'Pregame',sn:'MSG·CHASE·RSV',
+   tip:'<b>There is a Chase reserve lounge inside the arena.</b> You can reserve a spot pregame. Nearby: Nick and Stef\'s, Stout, Mustang Harry\'s.'},
+  {no:'04',lab:'Best Seats',sub:'Center 200s · lower bowl',img:'r10.jpg',tag:'100 Level',sec:'204',row:'1',seat:'8',stub:'The Sweet Spot',sn:'MSG·SEC·204',
+   tip:'<b>Front rows in the 200s in the center sections beat behind the basket, even down low.</b> The Hyundai Bridge is a cool spot and good value.'},
+  {no:'05',lab:'Best Food',sub:'Concourse · outside 107',img:'r25.jpg',tag:'Steak Sandwich',sec:'107',row:'CNC',seat:'—',stub:'Eat',sn:'MSG·EAT·107',
+   tip:'<b>Best food in MSG is the steak sandwich outside section 107.</b> The Garden Market burgers are the best basic food in sports — skip the pizza.'},
+  {no:'06',lab:'The Atmosphere',sub:'In-bowl · tip-off',img:'r17.jpg',tag:'Tip-off',sec:'ALL',row:'STAND',seat:'UP',stub:'Best Crowd, NBA',sn:'MSG·CROWD·01',
+   tip:'<b>Best crowd in the NBA.</b> Be ready to stand, and the seats are tight between people — but the energy is worth it, plus t-shirt tosses.'},
+  {no:'07',lab:'Insider Tips',sub:'Merch · on the way out',img:'r04.jpg',tag:'Team Store',sec:'100',row:'MRCH',seat:'—',stub:'Before You Go',sn:'MSG·MERCH·100',
+   tip:'The merch store through the 100 level gates has a shorter line. And know going in: <b>alcoholic drinks are very expensive inside MSG.</b>'},
+];
+
+document.getElementById('stack').innerHTML=TICKETS.map(t=>`
+  <div class="ticket">
+    <span class="notch t"></span><span class="notch b"></span>
+    <span class="perf"></span>
+    <div class="tk-win">
+      <span class="no">${t.no}</span>
+      <img src="${P+t.img}" alt=""><span class="tag">${t.tag}</span>
+    </div>
+    <div class="tk-body">
+      <div class="tk-head"><div class="tk-lab">${t.lab}</div><div class="tk-sub">${t.sub}</div></div>
+      <div class="tk-who"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tk-tip">${t.tip}</div>
+      <div class="tk-meta">
+        <div class="tk-fields">
+          <div class="tk-field"><div class="fl">Sec</div><div class="fv">${t.sec}</div></div>
+          <div class="tk-field"><div class="fl">Row</div><div class="fv">${t.row}</div></div>
+          <div class="tk-field"><div class="fl">Seat</div><div class="fv">${t.seat}</div></div>
+        </div>
+        <div class="tk-barcode"><div class="bars"></div><div class="bn">${t.sn}</div></div>
+      </div>
+    </div>
+    <div class="tk-stub">
+      <span class="adm">Admit One</span>
+      <span class="rot">${t.stub}</span>
+      <span class="sn">No. ${t.no} / 07</span>
+    </div>
+  </div>`).join('');
+</script>
+</body></html>

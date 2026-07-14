@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout 5 · Sidebar app</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .app { display: grid; grid-template-columns: 254px 1fr; min-height: 100vh; }
+  .side { background: var(--ink-soft); color: #fff; padding: 18px 14px; display: flex; flex-direction: column; gap: 7px; border-right: 4px solid var(--brand); }
+  .side .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 21px; letter-spacing: 1.5px; color: #fff; padding: 6px 8px 16px; }
+  .mi { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 10px; font: 800 14px var(--sans); text-transform: uppercase; letter-spacing: .4px; color: #e7e7e7; }
+  .mi .mic { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: var(--a); color: #fff; border: 2px solid rgba(0,0,0,.35); flex: none; }
+  .mi.ink .mic { color: var(--ink); }
+  .mi .mic .ic { width: 18px; height: 18px; }
+  .mi:hover, .mi.active { background: #2e2e2e; }
+  .mi.active { color: #fff; box-shadow: inset 3px 0 0 var(--a); }
+  .side .foot { margin-top: auto; }
+  .side .foot .btn { width: 100%; justify-content: center; }
+  .main { padding: clamp(20px,3vw,34px); max-width: 1000px; }
+  .topbar { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .topbar .search { flex: 1; }
+  .feature { position: relative; min-height: 240px; border: 2px solid var(--ink); border-radius: 16px; box-shadow: var(--punch-lg); overflow: hidden; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; padding: 22px; margin-bottom: 26px; }
+  .feature::before { content: ''; position: absolute; inset: 0; background: center/cover var(--bg); filter: brightness(.6) saturate(1.05); }
+  .feature::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 30%, rgba(10,10,8,.82)); }
+  .feature > * { position: relative; z-index: 1; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+  .card { border: 2px solid var(--ink); border-radius: 14px; background: #fff; box-shadow: var(--punch); padding: 8px 16px 12px; }
+  .card .rrow:last-child { border-bottom: 0; }
+  .card.games { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: 1fr; }
+    .side { flex-direction: row; align-items: center; gap: 10px; overflow-x: auto; border-right: 0; border-bottom: 4px solid var(--brand); }
+    .side .brand { display: none; }
+    .side .foot { margin: 0; }
+    .side .mi { flex: none; }
+    .side .mi span:last-child { display: none; }
+    .cols { grid-template-columns: 1fr; }
+  }
+</style></head>
+<body>
+<div class="app">
+  <aside class="side">
+    <a class="brand" id="brand"></a>
+    <div id="menu"></div>
+    <div class="foot"><a class="btn brand" id="rankbtn"></a></div>
+  </aside>
+  <main class="main">
+    <div class="topbar"><div class="search"><span id="si"></span><input placeholder="Search team, venue, game or city…"></div></div>
+    <a class="feature" id="feat">
+      <span class="eyebrow" style="color:var(--brand)">Top ranked in America · #1</span>
+      <div style="font-family:var(--display);font-size:clamp(26px,3vw,40px);text-transform:uppercase;letter-spacing:.5px;margin-top:6px">National Championship</div>
+      <div style="font-weight:700;color:#dcdcd0">Miami, FL · Snapback 8.88 → see the rankings</div>
+    </a>
+    <div class="cols">
+      <div><div class="eyebrow" style="margin-bottom:10px">On the slate tonight</div><div class="card games" id="games"></div></div>
+      <div><div class="eyebrow" style="margin-bottom:10px">Top ranked</div><div class="card" id="topRanked"></div></div>
+    </div>
+  </main>
+</div>
+<script src="_ui.js"></script>
+<script>
+  const S = window.SNAP;
+  brand.innerHTML = S.cap() + 'SNAPBACK'; si.innerHTML = S.svg('search');
+  rankbtn.innerHTML = S.svg('star') + 'Rank a game';
+  menu.innerHTML = S.dest.map((d, i) => `<a class="mi ${d.ink?'ink':''} ${i===1?'active':''}" style="--a:${d.accent}"><span class="mic">${S.svg(d.icon)}</span><span>${d.short}</span></a>`).join('');
+  feat.style.setProperty('--bg', `url('${S.photos[3]}')`);
+  games.innerHTML = S.games.slice(0,3).map(S.gameRow).join('');
+  topRanked.innerHTML = S.top.map(S.rankRow).join('');
+</script>
+</body></html>

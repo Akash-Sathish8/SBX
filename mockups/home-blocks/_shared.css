@@ -1,0 +1,32 @@
+/* Snapback brand tokens for the home-blocks mockups — mirrors the app's
+   src/styles.css @theme and mockups/review-redesign/_shared.css. Throwaway. */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --brand: #f7df02;   /* the yellow */
+  --ink: #141410;     /* near-black */
+  --ink-soft: #222222;
+  --cream: #fffdf6;   /* card stock */
+  --paper: #f4f4f1;   /* page bg */
+  --tip: #faf7e8;
+  --muted: #6b6b6b;
+  --gold: #b6a900;
+  --danger: #e2483d;
+  --display: 'Anton', 'Barlow', sans-serif;
+  --sans: 'Barlow', sans-serif;
+  --punch: 3px 3px 0 0 var(--ink);
+  --punch-lg: 6px 6px 0 0 var(--ink);
+
+  /* one accent per explore block (on-brand hues, reused from the review-redesign
+     avatar palette) — the whole point of the redesign is telling them apart */
+  --a-rank:   #f7df02;  /* primary action */
+  --a-near:   #2b6cb0;  /* blue */
+  --a-team:   #2f855a;  /* green */
+  --a-events: #dd6b20;  /* orange */
+  --a-venue:  #6b46c1;  /* purple */
+  --a-top:    #c0392b;  /* crimson */
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--sans); background: var(--paper); color: var(--ink); }
+a { text-decoration: none; color: inherit; }

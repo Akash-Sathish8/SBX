@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Snapback · Review Page Redesign — 20 Directions</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body{background:var(--paper)}
+  .hero{background:var(--ink);color:#fff;padding:34px 0 26px;border-bottom:5px solid var(--brand)}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo .mark{width:38px;height:38px;border-radius:7px}
+  .logo .wordmark{font-family:var(--display);font-size:26px;letter-spacing:2px;color:#fff;text-transform:uppercase}
+  .hero h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;
+    line-height:.98;margin:18px 0 12px}
+  .hero h1 span{color:var(--brand)}
+  .hero p{max-width:70ch;font-size:16px;line-height:1.6;color:#d7d7cf;margin:0 0 6px}
+  .hero .note{font-size:13px;color:#9a9a90;font-style:italic;margin-top:10px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px;font-size:12px;font-weight:700;color:#cfcfc7}
+  .legend b{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:12px;height:12px;border-radius:3px;border:1.5px solid #000}
+
+  .bar{position:sticky;top:0;z-index:40;background:var(--brand);border-bottom:2px solid var(--ink);
+    padding:10px 0}
+  .bar .in{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .bar .tot{font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);display:flex;gap:14px}
+  .bar .tot i{font-style:normal;font-family:var(--display);font-size:18px}
+  .bar button{cursor:pointer;border:2px solid var(--ink);background:var(--ink);color:#fff;font-family:var(--sans);
+    font-weight:800;font-size:12px;letter-spacing:.5px;text-transform:uppercase;padding:7px 14px;border-radius:8px}
+  .bar button.ghost{background:transparent;color:var(--ink)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:24px;padding:30px 0 60px}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--cream);border:2px solid var(--ink);border-radius:14px;overflow:hidden;
+    box-shadow:var(--punch);display:flex;flex-direction:column;transition:box-shadow .12s,transform .12s}
+  .card[data-v="yes"]{box-shadow:5px 5px 0 0 #1f9d4d}
+  .card[data-v="maybe"]{box-shadow:5px 5px 0 0 var(--brand)}
+  .card[data-v="no"]{box-shadow:5px 5px 0 0 var(--danger);opacity:.62}
+  .thumb{position:relative;height:270px;border-bottom:2px solid var(--ink);overflow:hidden;background:#111}
+  .thumb iframe{position:absolute;top:0;left:0;width:1440px;height:1000px;border:0;
+    transform:scale(.3125);transform-origin:top left;pointer-events:none}
+  .thumb .open{position:absolute;inset:0;z-index:2;text-decoration:none}
+  .thumb .badge{position:absolute;left:10px;top:10px;z-index:3;background:var(--ink);color:var(--brand);
+    font-family:var(--display);font-size:16px;letter-spacing:1px;padding:3px 10px;border-radius:6px}
+  .thumb .openpill{position:absolute;right:10px;top:10px;z-index:3;background:var(--brand);color:var(--ink);
+    border:1.5px solid var(--ink);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+    padding:4px 10px;border-radius:999px}
+  .meta{padding:14px 16px 4px}
+  .meta h3{font-family:var(--display);font-size:22px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);margin:0}
+  .meta p{font-size:13.5px;line-height:1.45;color:#4a4b44;font-weight:500;margin:6px 0 0}
+  .votes{display:flex;gap:8px;padding:12px 16px 16px;margin-top:auto}
+  .votes button{flex:1;cursor:pointer;border:2px solid var(--ink);background:#fff;color:var(--ink);
+    font-family:var(--sans);font-weight:800;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;
+    padding:9px 0;border-radius:9px;transition:background .1s}
+  .votes button.y.on{background:#1f9d4d;color:#fff}
+  .votes button.m.on{background:var(--brand);color:var(--ink)}
+  .votes button.n.on{background:var(--danger);color:#fff}
+</style></head>
+<body>
+
+<header class="hero"><div class="wrap-wide">
+  <div class="logo"><img class="mark" src="../../public/img/logo.png" alt=""><span class="wordmark">Snapback</span></div>
+  <h1>Review Page Redesign · <span>20 Directions</span></h1>
+  <p>Right now the venue review page hides every photo inside the "Fan Reviews" sidebar. These 20 concepts all do one thing differently: pull the photos <b style="color:#fff">out</b> and put them next to the seats and food they actually show — and tell the gameday as a story you can read at a glance.</p>
+  <p style="color:#fff;font-weight:700">Jack — walk through them and hit <b style="color:#7CFC9E">Yes</b> / <b style="color:var(--brand)">Maybe</b> / <b style="color:#ff8f86">No</b> on each. Then hit "Copy verdicts" up top and send it back.</p>
+  <div class="legend">
+    <b><span class="sw" style="background:#1f9d4d"></span> Yes — build it</b>
+    <b><span class="sw" style="background:var(--brand)"></span> Maybe — worth a look</b>
+    <b><span class="sw" style="background:var(--danger)"></span> No — skip</b>
+  </div>
+  <div class="note">Photos are placeholders from a real fan field report — judge the layout, not the pictures. All tips are your real MSG notes.</div>
+</div></header>
+
+<div class="bar"><div class="wrap-wide in">
+  <span class="tot">
+    <span>Yes <i id="cY">0</i></span><span>Maybe <i id="cM">0</i></span><span>No <i id="cN">0</i></span><span style="opacity:.6">Left <i id="cL">20</i></span>
+  </span>
+  <span style="margin-left:auto;display:flex;gap:10px">
+    <button id="copy">Copy verdicts</button>
+    <button class="ghost" id="reset">Reset</button>
+  </span>
+</div></div>
+
+<main class="wrap-wide"><div class="grid" id="grid"></div></main>
+
+<script>
+const CONCEPTS = [
+  ['01','01-timeline.html','Gameday Timeline','The whole night told top-to-bottom — every photo is a stop on the way from the street to your seat.'],
+  ['02','02-editorial.html','Editorial Feature','A long-form field report; photos float beside the exact section they prove.'],
+  ['03','03-illustrated-cards.html',"Illustrated Section Cards","Today's grid — but every card now leads with the photo that backs up the tip."],
+  ['04','04-split-sticky.html','Split-Screen Sticky','A pinned photo stage on the left that swaps as you scroll the tips on the right.'],
+  ['05','05-deck.html','Chaptered Deck','Full-screen cinematic chapters you swipe through like a highlight reel.'],
+  ['06','06-bento.html','Bento Grid','An interlocking mosaic — the seat and food hero photos anchor the tips around them.'],
+  ['07','07-stadium-map.html','Stadium Diagram','Pins dropped on a seating-bowl map — tap a spot to see its photo and tip.'],
+  ['08','08-photo-grid.html','Photo Grid','An Instagram-style square grid; tap any photo to read the tip behind it.'],
+  ['09','09-ticket-stubs.html','Ticket Stubs','Every section is a die-cut ticket stub — full Snapback ticket language.'],
+  ['10','10-scrolly.html','Scrollytelling','Full-bleed scenes with the tips drifting over them as you scroll.'],
+  ['11','11-field-guide.html','Field Guide','A printed pocket itinerary you would screenshot before you go.'],
+  ['12','12-gallery-pdp.html','Gallery + Thumb Rail','A product-page gallery — big hero, thumbnail rail, and the tip for each view.'],
+  ['13','13-tabs.html','Tabbed Sections','Everything one click away — a photo-led panel for each topic.'],
+  ['14','14-masonry.html','Masonry Feed','A Pinterest-style discovery feed that mixes photos and tips.'],
+  ['15','15-dashboard.html','Rating Dashboard','Each pillar score backed by a photo and the quote that earns it.'],
+  ['16','16-side-rail.html','Side-Rail Essay','A docs-style nav beside a calm, readable photo essay.'],
+  ['17','17-stories.html','Story Reel','Mobile Stories — tap through each topic, photo first.'],
+  ['18','18-zine.html','Zine Collage','A maximalist Snapback poster — taped photos, huge headlines.'],
+  ['19','19-photo-dock.html','Guide + Photo Dock','A readable guide with an ever-present photo dock that follows your section.'],
+  ['20','20-chat.html','Ask-a-Local Chat','Text a local — every answer arrives with a photo attached.'],
+];
+const KEY='sbx-review-verdicts';
+let verdicts=JSON.parse(localStorage.getItem(KEY)||'{}');
+const grid=document.getElementById('grid');
+
+CONCEPTS.forEach(([n,file,name,desc])=>{
+  const c=document.createElement('article');
+  c.className='card'; c.id='c'+n;
+  if(verdicts[n]) c.dataset.v=verdicts[n];
+  c.innerHTML=`
+    <div class="thumb">
+      <span class="badge">${n}</span>
+      <a class="openpill" href="${file}" target="_blank">Open ↗</a>
+      <iframe src="${file}" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+      <a class="open" href="${file}" target="_blank" aria-label="Open ${name}"></a>
+    </div>
+    <div class="meta"><h3>${name}</h3><p>${desc}</p></div>
+    <div class="votes">
+      <button class="y ${verdicts[n]==='yes'?'on':''}" data-n="${n}" data-v="yes">Yes</button>
+      <button class="m ${verdicts[n]==='maybe'?'on':''}" data-n="${n}" data-v="maybe">Maybe</button>
+      <button class="n ${verdicts[n]==='no'?'on':''}" data-n="${n}" data-v="no">No</button>
+    </div>`;
+  grid.appendChild(c);
+});
+
+function refresh(){
+  const v=Object.values(verdicts);
+  cY.textContent=v.filter(x=>x==='yes').length;
+  cM.textContent=v.filter(x=>x==='maybe').length;
+  cN.textContent=v.filter(x=>x==='no').length;
+  cL.textContent=20-v.length;
+}
+refresh();
+
+grid.addEventListener('click',e=>{
+  const b=e.target.closest('.votes button'); if(!b) return;
+  const n=b.dataset.n, v=b.dataset.v;
+  const card=document.getElementById('c'+n);
+  if(verdicts[n]===v){ delete verdicts[n]; card.removeAttribute('data-v'); }
+  else { verdicts[n]=v; card.dataset.v=v; }
+  card.querySelectorAll('.votes button').forEach(x=>x.classList.toggle('on',verdicts[n]===x.dataset.v));
+  localStorage.setItem(KEY,JSON.stringify(verdicts));
+  refresh();
+});
+
+document.getElementById('copy').addEventListener('click',()=>{
+  const order={yes:0,maybe:1,no:2,'':3};
+  const lines=CONCEPTS
+    .map(([n,,name])=>({n,name,v:verdicts[n]||''}))
+    .sort((a,b)=>order[a.v]-order[b.v]||a.n.localeCompare(b.n))
+    .map(x=>`${x.v?x.v.toUpperCase().padEnd(5):'—    '}  ${x.n}  ${x.name}`);
+  const txt='SNAPBACK — Review redesign verdicts\n'+
+    `Yes ${cY.textContent} · Maybe ${cM.textContent} · No ${cN.textContent}\n\n`+lines.join('\n');
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=document.getElementById('copy'); const o=btn.textContent;
+    btn.textContent='Copied ✓'; setTimeout(()=>btn.textContent=o,1400);
+  });
+});
+
+document.getElementById('reset').addEventListener('click',()=>{
+  if(!confirm('Clear all verdicts?')) return;
+  verdicts={}; localStorage.removeItem(KEY);
+  document.querySelectorAll('.card').forEach(c=>c.removeAttribute('data-v'));
+  document.querySelectorAll('.votes button').forEach(b=>b.classList.remove('on'));
+  refresh();
+});
+</script>
+</body></html>

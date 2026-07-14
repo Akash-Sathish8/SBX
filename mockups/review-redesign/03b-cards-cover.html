@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03b · Illustrated Cards — Photo Cover (Crowd) — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;margin:4px 0 4px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5}
+  .stage{background:#f7f6f2;padding:42px 0 64px}
+
+  /* section header band above each grid group */
+  .grp{margin-top:34px}
+  .grp:first-child{margin-top:26px}
+  .grphead{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+  .grphead .lab{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:1;letter-spacing:.5px;
+    color:var(--ink);font-size:clamp(24px,2.8vw,34px)}
+  .grphead .cnt{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .grphead .cstack{display:flex;padding-left:8px;margin-left:auto}
+  .grphead .cstack .ini,.grphead .cstack .av{width:26px;height:26px;margin-left:-8px;border:2px solid #f7f6f2;
+    box-shadow:0 0 0 1.5px var(--ink);border-radius:50%;object-fit:cover;background:var(--ink);
+    display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;position:relative}
+
+  /* poster grid: 3 col; feature tiles span 2 rows */
+  .poster{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:224px;gap:20px}
+  .tile{position:relative;border:2px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:var(--punch);
+    display:block;transition:transform .25s ease,box-shadow .25s ease;background:#111}
+  .tile:hover{transform:translate(-3px,-3px);box-shadow:var(--punch-lg)}
+  .tile.feature{grid-row:span 2}
+
+  .tile .bg{position:absolute;inset:0}
+  .tile .bg img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .tile:hover .bg img{transform:scale(1.05)}
+  .tile .scrim{position:absolute;inset:0;background:
+    linear-gradient(180deg,rgba(10,10,8,0) 28%,rgba(10,10,8,.4) 56%,rgba(10,10,8,.93) 100%)}
+
+  .tile .toprow{position:absolute;top:12px;left:12px;right:12px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;z-index:2}
+  .tile .tag{position:static}
+  /* a fan's rating badge on their photo-review */
+  .tile .rate{box-shadow:0 2px 8px rgba(0,0,0,.4);border:1.5px solid var(--ink)}
+  .tile .rate .slash{font-size:9px;opacity:.7;margin-left:1px}
+
+  .tile .foot{position:absolute;left:16px;right:16px;bottom:14px;z-index:2;color:#fff}
+  /* photo-credit chip = binds the cover photo to the fan who posted it */
+  .tile .credit{background:rgba(20,20,16,.9);border:1.5px solid rgba(255,255,255,.28)}
+  .tile.feature .credit{font-size:11.5px;padding:4px 12px 4px 4px}
+  .tile.feature .credit .ini,.tile.feature .credit .av{width:22px;height:22px;font-size:9px}
+  .tile .quote{font-size:13px;line-height:1.42;font-weight:500;color:#f2f1ea;margin-top:9px;
+    text-shadow:0 1px 6px rgba(0,0,0,.6)}
+  .tile .quote b{font-weight:800;color:#fff}
+  .tile.feature .quote{font-size:15px;line-height:1.44;margin-top:11px}
+
+  @media(max-width:900px){
+    .poster{grid-template-columns:repeat(2,1fr);grid-auto-rows:210px}
+    .tile.feature{grid-row:span 2}
+  }
+  @media(max-width:560px){
+    .poster{grid-template-columns:1fr;grid-auto-rows:auto}
+    .tile{aspect-ratio:4/5}
+    .tile.feature{grid-row:auto;aspect-ratio:3/4}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 03b — Illustrated Cards · Photo Cover</span>
+  <span style="color:#fff;text-transform:none;letter-spacing:.3px">Every cover photo is OWNED by a fan · a credit chip + their quote on each tile, grouped by section, at crowd density</span>
+</div>
+
+<header class="top"><div class="wrap-wide">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home">Home of New York Knicks · <b style="color:var(--brand)">Snapback 9.2</b> (#3) · Fan 8.7 (214)</div>
+</div></header>
+
+<section class="stage"><div class="wrap-wide">
+  <div class="shead-row">
+    <div><div class="eyebrow"><span class="dot"></span> Snapback · crowdsourced</div>
+      <h2 class="shead" style="margin-top:8px">What do I need to know?</h2></div>
+    <div style="display:flex;gap:10px"><span class="pill-brand">Build your guide →</span><span class="pill-dark">+ Add a tip</span></div>
+  </div>
+  <div class="ssub" style="margin-top:10px">Insider tips &amp; photos from fans who've actually been to Madison Square Garden</div>
+
+  <div id="groups"></div>
+</div></section>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  const C = window.CROWD;
+  const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+  const stackAv = id => {
+    const f = C.fans[id];
+    return f.verified
+      ? `<img class="av" src="${f.avatar}" alt="${esc(f.name)}">`
+      : `<span class="ini" style="background:${f.color}">${f.ini}</span>`;
+  };
+
+  // reviews with photos, indexed by author — lets us overlay a .rate badge on
+  // review-photo tiles and reuse a fan's overall body as the quote.
+  const reviewByFan = {};
+  C.reviews.forEach(r => { reviewByFan[r.by] = r; });
+
+  // trim a quote so it sits nicely over a photo
+  const short = (s, n=90) => s.length > n ? esc(s.slice(0, n).replace(/\s+\S*$/,'')) + '…' : esc(s);
+
+  function tile(item, feature){
+    const f = C.fans[item.by];
+    // does this fan have a full review? if so, badge the tile with their rating
+    const rev = reviewByFan[item.by];
+    const rate = rev ? `<span class="rate">${rev.rating}<span class="slash">/10</span></span>` : '';
+    const quote = short(item.text, feature ? 130 : 88);
+    return `<a class="tile${feature?' feature':''}" href="#">
+      <div class="bg"><img src="${item.photo.src}" alt=""></div>
+      <div class="scrim"></div>
+      <div class="toprow"><span class="tag">${esc(item.photo.area)}</span>${rate}</div>
+      <div class="foot">
+        <span class="credit">${stackAv(item.by)}${esc(f.name)}${f.verified?'<span class="vf" style="background:var(--brand);color:var(--ink);margin-left:2px">✓</span>':''}</span>
+        <div class="quote">${quote}</div>
+      </div>
+    </a>`;
+  }
+
+  const html = C.sections.map(sec => {
+    // only tips with photos become tiles — every cover photo is a real fan shot
+    const items = C.tipsFor(sec.key).filter(t => t.photo).slice().sort((a,b)=>{
+      if (a.pinned && !b.pinned) return -1;
+      if (b.pinned && !a.pinned) return 1;
+      return b.up - a.up;
+    });
+    if (!items.length) return '';
+
+    const feature = (sec.key === 'best-seats' || sec.key === 'food');
+    const authors = [...new Set(items.map(t=>t.by))]
+      .sort((a,b)=> (C.fans[b].verified?1:0) - (C.fans[a].verified?1:0));
+    const stack = authors.slice(0,5).map(stackAv).join('');
+
+    const tiles = items.map((it,i)=> tile(it, feature && i === 0)).join('');
+
+    return `<div class="grp">
+      <div class="grphead">
+        <span class="lab">${esc(sec.label)}</span>
+        <span class="cnt">${items.length} photo${items.length>1?'s':''} · ${authors.length} fans</span>
+        <span class="cstack">${stack}</span>
+      </div>
+      <div class="poster">${tiles}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('groups').innerHTML = html;
+})();
+</script>
+</body></html>

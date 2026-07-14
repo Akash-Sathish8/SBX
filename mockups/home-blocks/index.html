@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home explore-blocks — Snapback mockups</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 30px 24px 80px; }
+  .masthead { border: 3px solid var(--ink); background: var(--cream); border-radius: 14px; box-shadow: var(--punch-lg); padding: 22px 24px; margin-bottom: 30px; }
+  .masthead h1 { font-family: var(--display); font-size: clamp(28px, 4vw, 44px); text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px; }
+  .masthead p { margin: 0; color: #3a3a34; font-weight: 500; font-size: 15px; line-height: 1.5; max-width: 78ch; }
+  .masthead .prob { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .tag { font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; border: 2px solid var(--ink); border-radius: 999px; padding: 4px 11px; background: var(--tip); }
+
+  .concept { margin: 44px 0; }
+  .concept > h2 { font-family: var(--display); font-size: 24px; text-transform: uppercase; letter-spacing: .6px; margin: 0 0 4px; }
+  .concept > .blurb { color: var(--muted); font-weight: 600; font-size: 14px; margin: 0 0 16px; max-width: 74ch; }
+  .views { display: flex; flex-direction: column; gap: 16px; }
+  .vlabel { display: block; font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: #9a9a8e; margin-bottom: 7px; }
+  /* the app's dark hero backdrop, so accents read in context */
+  .frame { background: radial-gradient(120% 140% at 50% -10%, #2a2a22, #141410 60%); padding: 22px; border-radius: 14px; }
+  .frame.desk { width: 100%; }
+  .frame.mob { width: 372px; max-width: 100%; }
+
+  /* shared grid: 6-up desktop, 2-up mobile; the Rank block leads full-width on mobile */
+  .grid { display: grid; gap: 12px; }
+  .g6 { grid-template-columns: repeat(6, 1fr); }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g2 .rank { grid-column: 1 / -1; }
+  .blk { position: relative; display: block; }
+  .ic { width: 22px; height: 22px; flex: none; }
+  /* label + description always stack (they're inline spans by default) */
+  .frame .label, .frame .desc, .frame .kick { display: block; }
+
+  /* ============ 0 · CURRENT (reference — indistinguishable + clipped) ============ */
+  .c0 .blk { display: flex; min-height: 78px; overflow: hidden; border-radius: 9px; border: 2px solid var(--ink); background: var(--cream); box-shadow: var(--punch); }
+  .c0 .stub { flex: 0 0 34px; display: flex; flex-direction: column; border-right: 2px dashed var(--ink); padding: 8px 0 8px 9px; }
+  .c0 .stub b { margin-top: auto; transform: rotate(180deg); writing-mode: vertical-rl; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); }
+  .c0 .main { display: flex; flex: 1; flex-direction: column; min-width: 0; padding: 10px 12px; }
+  .c0 .label { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; }
+  .c0 .desc { margin-top: auto; padding-top: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+
+  /* ============ 1 · COLORED STUBS (keep the ticket, tint the stub) ============ */
+  .c1 .blk { display: flex; min-height: 90px; border-radius: 9px; border: 2px solid var(--ink); background: var(--cream); box-shadow: var(--punch); overflow: hidden; }
+  .c1 .stub { flex: 0 0 42px; display: flex; align-items: center; justify-content: center; background: var(--a); border-right: 2px solid var(--ink); color: #fff; }
+  .c1 .blk.ink .stub { color: var(--ink); }
+  .c1 .main { display: flex; flex: 1; flex-direction: column; min-width: 0; padding: 11px 13px; gap: 3px; }
+  .c1 .kick { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--a); }
+  .c1 .blk.ink .kick { color: var(--gold); }
+  .c1 .label { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; line-height: 1.1; }
+  .c1 .desc { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+  /* ============ 2 · LEFT ACCENT BAR + ICON ============ */
+  .c2 .blk { border-radius: 10px; border: 2px solid var(--ink); border-left: 10px solid var(--a); background: var(--cream); box-shadow: var(--punch); padding: 12px 14px; }
+  .c2 .hd { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .c2 .hd .ic { width: 21px; height: 21px; color: var(--a); }
+  .c2 .blk.ink .hd .ic { color: var(--ink); }
+  .c2 .kick { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); }
+  .c2 .label { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; line-height: 1.12; margin-bottom: 3px; }
+  .c2 .desc { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+  /* ============ 3 · SOLID COLOR BLOCKS ============ */
+  .c3 .blk { border-radius: 11px; border: 2px solid var(--ink); background: var(--a); box-shadow: var(--punch); padding: 13px 14px; color: #fff; }
+  .c3 .blk.ink { color: var(--ink); }
+  .c3 .hd { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+  .c3 .kick { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; opacity: .82; }
+  .c3 .label { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; line-height: 1.12; margin-bottom: 3px; }
+  .c3 .desc { font-size: 12px; font-weight: 600; opacity: .9; }
+
+  /* ============ 4 · HEADER-STRIP CARDS ============ */
+  .c4 .blk { display: flex; flex-direction: column; border-radius: 11px; border: 2px solid var(--ink); background: #fff; box-shadow: var(--punch); overflow: hidden; }
+  .c4 .strip { display: flex; align-items: center; gap: 7px; background: var(--a); border-bottom: 2px solid var(--ink); padding: 7px 11px; color: #fff; }
+  .c4 .blk.ink .strip { color: var(--ink); }
+  .c4 .strip .ic { width: 16px; height: 16px; }
+  .c4 .kick { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
+  .c4 .body { padding: 11px 13px 13px; }
+  .c4 .label { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; line-height: 1.12; margin-bottom: 4px; }
+  .c4 .desc { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+  /* ============ 5 · ICON-BADGE CARDS ============ */
+  .c5 .blk { border-radius: 12px; border: 2px solid var(--ink); background: #fff; box-shadow: var(--punch); padding: 13px; }
+  .c5 .badge { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; background: var(--a); border: 2px solid var(--ink); color: #fff; margin-bottom: 10px; }
+  .c5 .blk.ink .badge { color: var(--ink); }
+  .c5 .badge .ic { width: 20px; height: 20px; }
+  .c5 .label { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; line-height: 1.12; margin-bottom: 3px; }
+  .c5 .desc { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+  /* ============ 6 · PRIMARY BANNER + ACCENT ROW ============ */
+  .c6 .stack { display: flex; flex-direction: column; gap: 12px; }
+  .c6 .primary { display: flex; align-items: center; gap: 14px; border-radius: 12px; border: 2px solid var(--ink); background: var(--brand); box-shadow: var(--punch); padding: 15px 18px; color: var(--ink); }
+  .c6 .primary .pico { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: var(--ink); color: var(--brand); flex: none; }
+  .c6 .primary .pico .ic { width: 24px; height: 24px; }
+  .c6 .primary .plabel { font-family: var(--display); font-size: 24px; text-transform: uppercase; letter-spacing: .5px; line-height: 1; }
+  .c6 .primary .pdesc { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #5d5308; margin-top: 4px; }
+  .c6 .primary .arrow { margin-left: auto; font-family: var(--display); font-size: 30px; }
+  .c6 .row { display: grid; gap: 12px; }
+  .c6.desk .row { grid-template-columns: repeat(5, 1fr); }
+  .c6.mob .row { grid-template-columns: 1fr 1fr; }
+  .c6 .tile { display: flex; flex-direction: column; border-radius: 11px; border: 2px solid var(--ink); background: #fff; box-shadow: var(--punch); padding: 12px; }
+  .c6 .tile .badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: var(--a); border: 2px solid var(--ink); color: #fff; margin-bottom: 9px; }
+  .c6 .tile .badge .ic { width: 18px; height: 18px; }
+  .c6 .tile .label { font-size: 13.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .2px; line-height: 1.12; margin-bottom: 3px; }
+  .c6 .tile .desc { font-size: 11.5px; font-weight: 600; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <h1>Home explore-blocks · redesign mockups</h1>
+    <p>The six hero doors are hard to tell apart and their text gets cut off. Each concept below
+      gives every block its own <b>accent colour + icon</b> and room for the full label &amp;
+      description — no clipping. Shown on the real dark hero backdrop at desktop (6-up) and the
+      ~372px phone width where the truncation bites. Throwaway mockups; pick a direction.</p>
+    <div class="prob">
+      <span class="tag">Problem: all identical cream tickets</span>
+      <span class="tag">Problem: "review your experiences" clipped on mobile</span>
+    </div>
+  </div>
+  <div id="gallery"></div>
+</div>
+
+<script>
+  // The real six blocks (labels + destinations from src/routes/index.tsx), each with an accent.
+  const BLOCKS = [
+    { key: 'rank',   stub: 'Rank',    label: 'Been there? Rank it', desc: 'Review your experiences', accent: 'var(--a-rank)',   icon: 'star',     rank: true, ink: true },
+    { key: 'near',   stub: 'Explore', label: 'Near you',            desc: 'Games close to you',      accent: 'var(--a-near)',   icon: 'pin' },
+    { key: 'team',   stub: 'Explore', label: 'By sport & team',     desc: 'Browse leagues',          accent: 'var(--a-team)',   icon: 'pennant' },
+    { key: 'events', stub: 'Explore', label: 'Upcoming events',     desc: 'This weekend',            accent: 'var(--a-events)', icon: 'calendar' },
+    { key: 'venue',  stub: 'Explore', label: 'By venue',            desc: '632 venues',              accent: 'var(--a-venue)',  icon: 'ticket' },
+    { key: 'top',    stub: 'Explore', label: 'Top ranked',          desc: '166 experiences',         accent: 'var(--a-top)',    icon: 'bars' },
+  ];
+
+  const ICONS = {
+    star: '<path d="M12 2.6l2.7 5.9 6.4.7-4.8 4.3 1.3 6.3L12 17l-5.6 2.8 1.3-6.3L2.9 9.2l6.4-.7z" fill="currentColor" stroke="none"/>',
+    pin: '<path d="M12 21.5s6.5-6 6.5-11a6.5 6.5 0 10-13 0c0 5 6.5 11 6.5 11z"/><circle cx="12" cy="10.2" r="2.4"/>',
+    pennant: '<path d="M6 3.2V21"/><path d="M6 4.4h12.5l-3 3.8 3 3.8H6z"/>',
+    calendar: '<rect x="3.2" y="4.6" width="17.6" height="16" rx="2.2"/><path d="M3.2 9.4h17.6M8 2.6v4M16 2.6v4"/>',
+    ticket: '<path d="M3.2 8.2a2 2 0 012-2h13.6a2 2 0 012 2 1.9 1.9 0 000 3.8 1.9 1.9 0 000 3.8 2 2 0 01-2 2H5.2a2 2 0 01-2-2 1.9 1.9 0 000-3.8 1.9 1.9 0 000-3.8z"/><path d="M9 6.4v11.2"/>',
+    bars: '<path d="M5 21V11M12 21V4.5M19 21v-6.5"/>',
+  };
+  const svg = (n) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`;
+  const st = (b) => `style="--a:${b.accent}"`;
+  const cls = (b, ...extra) => [b.rank ? 'rank' : '', b.ink ? 'ink' : '', ...extra].filter(Boolean).join(' ');
+
+  // Each concept: id/name/blurb + a per-block renderer. grid() wraps the standard 6/2-up grid.
+  const grid = (mode, blocks, render) => `<div class="grid ${mode === 'desk' ? 'g6' : 'g2'}">${blocks.map(render).join('')}</div>`;
+
+  const CONCEPTS = [
+    {
+      id: 'c0', name: 'Current — for reference', blurb: 'Today: identical cream tickets, and min-height + overflow-hidden clip the second line on mobile.',
+      render: (mode) => grid(mode, BLOCKS, (b) => `<a class="blk ${cls(b)}"><span class="stub"><b>${b.stub}</b></span><span class="main"><span class="label">${b.label}</span><span class="desc">${b.desc}</span></span></a>`),
+    },
+    {
+      id: 'c1', name: '1 · Colored stubs', blurb: 'Keep the ticket + perforated stub, but fill the stub with the block\'s colour + icon. Smallest change from today.',
+      render: (mode) => grid(mode, BLOCKS, (b) => `<a class="blk ${cls(b)}" ${st(b)}><span class="stub">${svg(b.icon)}</span><span class="main"><span class="kick">${b.stub}</span><span class="label">${b.label}</span><span class="desc">${b.desc}</span></span></a>`),
+    },
+    {
+      id: 'c2', name: '2 · Left accent bar + icon', blurb: 'Cream card, a thick coloured left bar and an accent icon. Colour-coded without going loud.',
+      render: (mode) => grid(mode, BLOCKS, (b) => `<a class="blk ${cls(b)}" ${st(b)}><span class="hd">${svg(b.icon)}<span class="kick">${b.stub}</span></span><span class="label">${b.label}</span><span class="desc">${b.desc}</span></a>`),
+    },
+    {
+      id: 'c3', name: '3 · Solid color blocks', blurb: 'Each block filled with its colour (Rank stays yellow with ink text). Boldest separation — reads like a colourful launcher.',
+      render: (mode) => grid(mode, BLOCKS, (b) => `<a class="blk ${cls(b)}" ${st(b)}><span class="hd">${svg(b.icon)}<span class="kick">${b.stub}</span></span><span class="label">${b.label}</span><span class="desc">${b.desc}</span></a>`),
+    },
+    {
+      id: 'c4', name: '4 · Header-strip cards', blurb: 'White card with a coloured header strip (kicker + icon); the body has the big label + full description. Strong hierarchy, zero clipping.',
+      render: (mode) => grid(mode, BLOCKS, (b) => `<a class="blk ${cls(b)}" ${st(b)}><span class="strip">${svg(b.icon)}<span class="kick">${b.stub}</span></span><span class="body"><span class="label">${b.label}</span><span class="desc">${b.desc}</span></span></a>`),
+    },
+    {
+      id: 'c5', name: '5 · Icon-badge cards', blurb: 'White card, a rounded coloured icon badge, bold title, description. Clean and scannable.',
+      render: (mode) => grid(mode, BLOCKS, (b) => `<a class="blk ${cls(b)}" ${st(b)}><span class="badge">${svg(b.icon)}</span><span class="label">${b.label}</span><span class="desc">${b.desc}</span></a>`),
+    },
+    {
+      id: 'c6', name: '6 · Primary banner + accent row', blurb: '"Rank it" becomes one big yellow primary; the five explore tiles are colour-coded icon cards. Elevates the main action.',
+      render: (mode) => {
+        const p = BLOCKS[0];
+        const rest = BLOCKS.slice(1);
+        return `<div class="stack">
+          <a class="primary"><span class="pico">${svg(p.icon)}</span><span><span class="plabel">${p.label}</span><span class="pdesc" style="display:block">${p.desc}</span></span><span class="arrow">→</span></a>
+          <div class="row">${rest.map((b) => `<a class="tile" ${st(b)}><span class="badge">${svg(b.icon)}</span><span class="label">${b.label}</span><span class="desc">${b.desc}</span></a>`).join('')}</div>
+        </div>`;
+      },
+    },
+  ];
+
+  document.getElementById('gallery').innerHTML = CONCEPTS.map((c) => `
+    <section class="concept ${c.id}">
+      <h2>${c.name}</h2>
+      <p class="blurb">${c.blurb}</p>
+      <div class="views">
+        <div><span class="vlabel">Desktop · 6-up</span><div class="frame desk ${c.id} ${c.id === 'c6' ? 'desk' : ''}">${c.render('desk')}</div></div>
+        <div><span class="vlabel">Mobile · 2-up</span><div class="frame mob ${c.id} ${c.id === 'c6' ? 'mob' : ''}">${c.render('mob')}</div></div>
+      </div>
+    </section>`).join('');
+</script>
+</body>
+</html>

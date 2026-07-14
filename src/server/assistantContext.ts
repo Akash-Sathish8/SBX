@@ -103,7 +103,7 @@ export async function getVenueContext(targetId: string): Promise<AssistantContex
   const v = await dbVenueById(targetId)
   if (!v) return null
   const [fan, notes, tips, reviews, allGames] = await Promise.all([
-    dbVenueFanStats(v.name),
+    dbVenueFanStats({ venueId: v.id, name: v.name }),
     dbGetExpertNotes('venue', targetId),
     dbGetTips('venue', targetId),
     dbGetReviews('venue', targetId),
@@ -141,7 +141,7 @@ export async function getEventContext(targetId: string): Promise<AssistantContex
     dbGetExpertNotes('event', targetId),
     dbGetTips('event', targetId),
     dbGetReviews('event', targetId),
-    g.venue.name ? dbVenueFanStats(g.venue.name) : Promise.resolve(null),
+    (venueId || g.venue.name) ? dbVenueFanStats({ venueId: venueId || undefined, name: g.venue.name || undefined }) : Promise.resolve(null),
     venueId ? dbGetExpertNotes('venue', venueId) : Promise.resolve([] as ExpertNote[]),
     venueId ? dbGetTips('venue', venueId) : Promise.resolve([] as Tip[]),
   ])

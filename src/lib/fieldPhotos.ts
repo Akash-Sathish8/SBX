@@ -44,3 +44,15 @@ export const FIELD_PHOTOS: Record<string, Record<string, FieldPhoto[]>> = {
     ],
   },
 }
+
+// The single source of truth for the photo→author binding: a venue's field-report
+// photos for one author (matched case-insensitively on the username). Events never
+// carry photos, so event scope always returns null. Used by both the Reviews card
+// and the WhatToKnow tip thumbnails.
+export function photosForAuthor(
+  scope: 'venue' | 'event',
+  venueId: string,
+  author: string,
+): FieldPhoto[] | null {
+  return (scope === 'venue' && FIELD_PHOTOS[venueId]?.[author.toLowerCase()]) || null
+}

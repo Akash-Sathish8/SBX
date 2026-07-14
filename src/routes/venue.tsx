@@ -10,13 +10,14 @@ import { getJSON, getJSONFresh, warmImage } from '../lib/dataCache'
 import { SPORTS } from '../lib/sports'
 import type { Venue, Game } from '../lib/espn'
 import { WhatToKnow, AddTipButton } from '../components/WhatToKnow'
+import { LogGameButton, LogAtVenueButton } from '../components/LogGameButton'
 import { ExpertNotes } from '../components/ExpertNotes'
 import { Reviews, type VenueRatings } from '../components/Reviews'
 import { useAuth } from '../components/auth/AuthProvider'
 import { loadMyRankings } from '../lib/myRankings'
 import type { Experience } from '../lib/experiences'
 import { matchExperienceForVenue } from '../lib/experienceMatch'
-import { GamesThatWeekend, NearbyVenues } from '../components/NextHops'
+import { NearbyVenues } from '../components/NextHops'
 
 // The fan ranking for this venue: averaged across every signed-in fan who ranked
 // a game here (served by /api/venue-stats). `count` is 0 until anyone has.
@@ -132,7 +133,7 @@ function VenueContent({ v, games, review, tip, intel }: { v: Venue; games: Game[
     // Fan stats are LIVE (they change the moment a fan submits a score), so bypass
     // the session-forever getJSON memo — otherwise the Fan Score shows a stale value
     // after you rank a game until a full reload.
-    getJSONFresh('/api/venue-stats?venue=' + encodeURIComponent(v.name)).then((r: any) => { if (alive) setFan(r?.ok ? r.data : null) }).catch(() => { if (alive) setFan(null) })
+    getJSONFresh('/api/venue-stats?venueId=' + encodeURIComponent(v.id) + '&venue=' + encodeURIComponent(v.name)).then((r: any) => { if (alive) setFan(r?.ok ? r.data : null) }).catch(() => { if (alive) setFan(null) })
     return () => { alive = false }
   }, [v.name])
 
@@ -179,9 +180,12 @@ function VenueContent({ v, games, review, tip, intel }: { v: Venue; games: Game[
             <div className="min-w-0">
               <h1 className="max-w-[16ch] font-display text-[clamp(40px,7vw,86px)] leading-[.95] tracking-[1px] text-white uppercase">{v.name}</h1>
               {v.teams.length ? <div className="mt-[10px] text-[15px] font-semibold tracking-[.3px] text-[#bdbdbd]">Home of <b className="text-white">{v.teams.map((t) => t.displayName).join(' · ')}</b></div> : null}
-              <Button asChild variant="brand" className="mt-[16px] h-auto rounded-[8px] px-[20px] py-[12px] font-display text-[15px] font-normal tracking-[.5px] text-[#111]! shadow-[0_6px_18px_rgba(0,0,0,.1)] transition-[filter,translate] duration-[120ms,80ms] ease-[ease] hover:brightness-[.96] active:translate-y-[1px]">
-                <Link to="/venue-plan" search={{ id: v.id }}>Plan your visit →</Link>
-              </Button>
+              <div className="mt-[16px] flex flex-wrap gap-[12px]">
+                <LogAtVenueButton games={here} venueName={v.name} className="shadow-[0_6px_18px_rgba(0,0,0,.1)] transition-[filter,translate] duration-[120ms,80ms] ease-[ease] hover:brightness-[.96] active:translate-y-[1px]" />
+                <Button asChild variant="brand" className="h-auto rounded-[8px] border-2 border-brand bg-transparent px-[20px] py-[12px] font-display text-[15px] font-normal tracking-[.5px] text-brand! shadow-none transition-[filter,translate] duration-[120ms,80ms] ease-[ease] hover:bg-brand hover:text-[#111]! active:translate-y-[1px]">
+                  <Link to="/venue-plan" search={{ id: v.id }}>Plan your visit →</Link>
+                </Button>
+              </div>
             </div>
             <div className="flex flex-wrap gap-[12px]">
               {snap ? (
@@ -213,8 +217,8 @@ function VenueContent({ v, games, review, tip, intel }: { v: Venue; games: Game[
         </div>
         <div className={ssubCls}>Insider tips &amp; reviews from fans who've actually been to {v.name}</div>
         <ExpertNotes scope="venue" targetId={v.id} />
-        <div className="wtk-layout mt-2 grid grid-cols-[minmax(0,1fr)_clamp(300px,28%,380px)] items-stretch gap-[18px] max-[980px]:grid-cols-1">
-          <WhatToKnow scope="venue" targetId={v.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} cancelLabel={tip ? 'Skip' : 'Cancel'} />
+        <WhatToKnow scope="venue" targetId={v.id} composerOpen={tipOpen} onComposerClose={() => setTipOpen(false)} cancelLabel={tip ? 'Skip' : 'Cancel'} />
+        <div className="mt-8">
           <Reviews
             scope="venue"
             targetId={v.id}
@@ -236,19 +240,21 @@ function VenueContent({ v, games, review, tip, intel }: { v: Venue; games: Game[
         {here && here.length ? (
           <div className="mt-[6px] flex flex-col gap-[10px]">
             {here.slice(0, 20).map((g) => (
-              <Link key={g.id} to="/game" search={{ id: g.id, league: g.league }} className="grid grid-cols-[auto_1fr_auto] items-center gap-[14px] rounded-[8px] border-2 border-ink-soft bg-white px-[16px] py-[13px] [transition:translate_.12s,filter_.12s] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:drop-shadow-[7px_7px_0_#222] max-[560px]:grid-cols-[auto_1fr]">
-                <Badge variant="ghost" className="rounded-[4px] border-0 bg-ink-soft px-[8px] py-[4px] text-[11px] font-extrabold tracking-[.6px] whitespace-normal text-white">{SPORTS[g.league].label}</Badge>
-                <span className="text-[16px] font-extrabold text-ink-soft">{g.away.location || g.away.displayName} <span className="font-bold text-muted">@</span> {g.home.location || g.home.displayName}</span>
-                <span className="text-[12.5px] font-bold tracking-[.4px] whitespace-nowrap text-muted uppercase max-[560px]:col-start-2 max-[560px]:justify-self-start">{g.state === 'post' ? 'Final' : g.state === 'in' ? (g.detail || 'Live') : `${fmt(g.date)} · ${kickoff(g.date)}`}</span>
-              </Link>
+              <div key={g.id} className="flex items-stretch gap-[10px]">
+                <Link to="/game" search={{ id: g.id, league: g.league }} className="grid min-w-0 flex-1 grid-cols-[auto_1fr_auto] items-center gap-[14px] rounded-[8px] border-2 border-ink-soft bg-white px-[16px] py-[13px] [transition:translate_.12s,filter_.12s] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:drop-shadow-[7px_7px_0_#222] max-[560px]:grid-cols-[auto_1fr]">
+                  <Badge variant="ghost" className="rounded-[4px] border-0 bg-ink-soft px-[8px] py-[4px] text-[11px] font-extrabold tracking-[.6px] whitespace-normal text-white">{SPORTS[g.league].label}</Badge>
+                  <span className="text-[16px] font-extrabold text-ink-soft">{g.away.location || g.away.displayName} <span className="font-bold text-muted">@</span> {g.home.location || g.home.displayName}</span>
+                  <span className="text-[12.5px] font-bold tracking-[.4px] whitespace-nowrap text-muted uppercase max-[560px]:col-start-2 max-[560px]:justify-self-start">{g.state === 'post' ? 'Final' : g.state === 'in' ? (g.detail || 'Live') : `${fmt(g.date)} · ${kickoff(g.date)}`}</span>
+                </Link>
+                <LogGameButton game={g} compact className="flex-none self-center" />
+              </div>
             ))}
           </div>
         ) : null}
       </div></section>
 
-      {/* Next hops — the journey continues from here (other games nearby that
-          weekend + venues worth adding to the same trip). */}
-      <GamesThatWeekend city={v.city} excludeVenueName={v.name} />
+      {/* Next hops — the journey continues from here (venues worth adding to the
+          same trip). */}
       <NearbyVenues city={v.city} state={v.state} excludeId={v.id} />
     </>
   )

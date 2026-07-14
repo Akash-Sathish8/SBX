@@ -1,0 +1,41 @@
+/* Shared data + icon helpers for the home-layout mockups. Real destinations,
+   sample games + top-ranked rows so every layout renders realistic content. */
+window.SNAP = {
+  dest: [
+    { key: 'rank',   label: 'Been there? Rank it', short: 'Rank a game', desc: 'Review your experiences', accent: 'var(--a-rank)',   ink: true, icon: 'star' },
+    { key: 'near',   label: 'Near you',            short: 'Near you',    desc: 'Games close to you',      accent: 'var(--a-near)',   icon: 'pin' },
+    { key: 'team',   label: 'By sport & team',     short: 'Teams',       desc: 'Browse leagues',          accent: 'var(--a-team)',   icon: 'pennant' },
+    { key: 'events', label: 'Upcoming events',     short: 'This weekend',desc: 'This weekend',            accent: 'var(--a-events)', icon: 'calendar' },
+    { key: 'venue',  label: 'By venue',            short: 'Venues',      desc: '632 venues',              accent: 'var(--a-venue)',  icon: 'ticket' },
+    { key: 'top',    label: 'Top ranked',          short: 'Top ranked',  desc: '166 experiences',         accent: 'var(--a-top)',    icon: 'bars' },
+  ],
+  games: [
+    { league: 'MLB', wd: 'FRI', md: 'Jul 11', away: 'Red Sox', home: 'Mets',     venue: 'Citi Field',      city: 'Queens',      when: '7:10 PM' },
+    { league: 'NBA', wd: 'FRI', md: 'Jul 11', away: 'Lakers',  home: 'Celtics',  venue: 'TD Garden',       city: 'Boston',      when: '8:00 PM' },
+    { league: 'NFL', wd: 'SUN', md: 'Jul 13', away: 'Cowboys', home: '49ers',    venue: "Levi's Stadium",  city: 'Santa Clara', when: '4:25 PM' },
+    { league: 'CFB', wd: 'SAT', md: 'Jul 12', away: 'Texas',   home: 'Alabama',  venue: 'Bryant-Denny',    city: 'Tuscaloosa',  when: '3:30 PM' },
+  ],
+  top: [
+    { rank: 1, name: 'National Championship', loc: 'Miami, FL',        score: '8.88' },
+    { rank: 2, name: 'Kentucky Derby',        loc: 'Louisville, KY',   score: '8.86' },
+    { rank: 3, name: 'Indy 500',              loc: 'Indianapolis, IN', score: '8.78' },
+    { rank: 4, name: 'Chicago Cubs',          loc: 'Chicago, IL',      score: '8.36' },
+    { rank: 5, name: 'BYU Holy War',          loc: 'Provo, UT',        score: '8.27' },
+  ],
+  photos: ['../../public/img/hero/hero-3.jpg', '../../public/img/hero/hero-1.jpg', '../../public/img/hero/hero-6.jpg', '../../public/img/hero/hero-4.jpg'],
+  icons: {
+    star: '<path d="M12 2.6l2.7 5.9 6.4.7-4.8 4.3 1.3 6.3L12 17l-5.6 2.8 1.3-6.3L2.9 9.2l6.4-.7z" fill="currentColor" stroke="none"/>',
+    pin: '<path d="M12 21.5s6.5-6 6.5-11a6.5 6.5 0 10-13 0c0 5 6.5 11 6.5 11z"/><circle cx="12" cy="10.2" r="2.4"/>',
+    pennant: '<path d="M6 3.2V21"/><path d="M6 4.4h12.5l-3 3.8 3 3.8H6z"/>',
+    calendar: '<rect x="3.2" y="4.6" width="17.6" height="16" rx="2.2"/><path d="M3.2 9.4h17.6M8 2.6v4M16 2.6v4"/>',
+    ticket: '<path d="M3.2 8.2a2 2 0 012-2h13.6a2 2 0 012 2 1.9 1.9 0 000 3.8 1.9 1.9 0 000 3.8 2 2 0 01-2 2H5.2a2 2 0 01-2-2 1.9 1.9 0 000-3.8 1.9 1.9 0 000-3.8z"/><path d="M9 6.4v11.2"/>',
+    bars: '<path d="M5 21V11M12 21V4.5M19 21v-6.5"/>',
+    search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  },
+  svg(name, cls) { return `<svg class="ic ${cls || ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${this.icons[name]}</svg>`; },
+  cap() { return `<span class="cap">${this.svg('star')}</span>`; },
+  destCard(d) { return `<a class="dest ${d.ink ? 'ink' : ''}" style="--a:${d.accent}"><span class="badge">${this.svg(d.icon)}</span><span class="l">${d.label}</span><span class="d">${d.desc}</span></a>`; },
+  gameRow(g) { return `<a class="grow"><span class="date">${g.md.split(' ')[1]}<span>${g.wd}</span></span><span><span class="match">${g.away} <b style="color:#6b6b6b">@</b> ${g.home}</span><span class="sub">${g.league} · ${g.venue} · ${g.when}</span></span><span class="go">Game →</span></a>`; },
+  rankRow(r) { return `<a class="rrow"><span class="n ${r.rank === 1 ? 'one' : ''}">${r.rank}</span><span><span class="rn" style="display:block">${r.name}</span><span class="rl">${r.loc}</span></span><span class="rs">${r.score}</span></a>`; },
+};

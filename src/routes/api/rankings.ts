@@ -17,6 +17,7 @@ function sanitize(r: any): UserRanking | null {
     homeLogo: r.homeLogo ? String(r.homeLogo) : undefined,
     date: String(r.date ?? ''),
     venue: String(r.venue ?? ''),
+    venueId: r.venueId ? String(r.venueId) : undefined,
     city: r.city ? String(r.city) : undefined,
     fans: num(r.fans), food: num(r.food), unique: num(r.unique), stadium: num(r.stadium),
     score: num(r.score), ts: num(r.ts, Date.now()),

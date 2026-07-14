@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout 3 · Editorial feed</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .hero { position: relative; color: #fff; padding: clamp(34px,5vw,58px) clamp(20px,4vw,60px); overflow: hidden; border-bottom: 4px solid var(--brand); }
+  .hero::before { content: ''; position: absolute; inset: 0; background: center/cover var(--bg); filter: brightness(.46) saturate(1.05); }
+  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,8,.5), rgba(10,10,8,.72)); }
+  .hero > * { position: relative; z-index: 1; }
+  .hero .inner { max-width: 1120px; margin: 0 auto; }
+  .hero h1 { font-family: var(--display); font-size: clamp(34px,4.6vw,66px); text-transform: uppercase; line-height: 1.02; letter-spacing: 1px; margin: 6px 0 18px; max-width: 16ch; }
+  .hero h1 .hl { display: inline-block; background: var(--brand); color: var(--ink); padding: 0 .12em; box-shadow: 4px 4px 0 var(--ink); }
+  .hero .search { max-width: 620px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 clamp(20px,4vw,40px); }
+  .sec { padding: 32px 0; border-top: 2px solid #e6e4d8; }
+  .sec:first-child { border-top: 0; }
+  .sec-h { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 16px; }
+  .row6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .split2 { display: grid; grid-template-columns: 1.2fr 1fr; gap: 22px; align-items: start; }
+  .feat { position: relative; min-height: 260px; border: 2px solid var(--ink); border-radius: 14px; box-shadow: var(--punch-lg); overflow: hidden; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; }
+  .feat::before { content: ''; position: absolute; inset: 0; background: center/cover var(--bg2); filter: brightness(.62); }
+  .feat::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(10,10,8,.85)); }
+  .feat > * { position: relative; z-index: 1; }
+  .feat .score { align-self: flex-start; font-family: var(--display); font-size: 40px; background: var(--brand); color: var(--ink); border: 3px solid var(--ink); border-radius: 12px; padding: 2px 14px; box-shadow: var(--punch); }
+  .list { border: 2px solid var(--ink); border-radius: 14px; background: #fff; box-shadow: var(--punch); padding: 8px 16px; }
+  .list .rrow:last-child { border-bottom: 0; }
+  @media (max-width: 820px) { .row6 { grid-template-columns: 1fr 1fr; } .cards { grid-template-columns: 1fr; } .split2 { grid-template-columns: 1fr; } }
+</style></head>
+<body>
+<nav class="nav"><a class="brand" id="brand"></a><span class="burger"><span></span><span></span><span></span></span></nav>
+<header class="hero" id="hero"><div class="inner">
+  <span class="eyebrow" style="color:var(--brand)">Every gameday, ranked by fans</span>
+  <h1>Where does <span class="hl">gameday</span> take you?</h1>
+  <div class="search"><span id="si"></span><input placeholder="Search any team, venue, game or city…"></div>
+</div></header>
+<div class="wrap">
+  <section class="sec"><div class="sec-h"><div><span class="eyebrow">Live &amp; next up</span><h2 class="shead">On the slate</h2></div><a class="btn dark">This weekend →</a></div><div class="cards" id="games"></div></section>
+  <section class="sec"><div class="sec-h"><div><span class="eyebrow">Jump in</span><h2 class="shead">Explore</h2></div></div><div class="row6" id="explore"></div></section>
+  <section class="sec"><div class="sec-h"><div><span class="eyebrow">166 experiences</span><h2 class="shead">Top ranked in America</h2></div><a class="btn dark">Full rankings →</a></div>
+    <div class="split2">
+      <a class="feat" id="feat"><span class="score">8.88</span><div style="font-family:var(--display);font-size:30px;text-transform:uppercase;letter-spacing:.5px;margin-top:10px">National Championship</div><div class="eyebrow" style="color:#dcdcd0">#1 in America · Miami, FL</div></a>
+      <div class="list" id="list"></div>
+    </div>
+  </section>
+</div>
+<script src="_ui.js"></script>
+<script>
+  const S = window.SNAP;
+  brand.innerHTML = S.cap() + 'SNAPBACK'; si.innerHTML = S.svg('search');
+  hero.style.setProperty('--bg', `url('${S.photos[0]}')`);
+  games.innerHTML = S.games.slice(0,3).map(S.gameRow).join('');
+  explore.innerHTML = S.dest.map(S.destCard).join('');
+  document.getElementById('feat').style.setProperty('--bg2', `url('${S.photos[2]}')`);
+  list.innerHTML = S.top.slice(1).map(S.rankRow).join('');
+</script>
+</body></html>

@@ -1,0 +1,167 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>15 · Rating Dashboard — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:22px 0 18px}
+  .top h1{font-family:var(--display);font-size:clamp(26px,4.4vw,46px);text-transform:uppercase;letter-spacing:1px;margin:5px 0 0}
+  .top .home{font-size:13.5px;font-weight:600;color:#bdbdb5;margin-top:5px}
+
+  .stage{background:#f7f6f2;padding:34px 0 60px}
+
+  /* overall hero */
+  .hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;margin-top:20px}
+  .ov{background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:var(--punch-lg);
+    padding:24px 26px;position:relative;overflow:hidden;display:flex;align-items:center;gap:26px}
+  .ov::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle,rgba(247,223,2,.18),transparent 70%)}
+  .ov .big{font-family:var(--display);font-size:clamp(72px,12vw,120px);line-height:.82;color:var(--brand);
+    letter-spacing:1px;position:relative;z-index:2}
+  .ov .meta{position:relative;z-index:2}
+  .ov .meta .k{font-size:12px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#a9a99d}
+  .ov .meta .t{font-family:var(--display);font-size:28px;text-transform:uppercase;letter-spacing:.5px;margin:2px 0 8px;line-height:1}
+  .ov .meta .rank{display:inline-flex;align-items:center;gap:7px;background:var(--brand);color:var(--ink);
+    border-radius:999px;padding:6px 13px;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+
+  .compare{background:var(--cream);border:2px solid var(--ink);border-radius:16px;box-shadow:var(--punch);
+    padding:20px 22px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+  .compare .row{display:flex;align-items:center;gap:12px}
+  .compare .lab{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);width:96px;flex:none}
+  .compare .val{font-family:var(--display);font-size:30px;color:var(--ink);line-height:1;width:58px;flex:none}
+  .bar{flex:1;height:12px;background:var(--ink);border-radius:999px;overflow:hidden}
+  .bar > span{display:block;height:100%;background:var(--brand)}
+  .compare .note{font-size:12px;font-weight:700;color:var(--muted);border-top:1px dashed #e0ddcf;padding-top:12px}
+  .compare .note b{color:var(--ink)}
+
+  /* pillar grid */
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}
+  .pill{background:var(--cream);border:2px solid var(--ink);border-radius:16px;box-shadow:var(--punch);overflow:hidden;
+    display:grid;grid-template-columns:190px 1fr}
+  .pill .ph{position:relative;border-right:2px solid var(--ink)}
+  .pill .ph img{width:100%;height:100%;object-fit:cover;min-height:100%}
+  .pill .ph .tag{position:absolute;left:8px;bottom:8px}
+  .pill .ph .num{position:absolute;left:8px;top:8px;font-family:var(--display);font-size:44px;color:#fff;
+    line-height:.8;text-shadow:0 2px 10px rgba(0,0,0,.75)}
+  .pill .bd{padding:16px 18px 17px;display:flex;flex-direction:column}
+  .pill .hd{display:flex;align-items:baseline;gap:10px}
+  .pill .hd .name{font-family:var(--display);font-size:26px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:1}
+  .pill .hd .out{font-size:12px;font-weight:800;color:var(--muted);margin-left:auto}
+  .pill .prog{height:11px;background:var(--ink);border-radius:999px;overflow:hidden;margin:11px 0 4px}
+  .pill .prog > span{display:block;height:100%;background:var(--brand)}
+  .pill .who-row{display:flex;align-items:center;gap:7px;margin:10px 0 2px}
+  .pill .quote{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;line-height:1.45;color:#2a2a2a;
+    padding:9px 0 0}
+  .pill .quote::before{content:'“';font-family:var(--display);font-size:26px;color:var(--brand);line-height:.6;flex:none}
+  .pill .quote .vote{flex:none;margin-top:1px}
+
+  .verdict{margin-top:22px;background:var(--ink);color:#fff;border-radius:16px;box-shadow:var(--punch-lg);
+    padding:22px 26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .verdict .score{font-size:26px;padding:5px 14px}
+  .verdict .txt{font-size:15px;line-height:1.55;color:#eceace;flex:1;min-width:260px}
+  .verdict .txt b{color:#fff}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+  }
+  @media(max-width:520px){
+    .pill{grid-template-columns:1fr}
+    .pill .ph{border-right:0;border-bottom:2px solid var(--ink);aspect-ratio:16/9}
+  }
+</style></head>
+<body>
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 15 — Rating Dashboard</span>
+  <span style="color:#fff">Every score backed by a photo and a quote · data meets evidence</span>
+</div>
+
+<header class="top"><div class="wrap">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home">Home of New York Knicks</div>
+</div></header>
+
+<section class="stage"><div class="wrap">
+  <div class="eyebrow"><span class="dot"></span> Snapback · the scorecard, with the receipts</div>
+
+  <!-- OVERALL HERO -->
+  <div class="hero">
+    <div class="ov">
+      <div class="big">9.2</div>
+      <div class="meta">
+        <div class="k">Snapback Score</div>
+        <div class="t">Expert-<br>rated</div>
+        <span class="rank">★ #3 in the NBA</span>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="row"><span class="lab">Snapback</span><span class="val">9.2</span><span class="bar"><span style="width:92%"></span></span></div>
+      <div class="row"><span class="lab">Fans (214)</span><span class="val">8.7</span><span class="bar"><span style="width:87%"></span></span></div>
+      <div class="note">Experts rank it <b>higher than the crowd</b> — the fans dock it for tight seats and pricey drinks. Below, every pillar is backed by a photo and a Jack tip.</div>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <div class="grid">
+
+    <!-- FANS -->
+    <div class="pill">
+      <div class="ph"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""><span class="num">9.4</span><span class="tag">Tip-off</span></div>
+      <div class="bd">
+        <div class="hd"><span class="name">Fans</span><span class="out">9.4 / 10</span></div>
+        <div class="prog"><span style="width:94%"></span></div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)">Best crowd in the NBA</div>
+        <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+        <div class="quote"><span>Best crowd in the NBA. Be ready to stand, and the seats are tight between people — but the energy is worth it.</span><span class="vote"><button>▲</button><span class="n">63</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+    <!-- FOOD -->
+    <div class="pill">
+      <div class="ph"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""><span class="num">8.9</span><span class="tag">Steak Sandwich · 107</span></div>
+      <div class="bd">
+        <div class="hd"><span class="name">Food</span><span class="out">8.9 / 10</span></div>
+        <div class="prog"><span style="width:89%"></span></div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)">One legendary sandwich, one bad pizza</div>
+        <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+        <div class="quote"><span>Best food in MSG is the steak sandwich outside section 107. The Garden Market burgers are the best basic food in sports. Skip the pizza.</span><span class="vote"><button>▲</button><span class="n">57</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+    <!-- UNIQUE -->
+    <div class="pill">
+      <div class="ph"><img src="../../public/img/reports/citi/robby/r44.jpg" alt=""><span class="num">9.5</span><span class="tag">Chase Lounge</span></div>
+      <div class="bd">
+        <div class="hd"><span class="name">Unique</span><span class="out">9.5 / 10</span></div>
+        <div class="prog"><span style="width:95%"></span></div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)">The world's most famous arena</div>
+        <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+        <div class="quote"><span>The Chase and Hyundai Bridges are one-of-a-kind spots, and there's a Chase reserve lounge inside you can book pregame.</span><span class="vote"><button>▲</button><span class="n">33</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+    <!-- STADIUM -->
+    <div class="pill">
+      <div class="ph"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""><span class="num">8.8</span><span class="tag">100 Level</span></div>
+      <div class="bd">
+        <div class="hd"><span class="name">Stadium</span><span class="out">8.8 / 10</span></div>
+        <div class="prog"><span style="width:88%"></span></div>
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)">Great seats, tight rows</div>
+        <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+        <div class="quote"><span>Front rows in the 200s in the center sections beat behind the basket, even down low. The Hyundai Bridge is good value.</span><span class="vote"><button>▲</button><span class="n">41</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict">
+    <span class="who" style="color:#fff"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+    <span class="score">9.2</span>
+    <div class="txt">Best crowd in the NBA, best steak sandwich in the building, worst pizza. Come in on transit, sit center-200s, stand up all night. <b>— Jack's verdict</b></div>
+  </div>
+
+</div></section>
+</body></html>

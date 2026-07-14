@@ -1,0 +1,75 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02 · Editorial Feature — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .hero{position:relative;height:64vh;min-height:440px;background:url('../../public/img/reports/citi/robby/r17.jpg') center/cover;
+    display:flex;align-items:flex-end}
+  .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,16,.15),rgba(20,20,16,.88))}
+  .hero .in{position:relative;z-index:2;color:#fff;padding-bottom:34px}
+  .kick{display:inline-flex;gap:8px;align-items:center;background:var(--brand);color:var(--ink);font-weight:800;
+    font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:5px 11px;border-radius:3px}
+  .hero h1{font-family:var(--display);font-size:clamp(38px,6.2vw,74px);line-height:.94;letter-spacing:1px;
+    text-transform:uppercase;margin:14px 0 10px;max-width:15ch}
+  .byline{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;color:#e6e6df}
+  .byline .who{color:#fff}
+
+  .article{max-width:720px;margin:0 auto;padding:46px 24px 60px;font-size:18px;line-height:1.7;color:#26271f}
+  .article p{margin:0 0 22px}
+  .article .lede{font-size:21px;line-height:1.6;font-weight:500;color:#1c1d16}
+  .article .lede::first-letter{font-family:var(--display);float:left;font-size:78px;line-height:.72;
+    padding:6px 12px 0 0;color:var(--ink)}
+  h3.sub{font-family:var(--display);font-size:30px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);
+    margin:38px 0 8px;border-top:3px solid var(--ink);padding-top:16px}
+  .fig{margin:8px 0 6px}
+  .fig .photo{aspect-ratio:4/3;box-shadow:var(--punch-lg)}
+  .fig figcaption{font-size:13px;font-weight:700;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.4px}
+  .fig.right{float:right;width:46%;margin:6px 0 18px 28px}
+  .fig.left{float:left;width:46%;margin:6px 28px 18px 0}
+  .pull{font-family:var(--display);font-size:30px;line-height:1.05;text-transform:uppercase;color:var(--ink);
+    border-left:6px solid var(--brand);padding:6px 0 6px 20px;margin:30px 0}
+  .verdict{clear:both;background:var(--ink);color:#fff;border-radius:14px;padding:26px 28px;margin-top:34px}
+  .verdict .score{font-size:30px;padding:6px 16px}
+  @media(max-width:640px){.fig.right,.fig.left{float:none;width:100%;margin:8px 0 20px}}
+</style></head>
+<body>
+<div style="background:var(--ink);color:var(--brand);font-weight:800;font-size:12px;letter-spacing:1px;
+  text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 02 — Editorial Feature</span><span style="color:#fff">Long-form; photos float beside the section they illustrate</span></div>
+
+<header class="hero"><div class="wrap in">
+  <span class="kick"><span class="dot" style="background:var(--ink)"></span> The Snapback Field Report</span>
+  <h1>A Night at the World's Most Famous Arena</h1>
+  <div class="byline"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> By Jack Settleman <span class="vf">✓</span></span>
+    <span>·</span><span>Madison Square Garden · New York</span><span>·</span><span class="score">9.2</span></div>
+</div></header>
+
+<article class="article">
+  <p class="lede">There is no building in sports quite like the Garden. Get there right, sit in the right seat, eat the right sandwich, and a Knicks night becomes the best crowd in the NBA. Here's exactly how to do it.</p>
+
+  <h3 class="sub">Getting in</h3>
+  <figure class="fig right"><div class="photo"><img src="../../public/img/reports/citi/robby/r20.jpg" alt=""><span class="tag">Gates</span></div><figcaption>The 100-level gates — the fast way in</figcaption></figure>
+  <p>Best ways in: walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice. And when you get to the doors, come in through the 100 level gates — the merch store there has a way shorter line than the one in the MSG lobby.</p>
+  <p>If you want to slow it down, there's a Chase reserve lounge inside the arena you can book a spot in pregame, or hit Nick and Stef's, Stout, or Mustang Harry's on the way over.</p>
+
+  <h3 class="sub">Where to sit</h3>
+  <figure class="fig left"><div class="photo"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""><span class="tag">100 Level</span></div><figcaption>Center 200s beat behind the basket</figcaption></figure>
+  <p>Front rows in the 200s in the center sections beat behind the basket, even down low. The Chase Bridge and the Hyundai Bridge are both cool spots, and the Hyundai Bridge is real value. If you can get into the Delta Club, it comes with all-inclusive food and drink.</p>
+
+  <div class="pull">"Front rows in the 200s beat behind the basket, even down low."</div>
+
+  <h3 class="sub">What to eat</h3>
+  <figure class="fig right"><div class="photo"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""><span class="tag">Steak Sandwich</span></div><figcaption>Outside 107 — the best food in the building</figcaption></figure>
+  <p>The best food in MSG is the steak sandwich outside section 107. The hamburgers from the Garden Market are the best basic food item in sports — they use a different bun that's fantastic. Carnegie Deli is another good one. Skip the pizza, it's bad in the arena. And know going in: alcoholic drinks are very expensive.</p>
+
+  <h3 class="sub">The atmosphere</h3>
+  <p>Best crowd in the NBA. Be ready to stand, and the seats are tight between people. There aren't as many gimmicks as other NBA arenas, so it's not the most family-friendly, but there's still plenty of in-game entertainment like t-shirt tosses. The energy is worth it.</p>
+
+  <div class="verdict">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+      <span class="who" style="color:#fff"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+      <span class="score" style="margin-left:auto">9.2</span></div>
+    <div style="font-size:16px;line-height:1.6;color:#eceace">Best crowd in the NBA, best steak sandwich in the building, worst pizza. Come in on transit, sit center-200s, and stand up. — <b style="color:#fff">Jack's verdict</b></div>
+  </div>
+</article>
+</body></html>

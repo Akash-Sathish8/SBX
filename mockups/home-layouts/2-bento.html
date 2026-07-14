@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout 2 · Bento dashboard</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .page { max-width: 1160px; margin: 0 auto; padding: clamp(20px,3vw,34px); }
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(150px, auto); gap: 14px; }
+  .b { border: 2px solid var(--ink); border-radius: 14px; box-shadow: var(--punch); overflow: hidden; }
+  .b-search { grid-column: 1 / -1; grid-auto-rows: auto; min-height: 0; border: 0; box-shadow: none; }
+  .b-rank { grid-column: span 2; grid-row: span 2; background: var(--brand); display: flex; flex-direction: column; padding: 22px; }
+  .b-rank .big { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 14px; background: var(--ink); color: var(--brand); }
+  .b-rank .big .ic { width: 34px; height: 34px; }
+  .b-rank h2 { font-family: var(--display); font-size: clamp(30px,3.4vw,46px); text-transform: uppercase; letter-spacing: .5px; line-height: 1; margin: 16px 0 6px; }
+  .b-rank p { margin: 0; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; font-size: 14px; color: #5d5308; }
+  .b-rank .arrow { margin-top: auto; font-family: var(--display); font-size: 40px; }
+  .b-top { grid-column: span 2; grid-row: span 2; background: #fff; padding: 16px 18px; display: flex; flex-direction: column; }
+  .b-top .rrow:last-child { border-bottom: 0; }
+  .b-dest { display: flex; flex-direction: column; justify-content: space-between; background: var(--a); color: #fff; padding: 14px; }
+  .b-dest.ink { color: var(--ink); }
+  .b-dest .badge { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,.22); }
+  .b-dest.ink .badge { background: rgba(0,0,0,.12); }
+  .b-dest .l { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; line-height: 1.1; }
+  .b-dest .d { font-size: 12px; font-weight: 600; opacity: .9; margin-top: 2px; }
+  .b-photo { grid-column: 1 / -1; position: relative; min-height: 190px; color: #fff; display: flex; align-items: flex-end; padding: 18px 20px; }
+  .b-photo::before { content: ''; position: absolute; inset: 0; background: center/cover var(--bg); filter: brightness(.6) saturate(1.05); }
+  .b-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 30%, rgba(10,10,8,.82)); }
+  .b-photo > * { position: relative; z-index: 1; }
+  .sh { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  @media (max-width: 780px) {
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .b-rank, .b-top { grid-column: 1 / -1; grid-row: auto; }
+  }
+</style></head>
+<body>
+<nav class="nav"><a class="brand" id="brand"></a><span class="burger"><span></span><span></span><span></span></span></nav>
+<div class="page">
+  <div class="bento">
+    <div class="b b-search"><div class="search"><span id="si"></span><input placeholder="Search any team, venue, game or city…"></div></div>
+    <a class="b b-rank"><span class="big" id="rk"></span><h2>Rank a game</h2><p>Been there? Review it.</p><span class="arrow" id="ar"></span></a>
+    <div class="b b-top"><div class="sh"><span class="eyebrow">Top ranked in America</span><span class="eyebrow">166</span></div><div id="topRanked"></div></div>
+    <div id="tiles" style="display:contents"></div>
+    <div class="b b-photo" id="photo"><div><span class="eyebrow" style="color:var(--brand)">Tonight</span><div style="font-family:var(--display);font-size:26px;text-transform:uppercase;letter-spacing:.5px">Red Sox @ Mets · Citi Field</div></div></div>
+  </div>
+</div>
+<script src="_ui.js"></script>
+<script>
+  const S = window.SNAP;
+  brand.innerHTML = S.cap() + 'SNAPBACK'; si.innerHTML = S.svg('search');
+  rk.innerHTML = S.svg('star'); ar.innerHTML = S.svg('arrow');
+  topRanked.innerHTML = S.top.map(S.rankRow).join('');
+  const tileKeys = ['near','team','venue','events'];
+  tiles.innerHTML = tileKeys.map(k => { const d = S.dest.find(x => x.key === k);
+    return `<a class="b b-dest ${d.ink?'ink':''}" style="--a:${d.accent}"><span class="badge">${S.svg(d.icon)}</span><span><span class="l" style="display:block">${d.label}</span><span class="d" style="display:block">${d.desc}</span></span></a>`; }).join('');
+  photo.style.setProperty('--bg', `url('${S.photos[2]}')`);
+</script>
+</body></html>

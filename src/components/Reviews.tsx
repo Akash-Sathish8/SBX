@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-import { FIELD_PHOTOS, type FieldPhoto } from '../lib/fieldPhotos'
+import { FIELD_PHOTOS, photosForAuthor, type FieldPhoto } from '../lib/fieldPhotos'
 import { PhotoLightbox } from './PhotoLightbox'
 import { useAuth } from './auth/AuthProvider'
 import { ReviewShareCard } from './ReviewShareCard'
@@ -54,7 +54,7 @@ const RATING_PILLARS: { key: keyof VenueRatings; label: string }[] = [
   { key: 'fans', label: 'Fans' },
   { key: 'food', label: 'Food' },
   { key: 'unique', label: 'Unique' },
-  { key: 'stadium', label: 'Stadium' },
+  { key: 'stadium', label: 'Gameday' },
 ]
 const fmtPillar = (n: number) => (Math.round(n * 10) / 10).toString()
 
@@ -67,15 +67,15 @@ const voteBtnCls = (on: boolean, dir: 'up' | 'down') => cn(
   on && dir === 'down' && 'bg-[rgba(226,72,61,.14)] text-danger hover:bg-[rgba(226,72,61,.14)] hover:text-danger',
 )
 
-// Photo tiles: fixed 118x88 thumbs on the horizontal strip; full-width 108px
-// cells inside the 2-up category gallery.
+// Photo tiles: fixed 118x88 thumbs on the horizontal strip; 4:3 cells that fill
+// their track in the category gallery (which spreads across the full section).
 const photoTileCls = (inGallery: boolean) => cn(
   'group relative flex-none cursor-pointer overflow-hidden rounded-[8px] border-2 border-[#141414] bg-[#eee] p-0',
-  inGallery ? 'h-[108px] w-full' : 'h-[88px] w-[118px]',
+  inGallery ? 'aspect-[4/3] w-full' : 'h-[88px] w-[118px]',
 )
 const moreTileCls = (inGallery: boolean) => cn(
   'flex flex-none cursor-pointer flex-col items-center justify-center gap-[2px] rounded-[8px] border-2 border-[#141414] bg-[#141414] text-brand hover:bg-black',
-  inGallery ? 'h-[108px] w-full' : 'h-[88px] w-[118px]',
+  inGallery ? 'aspect-[4/3] w-full' : 'h-[88px] w-[118px]',
 )
 
 export function Reviews({
@@ -102,8 +102,7 @@ export function Reviews({
   // Pending share hands the card to ShareCardModal (native sheet / copy /
   // download on the pre-rendered PNG).
   const [shareRv, setShareRv] = useState<Review | null>(null)
-  const photosFor = (author: string): FieldPhoto[] | null =>
-    (scope === 'venue' && FIELD_PHOTOS[targetId]?.[author.toLowerCase()]) || null
+  const photosFor = (author: string): FieldPhoto[] | null => photosForAuthor(scope, targetId, author)
 
   const photoImg = (p: FieldPhoto) => (
     // h-full needs `!`: the unlayered global `img { height: auto }` in
@@ -140,7 +139,7 @@ export function Reviews({
   // Photo-only field reports render grouped by category (manifest order), each
   // group capped at CAT_MAX thumbs + a "+N" tile that opens the lightbox at
   // that category's first hidden photo. Lightbox indexes span the whole set.
-  const CAT_MAX = 4
+  const CAT_MAX = 8
   const gallery = (author: string) => {
     const photos = photosFor(author)
     if (!photos?.length) return null
@@ -156,7 +155,7 @@ export function Reviews({
         {groups.map((g) => (
           <div key={g.name} className="mt-[13px]">
             <div className="mb-2 flex items-baseline gap-[7px] border-b-2 border-[#141414] pb-[5px] font-display text-[14px] tracking-[.8px] text-[#141414] uppercase">{g.name} <i className="font-sans text-[11px] font-extrabold text-[#9a9a8e] not-italic">{g.items.length}</i></div>
-            <div className="grid grid-cols-2 gap-[7px]">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2">
               {g.items.slice(0, CAT_MAX).map(({ p, flat }) => (
                 <button key={p.src} type="button" className={photoTileCls(true)} onClick={() => openAt(flat)} aria-label={'View photo: ' + p.area}>
                   {photoImg(p)}
@@ -317,9 +316,9 @@ export function Reviews({
         </div>
       ) : null}
 
-      <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto px-[15px] pt-3 pb-3.5 max-[980px]:max-h-[440px] max-[980px]:flex-initial">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] items-start gap-3 px-[15px] pt-3 pb-3.5">
         {photoOnlyAuthors.map((author) => (
-          <div key={'photos:' + author} className="relative rounded-[9px] border-[1.5px] border-[#ecece4] bg-[#faf9f5] py-2.5 pr-[26px] pl-3">
+          <div key={'photos:' + author} className="relative col-span-full rounded-[9px] border-[1.5px] border-[#ecece4] bg-[#faf9f5] py-2.5 pr-3 pl-3">
             <div className="mb-1 flex flex-wrap items-baseline gap-2">
               <span className="text-[12px] font-extrabold tracking-[.3px] text-[#141414] uppercase">{author}</span>
               <span className="ml-auto text-[11px] font-semibold text-[#9a9a9a]">📸 {photosFor(author)?.length} photos · field report</span>

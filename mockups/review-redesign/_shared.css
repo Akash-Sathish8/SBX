@@ -1,0 +1,115 @@
+/* ============================================================================
+   Snapback — Review Redesign mockups · shared brand system
+   Tokens mirror src/styles.css (@theme). Fonts: Anton (display) + Barlow (sans).
+   Real photos live at ../../public/img/reports/citi/robby/*.jpg (placeholders
+   for MSG in these mockups — the LAYOUT is what's being decided, not the pics).
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+  --brand:#f7df02;      /* the yellow */
+  --ink:#141410;        /* near-black */
+  --ink-soft:#222;
+  --cream:#fffdf6;      /* card stock */
+  --paper:#f4f4f1;      /* page bg */
+  --tip:#faf7e8;        /* tip-card wash */
+  --muted:#6b6b6b;
+  --muted-2:#8a8a7c;
+  --gold:#b6a900;
+  --danger:#e2483d;
+  --line:#e4e2d9;
+  --punch:3px 3px 0 0 var(--ink);
+  --punch-lg:6px 6px 0 0 var(--ink);
+  --punch-brand:5px 5px 0 0 var(--brand);
+  --display:'Anton','Barlow',sans-serif;
+  --sans:'Barlow',system-ui,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--sans);
+  color:#33352f;
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.45;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.wrap-wide{max-width:1320px;margin:0 auto;padding:0 24px}
+
+/* ---- type ---- */
+.display{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:.95;letter-spacing:.5px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#000}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--brand)}
+.shead{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:.95;letter-spacing:.5px;color:var(--ink-soft);font-size:clamp(28px,3.6vw,40px)}
+.ssub{font-size:14px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:16px;line-height:1.55;color:#33352f;max-width:74ch}
+
+/* ---- chips / tags / badges ---- */
+.tag{display:inline-block;background:var(--brand);color:var(--ink);border:1.5px solid var(--ink);
+  border-radius:3px;padding:2px 7px;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--tip);border:1.5px solid #e7dca0;
+  border-radius:999px;padding:4px 11px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#5a5a52}
+.chip b{font-family:var(--display);font-weight:400;font-size:14px;color:var(--ink)}
+.score{display:inline-flex;align-items:center;justify-content:center;background:var(--brand);color:var(--ink);
+  font-family:var(--display);border-radius:6px;padding:2px 9px;letter-spacing:.3px}
+.pill-dark{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border-radius:999px;
+  padding:9px 18px;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.pill-brand{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--ink);border-radius:999px;
+  padding:9px 18px;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+
+/* ---- verified voice (Jack) ---- */
+.who{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:var(--ink)}
+.who .av{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink);object-fit:cover;background:var(--ink)}
+.who .vf{width:15px;height:15px;border-radius:50%;background:var(--ink);color:var(--brand);font-size:9px;font-weight:900;
+  display:inline-flex;align-items:center;justify-content:center}
+
+/* ---- card / photo primitives ---- */
+.card{background:var(--cream);border:2px solid var(--ink);border-radius:12px}
+.punch{box-shadow:var(--punch)}
+.punch-lg{box-shadow:var(--punch-lg)}
+.photo{position:relative;overflow:hidden;border:2px solid var(--ink);border-radius:10px;background:#eee}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+.photo:hover img{transform:scale(1.04)}
+.photo .tag{position:absolute;left:7px;bottom:7px}
+.cap{font-size:13.5px;line-height:1.45;font-weight:500;color:#2a2a2a}
+
+/* ---- vote pill ---- */
+.vote{display:inline-flex;align-items:center;border:1.5px solid rgba(20,20,20,.13);border-radius:999px;overflow:hidden}
+.vote button{border:0;background:none;cursor:pointer;padding:4px 9px;font-size:11px;font-weight:800;color:#9a9a90;font-family:var(--sans)}
+.vote .n{padding:0 4px;font-size:12px;font-weight:800;color:#3a3a34}
+
+/* ---- section header row ---- */
+.shead-row{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+/* ---- phone frame (for mobile-native concepts) ---- */
+.phone{width:390px;max-width:100%;margin:0 auto;background:#000;border-radius:44px;padding:11px;
+  box-shadow:0 30px 70px rgba(0,0,0,.4)}
+.phone .screen{background:var(--paper);border-radius:34px;overflow:hidden;height:820px;position:relative}
+.phone .screen.scroll{overflow-y:auto}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:28px;background:#000;
+  border-radius:0 0 18px 18px;z-index:60}
+
+/* ---- crowd primitives (shared so attribution looks identical everywhere) ---- */
+/* initials avatar for regular fans; set background via inline style */
+.ini{border-radius:50%;border:1.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;
+  font-weight:800;color:#fff;flex:none;width:26px;height:26px;font-size:9.5px;letter-spacing:.2px}
+.nm{font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.2px}
+.vf{width:14px;height:14px;border-radius:50%;background:var(--ink);color:var(--brand);font-size:8px;font-weight:900;
+  display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ago{font-size:11px;font-weight:600;color:#a3a091}
+/* a fan's rating badge (X/10) */
+.rate{display:inline-flex;align-items:center;background:var(--brand);color:var(--ink);font-family:var(--display);
+  border-radius:6px;padding:1px 8px;font-size:13px;letter-spacing:.3px}
+/* "by <name>" photo-credit chip, sits on a photo to bind it to its author */
+.credit{display:inline-flex;align-items:center;gap:5px;background:rgba(20,20,16,.82);color:#fff;border-radius:999px;
+  padding:3px 9px 3px 3px;font-size:10.5px;font-weight:700;letter-spacing:.2px}
+.credit .ini,.credit .av{width:19px;height:19px;font-size:8px}
+
+/* generic helpers */
+.mono{font-variant-numeric:tabular-nums}
+.uc{text-transform:uppercase}
+.center{text-align:center}

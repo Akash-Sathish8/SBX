@@ -1,0 +1,197 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>15b · Dashboard — Stat Grid — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;margin:4px 0 4px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5}
+  .top .home b{color:var(--brand)}
+  .stage{background:#f7f6f2;padding:34px 0 60px}
+
+  /* ---- KPI dashboard grid ---- */
+  .kpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:20px;align-items:stretch}
+
+  /* overall card spans 2 cols + 2 rows */
+  .overall{grid-column:span 2;grid-row:span 2;background:var(--ink);color:#fff;border:2px solid var(--ink);
+    border-radius:14px;box-shadow:var(--punch-lg);padding:24px 26px;position:relative;overflow:hidden;
+    display:flex;flex-direction:column}
+  .overall::after{content:'';position:absolute;right:-50px;bottom:-50px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,rgba(247,223,2,.16),transparent 70%);pointer-events:none}
+  .overall .eyebrow{color:var(--brand);position:relative;z-index:2}
+  .overall .eyebrow .dot{background:#fff}
+  .overall .mega{font-family:var(--display);font-size:clamp(78px,12vw,120px);line-height:.8;color:var(--brand);
+    letter-spacing:1px;margin:12px 0 0;position:relative;z-index:2}
+  .overall .mega small{font-family:var(--sans);font-size:18px;font-weight:800;color:#a9a99d;letter-spacing:0}
+  .overall .lab{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#a9a99d;position:relative;z-index:2}
+  .overall .rank{display:inline-flex;align-items:center;gap:6px;background:var(--brand);color:var(--ink);
+    border-radius:999px;padding:6px 13px;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+    margin-top:14px;align-self:flex-start;position:relative;z-index:2}
+  /* crowd proof inside overall */
+  .overall .crowd{margin-top:16px;display:flex;align-items:center;gap:11px;position:relative;z-index:2}
+  .overall .crowd .stack{display:flex;padding-left:9px}
+  .overall .crowd .stack .ini,.overall .crowd .stack .av{width:30px;height:30px;margin-left:-9px;border:2px solid var(--ink);
+    box-shadow:0 0 0 1.5px rgba(255,255,255,.35);position:relative}
+  .overall .crowd .txt{font-size:12px;font-weight:700;color:#cfcfc6;line-height:1.35}
+  .overall .crowd .txt b{color:#fff;font-family:var(--display);font-weight:400;font-size:15px;margin:0 1px}
+  .overall .split{margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);display:flex;gap:26px;position:relative;z-index:2}
+  .overall .split .col .k{font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#a9a99d}
+  .overall .split .col .v{font-family:var(--display);font-size:34px;line-height:.9;color:#fff;margin-top:3px}
+  .overall .split .col .v span{font-size:13px;color:#a9a99d;font-family:var(--sans);font-weight:700}
+  .overall .split .col.exp .v{color:var(--brand)}
+
+  /* compact pillar stat cards */
+  .stat{background:var(--cream);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch);
+    padding:0;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+  /* the credited hero photo of the card */
+  .stat .hero{position:relative;aspect-ratio:16/10;border-bottom:2px solid var(--ink);overflow:hidden}
+  .stat .hero img{width:100%;height:100%;object-fit:cover}
+  .stat .hero .tag{position:absolute;left:8px;top:8px}
+  .stat .hero .credit{position:absolute;left:8px;bottom:8px}
+  .stat .hero .num{position:absolute;right:8px;bottom:6px;font-family:var(--display);font-size:40px;color:var(--brand);
+    line-height:.8;text-shadow:0 2px 8px rgba(0,0,0,.85);letter-spacing:.5px}
+  .stat .bd{padding:13px 15px 15px;display:flex;flex-direction:column;flex:1}
+  .stat .hd{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .stat .hd .name{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:.9}
+  .stat .hd .of{font-size:11px;font-weight:800;color:var(--muted)}
+  .stat .mini{height:9px;background:var(--ink);border-radius:999px;overflow:hidden;margin:9px 0 0}
+  .stat .mini > span{display:block;height:100%;background:var(--brand)}
+  .stat .quote{font-size:12.5px;line-height:1.4;color:#2a2a2a;font-weight:500;margin-top:11px;
+    display:flex;gap:7px;align-items:flex-start;flex:1}
+  .stat .quote::before{content:'\201C';font-family:var(--display);font-size:22px;color:var(--brand);line-height:.55;flex:none}
+  .stat .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:11px;padding-top:11px;border-top:1px dashed #e0ddcf}
+  .stat .ft .who2{display:inline-flex;align-items:center;gap:6px}
+  .stat .ft .vote{flex:none}
+  .stat .ft .vote button{padding:3px 7px;font-size:10px}
+  /* second, small evidence thumb — a different fan's shot for the same pillar */
+  .stat .also{display:flex;align-items:center;gap:9px;margin-top:11px;padding-top:11px;border-top:1px dashed #e0ddcf}
+  .stat .also .mini-thumb{position:relative;width:52px;height:40px;border:2px solid var(--ink);border-radius:6px;overflow:hidden;flex:none;box-shadow:var(--punch)}
+  .stat .also .mini-thumb img{width:100%;height:100%;object-fit:cover}
+  .stat .also .also-tx{min-width:0}
+  .stat .also .also-tx .lbl{font-size:8.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .stat .also .also-tx .q{font-size:11.5px;line-height:1.32;color:#3a3a34;font-weight:600;margin-top:1px}
+
+  /* verdict strip below the grid */
+  .verdict{margin-top:18px;background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch-lg);
+    padding:20px 26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .verdict .score{font-size:24px;padding:5px 13px}
+  .verdict .txt{font-size:14.5px;line-height:1.55;color:#eceace;flex:1;min-width:280px}
+  .verdict .txt b{color:#fff}
+
+  @media(max-width:980px){
+    .kpi{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .overall{grid-column:span 2;grid-row:auto}
+  }
+  @media(max-width:560px){
+    .kpi{grid-template-columns:1fr}
+    .overall{grid-column:span 1}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 15b — Dashboard · Stat Grid</span>
+  <span style="color:#fff">A tight KPI board — each pillar tile is a fan's credited photo + their quote, with a second fan's shot backing it up</span></div>
+
+<header class="top"><div class="wrap">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home" id="home"></div>
+</div></header>
+
+<section class="stage"><div class="wrap">
+  <div class="eyebrow"><span class="dot"></span> Snapback · the dashboard, backed by the crowd</div>
+
+  <div class="kpi" id="kpi"></div>
+
+  <!-- VERDICT -->
+  <div class="verdict" id="verdict"></div>
+
+</div></section>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  var C = window.CROWD, v = C.venue;
+
+  document.getElementById('home').innerHTML =
+    'Home of '+v.team+' · <b>Snapback '+v.snap+'</b> · Fan '+v.fan+' ('+v.reviews+')';
+
+  // overall card
+  var stackIds = ['jack','grace','mike','tommy','jenn','danny','sarah','rob'];
+  var overall = ''+
+    '<div class="overall">'+
+      '<div class="eyebrow"><span class="dot"></span> Snapback Score</div>'+
+      '<div class="mega">'+v.snap+'<small>&nbsp;/ 10</small></div>'+
+      '<div class="lab">Crowd-verified venue</div>'+
+      '<span class="rank">★ #'+v.rank+' in the NBA</span>'+
+      '<div class="crowd">'+
+        '<div class="stack">'+stackIds.map(function(id){return C.avatar(id);}).join('')+'</div>'+
+        '<div class="txt"><b>'+v.fans+'</b> fans contributed<br><b>'+v.tips+'</b> tips · <b>'+v.reviews+'</b> reviews</div>'+
+      '</div>'+
+      '<div class="split">'+
+        '<div class="col exp"><div class="k">Expert</div><div class="v">'+v.snap+'</div></div>'+
+        '<div class="col"><div class="k">Fan</div><div class="v">'+v.fan+' <span>· '+v.reviews+'</span></div></div>'+
+        '<div class="col"><div class="k">Pillars</div><div class="v">'+C.pillars.length+' <span>graded</span></div></div>'+
+      '</div>'+
+    '</div>';
+
+  // one stat tile per pillar; evidence[0] = credited hero, evidence[1] = second fan's backing shot
+  var tiles = C.pillars.map(function(p){
+    var e0 = p.evidence[0], e1 = p.evidence[1];
+    var pct = parseFloat(p.score)*10;
+    var also = e1 ? ''+
+      '<div class="also">'+
+        '<div class="mini-thumb"><img src="'+e1.photo.src+'" alt=""></div>'+
+        '<div class="also-tx">'+
+          '<div class="lbl">Also '+C.fans[e1.by].name+'</div>'+
+          '<div class="q">“'+e1.quote+'”</div>'+
+        '</div>'+
+      '</div>' : '';
+    return ''+
+      '<div class="stat">'+
+        '<div class="hero">'+
+          '<img src="'+e0.photo.src+'" alt="">'+
+          '<span class="tag">'+e0.photo.area+'</span>'+
+          C.credit(e0.by)+
+          '<span class="num">'+p.score+'</span>'+
+        '</div>'+
+        '<div class="bd">'+
+          '<div class="hd"><span class="name">'+p.label+'</span><span class="of">/ 10</span></div>'+
+          '<div class="mini"><span style="width:'+pct+'%"></span></div>'+
+          '<div class="quote"><span>'+e0.quote+'</span></div>'+
+          '<div class="ft">'+
+            '<span class="who2">'+C.avatar(e0.by)+C.nameTag(e0.by)+'</span>'+
+            C.votePill(C.fans[e0.by].verified?63:44)+
+          '</div>'+
+          also+
+        '</div>'+
+      '</div>';
+  }).join('');
+
+  document.getElementById('kpi').innerHTML = overall + tiles;
+
+  document.getElementById('verdict').innerHTML =
+    '<span class="who" style="color:#fff">'+C.avatar('jack')+' Jack Settleman <span class="vf">✓</span></span>'+
+    '<span class="score">'+v.snap+'</span>'+
+    '<div class="txt">Best crowd in the NBA, best steak sandwich in the building, worst pizza. Come in on transit, sit center-200s, stand up all night. <b>— Jack’s verdict, backed by '+v.fans+' fans’ photos</b></div>';
+
+  // vote pills
+  document.querySelectorAll('.vote').forEach(function(vp){
+    var n=vp.querySelector('.n'),base=+n.textContent,state=0;
+    var btns=vp.querySelectorAll('button');
+    btns.forEach(function(b,i){
+      b.addEventListener('click',function(){
+        var dir=i===0?1:-1;
+        state=state===dir?0:dir;
+        n.textContent=base+state;
+        btns[0].style.color=state===1?'#141410':'';
+        btns[1].style.color=state===-1?'#e2483d':'';
+      });
+    });
+  });
+})();
+</script>
+</body></html>

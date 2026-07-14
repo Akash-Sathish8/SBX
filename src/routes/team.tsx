@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { container } from '../lib/ui'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { SiteNav } from '../components/SiteNav'
@@ -48,6 +48,7 @@ const hoplab = 'flex items-center gap-[7px] text-[11px] font-extrabold uppercase
 const hopsub = 'mt-1 text-[12.5px] font-semibold text-[#d9d9d0]'
 
 function TeamPage() {
+  const navigate = useNavigate()
   const { league: rawLeague, id: rawId } = Route.useSearch()
   const league = isLeague(rawLeague) ? (rawLeague as League) : null
   const id = (rawId || '').replace(/[^a-z0-9_-]/gi, '')
@@ -55,6 +56,14 @@ function TeamPage() {
   const [venue, setVenue] = useState<Venue | null | undefined>(undefined)
   const [games, setGames] = useState<Game[] | null>(null)
   const [exps, setExps] = useState<Experience[] | null>(null)
+
+  // The team page is a pass-through to its home venue: as soon as the venue
+  // resolves, redirect to that venue's review section (`intel=1` scrolls to "What
+  // do I need to know?"). `replace` keeps it out of history. Teams with no D1
+  // venue (many college programs) get no redirect and fall back to this page.
+  useEffect(() => {
+    if (venue) navigate({ to: '/venue', search: { id: venue.id, intel: 1 }, replace: true })
+  }, [venue, navigate])
 
   useEffect(() => {
     if (!league || !id) return

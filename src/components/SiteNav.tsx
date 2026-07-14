@@ -3,9 +3,9 @@ import { Link } from '@tanstack/react-router'
 import { useAuth } from './auth/AuthProvider'
 
 // Shared nav for every page (the FIELD GUIDE home included). A hamburger menu
-// on all widths, explore-first: Explore (home), This Weekend, Rankings,
+// on all widths, explore-first: Explore (home), Log a game (/rank), Top rated,
 // Following (auth-gated), You, and a sign-in/out control. /venues /games /teams
-// are one tap away via the home tiles; demoted pages (/guide /agenda
+// are one tap away via the home tiles; demoted pages (/weekend /guide /agenda
 // /conferences /build) stay reachable by URL only. Self-contained Tailwind (was
 // the global nav.css). `active` is accepted for back-compat with existing
 // callers; highlighting is driven by the router.
@@ -48,8 +48,8 @@ export function SiteNav(_props: { active?: string } = {}) {
 
       <nav className={'absolute top-[68px] right-0 z-[200] min-w-[248px] flex-col rounded-[0_0_0_12px] border-[3px] border-t-0 border-[#F7DF02] bg-[#222] p-[8px] shadow-[-6px_8px_0_0_rgba(0,0,0,.3)] max-[560px]:fixed max-[560px]:right-0 max-[560px]:left-0 max-[560px]:min-w-0 max-[560px]:rounded-none max-[560px]:border-r-0 max-[560px]:border-l-0 ' + (open ? 'flex' : 'hidden')}>
         <Link to="/" activeOptions={{ exact: true }} className={menuLink} activeProps={{ className: '!text-[#F7DF02]' }} onClick={close}>Explore</Link>
-        <Link to="/weekend" className={menuLink} activeProps={{ className: '!text-[#F7DF02]' }} onClick={close}>This Weekend</Link>
-        <Link to="/rankings" className={menuLink} activeProps={{ className: '!text-[#F7DF02]' }} onClick={close}>Rankings</Link>
+        <Link to="/rank" className={menuLink} activeProps={{ className: '!text-[#F7DF02]' }} onClick={close}>Log a game</Link>
+        <Link to="/rankings" className={menuLink} activeProps={{ className: '!text-[#F7DF02]' }} onClick={close}>Top rated</Link>
         {user ? <Link to="/feed" className={menuLink} activeProps={{ className: '!text-[#F7DF02]' }} onClick={close}>Following</Link> : null}
         <Link to="/profile" className={menuLink} activeProps={{ className: '!text-[#F7DF02]' }} onClick={close}>You</Link>
         <span className="mx-[8px] my-[6px] h-[2px] border-0 bg-[#353535]" />

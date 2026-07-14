@@ -1,0 +1,227 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>13 · Tabbed Photo Sections — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:26px 0 20px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5;margin-top:6px}
+  .top h1{font-family:var(--display);font-size:clamp(30px,5vw,54px);text-transform:uppercase;letter-spacing:1px;margin:5px 0 0}
+  .top .scores{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .sc{background:#fff;border-radius:11px;padding:9px 15px;min-width:98px}
+  .sc.snap{border:2px solid var(--brand)}
+  .sc .l{font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#8a8a82;display:flex;gap:5px;align-items:center}
+  .sc .v{font-family:var(--display);font-size:28px;color:#16160f;line-height:1;margin-top:4px}
+  .sc .s{font-size:10px;font-weight:600;color:#9a9a92;margin-top:4px}
+
+  /* tab bar */
+  .tabbar{background:var(--cream);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:20}
+  .tabs{display:flex;gap:4px;overflow-x:auto;padding:0}
+  .tab{position:relative;flex:none;border:0;background:none;cursor:pointer;font-family:var(--sans);
+    font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);
+    padding:16px 18px 15px;white-space:nowrap;border-bottom:4px solid transparent;margin-bottom:-2px}
+  .tab .ct{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;
+    margin-left:7px;border-radius:999px;background:#ece9dc;color:#7a7a6e;font-size:10.5px;font-weight:800;
+    font-variant-numeric:tabular-nums;vertical-align:middle}
+  .tab:hover{color:var(--ink-soft)}
+  .tab.active{color:var(--ink)}
+  .tab.active{border-bottom-color:var(--brand)}
+  .tab.active .ct{background:var(--brand);color:var(--ink)}
+
+  .stage{background:#f7f6f2;padding:34px 0 60px}
+  .eyebrow-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+
+  /* panel */
+  .panel{display:none;background:var(--cream);border:2px solid var(--ink);border-radius:14px;
+    box-shadow:var(--punch-lg);overflow:hidden}
+  .panel.show{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+    animation:pop .22s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .p-photos{padding:18px;border-right:2px solid var(--ink);display:grid;grid-template-columns:88px 1fr;gap:12px}
+  .lead{margin:0;grid-column:2}
+  .lead .photo{aspect-ratio:4/3;box-shadow:var(--punch)}
+  .lead .lab{position:absolute;left:9px;top:9px;font-family:var(--display);font-size:22px;color:#fff;
+    text-transform:uppercase;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+  .strip{grid-column:1;grid-row:1;display:flex;flex-direction:column;gap:10px}
+  .strip .photo{aspect-ratio:4/3;box-shadow:var(--punch);cursor:pointer}
+  .strip .photo .tag{left:5px;bottom:5px;padding:1px 5px;font-size:8px}
+
+  .p-tips{padding:20px 22px 22px}
+  .p-tips .who-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  .p-tips .hd{font-family:var(--display);font-size:26px;text-transform:uppercase;letter-spacing:.5px;
+    color:var(--ink);line-height:1;margin:12px 0 2px}
+  .p-tips .sub{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+  .tip{display:flex;gap:11px;align-items:flex-start;font-size:14px;line-height:1.5;color:#2a2a2a;
+    padding:13px 0;border-top:1px dashed #e0ddcf}
+  .tip .n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--brand);
+    font-family:var(--display);font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .tip .vote{flex:none;margin-top:1px}
+  .foot{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:14px;border-top:2px solid var(--ink)}
+
+  @media(max-width:780px){
+    .panel.show{grid-template-columns:1fr}
+    .p-photos{border-right:0;border-bottom:2px solid var(--ink)}
+    .p-photos{grid-template-columns:72px 1fr}
+    .strip .photo{aspect-ratio:1/1}
+  }
+</style></head>
+<body>
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 13 — Tabbed Photo Sections</span>
+  <span style="color:#fff">No long scroll · every section one click away, photo-led</span>
+</div>
+
+<header class="top"><div class="wrap">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home">Home of New York Knicks</div>
+  <div class="scores">
+    <div class="sc snap"><div class="l">★ Snapback</div><div class="v">9.2</div><div class="s">Expert · #3</div></div>
+    <div class="sc"><div class="l">Fan Score</div><div class="v">8.7</div><div class="s">214 ratings</div></div>
+  </div>
+</div></header>
+
+<!-- tab bar -->
+<nav class="tabbar"><div class="wrap"><div class="tabs" role="tablist">
+  <button class="tab active" data-tab="seats"  role="tab">Best seats <span class="ct">3</span></button>
+  <button class="tab"        data-tab="food"   role="tab">Best food <span class="ct">3</span></button>
+  <button class="tab"        data-tab="getin"  role="tab">Getting in <span class="ct">1</span></button>
+  <button class="tab"        data-tab="before" role="tab">Before <span class="ct">2</span></button>
+  <button class="tab"        data-tab="vibe"   role="tab">Atmosphere <span class="ct">1</span></button>
+  <button class="tab"        data-tab="insider"role="tab">Insider <span class="ct">2</span></button>
+</div></div></nav>
+
+<section class="stage"><div class="wrap">
+  <div class="eyebrow-row">
+    <div class="eyebrow"><span class="dot"></span> Snapback · scan the whole night in a click</div>
+    <div style="display:flex;gap:9px"><span class="pill-brand">+ Add a tip</span></div>
+  </div>
+
+  <!-- SEATS -->
+  <div class="panel show" id="pan-seats" role="tabpanel">
+    <div class="p-photos">
+      <div class="lead"><div class="photo"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""><span class="lab">Best Seats</span><span class="tag">100 Level</span></div></div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r40.jpg" alt=""><span class="tag">300 Level</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r56.jpg" alt=""><span class="tag">400 Level</span></div>
+      </div>
+    </div>
+    <div class="p-tips">
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="hd">Where to sit</div>
+      <div class="sub">3 tips · center 200s over behind-the-basket</div>
+      <div class="tip"><span class="n">1</span><span>Front rows in the 200s in the center sections beat behind the basket, even down low.</span><span class="vote"><button>▲</button><span class="n">41</span><button>▼</button></span></div>
+      <div class="tip"><span class="n">2</span><span>The Chase Bridge and the Hyundai Bridge are both cool spots, and the Hyundai Bridge is good value.</span><span class="vote"><button>▲</button><span class="n">33</span><button>▼</button></span></div>
+      <div class="tip"><span class="n">3</span><span>The Delta Club comes with all-inclusive food and drink (non-alcoholic).</span><span class="vote"><button>▲</button><span class="n">19</span><button>▼</button></span></div>
+      <div class="foot"><span class="score">Center 200s</span><span style="font-size:12px;font-weight:700;color:var(--muted)">Jack's pick for the best value seat</span></div>
+    </div>
+  </div>
+
+  <!-- FOOD -->
+  <div class="panel" id="pan-food" role="tabpanel">
+    <div class="p-photos">
+      <div class="lead"><div class="photo"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""><span class="lab">Best Food</span><span class="tag">Steak Sandwich · Sec 107</span></div></div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r30.jpg" alt=""><span class="tag">Garden Market</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r26.jpg" alt=""><span class="tag">Burgers</span></div>
+      </div>
+    </div>
+    <div class="p-tips">
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="hd">What to eat</div>
+      <div class="sub">3 tips · eat the sandwich, skip the pizza</div>
+      <div class="tip"><span class="n">1</span><span>Best food in MSG is the steak sandwich outside section 107.</span><span class="vote"><button>▲</button><span class="n">57</span><button>▼</button></span></div>
+      <div class="tip"><span class="n">2</span><span>The hamburgers from the Garden Market are the best basic food item in sports — a different bun that is fantastic.</span><span class="vote"><button>▲</button><span class="n">44</span><button>▼</button></span></div>
+      <div class="tip"><span class="n">3</span><span>Carnegie Deli is another good one. Skip the pizza, it is bad in the arena.</span><span class="vote"><button>▲</button><span class="n">28</span><button>▼</button></span></div>
+      <div class="foot"><span class="score">Sec 107</span><span style="font-size:12px;font-weight:700;color:var(--muted)">The best food in the building</span></div>
+    </div>
+  </div>
+
+  <!-- GETTING IN -->
+  <div class="panel" id="pan-getin" role="tabpanel">
+    <div class="p-photos">
+      <div class="lead"><div class="photo"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""><span class="lab">Getting In</span><span class="tag">Outside</span></div></div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r20.jpg" alt=""><span class="tag">Gates</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r19.jpg" alt=""><span class="tag">Concourse</span></div>
+      </div>
+    </div>
+    <div class="p-tips">
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="hd">Getting in</div>
+      <div class="sub">1 tip · transit over driving, every time</div>
+      <div class="tip"><span class="n">1</span><span>Best ways in: walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice.</span><span class="vote"><button>▲</button><span class="n">38</span><button>▼</button></span></div>
+      <div class="foot"><span class="score">Take transit</span><span style="font-size:12px;font-weight:700;color:var(--muted)">Driving is Jack's last choice</span></div>
+    </div>
+  </div>
+
+  <!-- BEFORE -->
+  <div class="panel" id="pan-before" role="tabpanel">
+    <div class="p-photos">
+      <div class="lead"><div class="photo"><img src="../../public/img/reports/citi/robby/r44.jpg" alt=""><span class="lab">Before</span><span class="tag">Chase Lounge</span></div></div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r51.jpg" alt=""><span class="tag">Bar</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r57.jpg" alt=""><span class="tag">Delta Club</span></div>
+      </div>
+    </div>
+    <div class="p-tips">
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="hd">Before the game</div>
+      <div class="sub">2 tips · pregame spots &amp; the reserve lounge</div>
+      <div class="tip"><span class="n">1</span><span>Pregame spots nearby: Nick and Stef's Steakhouse, The Rutherford, Stout, Mustang Harry's, and American Whiskey.</span><span class="vote"><button>▲</button><span class="n">22</span><button>▼</button></span></div>
+      <div class="tip"><span class="n">2</span><span>There is a Chase reserve lounge inside the arena. You can reserve a spot pregame.</span><span class="vote"><button>▲</button><span class="n">15</span><button>▼</button></span></div>
+      <div class="foot"><span class="score">Chase Lounge</span><span style="font-size:12px;font-weight:700;color:var(--muted)">Reserve a spot before doors</span></div>
+    </div>
+  </div>
+
+  <!-- ATMOSPHERE -->
+  <div class="panel" id="pan-vibe" role="tabpanel">
+    <div class="p-photos">
+      <div class="lead"><div class="photo"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""><span class="lab">Atmosphere</span><span class="tag">Tip-off</span></div></div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r18.jpg" alt=""><span class="tag">Concourse</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r15.jpg" alt=""><span class="tag">Concourse</span></div>
+      </div>
+    </div>
+    <div class="p-tips">
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="hd">The atmosphere</div>
+      <div class="sub">1 tip · best crowd in the NBA</div>
+      <div class="tip"><span class="n">1</span><span>Best crowd in the NBA. Be ready to stand, and the seats are tight between people. Not the most family-friendly, but there is still plenty of in-game entertainment like t-shirt tosses.</span><span class="vote"><button>▲</button><span class="n">63</span><button>▼</button></span></div>
+      <div class="foot"><span class="score">Stand up</span><span style="font-size:12px;font-weight:700;color:var(--muted)">The energy is worth it</span></div>
+    </div>
+  </div>
+
+  <!-- INSIDER -->
+  <div class="panel" id="pan-insider" role="tabpanel">
+    <div class="p-photos">
+      <div class="lead"><div class="photo"><img src="../../public/img/reports/citi/robby/r04.jpg" alt=""><span class="lab">Insider</span><span class="tag">Team Store</span></div></div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r63.jpg" alt=""><span class="tag">Team Store</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r12.jpg" alt=""><span class="tag">Concourse</span></div>
+      </div>
+    </div>
+    <div class="p-tips">
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="hd">Insider tips</div>
+      <div class="sub">2 tips · the shortcuts nobody tells you</div>
+      <div class="tip"><span class="n">1</span><span>The merch store through the gates on the 100 level has a way shorter line than the one in the MSG lobby.</span><span class="vote"><button>▲</button><span class="n">31</span><button>▼</button></span></div>
+      <div class="tip"><span class="n">2</span><span>Alcoholic drinks are very expensive inside MSG.</span><span class="vote"><button>▲</button><span class="n">26</span><button>▼</button></span></div>
+      <div class="foot"><span class="score">100 gates</span><span style="font-size:12px;font-weight:700;color:var(--muted)">Shorter merch line than the lobby</span></div>
+    </div>
+  </div>
+
+</div></section>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+    t.classList.add('active');
+    document.getElementById('pan-' + t.dataset.tab).classList.add('show');
+  }));
+</script>
+</body></html>

@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button'
 import { NativeSelect } from '@/components/ui/native-select'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
+import { photosForAuthor, type FieldPhoto } from '../lib/fieldPhotos'
+import { PhotoLightbox } from './PhotoLightbox'
 import { useAuth } from './auth/AuthProvider'
 
 // Crowdsourced "what do I need to know?" layer — the Letterboxd-for-sports core.
@@ -12,18 +14,20 @@ import { useAuth } from './auth/AuthProvider'
 
 type Section = { key: string; label: string; hint: string }
 
+// Card order follows the review-redesign mockup: the marquee categories (Best
+// Seats, Best Food) lead the 2-up grid.
 const VENUE_SECTIONS: Section[] = [
-  { key: 'getting-there', label: 'Getting there', hint: 'Transit, parking, rideshare. What actually works on gameday.' },
   { key: 'best-seats', label: 'Best seats', hint: 'Where the view, the shade, or the atmosphere is best.' },
   { key: 'food', label: 'Best food', hint: 'The must-get item, and exactly where to find it.' },
+  { key: 'getting-there', label: 'Getting there', hint: 'Transit, parking, rideshare. What actually works on gameday.' },
   { key: 'before', label: 'Before the game', hint: 'Bars, tailgates and pregame spots nearby.' },
   { key: 'atmosphere', label: 'Atmosphere', hint: 'What the crowd and the gameday feel are really like.' },
   { key: 'tips', label: 'Insider tips', hint: 'The stuff only regulars know.' },
 ]
 
 const EVENT_SECTIONS: Section[] = [
-  { key: 'getting-there', label: 'Getting there', hint: 'How to arrive, and when to show up.' },
   { key: 'best-seats', label: 'Best seats for this one', hint: 'Sun, shade, sightlines and where the energy is.' },
+  { key: 'getting-there', label: 'Getting there', hint: 'How to arrive, and when to show up.' },
   { key: 'before', label: 'Before the game', hint: 'Where to be beforehand.' },
   { key: 'tips', label: 'Insider tips', hint: "What you'd tell a friend going to this game." },
 ]
@@ -43,14 +47,62 @@ interface Tip {
   verified?: boolean
 }
 
-// All of one author's tips in a section, collapsed into a single card.
-interface TipGroup {
-  author: string
-  avatar?: string | null
-  verified: boolean
-  official: boolean
-  latest: string
-  tips: Tip[]
+// A distinct contributor, for the header/footer avatar stacks.
+interface AuthorChip { author: string; avatar?: string | null; verified: boolean }
+
+// "Pinned" has no DB column — a tip from a verified/official voice (Snapback,
+// Jack Settleman) is the pinned one: it sorts first and wears the badge.
+const isPinned = (t: Tip) => !!(t.verified || t.official)
+const net = (t: Tip) => t.up - t.down
+
+// Distinct contributors in display order, verified voices first (for the
+// "N fans" count and the overlapping avatar stacks).
+function uniqueAuthors(list: Tip[]): AuthorChip[] {
+  const seen = new Map<string, AuthorChip>()
+  for (const t of list) {
+    const key = (t.verified ? 'v:' : 'u:') + t.author
+    if (!seen.has(key)) seen.set(key, { author: t.author, avatar: t.avatar ?? null, verified: !!t.verified })
+  }
+  return [...seen.values()].sort((a, b) => (b.verified ? 1 : 0) - (a.verified ? 1 : 0))
+}
+
+// When binding a photo to a tip, prefer one whose field-report category fits the
+// section (a seats tip shows a seat view, a food tip shows food) before falling back
+// to any of that author's photos. Keys are the FieldPhoto.category values.
+const SECTION_PHOTO_CATEGORY: Record<string, string> = {
+  'best-seats': 'Views',
+  'food': 'Food',
+  'getting-there': 'Stadium',
+  'before': 'Lounges',
+  'atmosphere': 'Stadium',
+  'tips': 'Stadium',
+}
+
+// Non-verified fans get a stable initials bubble in one of the mockup's hues
+// (production stores no per-author color, so derive one from the name — purely
+// decorative and deterministic).
+const AV_COLORS = ['#c0392b', '#2b6cb0', '#6b46c1', '#b7791f', '#2f855a', '#c53030', '#285e61', '#97266d', '#4a5568', '#9c4221', '#1a365d', '#702459', '#22543d']
+function hashHue(s: string): string {
+  let h = 0
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0
+  return AV_COLORS[h % AV_COLORS.length]
+}
+function initials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean)
+  if (!parts.length) return '?'
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+}
+
+// One avatar for the stacks and tip meta rows. Verified voices show their logo;
+// everyone else shows initials on their derived hue. Inline width/height beat the
+// unlayered global `img{height:auto}` (see CLAUDE.md) without needing `!`.
+function avatarEl(idKey: string, author: string, avatar: string | null | undefined, verified: boolean, size: number, font: number, className: string) {
+  const style = { width: size, height: size }
+  if (verified) {
+    return <img key={idKey} className={cn('block flex-none rounded-full object-cover', className)} style={style} src={avatar || '/img/logo.png'} alt="" />
+  }
+  return <span key={idKey} className={cn('inline-flex flex-none items-center justify-center rounded-full font-extrabold text-white', className)} style={{ ...style, background: hashHue(author), fontSize: font }}>{initials(author)}</span>
 }
 
 function timeAgo(iso: string): string {
@@ -106,6 +158,10 @@ export function WhatToKnow({
   const [draft, setDraft] = useState('')
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState<string | null>(null)
+  // Which section cards have their "+N more" overflow revealed (keyed by section).
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({})
+  // Open photo viewer for a tapped tip thumbnail (paged across that author's set).
+  const [lbx, setLbx] = useState<{ photos: FieldPhoto[]; index: number; credit: string } | null>(null)
 
   // Fresh composer every time it opens.
   useEffect(() => {
@@ -124,32 +180,45 @@ export function WhatToKnow({
     return () => { alive = false }
   }, [scope, targetId, user?.id])
 
-  // Group each author's tips within a section into ONE card, ordered by votes:
-  // tips inside a card sort by net score (ups minus downs), and cards sort by
-  // their best tip's net score. Votes update `tips` optimistically, so the
-  // order reshuffles live as arrows are pressed. Ties: verified voices
-  // (Snapback, Jack Settleman) first, then recency.
-  const net = (t: Tip) => t.up - t.down
-  const bySection = useMemo(() => {
-    const out: Record<string, TipGroup[]> = {}
-    for (const t of tips) {
-      const groups = (out[t.section] ||= [])
-      const key = (t.verified ? 'v:' : 'u:') + t.author
-      let g = groups.find((x) => (x.verified ? 'v:' : 'u:') + x.author === key)
-      if (!g) { g = { author: t.author, avatar: t.avatar ?? null, verified: !!t.verified, official: !!t.official, latest: t.createdAt, tips: [] }; groups.push(g) }
-      g.tips.push(t)
-      if (!g.avatar && t.avatar) g.avatar = t.avatar
-      if (t.createdAt > g.latest) g.latest = t.createdAt
-    }
+  // Tips render individually now, sorted pinned/verified-first, then by net score
+  // (ups minus downs), then recency. Votes mutate `tips` optimistically, so the
+  // order reshuffles live as arrows are pressed. Alongside, bind a best-effort
+  // photo to each tip: the author's field-report photos for this venue (the only
+  // photo source we have — no per-tip column), a per-author cursor handing each of
+  // an author's tips a distinct frame. Almost every venue/event has none → the tip
+  // renders text-only. Never fabricated.
+  const { bySection, photoOf, pinnedIds } = useMemo(() => {
+    const out: Record<string, Tip[]> = {}
+    for (const t of tips) (out[t.section] ||= []).push(t)
+    const photoOf: Record<string, FieldPhoto | null> = {}
+    // One pinned tip per section: the top verified/official voice (by net votes).
+    // Everyone else — including that voice's other tips — sorts by votes.
+    const pinnedIds = new Set<string>()
     for (const k in out) {
-      for (const g of out[k]) g.tips.sort((a, b) => net(b) - net(a) || (b.createdAt < a.createdAt ? -1 : 1))
+      let lead: Tip | null = null
+      for (const t of out[k]) {
+        if (!isPinned(t)) continue
+        if (!lead || net(t) > net(lead) || (net(t) === net(lead) && t.createdAt > lead.createdAt)) lead = t
+      }
+      if (lead) pinnedIds.add(lead.id)
       out[k].sort((a, b) =>
-        net(b.tips[0]) - net(a.tips[0]) ||
-        (b.verified ? 1 : 0) - (a.verified ? 1 : 0) ||
-        (b.latest < a.latest ? -1 : 1))
+        (pinnedIds.has(b.id) ? 1 : 0) - (pinnedIds.has(a.id) ? 1 : 0) ||
+        net(b) - net(a) ||
+        (b.createdAt < a.createdAt ? -1 : 1))
+      // Per author in this section, a queue of their photos with section-matching
+      // categories first; shift one off per tip so each of an author's tips gets a
+      // distinct, on-topic frame.
+      const want = SECTION_PHOTO_CATEGORY[k]
+      const queue: Record<string, FieldPhoto[]> = {}
+      for (const t of out[k]) {
+        const ps = photosForAuthor(scope, targetId, t.author)
+        if (!ps?.length) { photoOf[t.id] = null; continue }
+        const q = (queue[t.author] ||= [...ps.filter((p) => p.category === want), ...ps.filter((p) => p.category !== want)])
+        photoOf[t.id] = q.shift() ?? ps[0]
+      }
     }
-    return out
-  }, [tips])
+    return { bySection: out, photoOf, pinnedIds }
+  }, [tips, scope, targetId])
 
   const submit = async () => {
     const text = draft.trim()
@@ -206,6 +275,70 @@ export function WhatToKnow({
       })
   }
 
+  // One tip as a "media object": the author's bound photo (when there is one) on
+  // the left, their words + attribution + vote pill on the right. No photo → a
+  // clean full-width text row (the mockup's .nophoto state).
+  const renderTip = (t: Tip) => {
+    const photo = photoOf[t.id]
+    const pinned = pinnedIds.has(t.id)
+    return (
+      <div
+        key={t.id}
+        className={cn(
+          'grid items-start gap-4 border-t border-dashed border-[#e0ddcf] py-4 first:border-t-0',
+          photo ? 'grid-cols-[112px_1fr]' : 'grid-cols-[1fr]',
+        )}
+      >
+        {photo ? (
+          <button
+            type="button"
+            className="group relative block aspect-[4/3] cursor-pointer overflow-hidden rounded-[9px] border-2 border-ink p-0 shadow-punch"
+            aria-label={'View photo: ' + photo.area}
+            onClick={() => {
+              const ps = photosForAuthor(scope, targetId, t.author)
+              const i = Math.max(0, ps?.findIndex((x) => x.src === photo.src) ?? 0)
+              setLbx({ photos: ps?.length ? ps : [photo], index: i, credit: t.author })
+            }}
+          >
+            <img className="block h-full! w-full object-cover transition-transform duration-150 group-hover:scale-105" src={photo.src} alt={photo.area} loading="lazy" decoding="async" />
+            <span className="absolute bottom-1.5 left-1.5 rounded-[3px] border-[1.5px] border-ink bg-brand px-1.5 py-[2px] font-sans text-[8px] font-extrabold tracking-[.5px] whitespace-nowrap text-ink uppercase">{photo.area}</span>
+          </button>
+        ) : null}
+        <div className="min-w-0">
+          <div className="mb-[5px] flex flex-wrap items-center gap-[7px]">
+            {avatarEl(t.id, t.author, t.avatar, !!t.verified, 24, 9, 'border-[1.5px] border-ink')}
+            <span className="text-[12px] font-extrabold tracking-[.2px] text-ink uppercase">{t.author}</span>
+            {t.verified ? <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-ink text-[9px] leading-none font-black text-brand" title="Verified" aria-label="Verified">✓</span> : null}
+            {pinned
+              ? <span className="rounded-[4px] border border-[#e7dca0] bg-tip px-[5px] py-px text-[8.5px] font-extrabold tracking-[.5px] text-gold uppercase">Pinned</span>
+              : <span className="text-[11px] font-semibold text-[#a3a091]">{timeAgo(t.createdAt)}</span>}
+            {t.mine ? (
+              <Button
+                variant="ghost"
+                className="ml-auto h-auto flex-none cursor-pointer rounded-none px-[2px] py-0 text-[17px] leading-none font-normal text-[#bbb] hover:bg-transparent hover:text-danger"
+                aria-label="Delete tip" onClick={() => remove(t)}
+              >×</Button>
+            ) : null}
+          </div>
+          <div className="text-[14.5px] leading-[1.48] font-medium whitespace-pre-wrap text-[#2a2a2a] [overflow-wrap:anywhere]">{t.body}</div>
+          <div className="mt-2 flex items-end gap-2.5">
+            <span className="inline-flex max-w-max items-center self-start overflow-hidden rounded-full border-[1.5px] border-[rgba(20,20,20,.13)]">
+              <Button
+                type="button" variant="ghost" className={voteBtnCls(t.myVote === 1, 'up')}
+                aria-label="Upvote tip" aria-pressed={t.myVote === 1} title="Helpful" onClick={() => vote(t, 1)}
+              >▲</Button>
+              <span className="min-w-4 px-[2px] text-center text-[11.5px] font-extrabold text-[#3a3a34]" title={t.up + ' up · ' + t.down + ' down'}>{t.up - t.down}</span>
+              <Button
+                type="button" variant="ghost" className={voteBtnCls(t.myVote === -1, 'down')}
+                aria-label="Downvote tip" aria-pressed={t.myVote === -1} title="Not helpful" onClick={() => vote(t, -1)}
+              >▼</Button>
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="font-sans [line-height:normal]">
       {composerOpen ? (
@@ -242,84 +375,68 @@ export function WhatToKnow({
         </div>
       ) : null}
 
-      <div className="mt-2 grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3.5 [.wtk-layout_&]:mt-0 [.wtk-layout_&]:grid-cols-3 [.wtk-layout_&]:max-[980px]:grid-cols-2 [.wtk-layout_&]:max-[560px]:grid-cols-1">
+      <div className="mt-2 grid grid-cols-2 gap-[30px] max-[860px]:grid-cols-1 max-[860px]:gap-6">
       {sections.map((s) => {
         const list = bySection[s.key] || []
+        const authors = uniqueAuthors(list)
+        const isExp = !!expanded[s.key]
+        const shown = isExp ? list : list.slice(0, 3)
+        const rest = list.slice(3)
+        const restAuthors = uniqueAuthors(rest)
         return (
-          <div key={s.key} className="rounded-[10px] border-2 border-[#141414] bg-white px-4 py-[15px]">
-            <div className="font-display text-[19px] tracking-[.4px] text-[#141414] uppercase">{s.label}</div>
-            <div className="mt-[5px] text-[13px] leading-[1.4] font-semibold text-[#666]">{s.hint}</div>
-
-            {list.length ? (
-              <div className="mt-3 flex max-h-[300px] flex-col gap-2.5 overflow-x-hidden overflow-y-auto overscroll-contain border-t border-dashed border-[#ddd] pt-[11px] pr-[5px] [scrollbar-color:#cdcdcd_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[7px] [&::-webkit-scrollbar-thumb]:rounded-[4px] [&::-webkit-scrollbar-thumb]:bg-[#cdcdcd] [&::-webkit-scrollbar-track]:bg-transparent">
-                {list.map((g) => (
-                  <div
-                    key={(g.verified ? 'v:' : 'u:') + g.author}
-                    className={cn(
-                      'relative rounded-[8px] border-[1.5px] border-[#e7dca0] bg-tip py-[9px] pr-[26px] pl-[11px]',
-                      g.verified && 'border-[#141414] border-l-4 border-l-brand bg-white',
-                    )}
-                  >
-                    <div className="mb-[3px] flex items-baseline gap-2">
-                      {g.verified ? (
-                        <span className="inline-flex items-center gap-1.5">
-                          <img className="block h-5! w-5 self-center rounded-full border-[1.5px] border-[#141414] object-cover" src={g.avatar || '/img/logo.png'} alt="" width={20} height={20} />
-                          <span className="text-[12px] font-extrabold tracking-[.3px] text-[#141414] uppercase">{g.author}</span>
-                          <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#141414] text-[9px] leading-none font-black text-brand" title="Verified" aria-label="Verified">✓</span>
-                        </span>
-                      ) : (
-                        <>
-                          <span className="text-[12px] font-extrabold tracking-[.3px] text-[#141414] uppercase">{g.author}</span>
-                          <span className="text-[11px] font-semibold text-[#9a9a9a]">{timeAgo(g.latest)}</span>
-                        </>
-                      )}
-                    </div>
-                    <div className="text-[13.5px] leading-[1.4] font-medium whitespace-pre-wrap text-[#2a2a2a] [overflow-wrap:anywhere]">
-                      {g.tips.map((t) => (
-                        <div key={t.id} className="flex flex-wrap items-start gap-2 [&:not(:first-child)]:mt-2 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-[rgba(20,20,20,.1)] [&:not(:first-child)]:pt-2">
-                          <span className="min-w-0 flex-1">{t.body}</span>
-                          {t.mine ? (
-                            <Button
-                              variant="ghost"
-                              className="h-auto flex-none cursor-pointer self-start rounded-none px-[2px] py-0 text-[17px] leading-none font-normal text-[#bbb] hover:bg-transparent hover:text-danger"
-                              aria-label="Delete tip" onClick={() => remove(t)}
-                            >×</Button>
-                          ) : null}
-                          <span className="mt-[7px] inline-flex max-w-max flex-[0_0_100%] items-center self-start overflow-hidden rounded-full border-[1.5px] border-[rgba(20,20,20,.13)]">
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              className={voteBtnCls(t.myVote === 1, 'up')}
-                              aria-label="Upvote tip"
-                              aria-pressed={t.myVote === 1}
-                              title="Helpful"
-                              onClick={() => vote(t, 1)}
-                            >▲</Button>
-                            <span className="min-w-4 px-[2px] text-center text-[11.5px] font-extrabold text-[#3a3a34]" title={t.up + ' up · ' + t.down + ' down'}>{t.up - t.down}</span>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              className={voteBtnCls(t.myVote === -1, 'down')}
-                              aria-label="Downvote tip"
-                              aria-pressed={t.myVote === -1}
-                              title="Not helpful"
-                              onClick={() => vote(t, -1)}
-                            >▼</Button>
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+          <article key={s.key} className="flex flex-col overflow-hidden rounded-[16px] border-2 border-ink bg-cream shadow-punch-lg">
+            <div className="flex items-center gap-[14px] px-[26px] pt-[20px] pb-1 max-[860px]:px-5">
+              <h3 className="m-0 font-display text-[clamp(28px,3.2vw,38px)] leading-[.92] tracking-[.5px] text-ink uppercase">{s.label}</h3>
+              <div className="ml-auto flex flex-col items-end gap-1.5">
+                <span className="text-[11px] font-extrabold tracking-[.6px] text-muted uppercase">{list.length} {list.length === 1 ? 'tip' : 'tips'} · {authors.length} {authors.length === 1 ? 'fan' : 'fans'}</span>
+                {authors.length ? (
+                  <span className="flex pl-2">
+                    {authors.slice(0, 5).map((a) => avatarEl((a.verified ? 'v:' : 'u:') + a.author, a.author, a.avatar, a.verified, 26, 9, '-ml-2 border-2 border-cream shadow-[0_0_0_1.5px_var(--color-ink)]'))}
+                  </span>
+                ) : null}
               </div>
-            ) : (
-              <div className="mt-3 flex items-center gap-2 border-t border-dashed border-[#ddd] pt-[11px] text-[12.5px] font-bold text-[#999]"><span className="h-[7px] w-[7px] flex-none rounded-full bg-brand" /> No tips yet. Be the first.</div>
-            )}
-
-          </div>
+            </div>
+            <div className="flex flex-1 flex-col px-[26px] pt-1.5 pb-[24px] max-[860px]:px-5">
+              {list.length ? (
+                <>
+                  {shown.map(renderTip)}
+                  {rest.length ? (
+                    <div className="mt-auto border-t-[1.5px] border-ink pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setExpanded((p) => ({ ...p, [s.key]: !isExp }))}
+                        className="inline-flex cursor-pointer items-center gap-2 rounded-full border-[1.5px] border-[#e7dca0] bg-tip px-3.5 py-[7px] font-sans text-[12px] font-extrabold tracking-[.5px] text-ink uppercase"
+                      >
+                        {isExp ? 'Show less ←' : (
+                          <>
+                            <span className="mr-0.5 inline-flex pl-1.5">
+                              {restAuthors.slice(0, 4).map((a) => avatarEl((a.verified ? 'v:' : 'u:') + a.author, a.author, a.avatar, a.verified, 20, 7, '-ml-1.5 border-[1.5px] border-tip shadow-[0_0_0_1px_var(--color-ink)]'))}
+                            </span>
+                            +{rest.length} more {rest.length === 1 ? 'tip' : 'tips'} from fans →
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <div className="flex items-center gap-2 border-t border-dashed border-[#ddd] pt-[11px] text-[12.5px] font-bold text-[#999]"><span className="h-[7px] w-[7px] flex-none rounded-full bg-brand" /> No tips yet. Be the first.</div>
+              )}
+            </div>
+          </article>
         )
       })}
       </div>
+
+      {lbx ? (
+        <PhotoLightbox
+          photos={lbx.photos}
+          index={lbx.index}
+          credit={lbx.credit}
+          onIndex={(index) => setLbx({ ...lbx, index })}
+          onClose={() => setLbx(null)}
+        />
+      ) : null}
     </div>
   )
 }

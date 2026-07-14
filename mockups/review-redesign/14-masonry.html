@@ -1,0 +1,237 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>14 · Pinterest Masonry Feed — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:24px 0 20px}
+  .top h1{font-family:var(--display);font-size:clamp(28px,4.6vw,50px);text-transform:uppercase;letter-spacing:1px;margin:5px 0 0}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5;margin-top:6px}
+  .top .home b{color:var(--brand)}
+  .top .row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .top .who{color:#fff;font-size:12px}
+  .top .who .av{border-color:#fff}
+
+  /* filter chips */
+  .filters{background:var(--cream);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:20}
+  .filters .in{display:flex;gap:9px;padding:13px 0;overflow-x:auto;align-items:center}
+  .fchip{flex:none;border:1.5px solid var(--ink);background:#fff;cursor:pointer;font-family:var(--sans);
+    font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--ink);
+    padding:7px 14px;border-radius:999px;transition:all .12s ease}
+  .fchip:hover{box-shadow:var(--punch)}
+  .fchip.active{background:var(--brand);box-shadow:var(--punch)}
+
+  .stage{background:#f7f6f2;padding:26px 0 60px}
+  .feed{columns:4 260px;column-gap:18px;margin-top:6px}
+  .item{break-inside:avoid;margin:0 0 18px;transition:transform .12s ease}
+  .item.hide{display:none}
+
+  /* photo card */
+  .pc{background:var(--cream);border:2px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:var(--punch)}
+  .pc .photo{border:0;border-radius:0;border-bottom:2px solid var(--ink)}
+  .pc .photo .tag{left:8px;bottom:8px}
+  .pc .cap{display:flex;gap:8px;align-items:flex-start;padding:11px 12px 12px;font-size:13px;line-height:1.4;
+    font-weight:500;color:#2a2a2a}
+  .pc .cap .av{width:19px;height:19px;border-radius:50%;border:1.5px solid var(--ink);flex:none;margin-top:1px}
+
+  /* tip card */
+  .tc{background:var(--tip);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--punch);padding:16px 16px 14px}
+  .tc.dark{background:var(--ink);color:#fff}
+  .tc .who-row{display:flex;align-items:center;gap:7px;margin-bottom:10px}
+  .tc .qmark{font-family:var(--display);font-size:34px;line-height:.5;color:var(--brand);display:block;height:16px}
+  .tc.dark .qmark{color:var(--brand)}
+  .tc .q{font-family:var(--display);font-weight:400;font-size:20px;line-height:1.1;letter-spacing:.3px;
+    text-transform:uppercase;color:var(--ink);margin:6px 0 12px}
+  .tc.dark .q{color:#fff}
+  .tc .foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .tc .kv{display:inline-block;background:var(--brand);color:var(--ink);border:1.5px solid var(--ink);
+    border-radius:3px;padding:2px 7px;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+  .tc.dark .vote{border-color:rgba(255,255,255,.25)}
+  .tc.dark .vote button{color:#c9c9bf}
+  .tc.dark .vote .n{color:#fff}
+
+  @media(max-width:520px){.feed{columns:2 150px;column-gap:12px}.item{margin-bottom:12px}}
+</style></head>
+<body>
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 14 — Pinterest Masonry Feed</span>
+  <span style="color:#fff">Endless discovery · photos and tips interleaved, filter to explore</span>
+</div>
+
+<header class="top"><div class="wrap"><div class="row">
+  <div>
+    <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+    <h1>Madison Square Garden</h1>
+    <div class="home">Home of New York Knicks · <b>Snapback 9.2</b> · Fan 8.7 (214)</div>
+  </div>
+  <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Curated by Jack Settleman <span class="vf">✓</span></span>
+</div></div></header>
+
+<!-- filters -->
+<nav class="filters"><div class="wrap"><div class="in">
+  <span style="flex:none;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-right:2px">Filter</span>
+  <button class="fchip active" data-f="all">All</button>
+  <button class="fchip" data-f="seats">Seats</button>
+  <button class="fchip" data-f="food">Food</button>
+  <button class="fchip" data-f="vibe">Vibe</button>
+  <button class="fchip" data-f="getin">Getting in</button>
+</div></div></nav>
+
+<section class="stage"><div class="wrap">
+  <div class="feed">
+
+    <!-- 1 · seats lead photo -->
+    <div class="item" data-cat="seats">
+      <div class="pc">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""><span class="tag">100 Level</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">Center 200s beat behind the basket, even down low.</div>
+      </div>
+    </div>
+
+    <!-- 2 · food lead photo (tall) -->
+    <div class="item" data-cat="food">
+      <div class="pc">
+        <div class="photo" style="aspect-ratio:3/4"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""><span class="tag">Steak Sandwich · Sec 107</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">The best food in the whole building — get it outside 107.</div>
+      </div>
+    </div>
+
+    <!-- 3 · vibe tip -->
+    <div class="item" data-cat="vibe">
+      <div class="tc dark">
+        <div class="who-row"><span class="who" style="color:#fff"><img class="av" src="../../public/img/logo.png" alt="" style="border-color:#fff"> Jack Settleman <span class="vf">✓</span></span></div>
+        <span class="qmark">“</span>
+        <div class="q">Best crowd in the NBA. Be ready to stand.</div>
+        <div class="foot"><span class="kv">Atmosphere</span><span class="vote"><button>▲</button><span class="n">63</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+    <!-- 4 · getin photo -->
+    <div class="item" data-cat="getin">
+      <div class="pc">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""><span class="tag">Outside</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">Walk, subway, LIRR or NJ Transit — driving is my last choice.</div>
+      </div>
+    </div>
+
+    <!-- 5 · food tip (wash) -->
+    <div class="item" data-cat="food">
+      <div class="tc">
+        <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+        <span class="qmark">“</span>
+        <div class="q">Skip the pizza. It is bad in the arena.</div>
+        <div class="foot"><span class="kv">Food</span><span class="vote"><button>▲</button><span class="n">28</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+    <!-- 6 · seats photo -->
+    <div class="item" data-cat="seats">
+      <div class="pc">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r40.jpg" alt=""><span class="tag">300 Level</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">The Hyundai Bridge is a cool spot and good value.</div>
+      </div>
+    </div>
+
+    <!-- 7 · vibe photo (tall) -->
+    <div class="item" data-cat="vibe">
+      <div class="pc">
+        <div class="photo" style="aspect-ratio:3/4"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""><span class="tag">Tip-off</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">Tight seats, but the energy is worth every inch.</div>
+      </div>
+    </div>
+
+    <!-- 8 · seats tip -->
+    <div class="item" data-cat="seats">
+      <div class="tc">
+        <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+        <span class="qmark">“</span>
+        <div class="q">Delta Club is all-inclusive food and drink.</div>
+        <div class="foot"><span class="kv">Seats</span><span class="vote"><button>▲</button><span class="n">19</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+    <!-- 9 · food photo -->
+    <div class="item" data-cat="food">
+      <div class="pc">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r30.jpg" alt=""><span class="tag">Garden Market</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">Best basic food in sports — that bun is fantastic.</div>
+      </div>
+    </div>
+
+    <!-- 10 · getin tip -->
+    <div class="item" data-cat="getin">
+      <div class="tc dark">
+        <div class="who-row"><span class="who" style="color:#fff"><img class="av" src="../../public/img/logo.png" alt="" style="border-color:#fff"> Jack Settleman <span class="vf">✓</span></span></div>
+        <span class="qmark">“</span>
+        <div class="q">100-level gates: way shorter merch line than the lobby.</div>
+        <div class="foot"><span class="kv">Getting in</span><span class="vote"><button>▲</button><span class="n">31</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+    <!-- 11 · getin photo -->
+    <div class="item" data-cat="getin">
+      <div class="pc">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r20.jpg" alt=""><span class="tag">Gates</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">Come in through the 100 level gates.</div>
+      </div>
+    </div>
+
+    <!-- 12 · seats photo -->
+    <div class="item" data-cat="seats">
+      <div class="pc">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r56.jpg" alt=""><span class="tag">400 Level</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">Even up top, the sightlines wrap you into the game.</div>
+      </div>
+    </div>
+
+    <!-- 13 · food photo -->
+    <div class="item" data-cat="food">
+      <div class="pc">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r26.jpg" alt=""><span class="tag">Burgers</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">Carnegie Deli is another good one.</div>
+      </div>
+    </div>
+
+    <!-- 14 · vibe tip -->
+    <div class="item" data-cat="vibe">
+      <div class="tc">
+        <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+        <span class="qmark">“</span>
+        <div class="q">Plenty of in-game fun — the t-shirt tosses go off.</div>
+        <div class="foot"><span class="kv">Atmosphere</span><span class="vote"><button>▲</button><span class="n">24</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+    <!-- 15 · before photo (vibe bucket) -->
+    <div class="item" data-cat="vibe">
+      <div class="pc">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r44.jpg" alt=""><span class="tag">Chase Lounge</span></div>
+        <div class="cap"><img class="av" src="../../public/img/logo.png" alt="">Reserve the Chase lounge for a calm pregame.</div>
+      </div>
+    </div>
+
+    <!-- 16 · food tip -->
+    <div class="item" data-cat="food">
+      <div class="tc dark">
+        <div class="who-row"><span class="who" style="color:#fff"><img class="av" src="../../public/img/logo.png" alt="" style="border-color:#fff"> Jack Settleman <span class="vf">✓</span></span></div>
+        <span class="qmark">“</span>
+        <div class="q">Alcoholic drinks are very expensive inside MSG.</div>
+        <div class="foot"><span class="kv">Insider</span><span class="vote"><button>▲</button><span class="n">26</span><button>▼</button></span></div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<script>
+  const chips = document.querySelectorAll('.fchip');
+  const items = document.querySelectorAll('.item');
+  chips.forEach(c => c.addEventListener('click', () => {
+    chips.forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    const f = c.dataset.f;
+    items.forEach(it => it.classList.toggle('hide', f !== 'all' && it.dataset.cat !== f));
+  }));
+</script>
+</body></html>

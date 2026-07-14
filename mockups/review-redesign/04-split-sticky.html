@@ -1,0 +1,292 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04 · Split-Screen Sticky — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  /* compact top bar */
+  .bar{position:sticky;top:0;z-index:40;background:var(--ink);color:#fff;border-bottom:2px solid #000}
+  .bar .in{display:flex;align-items:center;gap:16px;height:58px;padding:0 24px;max-width:1500px;margin:0 auto}
+  .bar .mark{font-family:var(--display);font-size:22px;letter-spacing:.5px;text-transform:uppercase;line-height:1;white-space:nowrap}
+  .bar .home{font-size:12.5px;font-weight:600;color:#bdbdb5;white-space:nowrap}
+  .bar .scores{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .bar .sb{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;letter-spacing:.4px;
+    text-transform:uppercase;color:#e8e8e0}
+  .bar .sb b{font-family:var(--display);font-size:18px;color:var(--brand);letter-spacing:.5px}
+  .bar .sb.fan b{color:#fff}
+  .bar .add{background:var(--brand);color:var(--ink);border:2px solid #000;border-radius:999px;padding:7px 15px;
+    font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;box-shadow:2px 2px 0 0 #000}
+
+  /* split shell */
+  .split{display:grid;grid-template-columns:55% 45%;max-width:1500px;margin:0 auto;align-items:start}
+
+  /* LEFT — sticky photo stage */
+  .stage{position:sticky;top:58px;height:calc(100vh - 58px);padding:26px 20px 26px 24px}
+  .stageInner{position:relative;height:100%;border:2px solid var(--ink);border-radius:16px;overflow:hidden;
+    box-shadow:var(--punch-lg);background:var(--ink)}
+  .stageInner .frame{position:absolute;inset:0}
+  .stageInner .frame img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease;
+    transform:scale(1.02)}
+  .stageInner .frame.on img{opacity:1}
+  .stageInner::after{content:'';position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(20,20,16,0) 38%,rgba(20,20,16,.86) 100%)}
+  .stageMeta{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:22px 22px 20px;color:#fff}
+  .stageMeta .stg{font-family:var(--display);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--brand);display:flex;align-items:center;gap:8px}
+  .stageMeta .stg .n{background:var(--brand);color:var(--ink);border-radius:4px;padding:1px 7px;font-size:12px}
+  .stageMeta h2{font-family:var(--display);font-size:clamp(30px,3.6vw,46px);line-height:.95;text-transform:uppercase;
+    letter-spacing:.5px;margin:9px 0 8px}
+  .stageMeta .scap{font-size:14px;line-height:1.45;font-weight:500;color:#eceace;max-width:44ch}
+  /* thumbnail cluster */
+  .cluster{position:absolute;top:16px;left:16px;z-index:3;display:flex;gap:8px}
+  .cluster .tw{width:64px;height:50px;border:2px solid #fff;border-radius:7px;overflow:hidden;
+    box-shadow:0 4px 14px rgba(0,0,0,.45);opacity:0;transform:translateY(-6px);transition:opacity .45s ease,transform .45s ease}
+  .cluster .tw img{width:100%;height:100%;object-fit:cover}
+  .cluster.on .tw{opacity:1;transform:none}
+  .cluster.on .tw:nth-child(2){transition-delay:.05s}
+  .cluster.on .tw:nth-child(3){transition-delay:.1s}
+  .areaTag{position:absolute;top:16px;right:16px;z-index:3}
+
+  /* progress rail on the stage */
+  .rail{position:absolute;top:0;left:0;height:4px;background:var(--brand);width:0;z-index:4;transition:width .4s ease}
+
+  /* RIGHT — scrolling sections */
+  .read{padding:26px 24px 26px 20px}
+  .intro{padding:14px 4px 26px}
+  .intro h1{font-family:var(--display);font-size:clamp(30px,4vw,50px);line-height:.95;text-transform:uppercase;
+    letter-spacing:.5px;color:var(--ink);margin:10px 0 10px}
+  .intro .lead{font-size:15.5px;line-height:1.6;color:#3a3b33;max-width:52ch}
+  .sec{padding:22px 22px 24px;border:2px solid var(--line);border-radius:14px;margin-bottom:20px;
+    background:#fbfaf5;transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;scroll-margin-top:78px}
+  .sec.active{border-color:var(--ink);background:var(--cream);box-shadow:var(--punch)}
+  .sec .head{display:flex;align-items:center;gap:11px;margin-bottom:4px}
+  .sec .idx{font-family:var(--display);font-size:20px;color:var(--ink);background:var(--brand);border:2px solid var(--ink);
+    border-radius:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;flex:none;
+    box-shadow:2px 2px 0 0 var(--ink);opacity:.35;transition:opacity .3s ease}
+  .sec.active .idx{opacity:1}
+  .sec .ttl{font-family:var(--display);font-size:26px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:1}
+  .sec .who-row{margin:12px 0 6px}
+  .tp{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.5;color:#282a24;
+    padding:11px 0;border-top:1px dashed #e0ddcf}
+  .tp:first-of-type{border-top:0}
+  .tp .vote{flex:none;margin-top:1px}
+  .tp b{color:var(--ink)}
+  /* verdict block at the end of the reading column */
+  .verdict{background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:14px;padding:22px 22px;
+    box-shadow:var(--punch);scroll-margin-top:78px}
+  .verdict .who{color:#fff}
+  .verdict .qt{font-size:15px;line-height:1.6;color:#eceace;margin:12px 0 0}
+
+  @media(max-width:900px){
+    .split{grid-template-columns:1fr}
+    .stage{position:relative;top:0;height:64vh;min-height:340px;padding:16px}
+    .read{padding:8px 16px 40px}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 04 — Split-Screen Sticky</span><span style="color:#fff">Pinned photo stage swaps as you scroll the tips</span>
+</div>
+
+<!-- compact top bar -->
+<div class="bar"><div class="in">
+  <span class="mark">Madison Square Garden</span>
+  <span class="home">New York Knicks · New York, NY</span>
+  <span class="scores">
+    <span class="sb">★ Snapback <b>9.2</b> <span style="color:#8a8a82">#3</span></span>
+    <span class="sb fan">Fan <b>8.7</b> <span style="color:#8a8a82">214</span></span>
+    <span class="add">+ Add a tip</span>
+  </span>
+</div></div>
+
+<div class="split">
+
+  <!-- LEFT: sticky stage -->
+  <div class="stage"><div class="stageInner">
+    <span class="rail" id="rail"></span>
+
+    <!-- swappable frames -->
+    <div class="frame on" data-frame="getting-in"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""></div>
+    <div class="frame" data-frame="best-seats"><img src="../../public/img/reports/citi/robby/r10.jpg" alt=""></div>
+    <div class="frame" data-frame="best-food"><img src="../../public/img/reports/citi/robby/r25.jpg" alt=""></div>
+    <div class="frame" data-frame="before"><img src="../../public/img/reports/citi/robby/r44.jpg" alt=""></div>
+    <div class="frame" data-frame="atmosphere"><img src="../../public/img/reports/citi/robby/r17.jpg" alt=""></div>
+    <div class="frame" data-frame="insider"><img src="../../public/img/reports/citi/robby/r04.jpg" alt=""></div>
+
+    <!-- area tag (swaps) -->
+    <span class="tag areaTag" id="areaTag">Outside</span>
+
+    <!-- thumbnail cluster (swaps) -->
+    <div class="cluster on" id="cluster">
+      <div class="tw"><img src="../../public/img/reports/citi/robby/r20.jpg" alt=""></div>
+      <div class="tw"><img src="../../public/img/reports/citi/robby/r59.jpg" alt=""></div>
+    </div>
+
+    <!-- meta caption (swaps) -->
+    <div class="stageMeta">
+      <div class="stg"><span class="n" id="stageNum">01</span> <span id="stageKick">Getting in</span></div>
+      <h2 id="stageTitle">Getting in</h2>
+      <div class="scap" id="stageCap">Best ways in: walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice.</div>
+    </div>
+  </div></div>
+
+  <!-- RIGHT: reading column -->
+  <div class="read">
+    <div class="intro">
+      <div class="eyebrow"><span class="dot"></span> Snapback · a fan's field guide</div>
+      <h1>Everything you<br>need to know</h1>
+      <div class="lead">Scroll the tips on the right — the photo on the left follows along, showing you exactly what Jack's talking about. Real seats, real food, real gates.</div>
+    </div>
+
+    <!-- 1 · Getting in -->
+    <section class="sec active" id="s-getting-in"
+      data-frame="getting-in" data-num="01" data-kick="Getting in" data-title="Getting in"
+      data-cap="Best ways in: walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice."
+      data-tag="Outside"
+      data-thumbs="r20.jpg|r59.jpg">
+      <div class="head"><span class="idx">1</span><span class="ttl">Getting in</span></div>
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tp"><span>Best ways in: walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice.</span><span class="vote"><button>▲</button><span class="n">38</span><button>▼</button></span></div>
+      <div class="tp"><span>Come in through the <b>100 level gates</b> — the merch store there has a way shorter line than the one in the MSG lobby.</span><span class="vote"><button>▲</button><span class="n">31</span><button>▼</button></span></div>
+    </section>
+
+    <!-- 2 · Best seats -->
+    <section class="sec" id="s-best-seats"
+      data-frame="best-seats" data-num="02" data-kick="Where to sit" data-title="Best seats"
+      data-cap="Front rows in the 200s in the center sections beat behind the basket, even down low."
+      data-tag="100 Level"
+      data-thumbs="r40.jpg|r56.jpg">
+      <div class="head"><span class="idx">2</span><span class="ttl">Best seats</span></div>
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tp"><span>Front rows in the 200s in the center sections beat behind the basket, even down low.</span><span class="vote"><button>▲</button><span class="n">41</span><button>▼</button></span></div>
+      <div class="tp"><span>The Chase Bridge and Hyundai Bridge are both cool spots — the <b>Hyundai Bridge is good value</b>.</span><span class="vote"><button>▲</button><span class="n">33</span><button>▼</button></span></div>
+      <div class="tp"><span>The Delta Club comes with all-inclusive food and drink (non-alcoholic).</span><span class="vote"><button>▲</button><span class="n">19</span><button>▼</button></span></div>
+    </section>
+
+    <!-- 3 · Best food -->
+    <section class="sec" id="s-best-food"
+      data-frame="best-food" data-num="03" data-kick="What to eat" data-title="Best food"
+      data-cap="The best food in MSG is the steak sandwich outside section 107."
+      data-tag="Steak Sandwich · Sec 107"
+      data-thumbs="r30.jpg|r26.jpg|r01.jpg">
+      <div class="head"><span class="idx">3</span><span class="ttl">Best food</span></div>
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tp"><span>Best food in MSG is the <b>steak sandwich outside section 107</b>.</span><span class="vote"><button>▲</button><span class="n">57</span><button>▼</button></span></div>
+      <div class="tp"><span>The Garden Market hamburgers are the best basic food item in sports — they use a different bun that's fantastic.</span><span class="vote"><button>▲</button><span class="n">44</span><button>▼</button></span></div>
+      <div class="tp"><span>Carnegie Deli is another good one. Skip the pizza, it's bad in the arena.</span><span class="vote"><button>▲</button><span class="n">28</span><button>▼</button></span></div>
+    </section>
+
+    <!-- 4 · Before the game -->
+    <section class="sec" id="s-before"
+      data-frame="before" data-num="04" data-kick="Before the game" data-title="Before"
+      data-cap="There's a Chase reserve lounge inside the arena — you can reserve a spot pregame."
+      data-tag="Chase Lounge"
+      data-thumbs="r51.jpg|r57.jpg">
+      <div class="head"><span class="idx">4</span><span class="ttl">Before the game</span></div>
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tp"><span>Pregame spots nearby: Nick and Stef's Steakhouse, The Rutherford, Stout, Mustang Harry's, and American Whiskey.</span><span class="vote"><button>▲</button><span class="n">22</span><button>▼</button></span></div>
+      <div class="tp"><span>There's a <b>Chase reserve lounge</b> inside the arena — you can reserve a spot pregame.</span><span class="vote"><button>▲</button><span class="n">15</span><button>▼</button></span></div>
+    </section>
+
+    <!-- 5 · Atmosphere -->
+    <section class="sec" id="s-atmosphere"
+      data-frame="atmosphere" data-num="05" data-kick="The crowd" data-title="Atmosphere"
+      data-cap="Best crowd in the NBA. Be ready to stand — the energy is worth it."
+      data-tag="Tip-off"
+      data-thumbs="r18.jpg|r19.jpg">
+      <div class="head"><span class="idx">5</span><span class="ttl">Atmosphere</span></div>
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tp"><span><b>Best crowd in the NBA.</b> Be ready to stand, and the seats are tight between people. Not the most family-friendly, but there's plenty of in-game entertainment like t-shirt tosses.</span><span class="vote"><button>▲</button><span class="n">63</span><button>▼</button></span></div>
+    </section>
+
+    <!-- 6 · Insider -->
+    <section class="sec" id="s-insider"
+      data-frame="insider" data-num="06" data-kick="Insider tips" data-title="Insider"
+      data-cap="The 100 level gate merch store has a way shorter line than the MSG lobby."
+      data-tag="Team Store"
+      data-thumbs="r63.jpg|r20.jpg">
+      <div class="head"><span class="idx">6</span><span class="ttl">Insider tips</span></div>
+      <div class="who-row"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tp"><span>The merch store through the <b>100 level gates</b> has a way shorter line than the one in the MSG lobby.</span><span class="vote"><button>▲</button><span class="n">31</span><button>▼</button></span></div>
+      <div class="tp"><span>Alcoholic drinks are <b>very expensive</b> inside MSG — budget for it.</span><span class="vote"><button>▲</button><span class="n">26</span><button>▼</button></span></div>
+    </section>
+
+    <!-- verdict -->
+    <div class="verdict" id="s-verdict"
+      data-frame="atmosphere" data-num="✓" data-kick="The verdict" data-title="The verdict"
+      data-cap="Best crowd, best steak sandwich, worst pizza. Come in on transit, sit center-200s, and stand up."
+      data-tag="Snapback 9.2"
+      data-thumbs="r10.jpg|r25.jpg">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+        <span class="score" style="margin-left:auto;font-size:22px;padding:3px 12px">9.2</span>
+      </div>
+      <div class="qt">"Best crowd in the NBA. Be ready to stand and the seats are tight, but the energy is worth it. Eat the steak sandwich outside section 107 and the Garden Market hamburgers, and skip the arena pizza. Get in through the 100 level gates for a shorter merch line, and know the alcohol is very expensive."</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const P = '../../public/img/reports/citi/robby/';
+  const frames  = document.querySelectorAll('.stageInner .frame');
+  const cluster = document.getElementById('cluster');
+  const areaTag = document.getElementById('areaTag');
+  const stageNum = document.getElementById('stageNum');
+  const stageKick = document.getElementById('stageKick');
+  const stageTitle = document.getElementById('stageTitle');
+  const stageCap  = document.getElementById('stageCap');
+  const rail = document.getElementById('rail');
+  const sections = [...document.querySelectorAll('[data-frame]')].filter(el => el.classList.contains('sec') || el.classList.contains('verdict'));
+  const total = document.querySelectorAll('.sec').length;
+
+  let current = null;
+  function activate(el){
+    if(el === current) return;
+    current = el;
+    const frameKey = el.dataset.frame;
+
+    // swap left photo
+    frames.forEach(f => f.classList.toggle('on', f.dataset.frame === frameKey));
+
+    // swap meta
+    stageNum.textContent = el.dataset.num;
+    stageKick.textContent = el.dataset.kick;
+    stageTitle.textContent = el.dataset.title;
+    stageCap.textContent = el.dataset.cap;
+    areaTag.textContent = el.dataset.tag;
+
+    // swap thumbnail cluster (retrigger the reveal animation)
+    const thumbs = (el.dataset.thumbs || '').split('|').filter(Boolean);
+    cluster.classList.remove('on');
+    cluster.innerHTML = thumbs.map(t => `<div class="tw"><img src="${P}${t}" alt=""></div>`).join('');
+    requestAnimationFrame(() => cluster.classList.add('on'));
+
+    // highlight active reading section
+    document.querySelectorAll('.sec').forEach(s => s.classList.toggle('active', s === el));
+
+    // progress rail
+    if(el.classList.contains('sec')){
+      const i = [...document.querySelectorAll('.sec')].indexOf(el) + 1;
+      rail.style.width = (i/total*100) + '%';
+    } else {
+      rail.style.width = '100%';
+    }
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    // pick the entry closest to the upper-third of the viewport
+    let best = null, bestDist = Infinity;
+    for(const e of entries){
+      if(!e.isIntersecting) continue;
+      const dist = Math.abs(e.boundingClientRect.top - window.innerHeight*0.28);
+      if(dist < bestDist){ bestDist = dist; best = e.target; }
+    }
+    if(best) activate(best);
+  }, { rootMargin:'-24% 0px -46% 0px', threshold:[0,0.25,0.5,1] });
+
+  sections.forEach(s => io.observe(s));
+  activate(sections[0]);
+</script>
+</body></html>

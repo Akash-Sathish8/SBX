@@ -1,0 +1,237 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>14b · Feed — Social Timeline — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body{background:#f0efe9}
+
+  /* ---- sticky mini-header ---- */
+  .mini{background:var(--ink);color:#fff;position:sticky;top:0;z-index:30;border-bottom:2px solid #000}
+  .mini .in{max-width:620px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;gap:14px}
+  .mini .id{min-width:0}
+  .mini .id .nm{font-family:var(--display);font-size:20px;text-transform:uppercase;letter-spacing:.5px;line-height:1;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mini .id .sub{font-size:11px;font-weight:600;color:#bdbdb5;margin-top:3px}
+  .mini .sc{margin-left:auto;display:flex;gap:8px;flex:none}
+  .miniscore{display:flex;flex-direction:column;align-items:center;gap:1px;background:rgba(255,255,255,.08);
+    border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:5px 11px}
+  .miniscore.brand{background:var(--brand);border-color:var(--brand)}
+  .miniscore .k{font-size:8.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#a7a79c}
+  .miniscore.brand .k{color:#5a5300}
+  .miniscore .v{font-family:var(--display);font-size:17px;line-height:1;color:#fff}
+  .miniscore.brand .v{color:var(--ink)}
+
+  /* ---- masthead above the feed ---- */
+  .masthead{max-width:620px;margin:0 auto;padding:24px 18px 8px}
+  .masthead .eyebrow{margin-bottom:10px}
+  .masthead h1{font-family:var(--display);font-size:clamp(30px,7vw,46px);text-transform:uppercase;letter-spacing:.5px;
+    line-height:.95;margin:0 0 8px;color:var(--ink-soft)}
+  .masthead .by{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted);font-weight:600;flex-wrap:wrap}
+  .masthead .by .who{font-size:12px}
+  .masthead .stack{display:flex;padding-left:8px;margin-left:2px}
+  .masthead .stack .ini,.masthead .stack .av{width:24px;height:24px;margin-left:-8px;border:2px solid #f0efe9;
+    box-shadow:0 0 0 1.5px var(--ink);position:relative;border-radius:50%;object-fit:cover}
+
+  /* ---- feed column ---- */
+  .feed{max-width:620px;margin:0 auto;padding:14px 18px 70px;display:flex;flex-direction:column;gap:18px}
+  .post{background:var(--cream);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch);overflow:hidden}
+
+  .p-head{display:flex;align-items:center;gap:11px;padding:14px 16px 12px}
+  .p-head .av{width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);object-fit:cover;flex:none;background:var(--ink)}
+  .p-head .ini{width:40px;height:40px;font-size:13px;border-width:2px}
+  .p-head .nm{font-size:14px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:6px;letter-spacing:.2px}
+  .p-head .vf{width:15px;height:15px}
+  .p-head .meta{font-size:12px;color:var(--muted);font-weight:600;margin-top:1px}
+  .p-head .meta .dot{margin:0 5px;opacity:.5}
+  .p-head .rt{margin-left:auto;flex:none;display:flex;align-items:center;gap:8px}
+  .p-head .rate{font-size:15px;padding:2px 10px}
+  .p-head .area{flex:none}
+
+  .p-kicker{padding:0 16px 4px;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--gold)}
+  .p-text{padding:2px 16px 13px;font-size:15.5px;line-height:1.5;color:#2b2b26}
+  .p-text b{font-weight:800;color:var(--ink)}
+
+  .p-media{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:#eee;position:relative}
+  .p-media.single{aspect-ratio:16/11}
+  .p-media.single img{width:100%;height:100%;object-fit:cover}
+  .p-media .cap{position:absolute;left:10px;bottom:10px}
+  .p-media.duo{display:grid;grid-template-columns:1fr 1fr;gap:0;aspect-ratio:16/9}
+  .p-media.duo .cell{position:relative;overflow:hidden}
+  .p-media.duo .cell + .cell{border-left:2px solid var(--ink)}
+  .p-media.duo .cell img{width:100%;height:100%;object-fit:cover}
+  .p-media.trio{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:0;aspect-ratio:16/10}
+  .p-media.trio .cell{position:relative;overflow:hidden}
+  .p-media.trio .cell:first-child{grid-row:1 / 3}
+  .p-media.trio .cell:not(:first-child){border-left:2px solid var(--ink)}
+  .p-media.trio .cell:nth-child(3){border-top:2px solid var(--ink)}
+  .p-media.trio .cell img{width:100%;height:100%;object-fit:cover}
+
+  /* dark "call-out" post (pure tip, no photo) */
+  .post.callout{background:var(--ink);color:#fff}
+  .post.callout .p-head .nm{color:#fff}
+  .post.callout .p-head .av{border-color:#fff}
+  .post.callout .p-kicker{color:var(--brand)}
+  .post.callout .quote{font-family:var(--display);font-weight:400;font-size:clamp(22px,4.5vw,30px);line-height:1.05;
+    letter-spacing:.4px;text-transform:uppercase;color:#fff;padding:2px 16px 14px}
+  .post.callout .quote .hl{color:var(--brand)}
+  .post.callout .p-foot{border-top-color:rgba(255,255,255,.14)}
+  .post.callout .vote{border-color:rgba(255,255,255,.25)}
+  .post.callout .vote button{color:#c9c9bf}.post.callout .vote .n{color:#fff}
+  .post.callout .act{color:#c9c9bf}
+
+  .p-foot{display:flex;align-items:center;gap:16px;padding:11px 16px 12px;border-top:1px solid var(--line)}
+  .p-foot .act{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;color:var(--muted);
+    letter-spacing:.3px;text-transform:uppercase}
+  .p-foot .act .ic{font-size:14px}
+  .p-foot .vote{margin-right:2px}
+
+  /* section divider inside the feed */
+  .feed-div{display:flex;align-items:center;gap:12px;margin:8px 2px 0}
+  .feed-div .l{flex:1;height:2px;background:var(--ink);opacity:.12;border-radius:2px}
+  .feed-div .t{font-family:var(--display);font-size:15px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+
+  /* end marker */
+  .endcap{max-width:620px;margin:0 auto;padding:0 18px 60px;text-align:center;color:#9a9a90;
+    font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+  .endcap .rule{height:2px;background:var(--ink);opacity:.12;margin:0 0 14px;border-radius:2px}
+</style></head>
+<body>
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 14b — Feed · Social Timeline</span>
+  <span style="color:#fff">One vertical feed of fan posts — each review + tip carries the photos its author actually took</span>
+</div>
+
+<!-- sticky mini-header -->
+<header class="mini"><div class="in">
+  <div class="id">
+    <div class="nm">Madison Square Garden</div>
+    <div class="sub">New York Knicks · New York, NY</div>
+  </div>
+  <div class="sc">
+    <span class="miniscore brand"><span class="k">Snap</span><span class="v">9.2</span></span>
+    <span class="miniscore"><span class="k">Fan</span><span class="v">8.7</span></span>
+  </div>
+</div></header>
+
+<div class="masthead">
+  <div class="eyebrow"><span class="dot"></span> Crowdsourced · Madison Square Garden</div>
+  <h1>The MSG feed</h1>
+  <div class="by" id="by"></div>
+</div>
+
+<main class="feed" id="feed"></main>
+
+<div class="endcap"><div class="rule"></div>You're all caught up · <span id="endcount"></span></div>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  const C = window.CROWD;
+  const feed = document.getElementById('feed');
+
+  const SECT = {
+    'best-seats':'Seats','food':'Food','getting-there':'Getting in',
+    'before':'Before','atmosphere':'Vibe','tips':'Insider'
+  };
+  const bold = s => s; // dataset text is already clean; no synthetic bolding
+
+  function headHTML(id, metaRight, kicker){
+    const f = C.fans[id];
+    return `<div class="p-head">${C.avatar(id).replace('class="ini"','class="ini"')}` +
+      `<div><div class="nm">${f.name}${f.verified?'<span class="vf">✓</span>':''}</div>` +
+      `<div class="meta">${kicker}</div></div>${metaRight}</div>`;
+  }
+
+  // ---- REVIEW post: avatar + name + rate badge + body + THEIR photos inline + actions
+  function reviewPost(r){
+    const f = C.fans[r.by];
+    const ph = r.photos;
+    let media = '';
+    if(ph.length===1){
+      media = `<div class="p-media single"><img src="${ph[0].src}" alt=""><span class="tag cap">${ph[0].area}</span></div>`;
+    } else if(ph.length===2){
+      media = `<div class="p-media duo">` + ph.map(p=>`<div class="cell"><img src="${p.src}" alt=""><span class="tag cap">${p.area}</span></div>`).join('') + `</div>`;
+    } else {
+      media = `<div class="p-media trio">` + ph.slice(0,3).map(p=>`<div class="cell"><img src="${p.src}" alt=""><span class="tag cap">${p.area}</span></div>`).join('') + `</div>`;
+    }
+    const right = `<div class="rt"><span class="rate">${r.rating}/10</span></div>`;
+    const el = document.createElement('article');
+    el.className = 'post';
+    el.innerHTML =
+      headHTML(r.by, right, `@${r.by} · ${r.ago} · Full review`) +
+      `<div class="p-text">${r.body}</div>` +
+      media +
+      `<div class="p-foot">${C.votePill(r.up)}` +
+        `<span class="act"><span class="ic">♥</span> ${r.up} likes</span>` +
+        `<span class="act"><span class="ic">↺</span> Save</span></div>`;
+    return el;
+  }
+
+  // ---- TIP post with a photo: avatar + name + tip text + THEIR photo + actions
+  function photoTipPost(t){
+    const el = document.createElement('article');
+    el.className = 'post';
+    el.innerHTML =
+      headHTML(t.by, `<span class="tag area">${SECT[t.section]||'Tip'}</span>`,
+               `@${t.by} · ${t.ago==='pinned'?'pinned':t.ago} · ${SECT[t.section]||'Tip'}`) +
+      `<div class="p-text">${t.text}</div>` +
+      `<div class="p-media single"><img src="${t.photo.src}" alt=""><span class="tag cap">${t.photo.area}</span></div>` +
+      `<div class="p-foot">${C.votePill(t.up)}` +
+        `<span class="act"><span class="ic">♥</span> ${t.up} likes</span>` +
+        `<span class="act"><span class="ic">↺</span> Save</span></div>`;
+    return el;
+  }
+
+  // ---- TEXT-ONLY tip -> dark callout
+  function calloutPost(t){
+    const el = document.createElement('article');
+    el.className = 'post callout';
+    el.innerHTML =
+      headHTML(t.by, `<span class="tag area">${SECT[t.section]||'Tip'}</span>`,
+               `@${t.by} · ${t.ago} · ${SECT[t.section]||'Insider'}`) +
+      `<div class="quote">${t.text}</div>` +
+      `<div class="p-foot">${C.votePill(t.up)}` +
+        `<span class="act"><span class="ic">♥</span> ${t.up} likes</span>` +
+        `<span class="act"><span class="ic">↺</span> Save</span></div>`;
+    return el;
+  }
+
+  function divider(label){
+    const d = document.createElement('div');
+    d.className = 'feed-div';
+    d.innerHTML = `<span class="t">${label}</span><span class="l"></span>`;
+    return d;
+  }
+
+  // ===== BUILD FEED =====
+  // 1) Fan reviews (the clearest "photos tied to the review"), vote-sorted
+  feed.appendChild(divider('Fan reviews'));
+  C.reviews.slice().sort((a,b)=>b.up-a.up).forEach(r => feed.appendChild(reviewPost(r)));
+
+  // 2) Top photo-tips across sections, vote-sorted, with a couple of dark text callouts mixed in
+  feed.appendChild(divider('Top tips & photos'));
+  const photoTips = C.tips.filter(t=>t.photo).sort((a,b)=>b.up-a.up).slice(0,8);
+  const textTips  = C.tips.filter(t=>!t.photo).sort((a,b)=>b.up-a.up).slice(0,2);
+  // interleave: 3 photo tips, then a callout, repeat
+  let ci = 0;
+  photoTips.forEach((t,i)=>{
+    feed.appendChild(photoTipPost(t));
+    if((i+1)%3===0 && ci<textTips.length) feed.appendChild(calloutPost(textTips[ci++]));
+  });
+  while(ci<textTips.length) feed.appendChild(calloutPost(textTips[ci++]));
+
+  // ---- masthead byline + contributor stack
+  const order = ['jack','grace','mike','tommy','sarah','danny','rob'];
+  const stack = order.map(id => C.avatar(id)).join('');
+  document.getElementById('by').innerHTML =
+    `<span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>` +
+    `<div class="stack">${stack}</div>` +
+    `<span>+${C.venue.fans - order.length} fans · Snapback ${C.venue.snap} (#${C.venue.rank}) · Fan ${C.venue.fan} (${C.venue.reviews})</span>`;
+
+  document.getElementById('endcount').textContent =
+    `${C.venue.fans} fans · ${C.venue.tips} tips · ${C.venue.reviews} reviews`;
+})();
+</script>
+</body></html>

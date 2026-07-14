@@ -1,0 +1,157 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03a · Illustrated Cards — Magazine (Crowd) — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;margin:4px 0 4px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5}
+  .stage{background:#f7f6f2;padding:42px 0 64px}
+
+  /* ---- magazine grid: 2 up on desktop ---- */
+  .mag{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;margin-top:30px}
+  .mag-card{background:var(--cream);border:2px solid var(--ink);border-radius:16px;overflow:hidden;
+    box-shadow:var(--punch-lg);display:flex;flex-direction:column}
+
+  /* card header: label + tip count + contributor avatar stack */
+  .mag-head{display:flex;align-items:center;gap:14px;padding:20px 26px 4px}
+  .mag-title{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:.92;letter-spacing:.5px;
+    color:var(--ink);font-size:clamp(28px,3.2vw,38px);margin:0}
+  .mag-headmeta{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .mag-headmeta .cnt{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .cstack{display:flex;padding-left:8px}
+  .cstack .ini,.cstack .av{width:26px;height:26px;margin-left:-8px;border:2px solid var(--cream);
+    box-shadow:0 0 0 1.5px var(--ink);border-radius:50%;object-fit:cover;background:var(--ink);
+    display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;position:relative}
+
+  .mag-body{padding:6px 26px 24px;display:flex;flex-direction:column;flex:1}
+
+  /* each tip = MEDIA OBJECT: author's photo alongside their tip + attribution */
+  .mag-tip{display:grid;grid-template-columns:112px 1fr;gap:16px;align-items:start;
+    padding:16px 0;border-top:1px dashed #e0ddcf}
+  .mag-tip:first-of-type{border-top:0}
+  .mag-tip.nophoto{grid-template-columns:1fr}
+  .mag-tip .photo{aspect-ratio:4/3;border-width:2px;border-radius:9px;box-shadow:var(--punch)}
+  .mag-tip .photo .tag{left:6px;bottom:6px;font-size:8px;padding:2px 6px}
+  .mag-tip .tmeta{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap}
+  .mag-tip .tmeta .av{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--ink);object-fit:cover;background:var(--ink);flex:none}
+  .mag-tip .tmeta .ini{width:24px;height:24px;font-size:9px}
+  .mag-tip .tmeta .pin{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);
+    border:1px solid #e7dca0;background:var(--tip);border-radius:4px;padding:1px 5px}
+  .mag-tip .body{font-size:14.5px;line-height:1.48;color:#2a2a2a;font-weight:500}
+  .mag-tip .body b{font-weight:800;color:var(--ink)}
+  .mag-tip .trow{display:flex;align-items:flex-end;gap:10px;margin-top:8px}
+  .mag-tip .trow .vote{flex:none}
+
+  .mag-more{margin-top:auto;padding-top:16px;border-top:1.5px solid var(--ink)}
+  .mag-more a{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.5px;
+    text-transform:uppercase;color:var(--ink);background:var(--tip);border:1.5px solid #e7dca0;border-radius:999px;padding:7px 14px}
+  .mag-more .fstack{display:inline-flex;padding-left:6px;margin-right:2px}
+  .mag-more .fstack .ini,.mag-more .fstack .av{width:20px;height:20px;margin-left:-6px;border:1.5px solid var(--tip);
+    box-shadow:0 0 0 1px var(--ink);border-radius:50%;font-size:7px;object-fit:cover;background:var(--ink);
+    display:inline-flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+
+  @media(max-width:860px){
+    .mag{grid-template-columns:1fr;gap:24px}
+    .mag-body{padding:6px 20px 22px}
+    .mag-head{padding:18px 20px 4px}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 03a — Illustrated Cards · Magazine</span>
+  <span style="color:#fff;text-transform:none;letter-spacing:.3px">Editorial section spreads at crowd density · each tip is a media object — the fan's photo beside their own words, credited</span>
+</div>
+
+<header class="top"><div class="wrap-wide">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home">Home of New York Knicks · <b style="color:var(--brand)">Snapback 9.2</b> (#3) · Fan 8.7 (214)</div>
+</div></header>
+
+<section class="stage"><div class="wrap-wide">
+  <div class="shead-row">
+    <div><div class="eyebrow"><span class="dot"></span> Snapback · crowdsourced</div>
+      <h2 class="shead" style="margin-top:8px">What do I need to know?</h2></div>
+    <div style="display:flex;gap:10px"><span class="pill-brand">Build your guide →</span><span class="pill-dark">+ Add a tip</span></div>
+  </div>
+  <div class="ssub" style="margin-top:10px">Insider tips &amp; photos from fans who've actually been to Madison Square Garden</div>
+
+  <div class="mag" id="mag"></div>
+</div></section>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  const C = window.CROWD;
+  const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+  // avatar for the header/footer contributor stacks
+  const stackAv = id => {
+    const f = C.fans[id];
+    return f.verified
+      ? `<img class="av" src="${f.avatar}" alt="${esc(f.name)}">`
+      : `<span class="ini" style="background:${f.color}">${f.ini}</span>`;
+  };
+
+  function tipMedia(t){
+    const f = C.fans[t.by];
+    const pinned = t.pinned ? `<span class="pin">Pinned</span>` : '';
+    const ago = t.pinned ? '' : `<span class="ago">${esc(t.ago)} ago</span>`;
+    const photo = t.photo
+      ? `<div class="photo"><img src="${t.photo.src}" alt=""><span class="tag">${esc(t.photo.area)}</span></div>`
+      : '';
+    return `<div class="mag-tip${t.photo ? '' : ' nophoto'}">
+      ${photo}
+      <div class="tcol">
+        <div class="tmeta">${C.avatar(t.by)}<span class="nm">${esc(f.name)}</span>${f.verified?'<span class="vf">✓</span>':''}${pinned}${ago}</div>
+        <div class="body">${esc(t.text)}</div>
+        <div class="trow">${C.votePill(t.up)}</div>
+      </div>
+    </div>`;
+  }
+
+  const html = C.sections.map(sec => {
+    const tips = C.tipsFor(sec.key).slice().sort((a,b)=>{
+      if (a.pinned && !b.pinned) return -1;
+      if (b.pinned && !a.pinned) return 1;
+      return b.up - a.up;
+    });
+    const top = tips.slice(0, 3);
+    const rest = tips.slice(3);
+
+    // contributors for this section (unique authors), verified first
+    const authors = [...new Set(tips.map(t=>t.by))]
+      .sort((a,b)=> (C.fans[b].verified?1:0) - (C.fans[a].verified?1:0));
+    const headStack = authors.slice(0, 5).map(stackAv).join('');
+
+    let moreBlock = '';
+    if (rest.length){
+      const restFans = [...new Set(rest.map(t=>t.by))];
+      const fstack = restFans.slice(0,4).map(stackAv).join('');
+      moreBlock = `<div class="mag-more"><a href="#">
+        <span class="fstack">${fstack}</span>+${rest.length} more tip${rest.length>1?'s':''} from fans →</a></div>`;
+    }
+
+    return `<article class="mag-card">
+      <div class="mag-head">
+        <h3 class="mag-title">${esc(sec.label)}</h3>
+        <div class="mag-headmeta">
+          <span class="cnt">${tips.length} tips · ${authors.length} fans</span>
+          <span class="cstack">${headStack}</span>
+        </div>
+      </div>
+      <div class="mag-body">
+        ${top.map(tipMedia).join('')}
+        ${moreBlock}
+      </div>
+    </article>`;
+  }).join('');
+
+  document.getElementById('mag').innerHTML = html;
+})();
+</script>
+</body></html>

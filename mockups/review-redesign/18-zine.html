@@ -1,0 +1,205 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>18 · Poster / Zine Collage — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body{background:#2a2a24;padding-bottom:60px}
+  .zwrap{display:flex;justify-content:center;padding:26px 20px 10px}
+  /* bounded poster canvas, scales down on small screens */
+  .canvas{position:relative;width:1100px;height:1400px;background:var(--cream);border:3px solid var(--ink);
+    box-shadow:0 30px 80px rgba(0,0,0,.55);overflow:hidden;
+    transform-origin:top center}
+  /* faint halftone / grid texture on the cream field */
+  .canvas::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(20,20,16,.06) 1.4px,transparent 1.4px);background-size:22px 22px}
+  .canvas::after{content:'';position:absolute;left:0;right:0;top:0;height:14px;background:var(--ink)}
+
+  /* absolutely positioned pieces */
+  .pc{position:absolute}
+
+  /* taped photo tiles */
+  .tile{border:3px solid var(--ink);background:#fff;padding:0;box-shadow:var(--punch-lg)}
+  .tile img{display:block;width:100%;height:100%;object-fit:cover}
+  .tape{position:absolute;width:82px;height:26px;background:rgba(247,223,2,.82);border:1px solid rgba(20,20,16,.35);
+    box-shadow:0 1px 3px rgba(0,0,0,.25);z-index:5}
+  .tape.tl{top:-13px;left:16px;transform:rotate(-8deg)}
+  .tape.tr{top:-13px;right:16px;transform:rotate(7deg)}
+  .tape.bl{bottom:-13px;left:20px;transform:rotate(6deg)}
+  /* area tag reused on tiles */
+  .tile .tag{position:absolute;left:8px;bottom:8px;font-size:10px;padding:3px 8px;box-shadow:1.5px 1.5px 0 0 var(--ink)}
+
+  /* giant overlapping Anton headlines */
+  .head{font-family:var(--display);text-transform:uppercase;line-height:.82;letter-spacing:.5px;color:var(--ink)}
+  .head .hi{color:#000;background:var(--brand);box-shadow:5px 0 0 var(--brand),-3px 0 0 var(--brand);padding:0 2px}
+  .head .out{color:transparent;-webkit-text-stroke:2.5px var(--ink);text-stroke:2.5px var(--ink)}
+
+  /* callout tips with arrows */
+  .callout{background:var(--tip);border:2px solid var(--ink);border-radius:10px;padding:11px 13px;
+    box-shadow:var(--punch);max-width:270px}
+  .callout p{margin:0;font-size:13.5px;line-height:1.45;font-weight:600;color:#22241f}
+  .callout .who{margin-top:8px}
+  .callout .who .av{width:18px;height:18px}
+  .callout .kick{display:block;font-family:var(--display);font-size:13px;text-transform:uppercase;letter-spacing:.5px;
+    color:var(--gold);margin-bottom:4px}
+  /* little hand-drawn-ish arrows (rotated bars w/ head) */
+  .arrow{position:absolute;z-index:6}
+  .arrow svg{overflow:visible;display:block}
+
+  /* the big yellow starburst seal */
+  .seal{position:absolute;width:210px;height:210px;z-index:8}
+  .seal .burst{position:absolute;inset:0}
+  .seal .core{position:absolute;inset:26px;background:var(--brand);border:3px solid var(--ink);border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--punch-lg)}
+  .seal .core .big{font-family:var(--display);font-size:66px;color:var(--ink);line-height:.8}
+  .seal .core .lab{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--ink);margin-top:4px}
+  .seal .core .rk{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#5a5209;margin-top:2px}
+
+  /* masthead block */
+  .masthead{position:absolute;top:40px;left:44px;z-index:9}
+  .masthead .kick{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--brand);
+    font-weight:800;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 12px;border-radius:3px}
+  .masthead h1{font-family:var(--display);font-size:118px;line-height:.8;text-transform:uppercase;letter-spacing:1px;
+    color:var(--ink);margin:14px 0 0;text-shadow:5px 5px 0 rgba(247,223,2,.9)}
+  .masthead .sub{margin-top:12px;font-size:15px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#33352f}
+  .masthead .sub b{color:var(--gold)}
+
+  /* verified footer strip */
+  .footstrip{position:absolute;left:44px;right:44px;bottom:34px;z-index:9;display:flex;align-items:center;gap:14px;
+    background:var(--ink);color:#fff;border-radius:12px;padding:16px 20px;box-shadow:var(--punch-lg)}
+  .footstrip .who{color:#fff}
+  .footstrip .verdict{font-family:var(--display);font-size:19px;text-transform:uppercase;letter-spacing:.5px;color:var(--brand);line-height:.95}
+  .footstrip .verdict span{color:#fff}
+  .footstrip .fscore{margin-left:auto;display:flex;gap:8px;align-items:center;flex:none}
+
+  @media(max-width:1160px){ .canvas{transform:scale(.86)} .zwrap{padding-bottom:0} }
+  @media(max-width:960px){ .canvas{transform:scale(.7)} }
+  @media(max-width:760px){ .canvas{transform:scale(.52)} }
+  @media(max-width:560px){ .canvas{transform:scale(.38)} }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 18 — Poster / Zine Collage</span><span style="color:#fff">Maximalist Snapback poster · taped photos, giant type, one loud seal</span>
+</div>
+
+<div class="zwrap">
+  <div class="canvas">
+
+    <!-- masthead -->
+    <div class="masthead">
+      <span class="kick"><span class="dot" style="background:var(--brand)"></span> The Snapback Field Report</span>
+      <h1>The<br>Garden</h1>
+      <div class="sub">Madison Square Garden · Knicks · New York · <b>Fan report by Jack Settleman ✓</b></div>
+    </div>
+
+    <!-- big 9.2 seal, top right -->
+    <div class="seal" style="top:44px;right:52px;transform:rotate(8deg)">
+      <div class="burst">
+        <svg viewBox="0 0 210 210" width="210" height="210">
+          <polygon points="105,0 128,32 166,20 168,60 206,72 184,105 206,138 168,150 166,190 128,178 105,210 82,178 44,190 42,150 4,138 26,105 4,72 42,60 44,20 82,32"
+            fill="#141410"/>
+        </svg>
+      </div>
+      <div class="core">
+        <div class="big">9.2</div>
+        <div class="lab">Snapback Score</div>
+        <div class="rk">Expert · #3 · Fan 8.7 (214)</div>
+      </div>
+    </div>
+
+    <!-- HERO tile: the view (best seats) -->
+    <div class="pc tile" style="top:290px;left:44px;width:430px;height:300px;transform:rotate(-3deg)">
+      <span class="tape tl"></span><span class="tape tr"></span>
+      <img src="../../public/img/reports/citi/robby/r10.jpg" alt="View from the 100 level">
+      <span class="tag">100 Level</span>
+    </div>
+
+    <!-- STAND UP outline headline overlapping hero -->
+    <div class="pc head" style="top:250px;right:60px;font-size:150px;text-align:right;z-index:7">
+      <span class="out">STAND</span><br><span class="hi">UP</span>
+    </div>
+
+    <!-- seats callout w/ arrow pointing to hero tile -->
+    <div class="pc callout" style="top:600px;left:70px;z-index:7">
+      <span class="kick">Where to sit</span>
+      <p>Front rows in the 200s, center sections — they beat behind the basket, even down low. Hyundai Bridge is good value.</p>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+    </div>
+    <div class="arrow" style="top:565px;left:250px">
+      <svg width="120" height="70"><path d="M6,60 C40,58 70,30 108,10" fill="none" stroke="#141410" stroke-width="3"/>
+        <path d="M108,10 l-16,2 M108,10 l-2,16" fill="none" stroke="#141410" stroke-width="3"/></svg>
+    </div>
+
+    <!-- FOOD tile: the steak sandwich, right side -->
+    <div class="pc tile" style="top:560px;right:70px;width:340px;height:260px;transform:rotate(4deg)">
+      <span class="tape tl"></span><span class="tape bl"></span>
+      <img src="../../public/img/reports/citi/robby/r25.jpg" alt="Steak sandwich">
+      <span class="tag">Sec 107</span>
+    </div>
+
+    <!-- EAT THE STEAK SANDWICH headline over the food area -->
+    <div class="pc head" style="top:830px;right:44px;font-size:80px;text-align:right;width:520px;z-index:7">
+      <span class="hi">EAT THE</span><br>STEAK<br><span class="hi">SANDWICH</span>
+    </div>
+
+    <!-- food callout + arrow to food tile -->
+    <div class="pc callout" style="top:840px;left:60px;z-index:7">
+      <span class="kick">What to eat</span>
+      <p>Steak sandwich outside section 107 is the best food in the building. Garden Market burgers use a fantastic bun. Skip the pizza.</p>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+    </div>
+    <div class="arrow" style="top:730px;right:405px">
+      <svg width="130" height="90"><path d="M124,80 C90,70 60,40 20,14" fill="none" stroke="#141410" stroke-width="3"/>
+        <path d="M20,14 l18,1 M20,14 l0,18" fill="none" stroke="#141410" stroke-width="3"/></svg>
+    </div>
+
+    <!-- small FOOD support tile: garden market -->
+    <div class="pc tile" style="top:1000px;left:70px;width:210px;height:160px;transform:rotate(-5deg)">
+      <span class="tape tr"></span>
+      <img src="../../public/img/reports/citi/robby/r30.jpg" alt="Garden Market">
+      <span class="tag">Garden Market</span>
+    </div>
+
+    <!-- ARRIVE / transit tile bottom right -->
+    <div class="pc tile" style="top:1010px;right:80px;width:300px;height:210px;transform:rotate(3deg)">
+      <span class="tape tl"></span><span class="tape bl"></span>
+      <img src="../../public/img/reports/citi/robby/r59.jpg" alt="Outside MSG">
+      <span class="tag">Outside</span>
+    </div>
+
+    <!-- COME IN ON TRANSIT headline bottom-left -->
+    <div class="pc head" style="top:1200px;left:44px;font-size:66px;z-index:7">
+      <span class="hi">COME IN</span><br><span class="out">ON</span> <span class="hi">TRANSIT</span>
+    </div>
+
+    <!-- transit callout + arrow to arrive tile -->
+    <div class="pc callout" style="top:1030px;right:400px;z-index:7;max-width:240px">
+      <span class="kick">Getting in</span>
+      <p>Walk, subway, LIRR, or NJ Transit. Driving is my last choice. Come in the 100-level gates — shorter merch line.</p>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+    </div>
+    <div class="arrow" style="top:1080px;right:340px">
+      <svg width="90" height="60"><path d="M6,30 C36,26 60,26 82,30" fill="none" stroke="#141410" stroke-width="3"/>
+        <path d="M82,30 l-16,-6 M82,30 l-16,6" fill="none" stroke="#141410" stroke-width="3"/></svg>
+    </div>
+
+    <!-- little insider sticky note -->
+    <div class="pc" style="top:1210px;right:70px;transform:rotate(-4deg);z-index:7;background:var(--brand);
+      border:2px solid var(--ink);border-radius:4px;padding:10px 12px;max-width:210px;box-shadow:var(--punch)">
+      <div style="font-family:var(--display);font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);margin-bottom:3px">Heads up</div>
+      <p style="margin:0;font-size:12.5px;line-height:1.4;font-weight:700;color:#1c1c14">Alcohol is very expensive inside MSG. Budget for it.</p>
+    </div>
+
+    <!-- verified footer strip -->
+    <div class="footstrip">
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+      <div class="verdict">Best crowd in the NBA. <span>Come in on transit, sit center-200s, eat the steak, stand up.</span></div>
+      <div class="fscore"><span class="score" style="font-size:24px;padding:5px 14px">9.2</span></div>
+    </div>
+
+  </div>
+</div>
+
+</body></html>

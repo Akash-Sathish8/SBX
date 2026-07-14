@@ -1,0 +1,228 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03c · Illustrated Cards — Digest Rows (Crowd) — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;margin:4px 0 4px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5}
+  .stage{background:#f7f6f2;padding:42px 0 60px}
+
+  /* social proof strip */
+  .proof{display:flex;align-items:center;gap:13px;margin-top:16px;flex-wrap:wrap}
+  .stack{display:flex;padding-left:9px}
+  .stack .ini,.stack .av{width:32px;height:32px;margin-left:-9px;border:2px solid #f7f6f2;
+    box-shadow:0 0 0 1.5px var(--ink);border-radius:50%;object-fit:cover;background:var(--ink);
+    display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;position:relative}
+  .proof .txt{font-size:13.5px;font-weight:600;color:#4a4b44}
+  .proof .txt b{font-family:var(--display);font-weight:400;font-size:17px;color:var(--ink);margin:0 1px}
+
+  /* one card, thin-divided rows */
+  .digest{margin-top:20px;background:var(--cream);border:2px solid var(--ink);border-radius:14px;
+    box-shadow:var(--punch-lg);overflow:hidden}
+  .row{display:grid;grid-template-columns:340px 1fr;gap:26px;padding:22px 26px;border-top:1.5px solid var(--line);align-items:start}
+  .row:first-child{border-top:0}
+
+  /* filmstrip — 2x2 grid with a +N overflow tile + contributor caption */
+  .strip{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .strip .photo{aspect-ratio:4/3;border-width:2px;border-radius:8px;box-shadow:var(--punch)}
+  .strip .photo .tag{left:5px;bottom:5px;font-size:8px;padding:2px 5px}
+  .strip .photo .pcred{position:absolute;top:5px;left:5px;z-index:2}
+  .strip .photo .pcred .credit{padding:2px 7px 2px 2px;font-size:8.5px}
+  .strip .photo .pcred .credit .ini,.strip .photo .pcred .credit .av{width:15px;height:15px;font-size:6.5px}
+  .moretile{aspect-ratio:4/3;border:2px solid var(--ink);border-radius:8px;background:var(--ink);color:var(--brand);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--punch);cursor:pointer}
+  .moretile b{font-family:var(--display);font-size:22px;line-height:1}
+  .moretile span{font-size:8px;font-weight:800;letter-spacing:.8px;text-transform:uppercase}
+  .stripcap{grid-column:1/-1;font-size:11px;font-weight:700;color:var(--muted);margin-top:1px;display:flex;align-items:center;gap:6px}
+
+  /* text side */
+  .rt .head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .rt .lab{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:1;letter-spacing:.5px;color:var(--ink);font-size:26px}
+  .rt .cnt{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .sortpill{margin-left:auto;display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);border-radius:999px;
+    padding:4px 11px;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#6b6b6b;background:#fff}
+
+  /* per-tip row: avatar + author meta + body + thumbnail + vote */
+  .tline{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px dashed #ece9dd}
+  .tline:first-of-type{border-top:0}
+  .tline.more{display:none}
+  .rt.expanded .tline.more{display:flex}
+  .tline .av{width:27px;height:27px;border-radius:50%;border:1.5px solid var(--ink);object-fit:cover;background:var(--ink);flex:none;margin-top:1px}
+  .tline .ini{width:27px;height:27px;border-radius:50%;border:1.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800;color:#fff;flex:none;margin-top:1px}
+  .tmain{flex:1;min-width:0}
+  .tmeta{display:flex;align-items:center;gap:6px;margin-bottom:1px;flex-wrap:wrap}
+  .tmeta .pin{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);border:1px solid #e7dca0;background:var(--tip);border-radius:4px;padding:1px 5px}
+  .tbody{font-size:13.5px;line-height:1.45;color:#2a2a2a;font-weight:500}
+  .tbody b{font-weight:800;color:var(--ink)}
+  /* a small thumbnail of the fan's own photo, bound to their tip */
+  .tthumb{flex:none;width:54px;height:54px;border:2px solid var(--ink);border-radius:7px;overflow:hidden;
+    box-shadow:2px 2px 0 0 var(--ink);position:relative;margin-top:2px}
+  .tthumb img{width:100%;height:100%;object-fit:cover}
+  .tline .vote{flex:none;margin-top:2px;transform:scale(.9);transform-origin:right top}
+
+  .showmore{margin-top:7px;background:none;border:0;cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:800;
+    letter-spacing:.4px;text-transform:uppercase;color:var(--gold);padding:5px 0;display:inline-flex;align-items:center;gap:6px}
+  .rt.expanded .showmore{display:none}
+
+  /* reviews block */
+  .reviews{margin-top:22px;background:var(--cream);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch-lg);overflow:hidden}
+  .rhead{display:flex;align-items:center;gap:10px;background:var(--brand);border-bottom:2px solid var(--ink);padding:12px 20px}
+  .rhead .t{font-family:var(--display);font-size:19px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink)}
+  .rhead .c{margin-left:auto;background:var(--ink);color:#fff;border-radius:11px;padding:3px 11px;font-size:12px;font-weight:800}
+  .rvrow{display:grid;grid-template-columns:1fr 128px;gap:18px;padding:15px 20px;border-top:1px dashed #ece9dd;align-items:center}
+  .rvrow:first-of-type{border-top:0}
+  .rvhead{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+  .rvhead .av{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ink);object-fit:cover;background:var(--ink);flex:none}
+  .rvhead .ini{width:26px;height:26px;font-size:9.5px}
+  .rvbody{font-size:13.5px;line-height:1.45;color:#2a2a2a;font-weight:500}
+  .rvphotos{display:flex;gap:8px}
+  .rvphoto{flex:1;aspect-ratio:4/3;border:2px solid var(--ink);border-radius:8px;overflow:hidden;box-shadow:var(--punch);position:relative}
+  .rvphoto img{width:100%;height:100%;object-fit:cover}
+  .rvphoto .tag{position:absolute;left:4px;bottom:4px;font-size:7.5px;padding:1px 4px}
+  .readall{display:block;text-align:center;padding:13px;background:#fff;border-top:2px solid var(--ink);
+    font-size:13px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--ink)}
+
+  @media(max-width:760px){.row{grid-template-columns:1fr;gap:16px;padding:20px}.rvrow{grid-template-columns:1fr}.rvphotos{max-width:260px}}
+</style></head>
+<body>
+
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 03c — Digest Rows · AT SCALE</span>
+  <span style="color:#fff;text-transform:none;letter-spacing:.3px">Per-section rows from ~14 fans · filmstrip of credited fan photos left, vote-sorted authored tips (with thumbnails) right, overflow</span>
+</div>
+
+<header class="top"><div class="wrap">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home">Home of New York Knicks · <b style="color:var(--brand)">Snapback 9.2</b> (#3) · Fan 8.7 (214)</div>
+</div></header>
+
+<section class="stage"><div class="wrap">
+  <div class="shead-row">
+    <div><div class="eyebrow"><span class="dot"></span> Snapback · crowdsourced</div>
+      <h2 class="shead" style="margin-top:8px">What do I need to know?</h2></div>
+    <div style="display:flex;gap:10px"><span class="pill-brand">Build your guide →</span><span class="pill-dark">+ Add a tip</span></div>
+  </div>
+  <div class="ssub" style="margin-top:10px">Insider tips &amp; photos from fans who've actually been to Madison Square Garden</div>
+
+  <div class="proof" id="proof"></div>
+
+  <div class="digest" id="digest"></div>
+
+  <div class="reviews" id="reviews"></div>
+</div></section>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  const C = window.CROWD;
+  const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+  const stackAv = id => {
+    const f = C.fans[id];
+    return f.verified
+      ? `<img class="av" src="${f.avatar}" alt="${esc(f.name)}">`
+      : `<span class="ini" style="background:${f.color}">${f.ini}</span>`;
+  };
+
+  // ---- social proof strip ----
+  const allFans = Object.keys(C.fans);
+  document.getElementById('proof').innerHTML =
+    `<div class="stack">${allFans.slice(0,8).map(stackAv).join('')}</div>
+     <span class="txt"><b>${C.venue.fans}</b> fans contributed · <b>${C.venue.tips}</b> tips · <b>${C.venue.reviews}</b> reviews · updated <b>2d</b> ago</span>`;
+
+  // ---- digest rows ----
+  const sortTips = tips => tips.slice().sort((a,b)=>{
+    if (a.pinned && !b.pinned) return -1;
+    if (b.pinned && !a.pinned) return 1;
+    return b.up - a.up;
+  });
+
+  function tline(t, isMore){
+    const f = C.fans[t.by];
+    const pin = t.pinned ? `<span class="pin">Pinned</span>` : '';
+    const ago = t.pinned ? '' : `<span class="ago">${esc(t.ago)} ago</span>`;
+    const thumb = t.photo
+      ? `<div class="tthumb"><img src="${t.photo.src}" alt=""></div>`
+      : '';
+    return `<div class="tline${isMore?' more':''}">
+      ${C.avatar(t.by)}
+      <div class="tmain">
+        <div class="tmeta"><span class="nm">${esc(f.name)}</span>${f.verified?'<span class="vf">✓</span>':''}${pin}${ago}</div>
+        <div class="tbody">${esc(t.text)}</div>
+      </div>
+      ${thumb}
+      ${C.votePill(t.up)}
+    </div>`;
+  }
+
+  const rows = C.sections.map(sec => {
+    const tips = sortTips(C.tipsFor(sec.key));
+    const photos = C.photosFor(sec.key); // {src,area,by}
+    const photoFans = [...new Set(photos.map(p=>p.by))];
+    const authors = [...new Set(tips.map(t=>t.by))];
+
+    // filmstrip: up to 3 credited photos + a +N overflow tile
+    const showPhotos = photos.slice(0, 3);
+    const extra = photos.length - showPhotos.length;
+    const cells = showPhotos.map(p =>
+      `<div class="photo"><img src="${p.src}" alt=""><span class="pcred">${C.credit(p.by)}</span><span class="tag">${esc(p.area)}</span></div>`
+    ).join('');
+    const moreTile = extra > 0
+      ? `<div class="moretile"><b>+${extra}</b><span>${esc(sec.label)}</span></div>`
+      : '';
+    const cap = photos.length
+      ? `<div class="stripcap">📷 ${photos.length} photo${photos.length>1?'s':''} from ${photoFans.length} fan${photoFans.length>1?'s':''}</div>`
+      : `<div class="stripcap">No photos yet — be the first</div>`;
+
+    // tips: first 4 visible, rest behind "show more"
+    const visible = tips.slice(0, 4);
+    const hidden = tips.slice(4);
+    const tipHtml = visible.map(t=>tline(t,false)).join('') + hidden.map(t=>tline(t,true)).join('');
+    const showMore = hidden.length
+      ? `<button class="showmore">Show ${hidden.length} more tip${hidden.length>1?'s':''} ▾</button>`
+      : '';
+
+    return `<div class="row">
+      <div class="strip">${cells}${moreTile}${cap}</div>
+      <div class="rt">
+        <div class="head"><span class="lab">${esc(sec.label)}</span><span class="cnt">${tips.length} tips · ${authors.length} fans</span><span class="sortpill">Top ▾</span></div>
+        ${tipHtml}
+        ${showMore}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('digest').innerHTML = rows;
+
+  // ---- fan reviews block ----
+  const reviews = C.reviews.slice().sort((a,b)=>b.up-a.up);
+  const rvRows = reviews.slice(0, 4).map(r => {
+    const f = C.fans[r.by];
+    const photos = (r.photos||[]).slice(0,2).map(p =>
+      `<div class="rvphoto"><img src="${p.src}" alt=""><span class="tag">${esc(p.area)}</span></div>`
+    ).join('');
+    return `<div class="rvrow">
+      <div>
+        <div class="rvhead">${C.avatar(r.by)}<span class="nm" style="font-size:12.5px">${esc(f.name)}</span>${f.verified?'<span class="vf">✓</span>':''}<span class="rate">${r.rating}/10</span><span class="ago">${esc(r.ago)} ago</span>${C.votePill(r.up)}</div>
+        <div class="rvbody">${esc(r.body)}</div>
+      </div>
+      <div class="rvphotos">${photos}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('reviews').innerHTML =
+    `<div class="rhead"><span class="t">Fan Reviews</span><span class="c">${C.venue.reviews}</span>
+       <span style="font-size:12px;font-weight:700;color:#5a5a52;margin-left:8px">avg ${C.venue.fan} / 10</span></div>
+     ${rvRows}
+     <a class="readall" href="#">Read all ${C.venue.reviews} reviews →</a>`;
+
+  // "Show N more tips" — reveal hidden vote-sorted overflow for a section
+  document.querySelectorAll('.showmore').forEach(btn=>{
+    btn.addEventListener('click',()=>btn.closest('.rt').classList.add('expanded'));
+  });
+})();
+</script>
+</body></html>

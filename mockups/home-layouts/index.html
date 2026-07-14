@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home layouts — Snapback mockups</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 30px 24px 90px; }
+  .masthead { border: 3px solid var(--ink); background: var(--cream); border-radius: 14px; box-shadow: var(--punch-lg); padding: 22px 24px; margin-bottom: 30px; }
+  .masthead h1 { font-family: var(--display); font-size: clamp(28px,4vw,44px); text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px; }
+  .masthead p { margin: 0; color: #3a3a34; font-weight: 500; font-size: 15px; line-height: 1.5; max-width: 80ch; }
+  .concept { margin: 46px 0; }
+  .concept h2 { font-family: var(--display); font-size: 26px; text-transform: uppercase; letter-spacing: .6px; margin: 0 0 4px; }
+  .concept .blurb { color: var(--muted); font-weight: 600; font-size: 14.5px; margin: 0 0 16px; max-width: 84ch; }
+  .concept .open { display: inline-flex; align-items: center; gap: 6px; font: 800 12px var(--sans); letter-spacing: .5px; text-transform: uppercase; border-bottom: 2px solid var(--brand); margin-bottom: 14px; }
+  .views { display: flex; gap: 22px; align-items: flex-start; flex-wrap: wrap; }
+  .vw { }
+  .vl { display: block; font: 800 11px var(--sans); letter-spacing: 1.2px; text-transform: uppercase; color: #9a9a8e; margin-bottom: 8px; }
+  iframe { border: 3px solid var(--ink); border-radius: 12px; box-shadow: var(--punch-lg); background: var(--paper); }
+  .desk { width: 100%; min-width: 300px; height: 640px; }
+  .deskwrap { flex: 1 1 620px; }
+  .mob { width: 390px; height: 720px; }
+  @media (max-width: 720px) { .mob { width: 340px; height: 640px; } }
+</style></head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <h1>Home — completely new layouts</h1>
+    <p>Five different homepage structures (not the same block-grid recoloured). Each renders the real
+      entry points + sample content, in a live desktop frame and a ~390px phone frame. Every layout
+      keeps the colour-coded, non-truncated explore entries. Throwaway mockups — pick a direction (or
+      a blend), then it gets built into <code>src/routes/index.tsx</code>.</p>
+  </div>
+  <div id="gallery"></div>
+</div>
+<script>
+  const CONCEPTS = [
+    { file: '1-split.html', name: '1 · Split hero', blurb: 'Above-the-fold split: brand + big headline + search + primary "Rank a game" and colour-dot explore chips on the left; a live "tonight" slate panel over a photo on the right. Two jobs, side by side.' },
+    { file: '2-bento.html', name: '2 · Bento dashboard', blurb: 'An app-style control panel: a big yellow "Rank a game" tile, a "Top ranked in America" list tile, colour-filled destination tiles, and a photo band — asymmetric bento sizing signals what matters.' },
+    { file: '3-feed.html', name: '3 · Editorial feed', blurb: 'A slim photo hero (headline + search), then scroll into content: tonight\'s slate as game cards, the six explore doors as a clean row, and a featured "Top ranked" spread. A sports-media homepage.' },
+    { file: '4-search.html', name: '4 · Search-first minimal', blurb: 'The search bar IS the hero — a giant centred headline + oversized search, with the six destinations as colour-dot pills beneath and a thin trending strip. Maximum focus, minimum chrome.' },
+    { file: '5-sidebar.html', name: '5 · Sidebar app', blurb: 'A web-app shell: a left colour-coded nav rail (the six destinations as a stacked menu) + a main area with a featured experience card, tonight\'s games, and the rankings. Collapses to a top rail on mobile.' },
+  ];
+  document.getElementById('gallery').innerHTML = CONCEPTS.map(c => `
+    <section class="concept">
+      <h2>${c.name}</h2>
+      <p class="blurb">${c.blurb}</p>
+      <a class="open" href="${c.file}" target="_blank">Open full page →</a>
+      <div class="views">
+        <div class="vw deskwrap"><span class="vl">Desktop</span><iframe class="desk" src="${c.file}" loading="lazy" title="${c.name} desktop"></iframe></div>
+        <div class="vw"><span class="vl">Mobile · 390px</span><iframe class="mob" src="${c.file}" loading="lazy" title="${c.name} mobile"></iframe></div>
+      </div>
+    </section>`).join('');
+</script>
+</body></html>

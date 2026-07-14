@@ -2,7 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { SearchIcon, MapPinIcon, CalendarDaysIcon, TrophyIcon } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 import { getJSON } from '../lib/dataCache'
+import { FanScorePill, useFanScores } from './FanScore'
 import { SPORTS, type League } from '../lib/sports'
 
 // The explore search box — live grouped suggestions from /api/search (teams,
@@ -25,6 +27,7 @@ interface Item {
   sub: string
   to: string
   search: Record<string, unknown>
+  venueId?: string // venue hits carry their id so the row can show a fan score
 }
 
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -49,7 +52,7 @@ function toItems(d: SearchData): Item[] {
     icon: <MapPinIcon className={lic} />,
     title: v.name,
     sub: [[v.city, v.state].filter(Boolean).join(', '), v.teams[0] ? `home of the ${v.teams[0].displayName}` : ''].filter(Boolean).join(' · '),
-    to: '/venue', search: { id: v.id },
+    to: '/venue', search: { id: v.id }, venueId: v.id,
   })
   for (const g of d.games) items.push({
     key: `g:${g.league}:${g.id}`, group: 'Games',
@@ -68,8 +71,10 @@ function toItems(d: SearchData): Item[] {
   return items
 }
 
-export function SearchBox({ placeholder = 'Search any team, venue, game or city…', autoFocus = false }: { placeholder?: string; autoFocus?: boolean }) {
+export function SearchBox({ placeholder = 'Search any team, venue, game or city…', autoFocus = false, size = 'md' }: { placeholder?: string; autoFocus?: boolean; size?: 'md' | 'lg' }) {
+  const big = size === 'lg'
   const navigate = useNavigate()
+  const fanScores = useFanScores()
   const wrapRef = useRef<HTMLDivElement>(null)
   const seqRef = useRef(0)
   const [q, setQ] = useState('')
@@ -125,9 +130,13 @@ export function SearchBox({ placeholder = 'Search any team, venue, game or city�
   let flat = -1
 
   return (
-    <div className="sbx-search relative max-w-[640px]" ref={wrapRef}>
-      <div className={'flex items-center gap-[10px] border-[3px] border-[#222222] bg-white px-[15px] py-[13px] shadow-[5px_5px_0_0_#222222] ' + (showSugg && groups.length ? 'rounded-[10px_10px_0_0]' : 'rounded-[10px]')}>
-        <SearchIcon className="h-[18px] w-[18px] flex-none text-[#141410] opacity-65" />
+    <div className="sbx-search relative max-w-[640px] text-left" ref={wrapRef}>
+      <div className={cn('flex items-center border-[3px] border-[#222222] bg-white',
+        big ? 'gap-3.5 px-[26px] py-[22px] shadow-[8px_8px_0_0_#222222]' : 'gap-[10px] px-[15px] py-[13px] shadow-[5px_5px_0_0_#222222]',
+        showSugg && groups.length
+          ? (big ? 'rounded-[16px_16px_0_0]' : 'rounded-[10px_10px_0_0]')
+          : (big ? 'rounded-[16px]' : 'rounded-[10px]'))}>
+        <SearchIcon className={cn('flex-none text-[#141410] opacity-65', big ? 'h-[26px] w-[26px]' : 'h-[18px] w-[18px]')} />
         <Input
           type="search"
           value={q}
@@ -135,14 +144,14 @@ export function SearchBox({ placeholder = 'Search any team, venue, game or city�
           autoComplete="off"
           autoFocus={autoFocus}
           aria-label="Search"
-          className="h-auto w-full border-0 bg-transparent p-0 text-[16px] font-semibold text-[#141410] shadow-none placeholder:font-medium placeholder:text-[#9a9a9a] focus-visible:ring-0 md:text-[16px]"
+          className={cn('h-auto w-full border-0 bg-transparent p-0 font-semibold text-[#141410] shadow-none placeholder:font-medium placeholder:text-[#9a9a9a] focus-visible:ring-0', big ? 'text-[21px] md:text-[21px]' : 'text-[16px] md:text-[16px]')}
           onChange={(e) => { setQ(e.target.value); setOpen(true) }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
         />
       </div>
       {showSugg ? (
-        <div className="absolute top-full right-0 left-0 z-[60] max-h-[400px] overflow-y-auto rounded-[0_0_10px_10px] border-[3px] border-t-0 border-[#222222] bg-white shadow-[5px_8px_0_0_#222222]" role="listbox">
+        <div className={cn('absolute top-full right-0 left-0 z-[60] max-h-[400px] overflow-y-auto border-[3px] border-t-0 border-[#222222] bg-white shadow-[5px_8px_0_0_#222222]', big ? 'rounded-[0_0_16px_16px]' : 'rounded-[0_0_10px_10px]')} role="listbox">
           {groups.length ? groups.map(({ g, rows }) => (
             <div key={g}>
               <div className="border-t border-[#eeede6] bg-[#fbf7dd] px-[15px] py-[6px] text-[10px] font-extrabold uppercase tracking-[1px] text-[#8a8a00]">{g}</div>
@@ -162,7 +171,8 @@ export function SearchBox({ placeholder = 'Search any team, venue, game or city�
                       <span className="overflow-hidden text-[13.5px] font-extrabold leading-[1.2] text-ellipsis whitespace-nowrap text-[#141410]">{it.title}</span>
                       <span className="mt-[1px] overflow-hidden text-[11.5px] font-semibold text-ellipsis whitespace-nowrap text-[#76766c]">{it.sub}</span>
                     </span>
-                    <span className="ml-auto flex-[0_0_auto] font-display text-[15px] text-[#111]">→</span>
+                    {it.venueId ? <FanScorePill stat={fanScores?.[it.venueId]} className="ml-auto flex-none" /> : null}
+                    <span className={cn('flex-[0_0_auto] font-display text-[15px] text-[#111]', it.venueId ? 'ml-[10px]' : 'ml-auto')}>→</span>
                   </Link>
                 )
               })}

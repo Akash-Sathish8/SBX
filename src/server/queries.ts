@@ -280,6 +280,7 @@ export interface UserRanking {
   homeLogo?: string
   date: string
   venue: string
+  venueId?: string
   city?: string
   fans: number
   food: number
@@ -288,6 +289,11 @@ export interface UserRanking {
   score: number
   ts: number
 }
+
+// Server-verified composite: the fan score is always the mean of the four pillars,
+// rounded to 1 decimal — never trust the client-sent `score`.
+const rankScore = (r: { fans: number; food: number; unique: number; stadium: number }) =>
+  Math.round(((r.fans + r.food + r.unique + r.stadium) / 4) * 10) / 10
 
 function toUserRanking(r: typeof userRankings.$inferSelect): UserRanking {
   return {
@@ -299,6 +305,7 @@ function toUserRanking(r: typeof userRankings.$inferSelect): UserRanking {
     homeLogo: r.homeLogo ?? undefined,
     date: r.date,
     venue: r.venue,
+    venueId: r.venueId ?? undefined,
     city: r.city ?? undefined,
     fans: Number(r.fans),
     food: Number(r.food),
@@ -324,23 +331,24 @@ export async function dbGetUserRankings(userId: string, order: 'score' | 'recent
 export async function dbUpsertUserRankings(userId: string, ranks: UserRanking[]): Promise<void> {
   if (!ranks.length) return
   const now = new Date().toISOString()
-  const stmts = ranks.map((r) =>
-    db()
+  const stmts = ranks.map((r) => {
+    const score = rankScore(r) // ignore client score; recompute from the pillars
+    return db()
       .insert(userRankings)
       .values({
         userId, gameId: r.gameId, league: r.league, away: r.away, home: r.home,
-        awayLogo: r.awayLogo ?? null, homeLogo: r.homeLogo ?? null, date: r.date, venue: r.venue, city: r.city ?? null,
-        fans: r.fans, food: r.food, unique_: r.unique, stadium: r.stadium, score: r.score, ts: r.ts, createdAt: now, updatedAt: now,
+        awayLogo: r.awayLogo ?? null, homeLogo: r.homeLogo ?? null, date: r.date, venue: r.venue, venueId: r.venueId ?? null, city: r.city ?? null,
+        fans: r.fans, food: r.food, unique_: r.unique, stadium: r.stadium, score, ts: r.ts, createdAt: now, updatedAt: now,
       })
       .onConflictDoUpdate({
         target: [userRankings.userId, userRankings.gameId],
         set: {
           league: r.league, away: r.away, home: r.home, awayLogo: r.awayLogo ?? null, homeLogo: r.homeLogo ?? null,
-          date: r.date, venue: r.venue, city: r.city ?? null, fans: r.fans, food: r.food, unique_: r.unique,
-          stadium: r.stadium, score: r.score, ts: r.ts, updatedAt: now,
+          date: r.date, venue: r.venue, venueId: r.venueId ?? null, city: r.city ?? null, fans: r.fans, food: r.food, unique_: r.unique,
+          stadium: r.stadium, score, ts: r.ts, updatedAt: now,
         },
-      }),
-  )
+      })
+  })
   await db().batch(stmts as [(typeof stmts)[number], ...(typeof stmts)[number][]])
 }
 
@@ -393,7 +401,18 @@ export async function dbUpdateProfile(userId: string, f: { displayName?: string 
 // game at that venue (user_rankings stores the venue name on each row, so no game
 // join is needed). Real, cross-user data — `count` is 0 until fans rank here. ----
 export interface VenueFanStats { count: number; fans: number; food: number; unique: number; stadium: number; score: number }
-export async function dbVenueFanStats(venue: string): Promise<VenueFanStats> {
+const r1 = (n: number | string | null | undefined) => Math.round(Number(n ?? 0) * 10) / 10
+
+// Aggregate a venue's fan ratings. New rows are keyed by `venue_id`; legacy rows
+// only carry the venue name, so match on either (pass both the id and the venue's
+// canonical name). Either may be omitted.
+export async function dbVenueFanStats(opts: { venueId?: string; name?: string }): Promise<VenueFanStats> {
+  const conds = [
+    opts.venueId ? eq(userRankings.venueId, opts.venueId) : undefined,
+    opts.name ? eq(userRankings.venue, opts.name) : undefined,
+  ].filter(Boolean) as SQL[]
+  const empty: VenueFanStats = { count: 0, fans: 0, food: 0, unique: 0, stadium: 0, score: 0 }
+  if (!conds.length) return empty
   const rows = await db()
     .select({
       n: count(),
@@ -404,13 +423,31 @@ export async function dbVenueFanStats(venue: string): Promise<VenueFanStats> {
       score: avg(userRankings.score),
     })
     .from(userRankings)
-    .where(eq(userRankings.venue, venue))
+    .where(conds.length === 1 ? conds[0] : or(...conds))
   const row = rows[0]
-  const r1 = (n: number | string | null | undefined) => Math.round(Number(n ?? 0) * 10) / 10
   return {
     count: Number(row?.n ?? 0),
     fans: r1(row?.fans), food: r1(row?.food), unique: r1(row?.uniq), stadium: r1(row?.stadium), score: r1(row?.score),
   }
+}
+
+// Every venue's fan score in one query — for listing cards (avoids an N+1 of
+// per-venue calls). Folds legacy name-only rows onto their venue id via a name
+// join, so a venue's ratings unify under its id regardless of how they were keyed.
+export type FanScoreMap = Record<string, { score: number; count: number }>
+export async function dbAllVenueFanStats(): Promise<FanScoreMap> {
+  const vidExpr = sql<string | null>`coalesce(${userRankings.venueId}, ${venues.id})`
+  const rows = await db()
+    .select({ vid: sql<string | null>`${vidExpr}`.as('vid'), n: count(), score: avg(userRankings.score) })
+    .from(userRankings)
+    .leftJoin(venues, eq(venues.name, userRankings.venue))
+    .groupBy(vidExpr)
+  const out: FanScoreMap = {}
+  for (const r of rows) {
+    if (!r.vid) continue // no id and no name-match — can't attach to a venue card
+    out[String(r.vid)] = { score: r1(r.score), count: Number(r.n ?? 0) }
+  }
+  return out
 }
 
 // The official Snapback account. Tips authored by this user id are editorial,

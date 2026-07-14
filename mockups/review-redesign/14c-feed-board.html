@@ -1,0 +1,235 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>14c · Feed — Category Board — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  html{scroll-behavior:smooth}
+
+  /* ---- header ---- */
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top .row{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .top h1{font-family:var(--display);font-size:clamp(30px,4.8vw,54px);text-transform:uppercase;letter-spacing:1px;margin:6px 0 0}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5;margin-top:8px}
+  .top .home b{color:#fff}
+  .top .scores{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .top .who{color:#fff;font-size:12px}
+  .top .who .av{border-color:#fff}
+  .sbadge{display:inline-flex;flex-direction:column;gap:2px;background:rgba(255,255,255,.07);
+    border:1.5px solid rgba(255,255,255,.16);border-radius:9px;padding:8px 14px}
+  .sbadge .k{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#a7a79c}
+  .sbadge .v{font-family:var(--display);font-size:24px;line-height:1;color:#fff}
+  .sbadge.brand{background:var(--brand);border-color:var(--brand)}
+  .sbadge.brand .k{color:#5a5300}.sbadge.brand .v{color:var(--ink)}
+  .sbadge .rank{font-size:11px;font-weight:800;color:var(--brand)}
+  .sbadge.brand .rank{color:#5a5300}
+  .contrib{display:flex;align-items:center;gap:11px;margin-top:16px}
+  .contrib .stack{display:flex;padding-left:8px}
+  .contrib .stack .ini,.contrib .stack .av{width:28px;height:28px;margin-left:-8px;border:2px solid var(--ink);
+    box-shadow:0 0 0 1.5px #fff;position:relative;border-radius:50%;object-fit:cover}
+  .contrib .txt{font-size:12.5px;font-weight:600;color:#cfcfc6}
+  .contrib .txt b{font-family:var(--display);font-weight:400;font-size:15px;color:#fff;margin:0 1px}
+
+  /* ---- sticky jump bar ---- */
+  .jump{background:var(--cream);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:30}
+  .jump .in{display:flex;gap:9px;padding:12px 0;overflow-x:auto;align-items:center}
+  .jlabel{flex:none;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-right:2px}
+  .jchip{flex:none;border:1.5px solid var(--ink);background:#fff;cursor:pointer;font-family:var(--sans);
+    font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--ink);
+    padding:7px 14px;border-radius:999px;transition:all .12s ease;white-space:nowrap}
+  .jchip:hover{box-shadow:var(--punch)}
+  .jchip.active{background:var(--brand);box-shadow:var(--punch)}
+  .jchip .c{opacity:.55;margin-left:5px;font-variant-numeric:tabular-nums}
+
+  /* ---- board ---- */
+  .stage{background:#f7f6f2;padding:12px 0 70px}
+  .area{padding:30px 0 6px;scroll-margin-top:70px}
+  .area + .area{border-top:2px dashed #dedbce}
+  .a-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .a-head .l{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .a-head .idx{font-family:var(--display);font-size:22px;color:var(--brand);
+    -webkit-text-stroke:1.5px var(--ink);line-height:1}
+  .a-head h2{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:.9;letter-spacing:.5px;
+    color:var(--ink-soft);font-size:clamp(26px,3.6vw,40px);margin:0}
+  .a-head .cnt{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .a-head .ssub{max-width:44ch}
+
+  /* per-category masonry via CSS columns */
+  .col{columns:3 250px;column-gap:16px}
+  .item{break-inside:avoid;margin:0 0 16px}
+
+  /* photo card — photo + credit chip + the author's quote + vote */
+  .pc{background:var(--cream);border:2px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:var(--punch);
+    transition:transform .12s ease,box-shadow .12s ease}
+  .pc:hover{transform:translate(-2px,-2px);box-shadow:var(--punch-lg)}
+  .pc .photo{border:0;border-radius:0;border-bottom:2px solid var(--ink);position:relative}
+  .pc .photo .tag{left:8px;top:8px;bottom:auto}
+  .pc .photo .credit{position:absolute;left:8px;bottom:8px;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+  .pc .body{padding:11px 12px 12px}
+  .pc .q{font-size:13.5px;line-height:1.4;font-weight:500;color:#2a2a2a}
+  .pc .q b{font-weight:800;color:var(--ink)}
+  .pc .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+  .pc .foot .pin{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);
+    border:1px solid #e7dca0;background:var(--tip);border-radius:4px;padding:1px 5px}
+  .pc .foot .ago{font-size:11px}
+
+  /* tip card (text only) */
+  .tc{background:var(--tip);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--punch);padding:16px 16px 14px;
+    transition:transform .12s ease,box-shadow .12s ease}
+  .tc:hover{transform:translate(-2px,-2px);box-shadow:var(--punch-lg)}
+  .tc.dark{background:var(--ink);color:#fff}
+  .tc .who-row{display:flex;align-items:center;gap:7px;margin-bottom:10px}
+  .tc .who-row .nm{font-size:12px}
+  .tc .qmark{font-family:var(--display);font-size:34px;line-height:.5;color:var(--brand);display:block;height:16px}
+  .tc .q{font-family:var(--display);font-weight:400;font-size:19px;line-height:1.12;letter-spacing:.3px;
+    text-transform:uppercase;color:var(--ink);margin:6px 0 12px}
+  .tc.dark .q{color:#fff}
+  .tc .foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .tc .kv{display:inline-block;background:var(--brand);color:var(--ink);border:1.5px solid var(--ink);
+    border-radius:3px;padding:2px 7px;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+  .tc.dark .vote{border-color:rgba(255,255,255,.25)}
+  .tc.dark .vote button{color:#c9c9bf}.tc.dark .vote .n{color:#fff}
+  .tc.dark .nm{color:#fff}
+  .tc.dark .vf{background:var(--brand);color:var(--ink)}
+
+  @media(max-width:560px){.col{columns:1}.item{margin-bottom:12px}}
+</style></head>
+<body>
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 14c — Feed · Category Board</span>
+  <span style="color:#fff">The wall grouped by area — every photo owned by the fan who posted it; jump to any section</span>
+</div>
+
+<header class="top"><div class="wrap"><div class="row">
+  <div>
+    <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+    <h1>Madison Square Garden</h1>
+    <div class="home">Home of <b>New York Knicks</b></div>
+    <div class="scores">
+      <span class="sbadge brand"><span class="k">Snapback</span><span class="v">9.2</span><span class="rank">#3 in the NBA</span></span>
+      <span class="sbadge"><span class="k">Fan score</span><span class="v">8.7</span><span class="rank" style="color:#a7a79c">214 ratings</span></span>
+    </div>
+    <div class="contrib" id="contrib"></div>
+  </div>
+  <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Curated with Jack Settleman <span class="vf">✓</span></span>
+</div></div></header>
+
+<!-- sticky jump bar -->
+<nav class="jump"><div class="wrap"><div class="in" id="jump">
+  <span class="jlabel">Jump to</span>
+</div></div></nav>
+
+<section class="stage"><div class="wrap" id="board"></div></section>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  const C = window.CROWD;
+  const board = document.getElementById('board');
+  const jump = document.getElementById('jump');
+
+  const SUB = {
+    'best-seats':'Where fans sit — and why the center 200s beat the floor.',
+    'food':'The steak sandwich, the Garden Market bun — and what to skip.',
+    'getting-there':'How the crowd gets to the Garden and through the gates.',
+    'before':'Chase reserve, the Delta Club and the calm pregame options.',
+    'atmosphere':'The best crowd in the NBA, straight from the seats.',
+    'tips':'The little things regulars know before they walk in.',
+  };
+  const SHORTLBL = {
+    'best-seats':'Seats','food':'Food','getting-there':'Getting in',
+    'before':'Before','atmosphere':'Vibe','tips':'Insider'
+  };
+
+  // headline-case a tip into an all-caps display quote for tip cards; trim overly long ones
+  function displayQuote(text){
+    if(text.length<=64) return text;
+    const cut = text.slice(0,60);
+    return cut.slice(0, cut.lastIndexOf(' ')) + '…';
+  }
+
+  function photoCard(t){
+    const pin = t.pinned ? '<span class="pin">Pinned</span>' : `<span class="ago">${t.ago} ago</span>`;
+    return `<div class="item"><div class="pc">` +
+      `<div class="photo"><img src="${t.photo.src}" alt=""><span class="tag">${t.photo.area}</span>${C.credit(t.by)}</div>` +
+      `<div class="body"><div class="q">${t.text}</div>` +
+      `<div class="foot">${t.pinned?'<span class="pin">Pinned</span>':`<span class="ago">${t.ago} ago</span>`}${C.votePill(t.up)}</div>` +
+      `</div></div></div>`;
+  }
+
+  function tipCard(t, dark){
+    return `<div class="item"><div class="tc${dark?' dark':''}">` +
+      `<div class="who-row">${C.avatar(t.by)}${C.nameTag(t.by)}</div>` +
+      `<span class="qmark">“</span>` +
+      `<div class="q">${displayQuote(t.text)}</div>` +
+      `<div class="foot"><span class="kv">${SHORTLBL[t.section]}</span>${C.votePill(t.up)}</div>` +
+      `</div></div>`;
+  }
+
+  // ---- build a section per CROWD.sections
+  C.sections.forEach((s, i) => {
+    const tips = C.tipsFor(s.key).slice().sort((a,b)=>b.up-a.up);
+    if(!tips.length) return;
+    const withPhoto = tips.filter(t=>t.photo);
+    const noPhoto   = tips.filter(t=>!t.photo);
+    const fanCount  = new Set(tips.map(t=>t.by)).size;
+
+    // interleave photo cards with the occasional text tip card (dark for the pinned/first)
+    const cards = [];
+    let ni = 0, darkNext = true;
+    withPhoto.forEach((t, idx) => {
+      cards.push(photoCard(t));
+      // drop a text tip card every ~2 photos to keep the masonry mixed
+      if(idx % 2 === 1 && ni < noPhoto.length){
+        cards.push(tipCard(noPhoto[ni++], darkNext));
+        darkNext = !darkNext;
+      }
+    });
+    while(ni < noPhoto.length){ cards.push(tipCard(noPhoto[ni++], darkNext)); darkNext = !darkNext; }
+
+    const idx = String(i+1).padStart(2,'0');
+    const sec = document.createElement('section');
+    sec.className = 'area';
+    sec.id = s.key;
+    sec.innerHTML =
+      `<div class="a-head"><div class="l">` +
+        `<span class="idx">${idx}</span><h2>${s.label}</h2>` +
+        `<span class="cnt">${tips.length} posts · ${fanCount} fans</span></div>` +
+        `<div class="ssub" style="text-transform:none;font-weight:600">${SUB[s.key]||''}</div></div>` +
+      `<div class="col">${cards.join('')}</div>`;
+    board.appendChild(sec);
+
+    const chip = document.createElement('a');
+    chip.className = 'jchip' + (i===0?' active':'');
+    chip.href = '#' + s.key;
+    chip.dataset.t = s.key;
+    chip.innerHTML = `${s.label} <span class="c">${tips.length}</span>`;
+    jump.appendChild(chip);
+  });
+
+  // ---- contributor stack
+  const order = ['jack','grace','mike','tommy','sarah','danny','rob','carl'];
+  document.getElementById('contrib').innerHTML =
+    `<div class="stack">${order.map(id=>C.avatar(id)).join('')}</div>` +
+    `<span class="txt"><b>${C.venue.fans}</b> fans · <b>${C.venue.tips}</b> tips · <b>${C.venue.reviews}</b> reviews</span>`;
+
+  // ---- jump-chip active sync
+  const chips = [...document.querySelectorAll('.jchip')];
+  const areas = chips.map(c => document.querySelector(c.getAttribute('href')));
+  chips.forEach(c => c.addEventListener('click', () => {
+    chips.forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+  }));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = '#' + e.target.id;
+        chips.forEach(x => x.classList.toggle('active', x.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  areas.forEach(a => a && io.observe(a));
+})();
+</script>
+</body></html>

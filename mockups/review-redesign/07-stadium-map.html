@@ -1,0 +1,256 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07 · Stadium Diagram Map — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:24px 0 20px}
+  .top h1{font-family:var(--display);font-size:clamp(28px,4.6vw,50px);text-transform:uppercase;letter-spacing:1px;margin:5px 0 5px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5}
+  .top .scores{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+  .sc{background:#fff;border-radius:11px;padding:9px 15px;min-width:104px}
+  .sc.snap{border:2px solid var(--brand)}
+  .sc .l{font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#8a8a82;display:flex;gap:6px;align-items:center}
+  .sc .v{font-family:var(--display);font-size:28px;color:#16160f;line-height:1;margin-top:4px}
+  .sc .s{font-size:10.5px;font-weight:600;color:#9a9a92;margin-top:4px}
+
+  .stage{background:#f7f6f2;padding:34px 0 56px}
+  .layout{display:grid;grid-template-columns:1fr 400px;gap:26px;margin-top:24px;align-items:start}
+
+  /* ---- the diagram ---- */
+  .diagram{position:relative;background:var(--cream);border:2px solid var(--ink);border-radius:16px;
+    box-shadow:var(--punch-lg);padding:22px;overflow:hidden}
+  .diagram .grain{position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,16,.05) 1px,transparent 1px);
+    background-size:15px 15px;pointer-events:none;opacity:.6}
+  .bowlbox{position:relative;width:100%;aspect-ratio:1/.9;max-width:620px;margin:0 auto}
+  .compass{position:absolute;top:0;right:2px;font-family:var(--display);font-size:13px;color:var(--muted);letter-spacing:1px}
+  svg .ring{fill:none;stroke:var(--ink);stroke-width:2}
+  svg .ringfill-100{fill:#faf7e8}
+  svg .ringfill-200{fill:#fffdf6}
+  svg .ringfill-300{fill:#f4f4f1}
+  svg .ringfill-400{fill:#ecebe4}
+  svg .concourse{fill:#eceae0;stroke:var(--ink);stroke-width:2}
+  svg .court{fill:var(--brand);stroke:var(--ink);stroke-width:2.5}
+  svg .courtline{stroke:var(--ink);stroke-width:1.5;fill:none;opacity:.55}
+  svg .rlabel{font-family:'Barlow',sans-serif;font-weight:800;font-size:11px;fill:var(--muted-2);letter-spacing:1px;text-transform:uppercase}
+  svg .courttext{font-family:'Anton',sans-serif;font-size:15px;fill:var(--ink);letter-spacing:1px}
+
+  /* pins */
+  .pin{position:absolute;transform:translate(-50%,-50%);z-index:5;cursor:pointer;
+    width:34px;height:34px;border-radius:50% 50% 50% 2px;background:var(--brand);border:2.5px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:16px;color:var(--ink);
+    box-shadow:var(--punch);transition:transform .15s ease,box-shadow .15s ease;rotate:45deg}
+  .pin span{rotate:-45deg}
+  .pin:hover,.pin.active{transform:translate(-50%,-58%) scale(1.12);box-shadow:5px 5px 0 0 var(--ink);z-index:9}
+  .pin.active{background:var(--ink);color:var(--brand)}
+  .pin::after{content:'';position:absolute;width:9px;height:9px;background:inherit;border-right:2.5px solid var(--ink);
+    border-bottom:2.5px solid var(--ink);bottom:-6px;left:50%;transform:translateX(-50%) rotate(-45deg);z-index:-1;display:none}
+
+  /* hover popover */
+  .pop{position:absolute;transform:translate(-50%,calc(-100% - 20px));z-index:30;width:230px;background:var(--cream);
+    border:2px solid var(--ink);border-radius:11px;box-shadow:var(--punch-lg);overflow:hidden;pointer-events:none;
+    opacity:0;transition:opacity .12s ease}
+  .pop.show{opacity:1}
+  .pop .pimg{position:relative;height:104px;border-bottom:2px solid var(--ink)}
+  .pop .pimg img{width:100%;height:100%;object-fit:cover}
+  .pop .pimg .tag{position:absolute;left:7px;bottom:7px}
+  .pop .pbody{padding:10px 11px 11px}
+  .pop .pttl{font-family:var(--display);font-size:16px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink);line-height:1}
+  .pop .ptip{font-size:12px;line-height:1.4;color:#333;margin-top:6px}
+  .pop::after{content:'';position:absolute;bottom:-9px;left:50%;transform:translateX(-50%) rotate(45deg);
+    width:15px;height:15px;background:var(--cream);border-right:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+
+  /* ---- side panel ---- */
+  .panel{position:sticky;top:16px}
+  .panelcard{background:var(--cream);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch-lg);overflow:hidden}
+  .panelcard .big{position:relative;aspect-ratio:4/3;border-bottom:2px solid var(--ink);background:#eee}
+  .panelcard .big img{width:100%;height:100%;object-fit:cover}
+  .panelcard .big .tag{position:absolute;left:10px;bottom:10px;font-size:11px;padding:3px 9px}
+  .panelcard .big .num{position:absolute;left:10px;top:10px;width:32px;height:32px;border-radius:50% 50% 50% 3px;
+    rotate:45deg;background:var(--brand);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-size:16px;box-shadow:var(--punch)}
+  .panelcard .big .num b{rotate:-45deg}
+  .panelbody{padding:15px 16px 17px}
+  .panelbody .lab{font-family:var(--display);font-size:24px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:1}
+  .panelbody .loc{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-top:5px}
+  .panelbody .who{margin:12px 0 8px}
+  .panelbody .tip{font-size:14px;line-height:1.5;color:#2a2a2a}
+  .panelbody .vote{margin-top:13px}
+
+  /* ---- legend ---- */
+  .legend{margin-top:16px;background:var(--cream);border:2px solid var(--ink);border-radius:14px;box-shadow:var(--punch);padding:6px 4px}
+  .legrow{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:9px;cursor:pointer;transition:background .12s ease}
+  .legrow:hover{background:var(--tip)}
+  .legrow.active{background:var(--tip)}
+  .legrow .ln{flex:none;width:26px;height:26px;border-radius:50% 50% 50% 2px;rotate:45deg;background:var(--brand);
+    border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:13px}
+  .legrow .ln b{rotate:-45deg}
+  .legrow.active .ln{background:var(--ink);color:var(--brand)}
+  .legrow .lt{font-size:13px;line-height:1.2}
+  .legrow .lt b{font-weight:800;color:var(--ink)}
+  .legrow .lt span{display:block;font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:1px}
+
+  .hint{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--muted);margin-top:14px}
+  .hint .k{background:var(--ink);color:#fff;border-radius:5px;padding:2px 7px;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+
+  @media(max-width:900px){
+    .layout{grid-template-columns:1fr}
+    .panel{position:static}
+  }
+</style></head>
+<body>
+<div style="background:var(--ink);color:var(--brand);font-weight:800;font-size:12px;letter-spacing:1px;
+  text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 07 — Stadium Diagram Map</span><span style="color:#fff">The seating bowl is the map — drop a pin on every tip</span></div>
+
+<header class="top"><div class="wrap">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home">Home of New York Knicks</div>
+  <div class="scores">
+    <div class="sc snap"><div class="l">★ Snapback</div><div class="v">9.2</div><div class="s">Expert · #3</div></div>
+    <div class="sc"><div class="l">Fan Score</div><div class="v">8.7</div><div class="s">214 ratings</div></div>
+  </div>
+</div></header>
+
+<section class="stage"><div class="wrap-wide">
+  <div class="shead-row">
+    <div><div class="eyebrow"><span class="dot"></span> Snapback · where in the building</div>
+      <h2 class="shead" style="margin-top:8px">Find it on the map</h2></div>
+    <div style="display:flex;gap:10px"><span class="pill-brand">Build your guide →</span><span class="pill-dark">+ Drop a pin</span></div>
+  </div>
+  <div class="ssub" style="margin-top:9px">Every tip is pinned to the spot in the arena it belongs to — hover a pin to preview, click to open it big.</div>
+
+  <div class="layout">
+    <!-- diagram -->
+    <div class="diagram">
+      <div class="grain"></div>
+      <div class="bowlbox" id="bowl">
+        <div class="compass">N ↑ · 7th Ave side</div>
+        <svg viewBox="0 0 400 360" width="100%" height="100%" aria-label="MSG seating bowl diagram">
+          <!-- concourse ring -->
+          <rect class="concourse" x="12" y="12" width="376" height="336" rx="150"/>
+          <text class="rlabel" x="200" y="30" text-anchor="middle">Concourse</text>
+          <!-- tier rings -->
+          <ellipse class="ring ringfill-400" cx="200" cy="180" rx="168" ry="150"/>
+          <text class="rlabel" x="200" y="53" text-anchor="middle">400 Level</text>
+          <ellipse class="ring ringfill-300" cx="200" cy="180" rx="134" ry="118"/>
+          <text class="rlabel" x="200" y="80" text-anchor="middle">300 Level</text>
+          <ellipse class="ring ringfill-200" cx="200" cy="180" rx="100" ry="86"/>
+          <text class="rlabel" x="200" y="106" text-anchor="middle">200 Level</text>
+          <ellipse class="ring ringfill-100" cx="200" cy="180" rx="66" ry="55"/>
+          <text class="rlabel" x="200" y="132" text-anchor="middle">100 Level</text>
+          <!-- court -->
+          <rect class="court" x="158" y="158" width="84" height="44" rx="4"/>
+          <line class="courtline" x1="200" y1="158" x2="200" y2="202"/>
+          <circle class="courtline" cx="200" cy="180" r="9"/>
+          <text class="courttext" x="200" y="185" text-anchor="middle">COURT</text>
+          <!-- section markers -->
+          <text class="rlabel" x="200" y="215" text-anchor="middle" style="font-size:9px">SEC 107</text>
+        </svg>
+
+        <!-- PINS (positioned as % of bowlbox) -->
+        <div class="pin" data-id="seats"  style="left:50%;top:24%"><span>1</span></div>
+        <div class="pin" data-id="bridge" style="left:80%;top:50%"><span>2</span></div>
+        <div class="pin" data-id="food"   style="left:50%;top:70%"><span>3</span></div>
+        <div class="pin" data-id="gates"  style="left:15%;top:82%"><span>4</span></div>
+        <div class="pin" data-id="chase"  style="left:14%;top:22%"><span>5</span></div>
+        <div class="pin" data-id="delta"  style="left:82%;top:20%"><span>6</span></div>
+
+        <!-- hover popover (single, moved by JS) -->
+        <div class="pop" id="pop">
+          <div class="pimg"><img id="popimg" src="" alt=""><span class="tag" id="poptag"></span></div>
+          <div class="pbody"><div class="pttl" id="popttl"></div><div class="ptip" id="poptip"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- side panel -->
+    <div class="panel">
+      <div class="panelcard">
+        <div class="big"><img id="bigimg" src="../../public/img/reports/citi/robby/r10.jpg" alt="">
+          <span class="num" id="bignum"><b>1</b></span>
+          <span class="tag" id="bigtag">100 / 200 Level</span></div>
+        <div class="panelbody">
+          <div class="lab" id="biglab">Best Seats</div>
+          <div class="loc" id="bigloc">Center 200s · Lower bowl</div>
+          <div class="who"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+          <div class="tip" id="bigtip">Front rows in the 200s in the center sections beat behind the basket, even down low.</div>
+          <div class="vote"><span class="vote"><button>▲</button><span class="n">41</span><button>▼</button></span></div>
+        </div>
+      </div>
+
+      <div class="legend" id="legend"></div>
+
+      <div class="hint"><span class="k">Tip</span> Hover a pin to preview · click to load it here</div>
+    </div>
+  </div>
+</div></section>
+
+<script>
+const P='../../public/img/reports/citi/robby/';
+const SPOTS={
+  seats:{n:1,lab:'Best Seats',loc:'Center 200s · Lower bowl',tag:'100 / 200 Level',img:P+'r10.jpg',
+    tip:'Front rows in the 200s in the center sections beat behind the basket, even down low.',votes:41},
+  bridge:{n:2,lab:'Hyundai Bridge',loc:'Upper corner · Best value',tag:'300 Level',img:P+'r40.jpg',
+    tip:'The Chase Bridge and the Hyundai Bridge are both cool spots — the Hyundai Bridge is good value.',votes:33},
+  food:{n:3,lab:'Steak Sandwich',loc:'Concourse · outside Sec 107',tag:'Steak Sandwich',img:P+'r25.jpg',
+    tip:'Best food in MSG is the steak sandwich outside section 107. The Garden Market burgers are the best basic food in sports — skip the pizza.',votes:57},
+  gates:{n:4,lab:'100-Level Gates',loc:'Ground entrance · 7th Ave',tag:'Gates',img:P+'r20.jpg',
+    tip:'Get in through the 100 level gates — the merch store there has a way shorter line than the one in the MSG lobby.',votes:38},
+  chase:{n:5,lab:'Chase Lounge',loc:'Reserve lounge · inside',tag:'Chase Lounge',img:P+'r44.jpg',
+    tip:'There is a Chase reserve lounge inside the arena. You can reserve a spot pregame.',votes:22},
+  delta:{n:6,lab:'Delta Club',loc:'Club level · all-inclusive',tag:'Delta Club',img:P+'r57.jpg',
+    tip:'The Delta Club comes with all-inclusive food and drink (non-alcoholic). Great if you want to eat without a line.',votes:26},
+};
+const ORDER=['seats','bridge','food','gates','chase','delta'];
+
+const pins=[...document.querySelectorAll('.pin')];
+const pop=document.getElementById('pop');
+const bowl=document.getElementById('bowl');
+
+function fillPop(id){
+  const s=SPOTS[id];
+  document.getElementById('popimg').src=s.img;
+  document.getElementById('poptag').textContent=s.tag;
+  document.getElementById('popttl').textContent=s.lab;
+  document.getElementById('poptip').textContent=s.tip;
+}
+function positionPop(pin){
+  pop.style.left=pin.style.left;
+  pop.style.top=pin.style.top;
+}
+function selectSpot(id){
+  const s=SPOTS[id];
+  document.getElementById('bigimg').src=s.img;
+  document.getElementById('bignum').innerHTML='<b>'+s.n+'</b>';
+  document.getElementById('bigtag').textContent=s.tag;
+  document.getElementById('biglab').textContent=s.lab;
+  document.getElementById('bigloc').textContent=s.loc;
+  document.getElementById('bigtip').textContent=s.tip;
+  document.querySelector('.panelbody .vote .n').textContent=s.votes;
+  pins.forEach(p=>p.classList.toggle('active',p.dataset.id===id));
+  [...document.querySelectorAll('.legrow')].forEach(r=>r.classList.toggle('active',r.dataset.id===id));
+}
+
+pins.forEach(pin=>{
+  const id=pin.dataset.id;
+  pin.addEventListener('mouseenter',()=>{fillPop(id);positionPop(pin);pop.classList.add('show');});
+  pin.addEventListener('mouseleave',()=>pop.classList.remove('show'));
+  pin.addEventListener('click',()=>selectSpot(id));
+});
+
+// legend
+const legend=document.getElementById('legend');
+legend.innerHTML=ORDER.map(id=>{const s=SPOTS[id];
+  return `<div class="legrow" data-id="${id}"><span class="ln"><b>${s.n}</b></span>
+    <span class="lt"><b>${s.lab}</b><span>${s.loc}</span></span></div>`;}).join('');
+[...legend.querySelectorAll('.legrow')].forEach(r=>{
+  r.addEventListener('click',()=>selectSpot(r.dataset.id));
+  r.addEventListener('mouseenter',()=>{const pin=pins.find(p=>p.dataset.id===r.dataset.id);
+    fillPop(r.dataset.id);positionPop(pin);pop.classList.add('show');});
+  r.addEventListener('mouseleave',()=>pop.classList.remove('show'));
+});
+
+selectSpot('seats');
+</script>
+</body></html>

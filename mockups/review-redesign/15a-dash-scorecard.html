@@ -1,0 +1,218 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>15a · Dashboard — Scorecard — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top h1{font-family:var(--display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px;margin:4px 0 4px}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5}
+  .top .home b{color:var(--brand)}
+  .stage{background:#f7f6f2;padding:38px 0 64px}
+
+  /* ---- overall scorecard hero ---- */
+  .card-head{background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:16px 16px 0 0;
+    box-shadow:var(--punch-lg);position:relative;overflow:hidden;
+    display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:30px;padding:28px 32px}
+  .card-head::after{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle,rgba(247,223,2,.16),transparent 70%);pointer-events:none}
+  .sc-mega{display:flex;align-items:flex-start;gap:14px;position:relative;z-index:2}
+  .sc-mega .num{font-family:var(--display);font-size:clamp(78px,13vw,128px);line-height:.78;color:var(--brand);letter-spacing:1px}
+  .sc-mega .side{padding-top:8px}
+  .sc-mega .side .k{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#a9a99d}
+  .sc-mega .side .of{font-family:var(--display);font-size:26px;color:#fff;line-height:1;margin-top:3px}
+  .sc-mega .side .rank{display:inline-flex;align-items:center;gap:6px;background:var(--brand);color:var(--ink);
+    border-radius:999px;padding:5px 12px;font-size:11.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-top:10px}
+  .head-label{position:relative;z-index:2}
+  .head-label .eyebrow{color:var(--brand)}
+  .head-label .eyebrow .dot{background:#fff}
+  .head-label h2{font-family:var(--display);text-transform:uppercase;font-size:clamp(24px,3vw,34px);letter-spacing:.5px;
+    line-height:.95;margin:8px 0 0;color:#fff}
+  .head-fan{position:relative;z-index:2;text-align:right;border-left:1px solid rgba(255,255,255,.14);padding-left:30px}
+  .head-fan .k{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#a9a99d}
+  .head-fan .num{font-family:var(--display);font-size:clamp(40px,6vw,58px);line-height:.85;color:#fff;margin-top:4px}
+  .head-fan .cnt{font-size:12px;font-weight:700;color:#a9a99d;margin-top:4px}
+
+  .head-note{background:var(--tip);border:2px solid var(--ink);border-top:0;border-radius:0;box-shadow:var(--punch-lg);
+    padding:13px 32px;font-size:13px;font-weight:700;color:#5a5a52;letter-spacing:.2px}
+  .head-note b{color:var(--ink)}
+  .head-note .stack{display:inline-flex;padding-left:8px;vertical-align:middle;margin-right:4px}
+  .head-note .stack .ini,.head-note .stack .av{width:22px;height:22px;margin-left:-8px;border:2px solid var(--tip);
+    box-shadow:0 0 0 1.5px var(--ink);position:relative}
+
+  /* ---- evidence rows (one per pillar) ---- */
+  .rows{border:2px solid var(--ink);border-top:0;border-radius:0 0 16px 16px;box-shadow:var(--punch-lg);overflow:hidden;background:var(--cream)}
+  .row-e{display:grid;grid-template-columns:56px minmax(150px,210px) minmax(0,1fr);align-items:start;
+    gap:24px;padding:22px 26px;border-top:2px solid var(--ink);position:relative}
+  .row-e:first-child{border-top:0}
+  .row-e:nth-child(even){background:#fbfaf4}
+
+  .rank-tab{font-family:var(--display);font-size:20px;color:var(--muted-2);line-height:1;text-align:center;
+    border-right:2px dashed #e0ddcf;padding-right:10px;padding-top:4px}
+  .rank-tab span{display:block;font-size:9px;font-weight:800;letter-spacing:.5px;color:var(--muted-2);font-family:var(--sans);margin-top:5px}
+
+  .pillar{min-width:0;padding-top:2px}
+  .pillar .name{font-family:var(--display);font-size:clamp(30px,3.4vw,42px);text-transform:uppercase;letter-spacing:.5px;
+    color:var(--ink);line-height:.85}
+  .pillar .big-line{display:flex;align-items:baseline;gap:8px;margin-top:8px}
+  .pillar .big{font-family:var(--display);font-size:40px;line-height:.8;color:var(--ink)}
+  .pillar .of{font-size:12px;font-weight:800;color:var(--muted)}
+  .ebar{height:12px;background:var(--ink);border-radius:999px;overflow:hidden;position:relative;margin-top:10px}
+  .ebar > span{display:block;height:100%;background:var(--brand)}
+  .pillar .backed{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:9px}
+
+  /* evidence photos, each credited to its author */
+  .ev-list{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .ev{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:16px;align-items:center}
+  .ev .thumb{position:relative;width:150px;height:104px;border:2px solid var(--ink);border-radius:9px;overflow:hidden;box-shadow:var(--punch)}
+  .ev .thumb img{width:100%;height:100%;object-fit:cover}
+  .ev .thumb .tag{position:absolute;left:6px;top:6px;font-size:8px;padding:2px 6px}
+  .ev .thumb .credit{position:absolute;left:6px;bottom:6px}
+  .ev .body{min-width:0}
+  .ev .body .name-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+  .ev .quote{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;line-height:1.42;color:#2a2a2a;font-weight:500}
+  .ev .quote::before{content:'\201C';font-family:var(--display);font-size:24px;color:var(--brand);line-height:.55;flex:none}
+  .ev .vote{flex:none;align-self:center}
+
+  /* verdict footer */
+  .verdict{margin-top:24px;background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:var(--punch-lg);
+    padding:22px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .verdict .score{font-size:26px;padding:5px 14px}
+  .verdict .txt{font-size:15px;line-height:1.55;color:#eceace;flex:1;min-width:280px}
+  .verdict .txt b{color:#fff}
+
+  @media(max-width:920px){
+    .card-head{grid-template-columns:1fr;gap:18px;text-align:left}
+    .head-fan{text-align:left;border-left:0;border-top:1px solid rgba(255,255,255,.14);padding-left:0;padding-top:16px;
+      display:flex;align-items:baseline;gap:14px}
+    .head-fan .num{font-size:44px}
+    .row-e{grid-template-columns:1fr;gap:14px}
+    .rank-tab{display:none}
+    .ev{grid-template-columns:120px minmax(0,1fr);gap:12px}
+    .ev .thumb{width:120px;height:84px}
+    .ev .vote{grid-column:2;justify-self:start}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 15a — Dashboard · Scorecard</span>
+  <span style="color:#fff">A report card where every pillar score is earned by attributed fan photos — each shot credited to the fan who took it, with their quote</span></div>
+
+<header class="top"><div class="wrap">
+  <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+  <h1>Madison Square Garden</h1>
+  <div class="home" id="home"></div>
+</div></header>
+
+<section class="stage"><div class="wrap">
+  <div class="eyebrow"><span class="dot"></span> Snapback · the scorecard, with the fans' receipts</div>
+
+  <div style="margin-top:16px">
+    <!-- OVERALL SCORECARD HERO -->
+    <div class="card-head">
+      <div class="sc-mega">
+        <div class="num" id="ov-snap"></div>
+        <div class="side">
+          <div class="k">Snapback Score</div>
+          <div class="of">/ 10</div>
+          <span class="rank" id="ov-rank"></span>
+        </div>
+      </div>
+      <div class="head-label">
+        <div class="eyebrow"><span class="dot"></span> Crowd-verified venue</div>
+        <h2>The<br>Scorecard</h2>
+      </div>
+      <div class="head-fan">
+        <div class="k">Fan Score</div>
+        <div class="num" id="ov-fan"></div>
+        <div class="cnt" id="ov-cnt"></div>
+      </div>
+    </div>
+    <div class="head-note" id="head-note"></div>
+
+    <!-- EVIDENCE ROWS -->
+    <div class="rows" id="rows"></div>
+
+    <!-- VERDICT -->
+    <div class="verdict" id="verdict"></div>
+  </div>
+
+</div></section>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  var C = window.CROWD, v = C.venue;
+
+  document.getElementById('home').innerHTML =
+    'Home of '+v.team+' · <b>Snapback '+v.snap+'</b> · Fan '+v.fan+' ('+v.reviews+')';
+  document.getElementById('ov-snap').textContent = v.snap;
+  document.getElementById('ov-rank').innerHTML = '★ #'+v.rank+' in the NBA';
+  document.getElementById('ov-fan').textContent = v.fan;
+  document.getElementById('ov-cnt').textContent = v.reviews+' fan ratings';
+
+  // social-proof stack in the head note
+  var stackIds = ['jack','grace','mike','tommy','jenn','danny','sarah'];
+  var stack = '<span class="stack">'+stackIds.map(function(id){return C.avatar(id);}).join('')+'</span>';
+  document.getElementById('head-note').innerHTML =
+    stack+'<b>'+v.fans+' fans</b> graded MSG. Experts rank it <b>higher than the crowd</b> — '+
+    'fans dock it for tight seats and pricey drinks. Every pillar below is backed by <b>fan photos</b>, each credited to the fan who posted it.';
+
+  // one row per pillar; each row lists that pillar's evidence photos, credited
+  var rows = C.pillars.map(function(p, i){
+    var num = String(i+1).padStart(2,'0');
+    var ev = p.evidence.map(function(e){
+      var f = C.fans[e.by];
+      return ''+
+        '<div class="ev">'+
+          '<div class="thumb">'+
+            '<img src="'+e.photo.src+'" alt="">'+
+            '<span class="tag">'+e.photo.area+'</span>'+
+            C.credit(e.by)+
+          '</div>'+
+          '<div class="body">'+
+            '<div class="name-row">'+C.avatar(e.by)+C.nameTag(e.by)+'</div>'+
+            '<div class="quote"><span>'+e.quote+'</span></div>'+
+          '</div>'+
+          C.votePill(f.verified?63:41)+
+        '</div>';
+    }).join('');
+    return ''+
+      '<div class="row-e">'+
+        '<div class="rank-tab">'+num+'<span>Pillar</span></div>'+
+        '<div class="pillar">'+
+          '<div class="name">'+p.label+'</div>'+
+          '<div class="big-line"><span class="big">'+p.score+'</span><span class="of">/ 10</span></div>'+
+          '<div class="ebar"><span style="width:'+(parseFloat(p.score)*10)+'%"></span></div>'+
+          '<div class="backed">Backed by '+p.evidence.length+' fan photos</div>'+
+        '</div>'+
+        '<div class="ev-list">'+ev+'</div>'+
+      '</div>';
+  }).join('');
+  document.getElementById('rows').innerHTML = rows;
+
+  // verdict — Jack's overall
+  document.getElementById('verdict').innerHTML =
+    '<span class="who" style="color:#fff">'+C.avatar('jack')+' Jack Settleman <span class="vf">✓</span></span>'+
+    '<span class="score">'+v.snap+'</span>'+
+    '<div class="txt">Best crowd in the NBA, best steak sandwich in the building, worst pizza. Come in on transit, sit center-200s, stand up all night. <b>— Jack’s verdict, echoed by '+v.fans+' fans</b></div>';
+
+  // vote pills toggle a single up/down state and nudge the count
+  document.querySelectorAll('.vote').forEach(function(vp){
+    var n=vp.querySelector('.n'),base=+n.textContent,state=0;
+    var btns=vp.querySelectorAll('button');
+    btns.forEach(function(b,i){
+      b.addEventListener('click',function(){
+        var dir=i===0?1:-1;
+        state=state===dir?0:dir;
+        n.textContent=base+state;
+        btns[0].style.color=state===1?'#141410':'';
+        btns[1].style.color=state===-1?'#e2483d':'';
+      });
+    });
+  });
+})();
+</script>
+</body></html>

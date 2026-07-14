@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout 4 · Search-first minimal</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .stage { min-height: calc(100vh - 62px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 26px; padding: 48px 20px 40px; position: relative; }
+  .stage::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(20,20,16,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(20,20,16,.045) 1px, transparent 1px); background-size: 40px 40px; }
+  .stage > * { position: relative; }
+  .stage h1 { font-family: var(--display); font-size: clamp(40px,7vw,96px); text-transform: uppercase; line-height: 1; letter-spacing: 1px; margin: 0; max-width: 16ch; }
+  .stage h1 .hl { display: inline-block; background: var(--brand); color: var(--ink); padding: 0 .12em; box-shadow: 5px 5px 0 var(--ink); }
+  .stage .sub { color: var(--muted); font-weight: 600; font-size: clamp(15px,1.8vw,19px); margin-top: -10px; }
+  .bigsearch { width: min(700px, 94vw); }
+  .bigsearch .search { padding: 18px 22px; border-radius: 14px; box-shadow: 7px 7px 0 var(--ink-soft); }
+  .bigsearch input { font-size: 19px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 11px; justify-content: center; max-width: 760px; }
+  .pill { display: inline-flex; align-items: center; gap: 9px; border: 2px solid var(--ink); border-radius: 999px; padding: 10px 17px; font: 800 13.5px var(--sans); text-transform: uppercase; letter-spacing: .4px; background: #fff; box-shadow: var(--punch); }
+  .pill .dot { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--a); border: 2px solid var(--ink); color: #fff; }
+  .pill.ink .dot { color: var(--ink); }
+  .pill .dot .ic { width: 14px; height: 14px; }
+  .trend { border-top: 3px solid var(--ink); background: var(--ink-soft); color: #fff; padding: 16px clamp(18px,4vw,40px); display: flex; align-items: center; gap: 18px; overflow-x: auto; }
+  .trend .lab { font: 800 12px var(--sans); letter-spacing: 1.5px; text-transform: uppercase; color: var(--brand); flex: none; }
+  .trend .t { display: flex; align-items: center; gap: 9px; flex: none; font-weight: 700; font-size: 14px; }
+  .trend .t b { font-family: var(--display); color: var(--brand); font-weight: 400; }
+</style></head>
+<body>
+<nav class="nav"><a class="brand" id="brand"></a><span class="burger"><span></span><span></span><span></span></span></nav>
+<main class="stage">
+  <h1>Where does <span class="hl">gameday</span> take&nbsp;you?</h1>
+  <div class="sub">Rank the games you've been to. Discover the ones worth the trip.</div>
+  <div class="bigsearch"><div class="search"><span id="si"></span><input placeholder="Search any team, venue, game or city…"></div></div>
+  <div class="pills" id="pills"></div>
+</main>
+<div class="trend" id="trend"></div>
+<script src="_ui.js"></script>
+<script>
+  const S = window.SNAP;
+  brand.innerHTML = S.cap() + 'SNAPBACK'; si.innerHTML = S.svg('search');
+  pills.innerHTML = S.dest.map(d => `<a class="pill ${d.ink?'ink':''}" style="--a:${d.accent}"><span class="dot">${S.svg(d.icon)}</span>${d.short}</a>`).join('');
+  trend.innerHTML = `<span class="lab">Trending</span>` + S.top.map(t => `<span class="t">${t.name} <b>${t.score}</b></span>`).join('');
+</script>
+</body></html>

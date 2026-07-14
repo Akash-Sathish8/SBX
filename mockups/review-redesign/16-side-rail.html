@@ -1,0 +1,278 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>16 · Side-Rail Nav + Photo Essay — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  html{scroll-behavior:smooth}
+  /* top venue header spans full width */
+  .top{background:var(--ink);color:#fff;padding:22px 0 20px;position:sticky;top:0;z-index:40;border-bottom:2px solid var(--brand)}
+  .top .in{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .top h1{font-family:var(--display);font-size:clamp(24px,3.4vw,40px);text-transform:uppercase;letter-spacing:.8px;margin:2px 0;line-height:.96}
+  .top .home{font-size:13px;font-weight:600;color:#bdbdb5;margin-top:2px}
+  .top .scores{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+  .sc{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.16);border-radius:10px;padding:7px 14px;text-align:center}
+  .sc.snap{border-color:var(--brand)}
+  .sc .l{font-size:9.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#9a9a92}
+  .sc .v{font-family:var(--display);font-size:24px;line-height:1;margin-top:3px;color:#fff}
+  .sc.snap .v{color:var(--brand)}
+
+  /* two-column shell */
+  .shell{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:236px 1fr;gap:56px;align-items:start}
+
+  /* LEFT sticky rail */
+  .rail{position:sticky;top:112px;padding:38px 0 40px}
+  .rail .rail-eyebrow{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;padding-left:16px}
+  .rail nav{display:flex;flex-direction:column;gap:2px;border-left:2px solid var(--line)}
+  .rail a{position:relative;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 18px;font-size:14px;font-weight:700;
+    letter-spacing:.2px;color:var(--muted);border-radius:0 8px 8px 0;transition:color .18s ease,background .18s ease;margin-left:-2px;border-left:2px solid transparent}
+  .rail a .idx{font-family:var(--display);font-size:13px;color:#c8c6bc;width:20px;transition:color .18s ease}
+  .rail a:hover{color:var(--ink-soft);background:#fbfaf5}
+  .rail a.active{color:var(--ink);background:var(--tip);border-left-color:var(--ink);font-weight:800}
+  .rail a.active .idx{color:var(--gold)}
+  .rail a.active::before{content:'';position:absolute;left:-2px;top:6px;bottom:6px;width:5px;background:var(--brand);border-radius:3px;
+    box-shadow:1.5px 1.5px 0 0 var(--ink)}
+  .rail .rail-foot{margin-top:26px;padding:16px;background:var(--cream);border:2px solid var(--ink);border-radius:12px;box-shadow:var(--punch)}
+  .rail .rail-foot .who{margin-bottom:8px}
+  .rail .rail-foot p{margin:0;font-size:12px;line-height:1.5;font-weight:600;color:#4a4a42}
+  .rail .rail-foot .stars{color:var(--gold);font-size:13px;letter-spacing:2px;margin-bottom:4px}
+
+  /* RIGHT essay column */
+  .essay{padding:38px 0 90px;max-width:720px}
+  .lede-block{margin-bottom:14px}
+  .essay .eyebrow{margin-bottom:12px}
+  .lede-block h2{font-family:var(--display);font-size:clamp(30px,4vw,46px);text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:.96;margin:0 0 14px}
+  .lede-block .lede{font-size:19px;line-height:1.6;font-weight:500;color:#2a2b22}
+
+  section.chap{padding:52px 0;border-top:2px solid var(--line);scroll-margin-top:120px}
+  section.chap:first-of-type{border-top:0}
+  .chap-num{font-family:var(--display);font-size:15px;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+  .chap h3{font-family:var(--display);font-size:clamp(30px,4.4vw,50px);text-transform:uppercase;letter-spacing:.5px;
+    color:var(--ink);line-height:.94;margin:6px 0 20px}
+  .lead-photo{position:relative;border:2px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:var(--punch-lg);aspect-ratio:16/10;background:#eee}
+  .lead-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .lead-photo:hover img{transform:scale(1.03)}
+  .lead-photo .tag{position:absolute;left:10px;bottom:10px;font-size:10px;padding:3px 9px}
+  .lead-photo .lab{position:absolute;left:12px;top:12px;font-family:var(--display);font-size:20px;color:#fff;text-transform:uppercase;
+    letter-spacing:.5px;text-shadow:0 2px 10px rgba(0,0,0,.75)}
+  .tips{margin-top:22px;display:flex;flex-direction:column;gap:16px}
+  .tip{display:flex;gap:14px;align-items:flex-start}
+  .tip .bar{flex:none;width:4px;align-self:stretch;background:var(--brand);border-radius:3px;margin-top:3px}
+  .tip p{margin:0;font-size:16.5px;line-height:1.6;font-weight:500;color:#2a2b22}
+  .tip .byline{margin-top:8px}
+  .who-lead{margin:14px 0 4px}
+
+  /* supporting photo strip */
+  .strip{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .strip .photo{aspect-ratio:4/3;box-shadow:var(--punch);border-radius:10px}
+  .strip .photo .tag{font-size:9px;padding:2px 7px}
+  .strip.one{grid-template-columns:1fr}
+
+  /* verdict */
+  .verdict{margin-top:44px;background:var(--ink);color:#fff;border-radius:14px;padding:28px 30px;box-shadow:var(--punch-lg)}
+  .verdict .qt{font-size:17px;line-height:1.6;font-weight:500;color:#efeed9}
+  .verdict .score{font-size:26px;padding:5px 14px}
+
+  @media(max-width:900px){
+    .shell{grid-template-columns:1fr;gap:0}
+    .rail{position:static;padding:22px 0 6px;top:auto}
+    .rail nav{flex-direction:row;overflow-x:auto;border-left:0;border-bottom:2px solid var(--line);padding-bottom:2px;gap:4px}
+    .rail a{white-space:nowrap;border-radius:8px 8px 0 0;border-left:0;border-bottom:2px solid transparent;padding:9px 12px}
+    .rail a.active{border-left-color:transparent;border-bottom-color:var(--ink)}
+    .rail a.active::before{left:6px;right:6px;top:auto;bottom:-2px;width:auto;height:4px;box-shadow:none}
+    .rail a .idx{display:none}
+    .rail .rail-eyebrow,.rail .rail-foot{display:none}
+    .essay{padding-top:14px}
+    .strip{grid-template-columns:1fr 1fr}
+  }
+</style></head>
+<body>
+
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 16 — Side-Rail Nav + Photo Essay</span><span style="color:#fff">Docs-site rail · scroll-spy · a calm, premium photo essay</span>
+</div>
+
+<!-- venue header spanning top -->
+<header class="top"><div class="wrap" style="max-width:1200px">
+  <div class="in">
+    <div>
+      <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+      <h1>Madison Square Garden</h1>
+      <div class="home">Home of New York Knicks · A Snapback Field Report</div>
+    </div>
+    <div class="scores">
+      <div class="sc snap"><div class="l">★ Snapback · #3</div><div class="v">9.2</div></div>
+      <div class="sc"><div class="l">Fan · 214</div><div class="v">8.7</div></div>
+    </div>
+  </div>
+</div></header>
+
+<div class="shell">
+
+  <!-- LEFT sticky nav -->
+  <aside class="rail">
+    <div class="rail-eyebrow">On this page</div>
+    <nav id="rail-nav">
+      <a href="#getting-in"  data-target="getting-in"><span class="idx">01</span> Getting in</a>
+      <a href="#best-seats"  data-target="best-seats"><span class="idx">02</span> Best seats</a>
+      <a href="#best-food"   data-target="best-food"><span class="idx">03</span> Best food</a>
+      <a href="#before"      data-target="before"><span class="idx">04</span> Before</a>
+      <a href="#atmosphere"  data-target="atmosphere"><span class="idx">05</span> Atmosphere</a>
+      <a href="#insider"     data-target="insider"><span class="idx">06</span> Insider</a>
+    </nav>
+    <div class="rail-foot">
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+      <div class="stars">★★★★★</div>
+      <p>Verified fan report. Every photo below is from Jack's own night at the Garden.</p>
+    </div>
+  </aside>
+
+  <!-- RIGHT photo essay -->
+  <main class="essay">
+
+    <div class="lede-block">
+      <div class="eyebrow"><span class="dot"></span> Snapback · a fan's field report</div>
+      <h2>Your night at the Garden</h2>
+      <p class="lede">There's no building in sports quite like it. Get there right, sit in the right seat, eat the right sandwich — and a Knicks night becomes the best crowd in the NBA. Here's exactly how to do it, in Jack's words and his photos.</p>
+    </div>
+
+    <!-- 01 Getting in -->
+    <section class="chap" id="getting-in">
+      <div class="chap-num">01 — Arrive</div>
+      <h3>Getting in</h3>
+      <div class="lead-photo"><img src="../../public/img/reports/citi/robby/r59.jpg" alt="Outside Madison Square Garden">
+        <span class="lab">Outside MSG</span><span class="tag">Outside</span></div>
+      <div class="who-lead"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tips">
+        <div class="tip"><span class="bar"></span><p>Best ways in: walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice.</p></div>
+        <div class="tip"><span class="bar"></span><p>When you get to the doors, come in through the 100&nbsp;level gates — the merch store there has a way shorter line than the one in the MSG lobby.</p></div>
+      </div>
+      <div class="strip one">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r20.jpg" alt="Gates"><span class="tag">Gates</span></div>
+      </div>
+    </section>
+
+    <!-- 02 Best seats -->
+    <section class="chap" id="best-seats">
+      <div class="chap-num">02 — Sit down</div>
+      <h3>Best seats</h3>
+      <div class="lead-photo"><img src="../../public/img/reports/citi/robby/r10.jpg" alt="View from the 100 level">
+        <span class="lab">The view</span><span class="tag">100 Level</span></div>
+      <div class="who-lead"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tips">
+        <div class="tip"><span class="bar"></span><p>Front rows in the 200s in the center sections beat behind the basket, even down low.</p></div>
+        <div class="tip"><span class="bar"></span><p>The Chase Bridge and the Hyundai Bridge are both cool spots — and the Hyundai Bridge is good value.</p></div>
+        <div class="tip"><span class="bar"></span><p>The Delta Club comes with all-inclusive food and drink (non-alcoholic).</p></div>
+      </div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r40.jpg" alt="300 level view"><span class="tag">300 Level</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r56.jpg" alt="400 level view"><span class="tag">400 Level</span></div>
+      </div>
+    </section>
+
+    <!-- 03 Best food -->
+    <section class="chap" id="best-food">
+      <div class="chap-num">03 — Eat</div>
+      <h3>Best food</h3>
+      <div class="lead-photo"><img src="../../public/img/reports/citi/robby/r25.jpg" alt="The steak sandwich">
+        <span class="lab">Steak sandwich</span><span class="tag">Outside Sec 107</span></div>
+      <div class="who-lead"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tips">
+        <div class="tip"><span class="bar"></span><p>The best food in MSG is the steak sandwich outside section 107.</p></div>
+        <div class="tip"><span class="bar"></span><p>The hamburgers from the Garden Market are the best basic food item in sports. They use a different type of bun that is fantastic.</p></div>
+        <div class="tip"><span class="bar"></span><p>Carnegie Deli is another good one. Skip the pizza — it's bad in the arena.</p></div>
+      </div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r30.jpg" alt="Garden Market"><span class="tag">Garden Market</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r38.jpg" alt="Menus"><span class="tag">Menus</span></div>
+      </div>
+    </section>
+
+    <!-- 04 Before -->
+    <section class="chap" id="before">
+      <div class="chap-num">04 — Warm up</div>
+      <h3>Before the game</h3>
+      <div class="lead-photo"><img src="../../public/img/reports/citi/robby/r44.jpg" alt="Chase Lounge">
+        <span class="lab">Chase Lounge</span><span class="tag">Chase Lounge</span></div>
+      <div class="who-lead"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tips">
+        <div class="tip"><span class="bar"></span><p>Pregame spots nearby: Nick and Stef's Steakhouse, The Rutherford, Stout, Mustang Harry's, and American Whiskey.</p></div>
+        <div class="tip"><span class="bar"></span><p>There is a Chase reserve lounge inside the arena. You can reserve a spot pregame.</p></div>
+      </div>
+      <div class="strip">
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r57.jpg" alt="Delta Club"><span class="tag">Delta Club</span></div>
+        <div class="photo"><img src="../../public/img/reports/citi/robby/r51.jpg" alt="Bar"><span class="tag">Bar</span></div>
+      </div>
+    </section>
+
+    <!-- 05 Atmosphere -->
+    <section class="chap" id="atmosphere">
+      <div class="chap-num">05 — Tip-off</div>
+      <h3>Atmosphere</h3>
+      <div class="lead-photo"><img src="../../public/img/reports/citi/robby/r17.jpg" alt="The crowd at tip-off">
+        <span class="lab">Best crowd in the NBA</span><span class="tag">Concourse</span></div>
+      <div class="who-lead"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tips">
+        <div class="tip"><span class="bar"></span><p>Best crowd in the NBA. Be ready to stand, and the seats are tight between people. There aren't as many gimmicks as other NBA arenas, so it's not the most family-friendly — but there's still plenty of in-game entertainment like t-shirt tosses.</p></div>
+      </div>
+    </section>
+
+    <!-- 06 Insider -->
+    <section class="chap" id="insider">
+      <div class="chap-num">06 — Know before you go</div>
+      <h3>Insider tips</h3>
+      <div class="lead-photo"><img src="../../public/img/reports/citi/robby/r04.jpg" alt="Team store">
+        <span class="lab">Team store</span><span class="tag">Team Store</span></div>
+      <div class="who-lead"><span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span></div>
+      <div class="tips">
+        <div class="tip"><span class="bar"></span><p>The merch store through the gates on the 100 level has a way shorter line than the one in the MSG lobby.</p></div>
+        <div class="tip"><span class="bar"></span><p>Alcoholic drinks are very expensive inside MSG. Budget for it.</p></div>
+      </div>
+
+      <div class="verdict">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <span class="who" style="color:#fff"><img class="av" src="../../public/img/logo.png" alt=""> Jack's verdict <span class="vf">✓</span></span>
+          <span class="score" style="margin-left:auto">9.2</span>
+        </div>
+        <div class="qt">"Best crowd in the NBA, best steak sandwich in the building, worst pizza. Come in on transit, sit center-200s, and stand up."</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // scroll-spy: highlight the rail item for the section currently in view
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#rail-nav a'));
+    var map = {};
+    links.forEach(function(a){ map[a.getAttribute('data-target')] = a; });
+    var sections = links.map(function(a){ return document.getElementById(a.getAttribute('data-target')); });
+
+    function setActive(id){
+      links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-target') === id); });
+    }
+
+    var visible = {};
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting) visible[e.target.id] = e.intersectionRatio;
+        else delete visible[e.target.id];
+      });
+      // choose the section highest up that is currently visible
+      var best = null, bestTop = Infinity;
+      sections.forEach(function(s){
+        if(visible[s.id] != null){
+          var t = s.getBoundingClientRect().top;
+          if(t < bestTop){ bestTop = t; best = s.id; }
+        }
+      });
+      if(best) setActive(best);
+    }, { rootMargin:'-45% 0px -45% 0px', threshold:[0,.25,.5,1] });
+
+    sections.forEach(function(s){ if(s) io.observe(s); });
+    setActive('getting-in');
+  })();
+</script>
+</body></html>

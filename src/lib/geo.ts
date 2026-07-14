@@ -26,3 +26,22 @@ export function haversineMiles(a: LatLng, b: LatLng): number {
 }
 
 export const fmtMiles = (n: number) => `${Math.round(n).toLocaleString()} mi`
+
+// The user's chosen "near me" location (from geolocation or a picked city),
+// persisted so /near and /venues "Near you" share the same anchor.
+export interface Anchor extends LatLng { label: string }
+const ANCHOR_KEY = 'sbx:near-loc:v1'
+
+export function loadAnchor(): Anchor | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const a = JSON.parse(window.localStorage.getItem(ANCHOR_KEY) || 'null')
+    return a && typeof a.lat === 'number' && typeof a.lng === 'number' ? a : null
+  } catch {
+    return null
+  }
+}
+export function saveAnchor(a: Anchor) {
+  if (typeof window === 'undefined') return
+  try { window.localStorage.setItem(ANCHOR_KEY, JSON.stringify(a)) } catch { /* ignore */ }
+}

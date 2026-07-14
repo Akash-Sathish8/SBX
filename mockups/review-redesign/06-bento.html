@@ -1,0 +1,257 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>06 · Bento Grid — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .stage{background:#f7f6f2;padding:34px 0 60px}
+
+  /* header row */
+  .hrow{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+  .hrow h1{font-family:var(--display);font-size:clamp(30px,4.4vw,52px);text-transform:uppercase;letter-spacing:.5px;
+    color:var(--ink);line-height:.95;margin:9px 0 0}
+  .hrow .home{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:8px}
+  .hrow .home b{color:var(--ink)}
+  .hactions{display:flex;gap:10px}
+
+  /* bento grid */
+  .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:172px;gap:14px}
+  .t{border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:var(--punch);position:relative;
+    background:var(--cream)}
+  .t.photo{border:2px solid var(--ink)}
+  .t.photo img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+  .t.photo:hover img{transform:scale(1.05)}
+
+  /* span helpers */
+  .c2{grid-column:span 2}.c2r{grid-row:span 2}.r2{grid-row:span 2}
+
+  /* photo tile overlay label */
+  .ov{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(0deg,rgba(20,20,16,.82),rgba(20,20,16,0) 58%)}
+  .lab{position:absolute;left:14px;bottom:13px;right:14px;z-index:2;color:#fff}
+  .lab .k{font-family:var(--display);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand)}
+  .lab .h{font-family:var(--display);font-size:clamp(20px,2.4vw,30px);line-height:.98;text-transform:uppercase;
+    letter-spacing:.5px;margin-top:3px;text-shadow:0 2px 10px rgba(0,0,0,.55)}
+  .lab .cp{font-size:12.5px;line-height:1.4;font-weight:500;color:#ececdf;margin-top:7px;max-width:40ch}
+  .lab .who{color:#fff;margin-top:10px}
+  .t .tag{position:absolute;right:11px;top:11px;z-index:3}
+
+  /* hero seat tile (2x2) larger caption stack */
+  .t.hero .lab .h{font-size:clamp(28px,3.4vw,44px)}
+  .t.hero .lab .cp{font-size:14px;max-width:34ch}
+  /* mini thumbnail cluster on hero */
+  .t.hero .mini{position:absolute;left:14px;top:14px;z-index:3;display:flex;gap:7px}
+  .t.hero .mini .m{width:56px;height:44px;border:2px solid #fff;border-radius:7px;overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,.5)}
+  .t.hero .mini .m img{width:100%;height:100%;object-fit:cover}
+
+  /* pure tip tile (tip-wash) */
+  .t.tip{background:var(--tip);border-color:var(--ink);padding:15px 16px 14px;display:flex;flex-direction:column}
+  .t.tip .k{font-family:var(--display);font-size:14px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink)}
+  .t.tip .who{margin:9px 0 7px}
+  .t.tip .q{font-size:14px;line-height:1.45;font-weight:500;color:#282a24}
+  .t.tip .q b{color:var(--ink)}
+  .t.tip .foot{margin-top:auto;padding-top:10px;display:flex;align-items:center;justify-content:space-between}
+  .t.tip .foot .vote{background:#fffdf3}
+
+  /* dark score/verdict tile */
+  .t.dark{background:var(--ink);color:#fff;padding:18px 18px 16px;display:flex;flex-direction:column}
+  .t.dark .k{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#bdbdb5;
+    display:flex;align-items:center;gap:7px}
+  .t.dark .k .dot{width:7px;height:7px;border-radius:50%;background:var(--brand)}
+  .t.dark .big{font-family:var(--display);font-size:clamp(46px,6vw,72px);line-height:.9;color:var(--brand);margin:10px 0 2px}
+  .t.dark .sub{font-size:12px;font-weight:700;color:#d8d8cf;text-transform:uppercase;letter-spacing:.4px}
+  .t.dark .qt{font-size:12.5px;line-height:1.5;color:#e6e5d8;margin-top:auto;padding-top:12px;border-top:1px solid #34342c}
+  .t.dark .fan{display:flex;gap:14px;margin-top:12px}
+  .t.dark .fan .n{font-family:var(--display);font-size:24px;color:#fff;line-height:1}
+  .t.dark .fan .l{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#9a9a90}
+
+  /* getting-there wide-ish tile with tip inline */
+  .t.arrive{background:var(--cream);padding:15px 16px;display:flex;flex-direction:column;justify-content:space-between}
+  .t.arrive .k{font-family:var(--display);font-size:16px;letter-spacing:.6px;text-transform:uppercase;color:var(--ink)}
+  .t.arrive .q{font-size:13.5px;line-height:1.45;font-weight:500;color:#282a24;margin-top:8px}
+  .t.arrive .q b{color:var(--ink)}
+  .t.arrive .foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+
+  @media(max-width:1000px){
+    .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:168px}
+    .c2,.hero{grid-column:span 2}
+  }
+  @media(max-width:560px){
+    .bento{grid-template-columns:1fr;grid-auto-rows:auto}
+    .t{grid-column:auto !important;grid-row:auto !important;min-height:200px}
+    .t.tip,.t.dark,.t.arrive{min-height:0}
+  }
+</style></head>
+<body>
+
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between">
+  <span>Concept 06 — Bento Grid</span><span style="color:#fff">Photo tiles and tip tiles interlock in one asymmetric mosaic</span>
+</div>
+
+<section class="stage"><div class="wrap-wide">
+
+  <!-- header row -->
+  <div class="hrow">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Snapback · Madison Square Garden</div>
+      <h1>What do I need to know?</h1>
+      <div class="home">New York Knicks · New York, NY · <b>Snapback 9.2</b> (#3) · Fan 8.7 · 214 ratings</div>
+    </div>
+    <div class="hactions">
+      <span class="pill-brand">Build your guide →</span>
+      <span class="pill-dark">+ Add a tip</span>
+    </div>
+  </div>
+
+  <!-- bento mosaic -->
+  <div class="bento">
+
+    <!-- BEST SEAT HERO — 2x2 -->
+    <div class="t photo hero c2 c2r">
+      <img src="../../public/img/reports/citi/robby/r10.jpg" alt="">
+      <div class="mini">
+        <div class="m"><img src="../../public/img/reports/citi/robby/r40.jpg" alt=""></div>
+        <div class="m"><img src="../../public/img/reports/citi/robby/r56.jpg" alt=""></div>
+      </div>
+      <span class="tag">100 Level</span>
+      <div class="ov"></div>
+      <div class="lab">
+        <div class="k">01 · Best seats</div>
+        <div class="h">Take the center 200s</div>
+        <div class="cp">Front rows in the 200s in the center sections beat behind the basket, even down low. The Hyundai Bridge is a cool spot and good value.</div>
+        <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+      </div>
+    </div>
+
+    <!-- ATMOSPHERE tip (small) -->
+    <div class="t tip">
+      <div class="k">Atmosphere</div>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack S. <span class="vf">✓</span></span>
+      <div class="q"><b>Best crowd in the NBA.</b> Be ready to stand — the seats are tight, but the energy is worth it.</div>
+      <div class="foot"><span class="vote"><button>▲</button><span class="n">63</span><button>▼</button></span></div>
+    </div>
+
+    <!-- DELTA CLUB / lounge photo (medium) -->
+    <div class="t photo">
+      <img src="../../public/img/reports/citi/robby/r57.jpg" alt="">
+      <span class="tag">Delta Club</span>
+      <div class="ov"></div>
+      <div class="lab"><div class="k">Upgrade</div><div class="h">All-inclusive</div></div>
+    </div>
+
+    <!-- BEST FOOD HERO — 2x1 -->
+    <div class="t photo c2">
+      <img src="../../public/img/reports/citi/robby/r25.jpg" alt="">
+      <span class="tag">Steak Sandwich · Sec 107</span>
+      <div class="ov"></div>
+      <div class="lab">
+        <div class="k">02 · Best food</div>
+        <div class="h">Steak sandwich, outside 107</div>
+        <div class="cp">The best food in MSG. The Garden Market hamburgers are the best basic food in sports — a fantastic bun. Skip the pizza.</div>
+        <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack Settleman <span class="vf">✓</span></span>
+      </div>
+    </div>
+
+    <!-- FOOD photo medium -->
+    <div class="t photo">
+      <img src="../../public/img/reports/citi/robby/r30.jpg" alt="">
+      <span class="tag">Garden Market</span>
+      <div class="ov"></div>
+      <div class="lab"><div class="k">Best burger</div><div class="h">Great bun</div></div>
+    </div>
+
+    <!-- FOOD photo medium -->
+    <div class="t photo">
+      <img src="../../public/img/reports/citi/robby/r26.jpg" alt="">
+      <span class="tag">Burgers</span>
+      <div class="ov"></div>
+      <div class="lab"><div class="k">Concourse</div><div class="h">Grab & go</div></div>
+    </div>
+
+    <!-- GETTING THERE tile -->
+    <div class="t arrive">
+      <div>
+        <div class="k">Getting in</div>
+        <div class="q"><b>Best ways in:</b> walking, the subway, the LIRR, or NJ Transit. Driving would be my last choice.</div>
+      </div>
+      <div class="foot">
+        <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack S. <span class="vf">✓</span></span>
+        <span class="vote" style="background:#fffdf3"><button>▲</button><span class="n">38</span><button>▼</button></span>
+      </div>
+    </div>
+
+    <!-- OUTSIDE / gates photo -->
+    <div class="t photo">
+      <img src="../../public/img/reports/citi/robby/r59.jpg" alt="">
+      <span class="tag">Outside</span>
+      <div class="ov"></div>
+      <div class="lab"><div class="k">Arrive</div><div class="h">7th Ave</div></div>
+    </div>
+
+    <!-- DARK score/verdict — 2x2 -->
+    <div class="t dark c2 c2r">
+      <div class="k"><span class="dot"></span> The verdict · Snapback Score</div>
+      <div class="big">9.2</div>
+      <div class="sub">#3 in the league · 214 fan ratings (8.7)</div>
+      <div class="qt">"Best crowd in the NBA. Come in on transit, sit center-200s, and stand up. Eat the steak sandwich outside 107 and the Garden Market burgers — skip the arena pizza. Know the alcohol is very expensive."</div>
+      <div class="fan">
+        <div><div class="n">9.2</div><div class="l">Snapback</div></div>
+        <div><div class="n">8.7</div><div class="l">Fans</div></div>
+        <div><div class="n">#3</div><div class="l">Ranked</div></div>
+        <span class="who" style="color:#fff;margin-left:auto;align-self:center"><img class="av" src="../../public/img/logo.png" alt=""> Jack ✓</span>
+      </div>
+    </div>
+
+    <!-- PREGAME / lounge photo -->
+    <div class="t photo">
+      <img src="../../public/img/reports/citi/robby/r44.jpg" alt="">
+      <span class="tag">Chase Lounge</span>
+      <div class="ov"></div>
+      <div class="lab"><div class="k">Before</div><div class="h">Reserve pregame</div></div>
+    </div>
+
+    <!-- INSIDER tip (small) -->
+    <div class="t tip">
+      <div class="k">Insider tip</div>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack S. <span class="vf">✓</span></span>
+      <div class="q">Merch through the <b>100 level gates</b> has a way shorter line than the MSG lobby.</div>
+      <div class="foot"><span class="vote"><button>▲</button><span class="n">31</span><button>▼</button></span></div>
+    </div>
+
+    <!-- BEFORE tip (small) -->
+    <div class="t tip">
+      <div class="k">Before the game</div>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack S. <span class="vf">✓</span></span>
+      <div class="q">Pregame at Nick and Stef's, Stout, or Mustang Harry's — then the <b>Chase reserve lounge</b> inside.</div>
+      <div class="foot"><span class="vote"><button>▲</button><span class="n">22</span><button>▼</button></span></div>
+    </div>
+
+    <!-- CROWD / concourse photo -->
+    <div class="t photo">
+      <img src="../../public/img/reports/citi/robby/r17.jpg" alt="">
+      <span class="tag">Tip-off</span>
+      <div class="ov"></div>
+      <div class="lab"><div class="k">The crowd</div><div class="h">Stand up</div></div>
+    </div>
+
+    <!-- COST tip (small) -->
+    <div class="t tip">
+      <div class="k">Heads up</div>
+      <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Jack S. <span class="vf">✓</span></span>
+      <div class="q">Alcoholic drinks are <b>very expensive</b> inside MSG — budget for it.</div>
+      <div class="foot"><span class="vote"><button>▲</button><span class="n">26</span><button>▼</button></span></div>
+    </div>
+
+    <!-- TEAM STORE photo -->
+    <div class="t photo">
+      <img src="../../public/img/reports/citi/robby/r04.jpg" alt="">
+      <span class="tag">Team Store</span>
+      <div class="ov"></div>
+      <div class="lab"><div class="k">On the way out</div><div class="h">Merch</div></div>
+    </div>
+
+  </div>
+</div></section>
+
+</body></html>

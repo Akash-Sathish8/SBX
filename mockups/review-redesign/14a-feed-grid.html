@@ -1,0 +1,242 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>14a · Feed — Uniform Grid — Snapback Review Redesign</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  /* ---- header ---- */
+  .top{background:var(--ink);color:#fff;padding:26px 0 22px}
+  .top .row{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .top h1{font-family:var(--display);font-size:clamp(30px,4.8vw,54px);text-transform:uppercase;letter-spacing:1px;margin:6px 0 0}
+  .top .home{font-size:14px;font-weight:600;color:#bdbdb5;margin-top:8px}
+  .top .home b{color:var(--brand)}
+  .top .scores{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .top .who{color:#fff;font-size:12px}
+  .top .who .av{border-color:#fff}
+  .sbadge{display:inline-flex;flex-direction:column;gap:2px;background:rgba(255,255,255,.07);
+    border:1.5px solid rgba(255,255,255,.16);border-radius:9px;padding:8px 14px}
+  .sbadge .k{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#a7a79c}
+  .sbadge .v{font-family:var(--display);font-size:24px;line-height:1;color:#fff}
+  .sbadge.brand{background:var(--brand);border-color:var(--brand)}
+  .sbadge.brand .k{color:#5a5300}.sbadge.brand .v{color:var(--ink)}
+  .sbadge .rank{font-size:11px;font-weight:800;color:var(--brand)}
+  .sbadge.brand .rank{color:#5a5300}
+
+  /* contributor stack in the header */
+  .contrib{display:flex;align-items:center;gap:12px;margin-top:16px}
+  .contrib .stack{display:flex;padding-left:9px}
+  .contrib .stack .ini,.contrib .stack .av{width:30px;height:30px;margin-left:-9px;border:2px solid var(--ink);
+    box-shadow:0 0 0 1.5px #fff;position:relative;border-radius:50%;object-fit:cover}
+  .contrib .txt{font-size:13px;font-weight:600;color:#cfcfc6}
+  .contrib .txt b{font-family:var(--display);font-weight:400;font-size:16px;color:#fff;margin:0 1px}
+
+  /* ---- filter bar ---- */
+  .filters{background:var(--cream);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:20}
+  .filters .in{display:flex;gap:9px;padding:13px 0;overflow-x:auto;align-items:center}
+  .flabel{flex:none;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-right:2px}
+  .fchip{flex:none;border:1.5px solid var(--ink);background:#fff;cursor:pointer;font-family:var(--sans);
+    font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--ink);
+    padding:7px 14px;border-radius:999px;transition:all .12s ease}
+  .fchip:hover{box-shadow:var(--punch)}
+  .fchip.active{background:var(--brand);box-shadow:var(--punch)}
+  .fchip .c{opacity:.55;margin-left:5px;font-variant-numeric:tabular-nums}
+
+  /* ---- explore grid ---- */
+  .stage{background:#f7f6f2;padding:22px 0 64px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:4px}
+  .tile{position:relative;aspect-ratio:1/1;border:2px solid var(--ink);border-radius:12px;overflow:hidden;
+    box-shadow:var(--punch);transition:transform .12s ease,box-shadow .12s ease}
+  .tile:hover{transform:translate(-2px,-2px);box-shadow:var(--punch-lg)}
+  .tile.hide{display:none}
+
+  /* photo tile — credit chip ALWAYS visible, quote revealed on hover */
+  .tile.photo{background:#eee}
+  .tile.photo img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+  .tile.photo:hover img{transform:scale(1.05)}
+  .tile.photo .tag{position:absolute;left:9px;top:9px;z-index:3}
+  .tile.photo .credit{position:absolute;left:9px;bottom:9px;z-index:4;max-width:calc(100% - 18px);
+    box-shadow:0 2px 6px rgba(0,0,0,.35)}
+  .tile.photo .credit .nm2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tile.photo .ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:12px 13px 40px;background:linear-gradient(180deg,transparent 30%,rgba(10,10,8,.86));
+    opacity:0;transition:opacity .18s ease;z-index:2}
+  .tile.photo:hover .ov{opacity:1}
+  .tile.photo .ov .qcap{color:#fff;font-size:13.5px;line-height:1.38;font-weight:600}
+  .tile.photo .type{position:absolute;right:9px;top:9px;z-index:3;width:22px;height:22px;border-radius:50%;
+    background:rgba(10,10,8,.55);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}
+
+  /* tip tile (text-only) */
+  .tile.tip{background:var(--tip);display:flex;flex-direction:column;padding:15px 15px 13px}
+  .tile.tip.dark{background:var(--ink);color:#fff}
+  .tile.tip .who-row{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+  .tile.tip .who-row .nm{font-size:12px}
+  .tile.tip .qmark{font-family:var(--display);font-size:40px;line-height:.4;color:var(--brand);display:block;height:16px}
+  .tile.tip .q{font-family:var(--display);font-weight:400;font-size:clamp(15px,1.55vw,19px);line-height:1.1;
+    letter-spacing:.3px;text-transform:uppercase;color:var(--ink);margin:8px 0 auto}
+  .tile.tip.dark .q{color:#fff}
+  .tile.tip .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}
+  .tile.tip .kv{display:inline-block;background:var(--brand);color:var(--ink);border:1.5px solid var(--ink);
+    border-radius:3px;padding:2px 7px;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+  .tile.tip.dark .vote{border-color:rgba(255,255,255,.25)}
+  .tile.tip.dark .vote button{color:#c9c9bf}
+  .tile.tip.dark .vote .n{color:#fff}
+  .tile.tip.dark .nm{color:#fff}
+  .tile.tip.dark .vf{background:var(--brand);color:var(--ink)}
+
+  .empty-note{text-align:center;color:#9a9a90;font-weight:700;padding:60px 0;display:none}
+
+  @media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:680px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}.tile.tip .q{font-size:16px}}
+</style></head>
+<body>
+<!-- concept banner -->
+<div style="background:var(--ink);color:var(--brand);font-family:var(--sans);font-weight:800;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;padding:8px 24px;display:flex;justify-content:space-between;gap:16px">
+  <span>Concept 14a — Feed · Uniform Grid</span>
+  <span style="color:#fff">Explore wall — every tile is a fan's photo or tip, credited to them; filter to browse</span>
+</div>
+
+<header class="top"><div class="wrap"><div class="row">
+  <div>
+    <span class="chip" style="background:rgba(255,255,255,.12);border-color:transparent;color:#fff">New York, NY</span>
+    <h1>Madison Square Garden</h1>
+    <div class="home">Home of <b style="color:#fff">New York Knicks</b></div>
+    <div class="scores">
+      <span class="sbadge brand"><span class="k">Snapback</span><span class="v">9.2</span><span class="rank">#3 in the NBA</span></span>
+      <span class="sbadge"><span class="k">Fan score</span><span class="v">8.7</span><span class="rank" style="color:#a7a79c">214 ratings</span></span>
+    </div>
+    <div class="contrib" id="contrib"></div>
+  </div>
+  <span class="who"><img class="av" src="../../public/img/logo.png" alt=""> Curated with Jack Settleman <span class="vf">✓</span></span>
+</div></div></header>
+
+<!-- filters -->
+<nav class="filters"><div class="wrap"><div class="in" id="filters">
+  <span class="flabel">Browse</span>
+</div></div></nav>
+
+<section class="stage"><div class="wrap">
+  <div class="grid" id="grid"></div>
+  <div class="empty-note">Nothing here yet.</div>
+</div></section>
+
+<script src="_crowd.js"></script>
+<script>
+(function(){
+  const C = window.CROWD;
+
+  // map dataset section keys -> the 5 filter buckets shown on this wall
+  const CAT = {
+    'best-seats':'seats', 'food':'food',
+    'atmosphere':'vibe', 'before':'vibe',
+    'getting-there':'getin', 'tips':'getin',
+  };
+  const FILTERS = [
+    {f:'all',   label:'All'},
+    {f:'seats', label:'Seats'},
+    {f:'food',  label:'Food'},
+    {f:'vibe',  label:'Vibe'},
+    {f:'getin', label:'Getting in'},
+  ];
+
+  // ---- build tiles from CROWD.tips: all photo-tips + a handful of strong text-only tips
+  const photoTips = C.tips.filter(t => t.photo).map(t => ({...t, kind:'photo'}));
+  const textTips  = C.tips.filter(t => !t.photo)
+                          .sort((a,b)=>b.up-a.up)
+                          .slice(0,5)
+                          .map(t => ({...t, kind:'tip'}));
+
+  // interleave text tiles through the photo wall so it reads mixed, keep vote-weighted order
+  const photos = photoTips.sort((a,b)=>b.up-a.up);
+  const items = [];
+  let ti = 0;
+  photos.forEach((p,i)=>{
+    items.push(p);
+    if((i+1)%4===0 && ti<textTips.length) items.push(textTips[ti++]);
+  });
+  while(ti<textTips.length) items.push(textTips[ti++]);
+
+  // short quote for the hover overlay / tip face — trim long tip text to one punchy line
+  function shortQuote(text){
+    if(text.length<=88) return text;
+    const cut = text.slice(0,85);
+    return cut.slice(0, cut.lastIndexOf(' ')) + '…';
+  }
+  const labelForCat = {seats:'Seats', food:'Food', vibe:'Vibe', getin:'Getting in'};
+
+  // ---- render filter chips (with live counts)
+  const counts = {all:items.length, seats:0, food:0, vibe:0, getin:0};
+  items.forEach(it=>{ const c=CAT[it.section]; if(c) counts[c]++; });
+  const fbar = document.getElementById('filters');
+  FILTERS.forEach((flt,i)=>{
+    const b = document.createElement('button');
+    b.className = 'fchip' + (i===0?' active':'');
+    b.dataset.f = flt.f;
+    b.innerHTML = `${flt.label} <span class="c">${counts[flt.f]}</span>`;
+    fbar.appendChild(b);
+  });
+
+  // ---- render contributor stack (dataset fans, jack first)
+  const order = ['jack','grace','mike','tommy','sarah','danny','rob','carl','jenn'];
+  const stack = order.map(id => C.avatar(id).replace('class="av"','class="av"').replace('class="ini"','class="ini"')).join('');
+  document.getElementById('contrib').innerHTML =
+    `<div class="stack">${stack}</div>` +
+    `<span class="txt"><b>${C.venue.fans}</b> fans contributed · <b>${C.venue.tips}</b> tips · <b>${C.venue.reviews}</b> reviews</span>`;
+
+  // ---- render tiles
+  const grid = document.getElementById('grid');
+  // rotate a few dark tip tiles for rhythm
+  let darkFlip = false;
+  items.forEach(it=>{
+    const cat = CAT[it.section] || 'getin';
+    if(it.kind==='photo'){
+      const el = document.createElement('a');
+      el.className = 'tile photo';
+      el.dataset.cat = cat;
+      el.innerHTML =
+        `<img src="${it.photo.src}" alt="">` +
+        `<span class="tag">${it.photo.area}</span><span class="type">◆</span>` +
+        `${C.credit(it.by)}` +
+        `<span class="ov"><span class="qcap">${shortQuote(it.text)}</span></span>`;
+      grid.appendChild(el);
+    } else {
+      const dark = darkFlip; darkFlip = !darkFlip;
+      const el = document.createElement('div');
+      el.className = 'tile tip' + (dark?' dark':'');
+      el.dataset.cat = cat;
+      el.innerHTML =
+        `<div class="who-row">${C.avatar(it.by)}${C.nameTag(it.by)}</div>` +
+        `<span class="qmark">“</span>` +
+        `<div class="q">${shortQuote(it.text)}</div>` +
+        `<div class="foot"><span class="kv">${labelForCat[cat]}</span>${C.votePill(it.up)}</div>`;
+      grid.appendChild(el);
+    }
+  });
+
+  // give the credit chip name a clamp class hook
+  grid.querySelectorAll('.credit').forEach(c=>{
+    const last = c.lastChild;
+    if(last && last.nodeType===3){
+      const span=document.createElement('span'); span.className='nm2'; span.textContent=last.textContent;
+      c.replaceChild(span,last);
+    }
+  });
+
+  // ---- filtering
+  const chips = document.querySelectorAll('.fchip');
+  const tiles = document.querySelectorAll('.tile');
+  const note  = document.querySelector('.empty-note');
+  chips.forEach(c => c.addEventListener('click', () => {
+    chips.forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    const f = c.dataset.f;
+    let shown = 0;
+    tiles.forEach(t => {
+      const hit = f === 'all' || t.dataset.cat === f;
+      t.classList.toggle('hide', !hit);
+      if (hit) shown++;
+    });
+    note.style.display = shown ? 'none' : 'block';
+  }));
+})();
+</script>
+</body></html>
